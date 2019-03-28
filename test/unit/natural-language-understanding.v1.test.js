@@ -1,30 +1,35 @@
 'use strict';
 
-const NaturalLanguageUnderstandingV1 = require('../../natural-language-understanding/v1-generated');
 const helper = require('ibm-cloud-sdk-core');
+const NaturalLanguageUnderstandingV1 = require('../../natural-language-understanding/v1-generated');
 const utils = require('../resources/unitTestUtils');
 
-const missingParamsError = utils.missingParamsError;
-const missingParamsSuccess = utils.missingParamsSuccess;
+const getOptions = utils.getOptions;
 const checkUrlAndMethod = utils.checkUrlAndMethod;
 const checkCallback = utils.checkCallback;
 const checkMediaHeaders = utils.checkMediaHeaders;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const missingParamsError = utils.missingParamsError;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const getOptions = utils.getOptions;
+
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const noop = () => {};
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api',
+  url:
+    'https://gateway.watsonplatform.net/natural-language-understanding/api/natural-language-understanding/api',
   version: '2018-10-18',
 };
 
-const natural_language_understanding = new NaturalLanguageUnderstandingV1(service);
-const createRequestMock = jest.spyOn(natural_language_understanding, 'createRequest');
+const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1(service);
+const createRequestMock = jest.spyOn(naturalLanguageUnderstanding, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
-const noop = () => {};
+
+// dont actually create a request
+createRequestMock.mockImplementation(noop);
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -62,7 +67,7 @@ describe('analyze', () => {
       };
 
       // invoke method
-      natural_language_understanding.analyze(params);
+      naturalLanguageUnderstanding.analyze(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -84,7 +89,6 @@ describe('analyze', () => {
       expect(options.body['return_analyzed_text']).toEqual(return_analyzed_text);
       expect(options.body['language']).toEqual(language);
       expect(options.body['limit_text_characters']).toEqual(limit_text_characters);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -100,17 +104,18 @@ describe('analyze', () => {
         },
       };
 
-      natural_language_understanding.analyze(params);
+      naturalLanguageUnderstanding.analyze(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      natural_language_understanding.analyze(null, () => {
+      naturalLanguageUnderstanding.analyze(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -120,13 +125,14 @@ describe('analyze', () => {
       // required parameters for this method
       const requiredParams = ['features'];
 
-      natural_language_understanding.analyze({}, err => {
+      naturalLanguageUnderstanding.analyze({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -140,7 +146,7 @@ describe('deleteModel', () => {
       };
 
       // invoke method
-      natural_language_understanding.deleteModel(params);
+      naturalLanguageUnderstanding.deleteModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -150,7 +156,7 @@ describe('deleteModel', () => {
       checkUrlAndMethod(options, '/v1/models/{model_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['model_id']).toEqual(model_id);
     });
@@ -168,17 +174,18 @@ describe('deleteModel', () => {
         },
       };
 
-      natural_language_understanding.deleteModel(params);
+      naturalLanguageUnderstanding.deleteModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      natural_language_understanding.deleteModel(null, () => {
+      naturalLanguageUnderstanding.deleteModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -188,13 +195,14 @@ describe('deleteModel', () => {
       // required parameters for this method
       const requiredParams = ['model_id'];
 
-      natural_language_understanding.deleteModel({}, err => {
+      naturalLanguageUnderstanding.deleteModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listModels', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -205,7 +213,7 @@ describe('listModels', () => {
       const params = {};
 
       // invoke method
-      natural_language_understanding.listModels(params);
+      naturalLanguageUnderstanding.listModels(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -215,7 +223,7 @@ describe('listModels', () => {
       checkUrlAndMethod(options, '/v1/models', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
     });
 
@@ -230,18 +238,18 @@ describe('listModels', () => {
         },
       };
 
-      natural_language_understanding.listModels(params);
+      naturalLanguageUnderstanding.listModels(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      natural_language_understanding.listModels();
+      naturalLanguageUnderstanding.listModels();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      natural_language_understanding.listModels(noop);
+      naturalLanguageUnderstanding.listModels(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });

@@ -1,8 +1,8 @@
 {
-  "name": "conversation_tone_analyzer_integration",
+  "name": "assistant_tone_analyzer_integration",
   "version": "1.0.0",
-  "description": "Example combining the Watson Conversation and Tone Analyzer services",
-  "main": "tone_conversation_integration.v1.js",
+  "description": "Example combining the Watson Assistant and Tone Analyzer services",
+  "main": "tone_assistant_integration.v1.js",
   "author": "https://github.com/aprilwebster",
   "license": "Apache-2.0",
   "dependencies": {
@@ -11,6 +11,6 @@
     "watson-developer-cloud": "latest"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   }
 }

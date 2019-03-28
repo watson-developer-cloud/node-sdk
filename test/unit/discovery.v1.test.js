@@ -1,31 +1,34 @@
 'use strict';
 
-const DiscoveryV1 = require('../../discovery/v1-generated');
 const helper = require('ibm-cloud-sdk-core');
+const DiscoveryV1 = require('../../discovery/v1-generated');
 const utils = require('../resources/unitTestUtils');
 
-const missingParamsError = utils.missingParamsError;
-const missingParamsSuccess = utils.missingParamsSuccess;
+const getOptions = utils.getOptions;
 const checkUrlAndMethod = utils.checkUrlAndMethod;
 const checkCallback = utils.checkCallback;
 const checkMediaHeaders = utils.checkMediaHeaders;
-const checkUserHeader = utils.checkUserHeader;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const missingParamsError = utils.missingParamsError;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const getOptions = utils.getOptions;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const noop = () => {};
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://gateway.watsonplatform.net/discovery/api',
+  url: 'https://gateway.watsonplatform.net/discovery/api/discovery/api',
   version: '2018-10-18',
 };
 
 const discovery = new DiscoveryV1(service);
 const createRequestMock = jest.spyOn(discovery, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
-const noop = () => {};
+
+// dont actually create a request
+createRequestMock.mockImplementation(noop);
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -64,7 +67,6 @@ describe('createEnvironment', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
       expect(options.body['size']).toEqual(size);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -84,6 +86,7 @@ describe('createEnvironment', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -107,6 +110,7 @@ describe('createEnvironment', () => {
     });
   });
 });
+
 describe('deleteEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -130,7 +134,7 @@ describe('deleteEnvironment', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -152,6 +156,7 @@ describe('deleteEnvironment', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -175,6 +180,7 @@ describe('deleteEnvironment', () => {
     });
   });
 });
+
 describe('getEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -198,7 +204,7 @@ describe('getEnvironment', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -220,6 +226,7 @@ describe('getEnvironment', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -243,6 +250,7 @@ describe('getEnvironment', () => {
     });
   });
 });
+
 describe('listEnvironments', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -266,7 +274,7 @@ describe('listEnvironments', () => {
       checkUrlAndMethod(options, '/v1/environments', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
     });
@@ -298,6 +306,7 @@ describe('listEnvironments', () => {
     });
   });
 });
+
 describe('listFields', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -323,7 +332,7 @@ describe('listFields', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/fields', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['collection_ids']).toEqual(collection_ids);
       expect(options.path['environment_id']).toEqual(environment_id);
@@ -348,6 +357,7 @@ describe('listFields', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -371,6 +381,7 @@ describe('listFields', () => {
     });
   });
 });
+
 describe('updateEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -405,7 +416,6 @@ describe('updateEnvironment', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
       expect(options.body['size']).toEqual(size);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -426,6 +436,7 @@ describe('updateEnvironment', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -449,6 +460,7 @@ describe('updateEnvironment', () => {
     });
   });
 });
+
 describe('createConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -492,7 +504,6 @@ describe('createConfiguration', () => {
       expect(options.body['enrichments']).toEqual(enrichments);
       expect(options.body['normalizations']).toEqual(normalizations);
       expect(options.body['source']).toEqual(source);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -515,6 +526,7 @@ describe('createConfiguration', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -538,6 +550,7 @@ describe('createConfiguration', () => {
     });
   });
 });
+
 describe('deleteConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -567,7 +580,7 @@ describe('deleteConfiguration', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['configuration_id']).toEqual(configuration_id);
@@ -592,6 +605,7 @@ describe('deleteConfiguration', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -615,6 +629,7 @@ describe('deleteConfiguration', () => {
     });
   });
 });
+
 describe('getConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -644,7 +659,7 @@ describe('getConfiguration', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['configuration_id']).toEqual(configuration_id);
@@ -669,6 +684,7 @@ describe('getConfiguration', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -692,6 +708,7 @@ describe('getConfiguration', () => {
     });
   });
 });
+
 describe('listConfigurations', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -717,7 +734,7 @@ describe('listConfigurations', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
       expect(options.path['environment_id']).toEqual(environment_id);
@@ -740,6 +757,7 @@ describe('listConfigurations', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -763,6 +781,7 @@ describe('listConfigurations', () => {
     });
   });
 });
+
 describe('updateConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -812,7 +831,6 @@ describe('updateConfiguration', () => {
       expect(options.body['enrichments']).toEqual(enrichments);
       expect(options.body['normalizations']).toEqual(normalizations);
       expect(options.body['source']).toEqual(source);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['configuration_id']).toEqual(configuration_id);
     });
@@ -838,6 +856,7 @@ describe('updateConfiguration', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -861,6 +880,7 @@ describe('updateConfiguration', () => {
     });
   });
 });
+
 describe('testConfigurationInEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -870,21 +890,21 @@ describe('testConfigurationInEnvironment', () => {
       // parameters
       const environment_id = 'fake_environment_id';
       const configuration = 'fake_configuration';
+      const file = 'fake_file';
+      const filename = 'fake_filename';
+      const file_content_type = 'fake_file_content_type';
+      const metadata = 'fake_metadata';
       const step = 'fake_step';
       const configuration_id = 'fake_configuration_id';
-      const file = 'fake_file';
-      const metadata = 'fake_metadata';
-      const file_content_type = 'fake_file_content_type';
-      const filename = 'fake_filename';
       const params = {
         environment_id,
         configuration,
+        file,
+        filename,
+        file_content_type,
+        metadata,
         step,
         configuration_id,
-        file,
-        metadata,
-        file_content_type,
-        filename,
       };
 
       // invoke method
@@ -927,6 +947,7 @@ describe('testConfigurationInEnvironment', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -950,6 +971,7 @@ describe('testConfigurationInEnvironment', () => {
     });
   });
 });
+
 describe('createCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -987,7 +1009,6 @@ describe('createCollection', () => {
       expect(options.body['description']).toEqual(description);
       expect(options.body['configuration_id']).toEqual(configuration_id);
       expect(options.body['language']).toEqual(language);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -1010,6 +1031,7 @@ describe('createCollection', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1033,6 +1055,7 @@ describe('createCollection', () => {
     });
   });
 });
+
 describe('deleteCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1062,7 +1085,7 @@ describe('deleteCollection', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1087,6 +1110,7 @@ describe('deleteCollection', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1110,6 +1134,7 @@ describe('deleteCollection', () => {
     });
   });
 });
+
 describe('getCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1139,7 +1164,7 @@ describe('getCollection', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1164,6 +1189,7 @@ describe('getCollection', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1187,6 +1213,7 @@ describe('getCollection', () => {
     });
   });
 });
+
 describe('listCollectionFields', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1216,7 +1243,7 @@ describe('listCollectionFields', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1241,6 +1268,7 @@ describe('listCollectionFields', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1264,6 +1292,7 @@ describe('listCollectionFields', () => {
     });
   });
 });
+
 describe('listCollections', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1289,7 +1318,7 @@ describe('listCollections', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
       expect(options.path['environment_id']).toEqual(environment_id);
@@ -1312,6 +1341,7 @@ describe('listCollections', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1335,6 +1365,7 @@ describe('listCollections', () => {
     });
   });
 });
+
 describe('updateCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1375,7 +1406,6 @@ describe('updateCollection', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
       expect(options.body['configuration_id']).toEqual(configuration_id);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -1399,6 +1429,7 @@ describe('updateCollection', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1422,6 +1453,7 @@ describe('updateCollection', () => {
     });
   });
 });
+
 describe('createExpansions', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1456,7 +1488,6 @@ describe('createExpansions', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['expansions']).toEqual(expansions);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -1482,6 +1513,7 @@ describe('createExpansions', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1505,6 +1537,7 @@ describe('createExpansions', () => {
     });
   });
 });
+
 describe('createStopwordList', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1552,12 +1585,14 @@ describe('createStopwordList', () => {
       const environment_id = 'fake_environment_id';
       const collection_id = 'fake_collection_id';
       const stopword_file = 'fake_stopword_file';
+      const stopword_filename = 'fake_stopword_filename';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         environment_id,
         collection_id,
         stopword_file,
+        stopword_filename,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
@@ -1568,6 +1603,7 @@ describe('createStopwordList', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1582,7 +1618,12 @@ describe('createStopwordList', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'stopword_file'];
+      const requiredParams = [
+        'environment_id',
+        'collection_id',
+        'stopword_file',
+        'stopword_filename',
+      ];
 
       discovery.createStopwordList({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1591,6 +1632,7 @@ describe('createStopwordList', () => {
     });
   });
 });
+
 describe('createTokenizationDictionary', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1625,7 +1667,6 @@ describe('createTokenizationDictionary', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['tokenization_rules']).toEqual(tokenization_rules);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -1649,6 +1690,7 @@ describe('createTokenizationDictionary', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1672,6 +1714,7 @@ describe('createTokenizationDictionary', () => {
     });
   });
 });
+
 describe('deleteExpansions', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1700,8 +1743,8 @@ describe('deleteExpansions', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1726,6 +1769,7 @@ describe('deleteExpansions', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1749,6 +1793,7 @@ describe('deleteExpansions', () => {
     });
   });
 });
+
 describe('deleteStopwordList', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1777,8 +1822,8 @@ describe('deleteStopwordList', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1803,6 +1848,7 @@ describe('deleteStopwordList', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1826,6 +1872,7 @@ describe('deleteStopwordList', () => {
     });
   });
 });
+
 describe('deleteTokenizationDictionary', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1854,8 +1901,8 @@ describe('deleteTokenizationDictionary', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1880,6 +1927,7 @@ describe('deleteTokenizationDictionary', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1903,6 +1951,7 @@ describe('deleteTokenizationDictionary', () => {
     });
   });
 });
+
 describe('getStopwordListStatus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1932,7 +1981,7 @@ describe('getStopwordListStatus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1957,6 +2006,7 @@ describe('getStopwordListStatus', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1980,6 +2030,7 @@ describe('getStopwordListStatus', () => {
     });
   });
 });
+
 describe('getTokenizationDictionaryStatus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2009,7 +2060,7 @@ describe('getTokenizationDictionaryStatus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2034,6 +2085,7 @@ describe('getTokenizationDictionaryStatus', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2057,6 +2109,7 @@ describe('getTokenizationDictionaryStatus', () => {
     });
   });
 });
+
 describe('listExpansions', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2086,7 +2139,7 @@ describe('listExpansions', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2111,6 +2164,7 @@ describe('listExpansions', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2134,6 +2188,7 @@ describe('listExpansions', () => {
     });
   });
 });
+
 describe('addDocument', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2144,16 +2199,16 @@ describe('addDocument', () => {
       const environment_id = 'fake_environment_id';
       const collection_id = 'fake_collection_id';
       const file = 'fake_file';
-      const metadata = 'fake_metadata';
-      const file_content_type = 'fake_file_content_type';
       const filename = 'fake_filename';
+      const file_content_type = 'fake_file_content_type';
+      const metadata = 'fake_metadata';
       const params = {
         environment_id,
         collection_id,
         file,
-        metadata,
-        file_content_type,
         filename,
+        file_content_type,
+        metadata,
       };
 
       // invoke method
@@ -2200,6 +2255,7 @@ describe('addDocument', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2223,6 +2279,7 @@ describe('addDocument', () => {
     });
   });
 });
+
 describe('deleteDocument', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2254,7 +2311,7 @@ describe('deleteDocument', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2282,6 +2339,7 @@ describe('deleteDocument', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2305,6 +2363,7 @@ describe('deleteDocument', () => {
     });
   });
 });
+
 describe('getDocumentStatus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2336,7 +2395,7 @@ describe('getDocumentStatus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2364,6 +2423,7 @@ describe('getDocumentStatus', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2387,6 +2447,7 @@ describe('getDocumentStatus', () => {
     });
   });
 });
+
 describe('updateDocument', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2398,17 +2459,17 @@ describe('updateDocument', () => {
       const collection_id = 'fake_collection_id';
       const document_id = 'fake_document_id';
       const file = 'fake_file';
-      const metadata = 'fake_metadata';
-      const file_content_type = 'fake_file_content_type';
       const filename = 'fake_filename';
+      const file_content_type = 'fake_file_content_type';
+      const metadata = 'fake_metadata';
       const params = {
         environment_id,
         collection_id,
         document_id,
         file,
-        metadata,
-        file_content_type,
         filename,
+        file_content_type,
+        metadata,
       };
 
       // invoke method
@@ -2458,6 +2519,7 @@ describe('updateDocument', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2481,6 +2543,7 @@ describe('updateDocument', () => {
     });
   });
 });
+
 describe('federatedQuery', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2569,7 +2632,6 @@ describe('federatedQuery', () => {
       expect(options.body['similar.document_ids']).toEqual(similar_document_ids);
       expect(options.body['similar.fields']).toEqual(similar_fields);
       expect(options.body['bias']).toEqual(bias);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -2590,6 +2652,7 @@ describe('federatedQuery', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2613,6 +2676,7 @@ describe('federatedQuery', () => {
     });
   });
 });
+
 describe('federatedQueryNotices', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2664,7 +2728,7 @@ describe('federatedQueryNotices', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/notices', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['collection_ids']).toEqual(collection_ids);
       expect(options.qs['filter']).toEqual(filter);
@@ -2702,6 +2766,7 @@ describe('federatedQueryNotices', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2725,6 +2790,7 @@ describe('federatedQueryNotices', () => {
     });
   });
 });
+
 describe('query', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2819,7 +2885,6 @@ describe('query', () => {
       expect(options.body['similar.document_ids']).toEqual(similar_document_ids);
       expect(options.body['similar.fields']).toEqual(similar_fields);
       expect(options.body['bias']).toEqual(bias);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -2843,6 +2908,7 @@ describe('query', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2866,6 +2932,7 @@ describe('query', () => {
     });
   });
 });
+
 describe('queryEntities', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2912,7 +2979,6 @@ describe('queryEntities', () => {
       expect(options.body['context']).toEqual(context);
       expect(options.body['count']).toEqual(count);
       expect(options.body['evidence_count']).toEqual(evidence_count);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -2936,6 +3002,7 @@ describe('queryEntities', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2959,6 +3026,7 @@ describe('queryEntities', () => {
     });
   });
 });
+
 describe('queryNotices', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3022,7 +3090,7 @@ describe('queryNotices', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['filter']).toEqual(filter);
       expect(options.qs['query']).toEqual(query);
@@ -3064,6 +3132,7 @@ describe('queryNotices', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3087,6 +3156,7 @@ describe('queryNotices', () => {
     });
   });
 });
+
 describe('queryRelations', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3136,7 +3206,6 @@ describe('queryRelations', () => {
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['count']).toEqual(count);
       expect(options.body['evidence_count']).toEqual(evidence_count);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -3160,6 +3229,7 @@ describe('queryRelations', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3183,6 +3253,7 @@ describe('queryRelations', () => {
     });
   });
 });
+
 describe('addTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3223,7 +3294,6 @@ describe('addTrainingData', () => {
       expect(options.body['natural_language_query']).toEqual(natural_language_query);
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['examples']).toEqual(examples);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -3247,6 +3317,7 @@ describe('addTrainingData', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3270,6 +3341,7 @@ describe('addTrainingData', () => {
     });
   });
 });
+
 describe('createTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3312,7 +3384,6 @@ describe('createTrainingExample', () => {
       expect(options.body['document_id']).toEqual(document_id);
       expect(options.body['cross_reference']).toEqual(cross_reference);
       expect(options.body['relevance']).toEqual(relevance);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
       expect(options.path['query_id']).toEqual(query_id);
@@ -3339,6 +3410,7 @@ describe('createTrainingExample', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3362,6 +3434,7 @@ describe('createTrainingExample', () => {
     });
   });
 });
+
 describe('deleteAllTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3390,8 +3463,8 @@ describe('deleteAllTrainingData', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3416,6 +3489,7 @@ describe('deleteAllTrainingData', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3439,6 +3513,7 @@ describe('deleteAllTrainingData', () => {
     });
   });
 });
+
 describe('deleteTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3469,8 +3544,8 @@ describe('deleteTrainingData', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3498,6 +3573,7 @@ describe('deleteTrainingData', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3521,6 +3597,7 @@ describe('deleteTrainingData', () => {
     });
   });
 });
+
 describe('deleteTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3553,8 +3630,8 @@ describe('deleteTrainingExample', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3585,6 +3662,7 @@ describe('deleteTrainingExample', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3608,6 +3686,7 @@ describe('deleteTrainingExample', () => {
     });
   });
 });
+
 describe('getTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3639,7 +3718,7 @@ describe('getTrainingData', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3667,6 +3746,7 @@ describe('getTrainingData', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3690,6 +3770,7 @@ describe('getTrainingData', () => {
     });
   });
 });
+
 describe('getTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3723,7 +3804,7 @@ describe('getTrainingExample', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3754,6 +3835,7 @@ describe('getTrainingExample', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3777,6 +3859,7 @@ describe('getTrainingExample', () => {
     });
   });
 });
+
 describe('listTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3806,7 +3889,7 @@ describe('listTrainingData', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3831,6 +3914,7 @@ describe('listTrainingData', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3854,6 +3938,7 @@ describe('listTrainingData', () => {
     });
   });
 });
+
 describe('listTrainingExamples', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3885,7 +3970,7 @@ describe('listTrainingExamples', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3913,6 +3998,7 @@ describe('listTrainingExamples', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3936,6 +4022,7 @@ describe('listTrainingExamples', () => {
     });
   });
 });
+
 describe('updateTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3977,7 +4064,6 @@ describe('updateTrainingExample', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['cross_reference']).toEqual(cross_reference);
       expect(options.body['relevance']).toEqual(relevance);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
       expect(options.path['query_id']).toEqual(query_id);
@@ -4007,6 +4093,7 @@ describe('updateTrainingExample', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4030,6 +4117,7 @@ describe('updateTrainingExample', () => {
     });
   });
 });
+
 describe('deleteUserData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4052,8 +4140,8 @@ describe('deleteUserData', () => {
 
       checkUrlAndMethod(options, '/v1/user_data', 'DELETE');
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['customer_id']).toEqual(customer_id);
     });
@@ -4075,6 +4163,7 @@ describe('deleteUserData', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4098,6 +4187,7 @@ describe('deleteUserData', () => {
     });
   });
 });
+
 describe('createEvent', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4127,7 +4217,6 @@ describe('createEvent', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['type']).toEqual(type);
       expect(options.body['data']).toEqual(data);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -4149,6 +4238,7 @@ describe('createEvent', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4172,6 +4262,7 @@ describe('createEvent', () => {
     });
   });
 });
+
 describe('getMetricsEventRate', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4199,7 +4290,7 @@ describe('getMetricsEventRate', () => {
       checkUrlAndMethod(options, '/v1/metrics/event_rate', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -4233,6 +4324,7 @@ describe('getMetricsEventRate', () => {
     });
   });
 });
+
 describe('getMetricsQuery', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4260,7 +4352,7 @@ describe('getMetricsQuery', () => {
       checkUrlAndMethod(options, '/v1/metrics/number_of_queries', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -4294,6 +4386,7 @@ describe('getMetricsQuery', () => {
     });
   });
 });
+
 describe('getMetricsQueryEvent', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4321,7 +4414,7 @@ describe('getMetricsQueryEvent', () => {
       checkUrlAndMethod(options, '/v1/metrics/number_of_queries_with_event', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -4355,6 +4448,7 @@ describe('getMetricsQueryEvent', () => {
     });
   });
 });
+
 describe('getMetricsQueryNoResults', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4382,7 +4476,7 @@ describe('getMetricsQueryNoResults', () => {
       checkUrlAndMethod(options, '/v1/metrics/number_of_queries_with_no_search_results', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -4416,6 +4510,7 @@ describe('getMetricsQueryNoResults', () => {
     });
   });
 });
+
 describe('getMetricsQueryTokenEvent', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4439,7 +4534,7 @@ describe('getMetricsQueryTokenEvent', () => {
       checkUrlAndMethod(options, '/v1/metrics/top_query_tokens_with_event_rate', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['count']).toEqual(count);
     });
@@ -4471,6 +4566,7 @@ describe('getMetricsQueryTokenEvent', () => {
     });
   });
 });
+
 describe('queryLog', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4502,7 +4598,7 @@ describe('queryLog', () => {
       checkUrlAndMethod(options, '/v1/logs', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['filter']).toEqual(filter);
       expect(options.qs['query']).toEqual(query);
@@ -4538,6 +4634,7 @@ describe('queryLog', () => {
     });
   });
 });
+
 describe('createCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4569,7 +4666,6 @@ describe('createCredentials', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['source_type']).toEqual(source_type);
       expect(options.body['credential_details']).toEqual(credential_details);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -4590,6 +4686,7 @@ describe('createCredentials', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4613,6 +4710,7 @@ describe('createCredentials', () => {
     });
   });
 });
+
 describe('deleteCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4642,7 +4740,7 @@ describe('deleteCredentials', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['credential_id']).toEqual(credential_id);
@@ -4667,6 +4765,7 @@ describe('deleteCredentials', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4690,7 +4789,8 @@ describe('deleteCredentials', () => {
     });
   });
 });
-describe('getSourceCredentials', () => {
+
+describe('getCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
@@ -4705,7 +4805,7 @@ describe('getSourceCredentials', () => {
       };
 
       // invoke method
-      discovery.getSourceCredentials(params);
+      discovery.getCredentials(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4719,7 +4819,7 @@ describe('getSourceCredentials', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['credential_id']).toEqual(credential_id);
@@ -4740,17 +4840,18 @@ describe('getSourceCredentials', () => {
         },
       };
 
-      discovery.getSourceCredentials(params);
+      discovery.getCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      discovery.getSourceCredentials(null, () => {
+      discovery.getCredentials(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -4760,13 +4861,14 @@ describe('getSourceCredentials', () => {
       // required parameters for this method
       const requiredParams = ['environment_id', 'credential_id'];
 
-      discovery.getSourceCredentials({}, err => {
+      discovery.getCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4790,7 +4892,7 @@ describe('listCredentials', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -4812,6 +4914,7 @@ describe('listCredentials', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4835,6 +4938,7 @@ describe('listCredentials', () => {
     });
   });
 });
+
 describe('updateCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4872,7 +4976,6 @@ describe('updateCredentials', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['source_type']).toEqual(source_type);
       expect(options.body['credential_details']).toEqual(credential_details);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['credential_id']).toEqual(credential_id);
     });
@@ -4896,6 +4999,7 @@ describe('updateCredentials', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4919,6 +5023,7 @@ describe('updateCredentials', () => {
     });
   });
 });
+
 describe('createGateway', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4947,7 +5052,6 @@ describe('createGateway', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['name']).toEqual(name);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -4968,6 +5072,7 @@ describe('createGateway', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4991,6 +5096,7 @@ describe('createGateway', () => {
     });
   });
 });
+
 describe('deleteGateway', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5020,7 +5126,7 @@ describe('deleteGateway', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['gateway_id']).toEqual(gateway_id);
@@ -5045,6 +5151,7 @@ describe('deleteGateway', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -5068,6 +5175,7 @@ describe('deleteGateway', () => {
     });
   });
 });
+
 describe('getGateway', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5093,7 +5201,7 @@ describe('getGateway', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways/{gateway_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['gateway_id']).toEqual(gateway_id);
@@ -5118,6 +5226,7 @@ describe('getGateway', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -5141,6 +5250,7 @@ describe('getGateway', () => {
     });
   });
 });
+
 describe('listGateways', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5164,7 +5274,7 @@ describe('listGateways', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -5186,6 +5296,7 @@ describe('listGateways', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);

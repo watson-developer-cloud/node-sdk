@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
+import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from 'ibm-cloud-sdk-core';
-import { getMissingParams } from 'ibm-cloud-sdk-core';
-import { RequestResponse } from 'request';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
+ * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities, relations, and categories in Natural Language Understanding.
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
@@ -73,10 +72,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * - Metadata
    * - Relations
    * - Semantic roles
-   * - Sentiment.
+   * - Sentiment
+   * - Syntax (Experimental).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {Features} params.features - Analysis features and options.
+   * @param {Features} params.features - Specific features to analyze the document for.
    * @param {string} [params.text] - The plain text to analyze. One of the `text`, `html`, or `url` parameters is
    * required.
    * @param {string} [params.html] - The HTML file to analyze. One of the `text`, `html`, or `url` parameters is
@@ -100,12 +100,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): NodeJS.ReadableStream | void {
+  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['features'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.analyze(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -126,12 +134,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'analyze');
- 
+
     const parameters = {
       options: {
         url: '/v1/analyze',
         method: 'POST',
-        json: true,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -158,12 +165,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} params.model_id - Model ID of the model to delete.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.InlineResponse200>): NodeJS.ReadableStream | void {
+  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.DeleteModelResults>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -175,7 +190,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'deleteModel');
- 
+
     const parameters = {
       options: {
         url: '/v1/models/{model_id}',
@@ -185,7 +200,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -203,14 +217,22 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): NodeJS.ReadableStream | void {
+  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'listModels');
- 
+
     const parameters = {
       options: {
         url: '/v1/models',
@@ -219,7 +241,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -252,7 +273,7 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -263,7 +284,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Parameters for the `analyze` operation. */
   export interface AnalyzeParams {
-    /** Analysis features and options. */
+    /** Specific features to analyze the document for. */
     features: Features;
     /** The plain text to analyze. One of the `text`, `html`, or `url` parameters is required. */
     text?: string;
@@ -284,6 +305,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Sets the maximum number of characters that are processed by the service. */
     limit_text_characters?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteModel` operation. */
@@ -291,18 +313,20 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Model ID of the model to delete. */
     model_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listModels` operation. */
   export interface ListModelsParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************
    * model interfaces
    ************************/
 
-  /** Results of the analysis, organized by feature. */
+  /** Analysis results for each requested feature. */
   export interface AnalysisResults {
     /** Language used to analyze the text. */
     language?: string;
@@ -310,8 +334,8 @@ namespace NaturalLanguageUnderstandingV1 {
     analyzed_text?: string;
     /** URL of the webpage that was analyzed. */
     retrieved_url?: string;
-    /** Usage information. */
-    usage?: Usage;
+    /** API usage information for the request. */
+    usage?: AnalysisResultsUsage;
     /** The general concepts referenced or alluded to in the analyzed text. */
     concepts?: ConceptsResult[];
     /** The entities detected in the analyzed text. */
@@ -320,16 +344,42 @@ namespace NaturalLanguageUnderstandingV1 {
     keywords?: KeywordsResult[];
     /** The categories that the service assigned to the analyzed text. */
     categories?: CategoriesResult[];
-    /** The detected anger, disgust, fear, joy, or sadness that is conveyed by the content. Emotion information can be returned for detected entities, keywords, or user-specified target phrases found in the text. */
+    /** The anger, disgust, fear, joy, or sadness conveyed by the content. */
     emotion?: EmotionResult;
-    /** The authors, publication date, title, prominent page image, and RSS/ATOM feeds of the webpage. Supports URL and HTML input types. */
-    metadata?: MetadataResult;
+    /** Webpage metadata, such as the author and the title of the page. */
+    metadata?: AnalysisResultsMetadata;
     /** The relationships between entities in the content. */
     relations?: RelationsResult[];
     /** Sentences parsed into `subject`, `action`, and `object` form. */
     semantic_roles?: SemanticRolesResult[];
     /** The sentiment of the content. */
     sentiment?: SentimentResult;
+    /** Tokens and sentences returned from syntax analysis. */
+    syntax?: SyntaxResult;
+  }
+
+  /** Webpage metadata, such as the author and the title of the page. */
+  export interface AnalysisResultsMetadata {
+    /** The authors of the document. */
+    authors?: Author[];
+    /** The publication date in the format ISO 8601. */
+    publication_date?: string;
+    /** The title of the document. */
+    title?: string;
+    /** URL of a prominent image on the webpage. */
+    image?: string;
+    /** RSS/ATOM feeds found on the webpage. */
+    feeds?: Feed[];
+  }
+
+  /** API usage information for the request. */
+  export interface AnalysisResultsUsage {
+    /** Number of features used in the API call. */
+    features?: number;
+    /** Number of text characters processed. */
+    text_characters?: number;
+    /** Number of 10,000-character units processed. */
+    text_units?: number;
   }
 
   /** The author of the analyzed content. */
@@ -342,6 +392,8 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface CategoriesOptions {
     /** Maximum number of categories to return. */
     limit?: number;
+    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) ID to override the standard categories model. */
+    model?: string;
   }
 
   /** A categorization of the analyzed text. */
@@ -369,7 +421,7 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** Delete model results. */
-  export interface InlineResponse200 {
+  export interface DeleteModelResults {
     /** model_id of the deleted model. */
     deleted?: string;
   }
@@ -496,6 +548,8 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: SentimentOptions;
     /** Returns a five-level taxonomy of the content. The top three categories are returned. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
     categories?: CategoriesOptions;
+    /** Returns tokens and sentences from the input text. */
+    syntax?: SyntaxOptions;
   }
 
   /** RSS or ATOM feed found on the webpage. */
@@ -536,22 +590,6 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
   export interface MetadataOptions {
-    /** MetadataOptions accepts additional properties. */
-    [propName: string]: any;
-  }
-
-  /** The authors, publication date, title, prominent page image, and RSS/ATOM feeds of the webpage. Supports URL and HTML input types. */
-  export interface MetadataResult {
-    /** The authors of the document. */
-    authors?: Author[];
-    /** The publication date in the format ISO 8601. */
-    publication_date?: string;
-    /** The title of the document. */
-    title?: string;
-    /** URL of a prominent image on the webpage. */
-    image?: string;
-    /** RSS/ATOM feeds found on the webpage. */
-    feeds?: Feed[];
   }
 
   /** Model. */
@@ -610,15 +648,6 @@ namespace NaturalLanguageUnderstandingV1 {
     arguments?: RelationArgument[];
   }
 
-  /** SemanticRolesAction. */
-  export interface SemanticRolesAction {
-    /** Analyzed text that corresponds to the action. */
-    text?: string;
-    /** normalized version of the action. */
-    normalized?: string;
-    verb?: SemanticRolesVerb;
-  }
-
   /** SemanticRolesEntity. */
   export interface SemanticRolesEntity {
     /** Entity type. */
@@ -631,14 +660,6 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface SemanticRolesKeyword {
     /** The keyword text. */
     text?: string;
-  }
-
-  /** SemanticRolesObject. */
-  export interface SemanticRolesObject {
-    /** Object text. */
-    text?: string;
-    /** An array of extracted keywords. */
-    keywords?: SemanticRolesKeyword[];
   }
 
   /** Parses sentences into subject, action, and object form. Supported languages: English, German, Japanese, Korean, Spanish. */
@@ -656,15 +677,32 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Sentence from the source that contains the subject, action, and object. */
     sentence?: string;
     /** The extracted subject from the sentence. */
-    subject?: SemanticRolesSubject;
+    subject?: SemanticRolesResultSubject;
     /** The extracted action from the sentence. */
-    action?: SemanticRolesAction;
+    action?: SemanticRolesResultAction;
     /** The extracted object from the sentence. */
-    object?: SemanticRolesObject;
+    object?: SemanticRolesResultObject;
   }
 
-  /** SemanticRolesSubject. */
-  export interface SemanticRolesSubject {
+  /** The extracted action from the sentence. */
+  export interface SemanticRolesResultAction {
+    /** Analyzed text that corresponds to the action. */
+    text?: string;
+    /** normalized version of the action. */
+    normalized?: string;
+    verb?: SemanticRolesVerb;
+  }
+
+  /** The extracted object from the sentence. */
+  export interface SemanticRolesResultObject {
+    /** Object text. */
+    text?: string;
+    /** An array of extracted keywords. */
+    keywords?: SemanticRolesKeyword[];
+  }
+
+  /** The extracted subject from the sentence. */
+  export interface SemanticRolesResultSubject {
     /** Text that corresponds to the subject role. */
     text?: string;
     /** An array of extracted entities. */
@@ -679,6 +717,14 @@ namespace NaturalLanguageUnderstandingV1 {
     text?: string;
     /** Verb tense. */
     tense?: string;
+  }
+
+  /** SentenceResult. */
+  export interface SentenceResult {
+    /** The sentence. */
+    text?: string;
+    /** Character offsets indicating the beginning and end of the sentence in the analyzed text. */
+    location?: number[];
   }
 
   /** Analyzes the general sentiment of your content or the sentiment toward specific target phrases. You can analyze sentiment for detected entities with `entities.sentiment` and for keywords with `keywords.sentiment`. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish. */
@@ -697,6 +743,28 @@ namespace NaturalLanguageUnderstandingV1 {
     targets?: TargetedSentimentResults[];
   }
 
+  /** Returns tokens and sentences from the input text. */
+  export interface SyntaxOptions {
+    /** Tokenization options. */
+    tokens?: SyntaxOptionsTokens;
+    /** Set this to `true` to return sentence information. */
+    sentences?: boolean;
+  }
+
+  /** Tokenization options. */
+  export interface SyntaxOptionsTokens {
+    /** Set this to `true` to return the lemma for each token. */
+    lemma?: boolean;
+    /** Set this to `true` to return the part of speech for each token. */
+    part_of_speech?: boolean;
+  }
+
+  /** Tokens and sentences returned from syntax analysis. */
+  export interface SyntaxResult {
+    tokens?: TokenResult[];
+    sentences?: SentenceResult[];
+  }
+
   /** Emotion results for a specified target. */
   export interface TargetedEmotionResults {
     /** Targeted text. */
@@ -713,14 +781,16 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
-  /** Usage information. */
-  export interface Usage {
-    /** Number of features used in the API call. */
-    features?: number;
-    /** Number of text characters processed. */
-    text_characters?: number;
-    /** Number of 10,000-character units processed. */
-    text_units?: number;
+  /** TokenResult. */
+  export interface TokenResult {
+    /** The token as it appears in the analyzed text. */
+    text?: string;
+    /** The part of speech of the token. For descriptions of the values, see [Universal Dependencies POS tags](https://universaldependencies.org/u/pos/). */
+    part_of_speech?: string;
+    /** Character offsets indicating the beginning and end of the token in the analyzed text. */
+    location?: number[];
+    /** The [lemma](https://wikipedia.org/wiki/Lemma_%28morphology%29) of the token. */
+    lemma?: string;
   }
 
 }

@@ -67,3 +67,7 @@ module.exports.checkRequiredParamsHandling = function(required, err, mpMock, crM
 module.exports.getOptions = function(createRequestMock) {
   return createRequestMock.mock.calls[0][0].options;
 };
+
+module.exports.expectToBePromise = function(obj) {
+  expect(typeof obj.then).toBe('function');
+};

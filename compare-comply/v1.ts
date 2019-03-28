@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
+import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from 'ibm-cloud-sdk-core';
-import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { FileObject } from 'ibm-cloud-sdk-core';
-import { RequestResponse } from 'request';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -61,37 +60,39 @@ class CompareComplyV1 extends BaseService {
    ************************/
 
   /**
-   * Convert file to HTML.
+   * Convert document to HTML.
    *
-   * Convert an uploaded file to HTML.
+   * Converts a document to HTML.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The file to convert.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The document to convert.
+   * @param {string} params.filename - The filename for file.
    * @param {string} [params.file_content_type] - The content type of file.
-   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): NodeJS.ReadableStream | void {
+  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['file'];
+    const _callback = callback;
+    const requiredParams = ['file', 'filename'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.convertToHtml(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    if (_params.file && !_params.filename) {
-      console.warn(
-        'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
-      );
-    }
-
     const formData = {
       'file': {
         data: _params.file,
@@ -101,11 +102,11 @@ class CompareComplyV1 extends BaseService {
     };
  
     const query = {
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'convertToHtml');
- 
+
     const parameters = {
       options: {
         url: '/v1/html_conversion',
@@ -131,44 +132,49 @@ class CompareComplyV1 extends BaseService {
   /**
    * Classify the elements of a document.
    *
-   * Analyze an uploaded file's structural and semantic elements.
+   * Analyzes the structural and semantic elements of a document.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The file to classify.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The document to classify.
    * @param {string} [params.file_content_type] - The content type of file.
-   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public classifyElements(params: CompareComplyV1.ClassifyElementsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.ClassifyReturn>): NodeJS.ReadableStream | void {
+  public classifyElements(params: CompareComplyV1.ClassifyElementsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.ClassifyReturn>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['file'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.classifyElements(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-
     const formData = {
       'file': {
         data: _params.file,
-        filename: _params.filename,
         contentType: _params.file_content_type
       }
     };
  
     const query = {
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'classifyElements');
- 
+
     const parameters = {
       options: {
         url: '/v1/element_classification',
@@ -194,44 +200,49 @@ class CompareComplyV1 extends BaseService {
   /**
    * Extract a document's tables.
    *
-   * Extract and analyze an uploaded file's tables.
+   * Analyzes the tables in a document.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The file on which to run table extraction.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The document on which to run table extraction.
    * @param {string} [params.file_content_type] - The content type of file.
-   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public extractTables(params: CompareComplyV1.ExtractTablesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.TableReturn>): NodeJS.ReadableStream | void {
+  public extractTables(params: CompareComplyV1.ExtractTablesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.TableReturn>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['file'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.extractTables(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-
     const formData = {
       'file': {
         data: _params.file,
-        filename: _params.filename,
         contentType: _params.file_content_type
       }
     };
  
     const query = {
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'extractTables');
- 
+
     const parameters = {
       options: {
         url: '/v1/tables',
@@ -257,44 +268,47 @@ class CompareComplyV1 extends BaseService {
   /**
    * Compare two documents.
    *
-   * Compare two uploaded input files. Uploaded files must be in the same file format.
+   * Compares two input documents. Documents must be in the same format.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file_1 - The first file to compare.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file_2 - The second file to compare.
-   * @param {string} [params.file_1_label] - A text label for the first file.
-   * @param {string} [params.file_2_label] - A text label for the second file.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file_1 - The first document to compare.
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file_2 - The second document to compare.
    * @param {string} [params.file_1_content_type] - The content type of file_1.
-   * @param {string} [params.file_1_filename] - The filename for file_1.
    * @param {string} [params.file_2_content_type] - The content type of file_2.
-   * @param {string} [params.file_2_filename] - The filename for file_2.
+   * @param {string} [params.file_1_label] - A text label for the first document.
+   * @param {string} [params.file_2_label] - A text label for the second document.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.CompareReturn>): NodeJS.ReadableStream | void {
+  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.CompareReturn>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['file_1', 'file_2'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.compareDocuments(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-
     const formData = {
       'file_1': {
         data: _params.file_1,
-        filename: _params.file_1_filename,
         contentType: _params.file_1_content_type
       },
       'file_2': {
         data: _params.file_2,
-        filename: _params.file_2_filename,
         contentType: _params.file_2_content_type
       }
     };
@@ -302,11 +316,11 @@ class CompareComplyV1 extends BaseService {
     const query = {
       'file_1_label': _params.file_1_label,
       'file_2_label': _params.file_2_label,
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'compareDocuments');
- 
+
     const parameters = {
       options: {
         url: '/v1/comparison',
@@ -342,12 +356,20 @@ class CompareComplyV1 extends BaseService {
    * @param {string} [params.comment] - An optional comment on or description of the feedback.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public addFeedback(params: CompareComplyV1.AddFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackReturn>): NodeJS.ReadableStream | void {
+  public addFeedback(params: CompareComplyV1.AddFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackReturn>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['feedback_data'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -361,12 +383,11 @@ class CompareComplyV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'addFeedback');
- 
+
     const parameters = {
       options: {
         url: '/v1/feedback',
         method: 'POST',
-        json: true,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -381,22 +402,32 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * Deletes a specified feedback entry.
+   * Delete a specified feedback entry.
+   *
+   * Deletes a feedback entry with a specified `feedback_id`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.feedback_id - A string that specifies the feedback entry to be deleted from the document.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackDeleted>): NodeJS.ReadableStream | void {
+  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackDeleted>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['feedback_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -404,7 +435,7 @@ class CompareComplyV1 extends BaseService {
     }
  
     const query = {
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const path = {
@@ -412,7 +443,7 @@ class CompareComplyV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'deleteFeedback');
- 
+
     const parameters = {
       options: {
         url: '/v1/feedback/{feedback_id}',
@@ -423,7 +454,6 @@ class CompareComplyV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -434,20 +464,30 @@ class CompareComplyV1 extends BaseService {
   /**
    * List a specified feedback entry.
    *
+   * Lists a feedback entry with a specified `feedback_id`.
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.feedback_id - A string that specifies the feedback entry to be included in the output.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getFeedback(params: CompareComplyV1.GetFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.GetFeedback>): NodeJS.ReadableStream | void {
+  public getFeedback(params: CompareComplyV1.GetFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.GetFeedback>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['feedback_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -455,7 +495,7 @@ class CompareComplyV1 extends BaseService {
     }
  
     const query = {
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const path = {
@@ -463,7 +503,7 @@ class CompareComplyV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getFeedback');
- 
+
     const parameters = {
       options: {
         url: '/v1/feedback/{feedback_id}',
@@ -474,7 +514,6 @@ class CompareComplyV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -483,7 +522,9 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * List the feedback in documents.
+   * List the feedback in a document.
+   *
+   * Lists the feedback in a document.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.feedback_type] - An optional string that filters the output to include only feedback with
@@ -527,11 +568,19 @@ class CompareComplyV1 extends BaseService {
    * object in the output includes a value called `total` that gives the total count of feedback created.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listFeedback(params?: CompareComplyV1.ListFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackList>): NodeJS.ReadableStream | void {
+  public listFeedback(params?: CompareComplyV1.ListFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackList>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listFeedback(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'feedback_type': _params.feedback_type,
@@ -553,7 +602,7 @@ class CompareComplyV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listFeedback');
- 
+
     const parameters = {
       options: {
         url: '/v1/feedback',
@@ -563,7 +612,6 @@ class CompareComplyV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -600,37 +648,40 @@ class CompareComplyV1 extends BaseService {
    * as listed on the **Endpoint** tab of your Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or
    * `ap-geo`.
    * @param {string} params.output_bucket_name - The name of the Cloud Object Storage output bucket.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
-   * @param {string} [params.input_credentials_filename] - The filename for input_credentials_file.
-   * @param {string} [params.output_credentials_filename] - The filename for output_credentials_file.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createBatch(params: CompareComplyV1.CreateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | void {
+  public createBatch(params: CompareComplyV1.CreateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['_function', 'input_credentials_file', 'input_bucket_location', 'input_bucket_name', 'output_credentials_file', 'output_bucket_location', 'output_bucket_name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createBatch(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-
     const formData = {
       'input_credentials_file': {
         data: _params.input_credentials_file,
-        filename: _params.input_credentials_filename,
         contentType: 'application/json'
       },
       'input_bucket_location': _params.input_bucket_location,
       'input_bucket_name': _params.input_bucket_name,
       'output_credentials_file': {
         data: _params.output_credentials_file,
-        filename: _params.output_credentials_filename,
         contentType: 'application/json'
       },
       'output_bucket_location': _params.output_bucket_location,
@@ -639,11 +690,11 @@ class CompareComplyV1 extends BaseService {
  
     const query = {
       'function': _params._function,
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'createBatch');
- 
+
     const parameters = {
       options: {
         url: '/v1/batches',
@@ -663,20 +714,28 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * Get information about a specific batch-processing request.
+   * Get information about a specific batch-processing job.
    *
-   * Get information about a batch-processing request with a specified ID.
+   * Gets information about a batch-processing job with a specified ID.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.batch_id - The ID of the batch-processing request whose information you want to retrieve.
+   * @param {string} params.batch_id - The ID of the batch-processing job whose information you want to retrieve.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getBatch(params: CompareComplyV1.GetBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | void {
+  public getBatch(params: CompareComplyV1.GetBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['batch_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getBatch(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -688,7 +747,7 @@ class CompareComplyV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getBatch');
- 
+
     const parameters = {
       options: {
         url: '/v1/batches/{batch_id}',
@@ -698,7 +757,6 @@ class CompareComplyV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -709,19 +767,27 @@ class CompareComplyV1 extends BaseService {
   /**
    * List submitted batch-processing jobs.
    *
-   * List the batch-processing jobs submitted by users.
+   * Lists batch-processing jobs submitted by users.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): NodeJS.ReadableStream | void {
+  public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listBatches(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listBatches');
- 
+
     const parameters = {
       options: {
         url: '/v1/batches',
@@ -730,7 +796,6 @@ class CompareComplyV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -739,26 +804,34 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * Update a pending or active batch-processing request.
+   * Update a pending or active batch-processing job.
    *
-   * Update a pending or active batch-processing request. You can rescan the input bucket to check for new documents or
-   * cancel a request.
+   * Updates a pending or active batch-processing job. You can rescan the input bucket to check for new documents or
+   * cancel a job.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.batch_id - The ID of the batch-processing request you want to update.
-   * @param {string} params.action - The action you want to perform on the specified batch-processing request.
-   * @param {string} [params.model_id] - The analysis model to be used by the service. For the
-   * `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method,
-   * the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in
-   * batch-processing requests.
+   * @param {string} params.batch_id - The ID of the batch-processing job you want to update.
+   * @param {string} params.action - The action you want to perform on the specified batch-processing job.
+   * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
+   * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
+   * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
+   * requests.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateBatch(params: CompareComplyV1.UpdateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): NodeJS.ReadableStream | void {
+  public updateBatch(params: CompareComplyV1.UpdateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['batch_id', 'action'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateBatch(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -767,7 +840,7 @@ class CompareComplyV1 extends BaseService {
  
     const query = {
       'action': _params.action,
-      'model_id': _params.model_id
+      'model': _params.model
     };
 
     const path = {
@@ -775,7 +848,7 @@ class CompareComplyV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'updateBatch');
- 
+
     const parameters = {
       options: {
         url: '/v1/batches/{batch_id}',
@@ -786,7 +859,6 @@ class CompareComplyV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -819,7 +891,7 @@ namespace CompareComplyV1 {
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -830,24 +902,20 @@ namespace CompareComplyV1 {
 
   /** Parameters for the `convertToHtml` operation. */
   export interface ConvertToHtmlParams {
-    /** The file to convert. */
+    /** The document to convert. */
     file: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: ConvertToHtmlConstants.ModelId | string;
+    /** The filename for file. */
+    filename: string;
     /** The content type of file. */
     file_content_type?: ConvertToHtmlConstants.FileContentType | string;
-    /** The filename for file. */
-    filename?: string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: ConvertToHtmlConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `convertToHtml` operation. */
   export namespace ConvertToHtmlConstants {
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
-      CONTRACTS = 'contracts',
-      TABLES = 'tables',
-    }
     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_PDF = 'application/pdf',
@@ -859,29 +927,28 @@ namespace CompareComplyV1 {
       IMAGE_PNG = 'image/png',
       IMAGE_TIFF = 'image/tiff',
       TEXT_PLAIN = 'text/plain',
+    }
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
+      CONTRACTS = 'contracts',
+      TABLES = 'tables',
     }
   }
 
   /** Parameters for the `classifyElements` operation. */
   export interface ClassifyElementsParams {
-    /** The file to classify. */
+    /** The document to classify. */
     file: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: ClassifyElementsConstants.ModelId | string;
     /** The content type of file. */
     file_content_type?: ClassifyElementsConstants.FileContentType | string;
-    /** The filename for file. */
-    filename?: string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: ClassifyElementsConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `classifyElements` operation. */
   export namespace ClassifyElementsConstants {
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
-      CONTRACTS = 'contracts',
-      TABLES = 'tables',
-    }
     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_PDF = 'application/pdf',
@@ -893,28 +960,27 @@ namespace CompareComplyV1 {
       IMAGE_PNG = 'image/png',
       IMAGE_TIFF = 'image/tiff',
     }
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
+      CONTRACTS = 'contracts',
+      TABLES = 'tables',
+    }
   }
 
   /** Parameters for the `extractTables` operation. */
   export interface ExtractTablesParams {
-    /** The file on which to run table extraction. */
+    /** The document on which to run table extraction. */
     file: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: ExtractTablesConstants.ModelId | string;
     /** The content type of file. */
     file_content_type?: ExtractTablesConstants.FileContentType | string;
-    /** The filename for file. */
-    filename?: string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: ExtractTablesConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `extractTables` operation. */
   export namespace ExtractTablesConstants {
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
-      CONTRACTS = 'contracts',
-      TABLES = 'tables',
-    }
     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_PDF = 'application/pdf',
@@ -927,38 +993,35 @@ namespace CompareComplyV1 {
       IMAGE_TIFF = 'image/tiff',
       TEXT_PLAIN = 'text/plain',
     }
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
+      CONTRACTS = 'contracts',
+      TABLES = 'tables',
+    }
   }
 
   /** Parameters for the `compareDocuments` operation. */
   export interface CompareDocumentsParams {
-    /** The first file to compare. */
+    /** The first document to compare. */
     file_1: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The second file to compare. */
+    /** The second document to compare. */
     file_2: NodeJS.ReadableStream|FileObject|Buffer;
-    /** A text label for the first file. */
-    file_1_label?: string;
-    /** A text label for the second file. */
-    file_2_label?: string;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: CompareDocumentsConstants.ModelId | string;
     /** The content type of file_1. */
     file_1_content_type?: CompareDocumentsConstants.File1ContentType | string;
-    /** The filename for file_1. */
-    file_1_filename?: string;
     /** The content type of file_2. */
     file_2_content_type?: CompareDocumentsConstants.File2ContentType | string;
-    /** The filename for file_2. */
-    file_2_filename?: string;
+    /** A text label for the first document. */
+    file_1_label?: string;
+    /** A text label for the second document. */
+    file_2_label?: string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: CompareDocumentsConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `compareDocuments` operation. */
   export namespace CompareDocumentsConstants {
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
-      CONTRACTS = 'contracts',
-      TABLES = 'tables',
-    }
     /** The content type of file_1. */
     export enum File1ContentType {
       APPLICATION_PDF = 'application/pdf',
@@ -983,6 +1046,11 @@ namespace CompareComplyV1 {
       IMAGE_PNG = 'image/png',
       IMAGE_TIFF = 'image/tiff',
     }
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
+      CONTRACTS = 'contracts',
+      TABLES = 'tables',
+    }
   }
 
   /** Parameters for the `addFeedback` operation. */
@@ -994,21 +1062,23 @@ namespace CompareComplyV1 {
     /** An optional comment on or description of the feedback. */
     comment?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteFeedback` operation. */
   export interface DeleteFeedbackParams {
     /** A string that specifies the feedback entry to be deleted from the document. */
     feedback_id: string;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: DeleteFeedbackConstants.ModelId | string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: DeleteFeedbackConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `deleteFeedback` operation. */
   export namespace DeleteFeedbackConstants {
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
       CONTRACTS = 'contracts',
       TABLES = 'tables',
     }
@@ -1018,15 +1088,16 @@ namespace CompareComplyV1 {
   export interface GetFeedbackParams {
     /** A string that specifies the feedback entry to be included in the output. */
     feedback_id: string;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: GetFeedbackConstants.ModelId | string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: GetFeedbackConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getFeedback` operation. */
   export namespace GetFeedbackConstants {
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
       CONTRACTS = 'contracts',
       TABLES = 'tables',
     }
@@ -1067,6 +1138,7 @@ namespace CompareComplyV1 {
     /** An optional boolean value. If specified as `true`, the `pagination` object in the output includes a value called `total` that gives the total count of feedback created. */
     include_total?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createBatch` operation. */
@@ -1085,13 +1157,10 @@ namespace CompareComplyV1 {
     output_bucket_location: string;
     /** The name of the Cloud Object Storage output bucket. */
     output_bucket_name: string;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: CreateBatchConstants.ModelId | string;
-    /** The filename for input_credentials_file. */
-    input_credentials_filename?: string;
-    /** The filename for output_credentials_file. */
-    output_credentials_filename?: string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: CreateBatchConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createBatch` operation. */
@@ -1102,8 +1171,8 @@ namespace CompareComplyV1 {
       ELEMENT_CLASSIFICATION = 'element_classification',
       TABLES = 'tables',
     }
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
       CONTRACTS = 'contracts',
       TABLES = 'tables',
     }
@@ -1111,36 +1180,39 @@ namespace CompareComplyV1 {
 
   /** Parameters for the `getBatch` operation. */
   export interface GetBatchParams {
-    /** The ID of the batch-processing request whose information you want to retrieve. */
+    /** The ID of the batch-processing job whose information you want to retrieve. */
     batch_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listBatches` operation. */
   export interface ListBatchesParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateBatch` operation. */
   export interface UpdateBatchParams {
-    /** The ID of the batch-processing request you want to update. */
+    /** The ID of the batch-processing job you want to update. */
     batch_id: string;
-    /** The action you want to perform on the specified batch-processing request. */
+    /** The action you want to perform on the specified batch-processing job. */
     action: UpdateBatchConstants.Action | string;
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    model_id?: UpdateBatchConstants.ModelId | string;
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    model?: UpdateBatchConstants.Model | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateBatch` operation. */
   export namespace UpdateBatchConstants {
-    /** The action you want to perform on the specified batch-processing request. */
+    /** The action you want to perform on the specified batch-processing job. */
     export enum Action {
       RESCAN = 'rescan',
       CANCEL = 'cancel',
     }
-    /** The analysis model to be used by the service. For the `/v1/element_classification` and `/v1/comparison` methods, the default is `contracts`. For the `/v1/tables` method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
-    export enum ModelId {
+    /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
+    export enum Model {
       CONTRACTS = 'contracts',
       TABLES = 'tables',
     }
@@ -1162,12 +1234,12 @@ namespace CompareComplyV1 {
   export interface AlignedElement {
     /** Identifies two elements that semantically align between the compared documents. */
     element_pair?: ElementPair[];
-    /** Specifies whether the text is identical. */
+    /** Specifies whether the aligned element is identical. Elements are considered identical despite minor differences such as leading punctuation, end-of-sentence punctuation, whitespace, the presence or absence of definite or indefinite articles, and others. */
     identical_text?: boolean;
-    /** Indicates that the elements aligned are contractual clauses of significance. */
-    significant_elements?: boolean;
     /** One or more hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
+    /** Indicates that the elements aligned are contractual clauses of significance. */
+    significant_elements?: boolean;
   }
 
   /** List of document attributes. */
@@ -1212,7 +1284,7 @@ namespace CompareComplyV1 {
 
   /** Cells that are not table header, column header, or row header cells. */
   export interface BodyCells {
-    /** A string value in the format `columnHeader-x-y`, where `x` and `y` are the begin and end offsets of this column header cell in the input document. */
+    /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1226,18 +1298,12 @@ namespace CompareComplyV1 {
     column_index_begin?: number;
     /** The `end` index of this cell's `column` location in the current table. */
     column_index_end?: number;
-    /** An array of values, each being the `id` value of a row header that is applicable to this body cell. */
-    row_header_ids?: string[];
-    /** An array of values, each being the `text` value of a row header that is applicable to this body cell. */
-    row_header_texts?: string[];
-    /** If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as `row_header_texts`. */
-    row_header_texts_normalized?: string[];
-    /** An array of values, each being the `id` value of a column header that is applicable to the current cell. */
-    column_header_ids?: string[];
-    /** An array of values, each being the `text` value of a column header that is applicable to the current cell. */
-    column_header_texts?: string[];
-    /** If you provide customization input, the normalized version of the column header texts according to the customization; otherwise, the same value as `column_header_texts`. */
-    column_header_texts_normalized?: string[];
+    row_header_ids?: RowHeaderIds[];
+    row_header_texts?: RowHeaderTexts[];
+    row_header_texts_normalized?: RowHeaderTextsNormalized[];
+    column_header_ids?: ColumnHeaderIds[];
+    column_header_texts?: ColumnHeaderTexts[];
+    column_header_texts_normalized?: ColumnHeaderTextsNormalized[];
     attributes?: Attribute[];
   }
 
@@ -1249,11 +1315,17 @@ namespace CompareComplyV1 {
     provenance_ids?: string[];
   }
 
-  /** The analysis of objects returned by the `/v1/element_classification` method. */
+  /** Information defining an element's subject matter. */
+  export interface CategoryComparison {
+    /** The category of the associated element. */
+    label?: string;
+  }
+
+  /** The analysis of objects returned by the **Element classification** method. */
   export interface ClassifyReturn {
     /** Basic information about the input document. */
     document?: Document;
-    /** The analysis model used to classify the input document. For the `/v1/element_classification` method, the only valid value is `contracts`. */
+    /** The analysis model used to classify the input document. For the **Element classification** method, the only valid value is `contracts`. */
     model_id?: string;
     /** The version of the analysis model identified by the value of the `model_id` key. */
     model_version?: string;
@@ -1265,17 +1337,37 @@ namespace CompareComplyV1 {
     document_structure?: DocStructure;
     /** Definitions of the parties identified in the input document. */
     parties?: Parties[];
-    /** The effective dates of the input document. */
+    /** The date or dates on which the document becomes effective. */
     effective_dates?: EffectiveDates[];
-    /** The monetary amounts identified in the input document. */
+    /** The monetary amounts that identify the total amount of the contract that needs to be paid from one party to another. */
     contract_amounts?: ContractAmts[];
-    /** The input document's termination dates. */
+    /** The date or dates on which the document is to be terminated. */
     termination_dates?: TerminationDates[];
+    /** The document's contract type or types as declared in the document. */
+    contract_type?: ContractType[];
+  }
+
+  /** An array of values, each being the `id` value of a column header that is applicable to the current cell. */
+  export interface ColumnHeaderIds {
+    /** The `id` value of a column header. */
+    id?: string;
+  }
+
+  /** An array of values, each being the `text` value of a column header that is applicable to the current cell. */
+  export interface ColumnHeaderTexts {
+    /** The `text` value of a column header. */
+    text?: string;
+  }
+
+  /** If you provide customization input, the normalized version of the column header texts according to the customization; otherwise, the same value as `column_header_texts`. */
+  export interface ColumnHeaderTextsNormalized {
+    /** The normalized version of a column header text. */
+    text_normalized?: string;
   }
 
   /** Column-level cells, each applicable as a header to other cells in the same column as itself, of the current table. */
   export interface ColumnHeaders {
-    /** A string value in the format `columnHeader-x-y`, where `x` and `y` are the begin and end offsets of this column header cell in the input document. */
+    /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The location of the column header cell in the current table as defined by its `begin` and `end` offsets, respectfully, in the input document. */
     location?: Object;
@@ -1295,16 +1387,16 @@ namespace CompareComplyV1 {
 
   /** The comparison of the two submitted documents. */
   export interface CompareReturn {
+    /** The analysis model used to compare the input documents. For the **Compare two documents** method, the only valid value is `contracts`. */
+    model_id?: string;
+    /** The version of the analysis model identified by the value of the `model_id` key. */
+    model_version?: string;
     /** Information about the documents being compared. */
     documents?: Document[];
     /** A list of pairs of elements that semantically align between the compared documents. */
     aligned_elements?: AlignedElement[];
     /** A list of elements that do not semantically align between the compared documents. */
     unaligned_elements?: UnalignedElement[];
-    /** The analysis model used to classify the input document. For the `/v1/element_classification` method, the only valid value is `contracts`. */
-    model_id?: string;
-    /** The version of the analysis model identified by the value of the `model_id` key. */
-    model_version?: string;
   }
 
   /** A contact. */
@@ -1320,6 +1412,16 @@ namespace CompareComplyV1 {
     /** The monetary amount. */
     text?: string;
     /** The confidence level in the identification of the contract amount. */
+    confidence_level?: string;
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+  }
+
+  /** The contract type identified in the input document. */
+  export interface ContractType {
+    /** The contract type. */
+    text?: string;
+    /** The confidence level in the identification of the termination date. */
     confidence_level?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1403,14 +1505,14 @@ namespace CompareComplyV1 {
   export interface ElementPair {
     /** The label of the document (that is, the value of either the `file_1_label` or `file_2_label` parameters) in which the element occurs. */
     document_label?: string;
-    /** The text of the element. */
+    /** The contents of the element. */
     text?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
-    /** Description of the action specified by the element  and whom it affects. */
-    types?: TypeLabel[];
+    /** Description of the action specified by the element and whom it affects. */
+    types?: TypeLabelComparison[];
     /** List of functional categories into which the element falls; in other words, the subject matter of the element. */
-    categories?: Category[];
+    categories?: CategoryComparison[];
     /** List of document attributes. */
     attributes?: Attribute[];
   }
@@ -1511,6 +1613,24 @@ namespace CompareComplyV1 {
     html?: string;
   }
 
+  /** A key in a key-value pair. */
+  export interface Key {
+    /** The unique ID of the key in the table. */
+    cell_id?: string;
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+    /** The text content of the table cell without HTML markup. */
+    text?: string;
+  }
+
+  /** Key-value pairs detected across cell boundaries. */
+  export interface KeyValuePair {
+    /** A key in a key-value pair. */
+    key?: Key;
+    /** A value in a key-value pair. */
+    value?: Value;
+  }
+
   /** A pair of `nature` and `party` objects. The `nature` object identifies the effect of the element on the identified `party`, and the `party` object identifies the affected party. */
   export interface Label {
     /** The identified `nature` of the element. */
@@ -1583,9 +1703,27 @@ namespace CompareComplyV1 {
     contacts?: Contact[];
   }
 
+  /** An array of values, each being the `id` value of a row header that is applicable to this body cell. */
+  export interface RowHeaderIds {
+    /** The `id` values of a row header. */
+    id?: string;
+  }
+
+  /** An array of values, each being the `text` value of a row header that is applicable to this body cell. */
+  export interface RowHeaderTexts {
+    /** The `text` value of a row header. */
+    text?: string;
+  }
+
+  /** If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as `row_header_texts`. */
+  export interface RowHeaderTextsNormalized {
+    /** The normalized version of a row header text. */
+    text_normalized?: string;
+  }
+
   /** Row-level cells, each applicable as a header to other cells in the same row as itself, of the current table. */
   export interface RowHeaders {
-    /** A string value in the format `rowHeader-x-y`, where `x` and `y` are the begin and end offsets of this row header cell in the input document. */
+    /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1633,7 +1771,7 @@ namespace CompareComplyV1 {
 
   /** The contents of the current table's header. */
   export interface TableHeaders {
-    /** String value in the format `tableHeader-x-y` where `x` and `y` are the `begin` and `end` offsets, respectfully, of the cell value in the input document. */
+    /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The location of the table header cell in the current table as defined by its `begin` and `end` offsets, respectfully, in the input document. */
     location?: Object;
@@ -1675,6 +1813,8 @@ namespace CompareComplyV1 {
     row_headers?: RowHeaders[];
     /** An array of column-level cells, each applicable as a header to other cells in the same column as itself, of the current table. */
     column_headers?: ColumnHeaders[];
+    /** An array of key-value pairs identified in the current table. */
+    key_value_pairs?: KeyValuePair[];
     /** An array of cells that are neither table header nor column header nor row header cells, of the current table with corresponding row and column header associations. */
     body_cells?: BodyCells[];
   }
@@ -1697,18 +1837,24 @@ namespace CompareComplyV1 {
     provenance_ids?: string[];
   }
 
+  /** Identification of a specific type. */
+  export interface TypeLabelComparison {
+    /** A pair of `nature` and `party` objects. The `nature` object identifies the effect of the element on the identified `party`, and the `party` object identifies the affected party. */
+    label?: Label;
+  }
+
   /** Element that does not align semantically between two compared documents. */
   export interface UnalignedElement {
-    /** The label assigned to the document by the value of the `file_1_label` or `file_2_label` parameters on the `/v1/compare` method. */
+    /** The label assigned to the document by the value of the `file_1_label` or `file_2_label` parameters on the **Compare two documents** method. */
     document_label?: string;
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
     /** The text of the element. */
     text?: string;
     /** Description of the action specified by the element and whom it affects. */
-    types?: TypeLabel[];
+    types?: TypeLabelComparison[];
     /** List of functional categories into which the element falls; in other words, the subject matter of the element. */
-    categories?: Category[];
+    categories?: CategoryComparison[];
     /** List of document attributes. */
     attributes?: Attribute[];
   }
@@ -1729,6 +1875,16 @@ namespace CompareComplyV1 {
     categories?: Category[];
     /** The type of modification the feedback entry in the `updated_labels` array. Possible values are `added`, `not_changed`, and `removed`. */
     modification?: string;
+  }
+
+  /** A value in a key-value pair. */
+  export interface Value {
+    /** The unique ID of the value in the table. */
+    cell_id?: string;
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+    /** The text content of the table cell without HTML markup. */
+    text?: string;
   }
 
 }

@@ -1,6 +1,6 @@
 'use strict';
 const fs = require('fs');
-const watson = require('../../index');
+const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
@@ -18,9 +18,9 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 8);
 
-  const visual_recognition = new watson.VisualRecognitionV3(
+  const visual_recognition = new VisualRecognitionV3(
     Object.assign({}, auth.visual_recognition_rc.v3, {
-      version: '2018-03-19',
+      version: '2019-03-27',
     })
   );
 

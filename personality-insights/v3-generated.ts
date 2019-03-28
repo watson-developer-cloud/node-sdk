@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
+import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from 'ibm-cloud-sdk-core';
-import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { FileObject } from 'ibm-cloud-sdk-core';
-import { RequestResponse } from 'request';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -102,10 +101,6 @@ class PersonalityInsightsV3 extends BaseService {
    * less text; for more information, see [Providing sufficient
    * input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an
    * object of type `Content`.
-   * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
-   * method description.
-   *
-   * Default: `text/plain`.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -126,14 +121,26 @@ class PersonalityInsightsV3 extends BaseService {
    * default, no column labels are returned. Applies only when the response type is CSV (`text/csv`).
    * @param {boolean} [params.consumption_preferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
+   * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
+   * method description.
+   *
+   * Default: `text/plain`.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): NodeJS.ReadableStream | void {
+  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['content'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.profile(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -148,21 +155,20 @@ class PersonalityInsightsV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profile');
- 
+
     const parameters = {
       options: {
         url: '/v3/profile',
         method: 'POST',
-        json: (_params.content_type === 'application/json'),
         body,
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,
-          'Accept-Language': _params.accept_language
+          'Accept-Language': _params.accept_language,
+          'Content-Type': _params.content_type
         }, _params.headers),
       }),
     };
@@ -210,10 +216,6 @@ class PersonalityInsightsV3 extends BaseService {
    * less text; for more information, see [Providing sufficient
    * input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an
    * object of type `Content`.
-   * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
-   * method description.
-   *
-   * Default: `text/plain`.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -234,14 +236,26 @@ class PersonalityInsightsV3 extends BaseService {
    * default, no column labels are returned. Applies only when the response type is CSV (`text/csv`).
    * @param {boolean} [params.consumption_preferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
+   * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
+   * method description.
+   *
+   * Default: `text/plain`.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): NodeJS.ReadableStream | void {
+  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['content'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.profileAsCsv(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -256,21 +270,20 @@ class PersonalityInsightsV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profileAsCsv');
- 
+
     const parameters = {
       options: {
         url: '/v3/profile',
         method: 'POST',
-        json: (_params.content_type === 'application/json'),
         body,
         qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'text/csv',
-          'Content-Type': _params.content_type,
           'Content-Language': _params.content_language,
-          'Accept-Language': _params.accept_language
+          'Accept-Language': _params.accept_language,
+          'Content-Type': _params.content_type
         }, _params.headers),
       }),
     };
@@ -303,7 +316,7 @@ namespace PersonalityInsightsV3 {
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -316,8 +329,6 @@ namespace PersonalityInsightsV3 {
   export interface ProfileParams {
     /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
-    content_type?: ProfileConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileConstants.ContentLanguage | string;
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
@@ -328,17 +339,14 @@ namespace PersonalityInsightsV3 {
     csv_headers?: boolean;
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    content_type?: ProfileConstants.ContentType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `profile` operation. */
   export namespace ProfileConstants {
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
-    export enum ContentType {
-      APPLICATION_JSON = 'application/json',
-      TEXT_HTML = 'text/html',
-      TEXT_PLAIN = 'text/plain',
-    }
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     export enum ContentLanguage {
       AR = 'ar',
@@ -361,14 +369,18 @@ namespace PersonalityInsightsV3 {
       ZH_CN = 'zh-cn',
       ZH_TW = 'zh-tw',
     }
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    export enum ContentType {
+      APPLICATION_JSON = 'application/json',
+      TEXT_HTML = 'text/html',
+      TEXT_PLAIN = 'text/plain',
+    }
   }
 
   /** Parameters for the `profileAsCsv` operation. */
   export interface ProfileAsCsvParams {
     /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
-    content_type?: ProfileAsCsvConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileAsCsvConstants.ContentLanguage | string;
     /** The desired language of the response. For two-character arguments, regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can specify any combination of languages for the input and response content. */
@@ -379,17 +391,14 @@ namespace PersonalityInsightsV3 {
     csv_headers?: boolean;
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    content_type?: ProfileAsCsvConstants.ContentType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `profileAsCsv` operation. */
   export namespace ProfileAsCsvConstants {
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
-    export enum ContentType {
-      APPLICATION_JSON = 'application/json',
-      TEXT_HTML = 'text/html',
-      TEXT_PLAIN = 'text/plain',
-    }
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     export enum ContentLanguage {
       AR = 'ar',
@@ -411,6 +420,12 @@ namespace PersonalityInsightsV3 {
       PT_BR = 'pt-br',
       ZH_CN = 'zh-cn',
       ZH_TW = 'zh-tw',
+    }
+    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    export enum ContentType {
+      APPLICATION_JSON = 'application/json',
+      TEXT_HTML = 'text/html',
+      TEXT_PLAIN = 'text/plain',
     }
   }
 

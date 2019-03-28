@@ -41,7 +41,7 @@
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
-    "types": ["node", "request", "extend", "is-stream"]    /* Type declaration files to be included in compilation. */
+    "types": ["node", "extend", "is-stream"]    /* Type declaration files to be included in compilation. */
     // "allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
     // "preserveSymlinks": true,              /* Do not resolve the real path of symlinks. */
 
@@ -57,7 +57,6 @@
   },
   "include": [
     "./lib/*.ts",
-    "./conversation/*.ts",
     "./assistant/*.ts",
     "./natural-language-classifier/*.ts",
     "./language-translator/*.ts",
@@ -69,7 +68,7 @@
     "./text-to-speech/*.ts",
     "./speech-to-text/*.ts",
     "./authorization/*.ts",
-    "./dialog/*.ts",
+    "./iam-token-manager/*.ts",
     "./compare-comply/*.ts",
     "./iam-token-manager/*.ts",
     "index.ts"

@@ -3,7 +3,7 @@
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
-const watson = require('../../index');
+const SpeechToTextV1 = require('../../speech-to-text/v1');
 const fs = require('fs');
 const concat = require('concat-stream');
 const path = require('path');
@@ -15,8 +15,8 @@ const TWO_MINUTES = 2 * 60 * 1000;
 describe('speech_to_text_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
-  const speech_to_text_rc = new watson.SpeechToTextV1(auth.speech_to_text_rc);
+  const speech_to_text = new SpeechToTextV1(auth.speech_to_text);
+  const speech_to_text_rc = new SpeechToTextV1(auth.speech_to_text_rc);
 
   it('recognize() (RC) @slow', function(done) {
     const params = {
@@ -103,8 +103,8 @@ describe('speech_to_text_integration', function() {
     });
   });
 
-  it('getModels()', function(done) {
-    speech_to_text.getModels({}, done);
+  it('listModels()', function(done) {
+    speech_to_text.listModels({}, done);
   });
 
   describe('recognizeUsingWebSocket() (RC) (credentials from environment/VCAP) @slow', () => {
@@ -120,7 +120,7 @@ describe('speech_to_text_integration', function() {
     it('transcribes audio over a websocket, credentials from environment', function(done) {
       process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.speech_to_text_rc.iam_apikey;
       process.env.SPEECH_TO_TEXT_URL = auth.speech_to_text_rc.url;
-      const speech_to_text_env = new watson.SpeechToTextV1({});
+      const speech_to_text_env = new SpeechToTextV1({});
       const recognizeStream = speech_to_text_env.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -148,7 +148,7 @@ describe('speech_to_text_integration', function() {
           },
         ],
       });
-      const speech_to_text_vcap = new watson.SpeechToTextV1({});
+      const speech_to_text_vcap = new SpeechToTextV1({});
       const recognizeStream = speech_to_text_vcap.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -229,7 +229,7 @@ describe('speech_to_text_integration', function() {
         speech_to_text.whenCustomizationReady(
           { customization_id: customization_id, interval: 250, times: 400 },
           function(err) {
-            if (err && err.code !== watson.SpeechToTextV1.ERR_NO_CORPORA) {
+            if (err && err.code !== SpeechToTextV1.ERR_NO_CORPORA) {
               return done(err);
             }
             test(done);
@@ -239,8 +239,8 @@ describe('speech_to_text_integration', function() {
     }
 
     beforeAll(function(done) {
-      const speech_to_text = new watson.SpeechToTextV1(auth.speech_to_text);
-      speech_to_text.getCustomizations({}, function(err, result) {
+      const speech_to_text = new SpeechToTextV1(auth.speech_to_text);
+      speech_to_text.listLanguageModels({}, function(err, result) {
         if (err) {
           // eslint-disable-next-line no-console
           console.warn('Error retrieving old customization models for cleanup', err);
@@ -256,7 +256,7 @@ describe('speech_to_text_integration', function() {
         async.forEach(
           toDelete,
           function(cust, next) {
-            speech_to_text.deleteCustomization(cust, function(err) {
+            speech_to_text.deleteLanguageModel(cust, function(err) {
               if (err) {
                 // eslint-disable-next-line no-console
                 console.warn('error deleting old customization model', cust, err);
@@ -269,8 +269,8 @@ describe('speech_to_text_integration', function() {
       });
     });
 
-    it('createCustomization()', function(done) {
-      speech_to_text.createCustomization(
+    it('createLanguageModel()', function(done) {
+      speech_to_text.createLanguageModel(
         {
           name: 'js-sdk-test-temporary',
           base_model_name: 'en-US_BroadbandModel',
@@ -289,7 +289,7 @@ describe('speech_to_text_integration', function() {
     });
 
     it('listCustomizations()', function(done) {
-      speech_to_text.getCustomizations({}, function(err, result) {
+      speech_to_text.listLanguageModels({}, function(err, result) {
         if (err) {
           return done(err);
         }
@@ -298,8 +298,8 @@ describe('speech_to_text_integration', function() {
       });
     });
 
-    it('getCustomization()', function(done) {
-      speech_to_text.getCustomization({ customization_id: customization_id }, function(
+    it('getLanguageModel()', function(done) {
+      speech_to_text.getLanguageModel({ customization_id: customization_id }, function(
         err,
         result
       ) {
@@ -318,8 +318,8 @@ describe('speech_to_text_integration', function() {
       speech_to_text.addCorpus(
         {
           customization_id: customization_id,
-          name: 'test_corpus_1',
-          corpus: fs.createReadStream(
+          corpus_name: 'test_corpus_1',
+          corpus_file: fs.createReadStream(
             path.join(__dirname, '../resources/speech_to_text/corpus-short-1.txt')
           ),
         },
@@ -334,8 +334,8 @@ describe('speech_to_text_integration', function() {
         speech_to_text.addCorpus(
           {
             customization_id: customization_id,
-            name: 'test_corpus_2',
-            corpus: fs.readFileSync(
+            corpus_name: 'test_corpus_2',
+            corpus_file: fs.readFileSync(
               path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt')
             ),
           },
@@ -350,8 +350,8 @@ describe('speech_to_text_integration', function() {
         speech_to_text.addCorpus(
           {
             customization_id: customization_id,
-            name: 'test_corpus_2',
-            corpus: fs
+            corpus_name: 'test_corpus_2',
+            corpus_file: fs
               .readFileSync(path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt'))
               .toString(),
             allow_overwrite: true,
@@ -362,7 +362,7 @@ describe('speech_to_text_integration', function() {
     );
 
     it('listCorpora()', function(done) {
-      speech_to_text.getCorpora({ customization_id: customization_id }, done);
+      speech_to_text.listCorpora({ customization_id: customization_id }, done);
     });
 
     it(
@@ -395,7 +395,7 @@ describe('speech_to_text_integration', function() {
         speech_to_text.addWord(
           {
             customization_id: customization_id,
-            word: 'tomato',
+            word_name: 'tomato',
             sounds_like: ['tomatoh', 'tomayto'],
           },
           done
@@ -404,14 +404,14 @@ describe('speech_to_text_integration', function() {
     );
 
     it('listWords()', function(done) {
-      speech_to_text.getWords({ customization_id: customization_id, sort: '+alphabetical' }, done);
+      speech_to_text.listWords({ customization_id: customization_id, sort: '+alphabetical' }, done);
     });
 
     it('getWord()', function(done) {
       speech_to_text.getWord(
         {
           customization_id: customization_id,
-          word: 'ieee',
+          word_name: 'ieee',
         },
         done
       );
@@ -423,7 +423,7 @@ describe('speech_to_text_integration', function() {
         speech_to_text.deleteWord(
           {
             customization_id: customization_id,
-            word: 'tomato',
+            word_name: 'tomato',
           },
           done
         );
@@ -436,7 +436,7 @@ describe('speech_to_text_integration', function() {
         speech_to_text.deleteWord(
           {
             customization_id: customization_id,
-            word: 'hhonors',
+            word_name: 'hhonors',
           },
           done
         );
@@ -475,16 +475,16 @@ describe('speech_to_text_integration', function() {
       'deleteCorpus()',
       waitUntilReady(function(done) {
         speech_to_text.deleteCorpus(
-          { customization_id: customization_id, name: 'test_corpus_1' },
+          { customization_id: customization_id, corpus_name: 'test_corpus_1' },
           done
         );
       })
     );
 
     it(
-      'trainCustomization()',
+      'trainLanguageModel()',
       waitUntilReady(function(done) {
-        speech_to_text.trainCustomization({ customization_id: customization_id }, done);
+        speech_to_text.trainLanguageModel({ customization_id: customization_id }, done);
       })
     );
 
@@ -566,15 +566,15 @@ describe('speech_to_text_integration', function() {
       );
     });
     it(
-      'resetCustomization()',
+      'resetLanguageModel()',
       waitUntilReady(function(done) {
-        speech_to_text.resetCustomization({ customization_id: customization_id }, done);
+        speech_to_text.resetLanguageModel({ customization_id: customization_id }, done);
       })
     );
 
-    it('deleteCustomization()', function(done) {
+    it('deleteLanguageModel()', function(done) {
       // var customization_id = '7964f4c0-97ab-11e6-8ac8-6333954f158e';
-      speech_to_text.deleteCustomization({ customization_id: customization_id }, done);
+      speech_to_text.deleteLanguageModel({ customization_id: customization_id }, done);
       customization_id = null;
     });
   });
@@ -583,14 +583,14 @@ describe('speech_to_text_integration', function() {
     let jobId = null;
 
     const deleteAfterRecognitionCompleted = (jobId, done) => {
-      speech_to_text.getRecognitionJob({ id: jobId }, (err, res) => {
+      speech_to_text.checkJob({ id: jobId }, (err, res) => {
         if (err) {
           return done(err);
         }
         if (res.status !== 'completed') {
           setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId, done), 300);
         } else {
-          speech_to_text.deleteRecognitionJob({ id: res.id }, done);
+          speech_to_text.deleteJob({ id: res.id }, done);
         }
       });
     };
@@ -607,7 +607,7 @@ describe('speech_to_text_integration', function() {
       );
     });
 
-    it('createRecognitionJob()', function(done) {
+    it('createJob()', function(done) {
       const params = {
         audio: fs.createReadStream(__dirname + '/../resources/weather.ogg'),
         content_type: 'audio/ogg; codec=opus',
@@ -618,22 +618,22 @@ describe('speech_to_text_integration', function() {
         events: 'recognitions.completed',
         results_ttl: 1,
       };
-      speech_to_text.createRecognitionJob(params, function(err, res) {
+      speech_to_text.createJob(params, function(err, res) {
         expect(err).toBeNull();
         jobId = res.id;
         done();
       });
     });
 
-    it('getRecognitionJobs() @slow', function(done) {
-      speech_to_text.getRecognitionJobs(done);
+    it('checkJobs() @slow', function(done) {
+      speech_to_text.checkJobs(done);
     });
 
-    it('getRecognitionJob()', function(done) {
-      speech_to_text.getRecognitionJob({ id: jobId }, done);
+    it('checkJob()', function(done) {
+      speech_to_text.checkJob({ id: jobId }, done);
     });
 
-    it('deleteRecognitionJob()', function(done) {
+    it('deleteJob()', function(done) {
       deleteAfterRecognitionCompleted(jobId, done);
     });
   });

@@ -1,6 +1,6 @@
 'use strict';
 
-const watson = require('../../index');
+const AssistantV1 = require('../../assistant/v1');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
@@ -101,9 +101,8 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 
 describe('assistant_integration', function() {
   jest.setTimeout(TEN_SECONDS);
-
-  auth.conversation.version = '2018-02-16';
-  const assistant = new watson.AssistantV1(auth.conversation);
+  auth.conversation.version = '2019-03-27';
+  const assistant = new AssistantV1(auth.conversation);
 
   describe('message()', function() {
     it('alternate_intents with custom headers', function(done) {
@@ -112,7 +111,7 @@ describe('assistant_integration', function() {
           text: 'Turn on the lights',
         },
         alternate_intents: true,
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
         headers: {
           customheader: 'custom',
         },
@@ -130,16 +129,16 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2017-02-03 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2017-02-03',
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const assistant = new AssistantV1(constructorParams);
 
       const params = {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
@@ -154,16 +153,16 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-09-20 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2016-09-20',
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const assistant = new AssistantV1(constructorParams);
 
       const params = {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
@@ -178,16 +177,16 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-07-11 version', function(done) {
-      const constructorParams = assign({}, auth.conversation, {
+      const constructorParams = assign({}, auth.assistant, {
         version: '2016-07-11',
       });
-      const assistant = new watson.AssistantV1(constructorParams);
+      const assistant = new AssistantV1(constructorParams);
 
       const params = {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.conversation.workspace_id,
+        workspace_id: auth.assistant.workspace_id,
       };
 
       assistant.message(params, function(err, result) {
@@ -275,7 +274,7 @@ describe('assistant_integration', function() {
   describe('getWorkspace()', function() {
     it('should get the workspace with the right intent', function(done) {
       const params = {
-        export: true,
+        _export: true,
         workspace_id: workspace1.workspace_id,
       };
 
@@ -313,7 +312,7 @@ describe('assistant_integration', function() {
     it('should get intents of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
       };
 
       assistant.listIntents(params, function(err, result) {
@@ -329,7 +328,7 @@ describe('assistant_integration', function() {
     it('should have pagination information', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
         sort: 'intent',
@@ -524,19 +523,21 @@ describe('assistant_integration', function() {
   });
 
   describe('getCounterexample()', function() {
-    it('should return a counterexample', function(done) {
+    it('should return a counterexample - using promise', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
         text: counterexampleText,
       };
 
-      assistant.getCounterexample(params, function(err, result) {
-        if (err) {
+      assistant
+        .getCounterexample(params)
+        .then(result => {
+          expect(result.text).toBe(counterexampleText);
+          done();
+        })
+        .catch(err => {
           return done(err);
-        }
-        expect(result.text).toBe(counterexampleText);
-        done();
-      });
+        });
     });
   });
 
@@ -631,7 +632,7 @@ describe('assistant_integration', function() {
     it('should get entities of the workspace', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
       };
 
       assistant.listEntities(params, function(err, result) {
@@ -647,7 +648,7 @@ describe('assistant_integration', function() {
     it('should have pagination information', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
         sort: 'entity',
@@ -727,7 +728,7 @@ describe('assistant_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        export: true,
+        _export: true,
       };
 
       assistant.listValues(params, function(err, result) {
@@ -744,7 +745,7 @@ describe('assistant_integration', function() {
       const params = {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
         sort: 'value',
@@ -824,7 +825,7 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        export: true,
+        _export: true,
       };
 
       assistant.listSynonyms(params, function(err, result) {
@@ -841,7 +842,7 @@ describe('assistant_integration', function() {
         workspace_id: workspace1.workspace_id,
         entity: test_entities_update.entity,
         value: test_value_update.value,
-        export: true,
+        _export: true,
         page_limit: 1,
         include_count: true,
       };
@@ -899,7 +900,7 @@ describe('assistant_integration', function() {
     it('should return logs', function(done) {
       const params = {
         workspace_id: workspace1.workspace_id,
-        export: true,
+        _export: true,
         page_limit: 1,
       };
 

@@ -1,8 +1,8 @@
 /**
- * Tone Analyzer integration with Conversation
+ * Tone Analyzer integration with Assistant
  *
- * This example demonstrates how to detect and interpret the tone for a user's input (a conversation turn)
- * using the Tone Analyzer Service, and add it to the payload to be sent in a request to the Conversation
+ * This example demonstrates how to detect and interpret the tone for a user's input (a assistant turn)
+ * using the Tone Analyzer Service, and add it to the payload to be sent in a request to the Assistant
  * Service API message endpoint.
  *
  * Service credentials can be provided directly in this file, or can be saved to a .env file located in the
@@ -13,34 +13,34 @@
  *   - https://console.ng.bluemix.net/catalog/services/tone-analyzer/
  *   - credentials for this service to be provided below in tone_analyzer variable
  *    - replace <tone_analyzer_username> and <tone_analyzer_password>
- *   2. Conversation Service instance:
- *   - https://console.ng.bluemix.net/catalog/services/conversation/
- *   - credentials for this service to be provided below in the conversation variable
- *    - replace <conversation_username> and <conversation_password>
+ *   2. Assistant Service instance:
+ *   - https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation
+ *   - credentials for this service to be provided below in the assistant variable
+ *    - replace <assistant_username> and <assistant_password>
  *   3. Workspace id:
  *   - a workspace containing intents, entities and dialog nodes must be created using the tool
- *     available through the Bluemix Conversation Service. Details are available at
- *     https://github.com/watson-developer-cloud/conversation-simple#workspace
+ *     available through the Bluemix Assistant Service. Details are available at
+ *     https://github.com/watson-developer-cloud/assistant-simple#workspace
  *    - replace <workspace_id> in the payload variable
  *
  * Run the code using the command:
- *   node tone_conversation_integration.v1.js
+ *   node tone_assistant_integration.v1.js
  */
 
 'use strict';
 /* eslint-env es6*/
 
-var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+var AssistantV1 = require('watson-developer-cloud/assistant/v1');
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 var tone_detection = require('./tone_detection.js');
 require('dotenv').config({ silent: true });
 
 /**
- * Instantiate the Watson Conversation Service
+ * Instantiate the Watson Assistant Service
  */
-var conversation = new ConversationV1({
-  username: process.env.CONVERSATION_USERNAME || '<conversation_username>',
-  password: process.env.CONVERSATION_PASSWORD || '<conversation_password>',
+var assistant = new AssistantV1({
+  username: process.env.ASSISTANT_USERNAME || '<assistant_username>',
+  password: process.env.ASSISTANT_PASSWORD || '<assistant_password>',
   version: '2017-05-26'
 });
 
@@ -54,13 +54,13 @@ var toneAnalyzer = new ToneAnalyzerV3({
 });
 
 /**
- * This example stores tone for each user utterance in conversation context.
+ * This example stores tone for each user utterance in assistant context.
  * Change this to false, if you do not want to maintain history
  */
 var maintainToneHistoryInContext = true;
 
 /**
- * Payload for the Watson Conversation Service
+ * Payload for the Watson Assistant Service
  * <workspace-id> and user input text required.
  */
 var payload = {
@@ -71,16 +71,16 @@ var payload = {
 };
 
 /**
- * invokeToneConversation calls the invokeToneAsync function to get the tone information for the user's
+ * invokeToneAssistant calls the invokeToneAsync function to get the tone information for the user's
  * input text (input.text in the payload json object), adds/updates the user's tone in the payload's context,
- * and sends the payload to the conversation service to get a response which is printed to screen.
- * @param payload a json object containing the basic information needed to converse with the Conversation Service's
+ * and sends the payload to the assistant service to get a response which is printed to screen.
+ * @param payload a json object containing the basic information needed to converse with the Assistant Service's
  * message endpoint.
  *
  * Note: as indicated below, the console.log statements can be replaced with application-specific code to process
- * the err or data object returned by the Conversation Service.
+ * the err or data object returned by the Assistant Service.
  */
-function invokeToneConversation(payload, maintainToneHistoryInContext) {
+function invokeToneAssistant(payload, maintainToneHistoryInContext) {
   tone_detection
     .invokeToneAsync(payload, toneAnalyzer)
     .then(tone => {
@@ -89,14 +89,14 @@ function invokeToneConversation(payload, maintainToneHistoryInContext) {
         tone,
         maintainToneHistoryInContext
       );
-      conversation.message(payload, function(err, data) {
+      assistant.message(payload, function(err, data) {
         if (err) {
           // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR
-          // FROM CONVERSATION SERVICE
+          // FROM ASSISTANT SERVICE
           console.error(JSON.stringify(err, null, 2));
         } else {
           // APPLICATION-SPECIFIC CODE TO PROCESS THE DATA
-          // FROM CONVERSATION SERVICE
+          // FROM ASSISTANT SERVICE
           console.log(JSON.stringify(data, null, 2));
         }
       });
@@ -106,4 +106,4 @@ function invokeToneConversation(payload, maintainToneHistoryInContext) {
     });
 }
 
-invokeToneConversation(payload, maintainToneHistoryInContext);
+invokeToneAssistant(payload, maintainToneHistoryInContext);

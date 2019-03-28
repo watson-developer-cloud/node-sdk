@@ -21,12 +21,12 @@ describe('discovery_integration', function() {
 
   const discovery = new DiscoveryV1(
     Object.assign({}, auth.discovery, {
-      version: '2017-11-07',
+      version: '2019-03-27',
     })
   );
 
-  it('should getEnvironments()', function(done) {
-    discovery.getEnvironments(null, function(err, res) {
+  it('should listEnvironments()', function(done) {
+    discovery.listEnvironments(null, function(err, res) {
       expect(err).toBeNull();
       expect(Array.isArray(res.environments)).toBe(true);
       const environment_ids = res.environments.map(e => e.environment_id);
@@ -44,8 +44,8 @@ describe('discovery_integration', function() {
     });
   });
 
-  it('should getConfigurations()', function(done) {
-    discovery.getConfigurations({ environment_id: environment_id }, function(err, res) {
+  it('should listConfigurations()', function(done) {
+    discovery.listConfigurations({ environment_id: environment_id }, function(err, res) {
       expect(err).toBeNull();
       expect(Array.isArray(res.configurations)).toBeDefined();
       expect(res.configurations[0]).toBeDefined();
@@ -90,8 +90,8 @@ describe('discovery_integration', function() {
     );
   });
 
-  it('getCollections()', function(done) {
-    discovery.getCollections(
+  it('listCollections()', function(done) {
+    discovery.listCollections(
       {
         environment_id: environment_id,
         configuration_id: configuration_id,
@@ -142,18 +142,25 @@ describe('discovery_integration', function() {
       });
     });
 
-    it('addJsonDocument()', function(done) {
+    it('addDocument()', function(done) {
+      const jsonFile = {
+        foo: 'bar',
+        from: 'node-sdk integration test',
+        test_date: new Date().toString(),
+      };
+
       const document_obj = {
         environment_id: environment_id,
         collection_id: collection_id,
         file: {
-          foo: 'bar',
-          from: 'node-sdk integration test',
-          test_date: new Date().toString(),
+          value: JSON.stringify(jsonFile),
+          options: {
+            filename: '_.json',
+          },
         },
       };
 
-      discovery.addJsonDocument(document_obj, function(err, response) {
+      discovery.addDocument(document_obj, function(err, response) {
         expect(err).toBeNull();
         expect(response.document_id).toBeDefined();
         done(err);
@@ -272,7 +279,7 @@ describe('discovery_integration', function() {
     });
 
     it('should getCredentials', function(done) {
-      discovery.getSourceCredentials(
+      discovery.getCredentials(
         {
           environment_id,
           credential_id: credentialId,

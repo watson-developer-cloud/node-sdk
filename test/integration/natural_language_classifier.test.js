@@ -1,7 +1,6 @@
 'use strict';
 
-const watson = require('../../index');
-const assert = require('assert');
+const NaturalLanguageClassifierV1 = require('../../natural-language-classifier/v1');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
@@ -10,7 +9,7 @@ const TWENTY_SECONDS = 20000;
 describe('natural_language_classifier_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const natural_language_classifier = new watson.NaturalLanguageClassifierV1(
+  const natural_language_classifier = new NaturalLanguageClassifierV1(
     auth.natural_language_classifier
   );
 
@@ -22,7 +21,7 @@ describe('natural_language_classifier_integration', function() {
       if (err) {
         return done(err);
       }
-      assert.equal(result.classifier_id, params.classifier_id);
+      expect(result.classifier_id).toBe(params.classifier_id);
       done();
     });
   });
@@ -36,7 +35,7 @@ describe('natural_language_classifier_integration', function() {
       if (err) {
         return done(err);
       }
-      assert.equal(result.classifier_id, params.classifier_id);
+      expect(result.classifier_id).toBe(params.classifier_id);
       done();
     });
   });

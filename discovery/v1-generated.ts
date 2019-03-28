@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
+import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from 'ibm-cloud-sdk-core';
-import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { FileObject } from 'ibm-cloud-sdk-core';
-import { RequestResponse } from 'request';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -77,12 +76,20 @@ class DiscoveryV1 extends BaseService {
    * `LT`, in all other plans the default is `S`.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createEnvironment(params: DiscoveryV1.CreateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | void {
+  public createEnvironment(params: DiscoveryV1.CreateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -96,12 +103,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createEnvironment');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments',
         method: 'POST',
-        json: true,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -122,12 +128,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteEnvironment(params: DiscoveryV1.DeleteEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>): NodeJS.ReadableStream | void {
+  public deleteEnvironment(params: DiscoveryV1.DeleteEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -139,7 +153,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteEnvironment');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
@@ -149,7 +163,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -164,12 +177,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getEnvironment(params: DiscoveryV1.GetEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | void {
+  public getEnvironment(params: DiscoveryV1.GetEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -181,7 +202,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getEnvironment');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
@@ -191,7 +212,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -208,18 +228,26 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.name] - Show only the environment with the given name.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): NodeJS.ReadableStream | void {
+  public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listEnvironments(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'name': _params.name
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listEnvironments');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments',
@@ -229,7 +257,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -247,12 +274,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listFields(params: DiscoveryV1.ListFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): NodeJS.ReadableStream | void {
+  public listFields(params: DiscoveryV1.ListFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_ids'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listFields(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -268,7 +303,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listFields');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/fields',
@@ -279,7 +314,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -301,12 +335,20 @@ class DiscoveryV1 extends BaseService {
    * modified when using a Lite plan. Environment size can only increased and not decreased.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateEnvironment(params: DiscoveryV1.UpdateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): NodeJS.ReadableStream | void {
+  public updateEnvironment(params: DiscoveryV1.UpdateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -324,12 +366,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateEnvironment');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}',
         method: 'PUT',
-        json: true,
         body,
         path,
       },
@@ -372,12 +413,20 @@ class DiscoveryV1 extends BaseService {
    * @param {Source} [params.source] - Object containing source parameters for the configuration.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createConfiguration(params: DiscoveryV1.CreateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | void {
+  public createConfiguration(params: DiscoveryV1.CreateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -398,12 +447,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createConfiguration');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -431,12 +479,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.configuration_id - The ID of the configuration.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteConfiguration(params: DiscoveryV1.DeleteConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>): NodeJS.ReadableStream | void {
+  public deleteConfiguration(params: DiscoveryV1.DeleteConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'configuration_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -449,7 +505,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteConfiguration');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
@@ -459,7 +515,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -475,12 +530,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.configuration_id - The ID of the configuration.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getConfiguration(params: DiscoveryV1.GetConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | void {
+  public getConfiguration(params: DiscoveryV1.GetConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'configuration_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -493,7 +556,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getConfiguration');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
@@ -503,7 +566,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -521,12 +583,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.name] - Find configurations with the given name.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listConfigurations(params: DiscoveryV1.ListConfigurationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>): NodeJS.ReadableStream | void {
+  public listConfigurations(params: DiscoveryV1.ListConfigurationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listConfigurations(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -542,7 +612,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listConfigurations');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations',
@@ -553,7 +623,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -584,12 +653,20 @@ class DiscoveryV1 extends BaseService {
    * @param {Source} [params.source] - Object containing source parameters for the configuration.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateConfiguration(params: DiscoveryV1.UpdateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): NodeJS.ReadableStream | void {
+  public updateConfiguration(params: DiscoveryV1.UpdateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'configuration_id', 'name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateConfiguration(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -611,12 +688,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateConfiguration');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
         method: 'PUT',
-        json: true,
         body,
         path,
       },
@@ -648,13 +724,11 @@ class DiscoveryV1 extends BaseService {
    * provided (both are present at the same time), then request is rejected. The maximum supported configuration size is
    * 1 MB. Configuration parts larger than 1 MB are rejected.
    * See the `GET /configurations/{configuration_id}` operation for an example configuration.
-   * @param {string} [params.step] - Specify to only run the input document through the given step instead of running
-   * the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`.
-   * @param {string} [params.configuration_id] - The ID of the configuration to use to process the document. If the
-   * **configuration** form part is also provided (both are present at the same time), then the request will be
-   * rejected.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
-   * supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
+   * testing a confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.file_content_type] - The content type of file.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a
    * document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is
    * 1 MB. Metadata parts larger than 1 MB are rejected.
@@ -662,27 +736,32 @@ class DiscoveryV1 extends BaseService {
    *   "Creator": "Johnny Appleseed",
    *   "Subject": "Apples"
    * } ```.
-   * @param {string} [params.file_content_type] - The content type of file.
-   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.step] - Specify to only run the input document through the given step instead of running
+   * the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`.
+   * @param {string} [params.configuration_id] - The ID of the configuration to use to process the document. If the
+   * **configuration** form part is also provided (both are present at the same time), then the request will be
+   * rejected.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public testConfigurationInEnvironment(params: DiscoveryV1.TestConfigurationInEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TestDocument>): NodeJS.ReadableStream | void {
+  public testConfigurationInEnvironment(params: DiscoveryV1.TestConfigurationInEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TestDocument>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.testConfigurationInEnvironment(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    if (_params.file && !_params.filename) {
-      console.warn(
-        'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
-      );
-    }
-
     const formData = {
       'configuration': _params.configuration,
       'file': {
@@ -703,7 +782,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'testConfigurationInEnvironment');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/preview',
@@ -739,12 +818,20 @@ class DiscoveryV1 extends BaseService {
    * 639-1 language code.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createCollection(params: DiscoveryV1.CreateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | void {
+  public createCollection(params: DiscoveryV1.CreateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -763,12 +850,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createCollection');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -791,12 +877,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteCollection(params: DiscoveryV1.DeleteCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>): NodeJS.ReadableStream | void {
+  public deleteCollection(params: DiscoveryV1.DeleteCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -809,7 +903,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteCollection');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
@@ -819,7 +913,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -835,12 +928,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getCollection(params: DiscoveryV1.GetCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | void {
+  public getCollection(params: DiscoveryV1.GetCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -853,7 +954,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getCollection');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
@@ -863,7 +964,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -881,12 +981,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listCollectionFields(params: DiscoveryV1.ListCollectionFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): NodeJS.ReadableStream | void {
+  public listCollectionFields(params: DiscoveryV1.ListCollectionFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCollectionFields(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -899,7 +1007,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCollectionFields');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
@@ -909,7 +1017,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -927,12 +1034,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.name] - Find collections with the given name.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listCollections(params: DiscoveryV1.ListCollectionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>): NodeJS.ReadableStream | void {
+  public listCollections(params: DiscoveryV1.ListCollectionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCollections(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -948,7 +1063,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCollections');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections',
@@ -959,7 +1074,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -978,12 +1092,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be updated.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateCollection(params: DiscoveryV1.UpdateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): NodeJS.ReadableStream | void {
+  public updateCollection(params: DiscoveryV1.UpdateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateCollection(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1002,12 +1124,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateCollection');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}',
         method: 'PUT',
-        json: true,
         body,
         path,
       },
@@ -1051,12 +1172,20 @@ class DiscoveryV1 extends BaseService {
    * items listed in the **expanded_terms** array.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
+  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'expansions'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createExpansions(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1073,12 +1202,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createExpansions');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -1102,26 +1230,28 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.stopword_file - The content of the stopword list to ingest.
-   * @param {string} [params.stopword_filename] - The filename for stopword_file.
+   * @param {string} params.stopword_filename - The filename for stopword_file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
-    const requiredParams = ['environment_id', 'collection_id', 'stopword_file'];
+    const _callback = callback;
+    const requiredParams = ['environment_id', 'collection_id', 'stopword_file', 'stopword_filename'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createStopwordList(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    if (_params.stopword_file && !_params.stopword_filename) {
-      console.warn(
-        'WARNING: `stopword_filename` should be provided if `stopword_file` is not null. This will be REQUIRED in the next major release.'
-      );
-    }
-
     const formData = {
       'stopword_file': {
         data: _params.stopword_file,
@@ -1136,7 +1266,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createStopwordList');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
@@ -1168,12 +1298,20 @@ class DiscoveryV1 extends BaseService {
    * text is from.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createTokenizationDictionary(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1190,12 +1328,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createTokenizationDictionary');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -1221,12 +1358,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteExpansions(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1239,7 +1384,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteExpansions');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
@@ -1248,8 +1393,6 @@ class DiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1268,12 +1411,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteStopwordList(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1286,7 +1437,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteStopwordList');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
@@ -1295,8 +1446,6 @@ class DiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1314,12 +1463,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteTokenizationDictionary(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1332,7 +1489,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTokenizationDictionary');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
@@ -1341,8 +1498,6 @@ class DiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1360,12 +1515,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getStopwordListStatus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1378,7 +1541,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getStopwordListStatus');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
@@ -1388,7 +1551,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1406,12 +1568,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): NodeJS.ReadableStream | void {
+  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getTokenizationDictionaryStatus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1424,7 +1594,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTokenizationDictionaryStatus');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
@@ -1434,7 +1604,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1453,12 +1622,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): NodeJS.ReadableStream | void {
+  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listExpansions(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1471,7 +1648,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listExpansions');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
@@ -1481,7 +1658,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1514,13 +1690,19 @@ class DiscoveryV1 extends BaseService {
    *
    *   * Fields with empty name values after normalization are filtered out before indexing.
    *
-   *   * Fields containing the following characters after normalization are filtered out before indexing: `#` and `,`.
+   *   * Fields containing the following characters after normalization are filtered out before indexing: `#` and `,`
+   *
+   *  **Note:** Documents can be added with a specific **document_id** by using the
+   * **_/v1/environments/{environment_id}/collections/{collection_id}/documents** method.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
-   * supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
+   * testing a confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.file_content_type] - The content type of file.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a
    * document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is
    * 1 MB. Metadata parts larger than 1 MB are rejected.
@@ -1528,27 +1710,27 @@ class DiscoveryV1 extends BaseService {
    *   "Creator": "Johnny Appleseed",
    *   "Subject": "Apples"
    * } ```.
-   * @param {string} [params.file_content_type] - The content type of file.
-   * @param {string} [params.filename] - The filename for file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public addDocument(params: DiscoveryV1.AddDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): NodeJS.ReadableStream | void {
+  public addDocument(params: DiscoveryV1.AddDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    if (_params.file && !_params.filename) {
-      console.warn(
-        'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
-      );
-    }
-
     const formData = {
       'file': {
         data: _params.file,
@@ -1564,7 +1746,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'addDocument');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents',
@@ -1595,12 +1777,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.document_id - The ID of the document.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteDocument(params: DiscoveryV1.DeleteDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>): NodeJS.ReadableStream | void {
+  public deleteDocument(params: DiscoveryV1.DeleteDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1614,7 +1804,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteDocument');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
@@ -1624,7 +1814,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1645,12 +1834,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.document_id - The ID of the document.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getDocumentStatus(params: DiscoveryV1.GetDocumentStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>): NodeJS.ReadableStream | void {
+  public getDocumentStatus(params: DiscoveryV1.GetDocumentStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getDocumentStatus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1664,7 +1861,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getDocumentStatus');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
@@ -1674,7 +1871,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1685,14 +1881,21 @@ class DiscoveryV1 extends BaseService {
   /**
    * Update a document.
    *
-   * Replace an existing document. Starts ingesting a document with optional metadata.
+   * Replace an existing document or add a document with a specified **document_id**. Starts ingesting a document with
+   * optional metadata.
+   *
+   * **Note:** When uploading a new document with this method it automatically replaces any document stored with the
+   * same **document_id** if it exists.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
-   * supported file size is 50 megabytes. Files larger than 50 megabytes is rejected.
+   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
+   * testing a confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.file_content_type] - The content type of file.
    * @param {string} [params.metadata] - If you're using the Data Crawler to upload your documents, you can test a
    * document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is
    * 1 MB. Metadata parts larger than 1 MB are rejected.
@@ -1700,27 +1903,27 @@ class DiscoveryV1 extends BaseService {
    *   "Creator": "Johnny Appleseed",
    *   "Subject": "Apples"
    * } ```.
-   * @param {string} [params.file_content_type] - The content type of file.
-   * @param {string} [params.filename] - The filename for file.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateDocument(params: DiscoveryV1.UpdateDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): NodeJS.ReadableStream | void {
+  public updateDocument(params: DiscoveryV1.UpdateDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-    if (_params.file && !_params.filename) {
-      console.warn(
-        'WARNING: `filename` should be provided if `file` is not null. This will be REQUIRED in the next major release.'
-      );
-    }
-
     const formData = {
       'file': {
         data: _params.file,
@@ -1737,7 +1940,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateDocument');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
@@ -1765,7 +1968,8 @@ class DiscoveryV1 extends BaseService {
    *
    * Complex queries might be too long for a standard method query. By using this method, you can construct longer
    * queries. However, these queries may take longer to complete than the standard method. For details, see the
-   * [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html).
+   * [Discovery service
+   * documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-query-concepts#query-concepts).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1782,36 +1986,36 @@ class DiscoveryV1 extends BaseService {
    * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
    * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to return.
+   * @param {string} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
    * number of results that are returned is 10 and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
+   * @param {string} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias**
    * parameter.
    * @param {boolean} [params.highlight] - When true, a highlight field is returned for each result which contains the
    * fields which match the query with `<em></em>` tags around the matching query terms.
-   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
+   * @param {string} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
    * parameter not specified, then all top-level fields are included.
    * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
    * passages if the requested total is not found. The default is `10`. The maximum is `100`.
    * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
-   * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate
+   * @param {boolean} [params.deduplicate] - When `true`, and used with a Watson Discovery News collection, duplicate
    * results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current
    * query only; **offset** is not considered. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
-   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against. Required
+   * @param {string} [params.collection_ids] - A comma-separated list of collection IDs to be queried against. Required
    * when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
+   * @param {string} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
    *
    * **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search
    * with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied
    * and reduce the scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
+   * @param {string} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {string} [params.bias] - Field which the returned results will be biased against. The specified field must
    * be either a **date** or **number** format. When a **date** type field is specified returned results are biased
@@ -1820,25 +2024,25 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.logging_opt_out] - If `true`, queries are not stored in the Discovery **Logs** endpoint.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public federatedQuery(params: DiscoveryV1.FederatedQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): NodeJS.ReadableStream | void {
+  public federatedQuery(params: DiscoveryV1.FederatedQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.federatedQuery(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-
-    // these params were arrays but now need to be strings, the following code is for compatibility
-    const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids', 'similar_fields'];
-    nonArrayParams.forEach(paramName => {
-      if (Array.isArray(_params[paramName])) {
-        _params[paramName] = _params[paramName].join(',');
-      }
-    });
 
     const body = {
       'filter': _params.filter,
@@ -1868,12 +2072,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'federatedQuery');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/query',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -1894,8 +2097,8 @@ class DiscoveryV1 extends BaseService {
    *
    * Queries for notices (errors or warnings) that might have been generated by the system. Notices are generated when
    * ingesting documents and performing relevance training. See the [Discovery service
-   * documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details on the query
-   * language.
+   * documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-query-concepts#query-concepts) for
+   * more details on the query language.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -1911,11 +2114,13 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
    * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
    * aggregations, see the Query reference.
-   * @param {number} [params.count] - Number of results to return.
+   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
+   * together in any one query is **10000**.
    * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
+   * **count** and **offset** values together in any one query is **10000**.
    * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
@@ -1935,12 +2140,20 @@ class DiscoveryV1 extends BaseService {
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public federatedQueryNotices(params: DiscoveryV1.FederatedQueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): NodeJS.ReadableStream | void {
+  public federatedQueryNotices(params: DiscoveryV1.FederatedQueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_ids'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.federatedQueryNotices(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1969,7 +2182,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'federatedQueryNotices');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/notices',
@@ -1980,7 +2193,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1993,7 +2205,8 @@ class DiscoveryV1 extends BaseService {
    *
    * Complex queries might be too long for a standard method query. By using this method, you can construct longer
    * queries. However, these queries may take longer to complete than the standard method. For details, see the
-   * [Discovery service documentation](https://console.bluemix.net/docs/services/discovery/using.html).
+   * [Discovery service
+   * documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-query-concepts#query-concepts).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -2011,36 +2224,36 @@ class DiscoveryV1 extends BaseService {
    * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
    * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to return.
+   * @param {string} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
    * number of results that are returned is 10 and the offset is 8, it returns the last two results.
-   * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
+   * @param {string} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias**
    * parameter.
    * @param {boolean} [params.highlight] - When true, a highlight field is returned for each result which contains the
    * fields which match the query with `<em></em>` tags around the matching query terms.
-   * @param {string[]} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
+   * @param {string} [params.passages_fields] - A comma-separated list of fields that passages are drawn from. If this
    * parameter not specified, then all top-level fields are included.
    * @param {number} [params.passages_count] - The maximum number of passages to return. The search returns fewer
    * passages if the requested total is not found. The default is `10`. The maximum is `100`.
    * @param {number} [params.passages_characters] - The approximate number of characters that any one passage will have.
-   * @param {boolean} [params.deduplicate] - When `true` and used with a Watson Discovery News collection, duplicate
+   * @param {boolean} [params.deduplicate] - When `true`, and used with a Watson Discovery News collection, duplicate
    * results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current
    * query only; **offset** is not considered. This parameter is currently Beta functionality.
    * @param {string} [params.deduplicate_field] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
-   * @param {string[]} [params.collection_ids] - A comma-separated list of collection IDs to be queried against. Required
+   * @param {string} [params.collection_ids] - A comma-separated list of collection IDs to be queried against. Required
    * when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
-   * @param {string[]} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
+   * @param {string} [params.similar_document_ids] - A comma-separated list of document IDs to find similar documents.
    *
    * **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search
    * with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied
    * and reduce the scope.
-   * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
+   * @param {string} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {string} [params.bias] - Field which the returned results will be biased against. The specified field must
    * be either a **date** or **number** format. When a **date** type field is specified returned results are biased
@@ -2049,25 +2262,25 @@ class DiscoveryV1 extends BaseService {
    * @param {boolean} [params.logging_opt_out] - If `true`, queries are not stored in the Discovery **Logs** endpoint.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public query(params: DiscoveryV1.QueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): NodeJS.ReadableStream | void {
+  public query(params: DiscoveryV1.QueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.query(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-
-    // these params were arrays but now need to be strings, the following code is for compatibility
-    const nonArrayParams = ['return_fields', 'sort', 'passages_fields', 'collection_ids', 'similar_document_ids'];
-    nonArrayParams.forEach(paramName => {
-      if (Array.isArray(_params[paramName])) {
-        _params[paramName] = _params[paramName].join(',');
-      }
-    });
 
     const body = {
       'filter': _params.filter,
@@ -2098,12 +2311,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'query');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -2122,7 +2334,7 @@ class DiscoveryV1 extends BaseService {
   /**
    * Knowledge Graph entity query.
    *
-   * See the [Knowledge Graph documentation](https://console.bluemix.net/docs/services/discovery/building-kg.html) for
+   * See the [Knowledge Graph documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-kg#kg) for
    * more details.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2139,12 +2351,20 @@ class DiscoveryV1 extends BaseService {
    * `0`. The maximum number of evidence items per query is 10,000.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public queryEntities(params: DiscoveryV1.QueryEntitiesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryEntitiesResponse>): NodeJS.ReadableStream | void {
+  public queryEntities(params: DiscoveryV1.QueryEntitiesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryEntitiesResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryEntities(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2165,12 +2385,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryEntities');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/query_entities',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -2190,8 +2409,8 @@ class DiscoveryV1 extends BaseService {
    *
    * Queries for notices (errors or warnings) that might have been generated by the system. Notices are generated when
    * ingesting documents and performing relevance training. See the [Discovery service
-   * documentation](https://console.bluemix.net/docs/services/discovery/using.html) for more details on the query
-   * language.
+   * documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-query-concepts#query-concepts) for
+   * more details on the query language.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
@@ -2208,11 +2427,13 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
    * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
    * aggregations, see the Query reference.
-   * @param {number} [params.count] - Number of results to return.
+   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
+   * together in any one query is **10000**.
    * @param {string[]} [params.return_fields] - A comma-separated list of the portion of the document hierarchy to
    * return.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
+   * **count** and **offset** values together in any one query is **10000**.
    * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
@@ -2237,12 +2458,20 @@ class DiscoveryV1 extends BaseService {
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public queryNotices(params: DiscoveryV1.QueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): NodeJS.ReadableStream | void {
+  public queryNotices(params: DiscoveryV1.QueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryNotices(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2275,7 +2504,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryNotices');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/notices',
@@ -2286,7 +2515,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2297,7 +2525,7 @@ class DiscoveryV1 extends BaseService {
   /**
    * Knowledge Graph relationship query.
    *
-   * See the [Knowledge Graph documentation](https://console.bluemix.net/docs/services/discovery/building-kg.html) for
+   * See the [Knowledge Graph documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-kg#kg) for
    * more details.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2310,18 +2538,26 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.sort] - The sorting method for the relationships, can be `score` or `frequency`.
    * `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot
    * be used in the same query as the **bias** parameter.
-   * @param {QueryRelationsFilter} [params.filter] - Filters to apply to the relationship query.
+   * @param {QueryRelationsFilter} [params.filter] -
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
    * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is
    * `0`. The maximum number of evidence items per query is 10,000.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public queryRelations(params: DiscoveryV1.QueryRelationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryRelationsResponse>): NodeJS.ReadableStream | void {
+  public queryRelations(params: DiscoveryV1.QueryRelationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryRelationsResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryRelations(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2343,12 +2579,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryRelations');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/query_relations',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -2375,17 +2610,26 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {string} [params.natural_language_query] -
-   * @param {string} [params.filter] -
-   * @param {TrainingExample[]} [params.examples] -
+   * @param {string} [params.natural_language_query] - The natural text query for the new training query.
+   * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
+   * applied.
+   * @param {TrainingExample[]} [params.examples] - Array of training examples.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public addTrainingData(params: DiscoveryV1.AddTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): NodeJS.ReadableStream | void {
+  public addTrainingData(params: DiscoveryV1.AddTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2404,12 +2648,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'addTrainingData');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -2433,17 +2676,25 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
-   * @param {string} [params.document_id] -
-   * @param {string} [params.cross_reference] -
-   * @param {number} [params.relevance] -
+   * @param {string} [params.document_id] - The document ID associated with this training example.
+   * @param {string} [params.cross_reference] - The cross reference associated with this training example.
+   * @param {number} [params.relevance] - The relevance of the training example.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createTrainingExample(params: DiscoveryV1.CreateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | void {
+  public createTrainingExample(params: DiscoveryV1.CreateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2463,12 +2714,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createTrainingExample');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -2493,12 +2743,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteAllTrainingData(params: DiscoveryV1.DeleteAllTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteAllTrainingData(params: DiscoveryV1.DeleteAllTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteAllTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2511,7 +2769,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteAllTrainingData');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
@@ -2520,8 +2778,6 @@ class DiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2540,12 +2796,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteTrainingData(params: DiscoveryV1.DeleteTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteTrainingData(params: DiscoveryV1.DeleteTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2559,7 +2823,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTrainingData');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
@@ -2568,8 +2832,6 @@ class DiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2589,12 +2851,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.example_id - The ID of the document as it is indexed.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteTrainingExample(params: DiscoveryV1.DeleteTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteTrainingExample(params: DiscoveryV1.DeleteTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2609,7 +2879,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTrainingExample');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
@@ -2618,8 +2888,6 @@ class DiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2638,12 +2906,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getTrainingData(params: DiscoveryV1.GetTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): NodeJS.ReadableStream | void {
+  public getTrainingData(params: DiscoveryV1.GetTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2657,7 +2933,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTrainingData');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
@@ -2667,7 +2943,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2687,12 +2962,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.example_id - The ID of the document as it is indexed.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getTrainingExample(params: DiscoveryV1.GetTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | void {
+  public getTrainingExample(params: DiscoveryV1.GetTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2707,7 +2990,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTrainingExample');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
@@ -2717,7 +3000,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2735,12 +3017,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listTrainingData(params: DiscoveryV1.ListTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>): NodeJS.ReadableStream | void {
+  public listTrainingData(params: DiscoveryV1.ListTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listTrainingData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2753,7 +3043,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listTrainingData');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
@@ -2763,7 +3053,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2782,12 +3071,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listTrainingExamples(params: DiscoveryV1.ListTrainingExamplesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>): NodeJS.ReadableStream | void {
+  public listTrainingExamples(params: DiscoveryV1.ListTrainingExamplesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listTrainingExamples(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2801,7 +3098,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listTrainingExamples');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
@@ -2811,7 +3108,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2829,16 +3125,24 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
-   * @param {string} [params.cross_reference] -
-   * @param {number} [params.relevance] -
+   * @param {string} [params.cross_reference] - The example to add.
+   * @param {number} [params.relevance] - The relevance value for this example.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateTrainingExample(params: DiscoveryV1.UpdateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): NodeJS.ReadableStream | void {
+  public updateTrainingExample(params: DiscoveryV1.UpdateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateTrainingExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2858,12 +3162,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateTrainingExample');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
         method: 'PUT',
-        json: true,
         body,
         path,
       },
@@ -2890,18 +3193,26 @@ class DiscoveryV1 extends BaseService {
    *
    * You associate a customer ID with data by passing the **X-Watson-Metadata** header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://console.bluemix.net/docs/services/discovery/information-security.html).
+   * security](https://cloud.ibm.com/docs/services/discovery?topic=discovery-information-security#information-security).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): NodeJS.ReadableStream | void {
+  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['customer_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteUserData(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2913,7 +3224,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteUserData');
- 
+
     const parameters = {
       options: {
         url: '/v1/user_data',
@@ -2922,8 +3233,6 @@ class DiscoveryV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2946,12 +3255,20 @@ class DiscoveryV1 extends BaseService {
    * @param {EventData} params.data - Query event data object.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createEvent(params: DiscoveryV1.CreateEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CreateEventResponse>): NodeJS.ReadableStream | void {
+  public createEvent(params: DiscoveryV1.CreateEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CreateEventResponse>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['type', 'data'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createEvent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -2964,12 +3281,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createEvent');
- 
+
     const parameters = {
       options: {
         url: '/v1/events',
         method: 'POST',
-        json: true,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -2998,11 +3314,19 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsEventRate(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -3011,7 +3335,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsEventRate');
- 
+
     const parameters = {
       options: {
         url: '/v1/metrics/event_rate',
@@ -3021,7 +3345,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3042,11 +3365,19 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQuery(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -3055,7 +3386,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQuery');
- 
+
     const parameters = {
       options: {
         url: '/v1/metrics/number_of_queries',
@@ -3065,7 +3396,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3088,11 +3418,19 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQueryEvent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -3101,7 +3439,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryEvent');
- 
+
     const parameters = {
       options: {
         url: '/v1/metrics/number_of_queries_with_event',
@@ -3111,7 +3449,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3133,11 +3470,19 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQueryNoResults(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'start_time': _params.start_time,
@@ -3146,7 +3491,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryNoResults');
- 
+
     const parameters = {
       options: {
         url: '/v1/metrics/number_of_queries_with_no_search_results',
@@ -3156,7 +3501,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3172,21 +3516,30 @@ class DiscoveryV1 extends BaseService {
    * individual word or unigram within the query string.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {number} [params.count] - Number of results to return.
+   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
+   * together in any one query is **10000**.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): NodeJS.ReadableStream | void {
+  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getMetricsQueryTokenEvent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'count': _params.count
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryTokenEvent');
- 
+
     const parameters = {
       options: {
         url: '/v1/metrics/top_query_tokens_with_event_rate',
@@ -3196,7 +3549,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3216,19 +3568,29 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
    * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
    * relevant search results. You cannot use **natural_language_query** and **query** at the same time.
-   * @param {number} [params.count] - Number of results to return.
+   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
+   * together in any one query is **10000**.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
+   * **count** and **offset** values together in any one query is **10000**.
    * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): NodeJS.ReadableStream | void {
+  public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.queryLog(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'filter': _params.filter,
@@ -3239,7 +3601,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryLog');
- 
+
     const parameters = {
       options: {
         url: '/v1/logs',
@@ -3249,7 +3611,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3276,17 +3637,26 @@ class DiscoveryV1 extends BaseService {
    * -  `salesforce` indicates the credentials are used to connect to Salesforce.
    * -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online.
    * -  `web_crawl` indicates the credentials are used to perform a web crawl.
+   * =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store.
    * @param {CredentialDetails} [params.credential_details] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createCredentials(params: DiscoveryV1.CreateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
+  public createCredentials(params: DiscoveryV1.CreateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3303,12 +3673,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createCredentials');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -3333,12 +3702,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.credential_id - The unique identifier for a set of source credentials.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteCredentials(params: DiscoveryV1.DeleteCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCredentials>): NodeJS.ReadableStream | void {
+  public deleteCredentials(params: DiscoveryV1.DeleteCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCredentials>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'credential_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3351,7 +3728,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteCredentials');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials/{credential_id}',
@@ -3361,7 +3738,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3382,12 +3758,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.credential_id - The unique identifier for a set of source credentials.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getSourceCredentials(params: DiscoveryV1.GetSourceCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
+  public getCredentials(params: DiscoveryV1.GetCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'credential_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3399,8 +3783,8 @@ class DiscoveryV1 extends BaseService {
       'credential_id': _params.credential_id
     };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getSourceCredentials');
- 
+    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getCredentials');
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials/{credential_id}',
@@ -3410,7 +3794,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3429,12 +3812,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listCredentials(params: DiscoveryV1.ListCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CredentialsList>): NodeJS.ReadableStream | void {
+  public listCredentials(params: DiscoveryV1.ListCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CredentialsList>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3446,7 +3837,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCredentials');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials',
@@ -3456,7 +3847,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3479,17 +3869,26 @@ class DiscoveryV1 extends BaseService {
    * -  `salesforce` indicates the credentials are used to connect to Salesforce.
    * -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online.
    * -  `web_crawl` indicates the credentials are used to perform a web crawl.
+   * =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store.
    * @param {CredentialDetails} [params.credential_details] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public updateCredentials(params: DiscoveryV1.UpdateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): NodeJS.ReadableStream | void {
+  public updateCredentials(params: DiscoveryV1.UpdateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'credential_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.updateCredentials(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3507,12 +3906,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateCredentials');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/credentials/{credential_id}',
         method: 'PUT',
-        json: true,
         body,
         path,
       },
@@ -3541,12 +3939,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.name] - User-defined name.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createGateway(params: DiscoveryV1.CreateGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | void {
+  public createGateway(params: DiscoveryV1.CreateGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createGateway(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3562,12 +3968,11 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createGateway');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/gateways',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -3592,12 +3997,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.gateway_id - The requested gateway ID.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayDelete>): NodeJS.ReadableStream | void {
+  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayDelete>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'gateway_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteGateway(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3610,7 +4023,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteGateway');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
@@ -3620,7 +4033,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3638,12 +4050,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.gateway_id - The requested gateway ID.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getGateway(params: DiscoveryV1.GetGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): NodeJS.ReadableStream | void {
+  public getGateway(params: DiscoveryV1.GetGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id', 'gateway_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getGateway(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3656,7 +4076,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getGateway');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
@@ -3666,7 +4086,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3683,12 +4102,20 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listGateways(params: DiscoveryV1.ListGatewaysParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayList>): NodeJS.ReadableStream | void {
+  public listGateways(params: DiscoveryV1.ListGatewaysParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayList>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['environment_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listGateways(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -3700,7 +4127,7 @@ class DiscoveryV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listGateways');
- 
+
     const parameters = {
       options: {
         url: '/v1/environments/{environment_id}/gateways',
@@ -3710,7 +4137,6 @@ class DiscoveryV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -3743,7 +4169,7 @@ namespace DiscoveryV1 {
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -3761,6 +4187,7 @@ namespace DiscoveryV1 {
     /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
     size?: CreateEnvironmentConstants.Size | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createEnvironment` operation. */
@@ -3785,6 +4212,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getEnvironment` operation. */
@@ -3792,6 +4220,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listEnvironments` operation. */
@@ -3799,6 +4228,7 @@ namespace DiscoveryV1 {
     /** Show only the environment with the given name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listFields` operation. */
@@ -3808,6 +4238,7 @@ namespace DiscoveryV1 {
     /** A comma-separated list of collection IDs to be queried against. */
     collection_ids: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateEnvironment` operation. */
@@ -3821,6 +4252,7 @@ namespace DiscoveryV1 {
     /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
     size?: UpdateEnvironmentConstants.Size | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateEnvironment` operation. */
@@ -3855,6 +4287,7 @@ namespace DiscoveryV1 {
     /** Object containing source parameters for the configuration. */
     source?: Source;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteConfiguration` operation. */
@@ -3864,6 +4297,7 @@ namespace DiscoveryV1 {
     /** The ID of the configuration. */
     configuration_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getConfiguration` operation. */
@@ -3873,6 +4307,7 @@ namespace DiscoveryV1 {
     /** The ID of the configuration. */
     configuration_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listConfigurations` operation. */
@@ -3882,6 +4317,7 @@ namespace DiscoveryV1 {
     /** Find configurations with the given name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateConfiguration` operation. */
@@ -3903,6 +4339,7 @@ namespace DiscoveryV1 {
     /** Object containing source parameters for the configuration. */
     source?: Source;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `testConfigurationInEnvironment` operation. */
@@ -3911,32 +4348,24 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The configuration to use to process the document. If this part is provided, then the provided configuration is used to process the document. If the **configuration_id** is also provided (both are present at the same time), then request is rejected. The maximum supported configuration size is 1 MB. Configuration parts larger than 1 MB are rejected. See the `GET /configurations/{configuration_id}` operation for an example configuration. */
     configuration?: string;
+    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the supported size are rejected. */
+    file?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for file. */
+    filename?: string;
+    /** The content type of file. */
+    file_content_type?: TestConfigurationInEnvironmentConstants.FileContentType | string;
+    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
+    metadata?: string;
     /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
     step?: TestConfigurationInEnvironmentConstants.Step | string;
     /** The ID of the configuration to use to process the document. If the **configuration** form part is also provided (both are present at the same time), then the request will be rejected. */
     configuration_id?: string;
-    /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. */
-    file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
-    metadata?: string;
-    /** The content type of file. */
-    file_content_type?: TestConfigurationInEnvironmentConstants.FileContentType | string;
-    /** The filename for file. */
-    filename?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `testConfigurationInEnvironment` operation. */
   export namespace TestConfigurationInEnvironmentConstants {
-    /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
-    export enum Step {
-      HTML_INPUT = 'html_input',
-      HTML_OUTPUT = 'html_output',
-      JSON_OUTPUT = 'json_output',
-      JSON_NORMALIZATIONS_OUTPUT = 'json_normalizations_output',
-      ENRICHMENTS_OUTPUT = 'enrichments_output',
-      NORMALIZATIONS_OUTPUT = 'normalizations_output',
-    }
     /** The content type of file. */
     export enum FileContentType {
       APPLICATION_JSON = 'application/json',
@@ -3945,6 +4374,15 @@ namespace DiscoveryV1 {
       APPLICATION_PDF = 'application/pdf',
       TEXT_HTML = 'text/html',
       APPLICATION_XHTML_XML = 'application/xhtml+xml',
+    }
+    /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
+    export enum Step {
+      HTML_INPUT = 'html_input',
+      HTML_OUTPUT = 'html_output',
+      JSON_OUTPUT = 'json_output',
+      JSON_NORMALIZATIONS_OUTPUT = 'json_normalizations_output',
+      ENRICHMENTS_OUTPUT = 'enrichments_output',
+      NORMALIZATIONS_OUTPUT = 'normalizations_output',
     }
   }
 
@@ -3961,6 +4399,7 @@ namespace DiscoveryV1 {
     /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
     language?: CreateCollectionConstants.Language | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createCollection` operation. */
@@ -3977,6 +4416,7 @@ namespace DiscoveryV1 {
       KO = 'ko',
       PT = 'pt',
       NL = 'nl',
+      ZH_CN = 'zh-CN',
     }
   }
 
@@ -3987,6 +4427,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getCollection` operation. */
@@ -3996,6 +4437,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listCollectionFields` operation. */
@@ -4005,6 +4447,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listCollections` operation. */
@@ -4014,6 +4457,7 @@ namespace DiscoveryV1 {
     /** Find collections with the given name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateCollection` operation. */
@@ -4029,6 +4473,7 @@ namespace DiscoveryV1 {
     /** The ID of the configuration in which the collection is to be updated. */
     configuration_id?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createExpansions` operation. */
@@ -4040,6 +4485,7 @@ namespace DiscoveryV1 {
     /** An array of query expansion definitions. Each object in the **expansions** array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured as bidirectional or unidirectional. Bidirectional means that all terms are expanded to all other terms in the object. Unidirectional means that a set list of terms can be expanded into a second list of terms. To create a bi-directional expansion specify an **expanded_terms** array. When found in a query, all items in the **expanded_terms** array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of **input_terms** and an array of **expanded_terms**. When items in the **input_terms** array are present in a query, they are expanded using the items listed in the **expanded_terms** array. */
     expansions: Expansion[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createStopwordList` operation. */
@@ -4051,8 +4497,9 @@ namespace DiscoveryV1 {
     /** The content of the stopword list to ingest. */
     stopword_file: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for stopword_file. */
-    stopword_filename?: string;
+    stopword_filename: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createTokenizationDictionary` operation. */
@@ -4064,6 +4511,7 @@ namespace DiscoveryV1 {
     /** An array of tokenization rules. Each rule contains, the original `text` string, component `tokens`, any alternate character set `readings`, and which `part_of_speech` the text is from. */
     tokenization_rules?: TokenDictRule[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteExpansions` operation. */
@@ -4073,6 +4521,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteStopwordList` operation. */
@@ -4082,6 +4531,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteTokenizationDictionary` operation. */
@@ -4091,6 +4541,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getStopwordListStatus` operation. */
@@ -4100,6 +4551,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getTokenizationDictionaryStatus` operation. */
@@ -4109,6 +4561,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listExpansions` operation. */
@@ -4118,6 +4571,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `addDocument` operation. */
@@ -4126,15 +4580,16 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. */
+    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the supported size are rejected. */
     file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
-    metadata?: string;
-    /** The content type of file. */
-    file_content_type?: AddDocumentConstants.FileContentType | string;
     /** The filename for file. */
     filename?: string;
+    /** The content type of file. */
+    file_content_type?: AddDocumentConstants.FileContentType | string;
+    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
+    metadata?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `addDocument` operation. */
@@ -4159,6 +4614,7 @@ namespace DiscoveryV1 {
     /** The ID of the document. */
     document_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getDocumentStatus` operation. */
@@ -4170,6 +4626,7 @@ namespace DiscoveryV1 {
     /** The ID of the document. */
     document_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateDocument` operation. */
@@ -4180,15 +4637,16 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the document. */
     document_id: string;
-    /** The content of the document to ingest. The maximum supported file size is 50 megabytes. Files larger than 50 megabytes is rejected. */
+    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the supported size are rejected. */
     file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
-    metadata?: string;
-    /** The content type of file. */
-    file_content_type?: UpdateDocumentConstants.FileContentType | string;
     /** The filename for file. */
     filename?: string;
+    /** The content type of file. */
+    file_content_type?: UpdateDocumentConstants.FileContentType | string;
+    /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
+    metadata?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateDocument` operation. */
@@ -4221,36 +4679,37 @@ namespace DiscoveryV1 {
     /** Number of results to return. */
     count?: number;
     /** A comma-separated list of the portion of the document hierarchy to return. */
-    return_fields?: string[];
+    return_fields?: string;
     /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias** parameter. */
-    sort?: string[];
+    sort?: string;
     /** When true, a highlight field is returned for each result which contains the fields which match the query with `<em></em>` tags around the matching query terms. */
     highlight?: boolean;
     /** A comma-separated list of fields that passages are drawn from. If this parameter not specified, then all top-level fields are included. */
-    passages_fields?: string[];
+    passages_fields?: string;
     /** The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`. */
     passages_count?: number;
     /** The approximate number of characters that any one passage will have. */
     passages_characters?: number;
-    /** When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current query only; **offset** is not considered. This parameter is currently Beta functionality. */
+    /** When `true`, and used with a Watson Discovery News collection, duplicate results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current query only; **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate?: boolean;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
     /** A comma-separated list of collection IDs to be queried against. Required when querying multiple collections, invalid when performing a single collection query. */
-    collection_ids?: string[];
+    collection_ids?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the **similar.document_ids** parameter. */
     similar?: boolean;
     /** A comma-separated list of document IDs to find similar documents. **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied and reduce the scope. */
-    similar_document_ids?: string[];
+    similar_document_ids?: string;
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
-    similar_fields?: string[];
+    similar_fields?: string;
     /** Field which the returned results will be biased against. The specified field must be either a **date** or **number** format. When a **date** type field is specified returned results are biased towards field values closer to the current date. When a **number** type field is specified, returned results are biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter. */
     bias?: string;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `federatedQueryNotices` operation. */
@@ -4267,11 +4726,11 @@ namespace DiscoveryV1 {
     natural_language_query?: string;
     /** An aggregation search that returns an exact answer by combining query search with filters. Useful for applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query reference. */
     aggregation?: string;
-    /** Number of results to return. */
+    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     count?: number;
     /** A comma-separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
@@ -4286,6 +4745,7 @@ namespace DiscoveryV1 {
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `query` operation. */
@@ -4307,36 +4767,37 @@ namespace DiscoveryV1 {
     /** Number of results to return. */
     count?: number;
     /** A comma-separated list of the portion of the document hierarchy to return. */
-    return_fields?: string[];
+    return_fields?: string;
     /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias** parameter. */
-    sort?: string[];
+    sort?: string;
     /** When true, a highlight field is returned for each result which contains the fields which match the query with `<em></em>` tags around the matching query terms. */
     highlight?: boolean;
     /** A comma-separated list of fields that passages are drawn from. If this parameter not specified, then all top-level fields are included. */
-    passages_fields?: string[];
+    passages_fields?: string;
     /** The maximum number of passages to return. The search returns fewer passages if the requested total is not found. The default is `10`. The maximum is `100`. */
     passages_count?: number;
     /** The approximate number of characters that any one passage will have. */
     passages_characters?: number;
-    /** When `true` and used with a Watson Discovery News collection, duplicate results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current query only; **offset** is not considered. This parameter is currently Beta functionality. */
+    /** When `true`, and used with a Watson Discovery News collection, duplicate results (based on the contents of the **title** field) are removed. Duplicate comparison is limited to the current query only; **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate?: boolean;
     /** When specified, duplicate results based on the field specified are removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not considered. This parameter is currently Beta functionality. */
     deduplicate_field?: string;
     /** A comma-separated list of collection IDs to be queried against. Required when querying multiple collections, invalid when performing a single collection query. */
-    collection_ids?: string[];
+    collection_ids?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the **similar.document_ids** parameter. */
     similar?: boolean;
     /** A comma-separated list of document IDs to find similar documents. **Tip:** Include the **natural_language_query** parameter to expand the scope of the document similarity search with the natural language query. Other query parameters, such as **filter** and **query**, are subsequently applied and reduce the scope. */
-    similar_document_ids?: string[];
+    similar_document_ids?: string;
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
-    similar_fields?: string[];
+    similar_fields?: string;
     /** Field which the returned results will be biased against. The specified field must be either a **date** or **number** format. When a **date** type field is specified returned results are biased towards field values closer to the current date. When a **number** type field is specified, returned results are biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter. */
     bias?: string;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryEntities` operation. */
@@ -4356,6 +4817,7 @@ namespace DiscoveryV1 {
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryNotices` operation. */
@@ -4374,11 +4836,11 @@ namespace DiscoveryV1 {
     passages?: boolean;
     /** An aggregation search that returns an exact answer by combining query search with filters. Useful for applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query reference. */
     aggregation?: string;
-    /** Number of results to return. */
+    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     count?: number;
     /** A comma-separated list of the portion of the document hierarchy to return. */
     return_fields?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
@@ -4399,6 +4861,7 @@ namespace DiscoveryV1 {
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryRelations` operation. */
@@ -4413,13 +4876,13 @@ namespace DiscoveryV1 {
     context?: QueryEntitiesContext;
     /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot be used in the same query as the **bias** parameter. */
     sort?: QueryRelationsConstants.Sort | string;
-    /** Filters to apply to the relationship query. */
     filter?: QueryRelationsFilter;
     /** The number of results to return. The default is `10`. The maximum is `1000`. */
     count?: number;
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `queryRelations` operation. */
@@ -4437,10 +4900,14 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
+    /** The natural text query for the new training query. */
     natural_language_query?: string;
+    /** The filter used on the collection before the **natural_language_query** is applied. */
     filter?: string;
+    /** Array of training examples. */
     examples?: TrainingExample[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createTrainingExample` operation. */
@@ -4451,10 +4918,14 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
+    /** The document ID associated with this training example. */
     document_id?: string;
+    /** The cross reference associated with this training example. */
     cross_reference?: string;
+    /** The relevance of the training example. */
     relevance?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteAllTrainingData` operation. */
@@ -4464,6 +4935,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteTrainingData` operation. */
@@ -4475,6 +4947,7 @@ namespace DiscoveryV1 {
     /** The ID of the query used for training. */
     query_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteTrainingExample` operation. */
@@ -4488,6 +4961,7 @@ namespace DiscoveryV1 {
     /** The ID of the document as it is indexed. */
     example_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getTrainingData` operation. */
@@ -4499,6 +4973,7 @@ namespace DiscoveryV1 {
     /** The ID of the query used for training. */
     query_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getTrainingExample` operation. */
@@ -4512,6 +4987,7 @@ namespace DiscoveryV1 {
     /** The ID of the document as it is indexed. */
     example_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listTrainingData` operation. */
@@ -4521,6 +4997,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collection_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listTrainingExamples` operation. */
@@ -4532,6 +5009,7 @@ namespace DiscoveryV1 {
     /** The ID of the query used for training. */
     query_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateTrainingExample` operation. */
@@ -4544,9 +5022,12 @@ namespace DiscoveryV1 {
     query_id: string;
     /** The ID of the document as it is indexed. */
     example_id: string;
+    /** The example to add. */
     cross_reference?: string;
+    /** The relevance value for this example. */
     relevance?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
@@ -4554,6 +5035,7 @@ namespace DiscoveryV1 {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createEvent` operation. */
@@ -4563,6 +5045,7 @@ namespace DiscoveryV1 {
     /** Query event data object. */
     data: EventData;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createEvent` operation. */
@@ -4582,6 +5065,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsEventRateConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsEventRate` operation. */
@@ -4601,6 +5085,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsQuery` operation. */
@@ -4620,6 +5105,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryEventConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsQueryEvent` operation. */
@@ -4639,6 +5125,7 @@ namespace DiscoveryV1 {
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryNoResultsConstants.ResultType | string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `getMetricsQueryNoResults` operation. */
@@ -4651,9 +5138,10 @@ namespace DiscoveryV1 {
 
   /** Parameters for the `getMetricsQueryTokenEvent` operation. */
   export interface GetMetricsQueryTokenEventParams {
-    /** Number of results to return. */
+    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     count?: number;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `queryLog` operation. */
@@ -4662,34 +5150,37 @@ namespace DiscoveryV1 {
     filter?: string;
     /** A query search returns all documents in your data set with full enrichments and full text, but with the most relevant documents listed first. Use a query search when you want to find the most relevant search results. You cannot use **natural_language_query** and **query** at the same time. */
     query?: string;
-    /** Number of results to return. */
+    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     count?: number;
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. */
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createCredentials` operation. */
   export interface CreateCredentialsParams {
     /** The ID of the environment. */
     environment_id: string;
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store. */
     source_type?: CreateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `createCredentials` operation. */
   export namespace CreateCredentialsConstants {
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store. */
     export enum SourceType {
       BOX = 'box',
       SALESFORCE = 'salesforce',
       SHAREPOINT = 'sharepoint',
       WEB_CRAWL = 'web_crawl',
+      CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
     }
   }
 
@@ -4700,15 +5191,17 @@ namespace DiscoveryV1 {
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
-  /** Parameters for the `getSourceCredentials` operation. */
-  export interface GetSourceCredentialsParams {
+  /** Parameters for the `getCredentials` operation. */
+  export interface GetCredentialsParams {
     /** The ID of the environment. */
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listCredentials` operation. */
@@ -4716,6 +5209,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `updateCredentials` operation. */
@@ -4724,21 +5218,23 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store. */
     source_type?: UpdateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Constants for the `updateCredentials` operation. */
   export namespace UpdateCredentialsConstants {
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store. */
     export enum SourceType {
       BOX = 'box',
       SALESFORCE = 'salesforce',
       SHAREPOINT = 'sharepoint',
       WEB_CRAWL = 'web_crawl',
+      CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
     }
   }
 
@@ -4749,6 +5245,7 @@ namespace DiscoveryV1 {
     /** User-defined name. */
     name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteGateway` operation. */
@@ -4758,6 +5255,7 @@ namespace DiscoveryV1 {
     /** The requested gateway ID. */
     gateway_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getGateway` operation. */
@@ -4767,6 +5265,7 @@ namespace DiscoveryV1 {
     /** The requested gateway ID. */
     gateway_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listGateways` operation. */
@@ -4774,6 +5273,7 @@ namespace DiscoveryV1 {
     /** The ID of the environment. */
     environment_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************
@@ -4788,6 +5288,14 @@ namespace DiscoveryV1 {
     matching_results?: number;
     /** Aggregations returned in the case of chained aggregations. */
     aggregations?: QueryAggregation[];
+  }
+
+  /** Calculation. */
+  export interface Calculation {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    /** Value of the aggregation. */
+    value?: number;
   }
 
   /** A collection for storing documents. */
@@ -4808,11 +5316,9 @@ namespace DiscoveryV1 {
     configuration_id?: string;
     /** The language of the documents stored in the collection. Permitted values include `en` (English), `de` (German), and `es` (Spanish). */
     language?: string;
-    /** The object providing information about the documents in the collection. Present only when retrieving details of a collection. */
     document_counts?: DocumentCounts;
     /** Summary of the disk usage statistics for this collection. */
     disk_usage?: CollectionDiskUsage;
-    /** Provides information about the status of relevance training for collection. */
     training_status?: TrainingStatus;
     /** Object containing source crawl status information. */
     source_crawl?: SourceStatus;
@@ -4878,7 +5384,7 @@ namespace DiscoveryV1 {
 
   /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
   export interface CredentialDetails {
-    /** The authentication method for this credentials definition. The  **credential_type** specified must be supported by the **source_type**. The following combinations are possible: -  `"source_type": "box"` - valid `credential_type`s: `oauth2` -  `"source_type": "salesforce"` - valid `credential_type`s: `username_password` -  `"source_type": "sharepoint"` - valid `credential_type`s: `saml` with **source_version** of `online`, or `ntml_v1` with **source_version** of `2016` -  `"source_type": "web_crawl"` - valid `credential_type`s: `noauth` or `basic`. */
+    /** The authentication method for this credentials definition. The  **credential_type** specified must be supported by the **source_type**. The following combinations are possible: -  `"source_type": "box"` - valid `credential_type`s: `oauth2` -  `"source_type": "salesforce"` - valid `credential_type`s: `username_password` -  `"source_type": "sharepoint"` - valid `credential_type`s: `saml` with **source_version** of `online`, or `ntml_v1` with **source_version** of `2016` -  `"source_type": "web_crawl"` - valid `credential_type`s: `noauth` or `basic` -  "source_type": "cloud_object_storage"` - valid `credential_type`s: `aws4_hmac`. */
     credential_type?: string;
     /** The **client_id** of the source that these credentials connect to. Only valid, and required, with a **credential_type** of `oauth2`. */
     client_id?: string;
@@ -4910,13 +5416,19 @@ namespace DiscoveryV1 {
     web_application_url?: string;
     /** The domain used to log in to your OnPrem SharePoint account. Only valid, and required, with a **source_version** of `2016`. */
     domain?: string;
+    /** The endpoint associated with the cloud object store that your are connecting to. Only valid, and required, with a **credential_type** of `aws4_hmac`. */
+    endpoint?: string;
+    /** The access key ID associated with the cloud object store. Only valid, and required, with a **credential_type** of `aws4_hmac`. For more infomation, see the [cloud object store documentation](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-using-hmac-credentials#using-hmac-credentials). */
+    access_key_id?: string;
+    /** The secret access key associated with the cloud object store. Only valid, and required, with a **credential_type** of `aws4_hmac`. This value is never returned and is only used when creating or modifying **credentials**. For more infomation, see the [cloud object store documentation](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-using-hmac-credentials#using-hmac-credentials). */
+    secret_access_key?: string;
   }
 
   /** Object containing credential information. */
   export interface Credentials {
     /** Unique identifier for this set of credentials. */
     credential_id?: string;
-    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. */
+    /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store. */
     source_type?: string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
@@ -4976,14 +5488,6 @@ namespace DiscoveryV1 {
     used_bytes?: number;
     /** Total number of bytes available in the environment's disk capacity. */
     maximum_allowed_bytes?: number;
-    /** **Deprecated**: Total number of bytes available in the environment's disk capacity. */
-    total_bytes?: number;
-    /** **Deprecated**: Amount of disk capacity used, in KB or GB format. */
-    used?: string;
-    /** **Deprecated**: Total amount of the environment's disk capacity, in KB or GB format. */
-    total?: string;
-    /** **Deprecated**: Percentage of the environment's disk capacity that is being used. */
-    percent_used?: number;
   }
 
   /** DocumentAccepted. */
@@ -5010,7 +5514,9 @@ namespace DiscoveryV1 {
 
   /** DocumentSnapshot. */
   export interface DocumentSnapshot {
+    /** The step in the document conversion process that the snapshot object represents. */
     step?: string;
+    /** Snapshot of the conversion. */
     snapshot?: Object;
   }
 
@@ -5020,10 +5526,6 @@ namespace DiscoveryV1 {
     document_id: string;
     /** The unique identifier for the configuration. */
     configuration_id?: string;
-    /** The creation date of the document in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'. */
-    created?: string;
-    /** Date of the most recent document update, in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'. */
-    updated?: string;
     /** Status of the document in the ingestion process. */
     status: string;
     /** Description of the document status. */
@@ -5044,21 +5546,20 @@ namespace DiscoveryV1 {
     description?: string;
     /** Field where enrichments will be stored. This field must already exist or be at most 1 level deeper than an existing field. For example, if `text` is a top-level field with no sub-fields, `text.foo` is a valid destination but `text.foo.bar` is not. */
     destination_field: string;
-    /** Field to be enriched. */
+    /** Field to be enriched. Arrays can be specified as the **source_field** if the **enrichment** service for this enrichment is set to `natural_language_undstanding`. */
     source_field: string;
     /** Indicates that the enrichments will overwrite the destination_field field if it already exists. */
     overwrite?: boolean;
-    /** Name of the enrichment service to call. Current options are `natural_language_understanding` and `elements`. When using `natual_language_understanding`, the **options** object must contain Natural Language Understanding options. When using `elements` the **options** object must contain Element Classification options. Additionally, when using the `elements` enrichment the configuration specified and files ingested must meet all the criteria specified in [the documentation](https://console.bluemix.net/docs/services/discovery/element-classification.html) Previous API versions also supported `alchemy_language`. */
+    /** Name of the enrichment service to call. Current options are `natural_language_understanding` and `elements`. When using `natual_language_understanding`, the **options** object must contain Natural Language Understanding options. When using `elements` the **options** object must contain Element Classification options. Additionally, when using the `elements` enrichment the configuration specified and files ingested must meet all the criteria specified in [the documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-element-classification#element-classification). */
     enrichment_name: string;
     /** If true, then most errors generated during the enrichment process will be treated as warnings and will not cause the document to fail processing. */
     ignore_downstream_errors?: boolean;
-    /** Options which are specific to a particular enrichment. */
+    /** An object representing the configuration options to use for the `elements` enrichment. */
     options?: EnrichmentOptions;
   }
 
-  /** Options which are specific to a particular enrichment. */
+  /** An object representing the configuration options to use for the `elements` enrichment. */
   export interface EnrichmentOptions {
-    /** An object representing the enrichment features that will be applied to the specified field. */
     features?: NluEnrichmentFeatures;
     /** ISO 639-1 code indicating the language to use for the analysis. This code overrides the automatic language detection performed by the service. Valid codes are `ar` (Arabic), `en` (English), `fr` (French), `de` (German), `it` (Italian), `pt` (Portuguese), `ru` (Russian), `es` (Spanish), and `sv` (Swedish). **Note:** Not all features support all languages, automatic detection is recommended. */
     language?: string;
@@ -5140,13 +5641,25 @@ namespace DiscoveryV1 {
     field_type?: string;
   }
 
+  /** Filter. */
+  export interface Filter {
+    /** The match the aggregated results queried for. */
+    match?: string;
+  }
+
   /** FontSetting. */
   export interface FontSetting {
+    /** The HTML heading level that any content with the matching font will be converted to. */
     level?: number;
+    /** The minimum size of the font to match. */
     min_size?: number;
+    /** The maximum size of the font to match. */
     max_size?: number;
+    /** When `true`, the font is matched if it is bold. */
     bold?: boolean;
+    /** When `true`, the font is matched if it is italic. */
     italic?: boolean;
+    /** The name of the font. */
     name?: string;
   }
 
@@ -5178,13 +5691,25 @@ namespace DiscoveryV1 {
     gateways?: Gateway[];
   }
 
+  /** Histogram. */
+  export interface Histogram {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    /** Interval of the aggregation. (For 'histogram' type). */
+    interval?: number;
+  }
+
   /** A list of HTML conversion settings. */
   export interface HtmlSettings {
+    /** Array of HTML tags that are excluded completely. */
     exclude_tags_completely?: string[];
+    /** Array of HTML tags which are excluded but still retain content. */
     exclude_tags_keep_content?: string[];
     keep_content?: XPathPatterns;
     exclude_content?: XPathPatterns;
+    /** An array of HTML tag attributes to keep in the converted document. */
     keep_tag_attributes?: string[];
+    /** Array of HTML tag attributes to exclude. */
     exclude_tag_attributes?: string[];
   }
 
@@ -5196,8 +5721,6 @@ namespace DiscoveryV1 {
     disk_usage?: DiskUsage;
     /** Summary of the collection usage in the environment. */
     collections?: CollectionUsage;
-    /** **Deprecated**: Summary of the memory usage statistics for this environment. */
-    memory_usage?: MemoryUsage;
   }
 
   /** The list of fetched fields. The fields are returned using a fully qualified name format, however, the format differs slightly from that used by the query operations. * Fields which contain nested JSON objects are assigned a type of "nested". * Fields which belong to a nested object are prefixed with `.properties` (for example, `warnings.properties.severity` means that the `warnings` object has a property called `severity`). * Fields returned from the News collection are prefixed with `v{N}-fullnews-t3-{YEAR}.mappings` (for example, `v5-fullnews-t3-2016.mappings.text.properties.author`). */
@@ -5228,6 +5751,7 @@ namespace DiscoveryV1 {
   export interface LogQueryResponse {
     /** Number of matching results. */
     matching_results?: number;
+    /** Array of log query response results. */
     results?: LogQueryResponseResult[];
   }
 
@@ -5265,6 +5789,7 @@ namespace DiscoveryV1 {
 
   /** Object containing result information that was returned by the query used to create this log entry. Only returned with logs of type `query`. */
   export interface LogQueryResponseResultDocuments {
+    /** Array of log query response results. */
     results?: LogQueryResponseResultDocumentsResult[];
     /** The number of results returned in the query associate with this log. */
     count?: number;
@@ -5284,26 +5809,13 @@ namespace DiscoveryV1 {
     collection_id?: string;
   }
 
-  /** **Deprecated**: Summary of the memory usage statistics for this environment. */
-  export interface MemoryUsage {
-    /** **Deprecated**: Number of bytes used in the environment's memory capacity. */
-    used_bytes?: number;
-    /** **Deprecated**: Total number of bytes available in the environment's memory capacity. */
-    total_bytes?: number;
-    /** **Deprecated**: Amount of memory capacity used, in KB or GB format. */
-    used?: string;
-    /** **Deprecated**: Total amount of the environment's memory capacity, in KB or GB format. */
-    total?: string;
-    /** **Deprecated**: Percentage of the environment's memory capacity that is being used. */
-    percent_used?: number;
-  }
-
   /** An aggregation analyzing log information for queries and events. */
   export interface MetricAggregation {
     /** The measurement interval for this metric. Metric intervals are always 1 day (`1d`). */
     interval?: string;
     /** The event type associated with this metric result. This field, when present, will always be `click`. */
     event_type?: string;
+    /** Array of metric aggregation query results. */
     results?: MetricAggregationResult[];
   }
 
@@ -5321,6 +5833,7 @@ namespace DiscoveryV1 {
 
   /** The response generated from a call to a **metrics** method. */
   export interface MetricResponse {
+    /** Array of metric aggregations. */
     aggregations?: MetricAggregation[];
   }
 
@@ -5328,6 +5841,7 @@ namespace DiscoveryV1 {
   export interface MetricTokenAggregation {
     /** The event type associated with this metric result. This field, when present, will always be `click`. */
     event_type?: string;
+    /** Array of results for the metric token aggregation. */
     results?: MetricTokenAggregationResult[];
   }
 
@@ -5343,7 +5857,14 @@ namespace DiscoveryV1 {
 
   /** The response generated from a call to a **metrics** method that evaluates tokens. */
   export interface MetricTokenResponse {
+    /** Array of metric token aggregations. */
     aggregations?: MetricTokenAggregation[];
+  }
+
+  /** Nested. */
+  export interface Nested {
+    /** The area of the results the aggregation was restricted to. */
+    path?: string;
   }
 
   /** An object that indicates the Categories enrichment will be applied to the specified field. */
@@ -5440,7 +5961,7 @@ namespace DiscoveryV1 {
 
   /** NormalizationOperation. */
   export interface NormalizationOperation {
-    /** Identifies what type of operation to perform. **copy** - Copies the value of the **source_field** to the **destination_field** field. If the **destination_field** already exists, then the value of the **source_field** overwrites the original value of the **destination_field**. **move** - Renames (moves) the **source_field** to the **destination_field**. If the **destination_field** already exists, then the value of the **source_field** overwrites the original value of the **destination_field**. Rename is identical to copy, except that the **source_field** is removed after the value has been copied to the **destination_field** (it is the same as a _copy_ followed by a _remove_). **merge** - Merges the value of the **source_field** with the value of the **destination_field**. The **destination_field** is converted into an array if it is not already an array, and the value of the **source_field** is appended to the array. This operation removes the **source_field** after the merge. If the **source_field** does not exist in the current document, then the **destination_field** is still converted into an array (if it is not an array already). This conversion ensures the type for **destination_field** is consistent across all documents. **remove** - Deletes the **source_field** field. The **destination_field** is ignored for this operation. **remove_nulls** - Removes all nested null (blank) field values from the JSON tree. **source_field** and **destination_field** are ignored by this operation because _remove_nulls_ operates on the entire JSON tree. Typically, **remove_nulls** is invoked as the last normalization operation (if it is invoked at all, it can be time-expensive). */
+    /** Identifies what type of operation to perform. **copy** - Copies the value of the **source_field** to the **destination_field** field. If the **destination_field** already exists, then the value of the **source_field** overwrites the original value of the **destination_field**. **move** - Renames (moves) the **source_field** to the **destination_field**. If the **destination_field** already exists, then the value of the **source_field** overwrites the original value of the **destination_field**. Rename is identical to copy, except that the **source_field** is removed after the value has been copied to the **destination_field** (it is the same as a _copy_ followed by a _remove_). **merge** - Merges the value of the **source_field** with the value of the **destination_field**. The **destination_field** is converted into an array if it is not already an array, and the value of the **source_field** is appended to the array. This operation removes the **source_field** after the merge. If the **source_field** does not exist in the current document, then the **destination_field** is still converted into an array (if it is not an array already). This conversion ensures the type for **destination_field** is consistent across all documents. **remove** - Deletes the **source_field** field. The **destination_field** is ignored for this operation. **remove_nulls** - Removes all nested null (blank) field values from the ingested document. **source_field** and **destination_field** are ignored by this operation because _remove_nulls_ operates on the entire ingested document. Typically, **remove_nulls** is invoked as the last normalization operation (if it is invoked at all, it can be time-expensive). */
     operation?: string;
     /** The source field for the operation. */
     source_field?: string;
@@ -5450,7 +5971,7 @@ namespace DiscoveryV1 {
 
   /** A notice produced for the collection. */
   export interface Notice {
-    /** Identifies the notice. Many notices might have the same ID. This field exists so that user applications can programmatically identify a notice and take automatic corrective action. */
+    /** Identifies the notice. Many notices might have the same ID. This field exists so that user applications can programmatically identify a notice and take automatic corrective action. Typical notice IDs include: `index_failed`, `index_failed_too_many_requests`, `index_failed_incompatible_field`, `index_failed_cluster_unavailable`, `ingestion_timeout`, `ingestion_error`, `bad_request`, `internal_error`, `missing_model`, `unsupported_model`, `smart_document_understanding_failed_incompatible_field`, `smart_document_understanding_failed_internal_error`, `smart_document_understanding_failed_internal_error`, `smart_document_understanding_failed_warning`, `smart_document_understanding_page_error`, `smart_document_understanding_page_warning`. **Note:** This is not a complete list, other values might be returned. */
     notice_id?: string;
     /** The creation date of the collection in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'. */
     created?: string;
@@ -5460,7 +5981,7 @@ namespace DiscoveryV1 {
     query_id?: string;
     /** Severity level of the notice. */
     severity?: string;
-    /** Ingestion or training step in which the notice occurred. */
+    /** Ingestion or training step in which the notice occurred. Typical step values include: `classify_elements`, `smartDocumentUnderstanding`, `ingestion`, `indexing`, `convert`. **Note:** This is not a complete list, other values might be returned. */
     step?: string;
     /** The description of the notice. */
     description?: string;
@@ -5480,6 +6001,7 @@ namespace DiscoveryV1 {
   export interface QueryAggregation {
     /** The type of aggregation command used. For example: term, filter, max, min, etc. */
     type?: string;
+    /** Array of aggregation results. */
     results?: AggregationResult[];
     /** Number of matching results. */
     matching_results?: number;
@@ -5501,8 +6023,9 @@ namespace DiscoveryV1 {
     type?: string;
   }
 
-  /** An array of entities resulting from the query. */
+  /** An object that contains an array of entities resulting from the query. */
   export interface QueryEntitiesResponse {
+    /** Array of entities that results from the query. */
     entities?: QueryEntitiesResponseItem[];
   }
 
@@ -5552,10 +6075,15 @@ namespace DiscoveryV1 {
 
   /** QueryNoticesResponse. */
   export interface QueryNoticesResponse {
+    /** The number of matching results. */
     matching_results?: number;
+    /** Array of document results that match the query. */
     results?: QueryNoticesResult[];
+    /** Array of aggregation results that match the query. */
     aggregations?: QueryAggregation[];
+    /** Array of passage results that match the query. */
     passages?: QueryPassages[];
+    /** The number of duplicates removed from this notices query. */
     duplicates_removed?: number;
   }
 
@@ -5563,14 +6091,14 @@ namespace DiscoveryV1 {
   export interface QueryNoticesResult {
     /** The unique identifier of the document. */
     id?: string;
-    /** *Deprecated* This field is now part of the **result_metadata** object. */
-    score?: number;
     /** Metadata of the document. */
     metadata?: Object;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of a query result. */
-    result_metadata?: QueryResultResultMetadata;
+    result_metadata?: QueryResultMetadata;
+    /** Automatically extracted result title. */
+    title?: string;
     /** The internal status code returned by the ingestion subsystem indicating the overall result of ingesting the source document. */
     code?: number;
     /** Name of the original source file (if available). */
@@ -5603,6 +6131,7 @@ namespace DiscoveryV1 {
 
   /** QueryRelationsArgument. */
   export interface QueryRelationsArgument {
+    /** Array of query entities. */
     entities?: QueryEntitiesEntity[];
   }
 
@@ -5618,9 +6147,7 @@ namespace DiscoveryV1 {
 
   /** QueryRelationsFilter. */
   export interface QueryRelationsFilter {
-    /** A list of relation types to include or exclude from the query. */
     relation_types?: QueryFilterType;
-    /** A list of entity types to include or exclude from the query. */
     entity_types?: QueryFilterType;
     /** A comma-separated list of document IDs to include in the query. */
     document_ids?: string[];
@@ -5640,15 +6167,21 @@ namespace DiscoveryV1 {
 
   /** QueryRelationsResponse. */
   export interface QueryRelationsResponse {
+    /** Array of relationships for the relations query. */
     relations?: QueryRelationsRelationship[];
   }
 
   /** A response containing the documents and aggregations for the query. */
   export interface QueryResponse {
+    /** The number of matching results for the query. */
     matching_results?: number;
+    /** Array of document results for the query. */
     results?: QueryResult[];
+    /** Array of aggregation results for the query. */
     aggregations?: QueryAggregation[];
+    /** Array of passage results for the query. */
     passages?: QueryPassages[];
+    /** The number of duplicate results removed. */
     duplicates_removed?: number;
     /** The session token for this query. The session token can be used to add events associated with this query to the query and event log. **Important:** Session tokens are case sensitive. */
     session_token?: string;
@@ -5660,24 +6193,24 @@ namespace DiscoveryV1 {
   export interface QueryResult {
     /** The unique identifier of the document. */
     id?: string;
-    /** *Deprecated* This field is now part of the **result_metadata** object. */
-    score?: number;
     /** Metadata of the document. */
     metadata?: Object;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of a query result. */
-    result_metadata?: QueryResultResultMetadata;
+    result_metadata?: QueryResultMetadata;
+    /** Automatically extracted result title. */
+    title?: string;
     /** QueryResult accepts additional properties. */
     [propName: string]: any;
   }
 
   /** Metadata of a query result. */
-  export interface QueryResultResultMetadata {
+  export interface QueryResultMetadata {
     /** An unbounded measure of the relevance of a particular result, dependent on the query and matching document. A higher score indicates a greater match to the query parameters. */
     score: number;
     /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be. confidence can range from `0.0` to `1.0`. The higher the number, the more relevant the document. The `confidence` value for a result was calculated using the model specified in the `document_retrieval_strategy` field of the result set. */
-    confidence: number;
+    confidence?: number;
   }
 
   /** An object contain retrieval type information. */
@@ -5702,13 +6235,13 @@ namespace DiscoveryV1 {
   export interface SegmentSettings {
     /** Enables/disables the Document Segmentation feature. */
     enabled?: boolean;
-    /** Defines the heading level that splits into document segments. Valid values are h1, h2, h3, h4, h5, h6. */
+    /** Defines the heading level that splits into document segments. Valid values are h1, h2, h3, h4, h5, h6. The content of the header field that the segmentation splits at is used as the **title** field for that segmented result. */
     selector_tags?: string[];
   }
 
   /** Object containing source parameters for the configuration. */
   export interface Source {
-    /** The type of source to connect to. -  `box` indicates the configuration is to connect an instance of Enterprise Box. -  `salesforce` indicates the configuration is to connect to Salesforce. -  `sharepoint` indicates the configuration is to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the configuration is to perform a web page crawl. */
+    /** The type of source to connect to. -  `box` indicates the configuration is to connect an instance of Enterprise Box. -  `salesforce` indicates the configuration is to connect to Salesforce. -  `sharepoint` indicates the configuration is to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the configuration is to perform a web page crawl. -  `cloud_object_storage` indicates the configuration is to connect to a cloud object store. */
     type?: string;
     /** The **credential_id** of the credentials to use to connect to the source. Credentials are defined using the **credentials** method. The **source_type** of the credentials used must match the **type** field specified in this object. */
     credential_id?: string;
@@ -5728,6 +6261,18 @@ namespace DiscoveryV1 {
     site_collections?: SourceOptionsSiteColl[];
     /** Array of Web page URLs to begin crawling the web from. Only valid and required when the **type** field of the **source** object is set to `web_crawl`. */
     urls?: SourceOptionsWebCrawl[];
+    /** Array of cloud object store buckets to begin crawling. Only valid and required when the **type** field of the **source** object is set to `cloud_object_store`, and the **crawl_all_buckets** field is `false` or not specified. */
+    buckets?: SourceOptionsBuckets[];
+    /** When `true`, all buckets in the specified cloud object store are crawled. If set to `true`, the **buckets** array must not be specified. */
+    crawl_all_buckets?: boolean;
+  }
+
+  /** Object defining a cloud object store bucket to crawl. */
+  export interface SourceOptionsBuckets {
+    /** The name of the cloud object store bucket to crawl. */
+    name: string;
+    /** The number of documents to crawl from this cloud object store bucket. If not specified, all documents in the bucket are crawled. */
+    limit?: number;
   }
 
   /** Object that defines a box folder to crawl with this configuration. */
@@ -5786,10 +6331,17 @@ namespace DiscoveryV1 {
 
   /** Object containing source crawl status information. */
   export interface SourceStatus {
-    /** The current status of the source crawl for this collection. This field returns `not_configured` if the default configuration for this source does not have a **source** object defined. -  `running` indicates that a crawl to fetch more documents is in progress. -  `complete` indicates that the crawl has completed with no errors. -  `complete_with_notices` indicates that some notices were generated during the crawl. Notices can be checked by using the **notices** query method. -  `stopped` indicates that the crawl has stopped but is not complete. */
+    /** The current status of the source crawl for this collection. This field returns `not_configured` if the default configuration for this source does not have a **source** object defined. -  `running` indicates that a crawl to fetch more documents is in progress. -  `complete` indicates that the crawl has completed with no errors. -  `queued` indicates that the crawl has been paused by the system and will automatically restart when possible. */
     status?: string;
     /** Date in UTC format indicating when the last crawl was attempted. If `null`, no crawl was completed. */
     last_updated?: string;
+  }
+
+  /** Term. */
+  export interface Term {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    count?: number;
   }
 
   /** TestDocument. */
@@ -5806,6 +6358,16 @@ namespace DiscoveryV1 {
     snapshots?: DocumentSnapshot[];
     /** An array of notice messages about the preview operation. */
     notices?: Notice[];
+  }
+
+  /** Timeslice. */
+  export interface Timeslice {
+    /** The field where the aggregation is located in the document. */
+    field?: string;
+    /** Interval of the aggregation. Valid date interval values are second/seconds minute/minutes, hour/hours, day/days, week/weeks, month/months, and year/years. */
+    interval?: string;
+    /** Used to indicate that anomaly detection should be performed. Anomaly detection is used to locate unusual datapoints within a time series. */
+    anomaly?: boolean;
   }
 
   /** An object defining a single tokenizaion rule. */
@@ -5828,6 +6390,13 @@ namespace DiscoveryV1 {
     type?: string;
   }
 
+  /** TopHits. */
+  export interface TopHits {
+    /** Number of top hits returned by the aggregation. */
+    size?: number;
+    hits?: TopHitsResults;
+  }
+
   /** TopHitsResults. */
   export interface TopHitsResults {
     /** Number of matching results. */
@@ -5838,41 +6407,61 @@ namespace DiscoveryV1 {
 
   /** TrainingDataSet. */
   export interface TrainingDataSet {
+    /** The environment id associated with this training data set. */
     environment_id?: string;
+    /** The collection id associated with this training data set. */
     collection_id?: string;
+    /** Array of training queries. */
     queries?: TrainingQuery[];
   }
 
   /** TrainingExample. */
   export interface TrainingExample {
+    /** The document ID associated with this training example. */
     document_id?: string;
+    /** The cross reference associated with this training example. */
     cross_reference?: string;
+    /** The relevance of the training example. */
     relevance?: number;
   }
 
   /** TrainingExampleList. */
   export interface TrainingExampleList {
+    /** Array of training examples. */
     examples?: TrainingExample[];
   }
 
   /** TrainingQuery. */
   export interface TrainingQuery {
+    /** The query ID associated with the training query. */
     query_id?: string;
+    /** The natural text query for the training query. */
     natural_language_query?: string;
+    /** The filter used on the collection before the **natural_language_query** is applied. */
     filter?: string;
+    /** Array of training examples. */
     examples?: TrainingExample[];
   }
 
   /** TrainingStatus. */
   export interface TrainingStatus {
+    /** The total number of training examples uploaded to this collection. */
     total_examples?: number;
+    /** When `true`, the collection has been successfully trained. */
     available?: boolean;
+    /** When `true`, the collection is currently processing training. */
     processing?: boolean;
+    /** When `true`, the collection has a sufficent amount of queries added for training to occur. */
     minimum_queries_added?: boolean;
+    /** When `true`, the collection has a sufficent amount of examples added for training to occur. */
     minimum_examples_added?: boolean;
+    /** When `true`, the collection has a sufficent amount of diversity in labeled results for training to occur. */
     sufficient_label_diversity?: boolean;
+    /** The number of notices associated with this data set. */
     notices?: number;
+    /** The timestamp of when the collection was successfully trained. */
     successfully_trained?: string;
+    /** The timestamp of when the data was uploaded. */
     data_updated?: string;
   }
 
@@ -5889,65 +6478,16 @@ namespace DiscoveryV1 {
 
   /** WordStyle. */
   export interface WordStyle {
+    /** HTML head level that content matching this style is tagged with. */
     level?: number;
+    /** Array of word style names to convert. */
     names?: string[];
   }
 
   /** XPathPatterns. */
   export interface XPathPatterns {
+    /** An array to XPaths. */
     xpaths?: string[];
-  }
-
-  /** Calculation. */
-  export interface Calculation {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    /** Value of the aggregation. */
-    value?: number;
-  }
-
-  /** Filter. */
-  export interface Filter {
-    /** The match the aggregated results queried for. */
-    match?: string;
-  }
-
-  /** Histogram. */
-  export interface Histogram {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    /** Interval of the aggregation. (For 'histogram' type). */
-    interval?: number;
-  }
-
-  /** Nested. */
-  export interface Nested {
-    /** The area of the results the aggregation was restricted to. */
-    path?: string;
-  }
-
-  /** Term. */
-  export interface Term {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    count?: number;
-  }
-
-  /** Timeslice. */
-  export interface Timeslice {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    /** Interval of the aggregation. Valid date interval values are second/seconds minute/minutes, hour/hours, day/days, week/weeks, month/months, and year/years. */
-    interval?: string;
-    /** Used to indicate that anomaly detection should be performed. Anomaly detection is used to locate unusual datapoints within a time series. */
-    anomaly?: boolean;
-  }
-
-  /** TopHits. */
-  export interface TopHits {
-    /** Number of top hits returned by the aggregation. */
-    size?: number;
-    hits?: TopHitsResults;
   }
 
 }

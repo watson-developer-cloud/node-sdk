@@ -3,7 +3,7 @@
 //
 // * This file is bundled by webpack-dev-middleware into bundle.js
 //
-// * The require('watson-developer-cloud/language_translator/v2') could also be written as require('watson-developer-cloud').LanguageTranslatorV2,
+// * The require('watson-developer-cloud/language_translator/v3') could also be written as require('watson-developer-cloud').LanguageTranslatorV3,
 //   but that version results in a much larger bundle size.
 //
 // * Tokens expire after 1 hour. This demo simply fetches a new one for each translation rather than keeping a fresh one.

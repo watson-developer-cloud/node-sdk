@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const watson = require('../../index');
+const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
@@ -11,8 +11,8 @@ const TWENTY_SECONDS = 20000;
 describe('tone_analyzer_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  auth.tone_analyzer.version = '2016-06-19';
-  const tone_analyzer = new watson.ToneAnalyzerV3(auth.tone_analyzer);
+  auth.tone_analyzer.version = '2019-03-27';
+  const tone_analyzer = new ToneAnalyzerV3(auth.tone_analyzer);
 
   it('tone()', function(done) {
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
@@ -26,11 +26,11 @@ describe('tone_analyzer_integration', function() {
       { tone_input: mobydick, content_type: 'invalid content type' },
       (err, res) => {
         expect(err).toBeTruthy();
-        expect(err['x-global-transaction-id']).toBeDefined();
-        expect(typeof err['x-global-transaction-id']).toBe('string');
+        expect(err.headers['x-global-transaction-id']).toBeDefined();
+        expect(typeof err.headers['x-global-transaction-id']).toBe('string');
+        done();
       }
     );
-    done();
   });
 
   it('toneChat()', function(done) {

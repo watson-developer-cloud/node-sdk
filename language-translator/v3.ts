@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService } from 'ibm-cloud-sdk-core';
-import { getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { FileObject } from 'ibm-cloud-sdk-core';
-import { RequestResponse } from 'request';
 import { getSdkHeaders } from '../lib/common';
+
 /**
  * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple IBM provided translation models that you can customize based on your unique terminology and language. Use Language Translator to take news from across the globe and present it in your language, communicate with your customers in their own language, and more.
  */
@@ -75,12 +75,20 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} [params.target] - Translation target language code.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): NodeJS.ReadableStream | void {
+  public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.translate(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -95,12 +103,11 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translate');
- 
+
     const parameters = {
       options: {
         url: '/v3/translate',
         method: 'POST',
-        json: true,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -127,12 +134,20 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} params.text - Input text in UTF-8 format.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): NodeJS.ReadableStream | void {
+  public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.identify(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -141,12 +156,11 @@ class LanguageTranslatorV3 extends BaseService {
     const body = _params.text;
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'identify');
- 
+
     const parameters = {
       options: {
         url: '/v3/identify',
         method: 'POST',
-        json: false,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -169,14 +183,22 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): NodeJS.ReadableStream | void {
+  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listIdentifiableLanguages(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
- 
+
     const parameters = {
       options: {
         url: '/v3/identifiable_languages',
@@ -217,8 +239,6 @@ class LanguageTranslatorV3 extends BaseService {
    * available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all
    * your models that have been created via parallel corpus customization, can be further customized with a forced
    * glossary.
-   * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
-   * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forced_glossary] - A TMX file with your customizations.
    * The customizations in the file completely overwrite the domain translaton data, including high frequency or high
    * confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A
@@ -227,31 +247,36 @@ class LanguageTranslatorV3 extends BaseService {
    * source and target language. You can upload multiple parallel_corpus files in one request. All uploaded
    * parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train
    * successfully.
-   * @param {string} [params.forced_glossary_filename] - The filename for forced_glossary.
-   * @param {string} [params.parallel_corpus_filename] - The filename for parallel_corpus.
+   * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
+   * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | void {
+  public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['base_model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.createModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
       return _callback(missingParams);
     }
-
     const formData = {
       'forced_glossary': {
         data: _params.forced_glossary,
-        filename: _params.forced_glossary_filename,
         contentType: 'application/octet-stream'
       },
       'parallel_corpus': {
         data: _params.parallel_corpus,
-        filename: _params.parallel_corpus_filename,
         contentType: 'application/octet-stream'
       }
     };
@@ -262,7 +287,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'createModel');
- 
+
     const parameters = {
       options: {
         url: '/v3/models',
@@ -290,12 +315,20 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} params.model_id - Model ID of the model to delete.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): NodeJS.ReadableStream | void {
+  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -307,7 +340,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteModel');
- 
+
     const parameters = {
       options: {
         url: '/v3/models/{model_id}',
@@ -334,12 +367,20 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} params.model_id - Model ID of the model to get.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): NodeJS.ReadableStream | void {
+  public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<any> | void {
     const _params = extend({}, params);
-    const _callback = (callback) ? callback : () => { /* noop */ };
+    const _callback = callback;
     const requiredParams = ['model_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -351,7 +392,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getModel');
- 
+
     const parameters = {
       options: {
         url: '/v3/models/{model_id}',
@@ -382,11 +423,19 @@ class LanguageTranslatorV3 extends BaseService {
    * provided base model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
-  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): NodeJS.ReadableStream | void {
+  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : (callback) ? callback : () => {/* noop */};
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
  
     const query = {
       'source': _params.source,
@@ -395,7 +444,7 @@ class LanguageTranslatorV3 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
- 
+
     const parameters = {
       options: {
         url: '/v3/models',
@@ -437,7 +486,7 @@ namespace LanguageTranslatorV3 {
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: RequestResponse) => void;
+  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -457,6 +506,7 @@ namespace LanguageTranslatorV3 {
     /** Translation target language code. */
     target?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `identify` operation. */
@@ -464,28 +514,27 @@ namespace LanguageTranslatorV3 {
     /** Input text in UTF-8 format. */
     text: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listIdentifiableLanguages` operation. */
   export interface ListIdentifiableLanguagesParams {
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `createModel` operation. */
   export interface CreateModelParams {
     /** The model ID of the model to use as the base for customization. To see available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all your models that have been created via parallel corpus customization, can be further customized with a forced glossary. */
     base_model_id: string;
-    /** An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters. */
-    name?: string;
     /** A TMX file with your customizations. The customizations in the file completely overwrite the domain translaton data, including high frequency or high confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A forced glossary should contain single words or short phrases. */
     forced_glossary?: NodeJS.ReadableStream|FileObject|Buffer;
     /** A TMX file with parallel sentences for source and target language. You can upload multiple parallel_corpus files in one request. All uploaded parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train successfully. */
     parallel_corpus?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for forced_glossary. */
-    forced_glossary_filename?: string;
-    /** The filename for parallel_corpus. */
-    parallel_corpus_filename?: string;
+    /** An optional model name that you can use to identify the model. Valid characters are letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters. */
+    name?: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `deleteModel` operation. */
@@ -493,6 +542,7 @@ namespace LanguageTranslatorV3 {
     /** Model ID of the model to delete. */
     model_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `getModel` operation. */
@@ -500,6 +550,7 @@ namespace LanguageTranslatorV3 {
     /** Model ID of the model to get. */
     model_id: string;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /** Parameters for the `listModels` operation. */
@@ -511,6 +562,7 @@ namespace LanguageTranslatorV3 {
     /** If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM provided base model. */
     default_models?: boolean;
     headers?: Object;
+    return_response?: boolean;
   }
 
   /*************************

@@ -20,6 +20,7 @@ Node.js client library to use the Watson APIs.
     * [IAM](#iam)
     * [Username and password](#username-and-password)
     * [API key](#api-key)
+  * [Callbacks vs Promises](#callbacks-vs-promises)
   * [Sending request headers](#sending-request-headers)
   * [Parsing HTTP response](#parsing-http-response)
   * [Data collection opt-out](#data-collection-opt-out)
@@ -64,8 +65,9 @@ Credentials are checked for in the following order:
 1. Hard-coded or programatic credentials passed to the service constructor
 
 2. Environment variables:
-- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties (or `SERVICE_NAME_API_KEY` when appropriate) and, optionally, `SERVICE_NAME_URL`
+- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties
 - If using IAM: `SERVICE_NAME_IAM_APIKEY` and optionally `SERVICE_NAME_IAM_URL`, or `SERVICE_NAME_IAM_ACCESS_TOKEN`
+- Optionally, `SERVICE_NAME_URL`
 
 3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
 
@@ -187,6 +189,39 @@ var discovery = new DiscoveryV1({
   });
 ```
 
+### Callbacks vs Promises
+
+All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. A Promise will be returned by default unless a Callback function is provided.
+
+```js
+const discovery = new watson.DiscoveryV1({
+/* iam_apikey, version, url, etc... */
+});
+
+// using Promises
+discovery.listEnvironments()
+  .then(body => {
+    console.log(JSON.stringify(body, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
+// using Promises provides the ability to use async / await
+async function callDiscovery() { // note that callDiscovery also returns a Promise
+  const body = await discovery.listEnvironments();
+}
+
+// using a Callback function
+discovery.listEnvironments((err, res) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(JSON.stringify(res, null, 2));
+  }
+});
+```
+
 ### Setting the service URL
 
 You can set the service URL by calling the setServiceUrl() method.
@@ -231,6 +266,8 @@ assistant.message({
 
 To retrieve the HTTP response, all methods can be called with a callback function with three parameters, with the third being the response. Users for example may retrieve the response headers with this usage pattern.
 
+If using Promises, the parameter `return_response` must be added and set to `true`. Then, the result returned will be equivalent to the third argument in the callback function - the entire response.
+
 Here is an example of how to access the response headers for Watson Assistant:
 
 ```js
@@ -244,6 +281,18 @@ assistant.message(params,  function(err, result, response) {
   else
     console.log(response.headers);
 });
+
+// using Promises
+
+params.return_response = true;
+
+assistant.message(params)
+  .then(response => {
+    console.log(response.headers);
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 
 ```
 
@@ -367,7 +416,7 @@ assistant.message(
 
 ### Assistant v1
 
-Use the [Assistant][conversation] service to determine the intent of a message.
+Use the [Assistant][assistant] service to determine the intent of a message.
 
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
@@ -429,10 +478,6 @@ compareComply.compareDocuments(
 );
 
 ```
-
-### Conversation
-
-This service has been renamed to Assistant.
 
 ### Discovery
 
@@ -746,10 +791,10 @@ visualRecognition.classify(params, function(err, res) {
 ## Composing services
 
 ### Integration of Tone Analyzer with Conversation
-Sample code for [integrating Tone Analyzer and Conversation][conversation_tone_analyzer_example] is provided in the [examples directory][examples].
+Sample code for [integrating Tone Analyzer and Assistant][assistant_tone_analyzer_example] is provided in the [examples directory][examples].
 
 ## Unauthenticated requests
-By default, the library tries to use Basic Auth and will ask for `api_key` or `username` and `password` and send an `Authorization: Basic XXXXXXX`. You can avoid this by using:
+By default, the library tries to authenticate and will ask for `iam_apikey`, `iam_access_token`, or `username` and `password` to send an `Authorization` header. You can avoid this by using:
 
 `use_unauthenticated`.
 
@@ -796,7 +841,6 @@ This library is licensed under Apache 2.0. Full license text is available in
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 [assistant]: https://www.ibm.com/watson/services/conversation/
-[conversation]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
 [visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/
@@ -808,10 +852,9 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [watson-dashboard]: https://console.bluemix.net/dashboard/apps?category=watson
 [npm_link]: https://www.npmjs.com/package/watson-developer-cloud
 [request_github]: https://github.com/request/request
-[dialog_migration]: https://console.bluemix.net/docs/services/conversation/index.html
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
-[conversation_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
+[assistant_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
 [license]: http://www.apache.org/licenses/LICENSE-2.0
 [vcap_services]: https://console.bluemix.net/docs/services/watson/getting-started-variables.html
 [ibm-cloud-onboarding]: http://console.bluemix.net/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node

@@ -1,30 +1,34 @@
 'use strict';
 
-const CompareComplyV1 = require('../../compare-comply/v1');
 const helper = require('ibm-cloud-sdk-core');
+const CompareComplyV1 = require('../../compare-comply/v1');
 const utils = require('../resources/unitTestUtils');
 
-const missingParamsError = utils.missingParamsError;
-const missingParamsSuccess = utils.missingParamsSuccess;
+const getOptions = utils.getOptions;
 const checkUrlAndMethod = utils.checkUrlAndMethod;
 const checkCallback = utils.checkCallback;
 const checkMediaHeaders = utils.checkMediaHeaders;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const missingParamsError = utils.missingParamsError;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const getOptions = utils.getOptions;
+
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const noop = () => {};
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://gateway.watsonplatform.net/compare-comply/api',
+  url: 'https://gateway.watsonplatform.net/compare-comply/api/compare-comply/api',
   version: '2018-10-18',
 };
 
-const compare_comply = new CompareComplyV1(service);
-const createRequestMock = jest.spyOn(compare_comply, 'createRequest');
+const compareComply = new CompareComplyV1(service);
+const createRequestMock = jest.spyOn(compareComply, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
-const noop = () => {};
+
+// dont actually create a request
+createRequestMock.mockImplementation(noop);
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -39,18 +43,18 @@ describe('convertToHtml', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const file = 'fake_file';
-      const model_id = 'fake_model_id';
-      const file_content_type = 'fake_file_content_type';
       const filename = 'fake_filename';
+      const file_content_type = 'fake_file_content_type';
+      const model = 'fake_model';
       const params = {
         file,
-        model_id,
-        file_content_type,
         filename,
+        file_content_type,
+        model,
       };
 
       // invoke method
-      compare_comply.convertToHtml(params);
+      compareComply.convertToHtml(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -65,33 +69,36 @@ describe('convertToHtml', () => {
       expect(options.formData['file'].data).toEqual(file);
       expect(options.formData['file'].filename).toEqual(filename);
       expect(options.formData['file'].contentType).toEqual(file_content_type);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const file = 'fake_file';
+      const filename = 'fake_filename';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         file,
+        filename,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
         },
       };
 
-      compare_comply.convertToHtml(params);
+      compareComply.convertToHtml(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.convertToHtml(null, () => {
+      compareComply.convertToHtml(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -99,15 +106,16 @@ describe('convertToHtml', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['file'];
+      const requiredParams = ['file', 'filename'];
 
-      compare_comply.convertToHtml({}, err => {
+      compareComply.convertToHtml({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('classifyElements', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -116,18 +124,16 @@ describe('classifyElements', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const file = 'fake_file';
-      const model_id = 'fake_model_id';
       const file_content_type = 'fake_file_content_type';
-      const filename = 'fake_filename';
+      const model = 'fake_model';
       const params = {
         file,
-        model_id,
         file_content_type,
-        filename,
+        model,
       };
 
       // invoke method
-      compare_comply.classifyElements(params);
+      compareComply.classifyElements(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -140,9 +146,8 @@ describe('classifyElements', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['file'].data).toEqual(file);
-      expect(options.formData['file'].filename).toEqual(filename);
       expect(options.formData['file'].contentType).toEqual(file_content_type);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
     });
 
     test('should prioritize user-given headers', () => {
@@ -158,17 +163,18 @@ describe('classifyElements', () => {
         },
       };
 
-      compare_comply.classifyElements(params);
+      compareComply.classifyElements(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.classifyElements(null, () => {
+      compareComply.classifyElements(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -178,13 +184,14 @@ describe('classifyElements', () => {
       // required parameters for this method
       const requiredParams = ['file'];
 
-      compare_comply.classifyElements({}, err => {
+      compareComply.classifyElements({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('extractTables', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -193,18 +200,16 @@ describe('extractTables', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const file = 'fake_file';
-      const model_id = 'fake_model_id';
       const file_content_type = 'fake_file_content_type';
-      const filename = 'fake_filename';
+      const model = 'fake_model';
       const params = {
         file,
-        model_id,
         file_content_type,
-        filename,
+        model,
       };
 
       // invoke method
-      compare_comply.extractTables(params);
+      compareComply.extractTables(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -217,9 +222,8 @@ describe('extractTables', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['file'].data).toEqual(file);
-      expect(options.formData['file'].filename).toEqual(filename);
       expect(options.formData['file'].contentType).toEqual(file_content_type);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
     });
 
     test('should prioritize user-given headers', () => {
@@ -235,17 +239,18 @@ describe('extractTables', () => {
         },
       };
 
-      compare_comply.extractTables(params);
+      compareComply.extractTables(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.extractTables(null, () => {
+      compareComply.extractTables(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -255,13 +260,14 @@ describe('extractTables', () => {
       // required parameters for this method
       const requiredParams = ['file'];
 
-      compare_comply.extractTables({}, err => {
+      compareComply.extractTables({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('compareDocuments', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -271,27 +277,23 @@ describe('compareDocuments', () => {
       // parameters
       const file_1 = 'fake_file_1';
       const file_2 = 'fake_file_2';
+      const file_1_content_type = 'fake_file_1_content_type';
+      const file_2_content_type = 'fake_file_2_content_type';
       const file_1_label = 'fake_file_1_label';
       const file_2_label = 'fake_file_2_label';
-      const model_id = 'fake_model_id';
-      const file_1_content_type = 'fake_file_1_content_type';
-      const file_1_filename = 'fake_file_1_filename';
-      const file_2_content_type = 'fake_file_2_content_type';
-      const file_2_filename = 'fake_file_2_filename';
+      const model = 'fake_model';
       const params = {
         file_1,
         file_2,
+        file_1_content_type,
+        file_2_content_type,
         file_1_label,
         file_2_label,
-        model_id,
-        file_1_content_type,
-        file_1_filename,
-        file_2_content_type,
-        file_2_filename,
+        model,
       };
 
       // invoke method
-      compare_comply.compareDocuments(params);
+      compareComply.compareDocuments(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -304,14 +306,12 @@ describe('compareDocuments', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['file_1'].data).toEqual(file_1);
-      expect(options.formData['file_1'].filename).toEqual(file_1_filename);
       expect(options.formData['file_1'].contentType).toEqual(file_1_content_type);
       expect(options.formData['file_2'].data).toEqual(file_2);
-      expect(options.formData['file_2'].filename).toEqual(file_2_filename);
       expect(options.formData['file_2'].contentType).toEqual(file_2_content_type);
       expect(options.qs['file_1_label']).toEqual(file_1_label);
       expect(options.qs['file_2_label']).toEqual(file_2_label);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
     });
 
     test('should prioritize user-given headers', () => {
@@ -329,17 +329,18 @@ describe('compareDocuments', () => {
         },
       };
 
-      compare_comply.compareDocuments(params);
+      compareComply.compareDocuments(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.compareDocuments(null, () => {
+      compareComply.compareDocuments(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -349,13 +350,14 @@ describe('compareDocuments', () => {
       // required parameters for this method
       const requiredParams = ['file_1', 'file_2'];
 
-      compare_comply.compareDocuments({}, err => {
+      compareComply.compareDocuments({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('addFeedback', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -373,7 +375,7 @@ describe('addFeedback', () => {
       };
 
       // invoke method
-      compare_comply.addFeedback(params);
+      compareComply.addFeedback(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -388,7 +390,6 @@ describe('addFeedback', () => {
       expect(options.body['feedback_data']).toEqual(feedback_data);
       expect(options.body['user_id']).toEqual(user_id);
       expect(options.body['comment']).toEqual(comment);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -404,17 +405,18 @@ describe('addFeedback', () => {
         },
       };
 
-      compare_comply.addFeedback(params);
+      compareComply.addFeedback(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.addFeedback(null, () => {
+      compareComply.addFeedback(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -424,13 +426,14 @@ describe('addFeedback', () => {
       // required parameters for this method
       const requiredParams = ['feedback_data'];
 
-      compare_comply.addFeedback({}, err => {
+      compareComply.addFeedback({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteFeedback', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -439,14 +442,14 @@ describe('deleteFeedback', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const feedback_id = 'fake_feedback_id';
-      const model_id = 'fake_model_id';
+      const model = 'fake_model';
       const params = {
         feedback_id,
-        model_id,
+        model,
       };
 
       // invoke method
-      compare_comply.deleteFeedback(params);
+      compareComply.deleteFeedback(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -456,9 +459,9 @@ describe('deleteFeedback', () => {
       checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
       expect(options.path['feedback_id']).toEqual(feedback_id);
     });
 
@@ -475,17 +478,18 @@ describe('deleteFeedback', () => {
         },
       };
 
-      compare_comply.deleteFeedback(params);
+      compareComply.deleteFeedback(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.deleteFeedback(null, () => {
+      compareComply.deleteFeedback(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -495,13 +499,14 @@ describe('deleteFeedback', () => {
       // required parameters for this method
       const requiredParams = ['feedback_id'];
 
-      compare_comply.deleteFeedback({}, err => {
+      compareComply.deleteFeedback({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getFeedback', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -510,14 +515,14 @@ describe('getFeedback', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const feedback_id = 'fake_feedback_id';
-      const model_id = 'fake_model_id';
+      const model = 'fake_model';
       const params = {
         feedback_id,
-        model_id,
+        model,
       };
 
       // invoke method
-      compare_comply.getFeedback(params);
+      compareComply.getFeedback(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -527,9 +532,9 @@ describe('getFeedback', () => {
       checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
       expect(options.path['feedback_id']).toEqual(feedback_id);
     });
 
@@ -546,17 +551,18 @@ describe('getFeedback', () => {
         },
       };
 
-      compare_comply.getFeedback(params);
+      compareComply.getFeedback(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.getFeedback(null, () => {
+      compareComply.getFeedback(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -566,13 +572,14 @@ describe('getFeedback', () => {
       // required parameters for this method
       const requiredParams = ['feedback_id'];
 
-      compare_comply.getFeedback({}, err => {
+      compareComply.getFeedback({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listFeedback', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -616,7 +623,7 @@ describe('listFeedback', () => {
       };
 
       // invoke method
-      compare_comply.listFeedback(params);
+      compareComply.listFeedback(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -626,7 +633,7 @@ describe('listFeedback', () => {
       checkUrlAndMethod(options, '/v1/feedback', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['feedback_type']).toEqual(feedback_type);
       expect(options.qs['before']).toEqual(before);
@@ -657,22 +664,23 @@ describe('listFeedback', () => {
         },
       };
 
-      compare_comply.listFeedback(params);
+      compareComply.listFeedback(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      compare_comply.listFeedback();
+      compareComply.listFeedback();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      compare_comply.listFeedback(noop);
+      compareComply.listFeedback(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('createBatch', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -687,9 +695,7 @@ describe('createBatch', () => {
       const output_credentials_file = 'fake_output_credentials_file';
       const output_bucket_location = 'fake_output_bucket_location';
       const output_bucket_name = 'fake_output_bucket_name';
-      const model_id = 'fake_model_id';
-      const input_credentials_filename = 'fake_input_credentials_filename';
-      const output_credentials_filename = 'fake_output_credentials_filename';
+      const model = 'fake_model';
       const params = {
         _function,
         input_credentials_file,
@@ -698,13 +704,11 @@ describe('createBatch', () => {
         output_credentials_file,
         output_bucket_location,
         output_bucket_name,
-        model_id,
-        input_credentials_filename,
-        output_credentials_filename,
+        model,
       };
 
       // invoke method
-      compare_comply.createBatch(params);
+      compareComply.createBatch(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -717,21 +721,15 @@ describe('createBatch', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['input_credentials_file'].data).toEqual(input_credentials_file);
-      expect(options.formData['input_credentials_file'].filename).toEqual(
-        input_credentials_filename
-      );
       expect(options.formData['input_credentials_file'].contentType).toEqual('application/json');
       expect(options.formData['input_bucket_location']).toEqual(input_bucket_location);
       expect(options.formData['input_bucket_name']).toEqual(input_bucket_name);
       expect(options.formData['output_credentials_file'].data).toEqual(output_credentials_file);
-      expect(options.formData['output_credentials_file'].filename).toEqual(
-        output_credentials_filename
-      );
       expect(options.formData['output_credentials_file'].contentType).toEqual('application/json');
       expect(options.formData['output_bucket_location']).toEqual(output_bucket_location);
       expect(options.formData['output_bucket_name']).toEqual(output_bucket_name);
       expect(options.qs['function']).toEqual(_function);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
     });
 
     test('should prioritize user-given headers', () => {
@@ -759,17 +757,18 @@ describe('createBatch', () => {
         },
       };
 
-      compare_comply.createBatch(params);
+      compareComply.createBatch(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.createBatch(null, () => {
+      compareComply.createBatch(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -787,13 +786,14 @@ describe('createBatch', () => {
         'output_bucket_name',
       ];
 
-      compare_comply.createBatch({}, err => {
+      compareComply.createBatch({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getBatch', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -807,7 +807,7 @@ describe('getBatch', () => {
       };
 
       // invoke method
-      compare_comply.getBatch(params);
+      compareComply.getBatch(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -817,7 +817,7 @@ describe('getBatch', () => {
       checkUrlAndMethod(options, '/v1/batches/{batch_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['batch_id']).toEqual(batch_id);
     });
@@ -835,17 +835,18 @@ describe('getBatch', () => {
         },
       };
 
-      compare_comply.getBatch(params);
+      compareComply.getBatch(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.getBatch(null, () => {
+      compareComply.getBatch(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -855,13 +856,14 @@ describe('getBatch', () => {
       // required parameters for this method
       const requiredParams = ['batch_id'];
 
-      compare_comply.getBatch({}, err => {
+      compareComply.getBatch({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listBatches', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -872,7 +874,7 @@ describe('listBatches', () => {
       const params = {};
 
       // invoke method
-      compare_comply.listBatches(params);
+      compareComply.listBatches(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -882,7 +884,7 @@ describe('listBatches', () => {
       checkUrlAndMethod(options, '/v1/batches', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
     });
 
@@ -897,22 +899,23 @@ describe('listBatches', () => {
         },
       };
 
-      compare_comply.listBatches(params);
+      compareComply.listBatches(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      compare_comply.listBatches();
+      compareComply.listBatches();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      compare_comply.listBatches(noop);
+      compareComply.listBatches(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('updateBatch', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -922,15 +925,15 @@ describe('updateBatch', () => {
       // parameters
       const batch_id = 'fake_batch_id';
       const action = 'fake_action';
-      const model_id = 'fake_model_id';
+      const model = 'fake_model';
       const params = {
         batch_id,
         action,
-        model_id,
+        model,
       };
 
       // invoke method
-      compare_comply.updateBatch(params);
+      compareComply.updateBatch(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -940,10 +943,10 @@ describe('updateBatch', () => {
       checkUrlAndMethod(options, '/v1/batches/{batch_id}', 'PUT');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['action']).toEqual(action);
-      expect(options.qs['model_id']).toEqual(model_id);
+      expect(options.qs['model']).toEqual(model);
       expect(options.path['batch_id']).toEqual(batch_id);
     });
 
@@ -962,17 +965,18 @@ describe('updateBatch', () => {
         },
       };
 
-      compare_comply.updateBatch(params);
+      compareComply.updateBatch(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      compare_comply.updateBatch(null, () => {
+      compareComply.updateBatch(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -982,7 +986,7 @@ describe('updateBatch', () => {
       // required parameters for this method
       const requiredParams = ['batch_id', 'action'];
 
-      compare_comply.updateBatch({}, err => {
+      compareComply.updateBatch({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

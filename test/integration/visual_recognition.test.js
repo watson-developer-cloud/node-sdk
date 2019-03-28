@@ -1,6 +1,6 @@
 'use strict';
 const fs = require('fs');
-const watson = require('../../index');
+const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
@@ -11,9 +11,9 @@ describe('visual_recognition_integration', function() {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 4);
 
-  const visual_recognition = new watson.VisualRecognitionV3(
+  const visual_recognition = new VisualRecognitionV3(
     Object.assign({}, auth.visual_recognition_rc.v3, {
-      version: '2018-10-01',
+      version: '2019-03-27',
     })
   );
 
