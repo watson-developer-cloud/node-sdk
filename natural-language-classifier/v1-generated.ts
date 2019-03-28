@@ -16,8 +16,9 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
+import { FileObject } from 'ibm-cloud-sdk-core';
 
 /**
  * IBM Watson&trade; Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short text input. You create and train a classifier to connect predefined classes to example texts so that the service can apply those classes to new inputs.
@@ -64,7 +65,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {string} params.text - The submitted phrase. The maximum length is 2048 characters.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public classify(params: NaturalLanguageClassifierV1.ClassifyParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classification>): Promise<any> | void {
     const _params = extend({}, params);
@@ -93,12 +94,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'classify');
- 
+
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}/classify',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -126,7 +126,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {ClassifyInput[]} params.collection - The submitted phrases.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public classifyCollection(params: NaturalLanguageClassifierV1.ClassifyCollectionParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassificationCollection>): Promise<any> | void {
     const _params = extend({}, params);
@@ -155,12 +155,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'classifyCollection');
- 
+
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}/classify_collection',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -194,11 +193,9 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.training_data - Training data in CSV format. Each text
    * value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see
    * [Data preparation](https://cloud.ibm.com/docs/services/natural-language-classifier/using-your-data.html).
-   * @param {string} [params.metadata_filename] - The filename for training_metadata.
-   * @param {string} [params.training_data_filename] - The filename for training_data.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public createClassifier(params: NaturalLanguageClassifierV1.CreateClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
@@ -217,22 +214,19 @@ class NaturalLanguageClassifierV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
-
     const formData = {
       'training_metadata': {
         data: _params.metadata,
-        filename: _params.metadata_filename,
         contentType: 'application/json'
       },
       'training_data': {
         data: _params.training_data,
-        filename: _params.training_data_filename,
         contentType: 'text/csv'
       }
     };
 
     const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'createClassifier');
- 
+
     const parameters = {
       options: {
         url: '/v1/classifiers',
@@ -257,7 +251,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {string} params.classifier_id - Classifier ID to delete.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -282,7 +276,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'deleteClassifier');
- 
+
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}',
@@ -292,7 +286,6 @@ class NaturalLanguageClassifierV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -309,7 +302,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {string} params.classifier_id - Classifier ID to query.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public getClassifier(params: NaturalLanguageClassifierV1.GetClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
@@ -334,7 +327,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'getClassifier');
- 
+
     const parameters = {
       options: {
         url: '/v1/classifiers/{classifier_id}',
@@ -344,7 +337,6 @@ class NaturalLanguageClassifierV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -360,7 +352,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
@@ -375,7 +367,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
     }
 
     const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'listClassifiers');
- 
+
     const parameters = {
       options: {
         url: '/v1/classifiers',
@@ -384,7 +376,6 @@ class NaturalLanguageClassifierV1 extends BaseService {
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -451,10 +442,6 @@ namespace NaturalLanguageClassifierV1 {
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data preparation](https://cloud.ibm.com/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for training_metadata. */
-    metadata_filename?: string;
-    /** The filename for training_data. */
-    training_data_filename?: string;
     headers?: Object;
     return_response?: boolean;
   }
