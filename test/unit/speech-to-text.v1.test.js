@@ -1,32 +1,34 @@
 'use strict';
 
-const SpeechToTextV1 = require('../../speech-to-text/v1-generated');
 const helper = require('ibm-cloud-sdk-core');
+const SpeechToTextV1 = require('../../speech-to-text/v1-generated');
 const utils = require('../resources/unitTestUtils');
 
-const missingParamsError = utils.missingParamsError;
-const missingParamsSuccess = utils.missingParamsSuccess;
+const getOptions = utils.getOptions;
 const checkUrlAndMethod = utils.checkUrlAndMethod;
 const checkCallback = utils.checkCallback;
 const checkMediaHeaders = utils.checkMediaHeaders;
-const checkUserHeader = utils.checkUserHeader;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const missingParamsError = utils.missingParamsError;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const getOptions = utils.getOptions;
-const expectToBePromise = utils.expectToBePromise;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const noop = () => {};
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://stream.watsonplatform.net/speech-to-text/api',
+  url: 'https://stream.watsonplatform.net/speech-to-text/api/speech-to-text/api',
   version: '2018-10-18',
 };
 
-const speech_to_text = new SpeechToTextV1(service);
-const createRequestMock = jest.spyOn(speech_to_text, 'createRequest');
+const speechToText = new SpeechToTextV1(service);
+const createRequestMock = jest.spyOn(speechToText, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
-const noop = () => {};
+
+// dont actually create a request
+createRequestMock.mockImplementation(noop);
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -46,7 +48,7 @@ describe('getModel', () => {
       };
 
       // invoke method
-      speech_to_text.getModel(params, noop);
+      speechToText.getModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -56,7 +58,7 @@ describe('getModel', () => {
       checkUrlAndMethod(options, '/v1/models/{model_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['model_id']).toEqual(model_id);
     });
@@ -74,32 +76,18 @@ describe('getModel', () => {
         },
       };
 
-      speech_to_text.getModel(params, noop);
+      speechToText.getModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const model_id = 'fake_model_id';
-      const params = {
-        model_id,
-      };
-
-      // invoke method
-      const getModelPromise = speech_to_text.getModel(params);
-      expectToBePromise(getModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.getModel(null, () => {
+      speechToText.getModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -109,26 +97,14 @@ describe('getModel', () => {
       // required parameters for this method
       const requiredParams = ['model_id'];
 
-      speech_to_text.getModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['model_id'];
-
-      const getModelPromise = speech_to_text.getModel();
-      expectToBePromise(getModelPromise);
-
-      getModelPromise.catch(err => {
+      speechToText.getModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listModels', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -139,7 +115,7 @@ describe('listModels', () => {
       const params = {};
 
       // invoke method
-      speech_to_text.listModels(params, noop);
+      speechToText.listModels(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -149,7 +125,7 @@ describe('listModels', () => {
       checkUrlAndMethod(options, '/v1/models', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
     });
 
@@ -164,34 +140,23 @@ describe('listModels', () => {
         },
       };
 
-      speech_to_text.listModels(params, noop);
+      speechToText.listModels(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listModelsPromise = speech_to_text.listModels(params);
-      expectToBePromise(listModelsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      speech_to_text.listModels({}, noop);
+      speechToText.listModels();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      speech_to_text.listModels(noop);
+      speechToText.listModels(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('recognize', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -200,7 +165,6 @@ describe('recognize', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const audio = 'fake_audio';
-      const content_type = 'fake_content_type';
       const model = 'fake_model';
       const language_customization_id = 'fake_language_customization_id';
       const acoustic_customization_id = 'fake_acoustic_customization_id';
@@ -219,9 +183,9 @@ describe('recognize', () => {
       const customization_id = 'fake_customization_id';
       const grammar_name = 'fake_grammar_name';
       const redaction = 'fake_redaction';
+      const content_type = 'fake_content_type';
       const params = {
         audio,
-        content_type,
         model,
         language_customization_id,
         acoustic_customization_id,
@@ -240,10 +204,11 @@ describe('recognize', () => {
         customization_id,
         grammar_name,
         redaction,
+        content_type,
       };
 
       // invoke method
-      speech_to_text.recognize(params, noop);
+      speechToText.recognize(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -257,7 +222,6 @@ describe('recognize', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       checkUserHeader(createRequestMock, 'Content-Type', content_type);
       expect(options.body).toEqual(audio);
-      expect(options.json).toEqual(content_type === 'application/json');
       expect(options.qs['model']).toEqual(model);
       expect(options.qs['language_customization_id']).toEqual(language_customization_id);
       expect(options.qs['acoustic_customization_id']).toEqual(acoustic_customization_id);
@@ -291,32 +255,18 @@ describe('recognize', () => {
         },
       };
 
-      speech_to_text.recognize(params, noop);
+      speechToText.recognize(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const audio = 'fake_audio';
-      const params = {
-        audio,
-      };
-
-      // invoke method
-      const recognizePromise = speech_to_text.recognize(params);
-      expectToBePromise(recognizePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.recognize(null, () => {
+      speechToText.recognize(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -326,26 +276,14 @@ describe('recognize', () => {
       // required parameters for this method
       const requiredParams = ['audio'];
 
-      speech_to_text.recognize({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['audio'];
-
-      const recognizePromise = speech_to_text.recognize();
-      expectToBePromise(recognizePromise);
-
-      recognizePromise.catch(err => {
+      speechToText.recognize({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('checkJob', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -359,7 +297,7 @@ describe('checkJob', () => {
       };
 
       // invoke method
-      speech_to_text.checkJob(params, noop);
+      speechToText.checkJob(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -369,7 +307,7 @@ describe('checkJob', () => {
       checkUrlAndMethod(options, '/v1/recognitions/{id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['id']).toEqual(id);
     });
@@ -387,32 +325,18 @@ describe('checkJob', () => {
         },
       };
 
-      speech_to_text.checkJob(params, noop);
+      speechToText.checkJob(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const id = 'fake_id';
-      const params = {
-        id,
-      };
-
-      // invoke method
-      const checkJobPromise = speech_to_text.checkJob(params);
-      expectToBePromise(checkJobPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.checkJob(null, () => {
+      speechToText.checkJob(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -422,26 +346,14 @@ describe('checkJob', () => {
       // required parameters for this method
       const requiredParams = ['id'];
 
-      speech_to_text.checkJob({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['id'];
-
-      const checkJobPromise = speech_to_text.checkJob();
-      expectToBePromise(checkJobPromise);
-
-      checkJobPromise.catch(err => {
+      speechToText.checkJob({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('checkJobs', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -452,7 +364,7 @@ describe('checkJobs', () => {
       const params = {};
 
       // invoke method
-      speech_to_text.checkJobs(params, noop);
+      speechToText.checkJobs(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -462,7 +374,7 @@ describe('checkJobs', () => {
       checkUrlAndMethod(options, '/v1/recognitions', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
     });
 
@@ -477,34 +389,23 @@ describe('checkJobs', () => {
         },
       };
 
-      speech_to_text.checkJobs(params, noop);
+      speechToText.checkJobs(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const checkJobsPromise = speech_to_text.checkJobs(params);
-      expectToBePromise(checkJobsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      speech_to_text.checkJobs({}, noop);
+      speechToText.checkJobs();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      speech_to_text.checkJobs(noop);
+      speechToText.checkJobs(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('createJob', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -513,7 +414,6 @@ describe('createJob', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const audio = 'fake_audio';
-      const content_type = 'fake_content_type';
       const model = 'fake_model';
       const callback_url = 'fake_callback_url';
       const events = 'fake_events';
@@ -536,9 +436,9 @@ describe('createJob', () => {
       const customization_id = 'fake_customization_id';
       const grammar_name = 'fake_grammar_name';
       const redaction = 'fake_redaction';
+      const content_type = 'fake_content_type';
       const params = {
         audio,
-        content_type,
         model,
         callback_url,
         events,
@@ -561,10 +461,11 @@ describe('createJob', () => {
         customization_id,
         grammar_name,
         redaction,
+        content_type,
       };
 
       // invoke method
-      speech_to_text.createJob(params, noop);
+      speechToText.createJob(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -578,7 +479,6 @@ describe('createJob', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       checkUserHeader(createRequestMock, 'Content-Type', content_type);
       expect(options.body).toEqual(audio);
-      expect(options.json).toEqual(content_type === 'application/json');
       expect(options.qs['model']).toEqual(model);
       expect(options.qs['callback_url']).toEqual(callback_url);
       expect(options.qs['events']).toEqual(events);
@@ -616,32 +516,18 @@ describe('createJob', () => {
         },
       };
 
-      speech_to_text.createJob(params, noop);
+      speechToText.createJob(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const audio = 'fake_audio';
-      const params = {
-        audio,
-      };
-
-      // invoke method
-      const createJobPromise = speech_to_text.createJob(params);
-      expectToBePromise(createJobPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.createJob(null, () => {
+      speechToText.createJob(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -651,26 +537,14 @@ describe('createJob', () => {
       // required parameters for this method
       const requiredParams = ['audio'];
 
-      speech_to_text.createJob({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['audio'];
-
-      const createJobPromise = speech_to_text.createJob();
-      expectToBePromise(createJobPromise);
-
-      createJobPromise.catch(err => {
+      speechToText.createJob({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteJob', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -684,7 +558,7 @@ describe('deleteJob', () => {
       };
 
       // invoke method
-      speech_to_text.deleteJob(params, noop);
+      speechToText.deleteJob(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -693,8 +567,8 @@ describe('deleteJob', () => {
 
       checkUrlAndMethod(options, '/v1/recognitions/{id}', 'DELETE');
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['id']).toEqual(id);
     });
@@ -712,32 +586,18 @@ describe('deleteJob', () => {
         },
       };
 
-      speech_to_text.deleteJob(params, noop);
+      speechToText.deleteJob(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const id = 'fake_id';
-      const params = {
-        id,
-      };
-
-      // invoke method
-      const deleteJobPromise = speech_to_text.deleteJob(params);
-      expectToBePromise(deleteJobPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteJob(null, () => {
+      speechToText.deleteJob(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -747,26 +607,14 @@ describe('deleteJob', () => {
       // required parameters for this method
       const requiredParams = ['id'];
 
-      speech_to_text.deleteJob({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['id'];
-
-      const deleteJobPromise = speech_to_text.deleteJob();
-      expectToBePromise(deleteJobPromise);
-
-      deleteJobPromise.catch(err => {
+      speechToText.deleteJob({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('registerCallback', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -782,7 +630,7 @@ describe('registerCallback', () => {
       };
 
       // invoke method
-      speech_to_text.registerCallback(params, noop);
+      speechToText.registerCallback(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -792,7 +640,7 @@ describe('registerCallback', () => {
       checkUrlAndMethod(options, '/v1/register_callback', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['callback_url']).toEqual(callback_url);
       expect(options.qs['user_secret']).toEqual(user_secret);
@@ -811,32 +659,18 @@ describe('registerCallback', () => {
         },
       };
 
-      speech_to_text.registerCallback(params, noop);
+      speechToText.registerCallback(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const callback_url = 'fake_callback_url';
-      const params = {
-        callback_url,
-      };
-
-      // invoke method
-      const registerCallbackPromise = speech_to_text.registerCallback(params);
-      expectToBePromise(registerCallbackPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.registerCallback(null, () => {
+      speechToText.registerCallback(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -846,26 +680,14 @@ describe('registerCallback', () => {
       // required parameters for this method
       const requiredParams = ['callback_url'];
 
-      speech_to_text.registerCallback({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['callback_url'];
-
-      const registerCallbackPromise = speech_to_text.registerCallback();
-      expectToBePromise(registerCallbackPromise);
-
-      registerCallbackPromise.catch(err => {
+      speechToText.registerCallback({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('unregisterCallback', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -879,7 +701,7 @@ describe('unregisterCallback', () => {
       };
 
       // invoke method
-      speech_to_text.unregisterCallback(params, noop);
+      speechToText.unregisterCallback(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -888,8 +710,8 @@ describe('unregisterCallback', () => {
 
       checkUrlAndMethod(options, '/v1/unregister_callback', 'POST');
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['callback_url']).toEqual(callback_url);
     });
@@ -907,32 +729,18 @@ describe('unregisterCallback', () => {
         },
       };
 
-      speech_to_text.unregisterCallback(params, noop);
+      speechToText.unregisterCallback(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const callback_url = 'fake_callback_url';
-      const params = {
-        callback_url,
-      };
-
-      // invoke method
-      const unregisterCallbackPromise = speech_to_text.unregisterCallback(params);
-      expectToBePromise(unregisterCallbackPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.unregisterCallback(null, () => {
+      speechToText.unregisterCallback(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -942,26 +750,14 @@ describe('unregisterCallback', () => {
       // required parameters for this method
       const requiredParams = ['callback_url'];
 
-      speech_to_text.unregisterCallback({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['callback_url'];
-
-      const unregisterCallbackPromise = speech_to_text.unregisterCallback();
-      expectToBePromise(unregisterCallbackPromise);
-
-      unregisterCallbackPromise.catch(err => {
+      speechToText.unregisterCallback({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('createLanguageModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -981,7 +777,7 @@ describe('createLanguageModel', () => {
       };
 
       // invoke method
-      speech_to_text.createLanguageModel(params, noop);
+      speechToText.createLanguageModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -997,7 +793,6 @@ describe('createLanguageModel', () => {
       expect(options.body['base_model_name']).toEqual(base_model_name);
       expect(options.body['dialect']).toEqual(dialect);
       expect(options.body['description']).toEqual(description);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -1015,34 +810,18 @@ describe('createLanguageModel', () => {
         },
       };
 
-      speech_to_text.createLanguageModel(params, noop);
+      speechToText.createLanguageModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const name = 'fake_name';
-      const base_model_name = 'fake_base_model_name';
-      const params = {
-        name,
-        base_model_name,
-      };
-
-      // invoke method
-      const createLanguageModelPromise = speech_to_text.createLanguageModel(params);
-      expectToBePromise(createLanguageModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.createLanguageModel(null, () => {
+      speechToText.createLanguageModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1052,26 +831,14 @@ describe('createLanguageModel', () => {
       // required parameters for this method
       const requiredParams = ['name', 'base_model_name'];
 
-      speech_to_text.createLanguageModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['name', 'base_model_name'];
-
-      const createLanguageModelPromise = speech_to_text.createLanguageModel();
-      expectToBePromise(createLanguageModelPromise);
-
-      createLanguageModelPromise.catch(err => {
+      speechToText.createLanguageModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteLanguageModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1085,7 +852,7 @@ describe('deleteLanguageModel', () => {
       };
 
       // invoke method
-      speech_to_text.deleteLanguageModel(params, noop);
+      speechToText.deleteLanguageModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1095,7 +862,7 @@ describe('deleteLanguageModel', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -1113,32 +880,18 @@ describe('deleteLanguageModel', () => {
         },
       };
 
-      speech_to_text.deleteLanguageModel(params, noop);
+      speechToText.deleteLanguageModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const deleteLanguageModelPromise = speech_to_text.deleteLanguageModel(params);
-      expectToBePromise(deleteLanguageModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteLanguageModel(null, () => {
+      speechToText.deleteLanguageModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1148,26 +901,14 @@ describe('deleteLanguageModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.deleteLanguageModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const deleteLanguageModelPromise = speech_to_text.deleteLanguageModel();
-      expectToBePromise(deleteLanguageModelPromise);
-
-      deleteLanguageModelPromise.catch(err => {
+      speechToText.deleteLanguageModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getLanguageModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1181,7 +922,7 @@ describe('getLanguageModel', () => {
       };
 
       // invoke method
-      speech_to_text.getLanguageModel(params, noop);
+      speechToText.getLanguageModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1191,7 +932,7 @@ describe('getLanguageModel', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -1209,32 +950,18 @@ describe('getLanguageModel', () => {
         },
       };
 
-      speech_to_text.getLanguageModel(params, noop);
+      speechToText.getLanguageModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const getLanguageModelPromise = speech_to_text.getLanguageModel(params);
-      expectToBePromise(getLanguageModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.getLanguageModel(null, () => {
+      speechToText.getLanguageModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1244,26 +971,14 @@ describe('getLanguageModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.getLanguageModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const getLanguageModelPromise = speech_to_text.getLanguageModel();
-      expectToBePromise(getLanguageModelPromise);
-
-      getLanguageModelPromise.catch(err => {
+      speechToText.getLanguageModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listLanguageModels', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1277,7 +992,7 @@ describe('listLanguageModels', () => {
       };
 
       // invoke method
-      speech_to_text.listLanguageModels(params, noop);
+      speechToText.listLanguageModels(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1287,7 +1002,7 @@ describe('listLanguageModels', () => {
       checkUrlAndMethod(options, '/v1/customizations', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['language']).toEqual(language);
     });
@@ -1303,34 +1018,23 @@ describe('listLanguageModels', () => {
         },
       };
 
-      speech_to_text.listLanguageModels(params, noop);
+      speechToText.listLanguageModels(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listLanguageModelsPromise = speech_to_text.listLanguageModels(params);
-      expectToBePromise(listLanguageModelsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      speech_to_text.listLanguageModels({}, noop);
+      speechToText.listLanguageModels();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      speech_to_text.listLanguageModels(noop);
+      speechToText.listLanguageModels(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('resetLanguageModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1344,7 +1048,7 @@ describe('resetLanguageModel', () => {
       };
 
       // invoke method
-      speech_to_text.resetLanguageModel(params, noop);
+      speechToText.resetLanguageModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1354,7 +1058,7 @@ describe('resetLanguageModel', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}/reset', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -1372,32 +1076,18 @@ describe('resetLanguageModel', () => {
         },
       };
 
-      speech_to_text.resetLanguageModel(params, noop);
+      speechToText.resetLanguageModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const resetLanguageModelPromise = speech_to_text.resetLanguageModel(params);
-      expectToBePromise(resetLanguageModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.resetLanguageModel(null, () => {
+      speechToText.resetLanguageModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1407,26 +1097,14 @@ describe('resetLanguageModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.resetLanguageModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const resetLanguageModelPromise = speech_to_text.resetLanguageModel();
-      expectToBePromise(resetLanguageModelPromise);
-
-      resetLanguageModelPromise.catch(err => {
+      speechToText.resetLanguageModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('trainLanguageModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1444,7 +1122,7 @@ describe('trainLanguageModel', () => {
       };
 
       // invoke method
-      speech_to_text.trainLanguageModel(params, noop);
+      speechToText.trainLanguageModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1454,7 +1132,7 @@ describe('trainLanguageModel', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}/train', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['word_type_to_add']).toEqual(word_type_to_add);
       expect(options.qs['customization_weight']).toEqual(customization_weight);
@@ -1474,32 +1152,18 @@ describe('trainLanguageModel', () => {
         },
       };
 
-      speech_to_text.trainLanguageModel(params, noop);
+      speechToText.trainLanguageModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const trainLanguageModelPromise = speech_to_text.trainLanguageModel(params);
-      expectToBePromise(trainLanguageModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.trainLanguageModel(null, () => {
+      speechToText.trainLanguageModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1509,26 +1173,14 @@ describe('trainLanguageModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.trainLanguageModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const trainLanguageModelPromise = speech_to_text.trainLanguageModel();
-      expectToBePromise(trainLanguageModelPromise);
-
-      trainLanguageModelPromise.catch(err => {
+      speechToText.trainLanguageModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('upgradeLanguageModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1542,7 +1194,7 @@ describe('upgradeLanguageModel', () => {
       };
 
       // invoke method
-      speech_to_text.upgradeLanguageModel(params, noop);
+      speechToText.upgradeLanguageModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1552,7 +1204,7 @@ describe('upgradeLanguageModel', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}/upgrade_model', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -1570,32 +1222,18 @@ describe('upgradeLanguageModel', () => {
         },
       };
 
-      speech_to_text.upgradeLanguageModel(params, noop);
+      speechToText.upgradeLanguageModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const upgradeLanguageModelPromise = speech_to_text.upgradeLanguageModel(params);
-      expectToBePromise(upgradeLanguageModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.upgradeLanguageModel(null, () => {
+      speechToText.upgradeLanguageModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1605,26 +1243,14 @@ describe('upgradeLanguageModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.upgradeLanguageModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const upgradeLanguageModelPromise = speech_to_text.upgradeLanguageModel();
-      expectToBePromise(upgradeLanguageModelPromise);
-
-      upgradeLanguageModelPromise.catch(err => {
+      speechToText.upgradeLanguageModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('addCorpus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1636,17 +1262,15 @@ describe('addCorpus', () => {
       const corpus_name = 'fake_corpus_name';
       const corpus_file = 'fake_corpus_file';
       const allow_overwrite = 'fake_allow_overwrite';
-      const corpus_filename = 'fake_corpus_filename';
       const params = {
         customization_id,
         corpus_name,
         corpus_file,
         allow_overwrite,
-        corpus_filename,
       };
 
       // invoke method
-      speech_to_text.addCorpus(params, noop);
+      speechToText.addCorpus(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1663,7 +1287,6 @@ describe('addCorpus', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['corpus_file'].data).toEqual(corpus_file);
-      expect(options.formData['corpus_file'].filename).toEqual(corpus_filename);
       expect(options.formData['corpus_file'].contentType).toEqual('text/plain');
       expect(options.qs['allow_overwrite']).toEqual(allow_overwrite);
       expect(options.path['customization_id']).toEqual(customization_id);
@@ -1687,36 +1310,18 @@ describe('addCorpus', () => {
         },
       };
 
-      speech_to_text.addCorpus(params, noop);
+      speechToText.addCorpus(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const corpus_name = 'fake_corpus_name';
-      const corpus_file = 'fake_corpus_file';
-      const params = {
-        customization_id,
-        corpus_name,
-        corpus_file,
-      };
-
-      // invoke method
-      const addCorpusPromise = speech_to_text.addCorpus(params);
-      expectToBePromise(addCorpusPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.addCorpus(null, () => {
+      speechToText.addCorpus(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1726,26 +1331,14 @@ describe('addCorpus', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'corpus_name', 'corpus_file'];
 
-      speech_to_text.addCorpus({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'corpus_name', 'corpus_file'];
-
-      const addCorpusPromise = speech_to_text.addCorpus();
-      expectToBePromise(addCorpusPromise);
-
-      addCorpusPromise.catch(err => {
+      speechToText.addCorpus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteCorpus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1761,7 +1354,7 @@ describe('deleteCorpus', () => {
       };
 
       // invoke method
-      speech_to_text.deleteCorpus(params, noop);
+      speechToText.deleteCorpus(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1775,7 +1368,7 @@ describe('deleteCorpus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['corpus_name']).toEqual(corpus_name);
@@ -1796,34 +1389,18 @@ describe('deleteCorpus', () => {
         },
       };
 
-      speech_to_text.deleteCorpus(params, noop);
+      speechToText.deleteCorpus(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const corpus_name = 'fake_corpus_name';
-      const params = {
-        customization_id,
-        corpus_name,
-      };
-
-      // invoke method
-      const deleteCorpusPromise = speech_to_text.deleteCorpus(params);
-      expectToBePromise(deleteCorpusPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteCorpus(null, () => {
+      speechToText.deleteCorpus(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1833,26 +1410,14 @@ describe('deleteCorpus', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'corpus_name'];
 
-      speech_to_text.deleteCorpus({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'corpus_name'];
-
-      const deleteCorpusPromise = speech_to_text.deleteCorpus();
-      expectToBePromise(deleteCorpusPromise);
-
-      deleteCorpusPromise.catch(err => {
+      speechToText.deleteCorpus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getCorpus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1868,7 +1433,7 @@ describe('getCorpus', () => {
       };
 
       // invoke method
-      speech_to_text.getCorpus(params, noop);
+      speechToText.getCorpus(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1882,7 +1447,7 @@ describe('getCorpus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['corpus_name']).toEqual(corpus_name);
@@ -1903,34 +1468,18 @@ describe('getCorpus', () => {
         },
       };
 
-      speech_to_text.getCorpus(params, noop);
+      speechToText.getCorpus(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const corpus_name = 'fake_corpus_name';
-      const params = {
-        customization_id,
-        corpus_name,
-      };
-
-      // invoke method
-      const getCorpusPromise = speech_to_text.getCorpus(params);
-      expectToBePromise(getCorpusPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.getCorpus(null, () => {
+      speechToText.getCorpus(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -1940,26 +1489,14 @@ describe('getCorpus', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'corpus_name'];
 
-      speech_to_text.getCorpus({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'corpus_name'];
-
-      const getCorpusPromise = speech_to_text.getCorpus();
-      expectToBePromise(getCorpusPromise);
-
-      getCorpusPromise.catch(err => {
+      speechToText.getCorpus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listCorpora', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1973,7 +1510,7 @@ describe('listCorpora', () => {
       };
 
       // invoke method
-      speech_to_text.listCorpora(params, noop);
+      speechToText.listCorpora(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1983,7 +1520,7 @@ describe('listCorpora', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}/corpora', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -2001,32 +1538,18 @@ describe('listCorpora', () => {
         },
       };
 
-      speech_to_text.listCorpora(params, noop);
+      speechToText.listCorpora(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const listCorporaPromise = speech_to_text.listCorpora(params);
-      expectToBePromise(listCorporaPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.listCorpora(null, () => {
+      speechToText.listCorpora(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2036,26 +1559,14 @@ describe('listCorpora', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.listCorpora({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const listCorporaPromise = speech_to_text.listCorpora();
-      expectToBePromise(listCorporaPromise);
-
-      listCorporaPromise.catch(err => {
+      speechToText.listCorpora({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('addWord', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2077,7 +1588,7 @@ describe('addWord', () => {
       };
 
       // invoke method
-      speech_to_text.addWord(params, noop);
+      speechToText.addWord(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2092,7 +1603,6 @@ describe('addWord', () => {
       expect(options.body['word']).toEqual(word);
       expect(options.body['sounds_like']).toEqual(sounds_like);
       expect(options.body['display_as']).toEqual(display_as);
-      expect(options.json).toEqual(true);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['word_name']).toEqual(word_name);
     });
@@ -2112,34 +1622,18 @@ describe('addWord', () => {
         },
       };
 
-      speech_to_text.addWord(params, noop);
+      speechToText.addWord(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const word_name = 'fake_word_name';
-      const params = {
-        customization_id,
-        word_name,
-      };
-
-      // invoke method
-      const addWordPromise = speech_to_text.addWord(params);
-      expectToBePromise(addWordPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.addWord(null, () => {
+      speechToText.addWord(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2149,26 +1643,14 @@ describe('addWord', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'word_name'];
 
-      speech_to_text.addWord({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'word_name'];
-
-      const addWordPromise = speech_to_text.addWord();
-      expectToBePromise(addWordPromise);
-
-      addWordPromise.catch(err => {
+      speechToText.addWord({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('addWords', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2184,7 +1666,7 @@ describe('addWords', () => {
       };
 
       // invoke method
-      speech_to_text.addWords(params, noop);
+      speechToText.addWords(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2197,7 +1679,6 @@ describe('addWords', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['words']).toEqual(words);
-      expect(options.json).toEqual(true);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
 
@@ -2216,34 +1697,18 @@ describe('addWords', () => {
         },
       };
 
-      speech_to_text.addWords(params, noop);
+      speechToText.addWords(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const words = 'fake_words';
-      const params = {
-        customization_id,
-        words,
-      };
-
-      // invoke method
-      const addWordsPromise = speech_to_text.addWords(params);
-      expectToBePromise(addWordsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.addWords(null, () => {
+      speechToText.addWords(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2253,26 +1718,14 @@ describe('addWords', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'words'];
 
-      speech_to_text.addWords({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'words'];
-
-      const addWordsPromise = speech_to_text.addWords();
-      expectToBePromise(addWordsPromise);
-
-      addWordsPromise.catch(err => {
+      speechToText.addWords({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteWord', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2288,7 +1741,7 @@ describe('deleteWord', () => {
       };
 
       // invoke method
-      speech_to_text.deleteWord(params, noop);
+      speechToText.deleteWord(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2302,7 +1755,7 @@ describe('deleteWord', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['word_name']).toEqual(word_name);
@@ -2323,34 +1776,18 @@ describe('deleteWord', () => {
         },
       };
 
-      speech_to_text.deleteWord(params, noop);
+      speechToText.deleteWord(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const word_name = 'fake_word_name';
-      const params = {
-        customization_id,
-        word_name,
-      };
-
-      // invoke method
-      const deleteWordPromise = speech_to_text.deleteWord(params);
-      expectToBePromise(deleteWordPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteWord(null, () => {
+      speechToText.deleteWord(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2360,26 +1797,14 @@ describe('deleteWord', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'word_name'];
 
-      speech_to_text.deleteWord({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'word_name'];
-
-      const deleteWordPromise = speech_to_text.deleteWord();
-      expectToBePromise(deleteWordPromise);
-
-      deleteWordPromise.catch(err => {
+      speechToText.deleteWord({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getWord', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2395,7 +1820,7 @@ describe('getWord', () => {
       };
 
       // invoke method
-      speech_to_text.getWord(params, noop);
+      speechToText.getWord(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2405,7 +1830,7 @@ describe('getWord', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words/{word_name}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['word_name']).toEqual(word_name);
@@ -2426,34 +1851,18 @@ describe('getWord', () => {
         },
       };
 
-      speech_to_text.getWord(params, noop);
+      speechToText.getWord(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const word_name = 'fake_word_name';
-      const params = {
-        customization_id,
-        word_name,
-      };
-
-      // invoke method
-      const getWordPromise = speech_to_text.getWord(params);
-      expectToBePromise(getWordPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.getWord(null, () => {
+      speechToText.getWord(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2463,26 +1872,14 @@ describe('getWord', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'word_name'];
 
-      speech_to_text.getWord({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'word_name'];
-
-      const getWordPromise = speech_to_text.getWord();
-      expectToBePromise(getWordPromise);
-
-      getWordPromise.catch(err => {
+      speechToText.getWord({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listWords', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2500,7 +1897,7 @@ describe('listWords', () => {
       };
 
       // invoke method
-      speech_to_text.listWords(params, noop);
+      speechToText.listWords(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2510,7 +1907,7 @@ describe('listWords', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['word_type']).toEqual(word_type);
       expect(options.qs['sort']).toEqual(sort);
@@ -2530,32 +1927,18 @@ describe('listWords', () => {
         },
       };
 
-      speech_to_text.listWords(params, noop);
+      speechToText.listWords(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const listWordsPromise = speech_to_text.listWords(params);
-      expectToBePromise(listWordsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.listWords(null, () => {
+      speechToText.listWords(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2565,26 +1948,14 @@ describe('listWords', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.listWords({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const listWordsPromise = speech_to_text.listWords();
-      expectToBePromise(listWordsPromise);
-
-      listWordsPromise.catch(err => {
+      speechToText.listWords({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('addGrammar', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2606,7 +1977,7 @@ describe('addGrammar', () => {
       };
 
       // invoke method
-      speech_to_text.addGrammar(params);
+      speechToText.addGrammar(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2624,7 +1995,6 @@ describe('addGrammar', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       checkUserHeader(createRequestMock, 'Content-Type', content_type);
       expect(options.body).toEqual(grammar_file);
-      expect(options.json).toEqual(content_type === 'application/json');
       expect(options.qs['allow_overwrite']).toEqual(allow_overwrite);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['grammar_name']).toEqual(grammar_name);
@@ -2649,17 +2019,18 @@ describe('addGrammar', () => {
         },
       };
 
-      speech_to_text.addGrammar(params);
+      speechToText.addGrammar(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.addGrammar(null, () => {
+      speechToText.addGrammar(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2669,13 +2040,14 @@ describe('addGrammar', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'grammar_name', 'grammar_file', 'content_type'];
 
-      speech_to_text.addGrammar({}, err => {
+      speechToText.addGrammar({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteGrammar', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2691,7 +2063,7 @@ describe('deleteGrammar', () => {
       };
 
       // invoke method
-      speech_to_text.deleteGrammar(params);
+      speechToText.deleteGrammar(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2705,7 +2077,7 @@ describe('deleteGrammar', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['grammar_name']).toEqual(grammar_name);
@@ -2726,17 +2098,18 @@ describe('deleteGrammar', () => {
         },
       };
 
-      speech_to_text.deleteGrammar(params);
+      speechToText.deleteGrammar(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteGrammar(null, () => {
+      speechToText.deleteGrammar(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2746,13 +2119,14 @@ describe('deleteGrammar', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'grammar_name'];
 
-      speech_to_text.deleteGrammar({}, err => {
+      speechToText.deleteGrammar({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getGrammar', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2768,7 +2142,7 @@ describe('getGrammar', () => {
       };
 
       // invoke method
-      speech_to_text.getGrammar(params);
+      speechToText.getGrammar(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2782,7 +2156,7 @@ describe('getGrammar', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['grammar_name']).toEqual(grammar_name);
@@ -2803,17 +2177,18 @@ describe('getGrammar', () => {
         },
       };
 
-      speech_to_text.getGrammar(params);
+      speechToText.getGrammar(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.getGrammar(null, () => {
+      speechToText.getGrammar(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2823,13 +2198,14 @@ describe('getGrammar', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'grammar_name'];
 
-      speech_to_text.getGrammar({}, err => {
+      speechToText.getGrammar({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listGrammars', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2843,7 +2219,7 @@ describe('listGrammars', () => {
       };
 
       // invoke method
-      speech_to_text.listGrammars(params);
+      speechToText.listGrammars(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2853,7 +2229,7 @@ describe('listGrammars', () => {
       checkUrlAndMethod(options, '/v1/customizations/{customization_id}/grammars', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -2871,17 +2247,18 @@ describe('listGrammars', () => {
         },
       };
 
-      speech_to_text.listGrammars(params);
+      speechToText.listGrammars(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.listGrammars(null, () => {
+      speechToText.listGrammars(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2891,13 +2268,14 @@ describe('listGrammars', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.listGrammars({}, err => {
+      speechToText.listGrammars({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('createAcousticModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2915,7 +2293,7 @@ describe('createAcousticModel', () => {
       };
 
       // invoke method
-      speech_to_text.createAcousticModel(params, noop);
+      speechToText.createAcousticModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2930,7 +2308,6 @@ describe('createAcousticModel', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['base_model_name']).toEqual(base_model_name);
       expect(options.body['description']).toEqual(description);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -2948,34 +2325,18 @@ describe('createAcousticModel', () => {
         },
       };
 
-      speech_to_text.createAcousticModel(params, noop);
+      speechToText.createAcousticModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const name = 'fake_name';
-      const base_model_name = 'fake_base_model_name';
-      const params = {
-        name,
-        base_model_name,
-      };
-
-      // invoke method
-      const createAcousticModelPromise = speech_to_text.createAcousticModel(params);
-      expectToBePromise(createAcousticModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.createAcousticModel(null, () => {
+      speechToText.createAcousticModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -2985,26 +2346,14 @@ describe('createAcousticModel', () => {
       // required parameters for this method
       const requiredParams = ['name', 'base_model_name'];
 
-      speech_to_text.createAcousticModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['name', 'base_model_name'];
-
-      const createAcousticModelPromise = speech_to_text.createAcousticModel();
-      expectToBePromise(createAcousticModelPromise);
-
-      createAcousticModelPromise.catch(err => {
+      speechToText.createAcousticModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteAcousticModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3018,7 +2367,7 @@ describe('deleteAcousticModel', () => {
       };
 
       // invoke method
-      speech_to_text.deleteAcousticModel(params, noop);
+      speechToText.deleteAcousticModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3028,7 +2377,7 @@ describe('deleteAcousticModel', () => {
       checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -3046,32 +2395,18 @@ describe('deleteAcousticModel', () => {
         },
       };
 
-      speech_to_text.deleteAcousticModel(params, noop);
+      speechToText.deleteAcousticModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const deleteAcousticModelPromise = speech_to_text.deleteAcousticModel(params);
-      expectToBePromise(deleteAcousticModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteAcousticModel(null, () => {
+      speechToText.deleteAcousticModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3081,26 +2416,14 @@ describe('deleteAcousticModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.deleteAcousticModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const deleteAcousticModelPromise = speech_to_text.deleteAcousticModel();
-      expectToBePromise(deleteAcousticModelPromise);
-
-      deleteAcousticModelPromise.catch(err => {
+      speechToText.deleteAcousticModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getAcousticModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3114,7 +2437,7 @@ describe('getAcousticModel', () => {
       };
 
       // invoke method
-      speech_to_text.getAcousticModel(params, noop);
+      speechToText.getAcousticModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3124,7 +2447,7 @@ describe('getAcousticModel', () => {
       checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -3142,32 +2465,18 @@ describe('getAcousticModel', () => {
         },
       };
 
-      speech_to_text.getAcousticModel(params, noop);
+      speechToText.getAcousticModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const getAcousticModelPromise = speech_to_text.getAcousticModel(params);
-      expectToBePromise(getAcousticModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.getAcousticModel(null, () => {
+      speechToText.getAcousticModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3177,26 +2486,14 @@ describe('getAcousticModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.getAcousticModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const getAcousticModelPromise = speech_to_text.getAcousticModel();
-      expectToBePromise(getAcousticModelPromise);
-
-      getAcousticModelPromise.catch(err => {
+      speechToText.getAcousticModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listAcousticModels', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3210,7 +2507,7 @@ describe('listAcousticModels', () => {
       };
 
       // invoke method
-      speech_to_text.listAcousticModels(params, noop);
+      speechToText.listAcousticModels(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3220,7 +2517,7 @@ describe('listAcousticModels', () => {
       checkUrlAndMethod(options, '/v1/acoustic_customizations', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['language']).toEqual(language);
     });
@@ -3236,34 +2533,23 @@ describe('listAcousticModels', () => {
         },
       };
 
-      speech_to_text.listAcousticModels(params, noop);
+      speechToText.listAcousticModels(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listAcousticModelsPromise = speech_to_text.listAcousticModels(params);
-      expectToBePromise(listAcousticModelsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      speech_to_text.listAcousticModels({}, noop);
+      speechToText.listAcousticModels();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      speech_to_text.listAcousticModels(noop);
+      speechToText.listAcousticModels(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
+
 describe('resetAcousticModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3277,7 +2563,7 @@ describe('resetAcousticModel', () => {
       };
 
       // invoke method
-      speech_to_text.resetAcousticModel(params, noop);
+      speechToText.resetAcousticModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3287,7 +2573,7 @@ describe('resetAcousticModel', () => {
       checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}/reset', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -3305,32 +2591,18 @@ describe('resetAcousticModel', () => {
         },
       };
 
-      speech_to_text.resetAcousticModel(params, noop);
+      speechToText.resetAcousticModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const resetAcousticModelPromise = speech_to_text.resetAcousticModel(params);
-      expectToBePromise(resetAcousticModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.resetAcousticModel(null, () => {
+      speechToText.resetAcousticModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3340,26 +2612,14 @@ describe('resetAcousticModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.resetAcousticModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const resetAcousticModelPromise = speech_to_text.resetAcousticModel();
-      expectToBePromise(resetAcousticModelPromise);
-
-      resetAcousticModelPromise.catch(err => {
+      speechToText.resetAcousticModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('trainAcousticModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3375,7 +2635,7 @@ describe('trainAcousticModel', () => {
       };
 
       // invoke method
-      speech_to_text.trainAcousticModel(params, noop);
+      speechToText.trainAcousticModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3385,7 +2645,7 @@ describe('trainAcousticModel', () => {
       checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}/train', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['custom_language_model_id']).toEqual(custom_language_model_id);
       expect(options.path['customization_id']).toEqual(customization_id);
@@ -3404,32 +2664,18 @@ describe('trainAcousticModel', () => {
         },
       };
 
-      speech_to_text.trainAcousticModel(params, noop);
+      speechToText.trainAcousticModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const trainAcousticModelPromise = speech_to_text.trainAcousticModel(params);
-      expectToBePromise(trainAcousticModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.trainAcousticModel(null, () => {
+      speechToText.trainAcousticModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3439,26 +2685,14 @@ describe('trainAcousticModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.trainAcousticModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const trainAcousticModelPromise = speech_to_text.trainAcousticModel();
-      expectToBePromise(trainAcousticModelPromise);
-
-      trainAcousticModelPromise.catch(err => {
+      speechToText.trainAcousticModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('upgradeAcousticModel', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3476,7 +2710,7 @@ describe('upgradeAcousticModel', () => {
       };
 
       // invoke method
-      speech_to_text.upgradeAcousticModel(params, noop);
+      speechToText.upgradeAcousticModel(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3490,7 +2724,7 @@ describe('upgradeAcousticModel', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['custom_language_model_id']).toEqual(custom_language_model_id);
       expect(options.qs['force']).toEqual(force);
@@ -3510,32 +2744,18 @@ describe('upgradeAcousticModel', () => {
         },
       };
 
-      speech_to_text.upgradeAcousticModel(params, noop);
+      speechToText.upgradeAcousticModel(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const upgradeAcousticModelPromise = speech_to_text.upgradeAcousticModel(params);
-      expectToBePromise(upgradeAcousticModelPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.upgradeAcousticModel(null, () => {
+      speechToText.upgradeAcousticModel(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3545,26 +2765,14 @@ describe('upgradeAcousticModel', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.upgradeAcousticModel({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const upgradeAcousticModelPromise = speech_to_text.upgradeAcousticModel();
-      expectToBePromise(upgradeAcousticModelPromise);
-
-      upgradeAcousticModelPromise.catch(err => {
+      speechToText.upgradeAcousticModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('addAudio', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3575,20 +2783,20 @@ describe('addAudio', () => {
       const customization_id = 'fake_customization_id';
       const audio_name = 'fake_audio_name';
       const audio_resource = 'fake_audio_resource';
-      const content_type = 'fake_content_type';
       const contained_content_type = 'fake_contained_content_type';
       const allow_overwrite = 'fake_allow_overwrite';
+      const content_type = 'fake_content_type';
       const params = {
         customization_id,
         audio_name,
         audio_resource,
-        content_type,
         contained_content_type,
         allow_overwrite,
+        content_type,
       };
 
       // invoke method
-      speech_to_text.addAudio(params, noop);
+      speechToText.addAudio(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3604,10 +2812,9 @@ describe('addAudio', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = content_type;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Content-Type', content_type);
       checkUserHeader(createRequestMock, 'Contained-Content-Type', contained_content_type);
+      checkUserHeader(createRequestMock, 'Content-Type', content_type);
       expect(options.body).toEqual(audio_resource);
-      expect(options.json).toEqual(content_type === 'application/json');
       expect(options.qs['allow_overwrite']).toEqual(allow_overwrite);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['audio_name']).toEqual(audio_name);
@@ -3630,36 +2837,18 @@ describe('addAudio', () => {
         },
       };
 
-      speech_to_text.addAudio(params, noop);
+      speechToText.addAudio(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const audio_name = 'fake_audio_name';
-      const audio_resource = 'fake_audio_resource';
-      const params = {
-        customization_id,
-        audio_name,
-        audio_resource,
-      };
-
-      // invoke method
-      const addAudioPromise = speech_to_text.addAudio(params);
-      expectToBePromise(addAudioPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.addAudio(null, () => {
+      speechToText.addAudio(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3669,26 +2858,14 @@ describe('addAudio', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'audio_name', 'audio_resource'];
 
-      speech_to_text.addAudio({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'audio_name', 'audio_resource'];
-
-      const addAudioPromise = speech_to_text.addAudio();
-      expectToBePromise(addAudioPromise);
-
-      addAudioPromise.catch(err => {
+      speechToText.addAudio({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteAudio', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3704,7 +2881,7 @@ describe('deleteAudio', () => {
       };
 
       // invoke method
-      speech_to_text.deleteAudio(params, noop);
+      speechToText.deleteAudio(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3718,7 +2895,7 @@ describe('deleteAudio', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['audio_name']).toEqual(audio_name);
@@ -3739,34 +2916,18 @@ describe('deleteAudio', () => {
         },
       };
 
-      speech_to_text.deleteAudio(params, noop);
+      speechToText.deleteAudio(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const audio_name = 'fake_audio_name';
-      const params = {
-        customization_id,
-        audio_name,
-      };
-
-      // invoke method
-      const deleteAudioPromise = speech_to_text.deleteAudio(params);
-      expectToBePromise(deleteAudioPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteAudio(null, () => {
+      speechToText.deleteAudio(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3776,26 +2937,14 @@ describe('deleteAudio', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'audio_name'];
 
-      speech_to_text.deleteAudio({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'audio_name'];
-
-      const deleteAudioPromise = speech_to_text.deleteAudio();
-      expectToBePromise(deleteAudioPromise);
-
-      deleteAudioPromise.catch(err => {
+      speechToText.deleteAudio({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('getAudio', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3811,7 +2960,7 @@ describe('getAudio', () => {
       };
 
       // invoke method
-      speech_to_text.getAudio(params, noop);
+      speechToText.getAudio(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3825,7 +2974,7 @@ describe('getAudio', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
       expect(options.path['audio_name']).toEqual(audio_name);
@@ -3846,34 +2995,18 @@ describe('getAudio', () => {
         },
       };
 
-      speech_to_text.getAudio(params, noop);
+      speechToText.getAudio(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const audio_name = 'fake_audio_name';
-      const params = {
-        customization_id,
-        audio_name,
-      };
-
-      // invoke method
-      const getAudioPromise = speech_to_text.getAudio(params);
-      expectToBePromise(getAudioPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.getAudio(null, () => {
+      speechToText.getAudio(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3883,26 +3016,14 @@ describe('getAudio', () => {
       // required parameters for this method
       const requiredParams = ['customization_id', 'audio_name'];
 
-      speech_to_text.getAudio({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id', 'audio_name'];
-
-      const getAudioPromise = speech_to_text.getAudio();
-      expectToBePromise(getAudioPromise);
-
-      getAudioPromise.catch(err => {
+      speechToText.getAudio({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('listAudio', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3916,7 +3037,7 @@ describe('listAudio', () => {
       };
 
       // invoke method
-      speech_to_text.listAudio(params, noop);
+      speechToText.listAudio(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3926,7 +3047,7 @@ describe('listAudio', () => {
       checkUrlAndMethod(options, '/v1/acoustic_customizations/{customization_id}/audio', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
@@ -3944,32 +3065,18 @@ describe('listAudio', () => {
         },
       };
 
-      speech_to_text.listAudio(params, noop);
+      speechToText.listAudio(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customization_id = 'fake_customization_id';
-      const params = {
-        customization_id,
-      };
-
-      // invoke method
-      const listAudioPromise = speech_to_text.listAudio(params);
-      expectToBePromise(listAudioPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.listAudio(null, () => {
+      speechToText.listAudio(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -3979,26 +3086,14 @@ describe('listAudio', () => {
       // required parameters for this method
       const requiredParams = ['customization_id'];
 
-      speech_to_text.listAudio({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customization_id'];
-
-      const listAudioPromise = speech_to_text.listAudio();
-      expectToBePromise(listAudioPromise);
-
-      listAudioPromise.catch(err => {
+      speechToText.listAudio({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
     });
   });
 });
+
 describe('deleteUserData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4012,7 +3107,7 @@ describe('deleteUserData', () => {
       };
 
       // invoke method
-      speech_to_text.deleteUserData(params, noop);
+      speechToText.deleteUserData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4021,8 +3116,8 @@ describe('deleteUserData', () => {
 
       checkUrlAndMethod(options, '/v1/user_data', 'DELETE');
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['customer_id']).toEqual(customer_id);
     });
@@ -4040,32 +3135,18 @@ describe('deleteUserData', () => {
         },
       };
 
-      speech_to_text.deleteUserData(params, noop);
+      speechToText.deleteUserData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customer_id = 'fake_customer_id';
-      const params = {
-        customer_id,
-      };
-
-      // invoke method
-      const deleteUserDataPromise = speech_to_text.deleteUserData(params);
-      expectToBePromise(deleteUserDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
     });
 
     test('should convert a `null` value for `params` to an empty object', done => {
-      speech_to_text.deleteUserData(null, () => {
+      speechToText.deleteUserData(null, () => {
         checkForEmptyObject(missingParamsMock);
         done();
       });
@@ -4075,20 +3156,7 @@ describe('deleteUserData', () => {
       // required parameters for this method
       const requiredParams = ['customer_id'];
 
-      speech_to_text.deleteUserData({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customer_id'];
-
-      const deleteUserDataPromise = speech_to_text.deleteUserData();
-      expectToBePromise(deleteUserDataPromise);
-
-      deleteUserDataPromise.catch(err => {
+      speechToText.deleteUserData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
