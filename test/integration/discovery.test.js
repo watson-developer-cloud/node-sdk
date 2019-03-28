@@ -21,7 +21,7 @@ describe('discovery_integration', function() {
 
   const discovery = new DiscoveryV1(
     Object.assign({}, auth.discovery, {
-      version: '2017-11-07',
+      version: '2019-03-27',
     })
   );
 

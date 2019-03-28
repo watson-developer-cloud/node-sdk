@@ -1,32 +1,34 @@
 'use strict';
 
-const DiscoveryV1 = require('../../discovery/v1-generated');
 const helper = require('ibm-cloud-sdk-core');
+const DiscoveryV1 = require('../../discovery/v1-generated');
 const utils = require('../resources/unitTestUtils');
 
-const missingParamsError = utils.missingParamsError;
-const missingParamsSuccess = utils.missingParamsSuccess;
+const getOptions = utils.getOptions;
 const checkUrlAndMethod = utils.checkUrlAndMethod;
 const checkCallback = utils.checkCallback;
 const checkMediaHeaders = utils.checkMediaHeaders;
-const checkUserHeader = utils.checkUserHeader;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const missingParamsSuccess = utils.missingParamsSuccess;
+const missingParamsError = utils.missingParamsError;
 const checkForEmptyObject = utils.checkForEmptyObject;
 const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const getOptions = utils.getOptions;
-const expectToBePromise = utils.expectToBePromise;
+const checkUserHeader = utils.checkUserHeader;
+const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const noop = () => {};
 
 const service = {
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'https://gateway.watsonplatform.net/discovery/api',
+  url: 'https://gateway.watsonplatform.net/discovery/api/discovery/api',
   version: '2018-10-18',
 };
 
 const discovery = new DiscoveryV1(service);
 const createRequestMock = jest.spyOn(discovery, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
-const noop = () => {};
+
+// dont actually create a request
+createRequestMock.mockImplementation(noop);
 
 afterEach(() => {
   createRequestMock.mockReset();
@@ -50,7 +52,7 @@ describe('createEnvironment', () => {
       };
 
       // invoke method
-      discovery.createEnvironment(params, noop);
+      discovery.createEnvironment(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -65,7 +67,6 @@ describe('createEnvironment', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
       expect(options.body['size']).toEqual(size);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -81,25 +82,11 @@ describe('createEnvironment', () => {
         },
       };
 
-      discovery.createEnvironment(params, noop);
+      discovery.createEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const name = 'fake_name';
-      const params = {
-        name,
-      };
-
-      // invoke method
-      const createEnvironmentPromise = discovery.createEnvironment(params);
-      expectToBePromise(createEnvironmentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -121,21 +108,9 @@ describe('createEnvironment', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['name'];
-
-      const createEnvironmentPromise = discovery.createEnvironment();
-      expectToBePromise(createEnvironmentPromise);
-
-      createEnvironmentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -149,7 +124,7 @@ describe('deleteEnvironment', () => {
       };
 
       // invoke method
-      discovery.deleteEnvironment(params, noop);
+      discovery.deleteEnvironment(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -159,7 +134,7 @@ describe('deleteEnvironment', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -177,25 +152,11 @@ describe('deleteEnvironment', () => {
         },
       };
 
-      discovery.deleteEnvironment(params, noop);
+      discovery.deleteEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const deleteEnvironmentPromise = discovery.deleteEnvironment(params);
-      expectToBePromise(deleteEnvironmentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -217,21 +178,9 @@ describe('deleteEnvironment', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const deleteEnvironmentPromise = discovery.deleteEnvironment();
-      expectToBePromise(deleteEnvironmentPromise);
-
-      deleteEnvironmentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -245,7 +194,7 @@ describe('getEnvironment', () => {
       };
 
       // invoke method
-      discovery.getEnvironment(params, noop);
+      discovery.getEnvironment(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -255,7 +204,7 @@ describe('getEnvironment', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -273,25 +222,11 @@ describe('getEnvironment', () => {
         },
       };
 
-      discovery.getEnvironment(params, noop);
+      discovery.getEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const getEnvironmentPromise = discovery.getEnvironment(params);
-      expectToBePromise(getEnvironmentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -313,21 +248,9 @@ describe('getEnvironment', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const getEnvironmentPromise = discovery.getEnvironment();
-      expectToBePromise(getEnvironmentPromise);
-
-      getEnvironmentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listEnvironments', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -341,7 +264,7 @@ describe('listEnvironments', () => {
       };
 
       // invoke method
-      discovery.listEnvironments(params, noop);
+      discovery.listEnvironments(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -351,7 +274,7 @@ describe('listEnvironments', () => {
       checkUrlAndMethod(options, '/v1/environments', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
     });
@@ -367,24 +290,12 @@ describe('listEnvironments', () => {
         },
       };
 
-      discovery.listEnvironments(params, noop);
+      discovery.listEnvironments(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listEnvironmentsPromise = discovery.listEnvironments(params);
-      expectToBePromise(listEnvironmentsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.listEnvironments({}, noop);
+      discovery.listEnvironments();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -395,6 +306,7 @@ describe('listEnvironments', () => {
     });
   });
 });
+
 describe('listFields', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -410,7 +322,7 @@ describe('listFields', () => {
       };
 
       // invoke method
-      discovery.listFields(params, noop);
+      discovery.listFields(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -420,7 +332,7 @@ describe('listFields', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/fields', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['collection_ids']).toEqual(collection_ids);
       expect(options.path['environment_id']).toEqual(environment_id);
@@ -441,27 +353,11 @@ describe('listFields', () => {
         },
       };
 
-      discovery.listFields(params, noop);
+      discovery.listFields(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
-      const params = {
-        environment_id,
-        collection_ids,
-      };
-
-      // invoke method
-      const listFieldsPromise = discovery.listFields(params);
-      expectToBePromise(listFieldsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -483,21 +379,9 @@ describe('listFields', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_ids'];
-
-      const listFieldsPromise = discovery.listFields();
-      expectToBePromise(listFieldsPromise);
-
-      listFieldsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('updateEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -517,7 +401,7 @@ describe('updateEnvironment', () => {
       };
 
       // invoke method
-      discovery.updateEnvironment(params, noop);
+      discovery.updateEnvironment(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -532,7 +416,6 @@ describe('updateEnvironment', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
       expect(options.body['size']).toEqual(size);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -549,25 +432,11 @@ describe('updateEnvironment', () => {
         },
       };
 
-      discovery.updateEnvironment(params, noop);
+      discovery.updateEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const updateEnvironmentPromise = discovery.updateEnvironment(params);
-      expectToBePromise(updateEnvironmentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -589,21 +458,9 @@ describe('updateEnvironment', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const updateEnvironmentPromise = discovery.updateEnvironment();
-      expectToBePromise(updateEnvironmentPromise);
-
-      updateEnvironmentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('createConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -629,7 +486,7 @@ describe('createConfiguration', () => {
       };
 
       // invoke method
-      discovery.createConfiguration(params, noop);
+      discovery.createConfiguration(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -647,7 +504,6 @@ describe('createConfiguration', () => {
       expect(options.body['enrichments']).toEqual(enrichments);
       expect(options.body['normalizations']).toEqual(normalizations);
       expect(options.body['source']).toEqual(source);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -666,27 +522,11 @@ describe('createConfiguration', () => {
         },
       };
 
-      discovery.createConfiguration(params, noop);
+      discovery.createConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const name = 'fake_name';
-      const params = {
-        environment_id,
-        name,
-      };
-
-      // invoke method
-      const createConfigurationPromise = discovery.createConfiguration(params);
-      expectToBePromise(createConfigurationPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -708,21 +548,9 @@ describe('createConfiguration', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'name'];
-
-      const createConfigurationPromise = discovery.createConfiguration();
-      expectToBePromise(createConfigurationPromise);
-
-      createConfigurationPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -738,7 +566,7 @@ describe('deleteConfiguration', () => {
       };
 
       // invoke method
-      discovery.deleteConfiguration(params, noop);
+      discovery.deleteConfiguration(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -750,10 +578,9 @@ describe('deleteConfiguration', () => {
         '/v1/environments/{environment_id}/configurations/{configuration_id}',
         'DELETE'
       );
-
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['configuration_id']).toEqual(configuration_id);
@@ -774,27 +601,11 @@ describe('deleteConfiguration', () => {
         },
       };
 
-      discovery.deleteConfiguration(params, noop);
+      discovery.deleteConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
-      const params = {
-        environment_id,
-        configuration_id,
-      };
-
-      // invoke method
-      const deleteConfigurationPromise = discovery.deleteConfiguration(params);
-      expectToBePromise(deleteConfigurationPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -816,21 +627,9 @@ describe('deleteConfiguration', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id'];
-
-      const deleteConfigurationPromise = discovery.deleteConfiguration();
-      expectToBePromise(deleteConfigurationPromise);
-
-      deleteConfigurationPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -846,7 +645,7 @@ describe('getConfiguration', () => {
       };
 
       // invoke method
-      discovery.getConfiguration(params, noop);
+      discovery.getConfiguration(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -860,7 +659,7 @@ describe('getConfiguration', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['configuration_id']).toEqual(configuration_id);
@@ -881,27 +680,11 @@ describe('getConfiguration', () => {
         },
       };
 
-      discovery.getConfiguration(params, noop);
+      discovery.getConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
-      const params = {
-        environment_id,
-        configuration_id,
-      };
-
-      // invoke method
-      const getConfigurationPromise = discovery.getConfiguration(params);
-      expectToBePromise(getConfigurationPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -923,21 +706,9 @@ describe('getConfiguration', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id'];
-
-      const getConfigurationPromise = discovery.getConfiguration();
-      expectToBePromise(getConfigurationPromise);
-
-      getConfigurationPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listConfigurations', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -953,7 +724,7 @@ describe('listConfigurations', () => {
       };
 
       // invoke method
-      discovery.listConfigurations(params, noop);
+      discovery.listConfigurations(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -963,7 +734,7 @@ describe('listConfigurations', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
       expect(options.path['environment_id']).toEqual(environment_id);
@@ -982,25 +753,11 @@ describe('listConfigurations', () => {
         },
       };
 
-      discovery.listConfigurations(params, noop);
+      discovery.listConfigurations(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const listConfigurationsPromise = discovery.listConfigurations(params);
-      expectToBePromise(listConfigurationsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1022,21 +779,9 @@ describe('listConfigurations', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const listConfigurationsPromise = discovery.listConfigurations();
-      expectToBePromise(listConfigurationsPromise);
-
-      listConfigurationsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('updateConfiguration', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1064,7 +809,7 @@ describe('updateConfiguration', () => {
       };
 
       // invoke method
-      discovery.updateConfiguration(params, noop);
+      discovery.updateConfiguration(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1086,7 +831,6 @@ describe('updateConfiguration', () => {
       expect(options.body['enrichments']).toEqual(enrichments);
       expect(options.body['normalizations']).toEqual(normalizations);
       expect(options.body['source']).toEqual(source);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['configuration_id']).toEqual(configuration_id);
     });
@@ -1108,29 +852,11 @@ describe('updateConfiguration', () => {
         },
       };
 
-      discovery.updateConfiguration(params, noop);
+      discovery.updateConfiguration(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
-      const name = 'fake_name';
-      const params = {
-        environment_id,
-        configuration_id,
-        name,
-      };
-
-      // invoke method
-      const updateConfigurationPromise = discovery.updateConfiguration(params);
-      expectToBePromise(updateConfigurationPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1152,21 +878,9 @@ describe('updateConfiguration', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id', 'name'];
-
-      const updateConfigurationPromise = discovery.updateConfiguration();
-      expectToBePromise(updateConfigurationPromise);
-
-      updateConfigurationPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('testConfigurationInEnvironment', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1176,25 +890,25 @@ describe('testConfigurationInEnvironment', () => {
       // parameters
       const environment_id = 'fake_environment_id';
       const configuration = 'fake_configuration';
+      const file = 'fake_file';
+      const filename = 'fake_filename';
+      const file_content_type = 'fake_file_content_type';
+      const metadata = 'fake_metadata';
       const step = 'fake_step';
       const configuration_id = 'fake_configuration_id';
-      const file = 'fake_file';
-      const metadata = 'fake_metadata';
-      const file_content_type = 'fake_file_content_type';
-      const filename = 'fake_filename';
       const params = {
         environment_id,
         configuration,
+        file,
+        filename,
+        file_content_type,
+        metadata,
         step,
         configuration_id,
-        file,
-        metadata,
-        file_content_type,
-        filename,
       };
 
       // invoke method
-      discovery.testConfigurationInEnvironment(params, noop);
+      discovery.testConfigurationInEnvironment(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1229,27 +943,11 @@ describe('testConfigurationInEnvironment', () => {
         },
       };
 
-      discovery.testConfigurationInEnvironment(params, noop);
+      discovery.testConfigurationInEnvironment(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const testConfigurationInEnvironmentPromise = discovery.testConfigurationInEnvironment(
-        params
-      );
-      expectToBePromise(testConfigurationInEnvironmentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1271,21 +969,9 @@ describe('testConfigurationInEnvironment', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const testConfigurationInEnvironmentPromise = discovery.testConfigurationInEnvironment();
-      expectToBePromise(testConfigurationInEnvironmentPromise);
-
-      testConfigurationInEnvironmentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('createCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1307,7 +993,7 @@ describe('createCollection', () => {
       };
 
       // invoke method
-      discovery.createCollection(params, noop);
+      discovery.createCollection(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1323,7 +1009,6 @@ describe('createCollection', () => {
       expect(options.body['description']).toEqual(description);
       expect(options.body['configuration_id']).toEqual(configuration_id);
       expect(options.body['language']).toEqual(language);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -1342,27 +1027,11 @@ describe('createCollection', () => {
         },
       };
 
-      discovery.createCollection(params, noop);
+      discovery.createCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const name = 'fake_name';
-      const params = {
-        environment_id,
-        name,
-      };
-
-      // invoke method
-      const createCollectionPromise = discovery.createCollection(params);
-      expectToBePromise(createCollectionPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1384,21 +1053,9 @@ describe('createCollection', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'name'];
-
-      const createCollectionPromise = discovery.createCollection();
-      expectToBePromise(createCollectionPromise);
-
-      createCollectionPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1414,7 +1071,7 @@ describe('deleteCollection', () => {
       };
 
       // invoke method
-      discovery.deleteCollection(params, noop);
+      discovery.deleteCollection(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1428,7 +1085,7 @@ describe('deleteCollection', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1449,27 +1106,11 @@ describe('deleteCollection', () => {
         },
       };
 
-      discovery.deleteCollection(params, noop);
+      discovery.deleteCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const deleteCollectionPromise = discovery.deleteCollection(params);
-      expectToBePromise(deleteCollectionPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1491,21 +1132,9 @@ describe('deleteCollection', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const deleteCollectionPromise = discovery.deleteCollection();
-      expectToBePromise(deleteCollectionPromise);
-
-      deleteCollectionPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1521,7 +1150,7 @@ describe('getCollection', () => {
       };
 
       // invoke method
-      discovery.getCollection(params, noop);
+      discovery.getCollection(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1533,10 +1162,9 @@ describe('getCollection', () => {
         '/v1/environments/{environment_id}/collections/{collection_id}',
         'GET'
       );
-
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1557,27 +1185,11 @@ describe('getCollection', () => {
         },
       };
 
-      discovery.getCollection(params, noop);
+      discovery.getCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const getCollectionPromise = discovery.getCollection(params);
-      expectToBePromise(getCollectionPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1599,21 +1211,9 @@ describe('getCollection', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const getCollectionPromise = discovery.getCollection();
-      expectToBePromise(getCollectionPromise);
-
-      getCollectionPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listCollectionFields', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1629,7 +1229,7 @@ describe('listCollectionFields', () => {
       };
 
       // invoke method
-      discovery.listCollectionFields(params, noop);
+      discovery.listCollectionFields(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1641,10 +1241,9 @@ describe('listCollectionFields', () => {
         '/v1/environments/{environment_id}/collections/{collection_id}/fields',
         'GET'
       );
-
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -1665,27 +1264,11 @@ describe('listCollectionFields', () => {
         },
       };
 
-      discovery.listCollectionFields(params, noop);
+      discovery.listCollectionFields(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const listCollectionFieldsPromise = discovery.listCollectionFields(params);
-      expectToBePromise(listCollectionFieldsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1707,21 +1290,9 @@ describe('listCollectionFields', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const listCollectionFieldsPromise = discovery.listCollectionFields();
-      expectToBePromise(listCollectionFieldsPromise);
-
-      listCollectionFieldsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listCollections', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1737,7 +1308,7 @@ describe('listCollections', () => {
       };
 
       // invoke method
-      discovery.listCollections(params, noop);
+      discovery.listCollections(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1747,7 +1318,7 @@ describe('listCollections', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
       expect(options.path['environment_id']).toEqual(environment_id);
@@ -1766,25 +1337,11 @@ describe('listCollections', () => {
         },
       };
 
-      discovery.listCollections(params, noop);
+      discovery.listCollections(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const listCollectionsPromise = discovery.listCollections(params);
-      expectToBePromise(listCollectionsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1806,21 +1363,9 @@ describe('listCollections', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const listCollectionsPromise = discovery.listCollections();
-      expectToBePromise(listCollectionsPromise);
-
-      listCollectionsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('updateCollection', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1842,7 +1387,7 @@ describe('updateCollection', () => {
       };
 
       // invoke method
-      discovery.updateCollection(params, noop);
+      discovery.updateCollection(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1854,7 +1399,6 @@ describe('updateCollection', () => {
         '/v1/environments/{environment_id}/collections/{collection_id}',
         'PUT'
       );
-
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
@@ -1862,7 +1406,6 @@ describe('updateCollection', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
       expect(options.body['configuration_id']).toEqual(configuration_id);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -1882,27 +1425,11 @@ describe('updateCollection', () => {
         },
       };
 
-      discovery.updateCollection(params, noop);
+      discovery.updateCollection(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const updateCollectionPromise = discovery.updateCollection(params);
-      expectToBePromise(updateCollectionPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -1924,21 +1451,9 @@ describe('updateCollection', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const updateCollectionPromise = discovery.updateCollection();
-      expectToBePromise(updateCollectionPromise);
-
-      updateCollectionPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('createExpansions', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1956,7 +1471,7 @@ describe('createExpansions', () => {
       };
 
       // invoke method
-      discovery.createExpansions(params, noop);
+      discovery.createExpansions(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1968,13 +1483,11 @@ describe('createExpansions', () => {
         '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
         'POST'
       );
-
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['expansions']).toEqual(expansions);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -1996,29 +1509,11 @@ describe('createExpansions', () => {
         },
       };
 
-      discovery.createExpansions(params, noop);
+      discovery.createExpansions(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const expansions = 'fake_expansions';
-      const params = {
-        environment_id,
-        collection_id,
-        expansions,
-      };
-
-      // invoke method
-      const createExpansionsPromise = discovery.createExpansions(params);
-      expectToBePromise(createExpansionsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2040,21 +1535,9 @@ describe('createExpansions', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'expansions'];
-
-      const createExpansionsPromise = discovery.createExpansions();
-      expectToBePromise(createExpansionsPromise);
-
-      createExpansionsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('createStopwordList', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2102,12 +1585,14 @@ describe('createStopwordList', () => {
       const environment_id = 'fake_environment_id';
       const collection_id = 'fake_collection_id';
       const stopword_file = 'fake_stopword_file';
+      const stopword_filename = 'fake_stopword_filename';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         environment_id,
         collection_id,
         stopword_file,
+        stopword_filename,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
@@ -2118,6 +1603,7 @@ describe('createStopwordList', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2146,6 +1632,7 @@ describe('createStopwordList', () => {
     });
   });
 });
+
 describe('createTokenizationDictionary', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2163,7 +1650,7 @@ describe('createTokenizationDictionary', () => {
       };
 
       // invoke method
-      discovery.createTokenizationDictionary(params, noop);
+      discovery.createTokenizationDictionary(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2180,7 +1667,6 @@ describe('createTokenizationDictionary', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['tokenization_rules']).toEqual(tokenization_rules);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -2200,27 +1686,11 @@ describe('createTokenizationDictionary', () => {
         },
       };
 
-      discovery.createTokenizationDictionary(params, noop);
+      discovery.createTokenizationDictionary(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const createTokenizationDictionaryPromise = discovery.createTokenizationDictionary(params);
-      expectToBePromise(createTokenizationDictionaryPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2242,21 +1712,9 @@ describe('createTokenizationDictionary', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const createTokenizationDictionaryPromise = discovery.createTokenizationDictionary();
-      expectToBePromise(createTokenizationDictionaryPromise);
-
-      createTokenizationDictionaryPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteExpansions', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2272,7 +1730,7 @@ describe('deleteExpansions', () => {
       };
 
       // invoke method
-      discovery.deleteExpansions(params, noop);
+      discovery.deleteExpansions(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2285,8 +1743,8 @@ describe('deleteExpansions', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2307,27 +1765,11 @@ describe('deleteExpansions', () => {
         },
       };
 
-      discovery.deleteExpansions(params, noop);
+      discovery.deleteExpansions(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const deleteExpansionsPromise = discovery.deleteExpansions(params);
-      expectToBePromise(deleteExpansionsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2349,21 +1791,9 @@ describe('deleteExpansions', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const deleteExpansionsPromise = discovery.deleteExpansions();
-      expectToBePromise(deleteExpansionsPromise);
-
-      deleteExpansionsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteStopwordList', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2392,8 +1822,8 @@ describe('deleteStopwordList', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2418,6 +1848,7 @@ describe('deleteStopwordList', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2441,6 +1872,7 @@ describe('deleteStopwordList', () => {
     });
   });
 });
+
 describe('deleteTokenizationDictionary', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2456,7 +1888,7 @@ describe('deleteTokenizationDictionary', () => {
       };
 
       // invoke method
-      discovery.deleteTokenizationDictionary(params, noop);
+      discovery.deleteTokenizationDictionary(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2469,8 +1901,8 @@ describe('deleteTokenizationDictionary', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2491,27 +1923,11 @@ describe('deleteTokenizationDictionary', () => {
         },
       };
 
-      discovery.deleteTokenizationDictionary(params, noop);
+      discovery.deleteTokenizationDictionary(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const deleteTokenizationDictionaryPromise = discovery.deleteTokenizationDictionary(params);
-      expectToBePromise(deleteTokenizationDictionaryPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2533,21 +1949,9 @@ describe('deleteTokenizationDictionary', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const deleteTokenizationDictionaryPromise = discovery.deleteTokenizationDictionary();
-      expectToBePromise(deleteTokenizationDictionaryPromise);
-
-      deleteTokenizationDictionaryPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getStopwordListStatus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2577,7 +1981,7 @@ describe('getStopwordListStatus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2602,6 +2006,7 @@ describe('getStopwordListStatus', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2625,6 +2030,7 @@ describe('getStopwordListStatus', () => {
     });
   });
 });
+
 describe('getTokenizationDictionaryStatus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2640,7 +2046,7 @@ describe('getTokenizationDictionaryStatus', () => {
       };
 
       // invoke method
-      discovery.getTokenizationDictionaryStatus(params, noop);
+      discovery.getTokenizationDictionaryStatus(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2654,7 +2060,7 @@ describe('getTokenizationDictionaryStatus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2675,29 +2081,11 @@ describe('getTokenizationDictionaryStatus', () => {
         },
       };
 
-      discovery.getTokenizationDictionaryStatus(params, noop);
+      discovery.getTokenizationDictionaryStatus(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const getTokenizationDictionaryStatusPromise = discovery.getTokenizationDictionaryStatus(
-        params
-      );
-      expectToBePromise(getTokenizationDictionaryStatusPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2719,21 +2107,9 @@ describe('getTokenizationDictionaryStatus', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const getTokenizationDictionaryStatusPromise = discovery.getTokenizationDictionaryStatus();
-      expectToBePromise(getTokenizationDictionaryStatusPromise);
-
-      getTokenizationDictionaryStatusPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listExpansions', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2749,7 +2125,7 @@ describe('listExpansions', () => {
       };
 
       // invoke method
-      discovery.listExpansions(params, noop);
+      discovery.listExpansions(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2763,7 +2139,7 @@ describe('listExpansions', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -2784,27 +2160,11 @@ describe('listExpansions', () => {
         },
       };
 
-      discovery.listExpansions(params, noop);
+      discovery.listExpansions(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const listExpansionsPromise = discovery.listExpansions(params);
-      expectToBePromise(listExpansionsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2826,21 +2186,9 @@ describe('listExpansions', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const listExpansionsPromise = discovery.listExpansions();
-      expectToBePromise(listExpansionsPromise);
-
-      listExpansionsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('addDocument', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2851,20 +2199,20 @@ describe('addDocument', () => {
       const environment_id = 'fake_environment_id';
       const collection_id = 'fake_collection_id';
       const file = 'fake_file';
-      const metadata = 'fake_metadata';
-      const file_content_type = 'fake_file_content_type';
       const filename = 'fake_filename';
+      const file_content_type = 'fake_file_content_type';
+      const metadata = 'fake_metadata';
       const params = {
         environment_id,
         collection_id,
         file,
-        metadata,
-        file_content_type,
         filename,
+        file_content_type,
+        metadata,
       };
 
       // invoke method
-      discovery.addDocument(params, noop);
+      discovery.addDocument(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2903,27 +2251,11 @@ describe('addDocument', () => {
         },
       };
 
-      discovery.addDocument(params, noop);
+      discovery.addDocument(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const addDocumentPromise = discovery.addDocument(params);
-      expectToBePromise(addDocumentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -2945,21 +2277,9 @@ describe('addDocument', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const addDocumentPromise = discovery.addDocument();
-      expectToBePromise(addDocumentPromise);
-
-      addDocumentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteDocument', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -2977,7 +2297,7 @@ describe('deleteDocument', () => {
       };
 
       // invoke method
-      discovery.deleteDocument(params, noop);
+      discovery.deleteDocument(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2991,7 +2311,7 @@ describe('deleteDocument', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3015,29 +2335,11 @@ describe('deleteDocument', () => {
         },
       };
 
-      discovery.deleteDocument(params, noop);
+      discovery.deleteDocument(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
-      const params = {
-        environment_id,
-        collection_id,
-        document_id,
-      };
-
-      // invoke method
-      const deleteDocumentPromise = discovery.deleteDocument(params);
-      expectToBePromise(deleteDocumentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3059,21 +2361,9 @@ describe('deleteDocument', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
-
-      const deleteDocumentPromise = discovery.deleteDocument();
-      expectToBePromise(deleteDocumentPromise);
-
-      deleteDocumentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getDocumentStatus', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3091,7 +2381,7 @@ describe('getDocumentStatus', () => {
       };
 
       // invoke method
-      discovery.getDocumentStatus(params, noop);
+      discovery.getDocumentStatus(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3105,7 +2395,7 @@ describe('getDocumentStatus', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -3129,29 +2419,11 @@ describe('getDocumentStatus', () => {
         },
       };
 
-      discovery.getDocumentStatus(params, noop);
+      discovery.getDocumentStatus(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
-      const params = {
-        environment_id,
-        collection_id,
-        document_id,
-      };
-
-      // invoke method
-      const getDocumentStatusPromise = discovery.getDocumentStatus(params);
-      expectToBePromise(getDocumentStatusPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3173,21 +2445,9 @@ describe('getDocumentStatus', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
-
-      const getDocumentStatusPromise = discovery.getDocumentStatus();
-      expectToBePromise(getDocumentStatusPromise);
-
-      getDocumentStatusPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('updateDocument', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3199,21 +2459,21 @@ describe('updateDocument', () => {
       const collection_id = 'fake_collection_id';
       const document_id = 'fake_document_id';
       const file = 'fake_file';
-      const metadata = 'fake_metadata';
-      const file_content_type = 'fake_file_content_type';
       const filename = 'fake_filename';
+      const file_content_type = 'fake_file_content_type';
+      const metadata = 'fake_metadata';
       const params = {
         environment_id,
         collection_id,
         document_id,
         file,
-        metadata,
-        file_content_type,
         filename,
+        file_content_type,
+        metadata,
       };
 
       // invoke method
-      discovery.updateDocument(params, noop);
+      discovery.updateDocument(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3255,29 +2515,11 @@ describe('updateDocument', () => {
         },
       };
 
-      discovery.updateDocument(params, noop);
+      discovery.updateDocument(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
-      const params = {
-        environment_id,
-        collection_id,
-        document_id,
-      };
-
-      // invoke method
-      const updateDocumentPromise = discovery.updateDocument(params);
-      expectToBePromise(updateDocumentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3299,21 +2541,9 @@ describe('updateDocument', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
-
-      const updateDocumentPromise = discovery.updateDocument();
-      expectToBePromise(updateDocumentPromise);
-
-      updateDocumentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('federatedQuery', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3369,7 +2599,7 @@ describe('federatedQuery', () => {
       };
 
       // invoke method
-      discovery.federatedQuery(params, noop);
+      discovery.federatedQuery(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3402,7 +2632,6 @@ describe('federatedQuery', () => {
       expect(options.body['similar.document_ids']).toEqual(similar_document_ids);
       expect(options.body['similar.fields']).toEqual(similar_fields);
       expect(options.body['bias']).toEqual(bias);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -3419,25 +2648,11 @@ describe('federatedQuery', () => {
         },
       };
 
-      discovery.federatedQuery(params, noop);
+      discovery.federatedQuery(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const federatedQueryPromise = discovery.federatedQuery(params);
-      expectToBePromise(federatedQueryPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3459,21 +2674,9 @@ describe('federatedQuery', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const federatedQueryPromise = discovery.federatedQuery();
-      expectToBePromise(federatedQueryPromise);
-
-      federatedQueryPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('federatedQueryNotices', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3515,7 +2718,7 @@ describe('federatedQueryNotices', () => {
       };
 
       // invoke method
-      discovery.federatedQueryNotices(params, noop);
+      discovery.federatedQueryNotices(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3525,7 +2728,7 @@ describe('federatedQueryNotices', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/notices', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['collection_ids']).toEqual(collection_ids);
       expect(options.qs['filter']).toEqual(filter);
@@ -3559,27 +2762,11 @@ describe('federatedQueryNotices', () => {
         },
       };
 
-      discovery.federatedQueryNotices(params, noop);
+      discovery.federatedQueryNotices(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
-      const params = {
-        environment_id,
-        collection_ids,
-      };
-
-      // invoke method
-      const federatedQueryNoticesPromise = discovery.federatedQueryNotices(params);
-      expectToBePromise(federatedQueryNoticesPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3601,21 +2788,9 @@ describe('federatedQueryNotices', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_ids'];
-
-      const federatedQueryNoticesPromise = discovery.federatedQueryNotices();
-      expectToBePromise(federatedQueryNoticesPromise);
-
-      federatedQueryNoticesPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('query', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3673,7 +2848,7 @@ describe('query', () => {
       };
 
       // invoke method
-      discovery.query(params, noop);
+      discovery.query(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3710,7 +2885,6 @@ describe('query', () => {
       expect(options.body['similar.document_ids']).toEqual(similar_document_ids);
       expect(options.body['similar.fields']).toEqual(similar_fields);
       expect(options.body['bias']).toEqual(bias);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -3730,27 +2904,11 @@ describe('query', () => {
         },
       };
 
-      discovery.query(params, noop);
+      discovery.query(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const queryPromise = discovery.query(params);
-      expectToBePromise(queryPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3772,21 +2930,9 @@ describe('query', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const queryPromise = discovery.query();
-      expectToBePromise(queryPromise);
-
-      queryPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('queryEntities', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3812,7 +2958,7 @@ describe('queryEntities', () => {
       };
 
       // invoke method
-      discovery.queryEntities(params, noop);
+      discovery.queryEntities(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3833,7 +2979,6 @@ describe('queryEntities', () => {
       expect(options.body['context']).toEqual(context);
       expect(options.body['count']).toEqual(count);
       expect(options.body['evidence_count']).toEqual(evidence_count);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -3853,27 +2998,11 @@ describe('queryEntities', () => {
         },
       };
 
-      discovery.queryEntities(params, noop);
+      discovery.queryEntities(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const queryEntitiesPromise = discovery.queryEntities(params);
-      expectToBePromise(queryEntitiesPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -3895,21 +3024,9 @@ describe('queryEntities', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const queryEntitiesPromise = discovery.queryEntities();
-      expectToBePromise(queryEntitiesPromise);
-
-      queryEntitiesPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('queryNotices', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -3959,7 +3076,7 @@ describe('queryNotices', () => {
       };
 
       // invoke method
-      discovery.queryNotices(params, noop);
+      discovery.queryNotices(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3973,7 +3090,7 @@ describe('queryNotices', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['filter']).toEqual(filter);
       expect(options.qs['query']).toEqual(query);
@@ -4011,27 +3128,11 @@ describe('queryNotices', () => {
         },
       };
 
-      discovery.queryNotices(params, noop);
+      discovery.queryNotices(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const queryNoticesPromise = discovery.queryNotices(params);
-      expectToBePromise(queryNoticesPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4053,21 +3154,9 @@ describe('queryNotices', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const queryNoticesPromise = discovery.queryNotices();
-      expectToBePromise(queryNoticesPromise);
-
-      queryNoticesPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('queryRelations', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4095,7 +3184,7 @@ describe('queryRelations', () => {
       };
 
       // invoke method
-      discovery.queryRelations(params, noop);
+      discovery.queryRelations(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4117,7 +3206,6 @@ describe('queryRelations', () => {
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['count']).toEqual(count);
       expect(options.body['evidence_count']).toEqual(evidence_count);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -4137,27 +3225,11 @@ describe('queryRelations', () => {
         },
       };
 
-      discovery.queryRelations(params, noop);
+      discovery.queryRelations(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const queryRelationsPromise = discovery.queryRelations(params);
-      expectToBePromise(queryRelationsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4179,21 +3251,9 @@ describe('queryRelations', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const queryRelationsPromise = discovery.queryRelations();
-      expectToBePromise(queryRelationsPromise);
-
-      queryRelationsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('addTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4215,7 +3275,7 @@ describe('addTrainingData', () => {
       };
 
       // invoke method
-      discovery.addTrainingData(params, noop);
+      discovery.addTrainingData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4234,7 +3294,6 @@ describe('addTrainingData', () => {
       expect(options.body['natural_language_query']).toEqual(natural_language_query);
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['examples']).toEqual(examples);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
     });
@@ -4254,27 +3313,11 @@ describe('addTrainingData', () => {
         },
       };
 
-      discovery.addTrainingData(params, noop);
+      discovery.addTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const addTrainingDataPromise = discovery.addTrainingData(params);
-      expectToBePromise(addTrainingDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4296,21 +3339,9 @@ describe('addTrainingData', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const addTrainingDataPromise = discovery.addTrainingData();
-      expectToBePromise(addTrainingDataPromise);
-
-      addTrainingDataPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('createTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4334,7 +3365,7 @@ describe('createTrainingExample', () => {
       };
 
       // invoke method
-      discovery.createTrainingExample(params, noop);
+      discovery.createTrainingExample(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4353,7 +3384,6 @@ describe('createTrainingExample', () => {
       expect(options.body['document_id']).toEqual(document_id);
       expect(options.body['cross_reference']).toEqual(cross_reference);
       expect(options.body['relevance']).toEqual(relevance);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
       expect(options.path['query_id']).toEqual(query_id);
@@ -4376,29 +3406,11 @@ describe('createTrainingExample', () => {
         },
       };
 
-      discovery.createTrainingExample(params, noop);
+      discovery.createTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const params = {
-        environment_id,
-        collection_id,
-        query_id,
-      };
-
-      // invoke method
-      const createTrainingExamplePromise = discovery.createTrainingExample(params);
-      expectToBePromise(createTrainingExamplePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4420,21 +3432,9 @@ describe('createTrainingExample', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
-
-      const createTrainingExamplePromise = discovery.createTrainingExample();
-      expectToBePromise(createTrainingExamplePromise);
-
-      createTrainingExamplePromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteAllTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4450,7 +3450,7 @@ describe('deleteAllTrainingData', () => {
       };
 
       // invoke method
-      discovery.deleteAllTrainingData(params, noop);
+      discovery.deleteAllTrainingData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4463,8 +3463,8 @@ describe('deleteAllTrainingData', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -4485,27 +3485,11 @@ describe('deleteAllTrainingData', () => {
         },
       };
 
-      discovery.deleteAllTrainingData(params, noop);
+      discovery.deleteAllTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const deleteAllTrainingDataPromise = discovery.deleteAllTrainingData(params);
-      expectToBePromise(deleteAllTrainingDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4527,21 +3511,9 @@ describe('deleteAllTrainingData', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const deleteAllTrainingDataPromise = discovery.deleteAllTrainingData();
-      expectToBePromise(deleteAllTrainingDataPromise);
-
-      deleteAllTrainingDataPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4559,7 +3531,7 @@ describe('deleteTrainingData', () => {
       };
 
       // invoke method
-      discovery.deleteTrainingData(params, noop);
+      discovery.deleteTrainingData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4572,8 +3544,8 @@ describe('deleteTrainingData', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -4597,29 +3569,11 @@ describe('deleteTrainingData', () => {
         },
       };
 
-      discovery.deleteTrainingData(params, noop);
+      discovery.deleteTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const params = {
-        environment_id,
-        collection_id,
-        query_id,
-      };
-
-      // invoke method
-      const deleteTrainingDataPromise = discovery.deleteTrainingData(params);
-      expectToBePromise(deleteTrainingDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4641,21 +3595,9 @@ describe('deleteTrainingData', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
-
-      const deleteTrainingDataPromise = discovery.deleteTrainingData();
-      expectToBePromise(deleteTrainingDataPromise);
-
-      deleteTrainingDataPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4675,7 +3617,7 @@ describe('deleteTrainingExample', () => {
       };
 
       // invoke method
-      discovery.deleteTrainingExample(params, noop);
+      discovery.deleteTrainingExample(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4688,8 +3630,8 @@ describe('deleteTrainingExample', () => {
         'DELETE'
       );
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -4716,31 +3658,11 @@ describe('deleteTrainingExample', () => {
         },
       };
 
-      discovery.deleteTrainingExample(params, noop);
+      discovery.deleteTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
-      const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
-      };
-
-      // invoke method
-      const deleteTrainingExamplePromise = discovery.deleteTrainingExample(params);
-      expectToBePromise(deleteTrainingExamplePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4762,21 +3684,9 @@ describe('deleteTrainingExample', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
-
-      const deleteTrainingExamplePromise = discovery.deleteTrainingExample();
-      expectToBePromise(deleteTrainingExamplePromise);
-
-      deleteTrainingExamplePromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4794,7 +3704,7 @@ describe('getTrainingData', () => {
       };
 
       // invoke method
-      discovery.getTrainingData(params, noop);
+      discovery.getTrainingData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4808,7 +3718,7 @@ describe('getTrainingData', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -4832,29 +3742,11 @@ describe('getTrainingData', () => {
         },
       };
 
-      discovery.getTrainingData(params, noop);
+      discovery.getTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const params = {
-        environment_id,
-        collection_id,
-        query_id,
-      };
-
-      // invoke method
-      const getTrainingDataPromise = discovery.getTrainingData(params);
-      expectToBePromise(getTrainingDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4876,21 +3768,9 @@ describe('getTrainingData', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
-
-      const getTrainingDataPromise = discovery.getTrainingData();
-      expectToBePromise(getTrainingDataPromise);
-
-      getTrainingDataPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -4910,7 +3790,7 @@ describe('getTrainingExample', () => {
       };
 
       // invoke method
-      discovery.getTrainingExample(params, noop);
+      discovery.getTrainingExample(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4924,7 +3804,7 @@ describe('getTrainingExample', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -4951,31 +3831,11 @@ describe('getTrainingExample', () => {
         },
       };
 
-      discovery.getTrainingExample(params, noop);
+      discovery.getTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
-      const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
-      };
-
-      // invoke method
-      const getTrainingExamplePromise = discovery.getTrainingExample(params);
-      expectToBePromise(getTrainingExamplePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -4997,21 +3857,9 @@ describe('getTrainingExample', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
-
-      const getTrainingExamplePromise = discovery.getTrainingExample();
-      expectToBePromise(getTrainingExamplePromise);
-
-      getTrainingExamplePromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listTrainingData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5027,7 +3875,7 @@ describe('listTrainingData', () => {
       };
 
       // invoke method
-      discovery.listTrainingData(params, noop);
+      discovery.listTrainingData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5041,7 +3889,7 @@ describe('listTrainingData', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -5062,27 +3910,11 @@ describe('listTrainingData', () => {
         },
       };
 
-      discovery.listTrainingData(params, noop);
+      discovery.listTrainingData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const params = {
-        environment_id,
-        collection_id,
-      };
-
-      // invoke method
-      const listTrainingDataPromise = discovery.listTrainingData(params);
-      expectToBePromise(listTrainingDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -5104,21 +3936,9 @@ describe('listTrainingData', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
-
-      const listTrainingDataPromise = discovery.listTrainingData();
-      expectToBePromise(listTrainingDataPromise);
-
-      listTrainingDataPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listTrainingExamples', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5136,7 +3956,7 @@ describe('listTrainingExamples', () => {
       };
 
       // invoke method
-      discovery.listTrainingExamples(params, noop);
+      discovery.listTrainingExamples(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5150,7 +3970,7 @@ describe('listTrainingExamples', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
@@ -5174,29 +3994,11 @@ describe('listTrainingExamples', () => {
         },
       };
 
-      discovery.listTrainingExamples(params, noop);
+      discovery.listTrainingExamples(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const params = {
-        environment_id,
-        collection_id,
-        query_id,
-      };
-
-      // invoke method
-      const listTrainingExamplesPromise = discovery.listTrainingExamples(params);
-      expectToBePromise(listTrainingExamplesPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -5218,21 +4020,9 @@ describe('listTrainingExamples', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
-
-      const listTrainingExamplesPromise = discovery.listTrainingExamples();
-      expectToBePromise(listTrainingExamplesPromise);
-
-      listTrainingExamplesPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('updateTrainingExample', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5256,7 +4046,7 @@ describe('updateTrainingExample', () => {
       };
 
       // invoke method
-      discovery.updateTrainingExample(params, noop);
+      discovery.updateTrainingExample(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5274,7 +4064,6 @@ describe('updateTrainingExample', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['cross_reference']).toEqual(cross_reference);
       expect(options.body['relevance']).toEqual(relevance);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['collection_id']).toEqual(collection_id);
       expect(options.path['query_id']).toEqual(query_id);
@@ -5300,31 +4089,11 @@ describe('updateTrainingExample', () => {
         },
       };
 
-      discovery.updateTrainingExample(params, noop);
+      discovery.updateTrainingExample(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
-      const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
-      };
-
-      // invoke method
-      const updateTrainingExamplePromise = discovery.updateTrainingExample(params);
-      expectToBePromise(updateTrainingExamplePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -5346,21 +4115,9 @@ describe('updateTrainingExample', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
-
-      const updateTrainingExamplePromise = discovery.updateTrainingExample();
-      expectToBePromise(updateTrainingExamplePromise);
-
-      updateTrainingExamplePromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteUserData', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5374,7 +4131,7 @@ describe('deleteUserData', () => {
       };
 
       // invoke method
-      discovery.deleteUserData(params, noop);
+      discovery.deleteUserData(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5383,8 +4140,8 @@ describe('deleteUserData', () => {
 
       checkUrlAndMethod(options, '/v1/user_data', 'DELETE');
       checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['customer_id']).toEqual(customer_id);
     });
@@ -5402,25 +4159,11 @@ describe('deleteUserData', () => {
         },
       };
 
-      discovery.deleteUserData(params, noop);
+      discovery.deleteUserData(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const customer_id = 'fake_customer_id';
-      const params = {
-        customer_id,
-      };
-
-      // invoke method
-      const deleteUserDataPromise = discovery.deleteUserData(params);
-      expectToBePromise(deleteUserDataPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -5442,21 +4185,9 @@ describe('deleteUserData', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['customer_id'];
-
-      const deleteUserDataPromise = discovery.deleteUserData();
-      expectToBePromise(deleteUserDataPromise);
-
-      deleteUserDataPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('createEvent', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5472,7 +4203,7 @@ describe('createEvent', () => {
       };
 
       // invoke method
-      discovery.createEvent(params, noop);
+      discovery.createEvent(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5486,7 +4217,6 @@ describe('createEvent', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['type']).toEqual(type);
       expect(options.body['data']).toEqual(data);
-      expect(options.json).toEqual(true);
     });
 
     test('should prioritize user-given headers', () => {
@@ -5504,27 +4234,11 @@ describe('createEvent', () => {
         },
       };
 
-      discovery.createEvent(params, noop);
+      discovery.createEvent(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const type = 'fake_type';
-      const data = 'fake_data';
-      const params = {
-        type,
-        data,
-      };
-
-      // invoke method
-      const createEventPromise = discovery.createEvent(params);
-      expectToBePromise(createEventPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -5546,21 +4260,9 @@ describe('createEvent', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['type', 'data'];
-
-      const createEventPromise = discovery.createEvent();
-      expectToBePromise(createEventPromise);
-
-      createEventPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getMetricsEventRate', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5578,7 +4280,7 @@ describe('getMetricsEventRate', () => {
       };
 
       // invoke method
-      discovery.getMetricsEventRate(params, noop);
+      discovery.getMetricsEventRate(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5588,7 +4290,7 @@ describe('getMetricsEventRate', () => {
       checkUrlAndMethod(options, '/v1/metrics/event_rate', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -5606,24 +4308,12 @@ describe('getMetricsEventRate', () => {
         },
       };
 
-      discovery.getMetricsEventRate(params, noop);
+      discovery.getMetricsEventRate(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const getMetricsEventRatePromise = discovery.getMetricsEventRate(params);
-      expectToBePromise(getMetricsEventRatePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsEventRate({}, noop);
+      discovery.getMetricsEventRate();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -5634,6 +4324,7 @@ describe('getMetricsEventRate', () => {
     });
   });
 });
+
 describe('getMetricsQuery', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5651,7 +4342,7 @@ describe('getMetricsQuery', () => {
       };
 
       // invoke method
-      discovery.getMetricsQuery(params, noop);
+      discovery.getMetricsQuery(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5661,7 +4352,7 @@ describe('getMetricsQuery', () => {
       checkUrlAndMethod(options, '/v1/metrics/number_of_queries', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -5679,24 +4370,12 @@ describe('getMetricsQuery', () => {
         },
       };
 
-      discovery.getMetricsQuery(params, noop);
+      discovery.getMetricsQuery(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const getMetricsQueryPromise = discovery.getMetricsQuery(params);
-      expectToBePromise(getMetricsQueryPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQuery({}, noop);
+      discovery.getMetricsQuery();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -5707,6 +4386,7 @@ describe('getMetricsQuery', () => {
     });
   });
 });
+
 describe('getMetricsQueryEvent', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5724,7 +4404,7 @@ describe('getMetricsQueryEvent', () => {
       };
 
       // invoke method
-      discovery.getMetricsQueryEvent(params, noop);
+      discovery.getMetricsQueryEvent(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5734,7 +4414,7 @@ describe('getMetricsQueryEvent', () => {
       checkUrlAndMethod(options, '/v1/metrics/number_of_queries_with_event', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -5752,24 +4432,12 @@ describe('getMetricsQueryEvent', () => {
         },
       };
 
-      discovery.getMetricsQueryEvent(params, noop);
+      discovery.getMetricsQueryEvent(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const getMetricsQueryEventPromise = discovery.getMetricsQueryEvent(params);
-      expectToBePromise(getMetricsQueryEventPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQueryEvent({}, noop);
+      discovery.getMetricsQueryEvent();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -5780,6 +4448,7 @@ describe('getMetricsQueryEvent', () => {
     });
   });
 });
+
 describe('getMetricsQueryNoResults', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5797,7 +4466,7 @@ describe('getMetricsQueryNoResults', () => {
       };
 
       // invoke method
-      discovery.getMetricsQueryNoResults(params, noop);
+      discovery.getMetricsQueryNoResults(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5807,7 +4476,7 @@ describe('getMetricsQueryNoResults', () => {
       checkUrlAndMethod(options, '/v1/metrics/number_of_queries_with_no_search_results', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['start_time']).toEqual(start_time);
       expect(options.qs['end_time']).toEqual(end_time);
@@ -5825,24 +4494,12 @@ describe('getMetricsQueryNoResults', () => {
         },
       };
 
-      discovery.getMetricsQueryNoResults(params, noop);
+      discovery.getMetricsQueryNoResults(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const getMetricsQueryNoResultsPromise = discovery.getMetricsQueryNoResults(params);
-      expectToBePromise(getMetricsQueryNoResultsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQueryNoResults({}, noop);
+      discovery.getMetricsQueryNoResults();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -5853,6 +4510,7 @@ describe('getMetricsQueryNoResults', () => {
     });
   });
 });
+
 describe('getMetricsQueryTokenEvent', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5866,7 +4524,7 @@ describe('getMetricsQueryTokenEvent', () => {
       };
 
       // invoke method
-      discovery.getMetricsQueryTokenEvent(params, noop);
+      discovery.getMetricsQueryTokenEvent(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5876,7 +4534,7 @@ describe('getMetricsQueryTokenEvent', () => {
       checkUrlAndMethod(options, '/v1/metrics/top_query_tokens_with_event_rate', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['count']).toEqual(count);
     });
@@ -5892,24 +4550,12 @@ describe('getMetricsQueryTokenEvent', () => {
         },
       };
 
-      discovery.getMetricsQueryTokenEvent(params, noop);
+      discovery.getMetricsQueryTokenEvent(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const getMetricsQueryTokenEventPromise = discovery.getMetricsQueryTokenEvent(params);
-      expectToBePromise(getMetricsQueryTokenEventPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.getMetricsQueryTokenEvent({}, noop);
+      discovery.getMetricsQueryTokenEvent();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -5920,6 +4566,7 @@ describe('getMetricsQueryTokenEvent', () => {
     });
   });
 });
+
 describe('queryLog', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -5941,7 +4588,7 @@ describe('queryLog', () => {
       };
 
       // invoke method
-      discovery.queryLog(params, noop);
+      discovery.queryLog(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5951,7 +4598,7 @@ describe('queryLog', () => {
       checkUrlAndMethod(options, '/v1/logs', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['filter']).toEqual(filter);
       expect(options.qs['query']).toEqual(query);
@@ -5971,24 +4618,12 @@ describe('queryLog', () => {
         },
       };
 
-      discovery.queryLog(params, noop);
+      discovery.queryLog(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const queryLogPromise = discovery.queryLog(params);
-      expectToBePromise(queryLogPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      discovery.queryLog({}, noop);
+      discovery.queryLog();
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -5999,6 +4634,7 @@ describe('queryLog', () => {
     });
   });
 });
+
 describe('createCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6016,7 +4652,7 @@ describe('createCredentials', () => {
       };
 
       // invoke method
-      discovery.createCredentials(params, noop);
+      discovery.createCredentials(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -6030,7 +4666,6 @@ describe('createCredentials', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['source_type']).toEqual(source_type);
       expect(options.body['credential_details']).toEqual(credential_details);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -6047,25 +4682,11 @@ describe('createCredentials', () => {
         },
       };
 
-      discovery.createCredentials(params, noop);
+      discovery.createCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const createCredentialsPromise = discovery.createCredentials(params);
-      expectToBePromise(createCredentialsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6087,21 +4708,9 @@ describe('createCredentials', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const createCredentialsPromise = discovery.createCredentials();
-      expectToBePromise(createCredentialsPromise);
-
-      createCredentialsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('deleteCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6117,7 +4726,7 @@ describe('deleteCredentials', () => {
       };
 
       // invoke method
-      discovery.deleteCredentials(params, noop);
+      discovery.deleteCredentials(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -6131,7 +4740,7 @@ describe('deleteCredentials', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['credential_id']).toEqual(credential_id);
@@ -6152,27 +4761,11 @@ describe('deleteCredentials', () => {
         },
       };
 
-      discovery.deleteCredentials(params, noop);
+      discovery.deleteCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
-      const params = {
-        environment_id,
-        credential_id,
-      };
-
-      // invoke method
-      const deleteCredentialsPromise = discovery.deleteCredentials(params);
-      expectToBePromise(deleteCredentialsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6194,21 +4787,9 @@ describe('deleteCredentials', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
-
-      const deleteCredentialsPromise = discovery.deleteCredentials();
-      expectToBePromise(deleteCredentialsPromise);
-
-      deleteCredentialsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('getCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6224,7 +4805,7 @@ describe('getCredentials', () => {
       };
 
       // invoke method
-      discovery.getCredentials(params, noop);
+      discovery.getCredentials(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -6238,7 +4819,7 @@ describe('getCredentials', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['credential_id']).toEqual(credential_id);
@@ -6259,27 +4840,11 @@ describe('getCredentials', () => {
         },
       };
 
-      discovery.getCredentials(params, noop);
+      discovery.getCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
-      const params = {
-        environment_id,
-        credential_id,
-      };
-
-      // invoke method
-      const getCredentialsPromise = discovery.getCredentials(params);
-      expectToBePromise(getCredentialsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6301,21 +4866,9 @@ describe('getCredentials', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
-
-      const getCredentialsPromise = discovery.getCredentials();
-      expectToBePromise(getCredentialsPromise);
-
-      getCredentialsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('listCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6329,7 +4882,7 @@ describe('listCredentials', () => {
       };
 
       // invoke method
-      discovery.listCredentials(params, noop);
+      discovery.listCredentials(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -6339,7 +4892,7 @@ describe('listCredentials', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -6357,25 +4910,11 @@ describe('listCredentials', () => {
         },
       };
 
-      discovery.listCredentials(params, noop);
+      discovery.listCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const params = {
-        environment_id,
-      };
-
-      // invoke method
-      const listCredentialsPromise = discovery.listCredentials(params);
-      expectToBePromise(listCredentialsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6397,21 +4936,9 @@ describe('listCredentials', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id'];
-
-      const listCredentialsPromise = discovery.listCredentials();
-      expectToBePromise(listCredentialsPromise);
-
-      listCredentialsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('updateCredentials', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6431,7 +4958,7 @@ describe('updateCredentials', () => {
       };
 
       // invoke method
-      discovery.updateCredentials(params, noop);
+      discovery.updateCredentials(params);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -6449,7 +4976,6 @@ describe('updateCredentials', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['source_type']).toEqual(source_type);
       expect(options.body['credential_details']).toEqual(credential_details);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['credential_id']).toEqual(credential_id);
     });
@@ -6469,27 +4995,11 @@ describe('updateCredentials', () => {
         },
       };
 
-      discovery.updateCredentials(params, noop);
+      discovery.updateCredentials(params);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
-      const params = {
-        environment_id,
-        credential_id,
-      };
-
-      // invoke method
-      const updateCredentialsPromise = discovery.updateCredentials(params);
-      expectToBePromise(updateCredentialsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6511,21 +5021,9 @@ describe('updateCredentials', () => {
         done();
       });
     });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
-
-      const updateCredentialsPromise = discovery.updateCredentials();
-      expectToBePromise(updateCredentialsPromise);
-
-      updateCredentialsPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
   });
 });
+
 describe('createGateway', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6554,7 +5052,6 @@ describe('createGateway', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['name']).toEqual(name);
-      expect(options.json).toEqual(true);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -6575,6 +5072,7 @@ describe('createGateway', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6598,6 +5096,7 @@ describe('createGateway', () => {
     });
   });
 });
+
 describe('deleteGateway', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6627,7 +5126,7 @@ describe('deleteGateway', () => {
       );
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['gateway_id']).toEqual(gateway_id);
@@ -6652,6 +5151,7 @@ describe('deleteGateway', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6675,6 +5175,7 @@ describe('deleteGateway', () => {
     });
   });
 });
+
 describe('getGateway', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6700,7 +5201,7 @@ describe('getGateway', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways/{gateway_id}', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['gateway_id']).toEqual(gateway_id);
@@ -6725,6 +5226,7 @@ describe('getGateway', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);
@@ -6748,6 +5250,7 @@ describe('getGateway', () => {
     });
   });
 });
+
 describe('listGateways', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -6771,7 +5274,7 @@ describe('listGateways', () => {
       checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
+      const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
@@ -6793,6 +5296,7 @@ describe('listGateways', () => {
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
   });
+
   describe('negative tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsError);

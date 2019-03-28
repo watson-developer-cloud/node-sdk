@@ -71,9 +71,37 @@ The following services have been deprecated for an extended period of time and w
 ### Assistant V2 Compatibility
 - Interface `MessageContextSkill` removed
 
+### Compare Comply Compatibility
+#### convertToHtml
+- Parameter name changed: `model_id` -> `model`
+
+#### classifyElements
+- Parameter name changed: `model_id` -> `model`
+
+#### extractTables
+- Parameter name changed: `model_id` -> `model`
+
+#### compareDocuments
+- Parameter name changed: `model_id` -> `model`
+
+#### deleteFeedback
+- Parameter name changed: `model_id` -> `model`
+
+#### getFeedback
+- Parameter name changed: `model_id` -> `model`
+
+#### createBatch
+- Parameter name changed: `model_id` -> `model`
+
+#### updateBatch
+- Parameter name changed: `model_id` -> `model`
+
 ### Discovery Compatibility
 #### getSourceCredentials
 - Method name changed: `getSourceCredentials` -> `getCredentials`
+
+#### createStopwordList
+- Parameter `stopword_filename` is now **required**
 
 #### getEnvironments
 - Method name changed: `getEnvironments` -> `listEnvironments`
@@ -125,31 +153,6 @@ The following services have been deprecated for an extended period of time and w
 
 #### model QueryResultResultMetadata
 - Model name changed: `QueryResultResultMetadata` -> `QueryResultMetadata`
-
-### Compare Comply Compatibility
-#### convertToHtml
-- Parameter name changed: `model_id` -> `model`
-
-#### classifyElements
-- Parameter name changed: `model_id` -> `model`
-
-#### extractTables
-- Parameter name changed: `model_id` -> `model`
-
-#### compareDocuments
-- Parameter name changed: `model_id` -> `model`
-
-#### deleteFeedback
-- Parameter name changed: `model_id` -> `model`
-
-#### getFeedback
-- Parameter name changed: `model_id` -> `model`
-
-#### createBatch
-- Parameter name changed: `model_id` -> `model`
-
-#### updateBatch
-- Parameter name changed: `model_id` -> `model`
 
 ### Natural Language Classifier Compatibility
 #### create
