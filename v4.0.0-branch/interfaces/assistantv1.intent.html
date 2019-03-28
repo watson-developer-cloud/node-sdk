@@ -91,7 +91,8 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.intent.html#created" class="tsd-kind-icon">created</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.intent.html#description" class="tsd-kind-icon">description</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.intent.html#intent_name" class="tsd-kind-icon">intent_<wbr>name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.intent.html#examples" class="tsd-kind-icon">examples</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.intent.html#intent" class="tsd-kind-icon">intent</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.intent.html#updated" class="tsd-kind-icon">updated</a></li>
 							</ul>
 						</section>
@@ -106,12 +107,12 @@
 					<div class="tsd-signature tsd-kind-icon">created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/assistant/v1.ts#L4645">assistant/v1.ts:4645</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/assistant/v1.ts#L4578">assistant/v1.ts:4578</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The timestamp for creation of the intent.</p>
+							<p>The timestamp for creation of the object.</p>
 						</div>
 					</div>
 				</section>
@@ -121,27 +122,42 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/assistant/v1.ts#L4649">assistant/v1.ts:4649</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/assistant/v1.ts#L4576">assistant/v1.ts:4576</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The description of the intent.</p>
+							<p>The description of the intent. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="intent_name" class="tsd-anchor"></a>
-					<h3>intent_<wbr>name</h3>
-					<div class="tsd-signature tsd-kind-icon">intent_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="examples" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> examples</h3>
+					<div class="tsd-signature tsd-kind-icon">examples<span class="tsd-signature-symbol">:</span> <a href="assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/assistant/v1.ts#L4643">assistant/v1.ts:4643</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/assistant/v1.ts#L4582">assistant/v1.ts:4582</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the intent.</p>
+							<p>An array of user input examples for the intent.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="intent" class="tsd-anchor"></a>
+					<h3>intent</h3>
+					<div class="tsd-signature tsd-kind-icon">intent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/assistant/v1.ts#L4574">assistant/v1.ts:4574</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix <code>sys-</code>. - It must be no longer than 128 characters.</p>
 						</div>
 					</div>
 				</section>
@@ -151,12 +167,12 @@
 					<div class="tsd-signature tsd-kind-icon">updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/assistant/v1.ts#L4647">assistant/v1.ts:4647</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/assistant/v1.ts#L4580">assistant/v1.ts:4580</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The timestamp for the last update to the intent.</p>
+							<p>The timestamp for the most recent update to the object.</p>
 						</div>
 					</div>
 				</section>
@@ -187,7 +203,10 @@
 										<a href="assistantv1.intent.html#description" class="tsd-kind-icon">description</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.intent.html#intent_name" class="tsd-kind-icon">intent_<wbr>name</a>
+										<a href="assistantv1.intent.html#examples" class="tsd-kind-icon">examples</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.intent.html#intent" class="tsd-kind-icon">intent</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.intent.html#updated" class="tsd-kind-icon">updated</a>

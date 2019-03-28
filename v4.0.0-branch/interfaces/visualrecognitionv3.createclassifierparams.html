@@ -94,7 +94,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#negative_examples" class="tsd-kind-icon">negative_<wbr>examples</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#negative_examples_filename" class="tsd-kind-icon">negative_<wbr>examples_<wbr>filename</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#positive_examples" class="tsd-kind-icon">positive_<wbr>examples</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#positive_examples_filename" class="tsd-kind-icon">positive_<wbr>examples_<wbr>filename</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 							</ul>
 						</section>
@@ -109,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/visual-recognition/v3-generated.ts#L839">visual-recognition/v3-generated.ts:839</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/visual-recognition/v3-generated.ts#L790">visual-recognition/v3-generated.ts:790</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -119,7 +118,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/visual-recognition/v3-generated.ts#L830">visual-recognition/v3-generated.ts:830</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/visual-recognition/v3-generated.ts#L783">visual-recognition/v3-generated.ts:783</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -134,7 +133,7 @@
 					<div class="tsd-signature tsd-kind-icon">negative_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/visual-recognition/v3-generated.ts#L834">visual-recognition/v3-generated.ts:834</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/visual-recognition/v3-generated.ts#L787">visual-recognition/v3-generated.ts:787</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -149,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">negative_<wbr>examples_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/visual-recognition/v3-generated.ts#L838">visual-recognition/v3-generated.ts:838</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/visual-recognition/v3-generated.ts#L789">visual-recognition/v3-generated.ts:789</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -161,30 +160,15 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="positive_examples" class="tsd-anchor"></a>
 					<h3>positive_<wbr>examples</h3>
-					<div class="tsd-signature tsd-kind-icon">positive_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
+					<div class="tsd-signature tsd-kind-icon">positive_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/visual-recognition/v3-generated.ts#L832">visual-recognition/v3-generated.ts:832</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/visual-recognition/v3-generated.ts#L785">visual-recognition/v3-generated.ts:785</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Specify the parameter name by appending <code>_positive_examples</code> to the class name. For example, <code>goldenretriever_positive_examples</code> creates the class <strong>goldenretriever</strong>. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="positive_examples_filename" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> positive_<wbr>examples_<wbr>filename</h3>
-					<div class="tsd-signature tsd-kind-icon">positive_<wbr>examples_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/visual-recognition/v3-generated.ts#L836">visual-recognition/v3-generated.ts:836</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The filename for positive_examples.</p>
+							<p>A dictionary that contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Specify the parameter name by appending <code>_positive_examples</code> to the class name. For example, <code>goldenretriever_positive_examples</code> creates the class <strong>goldenretriever</strong>. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8.</p>
 						</div>
 					</div>
 				</section>
@@ -194,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ecb5dee/visual-recognition/v3-generated.ts#L840">visual-recognition/v3-generated.ts:840</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bd74547/visual-recognition/v3-generated.ts#L791">visual-recognition/v3-generated.ts:791</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -271,9 +255,6 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="visualrecognitionv3.createclassifierparams.html#positive_examples" class="tsd-kind-icon">positive_<wbr>examples</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="visualrecognitionv3.createclassifierparams.html#positive_examples_filename" class="tsd-kind-icon">positive_<wbr>examples_<wbr>filename</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="visualrecognitionv3.createclassifierparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>

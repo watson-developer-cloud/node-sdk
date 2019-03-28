@@ -125,8 +125,9 @@
 					</li>
 					<li><p>Environment variables:</p>
 					</li>
-					<li><code>SERVICE_NAME_USERNAME</code> and <code>SERVICE_NAME_PASSWORD</code> environment properties (or <code>SERVICE_NAME_API_KEY</code> when appropriate) and, optionally, <code>SERVICE_NAME_URL</code></li>
-					<li><p>If using IAM: <code>SERVICE_NAME_IAM_APIKEY</code> and optionally <code>SERVICE_NAME_IAM_URL</code>, or <code>SERVICE_NAME_IAM_ACCESS_TOKEN</code></p>
+					<li><code>SERVICE_NAME_USERNAME</code> and <code>SERVICE_NAME_PASSWORD</code> environment properties</li>
+					<li>If using IAM: <code>SERVICE_NAME_IAM_APIKEY</code> and optionally <code>SERVICE_NAME_IAM_URL</code>, or <code>SERVICE_NAME_IAM_ACCESS_TOKEN</code></li>
+					<li><p>Optionally, <code>SERVICE_NAME_URL</code></p>
 					</li>
 					<li><p>IBM-Cloud-supplied credentials (via the <code>VCAP_SERVICES</code> JSON-encoded environment property)</p>
 					</li>
@@ -435,8 +436,6 @@ compareComply.compareDocuments(
   }
 );
 </code></pre>
-				<h3 id="conversation">Conversation</h3>
-				<p>This service has been renamed to Assistant.</p>
 				<h3 id="discovery">Discovery</h3>
 				<p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud/discovery/v1'</span>);
@@ -693,9 +692,9 @@ visualRecognition.classify(params, <span class="hljs-function"><span class="hljs
 });</code></pre>
 				<h2 id="composing-services">Composing services</h2>
 				<h3 id="integration-of-tone-analyzer-with-conversation">Integration of Tone Analyzer with Conversation</h3>
-				<p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Conversation</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
+				<p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Assistant</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
 				<h2 id="unauthenticated-requests">Unauthenticated requests</h2>
-				<p>By default, the library tries to use Basic Auth and will ask for <code>api_key</code> or <code>username</code> and <code>password</code> and send an <code>Authorization: Basic XXXXXXX</code>. You can avoid this by using:</p>
+				<p>By default, the library tries to authenticate and will ask for <code>iam_apikey</code>, <code>iam_access_token</code>, or <code>username</code> and <code>password</code> to send an <code>Authorization</code> header. You can avoid this by using:</p>
 				<p><code>use_unauthenticated</code>.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> watson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'watson-developer-cloud'</span>);
 
