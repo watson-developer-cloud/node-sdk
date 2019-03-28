@@ -16,8 +16,9 @@
 
 import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, FileObject, getMissingParams} from 'ibm-cloud-sdk-core';
+import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
+import { FileObject } from 'ibm-cloud-sdk-core';
 
 /**
  * ### Service Overview The IBM&reg; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.   For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface. It also supports a WebSocket interface that provides both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. SSML is an XML-based markup language that provides text annotation for speech-synthesis applications.   The service also offers a customization interface. You can use the interface to define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic Representation (SPR).
@@ -60,7 +61,7 @@ class TextToSpeechV1 extends BaseService {
    * about the voice. Specify a customization ID to obtain information for that custom voice model of the specified
    * voice. To list information about all available voices, use the **List voices** method.
    *
-   * **See also:** [Specifying a voice](https://cloud.ibm.com/docs/services/text-to-speech/http.html#voices).
+   * **See also:** [Listing a specific voice](https://cloud.ibm.com/docs/services/text-to-speech/voices.html#listVoice).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned.
@@ -70,7 +71,7 @@ class TextToSpeechV1 extends BaseService {
    * customization.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public getVoice(params: TextToSpeechV1.GetVoiceParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>): Promise<any> | void {
     const _params = extend({}, params);
@@ -99,7 +100,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getVoice');
- 
+
     const parameters = {
       options: {
         url: '/v1/voices/{voice}',
@@ -123,12 +124,13 @@ class TextToSpeechV1 extends BaseService {
    * Lists all voices available for use with the service. The information includes the name, language, gender, and other
    * details about the voice. To see information about a specific voice, use the **Get a voice** method.
    *
-   * **See also:** [Specifying a voice](https://cloud.ibm.com/docs/services/text-to-speech/http.html#voices).
+   * **See also:** [Listing all available
+   * voices](https://cloud.ibm.com/docs/services/text-to-speech/voices.html#listVoices).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
@@ -143,7 +145,7 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listVoices');
- 
+
     const parameters = {
       options: {
         url: '/v1/voices',
@@ -169,11 +171,11 @@ class TextToSpeechV1 extends BaseService {
    * Synthesizes text to audio that is spoken in the specified voice. The service bases its understanding of the
    * language for the input text on the specified voice. Use a voice that matches the language of the input text.
    *
-   * The service returns the synthesized audio stream as an array of bytes. You can pass a maximum of 5 KB of text to
-   * the service.
+   * The method accepts a maximum of 5 KB of input text in the body of the request, and 8 KB for the URL and headers.
+   * The 5 KB limit includes any SSML tags that you specify. The service returns the synthesized audio stream as an
+   * array of bytes.
    *
-   * **See also:** [Synthesizing text to
-   * audio](https://cloud.ibm.com/docs/services/text-to-speech/http.html#synthesize).
+   * **See also:** [The HTTP interface](https://cloud.ibm.com/docs/services/text-to-speech/http.html).
    *
    * ### Audio formats (accept types)
    *
@@ -230,7 +232,7 @@ class TextToSpeechV1 extends BaseService {
    *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
    *
    * For more information about specifying an audio format, including additional details about some of the formats, see
-   * [Specifying an audio format](https://cloud.ibm.com/docs/services/text-to-speech/http.html#format).
+   * [Audio formats](https://cloud.ibm.com/docs/services/text-to-speech/audio-formats.html).
    *
    * ### Warning messages
    *
@@ -241,19 +243,19 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The text to synthesize.
-   * @param {string} [params.accept] - The requested format (MIME type) of the audio. You can use the `Accept` header or
-   * the `accept` parameter to specify the audio format. For more information about specifying an audio format, see
-   * **Audio formats (accept types)** in the method description.
-   *
-   * Default: `audio/ogg;codecs=opus`.
    * @param {string} [params.voice] - The voice to use for synthesis.
    * @param {string} [params.customization_id] - The customization ID (GUID) of a custom voice model to use for the
    * synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the
    * indicated voice. You must make the request with service credentials created for the instance of the service that
    * owns the custom model. Omit the parameter to use the specified voice with no customization.
+   * @param {string} [params.accept] - The requested format (MIME type) of the audio. You can use the `Accept` header or
+   * the `accept` parameter to specify the audio format. For more information about specifying an audio format, see
+   * **Audio formats (accept types)** in the method description.
+   *
+   * Default: `audio/ogg;codecs=opus`.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
     const _params = extend({}, params);
@@ -283,7 +285,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'synthesize');
- 
+
     const parameters = {
       options: {
         url: '/v1/synthesize',
@@ -333,7 +335,7 @@ class TextToSpeechV1 extends BaseService {
    * customization.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public getPronunciation(params: TextToSpeechV1.GetPronunciationParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>): Promise<any> | void {
     const _params = extend({}, params);
@@ -361,7 +363,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getPronunciation');
- 
+
     const parameters = {
       options: {
         url: '/v1/pronunciation',
@@ -402,7 +404,7 @@ class TextToSpeechV1 extends BaseService {
    * recommended.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public createVoiceModel(params: TextToSpeechV1.CreateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): Promise<any> | void {
     const _params = extend({}, params);
@@ -429,12 +431,11 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'createVoiceModel');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations',
         method: 'POST',
-        json: true,
         body,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -464,7 +465,7 @@ class TextToSpeechV1 extends BaseService {
    * request with service credentials created for the instance of the service that owns the custom model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -489,7 +490,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteVoiceModel');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}',
@@ -522,7 +523,7 @@ class TextToSpeechV1 extends BaseService {
    * request with service credentials created for the instance of the service that owns the custom model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): Promise<any> | void {
     const _params = extend({}, params);
@@ -547,7 +548,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getVoiceModel');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}',
@@ -583,7 +584,7 @@ class TextToSpeechV1 extends BaseService {
    * requester.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public listVoiceModels(params?: TextToSpeechV1.ListVoiceModelsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
@@ -602,7 +603,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listVoiceModels');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations',
@@ -655,7 +656,7 @@ class TextToSpeechV1 extends BaseService {
    * to be added or updated for the custom voice model. Pass an empty array to make no additions or updates.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public updateVoiceModel(params: TextToSpeechV1.UpdateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -686,12 +687,11 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'updateVoiceModel');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -751,7 +751,7 @@ class TextToSpeechV1 extends BaseService {
    * entries](https://cloud.ibm.com/docs/services/text-to-speech/custom-rules.html#jaNotes).
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public addWord(params: TextToSpeechV1.AddWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -782,12 +782,11 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'addWord');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/words/{word}',
         method: 'PUT',
-        json: true,
         body,
         path,
       },
@@ -839,7 +838,7 @@ class TextToSpeechV1 extends BaseService {
    * lowercase letters. The array is empty if the custom model contains no words.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -868,12 +867,11 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'addWords');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/words',
         method: 'POST',
-        json: true,
         body,
         path,
       },
@@ -905,7 +903,7 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.word - The word that is to be deleted from the custom voice model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -931,7 +929,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteWord');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/words/{word}',
@@ -965,7 +963,7 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.word - The word that is to be queried from the custom voice model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public getWord(params: TextToSpeechV1.GetWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>): Promise<any> | void {
     const _params = extend({}, params);
@@ -991,7 +989,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getWord');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/words/{word}',
@@ -1025,7 +1023,7 @@ class TextToSpeechV1 extends BaseService {
    * request with service credentials created for the instance of the service that owns the custom model.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): Promise<any> | void {
     const _params = extend({}, params);
@@ -1050,7 +1048,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listWords');
- 
+
     const parameters = {
       options: {
         url: '/v1/customizations/{customization_id}/words',
@@ -1088,7 +1086,7 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
    * @param {Object} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
-   * @returns {NodeJS.ReadableStream|void}
+   * @returns {Promise<any>|void}
    */
   public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
@@ -1113,7 +1111,7 @@ class TextToSpeechV1 extends BaseService {
     };
 
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteUserData');
- 
+
     const parameters = {
       options: {
         url: '/v1/user_data',
@@ -1177,17 +1175,23 @@ namespace TextToSpeechV1 {
     /** The voice for which information is to be returned. */
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
+      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
+      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
+      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
+      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
     }
@@ -1203,50 +1207,56 @@ namespace TextToSpeechV1 {
   export interface SynthesizeParams {
     /** The text to synthesize. */
     text: string;
-    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
-    accept?: SynthesizeConstants.Accept | string;
     /** The voice to use for synthesis. */
     voice?: SynthesizeConstants.Voice | string;
     /** The customization ID (GUID) of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization. */
     customization_id?: string;
+    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
+    accept?: SynthesizeConstants.Accept | string;
     headers?: Object;
     return_response?: boolean;
   }
 
   /** Constants for the `synthesize` operation. */
   export namespace SynthesizeConstants {
-    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
-    export enum Accept {
-      BASIC = 'audio/basic',
-      FLAC = 'audio/flac',
-      L16 = 'audio/l16',
-      OGG = 'audio/ogg',
-      OGG_CODECS_OPUS = 'audio/ogg;codecs=opus',
-      OGG_CODECS_VORBIS = 'audio/ogg;codecs=vorbis',
-      MP3 = 'audio/mp3',
-      MPEG = 'audio/mpeg',
-      MULAW = 'audio/mulaw',
-      WAV = 'audio/wav',
-      WEBM = 'audio/webm',
-      WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
-      WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
-    }
     /** The voice to use for synthesis. */
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
+      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
+      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
+      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
+      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
+    }
+    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
+    export enum Accept {
+      AUDIO_BASIC = 'audio/basic',
+      AUDIO_FLAC = 'audio/flac',
+      AUDIO_L16 = 'audio/l16',
+      AUDIO_OGG = 'audio/ogg',
+      AUDIO_OGG_CODECS_OPUS = 'audio/ogg;codecs=opus',
+      AUDIO_OGG_CODECS_VORBIS = 'audio/ogg;codecs=vorbis',
+      AUDIO_MP3 = 'audio/mp3',
+      AUDIO_MPEG = 'audio/mpeg',
+      AUDIO_MULAW = 'audio/mulaw',
+      AUDIO_WAV = 'audio/wav',
+      AUDIO_WEBM = 'audio/webm',
+      AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
+      AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
   }
 
@@ -1269,17 +1279,23 @@ namespace TextToSpeechV1 {
     /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. */
     export enum Voice {
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
+      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
+      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
+      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
+      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
     }
