@@ -65,82 +65,81 @@
 ### BREAKING CHANGES
 
 * **visual_recognition:** For `updateClassifier` and `createClassifier`, the parameter `{classname}_positive_examples` is changed to a map called `positive_examples` with classnames as keys.
-
-See the migration guide, UPGRADE-4.0.md, for more information.
+  * See the migration guide, UPGRADE-4.0.md, for more information.
+  
 * Node 4 will no longer be supported, considered during development, or tested with.
-
-To migrate your code, upgrade to a newer major version of Node.
+  * To migrate your code, upgrade to a newer major version of Node.
+  
 * **assistant-v2:** For `updateValue`, parameter `new_type` is changed to `new_value_type`. For `updateDialogNode`, parameter `new_type` is changed to `new_node_type`.
-* These method renames are breaking changes. Update the method names to migrate your code.
+  * These method renames are breaking changes. Update the method names to migrate your code.
+  
 * There is no more `index.ts` file, so importing with `require('watson-developer-cloud')` will no longer work.
+  * To migrate your code, import only the services that you need, e.g. `require('watson-developer-cloud/speech-to-text/v1')`.
 
-To migrate your code, import only the services that you need, e.g. `require('watson-developer-cloud/speech-to-text/v1')`.
-
-Using the file `sdk.ts` to export all of the services for browserification
 * The methods `createStopwordList` in discovery and `convertToHTML` in comply comply now have new, required parameters
-
-To migrate your code, include the parameter `stopword_filename` for `createStopwordList`, and `filename` for `convertToHTML`
+  * To migrate your code, include the parameter `stopword_filename` for `createStopwordList`, and `filename` for `convertToHTML`
+  
 * **assistant-v1:** The Assistant v1 parameter `export` is now `_export` is all instances.
-
-To migrate your code, change any use of the `export` parameter to `_export`.
+  * To migrate your code, change any use of the `export` parameter to `_export`.
+  
 * The SDK used to document and allow array values for these parameters, converting them to strings to be sent to the service.
+  * To migrate your code, convert any array values for these parameters to comma-separated values in a string.
 
-To migrate your code, convert any array values for these parameters to comma-separated values in a string.
 * The module `json-training-to-csv` is no longer available.
+  * To migrate your code, provide `training_data` to NLC as a CSV file.
 
-To migrate your code, provide `training_data` to NLC as a CSV file.
 * Cookies will no longer be sent or stored in requests. This should have very little impact on usage but is techincally a breaking change.
-
-This affects internal functionality but has no effect on client code.
+  * This affects internal functionality but has no effect on client code.
+  
 * Errors objects returned from service errors are now different
+  * To migrate your code, see the upgrade guide for the new error structure
 
-To migrate your code, see the upgrade guide for the new error structure:
 * Network responses received in callback function may now have different structures (results and errors). Requests no longer return a Stream.
-
-See the UPGRADE-4.0.md file for more information.
+  * See the UPGRADE-4.0.md file for more information.
+  
 * **personality-insights:** Personality Insights v2 is no longer available in the SDK
-
-To migrate your code, use Personality Insights v3:
+  * To migrate your code, use Personality Insights v3:
+  
 * **compare-comply:** Parameter `model_id` has been changed to `model` for the following methods: convertToHtml, classifyElements, extractTables, compareDocuments, deleteFeedback, getFeedback, createBatch, and updateBatch
+
 * **speech-to-text:** Deprecated methods in Speech to Text are no longer available. Changed parameter names are no longer interally corrected.
+  * To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/speech-to-text/api/v1/node.html?node
 
-To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/speech-to-text/api/v1/node.html?node
 * **text-to-speech:** Deprecated methods in Text to Speech are no longer available. Changed parameter names are no longer interally corrected.
+  * To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/text-to-speech/api/v1/node.html?node
 
-To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/text-to-speech/api/v1/node.html?node
 * **visual-recognition:** Deprecated methods in Visual Recognition are no longer available. Changed parameter names are no longer interally corrected.
+  * To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/visual-recognition/api/v3/node.html?node
 
-To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/visual-recognition/api/v3/node.html?node
 * **tone-analyzer:** Deprecated methods in Tone Analyzer are no longer available. Changed parameter names are no longer interally corrected.
+  * To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/tone-analyzer/api/v3/node.html?node
 
-To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/tone-analyzer/api/v3/node.html?node
 * **personality-insights-v3:** Deprecated methods in Personality Insights v3 are no longer available. Changed parameter names are no longer interally corrected.
+  * To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/personality-insights/api/v3/node.html?node
 
-To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/personality-insights/api/v3/node.html?node
 * **natural-language-understanding:** The `version_date` parameter in Natural Language Understanding is no longer supported.
+  * To migrate your code, use the parameter name `version` instead.
 
-To migrate your code, use the parameter name `version` instead.
 * **natural-language-classifier:** Deprecated methods in Natural Language Classifier are no longer available. Changed parameter names are no longer interally corrected.
+  * To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/node.html?node
 
-To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/natural-language-classifier/api/v1/node.html?node
 * **discovery:** Deprecated methods in Discovery are no longer available. Changed parameter names are no longer interally corrected.
+  * To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/discovery/api/v1/node.html?node
 
-To migrate your code, use the methods and parameters currently available with the service as documented here: https://www.ibm.com/watson/developercloud/discovery/api/v1/node.html?node
 * **conversation:** The Conversation service will no longer be available
+  * To migrate your code, use the Assistant v1 or v2 service.
 
-To migrate your code, use the Assistant v1 or v2 service.
 * **language-translator-v2:** The Language Translator V2 service will no longer be available
+  * To migrate your code, use the Language Translator V3 service.
 
-To migrate your code, use the Language Translator V3 service.
 * **dialog:** The Dialog service will no longer be available
+  * To migrate your code, use the Assistant v1 or v2 service.
 
-To migrate your code, use the Assistant v1 or v2 service.
 * Support for the `api_key` parameter has been removed.
+  * For instances of Visual Recognition, use `iam_apikey` to authenticate.
 
-For instances of Visual Recognition, use `iam_apikey` to authenticate.
 * **discovery:** The name of the model `QueryResultResultMetadata` has been changed to `QueryResultMetadata`
-
-To migrate your code, use the model `QueryResultMetadata` instead of `QueryResultResultMetadata`:
+  * To migrate your code, use the model `QueryResultMetadata` instead of `QueryResultResultMetadata`:
 
 ## [3.18.4](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.3...v3.18.4) (2019-03-28)
 
