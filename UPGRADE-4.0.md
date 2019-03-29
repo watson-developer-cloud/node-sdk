@@ -1,20 +1,20 @@
 # Upgrading to watson-developer-cloud@4.0
-- [Breaking changes]
-   - [Methods no longer return stream]
-   - [Error Handling Compatibility]
-   - [Default Methods Compatibility]
-   - [Removed Services]
-   - [Constructor Compatibility]
-   - [Assistant V1 Compatibility]
-   - [Assistant V2 Compatibility]
-   - [Discovery Compatibility]
-   - [Compare Comply Compatibility]
-   - [Natural Language Classifier Compatibility]
-   - [Personality Insights v3 Compatibility]
-   - [Speech to Text Compatibility]
-   - [Text to Speech Compatibility]
-   - [Tone Analyzer Compatibility]
-   - [Visual Recognition Compatibility]
+- [Breaking changes](#breaking-changes)
+   - [Methods no longer return stream](#methods-no-longer-return-stream)
+   - [Error Handling Compatibility](#error-handling-compatibility)
+   - [Default Methods Compatibility](#default-methods-compatibility)
+   - [Removed Services](#removed-services)
+   - [Constructor Compatibility](#constructor-compatibility)
+   - [Assistant V1 Compatibility](#assistant-v1-compatibility)
+   - [Assistant V2 Compatibility](#assistant-v2-compatibility)
+   - [Discovery Compatibility](#discovery-compatibility)
+   - [Compare Comply Compatibility](#compare-comply-compatibility)
+   - [Natural Language Classifier Compatibility](#natural-language-classifier-compatibility)
+   - [Personality Insights v3 Compatibility](#personality-insights-v3-compatibility)
+   - [Speech to Text Compatibility](#speech-to-text-compatibility)
+   - [Text to Speech Compatibility](#text-to-speech-compatibility)
+   - [Tone Analyzer Compatibility](#tone-analyzer-compatibility)
+   - [Visual Recognition Compatibility](#visual-recognition-compatibility)
 
 
 ## Breaking changes
