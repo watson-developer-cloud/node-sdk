@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.0.0...v4.0.1) (2019-03-29)
+
+
+### Bug Fixes
+
+* add compare comply keyword to package.json (to trigger release) ([7905445](https://github.com/watson-developer-cloud/node-sdk/commit/7905445))
+
 # [4.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v3.18.4...v4.0.0) (2019-03-28)
 
 
