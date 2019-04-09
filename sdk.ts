@@ -15,7 +15,7 @@
  */
 
 /**
- * @module watson-developer-cloud
+ * @module ibm-watson
  * Provide the entire sdk in one module in order to be browserified
  */
 
