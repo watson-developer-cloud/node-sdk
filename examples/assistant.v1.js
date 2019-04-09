@@ -1,6 +1,6 @@
 'use strict';
 
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+var AssistantV1 = require('ibm-watson/assistant/v1');
 
 /**
  * Instantiate the Watson Assistant Service

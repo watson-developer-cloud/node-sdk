@@ -1,6 +1,6 @@
 'use strict';
 
-var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
+var PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
 var fs = require('fs');
 
 var personalityInsights = new PersonalityInsightsV3({

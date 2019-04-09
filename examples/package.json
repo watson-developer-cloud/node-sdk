@@ -7,8 +7,8 @@
   "dependencies": {
     "async": "^2.1.4",
     "dotenv": "^2.0.0",
+    "ibm-watson": "latest",
     "speaker": "^0.3.0",
-    "watson-developer-cloud": "latest",
     "wav": "^1.0.1"
   },
   "engines": {

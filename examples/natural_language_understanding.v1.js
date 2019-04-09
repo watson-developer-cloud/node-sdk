@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 require('dotenv').config({ silent: true }); //  optional
 
 var nlu = new NaturalLanguageUnderstandingV1({

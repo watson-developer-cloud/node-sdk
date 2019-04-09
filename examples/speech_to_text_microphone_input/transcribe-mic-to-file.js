@@ -1,7 +1,7 @@
 'use strict';
 var fs = require('fs');
 require('dotenv').config({ silent: true }); // optional, handy for local development
-var SpeechToText = require('watson-developer-cloud/speech-to-text/v1');
+var SpeechToText = require('ibm-watson/speech-to-text/v1');
 var mic = require('mic');
 var wav = require('wav');
 

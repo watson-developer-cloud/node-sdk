@@ -1,6 +1,6 @@
 'use strict';
 
-var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+var VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
 var fs = require('fs');
 
 var visualRecognition = new VisualRecognitionV3({

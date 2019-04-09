@@ -1,6 +1,6 @@
 'use strict';
 
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
 
 var toneAnalyzer = new ToneAnalyzerV3({
   username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',

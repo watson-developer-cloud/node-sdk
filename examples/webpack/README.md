@@ -55,18 +55,18 @@ Several services use the `fs` library, which won't work in browser environments,
 Ideally, only the specific services used shoud be included, for example:
 
 ```js
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+var AssistantV1 = require('ibm-watson/assistant/v1');
 ```
 
 **Not Recommended**: It's possible to load the entire library, but it is not recommended due to the added file size:
 
 ```js
-var watson = require('watson-developer-cloud');
+var watson = require('ibm-watson');
 ```
 or
 ```
-const { AssistantV1, ToneAnalyzerV3 } = require('watson-developer-cloud');
+const { AssistantV1, ToneAnalyzerV3 } = require('ibm-watson');
 ```
 
 Additionally, when importing the entire library, the `shebang-loader` package is need and must be configured

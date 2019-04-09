@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 
 const textToSpeech = new TextToSpeechV1({
   // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
