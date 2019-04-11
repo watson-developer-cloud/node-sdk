@@ -3,14 +3,14 @@
 //
 // * This file is bundled by exprss-browserify into bundle.js
 //
-// * The require('watson-developer-cloud/language_translator/v3') could also be written as require('watson-developer-cloud').LanguageTranslatorV3,
+// * The require('ibm-watson/language_translator/v3') could also be written as require('ibm-watson').LanguageTranslatorV3,
 //   but that version results in a much larger bundle size.
 //
 // * Tokens expire after 1 hour. This demo simply fetches a new one for each translation rather than keeping a fresh one.
 //
 // * fetch() is a modern version of XMLHttpRequest. A pollyfill is available for older browsers: https://github.com/github/fetch
 
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
 
 var btn = document.getElementById('analyze-btn');
 var input = document.getElementById('input');

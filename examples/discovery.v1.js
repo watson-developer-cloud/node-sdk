@@ -1,6 +1,6 @@
 'use strict';
 
-var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
+var DiscoveryV1 = require('ibm-watson/discovery/v1');
 var fs = require('fs');
 
 var discovery = new DiscoveryV1({

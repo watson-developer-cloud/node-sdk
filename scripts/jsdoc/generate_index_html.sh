@@ -27,7 +27,7 @@ echo '<!DOCTYPE html>
     <p><a href="https://www.ibm.com/watson/developer/">Info</a>
         | <a href="https://console.bluemix.net/developer/watson/documentation">Documentation</a>
         | <a href="https://github.com/watson-developer-cloud/node-sdk">GitHub</a>
-        | <a href="https://npmjs.org/package/watson-developer-cloud">npm</a>
+        | <a href="https://npmjs.org/package/ibm-watson">npm</a>
     </p>
 
     <p>JSDoc by branch/tag:</p>

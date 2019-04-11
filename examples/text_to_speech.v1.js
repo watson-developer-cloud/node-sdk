@@ -1,6 +1,6 @@
 'use strict';
 
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 var fs = require('fs');
 
 var textToSpeech = new TextToSpeechV1({

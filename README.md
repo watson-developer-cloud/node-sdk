@@ -3,8 +3,8 @@
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg)](http://travis-ci.org/watson-developer-cloud/node-sdk)
 [![codecov](https://codecov.io/gh/watson-developer-cloud/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-developer-cloud/node-sdk)
 [![Slack](https://wdc-slack-inviter.mybluemix.net/badge.svg)](https://wdc-slack-inviter.mybluemix.net)
-[![npm-version](https://img.shields.io/npm/v/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
-[![npm-downloads](https://img.shields.io/npm/dm/watson-developer-cloud.svg)](https://www.npmjs.com/package/watson-developer-cloud)
+[![npm-version](https://img.shields.io/npm/v/ibm-watson.svg)](https://www.npmjs.com/package/ibm-watson)
+[![npm-downloads](https://img.shields.io/npm/dm/ibm-watson.svg)](https://www.npmjs.com/package/ibm-watson)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 Node.js client library to use the Watson APIs.
@@ -53,7 +53,7 @@ Node.js client library to use the Watson APIs.
 ## Installation
 
 ```sh
-npm install watson-developer-cloud
+npm install ibm-watson
 ```
 
 ## Usage
@@ -115,7 +115,7 @@ The file downloaded will be called `ibm-credentials.env`. This is the name the S
 As long as you set that up correctly, you don't have to worry about setting any authentication options in your code. So, for example, if you created and downloaded the credential file for your Discovery instance, you just need to do the following:
 
 ```js
-const DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
+const DiscoveryV1 = require('ibm-watson/discovery/v1');
 const discovery = new DiscoveryV1({ version: '2019-02-01' });
 ```
 
@@ -180,7 +180,7 @@ discovery.setAccessToken('<access-token>')
 ### Username and password
 
 ```javascript
-var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
+var DiscoveryV1 = require('ibm-watson/discovery/v1');
 
 var discovery = new DiscoveryV1({
     version: '{version}',
@@ -347,7 +347,7 @@ Note that the token is supplied URL-encoded, and will not be accepted if it is d
 The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var watson = require('ibm-watson');
 
 // to get an IAM Access Token
 var authorization = new watson.AuthorizationV1({
@@ -389,7 +389,7 @@ Use the [Assistant][conversation] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
-var AssistantV2 = require('watson-developer-cloud/assistant/v2');
+var AssistantV2 = require('ibm-watson/assistant/v2');
 
 var assistant = new AssistantV2({
   username: '<username>',
@@ -421,7 +421,7 @@ Use the [Assistant][assistant] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
 
 ```js
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
+var AssistantV1 = require('ibm-watson/assistant/v1');
 
 var assistant = new AssistantV1({
   username: '<username>',
@@ -451,7 +451,7 @@ Use the Compare Comply service to compare and classify documents.
 
 ```javascript
 const fs = require('fs');
-const CompareComplyV1 = require('watson-developer-cloud/compare-comply/v1');
+const CompareComplyV1 = require('ibm-watson/compare-comply/v1');
 
 const compareComply = new CompareComplyV1({
   iam_apikey: '<iam_apikey>',
@@ -484,7 +484,7 @@ compareComply.compareDocuments(
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
 
 ```javascript
-var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
+var DiscoveryV1 = require('ibm-watson/discovery/v1');
 
 var discovery = new DiscoveryV1({
   username: '<username>',
@@ -515,7 +515,7 @@ discovery.query(
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
 ```javascript
-const LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v3');
+const LanguageTranslatorV3 = require('ibm-watson/language-translator/v3');
 
 const languageTranslator = new LanguageTranslatorV3({
   iam_apikey: '<apikey>',
@@ -557,7 +557,7 @@ languageTranslator.identify(
 Use [Natural Language Classifier](https://console.bluemix.net/docs/services/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
-var NaturalLanguageClassifierV1 = require('watson-developer-cloud/natural-language-classifier/v1');
+var NaturalLanguageClassifierV1 = require('ibm-watson/natural-language-classifier/v1');
 
 var classifier = new NaturalLanguageClassifierV1({
   username: '<username>',
@@ -590,7 +590,7 @@ Use Natural Language Understanding is a collection of natural language processin
 
 ```javascript
 var fs = require('fs');
-var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
+var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 
 var nlu = new NaturalLanguageUnderstandingV1({
   username: '<username>',
@@ -624,7 +624,7 @@ Analyze text in English and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
 ```javascript
-var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
+var PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
 
 var personalityInsights = new PersonalityInsightsV3({
   username: '<username>',
@@ -655,7 +655,7 @@ personalityInsights.profile(
 Use the [Speech to Text][speech_to_text] service to recognize the text from a `.wav` file.
 
 ```javascript
-var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+var SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
 var fs = require('fs');
 
 var speechToText = new SpeechToTextV1({
@@ -689,7 +689,7 @@ fs.createReadStream('./resources/speech.wav')
 Use the [Text to Speech][text_to_speech] service to synthesize text into an audio file.
 
 ```js
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 var fs = require('fs');
 
 var textToSpeech = new TextToSpeechV1({
@@ -732,7 +732,7 @@ Use the [Tone Analyzer][tone_analyzer] service to analyze the
 emotion, writing and social tones of a text.
 
 ```js
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
 
 var toneAnalyzer = new ToneAnalyzerV3({
   username: '<username>',
@@ -765,7 +765,7 @@ following picture.
 <img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" />
 
 ```js
-var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+var VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
 var fs = require('fs');
 
 var visualRecognition = new VisualRecognitionV3({
@@ -799,7 +799,7 @@ By default, the library tries to authenticate and will ask for `iam_apikey`, `ia
 `use_unauthenticated`.
 
 ```javascript
-var watson = require('watson-developer-cloud');
+var watson = require('ibm-watson');
 
 var assistant = new watson.AssistantV1({
   use_unauthenticated: true
@@ -850,7 +850,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 [language_translator]: https://www.ibm.com/watson/services/language-translator/
 [ibm_cloud]: https://console.bluemix.net
 [watson-dashboard]: https://console.bluemix.net/dashboard/apps?category=watson
-[npm_link]: https://www.npmjs.com/package/watson-developer-cloud
+[npm_link]: https://www.npmjs.com/package/ibm-watson
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js

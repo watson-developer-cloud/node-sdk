@@ -2,8 +2,8 @@
 var express = require('express'); // eslint-disable-line node/no-missing-require
 var app = express();
 var dotenv = require('dotenv');
-var AuthorizationV1 = require('watson-developer-cloud/authorization/v1');
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var AuthorizationV1 = require('ibm-watson/authorization/v1');
+var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
 
 // bundle the code
 var webpackDevMiddleware = require('webpack-dev-middleware');

@@ -3,7 +3,7 @@
 // This example takes uncompressed wav audio from the Text to Speech service and plays it through the computer's speakers
 // Should work on windows/mac/linux, but linux may require some extra setup first: https://www.npmjs.com/package/speaker
 
-var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
+var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 var wav = require('wav');
 var Speaker = require('speaker');
 require('dotenv').load({ silent: true }); // imports environment properties from a .env file if present

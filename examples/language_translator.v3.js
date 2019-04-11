@@ -1,7 +1,7 @@
 'use strict';
 require('dotenv').config();
 
-const LanguageTranslatorV3 = require('watson-developer-cloud/language-translator/v3');
+const LanguageTranslatorV3 = require('ibm-watson/language-translator/v3');
 
 /**
  * Instantiate the Watson Language Translator Service

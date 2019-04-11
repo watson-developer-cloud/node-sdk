@@ -1,4 +1,4 @@
-# Upgrading to watson-developer-cloud@4.0
+# Upgrading to ibm-watson@4.0
 - [Breaking changes](#breaking-changes)
    - [Methods no longer return stream](#methods-no-longer-return-stream)
    - [Error Handling Compatibility](#error-handling-compatibility)

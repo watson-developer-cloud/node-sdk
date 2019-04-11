@@ -30,8 +30,8 @@
 'use strict';
 /* eslint-env es6*/
 
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var AssistantV1 = require('ibm-watson/assistant/v1');
+var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
 var tone_detection = require('./tone_detection.js');
 require('dotenv').config({ silent: true });
 
