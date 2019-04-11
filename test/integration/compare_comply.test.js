@@ -89,7 +89,7 @@ describe('feedback', () => {
   let feedback_id;
   test('addFeedback', done => {
     const params = {
-      comment: 'testing testing comments v2',
+      comment: 'testing testing comments v2 - node sdk test',
       user_id: 'user_id_123x',
       feedback_data: {
         feedback_type: 'element_classification',
@@ -179,7 +179,7 @@ describe('feedback', () => {
     });
   });
 
-  test('getFeedback', done => {
+  test('getFeedback @slow', done => {
     const params = {
       feedback_id,
       headers: {
@@ -206,7 +206,7 @@ describe('feedback', () => {
     });
   });
 
-  test('deleteFeedback', done => {
+  test('deleteFeedback @slow', done => {
     const params = {
       feedback_id,
     };
