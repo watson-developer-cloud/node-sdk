@@ -67,7 +67,7 @@
     "lint-staged": "~7.2.0",
     "object.assign": "~4.1.0",
     "prettier": "^1.16.4",
-    "semantic-release": "^15.13.3",
+    "semantic-release": "^15.13.8",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
