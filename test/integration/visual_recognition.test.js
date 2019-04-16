@@ -12,7 +12,7 @@ describe('visual_recognition_integration', function() {
   jest.setTimeout(THIRTY_SECONDS * 4);
 
   const visual_recognition = new VisualRecognitionV3(
-    Object.assign({}, auth.visual_recognition_rc.v3, {
+    Object.assign({}, auth.visual_recognition, {
       version: '2019-03-27',
     })
   );

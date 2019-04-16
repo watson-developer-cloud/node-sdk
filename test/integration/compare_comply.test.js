@@ -179,7 +179,7 @@ describe('feedback', () => {
     });
   });
 
-  test('getFeedback @slow', done => {
+  test('getFeedback', done => {
     const params = {
       feedback_id,
       headers: {
@@ -206,13 +206,13 @@ describe('feedback', () => {
     });
   });
 
-  test('deleteFeedback @slow', done => {
+  test('deleteFeedback', done => {
     const params = {
       feedback_id,
     };
     compare_comply.deleteFeedback(params, (err, res) => {
       expect(err).toBeNull();
-      expect(res.status).toBe(200);
+      expect(res.status).toBe('200');
       expect(res.message).toBeDefined();
       done();
     });
@@ -238,7 +238,6 @@ describe('batches @slow', () => {
     compare_comply.createBatch(params, (err, res) => {
       expect(err).toBeNull();
       expect(res.function).toBeTruthy();
-      expect(res.model).toBeTruthy();
       expect(res.input_bucket_name).toBeTruthy();
       expect(res.output_bucket_name).toBeTruthy();
       expect(res.input_bucket_location).toBeTruthy();
@@ -265,7 +264,6 @@ describe('batches @slow', () => {
       compare_comply.updateBatch(params, (err, res) => {
         expect(err).toBeNull();
         expect(res.function).toBeTruthy();
-        expect(res.model).toBeTruthy();
         expect(res.input_bucket_name).toBeTruthy();
         expect(res.output_bucket_name).toBeTruthy();
         expect(res.input_bucket_location).toBeTruthy();
@@ -287,7 +285,6 @@ describe('batches @slow', () => {
     compare_comply.getBatch(params, (err, res) => {
       expect(err).toBeNull();
       expect(res.function).toBeTruthy();
-      expect(res.model).toBeTruthy();
       expect(res.input_bucket_name).toBeTruthy();
       expect(res.output_bucket_name).toBeTruthy();
       expect(res.input_bucket_location).toBeTruthy();
