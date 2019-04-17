@@ -41,8 +41,9 @@ Node.js client library to use the Watson APIs.
   * [Composing Services](#composing-services)
   * [Debug](#debug)
   * [Tests](#tests)
-  * [License](#license)
   * [Contributing](#contributing)
+  * [Featured Projects](#featured-projects)
+  * [License](#license)
 
 </details>
 
@@ -837,14 +838,18 @@ $ jest '<path to test>'
 ## Open source @ IBM
 [Find more open source projects on the IBM Github Page.](http://ibm.github.io/)
 
-## License
+## Contributing
+See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
+## Featured Projects
+We love to highlight cool open-source projects that use this SDK! If you'd like to get your project added to the list, feel free to make an issue linking us to it.
+- [Watson Speech to Text Demo App](https://github.com/watson-developer-cloud/speech-to-text-nodejs)
+- [Watson Assistant Demo App](https://github.com/watson-developer-cloud/assistant-simple)
+- [Virtual TJBot Node-RED Nodes](https://github.com/jeancarl/node-red-contrib-virtual-tjbot)
+
+## License
 This library is licensed under Apache 2.0. Full license text is available in
 [COPYING][license].
-
-## Contributing
-
-See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
 
 [assistant]: https://www.ibm.com/watson/services/conversation/
 [discovery]: https://www.ibm.com/watson/services/discovery/
