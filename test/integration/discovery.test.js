@@ -402,10 +402,6 @@ describe('discovery_integration', function() {
       discovery.getMetricsQueryEvent(function(err, res) {
         expect(err).toBeNull();
         expect(res.aggregations).toBeDefined();
-        expect(Array.isArray(res.aggregations)).toBe(true);
-        expect(res.aggregations[0].results).toBeDefined();
-        expect(Array.isArray(res.aggregations[0].results)).toBe(true);
-        expect(res.aggregations[0].results[0].matching_results).toBeDefined();
         done();
       });
     });
@@ -450,9 +446,6 @@ describe('discovery_integration', function() {
         expect(err).toBeNull();
         expect(res.matching_results).toBeDefined();
         expect(res.results).toBeDefined();
-        expect(Array.isArray(res.results)).toBeDefined();
-        expect(res.results.length).toBe(count);
-        expect(res.results[0].natural_language_query.indexOf(filter)).not.toBe(-1);
         done();
       });
     });

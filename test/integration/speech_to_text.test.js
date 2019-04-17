@@ -16,15 +16,6 @@ describe('speech_to_text_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
   const speech_to_text = new SpeechToTextV1(auth.speech_to_text);
-  const speech_to_text_rc = new SpeechToTextV1(auth.speech_to_text_rc);
-
-  it('recognize() (RC) @slow', function(done) {
-    const params = {
-      audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
-      content_type: 'audio/ogg; codec=opus',
-    };
-    speech_to_text_rc.recognize(params, done);
-  });
 
   it('recognize()', function(done) {
     const params = {
@@ -107,7 +98,7 @@ describe('speech_to_text_integration', function() {
     speech_to_text.listModels({}, done);
   });
 
-  describe('recognizeUsingWebSocket() (RC) (credentials from environment/VCAP) @slow', () => {
+  describe('recognizeUsingWebSocket() (credentials from environment/VCAP) @slow', () => {
     let env;
     beforeEach(function() {
       env = process.env;
@@ -118,8 +109,8 @@ describe('speech_to_text_integration', function() {
     });
 
     it('transcribes audio over a websocket, credentials from environment', function(done) {
-      process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.speech_to_text_rc.iam_apikey;
-      process.env.SPEECH_TO_TEXT_URL = auth.speech_to_text_rc.url;
+      process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.speech_to_text.iam_apikey;
+      process.env.SPEECH_TO_TEXT_URL = auth.speech_to_text.url;
       const speech_to_text_env = new SpeechToTextV1({});
       const recognizeStream = speech_to_text_env.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
@@ -142,33 +133,14 @@ describe('speech_to_text_integration', function() {
         speech_to_text: [
           {
             credentials: {
-              iam_apikey: auth.speech_to_text_rc.iam_apikey,
-              url: auth.speech_to_text_rc.url,
+              iam_apikey: auth.speech_to_text.iam_apikey,
+              url: auth.speech_to_text.url,
             },
           },
         ],
       });
       const speech_to_text_vcap = new SpeechToTextV1({});
       const recognizeStream = speech_to_text_vcap.recognizeUsingWebSocket();
-      recognizeStream.setEncoding('utf8');
-      fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
-        .pipe(recognizeStream)
-        .on('error', done)
-        .pipe(
-          concat(function(transcription) {
-            expect(typeof transcription).toBe('string');
-            expect(transcription.trim()).toBe(
-              'thunderstorms could produce large hail isolated tornadoes and heavy rain'
-            );
-            done();
-          })
-        );
-    });
-  });
-
-  describe('recognizeUsingWebSocket() (RC)', () => {
-    it('transcribes audio over a websocket @slow', function(done) {
-      const recognizeStream = speech_to_text_rc.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
         .pipe(recognizeStream)

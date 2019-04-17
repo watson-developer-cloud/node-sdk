@@ -101,8 +101,8 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 
 describe('assistant_integration', function() {
   jest.setTimeout(TEN_SECONDS);
-  auth.conversation.version = '2019-03-27';
-  const assistant = new AssistantV1(auth.conversation);
+  auth.assistant.version = '2019-03-27';
+  const assistant = new AssistantV1(auth.assistant);
 
   describe('message()', function() {
     it('alternate_intents with custom headers', function(done) {
