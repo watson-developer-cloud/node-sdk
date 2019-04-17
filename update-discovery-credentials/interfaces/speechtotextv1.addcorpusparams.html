@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AddCorpusParams | watson-developer-cloud</title>
+	<title>AddCorpusParams | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">watson-developer-cloud</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -91,10 +91,10 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addcorpusparams.html#allow_overwrite" class="tsd-kind-icon">allow_<wbr>overwrite</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addcorpusparams.html#corpus_file" class="tsd-kind-icon">corpus_<wbr>file</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addcorpusparams.html#corpus_filename" class="tsd-kind-icon">corpus_<wbr>filename</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addcorpusparams.html#corpus_name" class="tsd-kind-icon">corpus_<wbr>name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addcorpusparams.html#customization_id" class="tsd-kind-icon">customization_<wbr>id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addcorpusparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.addcorpusparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,12 +108,12 @@
 					<div class="tsd-signature tsd-kind-icon">allow_<wbr>overwrite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L3058">speech-to-text/v1-generated.ts:3058</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/speech-to-text/v1-generated.ts#L3822">speech-to-text/v1-generated.ts:3822</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If <code>true</code>, the specified corpus or audio resource overwrites an existing corpus or audio resource with the same name. If <code>false</code>, the request fails if a corpus or audio resource with the same name already exists. The parameter has no effect if a corpus or audio resource with the same name does not already exist.</p>
+							<p>If <code>true</code>, the specified corpus overwrites an existing corpus with the same name. If <code>false</code>, the request fails if a corpus with the same name already exists. The parameter has no effect if a corpus with the same name does not already exist.</p>
 						</div>
 					</div>
 				</section>
@@ -123,27 +123,12 @@
 					<div class="tsd-signature tsd-kind-icon">corpus_<wbr>file<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L3056">speech-to-text/v1-generated.ts:3056</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/speech-to-text/v1-generated.ts#L3820">speech-to-text/v1-generated.ts:3820</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. With the <code>curl</code> command, use the <code>--data-binary</code> option to upload the file for the request.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="corpus_filename" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> corpus_<wbr>filename</h3>
-					<div class="tsd-signature tsd-kind-icon">corpus_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L3060">speech-to-text/v1-generated.ts:3060</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The filename for corpus_file.</p>
+							<p>A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. Make sure that you know the character encoding of the file. You must use that encoding when working with the words in the custom language model. For more information, see <a href="https://cloud.ibm.com/docs/services/speech-to-text/language-resource.html#charEncoding">Character encoding</a>. With the <code>curl</code> command, use the <code>--data-binary</code> option to upload the file for the request.</p>
 						</div>
 					</div>
 				</section>
@@ -153,12 +138,12 @@
 					<div class="tsd-signature tsd-kind-icon">corpus_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L3054">speech-to-text/v1-generated.ts:3054</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/speech-to-text/v1-generated.ts#L3818">speech-to-text/v1-generated.ts:3818</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the new corpus for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the corpus. <em> Include a maximum of 128 characters in the name. </em> Do not include spaces, slashes, or backslashes in the name. <em> Do not use the name of a corpus that has already been added to the custom model. </em> Do not use the name <code>user</code>, which is reserved by the service to denote custom words that are added or modified by the user.</p>
+							<p>The name of the new corpus for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the corpus. * Include a maximum of 128 characters in the name. * Do not include spaces, slashes, or backslashes in the name. * Do not use the name of an existing corpus or grammar that is already defined for the custom model. * Do not use the name <code>user</code>, which is reserved by the service to denote custom words that are added or modified by the user.</p>
 						</div>
 					</div>
 				</section>
@@ -168,12 +153,12 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L3052">speech-to-text/v1-generated.ts:3052</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/speech-to-text/v1-generated.ts#L3816">speech-to-text/v1-generated.ts:3816</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with service credentials created for the instance of the service that owns the custom model.</p>
+							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -183,7 +168,17 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/speech-to-text/v1-generated.ts#L3061">speech-to-text/v1-generated.ts:3061</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/speech-to-text/v1-generated.ts#L3823">speech-to-text/v1-generated.ts:3823</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="return_response" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
+					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/speech-to-text/v1-generated.ts#L3824">speech-to-text/v1-generated.ts:3824</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,25 +204,19 @@
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
@@ -250,9 +239,6 @@
 										<a href="speechtotextv1.addcorpusparams.html#corpus_file" class="tsd-kind-icon">corpus_<wbr>file</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.addcorpusparams.html#corpus_filename" class="tsd-kind-icon">corpus_<wbr>filename</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.addcorpusparams.html#corpus_name" class="tsd-kind-icon">corpus_<wbr>name</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -260,6 +246,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.addcorpusparams.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.addcorpusparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
 									</li>
 								</ul>
 							</li>

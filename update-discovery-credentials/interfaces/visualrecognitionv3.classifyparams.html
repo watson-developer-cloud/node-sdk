@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ClassifyParams | watson-developer-cloud</title>
+	<title>ClassifyParams | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">watson-developer-cloud</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -96,6 +96,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classifyparams.html#images_file_content_type" class="tsd-kind-icon">images_<wbr>file_<wbr>content_<wbr>type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classifyparams.html#images_filename" class="tsd-kind-icon">images_<wbr>filename</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classifyparams.html#owners" class="tsd-kind-icon">owners</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classifyparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classifyparams.html#threshold" class="tsd-kind-icon">threshold</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classifyparams.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
@@ -111,12 +112,12 @@
 					<div class="tsd-signature tsd-kind-icon">accept_<wbr>language<span class="tsd-signature-symbol">:</span> <a href="../enums/visualrecognitionv3.classifyconstants.acceptlanguage.html" class="tsd-signature-type">AcceptLanguage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L637">visual-recognition/v3-generated.ts:637</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L723">visual-recognition/v3-generated.ts:723</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The language of the output class names. The full set of languages is supported for the built-in classifier IDs: <code>default</code>, <code>food</code>, and <code>explicit</code>. The class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name.</p>
+							<p>The desired language of parts of the response. See the response for details.</p>
 						</div>
 					</div>
 				</section>
@@ -126,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">classifier_<wbr>ids<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L645">visual-recognition/v3-generated.ts:645</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L721">visual-recognition/v3-generated.ts:721</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -141,7 +142,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L650">visual-recognition/v3-generated.ts:650</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L724">visual-recognition/v3-generated.ts:724</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -151,12 +152,12 @@
 					<div class="tsd-signature tsd-kind-icon">images_<wbr>file<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L635">visual-recognition/v3-generated.ts:635</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L709">visual-recognition/v3-generated.ts:709</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An image file (.jpg, .png) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the <strong>url</strong> parameter.</p>
+							<p>An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the <strong>url</strong> parameter.</p>
 						</div>
 					</div>
 				</section>
@@ -166,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">images_<wbr>file_<wbr>content_<wbr>type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L647">visual-recognition/v3-generated.ts:647</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L713">visual-recognition/v3-generated.ts:713</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -181,7 +182,7 @@
 					<div class="tsd-signature tsd-kind-icon">images_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L649">visual-recognition/v3-generated.ts:649</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L711">visual-recognition/v3-generated.ts:711</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -196,14 +197,24 @@
 					<div class="tsd-signature tsd-kind-icon">owners<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L643">visual-recognition/v3-generated.ts:643</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L719">visual-recognition/v3-generated.ts:719</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The categories of classifiers to apply. Use <code>IBM</code> to classify against the <code>default</code> general classifier, and use <code>me</code> to classify against your custom classifiers. To analyze the image against both classifier categories, set the value to both <code>IBM</code> and <code>me</code>. The built-in <code>default</code> classifier is used if both <strong>classifier_ids</strong> and <strong>owners</strong> parameters are empty. The <strong>classifier_ids</strong> parameter overrides <strong>owners</strong>, so make sure that <strong>classifier_ids</strong> is empty.</p>
+							<p>The categories of classifiers to apply. The <strong>classifier_ids</strong> parameter overrides <strong>owners</strong>, so make sure that <strong>classifier_ids</strong> is empty. - Use <code>IBM</code> to classify against the <code>default</code> general classifier. You get the same result if both <strong>classifier_ids</strong> and <strong>owners</strong> parameters are empty. - Use <code>me</code> to classify against all your custom classifiers. However, for better performance use <strong>classifier_ids</strong> to specify the specific custom classifiers to apply. - Use both <code>IBM</code> and <code>me</code> to analyze the image against both classifier categories.</p>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="return_response" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
+					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L725">visual-recognition/v3-generated.ts:725</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="threshold" class="tsd-anchor"></a>
@@ -211,12 +222,12 @@
 					<div class="tsd-signature tsd-kind-icon">threshold<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L641">visual-recognition/v3-generated.ts:641</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L717">visual-recognition/v3-generated.ts:717</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The minimum score a class must have to be displayed in the response. Set the threshold to <code>0.0</code> to ignore the classification score and return all values.</p>
+							<p>The minimum score a class must have to be displayed in the response. Set the threshold to <code>0.0</code> to return all identified classes.</p>
 						</div>
 					</div>
 				</section>
@@ -226,12 +237,12 @@
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L639">visual-recognition/v3-generated.ts:639</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L715">visual-recognition/v3-generated.ts:715</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The URL of an image to analyze. Must be in .jpg, or .png format. The minimum recommended pixel density is 32X32 pixels per inch, and the maximum image size is 10 MB. You can also include images with the <strong>images_file</strong> parameter.</p>
+							<p>The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum image size is 10 MB. You can also include images with the <strong>images_file</strong> parameter.</p>
 						</div>
 					</div>
 				</section>
@@ -257,25 +268,19 @@
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
@@ -320,6 +325,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="visualrecognitionv3.classifyparams.html#owners" class="tsd-kind-icon">owners</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="visualrecognitionv3.classifyparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="visualrecognitionv3.classifyparams.html#threshold" class="tsd-kind-icon">threshold</a>

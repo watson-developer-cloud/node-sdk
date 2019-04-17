@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CreateEntityParams | watson-developer-cloud</title>
+	<title>CreateEntityParams | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">watson-developer-cloud</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -94,6 +94,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createentityparams.html#fuzzy_match" class="tsd-kind-icon">fuzzy_<wbr>match</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createentityparams.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createentityparams.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createentityparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createentityparams.html#values" class="tsd-kind-icon">values</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createentityparams.html#workspace_id" class="tsd-kind-icon">workspace_<wbr>id</a></li>
 							</ul>
@@ -109,7 +110,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L3123">assistant/v1.ts:3123</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3640">assistant/v1.ts:3640</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -124,12 +125,12 @@
 					<div class="tsd-signature tsd-kind-icon">entity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L3121">assistant/v1.ts:3121</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3638">assistant/v1.ts:3638</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix <code>sys-</code>. - It must be no longer than 64 characters.</p>
+							<p>The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It must be no longer than 64 characters. If you specify an entity name beginning with the reserved prefix <code>sys-</code>, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.).</p>
 						</div>
 					</div>
 				</section>
@@ -139,7 +140,7 @@
 					<div class="tsd-signature tsd-kind-icon">fuzzy_<wbr>match<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L3129">assistant/v1.ts:3129</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3644">assistant/v1.ts:3644</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L3130">assistant/v1.ts:3130</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3647">assistant/v1.ts:3647</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,14 +165,24 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L3125">assistant/v1.ts:3125</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3642">assistant/v1.ts:3642</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Any metadata related to the value.</p>
+							<p>Any metadata related to the entity.</p>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="return_response" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
+					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3648">assistant/v1.ts:3648</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="values" class="tsd-anchor"></a>
@@ -179,7 +190,7 @@
 					<div class="tsd-signature tsd-kind-icon">values<span class="tsd-signature-symbol">:</span> <a href="assistantv1.createvalue.html" class="tsd-signature-type">CreateValue</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L3127">assistant/v1.ts:3127</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3646">assistant/v1.ts:3646</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -194,7 +205,7 @@
 					<div class="tsd-signature tsd-kind-icon">workspace_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L3119">assistant/v1.ts:3119</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L3636">assistant/v1.ts:3636</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -239,6 +250,9 @@
 										<a href="assistantv1.createentityparams.html#metadata" class="tsd-kind-icon">metadata</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.createentityparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.createentityparams.html#values" class="tsd-kind-icon">values</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -257,25 +271,19 @@
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

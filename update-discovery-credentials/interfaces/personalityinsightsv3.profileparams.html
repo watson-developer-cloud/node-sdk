@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ProfileParams | watson-developer-cloud</title>
+	<title>ProfileParams | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">watson-developer-cloud</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -97,6 +97,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="personalityinsightsv3.profileparams.html#csv_headers" class="tsd-kind-icon">csv_<wbr>headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="personalityinsightsv3.profileparams.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="personalityinsightsv3.profileparams.html#raw_scores" class="tsd-kind-icon">raw_<wbr>scores</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="personalityinsightsv3.profileparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 							</ul>
 						</section>
 					</div>
@@ -110,7 +111,7 @@
 					<div class="tsd-signature tsd-kind-icon">accept_<wbr>language<span class="tsd-signature-symbol">:</span> <a href="../enums/personalityinsightsv3.profileconstants.acceptlanguage.html" class="tsd-signature-type">AcceptLanguage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L287">personality-insights/v3-generated.ts:287</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L335">personality-insights/v3-generated.ts:335</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -125,7 +126,7 @@
 					<div class="tsd-signature tsd-kind-icon">consumption_<wbr>preferences<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L293">personality-insights/v3-generated.ts:293</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L341">personality-insights/v3-generated.ts:341</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -140,12 +141,12 @@
 					<div class="tsd-signature tsd-kind-icon">content<span class="tsd-signature-symbol">:</span> <a href="personalityinsightsv3.content.html" class="tsd-signature-type">Content</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L281">personality-insights/v3-generated.ts:281</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L331">personality-insights/v3-generated.ts:331</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see <a href="https://console.bluemix.net/docs/services/personality-insights/input.html#sufficient">Providing sufficient input</a>. For JSON input, provide an object of type <code>Content</code>.</p>
+							<p>A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see <a href="https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient">Providing sufficient input</a>. For JSON input, provide an object of type <code>Content</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -155,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">content_<wbr>language<span class="tsd-signature-symbol">:</span> <a href="../enums/personalityinsightsv3.profileconstants.contentlanguage.html" class="tsd-signature-type">ContentLanguage</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L285">personality-insights/v3-generated.ts:285</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L333">personality-insights/v3-generated.ts:333</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -166,16 +167,16 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="content_type" class="tsd-anchor"></a>
-					<h3>content_<wbr>type</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> content_<wbr>type</h3>
 					<div class="tsd-signature tsd-kind-icon">content_<wbr>type<span class="tsd-signature-symbol">:</span> <a href="../enums/personalityinsightsv3.profileconstants.contenttype.html" class="tsd-signature-type">ContentType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L283">personality-insights/v3-generated.ts:283</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L343">personality-insights/v3-generated.ts:343</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The type of the input. A character encoding can be specified by including a <code>charset</code> parameter. For example, &#39;text/html;charset=utf-8&#39;.</p>
+							<p>The type of the input. For more information, see <strong>Content types</strong> in the method description. Default: <code>text/plain</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -185,12 +186,12 @@
 					<div class="tsd-signature tsd-kind-icon">csv_<wbr>headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L291">personality-insights/v3-generated.ts:291</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L339">personality-insights/v3-generated.ts:339</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Indicates whether column labels are returned with a CSV response. By default, no column labels are returned. Applies only when the <strong>Accept</strong> parameter is set to <code>text/csv</code>.</p>
+							<p>Indicates whether column labels are returned with a CSV response. By default, no column labels are returned. Applies only when the response type is CSV (<code>text/csv</code>).</p>
 						</div>
 					</div>
 				</section>
@@ -200,7 +201,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L294">personality-insights/v3-generated.ts:294</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L344">personality-insights/v3-generated.ts:344</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -210,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">raw_<wbr>scores<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/personality-insights/v3-generated.ts#L289">personality-insights/v3-generated.ts:289</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L337">personality-insights/v3-generated.ts:337</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -218,6 +219,16 @@
 							<p>Indicates whether a raw score in addition to a normalized percentile is returned for each characteristic; raw scores are not compared with a sample population. By default, only normalized percentiles are returned.</p>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="return_response" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
+					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/personality-insights/v3-generated.ts#L345">personality-insights/v3-generated.ts:345</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -241,25 +252,19 @@
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -317,6 +322,9 @@
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="personalityinsightsv3.profileparams.html#raw_scores" class="tsd-kind-icon">raw_<wbr>scores</a>
 									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="personalityinsightsv3.profileparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
+									</li>
 								</ul>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
@@ -356,7 +364,7 @@
 								<a href="../classes/personalityinsightsv3.html#createrequest" class="tsd-kind-icon">create<wbr>Request</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/personalityinsightsv3.html#getcredentials" class="tsd-kind-icon">get<wbr>Credentials</a>
+								<a href="../classes/personalityinsightsv3.html#getservicecredentials" class="tsd-kind-icon">get<wbr>Service<wbr>Credentials</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="../classes/personalityinsightsv3.html#preauthenticate" class="tsd-kind-icon">pre<wbr>Authenticate</a>

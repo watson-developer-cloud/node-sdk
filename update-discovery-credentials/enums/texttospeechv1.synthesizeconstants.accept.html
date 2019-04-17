@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Accept | watson-developer-cloud</title>
+	<title>Accept | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">watson-developer-cloud</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -73,7 +73,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The requested audio format (MIME type) of the audio. You can use the <code>Accept</code> header or the <code>accept</code> query parameter to specify the audio format. (For the <code>audio/l16</code> format, you can optionally specify <code>endianness=big-endian</code> or <code>endianness=little-endian</code>; the default is little endian.) For detailed information about the supported audio formats and sampling rates, see <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#format">Specifying an audio format</a>.</p>
+						<p>The requested format (MIME type) of the audio. You can use the <code>Accept</code> header or the <code>accept</code> parameter to specify the audio format. For more information about specifying an audio format, see <strong>Audio formats (accept types)</strong> in the method description. Default: <code>audio/ogg;codecs=opus</code>.</p>
 					</div>
 				</div>
 			</section>
@@ -84,19 +84,19 @@
 						<section class="tsd-index-section ">
 							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#basic" class="tsd-kind-icon">BASIC</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#flac" class="tsd-kind-icon">FLAC</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#l16_rate_nnnn" class="tsd-kind-icon">L16_<wbr>RATE_<wbr>NNNN</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#mp3" class="tsd-kind-icon">MP3</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#mpeg" class="tsd-kind-icon">MPEG</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#mulaw_rate_nnnn" class="tsd-kind-icon">MULAW_<wbr>RATE_<wbr>NNNN</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#ogg" class="tsd-kind-icon">OGG</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#ogg_codecs_opus" class="tsd-kind-icon">OGG_<wbr>CODECS_<wbr>OPUS</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#ogg_codecs_vorbis" class="tsd-kind-icon">OGG_<wbr>CODECS_<wbr>VORBIS</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#wav" class="tsd-kind-icon">WAV</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#webm" class="tsd-kind-icon">WEBM</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#webm_codecs_opus" class="tsd-kind-icon">WEBM_<wbr>CODECS_<wbr>OPUS</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#webm_codecs_vorbis" class="tsd-kind-icon">WEBM_<wbr>CODECS_<wbr>VORBIS</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_basic" class="tsd-kind-icon">AUDIO_<wbr>BASIC</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_flac" class="tsd-kind-icon">AUDIO_<wbr>FLAC</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_l16" class="tsd-kind-icon">AUDIO_<wbr><wbr>L16</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_mp3" class="tsd-kind-icon">AUDIO_<wbr>MP3</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_mpeg" class="tsd-kind-icon">AUDIO_<wbr>MPEG</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_mulaw" class="tsd-kind-icon">AUDIO_<wbr>MULAW</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_ogg" class="tsd-kind-icon">AUDIO_<wbr>OGG</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_ogg_codecs_opus" class="tsd-kind-icon">AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>OPUS</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_ogg_codecs_vorbis" class="tsd-kind-icon">AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>VORBIS</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_wav" class="tsd-kind-icon">AUDIO_<wbr>WAV</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_webm" class="tsd-kind-icon">AUDIO_<wbr>WEBM</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_webm_codecs_opus" class="tsd-kind-icon">AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>OPUS</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.synthesizeconstants.accept.html#audio_webm_codecs_vorbis" class="tsd-kind-icon">AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>VORBIS</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,132 +105,132 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Enumeration members</h2>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="basic" class="tsd-anchor"></a>
-					<h3>BASIC</h3>
-					<div class="tsd-signature tsd-kind-icon">BASIC<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/basic&quot;</span></div>
+					<a name="audio_basic" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>BASIC</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>BASIC<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/basic&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1010">text-to-speech/v1-generated.ts:1010</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1247">text-to-speech/v1-generated.ts:1247</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="flac" class="tsd-anchor"></a>
-					<h3>FLAC</h3>
-					<div class="tsd-signature tsd-kind-icon">FLAC<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/flac&quot;</span></div>
+					<a name="audio_flac" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>FLAC</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>FLAC<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/flac&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1011">text-to-speech/v1-generated.ts:1011</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1248">text-to-speech/v1-generated.ts:1248</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="l16_rate_nnnn" class="tsd-anchor"></a>
-					<h3>L16_<wbr>RATE_<wbr>NNNN</h3>
-					<div class="tsd-signature tsd-kind-icon">L16_<wbr>RATE_<wbr>NNNN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/l16;rate&#x3D;nnnn&quot;</span></div>
+					<a name="audio_l16" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr><wbr>L16</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr><wbr>L16<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/l16&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1012">text-to-speech/v1-generated.ts:1012</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1249">text-to-speech/v1-generated.ts:1249</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="mp3" class="tsd-anchor"></a>
-					<h3>MP3</h3>
-					<div class="tsd-signature tsd-kind-icon">MP3<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/mp3&quot;</span></div>
+					<a name="audio_mp3" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>MP3</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>MP3<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/mp3&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1016">text-to-speech/v1-generated.ts:1016</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1253">text-to-speech/v1-generated.ts:1253</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="mpeg" class="tsd-anchor"></a>
-					<h3>MPEG</h3>
-					<div class="tsd-signature tsd-kind-icon">MPEG<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/mpeg&quot;</span></div>
+					<a name="audio_mpeg" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>MPEG</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>MPEG<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/mpeg&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1017">text-to-speech/v1-generated.ts:1017</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1254">text-to-speech/v1-generated.ts:1254</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="mulaw_rate_nnnn" class="tsd-anchor"></a>
-					<h3>MULAW_<wbr>RATE_<wbr>NNNN</h3>
-					<div class="tsd-signature tsd-kind-icon">MULAW_<wbr>RATE_<wbr>NNNN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/mulaw;rate&#x3D;nnnn&quot;</span></div>
+					<a name="audio_mulaw" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>MULAW</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>MULAW<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/mulaw&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1018">text-to-speech/v1-generated.ts:1018</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1255">text-to-speech/v1-generated.ts:1255</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="ogg" class="tsd-anchor"></a>
-					<h3>OGG</h3>
-					<div class="tsd-signature tsd-kind-icon">OGG<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/ogg&quot;</span></div>
+					<a name="audio_ogg" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>OGG</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>OGG<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/ogg&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1013">text-to-speech/v1-generated.ts:1013</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1250">text-to-speech/v1-generated.ts:1250</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="ogg_codecs_opus" class="tsd-anchor"></a>
-					<h3>OGG_<wbr>CODECS_<wbr>OPUS</h3>
-					<div class="tsd-signature tsd-kind-icon">OGG_<wbr>CODECS_<wbr>OPUS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/ogg;codecs&#x3D;opus&quot;</span></div>
+					<a name="audio_ogg_codecs_opus" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>OPUS</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>OPUS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/ogg;codecs&#x3D;opus&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1014">text-to-speech/v1-generated.ts:1014</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1251">text-to-speech/v1-generated.ts:1251</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="ogg_codecs_vorbis" class="tsd-anchor"></a>
-					<h3>OGG_<wbr>CODECS_<wbr>VORBIS</h3>
-					<div class="tsd-signature tsd-kind-icon">OGG_<wbr>CODECS_<wbr>VORBIS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/ogg;codecs&#x3D;vorbis&quot;</span></div>
+					<a name="audio_ogg_codecs_vorbis" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>VORBIS</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>VORBIS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/ogg;codecs&#x3D;vorbis&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1015">text-to-speech/v1-generated.ts:1015</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1252">text-to-speech/v1-generated.ts:1252</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="wav" class="tsd-anchor"></a>
-					<h3>WAV</h3>
-					<div class="tsd-signature tsd-kind-icon">WAV<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/wav&quot;</span></div>
+					<a name="audio_wav" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>WAV</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>WAV<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/wav&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1019">text-to-speech/v1-generated.ts:1019</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1256">text-to-speech/v1-generated.ts:1256</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="webm" class="tsd-anchor"></a>
-					<h3>WEBM</h3>
-					<div class="tsd-signature tsd-kind-icon">WEBM<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/webm&quot;</span></div>
+					<a name="audio_webm" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>WEBM</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>WEBM<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/webm&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1020">text-to-speech/v1-generated.ts:1020</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1257">text-to-speech/v1-generated.ts:1257</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="webm_codecs_opus" class="tsd-anchor"></a>
-					<h3>WEBM_<wbr>CODECS_<wbr>OPUS</h3>
-					<div class="tsd-signature tsd-kind-icon">WEBM_<wbr>CODECS_<wbr>OPUS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/webm;codecs&#x3D;opus&quot;</span></div>
+					<a name="audio_webm_codecs_opus" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>OPUS</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>OPUS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/webm;codecs&#x3D;opus&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1021">text-to-speech/v1-generated.ts:1021</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1258">text-to-speech/v1-generated.ts:1258</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="webm_codecs_vorbis" class="tsd-anchor"></a>
-					<h3>WEBM_<wbr>CODECS_<wbr>VORBIS</h3>
-					<div class="tsd-signature tsd-kind-icon">WEBM_<wbr>CODECS_<wbr>VORBIS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/webm;codecs&#x3D;vorbis&quot;</span></div>
+					<a name="audio_webm_codecs_vorbis" class="tsd-anchor"></a>
+					<h3>AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>VORBIS</h3>
+					<div class="tsd-signature tsd-kind-icon">AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>VORBIS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;audio/webm;codecs&#x3D;vorbis&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/text-to-speech/v1-generated.ts#L1022">text-to-speech/v1-generated.ts:1022</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/text-to-speech/v1-generated.ts#L1259">text-to-speech/v1-generated.ts:1259</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -252,43 +252,43 @@
 						<a href="texttospeechv1.synthesizeconstants.accept.html" class="tsd-kind-icon">Accept</a>
 						<ul>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#basic" class="tsd-kind-icon">BASIC</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_basic" class="tsd-kind-icon">AUDIO_<wbr>BASIC</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#flac" class="tsd-kind-icon">FLAC</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_flac" class="tsd-kind-icon">AUDIO_<wbr>FLAC</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#l16_rate_nnnn" class="tsd-kind-icon">L16_<wbr>RATE_<wbr>NNNN</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_l16" class="tsd-kind-icon">AUDIO_<wbr><wbr>L16</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#mp3" class="tsd-kind-icon">MP3</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_mp3" class="tsd-kind-icon">AUDIO_<wbr>MP3</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#mpeg" class="tsd-kind-icon">MPEG</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_mpeg" class="tsd-kind-icon">AUDIO_<wbr>MPEG</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#mulaw_rate_nnnn" class="tsd-kind-icon">MULAW_<wbr>RATE_<wbr>NNNN</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_mulaw" class="tsd-kind-icon">AUDIO_<wbr>MULAW</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#ogg" class="tsd-kind-icon">OGG</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_ogg" class="tsd-kind-icon">AUDIO_<wbr>OGG</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#ogg_codecs_opus" class="tsd-kind-icon">OGG_<wbr>CODECS_<wbr>OPUS</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_ogg_codecs_opus" class="tsd-kind-icon">AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>OPUS</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#ogg_codecs_vorbis" class="tsd-kind-icon">OGG_<wbr>CODECS_<wbr>VORBIS</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_ogg_codecs_vorbis" class="tsd-kind-icon">AUDIO_<wbr>OGG_<wbr>CODECS_<wbr>VORBIS</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#wav" class="tsd-kind-icon">WAV</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_wav" class="tsd-kind-icon">AUDIO_<wbr>WAV</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#webm" class="tsd-kind-icon">WEBM</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_webm" class="tsd-kind-icon">AUDIO_<wbr>WEBM</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#webm_codecs_opus" class="tsd-kind-icon">WEBM_<wbr>CODECS_<wbr>OPUS</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_webm_codecs_opus" class="tsd-kind-icon">AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>OPUS</a>
 							</li>
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="texttospeechv1.synthesizeconstants.accept.html#webm_codecs_vorbis" class="tsd-kind-icon">WEBM_<wbr>CODECS_<wbr>VORBIS</a>
+								<a href="texttospeechv1.synthesizeconstants.accept.html#audio_webm_codecs_vorbis" class="tsd-kind-icon">AUDIO_<wbr>WEBM_<wbr>CODECS_<wbr>VORBIS</a>
 							</li>
 						</ul>
 					</li>

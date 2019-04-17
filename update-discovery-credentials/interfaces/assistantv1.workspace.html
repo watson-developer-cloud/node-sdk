@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Workspace | watson-developer-cloud</title>
+	<title>Workspace | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">watson-developer-cloud</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -89,12 +89,17 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#counterexamples" class="tsd-kind-icon">counterexamples</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#created" class="tsd-kind-icon">created</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#dialog_nodes" class="tsd-kind-icon">dialog_<wbr>nodes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#entities" class="tsd-kind-icon">entities</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#intents" class="tsd-kind-icon">intents</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#language" class="tsd-kind-icon">language</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#learning_opt_out" class="tsd-kind-icon">learning_<wbr>opt_<wbr>out</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#metadata" class="tsd-kind-icon">metadata</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#status" class="tsd-kind-icon">status</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#system_settings" class="tsd-kind-icon">system_<wbr>settings</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#updated" class="tsd-kind-icon">updated</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspace.html#workspace_id" class="tsd-kind-icon">workspace_<wbr>id</a></li>
@@ -106,17 +111,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="counterexamples" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> counterexamples</h3>
+					<div class="tsd-signature tsd-kind-icon">counterexamples<span class="tsd-signature-symbol">:</span> <a href="assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4838">assistant/v1.ts:4838</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of counterexamples.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="created" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> created</h3>
 					<div class="tsd-signature tsd-kind-icon">created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4315">assistant/v1.ts:4315</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4828">assistant/v1.ts:4828</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The timestamp for creation of the workspace.</p>
+							<p>The timestamp for creation of the object.</p>
 						</div>
 					</div>
 				</section>
@@ -126,12 +146,57 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4321">assistant/v1.ts:4321</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4814">assistant/v1.ts:4814</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The description of the workspace.</p>
+							<p>The description of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="dialog_nodes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> dialog_<wbr>nodes</h3>
+					<div class="tsd-signature tsd-kind-icon">dialog_<wbr>nodes<span class="tsd-signature-symbol">:</span> <a href="assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4836">assistant/v1.ts:4836</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of objects describing the dialog nodes in the workspace.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="entities" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> entities</h3>
+					<div class="tsd-signature tsd-kind-icon">entities<span class="tsd-signature-symbol">:</span> <a href="assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4834">assistant/v1.ts:4834</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of objects describing the entities for the workspace.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="intents" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> intents</h3>
+					<div class="tsd-signature tsd-kind-icon">intents<span class="tsd-signature-symbol">:</span> <a href="assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4832">assistant/v1.ts:4832</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of intents.</p>
 						</div>
 					</div>
 				</section>
@@ -141,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4313">assistant/v1.ts:4313</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4816">assistant/v1.ts:4816</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -152,11 +217,11 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="learning_opt_out" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> learning_<wbr>opt_<wbr>out</h3>
+					<h3>learning_<wbr>opt_<wbr>out</h3>
 					<div class="tsd-signature tsd-kind-icon">learning_<wbr>opt_<wbr>out<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4325">assistant/v1.ts:4325</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4820">assistant/v1.ts:4820</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -171,7 +236,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4323">assistant/v1.ts:4323</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4818">assistant/v1.ts:4818</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -186,12 +251,27 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4311">assistant/v1.ts:4311</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4812">assistant/v1.ts:4812</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the workspace.</p>
+							<p>The name of the workspace. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 64 characters.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="status" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4826">assistant/v1.ts:4826</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The current status of the workspace.</p>
 						</div>
 					</div>
 				</section>
@@ -201,7 +281,7 @@
 					<div class="tsd-signature tsd-kind-icon">system_<wbr>settings<span class="tsd-signature-symbol">:</span> <a href="assistantv1.workspacesystemsettings.html" class="tsd-signature-type">WorkspaceSystemSettings</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4327">assistant/v1.ts:4327</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4822">assistant/v1.ts:4822</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -216,12 +296,12 @@
 					<div class="tsd-signature tsd-kind-icon">updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4317">assistant/v1.ts:4317</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4830">assistant/v1.ts:4830</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The timestamp for the last update to the workspace.</p>
+							<p>The timestamp for the most recent update to the object.</p>
 						</div>
 					</div>
 				</section>
@@ -231,12 +311,12 @@
 					<div class="tsd-signature tsd-kind-icon">workspace_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/assistant/v1.ts#L4319">assistant/v1.ts:4319</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/assistant/v1.ts#L4824">assistant/v1.ts:4824</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The workspace ID.</p>
+							<p>The workspace ID of the workspace.</p>
 						</div>
 					</div>
 				</section>
@@ -261,10 +341,22 @@
 								<a href="assistantv1.workspace.html" class="tsd-kind-icon">Workspace</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspace.html#counterexamples" class="tsd-kind-icon">counterexamples</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspace.html#created" class="tsd-kind-icon">created</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspace.html#description" class="tsd-kind-icon">description</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspace.html#dialog_nodes" class="tsd-kind-icon">dialog_<wbr>nodes</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspace.html#entities" class="tsd-kind-icon">entities</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspace.html#intents" class="tsd-kind-icon">intents</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspace.html#language" class="tsd-kind-icon">language</a>
@@ -277,6 +369,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspace.html#name" class="tsd-kind-icon">name</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspace.html#status" class="tsd-kind-icon">status</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspace.html#system_settings" class="tsd-kind-icon">system_<wbr>settings</a>
@@ -300,25 +395,19 @@
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="../classes/languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

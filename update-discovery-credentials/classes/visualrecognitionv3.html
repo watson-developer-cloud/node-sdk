@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VisualRecognitionV3 | watson-developer-cloud</title>
+	<title>VisualRecognitionV3 | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">watson-developer-cloud</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -93,6 +93,7 @@
 							<h3>Modules</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/visualrecognitionv3.classifyconstants.html" class="tsd-kind-icon">Classify<wbr>Constants</a></li>
+								<li class="tsd-kind-module tsd-parent-kind-class"><a href="../modules/visualrecognitionv3.detectfacesconstants.html" class="tsd-kind-icon">Detect<wbr>Faces<wbr>Constants</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -160,7 +161,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="visualrecognitionv3.html#detectfaces" class="tsd-kind-icon">detect<wbr>Faces</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="visualrecognitionv3.html#getclassifier" class="tsd-kind-icon">get<wbr>Classifier</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="visualrecognitionv3.html#getcoremlmodel" class="tsd-kind-icon">get<wbr>Core<wbr>MlModel</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="visualrecognitionv3.html#getcredentials" class="tsd-kind-icon">get<wbr>Credentials</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="visualrecognitionv3.html#getservicecredentials" class="tsd-kind-icon">get<wbr>Service<wbr>Credentials</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="visualrecognitionv3.html#listclassifiers" class="tsd-kind-icon">list<wbr>Classifiers</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="visualrecognitionv3.html#preauthenticate" class="tsd-kind-icon">pre<wbr>Authenticate</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="visualrecognitionv3.html#setaccesstoken" class="tsd-kind-icon">set<wbr>Access<wbr>Token</a></li>
@@ -178,7 +179,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L623">visual-recognition/v3-generated.ts:623</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L697">visual-recognition/v3-generated.ts:697</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -191,7 +192,7 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span>, response<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RequestResponse</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span>, response<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -204,7 +205,7 @@
 												<h5><span class="tsd-flag ts-flagOptional">Optional</span> body: <span class="tsd-signature-type">T</span></h5>
 											</li>
 											<li>
-												<h5><span class="tsd-flag ts-flagOptional">Optional</span> response: <span class="tsd-signature-type">RequestResponse</span></h5>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> response: <span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -220,7 +221,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L610">visual-recognition/v3-generated.ts:610</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L684">visual-recognition/v3-generated.ts:684</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -275,7 +276,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L31">visual-recognition/v3-generated.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L31">visual-recognition/v3-generated.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -315,7 +316,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L95">lib/base_service.ts:95</a></li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:52</li>
 						</ul>
 					</aside>
 				</section>
@@ -326,7 +327,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L30">visual-recognition/v3-generated.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L30">visual-recognition/v3-generated.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -337,7 +338,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L96">lib/base_service.ts:96</a></li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:53</li>
 						</ul>
 					</aside>
 				</section>
@@ -348,7 +349,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L31">visual-recognition/v3-generated.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L31">visual-recognition/v3-generated.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -359,7 +360,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L97">lib/base_service.ts:97</a></li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:54</li>
 						</ul>
 					</aside>
 				</section>
@@ -370,7 +371,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L29">visual-recognition/v3-generated.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L29">visual-recognition/v3-generated.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -381,13 +382,13 @@
 					<a name="classify" class="tsd-anchor"></a>
 					<h3>classify</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">classify<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/visualrecognitionv3.classifyparams.html" class="tsd-signature-type">ClassifyParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifiedimages.html" class="tsd-signature-type">ClassifiedImages</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">classify<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/visualrecognitionv3.classifyparams.html" class="tsd-signature-type">ClassifyParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifiedimages.html" class="tsd-signature-type">ClassifiedImages</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L107">visual-recognition/v3-generated.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L104">visual-recognition/v3-generated.ts:104</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -405,7 +406,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifiedimages.html" class="tsd-signature-type">ClassifiedImages</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -416,13 +417,13 @@
 					<a name="createclassifier" class="tsd-anchor"></a>
 					<h3>create<wbr>Classifier</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.createclassifierparams.html" class="tsd-signature-type">CreateClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.createclassifierparams.html" class="tsd-signature-type">CreateClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L244">visual-recognition/v3-generated.ts:244</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L264">visual-recognition/v3-generated.ts:264</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -447,7 +448,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -465,7 +466,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L245">lib/base_service.ts:245</a></li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:111</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -498,13 +499,13 @@
 					<a name="deleteclassifier" class="tsd-anchor"></a>
 					<h3>delete<wbr>Classifier</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.deleteclassifierparams.html" class="tsd-signature-type">DeleteClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.deleteclassifierparams.html" class="tsd-signature-type">DeleteClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L310">visual-recognition/v3-generated.ts:310</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L326">visual-recognition/v3-generated.ts:326</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -524,7 +525,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -535,13 +536,13 @@
 					<a name="deleteuserdata" class="tsd-anchor"></a>
 					<h3>delete<wbr>User<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L571">visual-recognition/v3-generated.ts:571</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L632">visual-recognition/v3-generated.ts:632</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,7 +552,7 @@
 								<p>Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with
 								the customer ID.</p>
 								<p>You associate a customer ID with data by passing the <code>X-Watson-Metadata</code> header with a request that passes data.
-									For more information about personal data and customer IDs, see <a href="https://console.bluemix.net/docs/services/visual-recognition/information-security.html">Information
+									For more information about personal data and customer IDs, see <a href="https://cloud.ibm.com/docs/services/visual-recognition/information-security.html">Information
 								security</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -566,7 +567,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -577,13 +578,13 @@
 					<a name="detectfaces" class="tsd-anchor"></a>
 					<h3>detect<wbr>Faces</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">detect<wbr>Faces<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/visualrecognitionv3.detectfacesparams.html" class="tsd-signature-type">DetectFacesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.detectedfaces.html" class="tsd-signature-type">DetectedFaces</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">detect<wbr>Faces<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/visualrecognitionv3.detectfacesparams.html" class="tsd-signature-type">DetectFacesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.detectedfaces.html" class="tsd-signature-type">DetectedFaces</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L176">visual-recognition/v3-generated.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L188">visual-recognition/v3-generated.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -592,13 +593,14 @@
 								</div>
 								<p><strong>Important:</strong> On April 2, 2018, the identity information in the response to calls to the Face model was removed.
 									The identity information refers to the <code>name</code> of the person, <code>score</code>, and <code>type_hierarchy</code> knowledge graph. For
-									details about the enhanced Face model, see the <a href="https://console.bluemix.net/docs/services/visual-recognition/release-notes.html#2april2018">Release
+									details about the enhanced Face model, see the <a href="https://cloud.ibm.com/docs/services/visual-recognition/release-notes.html#2april2018">Release
 								notes</a>.</p>
 								<p>Analyze and get data about faces in images. Responses can include estimated age and gender. This feature uses a
 									built-in model, so no training is necessary. The Detect faces method does not support general biometric facial
 								recognition.</p>
 								<p>Supported image formats include .gif, .jpg, .png, and .tif. The maximum image size is 10 MB. The minimum
-								recommended pixel density is 32X32 pixels per inch.</p>
+									recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least
+								224 x 224 pixels.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -609,7 +611,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.detectedfaces.html" class="tsd-signature-type">DetectedFaces</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -620,13 +622,13 @@
 					<a name="getclassifier" class="tsd-anchor"></a>
 					<h3>get<wbr>Classifier</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.getclassifierparams.html" class="tsd-signature-type">GetClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.getclassifierparams.html" class="tsd-signature-type">GetClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L348">visual-recognition/v3-generated.ts:348</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L377">visual-recognition/v3-generated.ts:377</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -647,7 +649,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -658,20 +660,20 @@
 					<a name="getcoremlmodel" class="tsd-anchor"></a>
 					<h3>get<wbr>Core<wbr>MlModel</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Core<wbr>MlModel<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.getcoremlmodelparams.html" class="tsd-signature-type">GetCoreMlModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Core<wbr>MlModel<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.getcoremlmodelparams.html" class="tsd-signature-type">GetCoreMlModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L524">visual-recognition/v3-generated.ts:524</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L571">visual-recognition/v3-generated.ts:571</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Retrieve a Core ML model of a classifier.</p>
 								</div>
-								<p>Download a Core ML model file (.mlmodel) of a custom classifier that returns <tt>\&quot;core_ml_enabled\&quot;: true</tt> in
+								<p>Download a Core ML model file (.mlmodel) of a custom classifier that returns <tt>"core_ml_enabled": true</tt> in
 								the classifier details.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -686,7 +688,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -694,17 +696,17 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="getcredentials" class="tsd-anchor"></a>
-					<h3>get<wbr>Credentials</h3>
+					<a name="getservicecredentials" class="tsd-anchor"></a>
+					<h3>get<wbr>Service<wbr>Credentials</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Credentials<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Credentials</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Service<wbr>Credentials<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Credentials</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from BaseService.getCredentials</p>
+								<p>Inherited from BaseService.getServiceCredentials</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L166">lib/base_service.ts:166</a></li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:78</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -721,13 +723,13 @@
 					<a name="listclassifiers" class="tsd-anchor"></a>
 					<h3>list<wbr>Classifiers</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Classifiers<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/visualrecognitionv3.listclassifiersparams.html" class="tsd-signature-type">ListClassifiersParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifiers.html" class="tsd-signature-type">Classifiers</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Classifiers<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/visualrecognitionv3.listclassifiersparams.html" class="tsd-signature-type">ListClassifiersParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifiers.html" class="tsd-signature-type">Classifiers</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L385">visual-recognition/v3-generated.ts:385</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L427">visual-recognition/v3-generated.ts:427</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -744,7 +746,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifiers.html" class="tsd-signature-type">Classifiers</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -762,7 +764,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.preAuthenticate</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L223">lib/base_service.ts:223</a></li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:101</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -796,7 +798,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/lib/base_service.ts#L204">lib/base_service.ts:204</a></li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:91</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -826,22 +828,21 @@
 					<a name="updateclassifier" class="tsd-anchor"></a>
 					<h3>update<wbr>Classifier</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.updateclassifierparams.html" class="tsd-signature-type">UpdateClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/visualrecognitionv3.updateclassifierparams.html" class="tsd-signature-type">UpdateClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3ed91de/visual-recognition/v3-generated.ts#L448">visual-recognition/v3-generated.ts:448</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/6a50c07/visual-recognition/v3-generated.ts#L498">visual-recognition/v3-generated.ts:498</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Update a classifier.</p>
 								</div>
-								<p>Update a custom classifier by adding new positive or negative classes (examples) or by adding new images to
-									existing classes. You must supply at least one set of positive or negative examples. For details, see <a href="https://console.bluemix.net/docs/services/visual-recognition/customizing.html#updating-custom-classifiers">Updating
-										custom
+								<p>Update a custom classifier by adding new positive or negative classes or by adding new images to existing classes.
+									You must supply at least one set of positive or negative examples. For details, see <a href="https://cloud.ibm.com/docs/services/visual-recognition/customizing.html#updating-custom-classifiers">Updating custom
 								classifiers</a>.</p>
 								<p>Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class
 								names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.</p>
@@ -861,7 +862,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="visualrecognitionv3.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/visualrecognitionv3.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">ReadableStream</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
@@ -890,25 +891,19 @@
 						<a href="authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="conversationv1.html" class="tsd-kind-icon">Conversation<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="dialogv1.html" class="tsd-kind-icon">Dialog<wbr>V1</a>
+						<a href="comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="languagetranslatorv2.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V2</a>
+						<a href="languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="personalityinsightsv2.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V2</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
@@ -1057,7 +1052,7 @@
 								<a href="visualrecognitionv3.html#getcoremlmodel" class="tsd-kind-icon">get<wbr>Core<wbr>MlModel</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="visualrecognitionv3.html#getcredentials" class="tsd-kind-icon">get<wbr>Credentials</a>
+								<a href="visualrecognitionv3.html#getservicecredentials" class="tsd-kind-icon">get<wbr>Service<wbr>Credentials</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="visualrecognitionv3.html#listclassifiers" class="tsd-kind-icon">list<wbr>Classifiers</a>
