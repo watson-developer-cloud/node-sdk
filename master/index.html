@@ -72,45 +72,45 @@
 				<p>Node.js client library to use the Watson APIs.</p>
 				<details>
 					<summary>Table of Contents</summary>
-					<ul>
-						<li><a href="#before-you-begin">Before you begin</a></li>
-						<li><a href="#installation">Installation</a></li>
-						<li><a href="#usage">Usage</a></li>
-						<li><a href="#client-side-usage">Client-side usage</a></li>
-						<li><a href="#authentication">Authentication</a><ul>
-								<li><a href="#iam">IAM</a></li>
-								<li><a href="#username-and-password">Username and password</a></li>
-								<li><a href="#api-key">API key</a></li>
-							</ul>
-						</li>
-						<li><a href="#callbacks-vs-promises">Callbacks vs Promises</a></li>
-						<li><a href="#sending-request-headers">Sending request headers</a></li>
-						<li><a href="#parsing-http-response">Parsing HTTP response</a></li>
-						<li><a href="#data-collection-opt-out">Data collection opt-out</a></li>
-						<li><a href="#documentation">Documentation</a></li>
-						<li><a href="#questions">Questions</a></li>
-						<li><a href="#ibm-watson-services">IBM Watson services</a><ul>
-								<li><a href="#authorization">Authorization</a></li>
-								<li><a href="#assistant-v2">Assistant v2</a></li>
-								<li><a href="#assistant-v1">Assistant v1</a></li>
-								<li><a href="#discovery">Discovery</a></li>
-								<li><a href="#language-translator">Language Translator</a></li>
-								<li><a href="#natural-language-classifier">Natural Language Classifier</a></li>
-								<li><a href="#natural-language-understanding">Natural Language Understanding</a></li>
-								<li><a href="#personality-insights">Personality Insights</a></li>
-								<li><a href="#speech-to-text">Speech to Text</a></li>
-								<li><a href="#text-to-speech">Text to Speech</a></li>
-								<li><a href="#tone-analyzer">Tone Analyzer</a></li>
-								<li><a href="#visual-recognition">Visual Recognition</a></li>
-							</ul>
-						</li>
-						<li><a href="#composing-services">Composing Services</a></li>
-						<li><a href="#debug">Debug</a></li>
-						<li><a href="#tests">Tests</a></li>
-						<li><a href="#license">License</a></li>
-						<li><a href="#contributing">Contributing</a></li>
-					</ul>
+					* [Before you begin](#before-you-begin)
+					* [Installation](#installation)
+					* [Usage](#usage)
+					* [Client-side usage](#client-side-usage)
+					* [Authentication](#authentication)
+					* [IAM](#iam)
+					* [Username and password](#username-and-password)
+					* [API key](#api-key)
+					* [Callbacks vs Promises](#callbacks-vs-promises)
+					* [Sending request headers](#sending-request-headers)
+					* [Parsing HTTP response](#parsing-http-response)
+					* [Data collection opt-out](#data-collection-opt-out)
+					* [Documentation](#documentation)
+					* [Questions](#questions)
+					* [IBM Watson services](#ibm-watson-services)
+					* [Authorization](#authorization)
+					* [Assistant v2](#assistant-v2)
+					* [Assistant v1](#assistant-v1)
+					* [Discovery](#discovery)
+					* [Language Translator](#language-translator)
+					* [Natural Language Classifier](#natural-language-classifier)
+					* [Natural Language Understanding](#natural-language-understanding)
+					* [Personality Insights](#personality-insights)
+					* [Speech to Text](#speech-to-text)
+					* [Text to Speech](#text-to-speech)
+					* [Tone Analyzer](#tone-analyzer)
+					* [Visual Recognition](#visual-recognition)
+					* [Composing Services](#composing-services)
+					* [Debug](#debug)
+					* [Tests](#tests)
+					* [Contributing](#contributing)
+					* [Featured Projects](#featured-projects)
+					* [License](#license)
 				</details>
+				<h2 id="announcements-">ANNOUNCEMENTS!</h2>
+				<h3 id="new-major-version">New Major Version</h3>
+				<p>The new major version, <code>v4</code> has been released. The major new feature in this release is native support for Promises. There are some breaking changes - use the <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/UPGRADE-4.0.md">migration guide</a> to navigate any changes that affect your code.</p>
+				<h3 id="package-rename">Package Rename</h3>
+				<p>This package has been moved under the name <code>ibm-watson</code>. The package is still available at <code>watson-developer-cloud</code>, but that will no longer receive updates. Use <code>ibm-watson</code> to stay up to date.</p>
 				<h2 id="before-you-begin">Before you begin</h2>
 				<ul>
 					<li>You need an <a href="http://console.bluemix.net/registration?target=/developer/watson&amp;cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node">IBM Cloud</a> account.</li>
@@ -714,11 +714,20 @@ visualRecognition.classify(params, <span class="hljs-function"><span class="hljs
 				<pre><code class="language-sh">$ jest <span class="hljs-string">'&lt;path to test&gt;'</span></code></pre>
 				<h2 id="open-source-ibm">Open source @ IBM</h2>
 				<p><a href="http://ibm.github.io/">Find more open source projects on the IBM Github Page.</a></p>
+				<h2 id="contributing">Contributing</h2>
+				<p>See <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING</a>.</p>
+				<h2 id="featured-projects">Featured Projects</h2>
+				<p>We love to highlight cool open-source projects that use this SDK! If you&#39;d like to get your project added to the list, feel free to make an issue linking us to it.</p>
+				<ul>
+					<li><a href="https://github.com/watson-developer-cloud/speech-to-text-nodejs">Watson Speech to Text Demo App</a></li>
+					<li><a href="https://github.com/watson-developer-cloud/assistant-demo">Watson Assistant Demo App</a></li>
+					<li><a href="https://github.com/jeancarl/node-red-contrib-virtual-tjbot">Virtual TJBot Node-RED Nodes</a></li>
+					<li><a href="https://github.com/Themandunord/IWAC">CLI tool for Watson Assistant</a></li>
+					<li><a href="https://github.com/boneskull/puddlenuts">CLI tool for Watson Visual Recognition</a></li>
+				</ul>
 				<h2 id="license">License</h2>
 				<p>This library is licensed under Apache 2.0. Full license text is available in
 				<a href="http://www.apache.org/licenses/LICENSE-2.0">COPYING</a>.</p>
-				<h2 id="contributing">Contributing</h2>
-				<p>See <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING</a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
