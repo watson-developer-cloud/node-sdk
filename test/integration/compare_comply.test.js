@@ -212,7 +212,7 @@ describe('feedback', () => {
     };
     compare_comply.deleteFeedback(params, (err, res) => {
       expect(err).toBeNull();
-      expect(res.status).toBe('200');
+      expect(res.status).toBe(200);
       expect(res.message).toBeDefined();
       done();
     });
