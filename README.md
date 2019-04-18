@@ -844,8 +844,10 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 ## Featured Projects
 We love to highlight cool open-source projects that use this SDK! If you'd like to get your project added to the list, feel free to make an issue linking us to it.
 - [Watson Speech to Text Demo App](https://github.com/watson-developer-cloud/speech-to-text-nodejs)
-- [Watson Assistant Demo App](https://github.com/watson-developer-cloud/assistant-simple)
+- [Watson Assistant Demo App](https://github.com/watson-developer-cloud/assistant-demo)
 - [Virtual TJBot Node-RED Nodes](https://github.com/jeancarl/node-red-contrib-virtual-tjbot)
+- [CLI tool for Watson Assistant](https://github.com/Themandunord/IWAC)
+- [CLI tool for Watson Visual Recognition](https://github.com/boneskull/puddlenuts)
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in
