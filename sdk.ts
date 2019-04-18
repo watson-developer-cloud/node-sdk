@@ -27,20 +27,20 @@ export import AssistantV2 = require('./assistant/v2');
 
 export import CompareComplyV1 = require('./compare-comply/v1');
 
-export import DiscoveryV1 = require('./discovery/v1-generated');
+export import DiscoveryV1 = require('./discovery/v1');
 
 export import LanguageTranslatorV3 = require('./language-translator/v3');
 
-export import NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1-generated');
+export import NaturalLanguageClassifierV1 = require('./natural-language-classifier/v1');
 
-export import NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1-generated');
+export import NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1');
 
-export import PersonalityInsightsV3 = require('./personality-insights/v3-generated');
+export import PersonalityInsightsV3 = require('./personality-insights/v3');
 
 export import SpeechToTextV1 = require('./speech-to-text/v1');
 
 export import TextToSpeechV1 = require('./text-to-speech/v1');
 
-export import ToneAnalyzerV3 = require('./tone-analyzer/v3-generated');
+export import ToneAnalyzerV3 = require('./tone-analyzer/v3');
 
-export import VisualRecognitionV3 = require('./visual-recognition/v3-generated');
+export import VisualRecognitionV3 = require('./visual-recognition/v3');

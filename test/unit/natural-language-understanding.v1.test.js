@@ -1,7 +1,7 @@
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
-const NaturalLanguageUnderstandingV1 = require('../../natural-language-understanding/v1-generated');
+const NaturalLanguageUnderstandingV1 = require('../../natural-language-understanding/v1');
 const utils = require('../resources/unitTestUtils');
 
 const getOptions = utils.getOptions;

@@ -1,7 +1,7 @@
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
-const VisualRecognitionV3 = require('../../visual-recognition/v3-generated');
+const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const utils = require('../resources/unitTestUtils');
 
 const getOptions = utils.getOptions;
