@@ -1,7 +1,7 @@
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
-const PersonalityInsightsV3 = require('../../personality-insights/v3-generated');
+const PersonalityInsightsV3 = require('../../personality-insights/v3');
 const utils = require('../resources/unitTestUtils');
 
 const getOptions = utils.getOptions;

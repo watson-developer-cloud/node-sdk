@@ -1,7 +1,7 @@
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
-const ToneAnalyzerV3 = require('../../tone-analyzer/v3-generated');
+const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
 const utils = require('../resources/unitTestUtils');
 
 const getOptions = utils.getOptions;
