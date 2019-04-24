@@ -80,7 +80,6 @@
   "dependencies": {
     "@types/csv-stringify": "^1.4.3",
     "@types/extend": "^3.0.1",
-    "@types/file-type": "^10.6.0",
     "@types/is-stream": "~1.1.0",
     "@types/node": "^11.9.4",
     "async": "^2.6.2",
@@ -88,7 +87,7 @@
     "buffer-from": "^1.1.1",
     "dotenv": "^6.2.0",
     "extend": "~3.0.2",
-    "file-type": "^10.7.1",
+    "file-type": "^10.11.0",
     "form-data": "^2.3.3",
     "ibm-cloud-sdk-core": "^0.1.1",
     "isstream": "~0.1.2",
