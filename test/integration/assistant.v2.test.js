@@ -2,13 +2,13 @@
 
 const AssistantV2 = require('../../assistant/v2');
 const authHelper = require('../resources/auth_helper.js');
-
-const auth = authHelper.auth.assistant;
-auth.version = '2019-03-27';
+const auth = authHelper.auth;
+const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
 describe('assistant v2 integration', function() {
-  const assistant = new AssistantV2(auth);
-  const assistant_id = auth.assistant_id;
+  auth.assistant.version = '2019-03-27';
+  const assistant = new AssistantV2(auth.assistant);
+  const assistant_id = auth.assistant.assistant_id;
   let session_id;
 
   it('should createSession', function(done) {
