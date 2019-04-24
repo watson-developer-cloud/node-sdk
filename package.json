@@ -67,7 +67,7 @@
     "lint-staged": "~7.2.0",
     "object.assign": "~4.1.0",
     "prettier": "^1.16.4",
-    "semantic-release": "^15.13.8",
+    "semantic-release": "^15.13.12",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
@@ -152,5 +152,72 @@
     "collectCoverage": true,
     "coverageDirectory": "./coverage/",
     "testEnvironment": "node"
+  },
+  "commitlint": {
+    "rules": {
+      "body-leading-blank": [
+        1,
+        "always"
+      ],
+      "footer-leading-blank": [
+        1,
+        "always"
+      ],
+      "header-max-length": [
+        2,
+        "always",
+        72
+      ],
+      "scope-case": [
+        2,
+        "always",
+        "lower-case"
+      ],
+      "subject-case": [
+        2,
+        "never",
+        [
+          "sentence-case",
+          "start-case",
+          "pascal-case",
+          "upper-case"
+        ]
+      ],
+      "subject-empty": [
+        2,
+        "never"
+      ],
+      "subject-full-stop": [
+        2,
+        "never",
+        "."
+      ],
+      "type-case": [
+        2,
+        "always",
+        "lower-case"
+      ],
+      "type-empty": [
+        2,
+        "never"
+      ],
+      "type-enum": [
+        2,
+        "always",
+        [
+          "build",
+          "chore",
+          "ci",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "style",
+          "test"
+        ]
+      ]
+    }
   }
 }
