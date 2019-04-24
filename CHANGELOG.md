@@ -1,3 +1,10 @@
+## [4.0.2](https://github.com/watson-developer-cloud/node-sdk/compare/v4.0.1...v4.0.2) (2019-04-24)
+
+
+### Bug Fixes
+
+* update vulnerable dependencies ([26f7dce](https://github.com/watson-developer-cloud/node-sdk/commit/26f7dce))
+
 ## [4.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.0.0...v4.0.1) (2019-03-29)
 
 
