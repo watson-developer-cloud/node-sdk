@@ -6,7 +6,7 @@ const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
-const compare_comply = new CompareComply(auth.compare_comply);
+const compare_comply = auth ? new CompareComply(auth.compare_comply) : null;
 
 describe('html conversion', () => {
   test('convertToHtml', done => {
