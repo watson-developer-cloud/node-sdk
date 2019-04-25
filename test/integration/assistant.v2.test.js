@@ -70,7 +70,7 @@ describe('assistant v2 integration', function() {
 
   it('should deleteSession', function(done) {
     const params = {
-      assistant_id: auth.assistant_id,
+      assistant_id: auth.assistant.assistant_id,
       session_id,
     };
     assistant.deleteSession(params, function(err, res) {
