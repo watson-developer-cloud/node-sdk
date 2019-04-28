@@ -12,9 +12,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "dotenv": "^4.0.0",
+    "ibm-watson": "latest",
+    "ioredis": "latest",
     "line-in": "^0.1.2",
     "mic": "^2.1.1",
-    "ibm-watson": "latest",
     "wav": "^1.0.1"
   }
 }
