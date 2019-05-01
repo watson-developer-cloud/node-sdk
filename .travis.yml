@@ -14,8 +14,8 @@ before_install:
 - npm install -g typescript
 script:
 - tsc
-- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test-travis; else npm run
-  test-unit-travis; fi
+- npm run test-unit-travis || travis_terminate 1
+- npm run test-integration-travis || node scripts/report_integration_test.js || (cat test-output.log && travis_terminate 1)
 - npm run check-packages
 - sh scripts/typedoc/generate_typedoc.sh
 after_success:

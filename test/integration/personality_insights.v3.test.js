@@ -7,6 +7,7 @@ const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
+const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('personality_insights_v3_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
@@ -20,7 +21,7 @@ describe('personality_insights_v3_integration', function() {
       content: mobydick,
       content_type: 'text/plain',
     };
-    personality_insights.profile(params, done);
+    personality_insights.profile(params, serviceErrorUtils.checkErrorCode(200, done));
   });
 
   it('profile with text content and all params', function(done) {
@@ -32,7 +33,7 @@ describe('personality_insights_v3_integration', function() {
       raw_scores: true,
       consumption_preferences: true,
     };
-    personality_insights.profile(params, done);
+    personality_insights.profile(params, serviceErrorUtils.checkErrorCode(200, done));
   });
 
   it('profile with html content', function(done) {
@@ -40,7 +41,7 @@ describe('personality_insights_v3_integration', function() {
       content: '<div>' + mobydick + '</div>',
       content_type: 'text/html',
     };
-    personality_insights.profile(params, done);
+    personality_insights.profile(params, serviceErrorUtils.checkErrorCode(200, done));
   });
 
   it('profile with csv response', function(done) {
@@ -54,6 +55,6 @@ describe('personality_insights_v3_integration', function() {
         accept: 'text/csv',
       },
     };
-    personality_insights.profileAsCsv(params, done);
+    personality_insights.profileAsCsv(params, serviceErrorUtils.checkErrorCode(200, done));
   });
 });

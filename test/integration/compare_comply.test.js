@@ -5,6 +5,7 @@ const CompareComply = require('../../compare-comply/v1');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
+const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('compare_comply_integration', () => {
   const compare_comply = new CompareComply(auth.compare_comply);
@@ -14,11 +15,14 @@ describe('compare_comply_integration', () => {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compare_comply.convertToHtml(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.html).toBeTruthy();
-        done();
-      });
+      compare_comply.convertToHtml(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.html).toBeTruthy();
+          done();
+        })
+      );
     });
   });
 
@@ -28,21 +32,24 @@ describe('compare_comply_integration', () => {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compare_comply.classifyElements(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.document).toBeTruthy();
-        expect(res.model_id).toBeTruthy();
-        expect(res.model_version).toBeTruthy();
-        expect(res.elements).toBeTruthy();
-        expect(res.tables).toBeTruthy();
-        expect(res.document_structure).toBeTruthy();
-        expect(res.parties).toBeTruthy();
-        expect(res.effective_dates).toBeTruthy();
-        expect(res.termination_dates).toBeTruthy();
-        expect(res.contract_amounts).toBeTruthy();
-        done();
-      });
-    });
+      compare_comply.classifyElements(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.document).toBeTruthy();
+          expect(res.model_id).toBeTruthy();
+          expect(res.model_version).toBeTruthy();
+          expect(res.elements).toBeTruthy();
+          expect(res.tables).toBeTruthy();
+          expect(res.document_structure).toBeTruthy();
+          expect(res.parties).toBeTruthy();
+          expect(res.effective_dates).toBeTruthy();
+          expect(res.termination_dates).toBeTruthy();
+          expect(res.contract_amounts).toBeTruthy();
+          done();
+        })
+      );
+    }, 10000);
   });
 
   describe('tables', () => {
@@ -51,14 +58,17 @@ describe('compare_comply_integration', () => {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compare_comply.extractTables(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.document).toBeTruthy();
-        expect(res.model_id).toBeTruthy();
-        expect(res.model_version).toBeTruthy();
-        expect(res.tables).toBeTruthy();
-        done();
-      });
+      compare_comply.extractTables(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.document).toBeTruthy();
+          expect(res.model_id).toBeTruthy();
+          expect(res.model_version).toBeTruthy();
+          expect(res.tables).toBeTruthy();
+          done();
+        })
+      );
     });
   });
 
@@ -73,15 +83,18 @@ describe('compare_comply_integration', () => {
         file_2_filename: 'contract_B.pdf',
         file_2_label: 'test-file-2',
       };
-      compare_comply.compareDocuments(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.model_version).toBeTruthy();
-        expect(res.documents).toBeTruthy();
-        expect(res.aligned_elements).toBeTruthy();
-        expect(res.model_id).toBeTruthy();
-        expect(res.unaligned_elements).toBeTruthy();
-        done();
-      });
+      compare_comply.compareDocuments(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.model_version).toBeTruthy();
+          expect(res.documents).toBeTruthy();
+          expect(res.aligned_elements).toBeTruthy();
+          expect(res.model_id).toBeTruthy();
+          expect(res.unaligned_elements).toBeTruthy();
+          done();
+        })
+      );
     });
   });
 
@@ -166,56 +179,77 @@ describe('compare_comply_integration', () => {
         },
       };
 
-      compare_comply.addFeedback(params, (err, res) => {
-        feedback_id = res.feedback_id;
+      compare_comply.addFeedback(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          feedback_id = res.feedback_id;
 
-        expect(err).toBeNull();
-        expect(res.feedback_id).toBeDefined();
-        expect(res.user_id).toBeDefined();
-        expect(res.comment).toBeDefined();
-        expect(res.created).toBeDefined();
-        expect(res.feedback_data).toBeDefined();
-        done();
-      });
-    });
+          expect(err).toBeNull();
+          expect(res.feedback_id).toBeDefined();
+          expect(res.user_id).toBeDefined();
+          expect(res.comment).toBeDefined();
+          expect(res.created).toBeDefined();
+          expect(res.feedback_data).toBeDefined();
+          done();
+        })
+      );
+    }, 15000);
 
     test('getFeedback', done => {
+      if (!feedback_id) {
+        // We cannot run this test when addFeedback failed.
+        return done();
+      }
+
       const params = {
         feedback_id,
         headers: {
           'x-watson-metadata': 'customer_id=sdk-test-customer-id',
         },
       };
-      compare_comply.getFeedback(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.feedback_id).toBeDefined();
-        expect(res.user_id).toBeDefined();
-        expect(res.comment).toBeDefined();
-        expect(res.created).toBeDefined();
-        expect(res.feedback_data).toBeDefined();
-        done();
-      });
-    });
+      compare_comply.getFeedback(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.feedback_id).toBeDefined();
+          expect(res.user_id).toBeDefined();
+          expect(res.comment).toBeDefined();
+          expect(res.created).toBeDefined();
+          expect(res.feedback_data).toBeDefined();
+          done();
+        })
+      );
+    }, 10000);
 
     test('listFeedback', done => {
-      compare_comply.listFeedback((err, res) => {
-        expect(err).toBeNull();
-        expect(res.feedback).toBeDefined();
-        expect(res.pagination).toBeDefined();
-        done();
-      });
-    });
+      compare_comply.listFeedback(
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.feedback).toBeDefined();
+          expect(res.pagination).toBeDefined();
+          done();
+        })
+      );
+    }, 10000);
 
     test('deleteFeedback', done => {
+      if (!feedback_id) {
+        // We cannot run this test when addFeedback failed.
+        return done();
+      }
+
       const params = {
         feedback_id,
       };
-      compare_comply.deleteFeedback(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.status).toBe(200);
-        expect(res.message).toBeDefined();
-        done();
-      });
+      compare_comply.deleteFeedback(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
+          expect(res.message).toBeDefined();
+          done();
+        })
+      );
     });
   });
 

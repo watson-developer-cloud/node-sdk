@@ -8,6 +8,7 @@ const fs = require('fs');
 const concat = require('concat-stream');
 const path = require('path');
 const async = require('async');
+const serviceErrorUtils = require('../resources/service_error_util');
 
 const TWENTY_SECONDS = 20000;
 const TWO_MINUTES = 2 * 60 * 1000;
@@ -22,7 +23,7 @@ describe('speech_to_text_integration', function() {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       content_type: 'audio/ogg; codec=opus',
     };
-    speech_to_text.recognize(params, done);
+    speech_to_text.recognize(params, serviceErrorUtils.checkErrorCode(200, done));
   });
 
   it('recognize() keywords', function(done) {
@@ -32,12 +33,10 @@ describe('speech_to_text_integration', function() {
       keywords_threshold: 0.6,
       content_type: 'audio/ogg; codec=opus',
     };
-    speech_to_text.recognize(params, function(err, res) {
-      if (err) {
-        return done(err);
-      }
-
-      /*
+    speech_to_text.recognize(
+      params,
+      serviceErrorUtils.checkErrorCode(200, function(err, res) {
+        /*
       example result
       as of 12/1/2016, the keywords confidence seems to have some variance between test runs
       {
@@ -82,20 +81,21 @@ describe('speech_to_text_integration', function() {
       }
       */
 
-      expect(res.results).toBeDefined();
-      expect(res.results[0]).toBeDefined();
-      expect(res.results[0].keywords_result).toBeDefined();
-      const keywords_result = res.results[0].keywords_result;
-      expect(keywords_result.tornadoes).toBeDefined();
-      expect(keywords_result.hail).toBeDefined();
-      expect(keywords_result.rain).toBeDefined();
+        expect(res.results).toBeDefined();
+        expect(res.results[0]).toBeDefined();
+        expect(res.results[0].keywords_result).toBeDefined();
+        const keywords_result = res.results[0].keywords_result;
+        expect(keywords_result.tornadoes).toBeDefined();
+        expect(keywords_result.hail).toBeDefined();
+        expect(keywords_result.rain).toBeDefined();
 
-      done();
-    });
+        done();
+      })
+    );
   });
 
   it('listModels()', function(done) {
-    speech_to_text.listModels({}, done);
+    speech_to_text.listModels({}, serviceErrorUtils.checkErrorCode(200, done));
   });
 
   describe('recognizeUsingWebSocket() (credentials from environment/VCAP) @slow', () => {
@@ -555,16 +555,16 @@ describe('speech_to_text_integration', function() {
     let jobId = null;
 
     const deleteAfterRecognitionCompleted = (jobId, done) => {
-      speech_to_text.checkJob({ id: jobId }, (err, res) => {
-        if (err) {
-          return done(err);
-        }
-        if (res.status !== 'completed') {
-          setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId, done), 300);
-        } else {
-          speech_to_text.deleteJob({ id: res.id }, done);
-        }
-      });
+      speech_to_text.checkJob(
+        { id: jobId },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          if (res.status !== 'completed') {
+            setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId, done), 300);
+          } else {
+            speech_to_text.deleteJob({ id: res.id }, serviceErrorUtils.checkErrorCode(200, done));
+          }
+        })
+      );
     };
 
     it('registerCallback()', function(done) {
@@ -575,7 +575,7 @@ describe('speech_to_text_integration', function() {
             'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
           user_secret: 'ThisIsMySecret',
         },
-        done
+        serviceErrorUtils.checkErrorCode(200, done)
       );
     });
 
@@ -590,11 +590,14 @@ describe('speech_to_text_integration', function() {
         events: 'recognitions.completed',
         results_ttl: 1,
       };
-      speech_to_text.createJob(params, function(err, res) {
-        expect(err).toBeNull();
-        jobId = res.id;
-        done();
-      });
+      speech_to_text.createJob(
+        params,
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          jobId = res.id;
+          done();
+        })
+      );
     });
 
     it('checkJobs() @slow', function(done) {
@@ -602,11 +605,20 @@ describe('speech_to_text_integration', function() {
     });
 
     it('checkJob()', function(done) {
-      speech_to_text.checkJob({ id: jobId }, done);
+      if (!jobId) {
+        // We cannot run this test when job creation failed.
+        return done();
+      }
+      speech_to_text.checkJob({ id: jobId }, serviceErrorUtils.checkErrorCode(200, done));
     });
 
     it('deleteJob()', function(done) {
-      deleteAfterRecognitionCompleted(jobId, done);
+      if (!jobId) {
+        // We cannot run this test when job creation failed.
+        return done();
+      }
+
+      deleteAfterRecognitionCompleted(jobId, serviceErrorUtils.checkErrorCode(200, done));
     });
   });
 
@@ -618,7 +630,7 @@ describe('speech_to_text_integration', function() {
           base_model_name: 'en-US_BroadbandModel',
           content_type: 'application/json',
         },
-        done
+        serviceErrorUtils.checkErrorCode(200, done)
       );
     });
   });
