@@ -149,7 +149,7 @@ Some services use token-based Identity and Access Management (IAM) authenticatio
 You supply either an IAM service **API key** or an **access token**:
 
 - Use the API key to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.
-- Use the access token if you want to manage the lifecycle yourself. For details, see [Authenticating with IAM tokens](https://console.bluemix.net/docs/services/watson/getting-started-iam.html). If you want to switch to API key, override your stored IAM credentials with an IAM API key.
+- Use the access token if you want to manage the lifecycle yourself. For details, see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/services/watson/getting-started-iam.html). If you want to switch to API key, override your stored IAM credentials with an IAM API key.
 
 ###### Supplying the IAM API key
 
@@ -158,8 +158,8 @@ You supply either an IAM service **API key** or an **access token**:
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
-  iam_apikey: '<iam_api_key>',
-  iam_url: '<iam_url>', // optional - the default value is https://iam.bluemix.net/identity/token
+  iam_apikey: '<apikey>',
+  iam_url: '<iam_url>', // optional - the default value is https://cloud.ibm.com/identity/token
 });
 ```
 
@@ -259,14 +259,13 @@ assistant.message({
     'Custom-Header': 'custom',
     'Accept-Language': 'custom'
 
-  }
-},  function(err, result, response) {
-  if (err)
-    console.log('error:', err);
-  else
+  })
+  .then(result => {
     console.log(JSON.stringify(result, null, 2));
-});
-
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 ```
 
 ### Parsing HTTP response
@@ -305,7 +304,7 @@ assistant.message(params)
 
 ### Data collection opt-out
 
-By default, [all requests are logged](https://console.bluemix.net/docs/services/watson/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
+By default, [all requests are logged](https://cloud.ibm.com/docs/services/watson/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
 var myInstance = new watson.WhateverServiceV1({
@@ -326,14 +325,14 @@ To do this, set `disable_ssl_verification` to `true` in the service constructor,
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
-  iam_apikey: '<iam_api_key>',
+  iam_apikey: '<apikey>',
   disable_ssl_verification: true, // this will disable SSL verification for any request made with this object
 });
 ```
 
 ## Documentation
 
-You can find links to the documentation at https://console.bluemix.net/developer/watson/documentation. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
+You can find links to the documentation at https://cloud.ibm.com/developer/watson/documentation. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
 
 There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/master/
 
@@ -391,16 +390,15 @@ function (err, token) {
 
 ### Assistant v2
 
-Use the [Assistant][conversation] service to determine the intent of a message.
+Use the [Assistant][assistant] service to determine the intent of a message.
 
-Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/services/conversation/index.html#about) for details.
 
 ```js
 var AssistantV2 = require('ibm-watson/assistant/v2');
 
 var assistant = new AssistantV2({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   url: 'https://gateway.watsonplatform.net/assistant/api/',
   version: '2018-09-19'
 });
@@ -410,29 +408,26 @@ assistant.message(
     input: { text: "What's the weather?" },
     assistant_id: '<assistant id>',
     session_id: '<session id>',
-  },
-  function(err, response) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
 ```
 
 ### Assistant v1
 
 Use the [Assistant][assistant] service to determine the intent of a message.
 
-Note: You must first create a workspace via IBM Cloud. See [the documentation](https://console.bluemix.net/docs/services/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/services/conversation/index.html#about) for details.
 
 ```js
 var AssistantV1 = require('ibm-watson/assistant/v1');
 
 var assistant = new AssistantV1({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   url: 'https://gateway.watsonplatform.net/assistant/api/',
   version: '2018-02-16'
 });
@@ -441,15 +436,13 @@ assistant.message(
   {
     input: { text: "What's the weather?" },
     workspace_id: '<workspace id>'
-  },
-  function(err, response) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
 ```
 
 ### Compare Comply
@@ -461,7 +454,7 @@ const fs = require('fs');
 const CompareComplyV1 = require('ibm-watson/compare-comply/v1');
 
 const compareComply = new CompareComplyV1({
-  iam_apikey: '<iam_apikey>',
+  iam_apikey: '<apikey>',
   url: 'https://gateway.watsonplatform.net/compare-comply/api',
   version: '2018-12-06'
 });
@@ -474,16 +467,13 @@ compareComply.compareDocuments(
       file_2: fs.createReadStream('<path-to-file-2>'),
       file_2_filename: '<filename-2>',
       file_2_label: 'file-2',
-  },
-  function(err, response) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
-
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
 ```
 
 ### Discovery
@@ -494,8 +484,7 @@ Use the [Discovery Service][discovery] to search and analyze structured and unst
 var DiscoveryV1 = require('ibm-watson/discovery/v1');
 
 var discovery = new DiscoveryV1({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   url: 'https://gateway.watsonplatform.net/discovery/api/',
   version: '2017-09-01'
 });
@@ -505,16 +494,13 @@ discovery.query(
     environment_id: '<environment_id>',
     collection_id: '<collection_id>',
     query: 'my_query'
-  },
-  function(err, response) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
-
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
 ```
 
 ### Language Translator
@@ -535,40 +521,36 @@ languageTranslator.translate(
     text: 'A sentence must have a verb',
     source: 'en',
     target: 'es'
-  },
-  function(err, translation) {
-    if (err)  {
-      console.log('error:', err);
-    } else  {
-      console.log(JSON.stringify(translation, null, 2));
-  }
-);
+  })
+  .then(translation => {
+    console.log(JSON.stringify(translation, null, 2));
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 
 languageTranslator.identify(
   {
     text:
       'The language translator service takes text input and identifies the language used.'
-  },
-  function(err, language) {
-    if (err)  {
-      console.log('error:', err);
-    } else {
-      console.log(JSON.stringify(language, null, 2));
-    }
-  }
-);
+  })
+  .then(language => {
+    console.log(JSON.stringify(language, null, 2));
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 ```
 
 ### Natural Language Classifier
 
-Use [Natural Language Classifier](https://console.bluemix.net/docs/services/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
+Use [Natural Language Classifier](https://cloud.ibm.com/docs/services/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```javascript
 var NaturalLanguageClassifierV1 = require('ibm-watson/natural-language-classifier/v1');
 
 var classifier = new NaturalLanguageClassifierV1({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   url: 'https://gateway.watsonplatform.net/natural-language-classifier/api/'
 });
 
@@ -576,15 +558,13 @@ classifier.classify(
   {
     text: 'Is it sunny?',
     classifier_id: '<classifier-id>'
-  },
-  function(err, response) {
-    if (err) {
-      console.log('error:', err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 ```
 
 See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
@@ -600,8 +580,7 @@ var fs = require('fs');
 var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 
 var nlu = new NaturalLanguageUnderstandingV1({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   version: '2018-04-05',
   url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
@@ -613,15 +592,13 @@ nlu.analyze(
       concepts: {},
       keywords: {}
     }
-  },
-  function(err, response) {
-    if (err) {
-      console.log('error:', err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 ```
 
 
@@ -634,8 +611,7 @@ Analyze text in English and get a personality profile by using the
 var PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
 
 var personalityInsights = new PersonalityInsightsV3({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   version: '2016-10-19',
   url: 'https://gateway.watsonplatform.net/personality-insights/api/'
 });
@@ -645,15 +621,13 @@ personalityInsights.profile(
     content: 'Enter more than 100 unique words here...',
     content_type: 'text/plain',
     consumption_preferences: true
-  },
-  function(err, response) {
-    if (err) {
-      console.log('error:', err);
-    } else {
-      console.log(JSON.stringify(response, null, 2));
-    }
-  }
-);
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log('error:', err);
+  });
 ```
 
 
@@ -666,8 +640,7 @@ var SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
 var fs = require('fs');
 
 var speechToText = new SpeechToTextV1({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   url: 'https://stream.watsonplatform.net/speech-to-text/api/'
 });
 
@@ -677,12 +650,13 @@ var params = {
   content_type: 'audio/l16; rate=44100'
 };
 
-speechToText.recognize(params, function(err, res) {
-  if (err)
+speechToText.recognize(params)
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
     console.log(err);
-  else
-    console.log(JSON.stringify(res, null, 2));
-});
+  });
 
 // or streaming
 fs.createReadStream('./resources/speech.wav')
@@ -700,8 +674,7 @@ var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 var fs = require('fs');
 
 var textToSpeech = new TextToSpeechV1({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   url: 'https://stream.watsonplatform.net/text-to-speech/api/'
 });
 
@@ -714,15 +687,15 @@ var params = {
 // Synthesize speech, correct the wav header, then save to disk
 // (wav header requires a file length, but this is unknown until after the header is already generated and sent)
 textToSpeech
-  .synthesize(params, function(err, audio) {
-    if (err) {
-      console.log(err);
-      return;
-    }
+  .synthesize(params)
+  .then(result => {
     textToSpeech.repairWavHeader(audio);
     fs.writeFileSync('audio.wav', audio);
     console.log('audio.wav written with a corrected wav header');
-});
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 
 // or, using WebSockets
@@ -742,8 +715,7 @@ emotion, writing and social tones of a text.
 var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
 
 var toneAnalyzer = new ToneAnalyzerV3({
-  username: '<username>',
-  password: '<password>',
+  iam_apikey: '<apikey>',
   version: '2016-05-19',
   url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
 });
@@ -752,15 +724,13 @@ toneAnalyzer.tone(
   {
     tone_input: 'Greetings from Watson Developer Cloud!',
     content_type: 'text/plain'
-  },
-  function(err, tone) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(JSON.stringify(tone, null, 2));
-    }
-  }
-);
+  })
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
 ```
 
 
@@ -778,20 +748,20 @@ var fs = require('fs');
 var visualRecognition = new VisualRecognitionV3({
   url: '<service_url>',
   version: '2018-03-19',
-  iam_apikey: '<iam_api_key>',
+  iam_apikey: '<apikey>',
 });
 
 var params = {
   images_file: fs.createReadStream('./resources/car.png')
 };
 
-visualRecognition.classify(params, function(err, res) {
-  if (err) {
+visualRecognition.classify(params)
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2));
+  })
+  .catch(err => {
     console.log(err);
-  } else {
-    console.log(JSON.stringify(res, null, 2));
-  }
-});
+  });
 ```
 
 
@@ -853,7 +823,7 @@ We love to highlight cool open-source projects that use this SDK! If you'd like 
 This library is licensed under Apache 2.0. Full license text is available in
 [COPYING][license].
 
-[assistant]: https://www.ibm.com/watson/services/conversation/
+[assistant]: https://www.ibm.com/cloud/watson-assistant/
 [discovery]: https://www.ibm.com/watson/services/discovery/
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
 [visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/
@@ -861,14 +831,14 @@ This library is licensed under Apache 2.0. Full license text is available in
 [text_to_speech]: https://www.ibm.com/watson/services/text-to-speech/
 [speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
 [language_translator]: https://www.ibm.com/watson/services/language-translator/
-[ibm_cloud]: https://console.bluemix.net
-[watson-dashboard]: https://console.bluemix.net/dashboard/apps?category=watson
+[ibm_cloud]: https://cloud.ibm.com
+[watson-dashboard]: https://cloud.ibm.com/dashboard/apps?category=watson
 [npm_link]: https://www.npmjs.com/package/ibm-watson
 [request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
 [assistant_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
 [license]: http://www.apache.org/licenses/LICENSE-2.0
-[vcap_services]: https://console.bluemix.net/docs/services/watson/getting-started-variables.html
-[ibm-cloud-onboarding]: http://console.bluemix.net/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node
+[vcap_services]: https://cloud.ibm.com/docs/services/watson/getting-started-variables.html
+[ibm-cloud-onboarding]: http://cloud.ibm.com/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node
 
