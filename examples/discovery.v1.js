@@ -5,7 +5,7 @@ var fs = require('fs');
 
 var discovery = new DiscoveryV1({
   // if left unspecified here, the SDK will fall back to the DISCOVERY_USERNAME and DISCOVERY_PASSWORD
-  // environment properties, and then Bluemix's VCAP_SERVICES environment property
+  // environment properties, and then IBM Cloud's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
   // url: 'INSERT YOUR URL FOR THE SERVICE HERE'

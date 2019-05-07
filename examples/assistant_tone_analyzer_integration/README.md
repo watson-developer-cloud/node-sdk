@@ -9,8 +9,8 @@ This example provides sample code for integrating [Tone Analyzer][tone_analyzer]
 
 Requirements to run the sample code
 
-  * [Tone Analyzer Service credentials][bluemix_tone_analyzer_service]
-  * [Assistant Service credentials][bluemix_assistant_service]
+  * [Tone Analyzer Service credentials][tone_analyzer_service]
+  * [Assistant Service credentials][assistant_service]
   * [Assistant Workspace ID][assistant_simple_workspace]
 
 Credentials & the Workspace ID can be set in environment properties, a .env file, or directly in the code.
@@ -23,8 +23,8 @@ Command to run the sample code
 
 [assistant]: https://www.ibm.com/watson/services/conversation/
 [tone_analyzer]: https://www.ibm.com/watson/services/tone-analyzer/
-[bluemix_assistant_service]: https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation
-[bluemix_tone_analyzer_service]: https://console.ng.bluemix.net/catalog/services/tone-analyzer/
+[assistant_service]: https://cloud.ibm.com/catalog/services/watson-assistant
+[tone_analyzer_service]: https://cloud.ibm.com/catalog/services/tone-analyzer
 [assistant_simple_workspace]: https://github.com/watson-developer-cloud/assistant-simple#workspace
 [tone_assistant_integration_example]: https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/assistant_tone_analyzer_integration/tone_assistant_integration.v1.js
 [tone_assistant_integration_example_tone_detection]: https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/assistant_tone_analyzer_integration/tone_detection.js

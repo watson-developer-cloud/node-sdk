@@ -10,16 +10,16 @@
  *
  * Requirements:
  *   1. Tone Analyzer Service instance:
- *   - https://console.ng.bluemix.net/catalog/services/tone-analyzer/
+ *   - https://cloud.ibm.com/catalog/services/tone-analyzer
  *   - credentials for this service to be provided below in tone_analyzer variable
  *    - replace <tone_analyzer_username> and <tone_analyzer_password>
  *   2. Assistant Service instance:
- *   - https://console.bluemix.net/catalog/services/watson-assistant-formerly-conversation
+ *   - https://cloud.ibm.com/catalog/services/watson-assistant
  *   - credentials for this service to be provided below in the assistant variable
  *    - replace <assistant_username> and <assistant_password>
  *   3. Workspace id:
  *   - a workspace containing intents, entities and dialog nodes must be created using the tool
- *     available through the Bluemix Assistant Service. Details are available at
+ *     available through the IBM Cloud Assistant Service. Details are available at
  *     https://github.com/watson-developer-cloud/assistant-simple#workspace
  *    - replace <workspace_id> in the payload variable
  *
