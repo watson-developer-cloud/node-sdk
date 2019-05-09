@@ -3245,7 +3245,9 @@ namespace AssistantV1 {
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: {
+      [key: string]: string;
+    };
   }
 
   /** The callback for a service request. */
@@ -3276,7 +3278,9 @@ namespace AssistantV1 {
     output?: OutputData;
     /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
     nodes_visited_details?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3302,7 +3306,9 @@ namespace AssistantV1 {
     dialog_nodes?: DialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3310,7 +3316,9 @@ namespace AssistantV1 {
   export interface DeleteWorkspaceParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3324,7 +3332,9 @@ namespace AssistantV1 {
     include_audit?: boolean;
     /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
     sort?: GetWorkspaceConstants.Sort | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3348,7 +3358,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3387,7 +3399,9 @@ namespace AssistantV1 {
     counterexamples?: Counterexample[];
     /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities. If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
     append?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: any;
+    };
     return_response?: boolean;
   }
 
@@ -3401,7 +3415,9 @@ namespace AssistantV1 {
     description?: string;
     /** An array of user input examples for the intent. */
     examples?: Example[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3411,7 +3427,9 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3425,7 +3443,9 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3445,7 +3465,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3470,7 +3492,9 @@ namespace AssistantV1 {
     new_description?: string;
     /** An array of user input examples for the intent. */
     new_examples?: Example[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3484,7 +3508,9 @@ namespace AssistantV1 {
     text: string;
     /** An array of contextual entity mentions. */
     mentions?: Mention[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3496,7 +3522,9 @@ namespace AssistantV1 {
     intent: string;
     /** The text of the user input example. */
     text: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3510,7 +3538,9 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3530,7 +3560,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3555,7 +3587,9 @@ namespace AssistantV1 {
     new_text?: string;
     /** An array of contextual entity mentions. */
     new_mentions?: Mention[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3565,7 +3599,9 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
     text: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3575,7 +3611,9 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3587,7 +3625,9 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3605,7 +3645,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3626,7 +3668,9 @@ namespace AssistantV1 {
     text: string;
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters - It cannot consist of only whitespace characters - It must be no longer than 1024 characters. */
     new_text?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3644,7 +3688,9 @@ namespace AssistantV1 {
     fuzzy_match?: boolean;
     /** An array of objects describing the entity values. */
     values?: CreateValue[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3654,7 +3700,9 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3668,7 +3716,9 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3688,7 +3738,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3717,7 +3769,9 @@ namespace AssistantV1 {
     new_fuzzy_match?: boolean;
     /** An array of objects describing the entity values. */
     new_values?: CreateValue[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3731,7 +3785,9 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3751,7 +3807,9 @@ namespace AssistantV1 {
     synonyms?: string[];
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
     patterns?: string[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3772,7 +3830,9 @@ namespace AssistantV1 {
     entity: string;
     /** The text of the entity value. */
     value: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3788,7 +3848,9 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3810,7 +3872,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3841,7 +3905,9 @@ namespace AssistantV1 {
     new_synonyms?: string[];
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression no longer than 512 characters. For more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant/entities.html#entities-create-dictionary-based). */
     new_patterns?: string[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3864,7 +3930,9 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     synonym: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3878,7 +3946,9 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3894,7 +3964,9 @@ namespace AssistantV1 {
     synonym: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3916,7 +3988,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3941,7 +4015,9 @@ namespace AssistantV1 {
     synonym: string;
     /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_synonym?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -3985,7 +4061,9 @@ namespace AssistantV1 {
     digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     user_label?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4038,7 +4116,9 @@ namespace AssistantV1 {
     workspace_id: string;
     /** The dialog node ID (for example, `get_order`). */
     dialog_node: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4050,7 +4130,9 @@ namespace AssistantV1 {
     dialog_node: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4068,7 +4150,9 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     include_audit?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4123,7 +4207,9 @@ namespace AssistantV1 {
     new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. This string must be no longer than 512 characters. */
     new_user_label?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4180,7 +4266,9 @@ namespace AssistantV1 {
     page_limit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4196,7 +4284,9 @@ namespace AssistantV1 {
     page_limit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4204,7 +4294,9 @@ namespace AssistantV1 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 

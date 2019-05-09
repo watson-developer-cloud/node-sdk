@@ -887,7 +887,9 @@ namespace CompareComplyV1 {
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: {
+      [key: string]: string;
+    };
   }
 
   /** The callback for a service request. */
@@ -910,7 +912,9 @@ namespace CompareComplyV1 {
     file_content_type?: ConvertToHtmlConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: ConvertToHtmlConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -943,7 +947,9 @@ namespace CompareComplyV1 {
     file_content_type?: ClassifyElementsConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: ClassifyElementsConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -975,7 +981,9 @@ namespace CompareComplyV1 {
     file_content_type?: ExtractTablesConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: ExtractTablesConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1016,7 +1024,9 @@ namespace CompareComplyV1 {
     file_2_label?: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: CompareDocumentsConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1061,7 +1071,9 @@ namespace CompareComplyV1 {
     user_id?: string;
     /** An optional comment on or description of the feedback. */
     comment?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1071,7 +1083,9 @@ namespace CompareComplyV1 {
     feedback_id: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: DeleteFeedbackConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1090,7 +1104,9 @@ namespace CompareComplyV1 {
     feedback_id: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: GetFeedbackConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1137,7 +1153,9 @@ namespace CompareComplyV1 {
     sort?: string;
     /** An optional boolean value. If specified as `true`, the `pagination` object in the output includes a value called `total` that gives the total count of feedback created. */
     include_total?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1159,7 +1177,9 @@ namespace CompareComplyV1 {
     output_bucket_name: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: CreateBatchConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1182,13 +1202,17 @@ namespace CompareComplyV1 {
   export interface GetBatchParams {
     /** The ID of the batch-processing job whose information you want to retrieve. */
     batch_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
   /** Parameters for the `listBatches` operation. */
   export interface ListBatchesParams {
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -1200,7 +1224,9 @@ namespace CompareComplyV1 {
     action: UpdateBatchConstants.Action | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: UpdateBatchConstants.Model | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 

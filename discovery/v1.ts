@@ -4165,7 +4165,9 @@ namespace DiscoveryV1 {
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: {
+      [key: string]: string;
+    };
   }
 
   /** The callback for a service request. */
@@ -4186,7 +4188,9 @@ namespace DiscoveryV1 {
     description?: string;
     /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
     size?: CreateEnvironmentConstants.Size | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4211,7 +4215,9 @@ namespace DiscoveryV1 {
   export interface DeleteEnvironmentParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4219,7 +4225,9 @@ namespace DiscoveryV1 {
   export interface GetEnvironmentParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4227,7 +4235,9 @@ namespace DiscoveryV1 {
   export interface ListEnvironmentsParams {
     /** Show only the environment with the given name. */
     name?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4237,7 +4247,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** A comma-separated list of collection IDs to be queried against. */
     collection_ids: string[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4251,7 +4263,9 @@ namespace DiscoveryV1 {
     description?: string;
     /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
     size?: UpdateEnvironmentConstants.Size | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4286,7 +4300,9 @@ namespace DiscoveryV1 {
     normalizations?: NormalizationOperation[];
     /** Object containing source parameters for the configuration. */
     source?: Source;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4296,7 +4312,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the configuration. */
     configuration_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4306,7 +4324,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the configuration. */
     configuration_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4316,7 +4336,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** Find configurations with the given name. */
     name?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4338,7 +4360,9 @@ namespace DiscoveryV1 {
     normalizations?: NormalizationOperation[];
     /** Object containing source parameters for the configuration. */
     source?: Source;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4360,7 +4384,9 @@ namespace DiscoveryV1 {
     step?: TestConfigurationInEnvironmentConstants.Step | string;
     /** The ID of the configuration to use to process the document. If the **configuration** form part is also provided (both are present at the same time), then the request will be rejected. */
     configuration_id?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4398,7 +4424,9 @@ namespace DiscoveryV1 {
     configuration_id?: string;
     /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
     language?: CreateCollectionConstants.Language | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4426,7 +4454,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4436,7 +4466,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4446,7 +4478,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4456,7 +4490,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** Find collections with the given name. */
     name?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4472,7 +4508,9 @@ namespace DiscoveryV1 {
     description?: string;
     /** The ID of the configuration in which the collection is to be updated. */
     configuration_id?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4484,7 +4522,9 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** An array of query expansion definitions. Each object in the **expansions** array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured as bidirectional or unidirectional. Bidirectional means that all terms are expanded to all other terms in the object. Unidirectional means that a set list of terms can be expanded into a second list of terms. To create a bi-directional expansion specify an **expanded_terms** array. When found in a query, all items in the **expanded_terms** array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of **input_terms** and an array of **expanded_terms**. When items in the **input_terms** array are present in a query, they are expanded using the items listed in the **expanded_terms** array. */
     expansions: Expansion[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4498,7 +4538,9 @@ namespace DiscoveryV1 {
     stopword_file: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for stopword_file. */
     stopword_filename: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4510,7 +4552,9 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** An array of tokenization rules. Each rule contains, the original `text` string, component `tokens`, any alternate character set `readings`, and which `part_of_speech` the text is from. */
     tokenization_rules?: TokenDictRule[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4520,7 +4564,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4530,7 +4576,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4540,7 +4588,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4550,7 +4600,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4560,7 +4612,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4570,7 +4624,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4588,7 +4644,9 @@ namespace DiscoveryV1 {
     file_content_type?: AddDocumentConstants.FileContentType | string;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
     metadata?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4613,7 +4671,9 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the document. */
     document_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4625,7 +4685,9 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the document. */
     document_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4645,7 +4707,9 @@ namespace DiscoveryV1 {
     file_content_type?: UpdateDocumentConstants.FileContentType | string;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
     metadata?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4708,7 +4772,9 @@ namespace DiscoveryV1 {
     bias?: string;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4744,7 +4810,9 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4796,7 +4864,9 @@ namespace DiscoveryV1 {
     bias?: string;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4816,7 +4886,9 @@ namespace DiscoveryV1 {
     count?: number;
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4860,7 +4932,9 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4881,7 +4955,9 @@ namespace DiscoveryV1 {
     count?: number;
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4906,7 +4982,9 @@ namespace DiscoveryV1 {
     filter?: string;
     /** Array of training examples. */
     examples?: TrainingExample[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4924,7 +5002,9 @@ namespace DiscoveryV1 {
     cross_reference?: string;
     /** The relevance of the training example. */
     relevance?: number;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4934,7 +5014,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4946,7 +5028,9 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4960,7 +5044,9 @@ namespace DiscoveryV1 {
     query_id: string;
     /** The ID of the document as it is indexed. */
     example_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4972,7 +5058,9 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4986,7 +5074,9 @@ namespace DiscoveryV1 {
     query_id: string;
     /** The ID of the document as it is indexed. */
     example_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -4996,7 +5086,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5008,7 +5100,9 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5026,7 +5120,9 @@ namespace DiscoveryV1 {
     cross_reference?: string;
     /** The relevance value for this example. */
     relevance?: number;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5034,7 +5130,9 @@ namespace DiscoveryV1 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5044,7 +5142,9 @@ namespace DiscoveryV1 {
     type: CreateEventConstants.Type | string;
     /** Query event data object. */
     data: EventData;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5064,7 +5164,9 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsEventRateConstants.ResultType | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5084,7 +5186,9 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryConstants.ResultType | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5104,7 +5208,9 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryEventConstants.ResultType | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5124,7 +5230,9 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryNoResultsConstants.ResultType | string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5140,7 +5248,9 @@ namespace DiscoveryV1 {
   export interface GetMetricsQueryTokenEventParams {
     /** Number of results to return. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     count?: number;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5156,7 +5266,9 @@ namespace DiscoveryV1 {
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5168,7 +5280,9 @@ namespace DiscoveryV1 {
     source_type?: CreateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5190,7 +5304,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5200,7 +5316,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5208,7 +5326,9 @@ namespace DiscoveryV1 {
   export interface ListCredentialsParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5222,7 +5342,9 @@ namespace DiscoveryV1 {
     source_type?: UpdateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5244,7 +5366,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** User-defined name. */
     name?: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5254,7 +5378,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The requested gateway ID. */
     gateway_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5264,7 +5390,9 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The requested gateway ID. */
     gateway_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -5272,7 +5400,9 @@ namespace DiscoveryV1 {
   export interface ListGatewaysParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 

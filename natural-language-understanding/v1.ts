@@ -269,7 +269,9 @@ namespace NaturalLanguageUnderstandingV1 {
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: {
+      [key: string]: string;
+    };
   }
 
   /** The callback for a service request. */
@@ -304,7 +306,9 @@ namespace NaturalLanguageUnderstandingV1 {
     language?: string;
     /** Sets the maximum number of characters that are processed by the service. */
     limit_text_characters?: number;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -312,13 +316,17 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface DeleteModelParams {
     /** Model ID of the model to delete. */
     model_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
   /** Parameters for the `listModels` operation. */
   export interface ListModelsParams {
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 

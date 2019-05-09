@@ -403,7 +403,9 @@ namespace NaturalLanguageClassifierV1 {
     username?: string;
     password?: string;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: {
+      [key: string]: string;
+    };
   }
 
   /** The callback for a service request. */
@@ -422,7 +424,9 @@ namespace NaturalLanguageClassifierV1 {
     classifier_id: string;
     /** The submitted phrase. The maximum length is 2048 characters. */
     text: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -432,7 +436,9 @@ namespace NaturalLanguageClassifierV1 {
     classifier_id: string;
     /** The submitted phrases. */
     collection: ClassifyInput[];
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -442,7 +448,9 @@ namespace NaturalLanguageClassifierV1 {
     metadata: NodeJS.ReadableStream|FileObject|Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data preparation](https://cloud.ibm.com/docs/services/natural-language-classifier/using-your-data.html). */
     training_data: NodeJS.ReadableStream|FileObject|Buffer;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -450,7 +458,9 @@ namespace NaturalLanguageClassifierV1 {
   export interface DeleteClassifierParams {
     /** Classifier ID to delete. */
     classifier_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
@@ -458,13 +468,17 @@ namespace NaturalLanguageClassifierV1 {
   export interface GetClassifierParams {
     /** Classifier ID to query. */
     classifier_id: string;
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
   /** Parameters for the `listClassifiers` operation. */
   export interface ListClassifiersParams {
-    headers?: Object;
+    headers?: {
+      [key: string]: string;
+    };
     return_response?: boolean;
   }
 
