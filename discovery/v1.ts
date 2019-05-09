@@ -5647,7 +5647,9 @@ namespace DiscoveryV1 {
     /** The step in the document conversion process that the snapshot object represents. */
     step?: string;
     /** Snapshot of the conversion. */
-    snapshot?: Object;
+    snapshot?: {
+      [key: string]: any;
+    };
   }
 
   /** Status information about a submitted document. */
@@ -6222,7 +6224,9 @@ namespace DiscoveryV1 {
     /** The unique identifier of the document. */
     id?: string;
     /** Metadata of the document. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of a query result. */
@@ -6324,7 +6328,9 @@ namespace DiscoveryV1 {
     /** The unique identifier of the document. */
     id?: string;
     /** Metadata of the document. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of a query result. */

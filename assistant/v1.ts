@@ -3293,7 +3293,9 @@ namespace AssistantV1 {
     /** The language of the workspace. */
     language?: string;
     /** Any metadata related to the workspace. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
     /** Global settings for the workspace. */
@@ -3384,7 +3386,9 @@ namespace AssistantV1 {
     /** The language of the workspace. */
     language?: string;
     /** Any metadata related to the workspace. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out?: boolean;
     /** Global settings for the workspace. */
@@ -3683,7 +3687,9 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the entity. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
     /** An array of objects describing the entity values. */
@@ -3764,7 +3770,9 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     new_description?: string;
     /** Any metadata related to the entity. */
-    new_metadata?: Object;
+    new_metadata?: {
+      [key: string]: any;
+    };
     /** Whether to use fuzzy matching for the entity. */
     new_fuzzy_match?: boolean;
     /** An array of objects describing the entity values. */
@@ -3800,7 +3808,9 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Specifies the type of entity value. */
     value_type?: CreateValueConstants.ValueType | string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
@@ -3898,7 +3908,9 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     new_value?: string;
     /** Any metadata related to the entity value. */
-    new_metadata?: Object;
+    new_metadata?: {
+      [key: string]: any;
+    };
     /** Specifies the type of entity value. */
     new_value_type?: UpdateValueConstants.ValueType | string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
@@ -4038,9 +4050,13 @@ namespace AssistantV1 {
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
-    context?: Object;
+    context?: {
+      [key: string]: any;
+    };
     /** The metadata for the dialog node. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
@@ -4184,9 +4200,13 @@ namespace AssistantV1 {
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
     new_output?: DialogNodeOutput;
     /** The context for the dialog node. */
-    new_context?: Object;
+    new_context?: {
+      [key: string]: any;
+    };
     /** The metadata for the dialog node. */
-    new_metadata?: Object;
+    new_metadata?: {
+      [key: string]: any;
+    };
     /** The next step to execute following this dialog node. */
     new_next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
@@ -4349,7 +4369,9 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the entity. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
     /** The timestamp for creation of the object. */
@@ -4379,7 +4401,9 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Specifies the type of entity value. */
     value_type?: string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
@@ -4407,9 +4431,13 @@ namespace AssistantV1 {
     /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant/dialog-overview.html#dialog-overview-responses). */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
-    context?: Object;
+    context?: {
+      [key: string]: any;
+    };
     /** The metadata for the dialog node. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
     /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. - It must be no longer than 64 characters. */
@@ -4445,7 +4473,9 @@ namespace AssistantV1 {
     /** The type of action to invoke. */
     action_type?: string;
     /** A map of key/value pairs to be provided to the action. */
-    parameters?: Object;
+    parameters?: {
+      [key: string]: any;
+    };
     /** The location in the dialog context where the result of the action is stored. */
     result_variable: string;
     /** The name of the context variable that the client application will use to pass in credentials for the action. */
@@ -4581,7 +4611,9 @@ namespace AssistantV1 {
     /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. */
     value: DialogSuggestionValue;
     /** The dialog output that will be returned from the Watson Assistant service if the user selects the corresponding option. */
-    output?: Object;
+    output?: {
+      [key: string]: any;
+    };
     /** The ID of the dialog node that the **label** property is taken from. The **label** property is populated using the value of the dialog node's **user_label** property. */
     dialog_node?: string;
   }
@@ -4603,7 +4635,9 @@ namespace AssistantV1 {
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters, and it must be no longer than 128 characters. */
     description?: string;
     /** Any metadata related to the entity. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Whether to use fuzzy matching for the entity. */
     fuzzy_match?: boolean;
     /** The timestamp for creation of the object. */
@@ -4831,7 +4865,9 @@ namespace AssistantV1 {
     /** A decimal percentage that represents Watson's confidence in the entity. */
     confidence?: number;
     /** Any metadata for the entity. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
     /** RuntimeEntity accepts additional properties. */
@@ -4877,7 +4913,9 @@ namespace AssistantV1 {
     /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
     value: string;
     /** Any metadata related to the entity value. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Specifies the type of entity value. */
     value_type: string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. - It must be no longer than 64 characters. */
@@ -4907,7 +4945,9 @@ namespace AssistantV1 {
     /** The language of the workspace. */
     language: string;
     /** Any metadata related to the workspace. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
     learning_opt_out: boolean;
     /** Global settings for the workspace. */
@@ -4945,7 +4985,9 @@ namespace AssistantV1 {
     /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
-    human_agent_assist?: Object;
+    human_agent_assist?: {
+      [key: string]: any;
+    };
   }
 
   /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */

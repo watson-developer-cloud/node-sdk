@@ -348,7 +348,9 @@ namespace AssistantV2 {
     /** The type of action to invoke. */
     action_type?: string;
     /** A map of key/value pairs to be provided to the action. */
-    parameters?: Object;
+    parameters?: {
+      [key: string]: any;
+    };
     /** The location in the dialog context where the result of the action is stored. */
     result_variable: string;
     /** The name of the context variable that the client application will use to pass in credentials for the action. */
@@ -414,7 +416,9 @@ namespace AssistantV2 {
     /** An object defining the message input to be sent to the assistant if the user selects the corresponding disambiguation option. */
     value: DialogSuggestionValue;
     /** The dialog output that will be returned from the Watson Assistant service if the user selects the corresponding option. */
-    output?: Object;
+    output?: {
+      [key: string]: any;
+    };
   }
 
   /** An object defining the message input to be sent to the assistant if the user selects the corresponding disambiguation option. */
@@ -494,7 +498,9 @@ namespace AssistantV2 {
     /** Additional detailed information about a message response and how it was generated. */
     debug?: MessageOutputDebug;
     /** An object containing any custom properties included in the response. This object includes any arbitrary properties defined in the dialog JSON editor as part of the dialog node output. */
-    user_defined?: Object;
+    user_defined?: {
+      [key: string]: any;
+    };
   }
 
   /** Additional detailed information about a message response and how it was generated. */
@@ -528,7 +534,9 @@ namespace AssistantV2 {
     /** A decimal percentage that represents Watson's confidence in the entity. */
     confidence?: number;
     /** Any metadata for the entity. */
-    metadata?: Object;
+    metadata?: {
+      [key: string]: any;
+    };
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
   }

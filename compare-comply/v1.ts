@@ -1396,7 +1396,9 @@ namespace CompareComplyV1 {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The location of the column header cell in the current table as defined by its `begin` and `end` offsets, respectfully, in the input document. */
-    location?: Object;
+    location?: {
+      [key: string]: any;
+    };
     /** The textual contents of this cell from the input document without associated markup content. */
     text?: string;
     /** If you provide customization input, the normalized version of the cell text according to the customization; otherwise, the same value as `text`. */
@@ -1800,7 +1802,9 @@ namespace CompareComplyV1 {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The location of the table header cell in the current table as defined by its `begin` and `end` offsets, respectfully, in the input document. */
-    location?: Object;
+    location?: {
+      [key: string]: any;
+    };
     /** The textual contents of the cell from the input document without associated markup content. */
     text?: string;
     /** The `begin` index of this cell's `row` location in the current table. */
