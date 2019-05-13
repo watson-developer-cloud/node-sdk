@@ -118,7 +118,7 @@
     "test-unit": "jest --silent --verbose test/unit/",
     "test": "jest --silent --verbose test/",
     "test-unit-travis": "jest --silent --runInBand test/unit/",
-    "test-travis": "jest --silent --runInBand --testNamePattern='^((?!@slow).)*$' test/",
+    "test-integration-travis": "jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' --json test/integration > test-output.log",
     "report-coverage": "codecov",
     "watch-doc": "nodemon --watch ./ --ext js,tmpl,json --ignore dist/ --ignore doc/ --ignore test/ --ignore examples/ --exec npm run doc",
     "watch": "npm run test-unit -- --watch",

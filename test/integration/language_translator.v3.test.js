@@ -5,6 +5,7 @@ const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
+const serviceErrorUtils = require('../resources/service_error_util');
 
 // todo: figure out why these started all failing with Not Authorized
 describe('language_translator_integration', function() {
@@ -14,7 +15,7 @@ describe('language_translator_integration', function() {
   const language_translator = new LanguageTranslatorV3(auth.language_translator);
 
   it('listModels()', function(done) {
-    language_translator.listModels(null, done);
+    language_translator.listModels(null, serviceErrorUtils.checkErrorCode(200, done));
   });
 
   it('translate()', function(done) {
@@ -23,17 +24,20 @@ describe('language_translator_integration', function() {
       source: 'en',
       target: 'es',
     };
-    language_translator.translate(params, done);
+    language_translator.translate(params, serviceErrorUtils.checkErrorCode(200, done));
   });
 
   it('listIdentifiableLanguages()', function(done) {
-    language_translator.listIdentifiableLanguages(null, done);
+    language_translator.listIdentifiableLanguages(
+      null,
+      serviceErrorUtils.checkErrorCode(200, done)
+    );
   });
 
   it('identify()', function(done) {
     const params = {
       text: 'this is an important test that needs to work',
     };
-    language_translator.identify(params, done);
+    language_translator.identify(params, serviceErrorUtils.checkErrorCode(200, done));
   });
 });

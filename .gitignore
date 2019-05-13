@@ -42,3 +42,5 @@ sdk.js
 **/*.js.map
 coverage.lcov
 .swagger-codegen-ignore
+*.log
+*.tmp

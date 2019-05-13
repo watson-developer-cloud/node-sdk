@@ -7,6 +7,7 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 const async = require('async');
 const fs = require('fs');
 const path = require('path');
+const serviceErrorUtils = require('../resources/service_error_util');
 
 const THIRTY_SECONDS = 30000;
 
@@ -26,31 +27,40 @@ describe('discovery_integration', function() {
   );
 
   it('should listEnvironments()', function(done) {
-    discovery.listEnvironments(null, function(err, res) {
-      expect(err).toBeNull();
-      expect(Array.isArray(res.environments)).toBe(true);
-      const environment_ids = res.environments.map(e => e.environment_id);
-      expect(environment_ids.indexOf(environment_id) > -1).toBe(true);
-      done();
-    });
+    discovery.listEnvironments(
+      null,
+      serviceErrorUtils.checkErrorCode(200, function(err, res) {
+        expect(err).toBeNull();
+        expect(Array.isArray(res.environments)).toBe(true);
+        const environment_ids = res.environments.map(e => e.environment_id);
+        expect(environment_ids.indexOf(environment_id) > -1).toBe(true);
+        done();
+      })
+    );
   });
 
   it('should getEnvironment()', function(done) {
-    discovery.getEnvironment({ environment_id: environment_id }, function(err, env) {
-      expect(err).toBeNull();
-      expect(env).toBeDefined();
-      expect(env.environment_id).toBe(environment_id);
-      done();
-    });
+    discovery.getEnvironment(
+      { environment_id: environment_id },
+      serviceErrorUtils.checkErrorCode(200, function(err, env) {
+        expect(err).toBeNull();
+        expect(env).toBeDefined();
+        expect(env.environment_id).toBe(environment_id);
+        done();
+      })
+    );
   });
 
   it('should listConfigurations()', function(done) {
-    discovery.listConfigurations({ environment_id: environment_id }, function(err, res) {
-      expect(err).toBeNull();
-      expect(Array.isArray(res.configurations)).toBeDefined();
-      expect(res.configurations[0]).toBeDefined();
-      done();
-    });
+    discovery.listConfigurations(
+      { environment_id: environment_id },
+      serviceErrorUtils.checkErrorCode(200, function(err, res) {
+        expect(err).toBeNull();
+        expect(Array.isArray(res.configurations)).toBeDefined();
+        expect(res.configurations[0]).toBeDefined();
+        done();
+      })
+    );
   });
 
   it('should getConfiguration()', function(done) {
@@ -59,12 +69,12 @@ describe('discovery_integration', function() {
         environment_id: environment_id,
         configuration_id: configuration_id,
       },
-      function(err, conf) {
+      serviceErrorUtils.checkErrorCode(200, function(err, conf) {
         expect(err).toBeNull();
         expect(conf).toBeDefined();
         expect(conf.configuration_id).toBe(configuration_id);
         done();
-      }
+      })
     );
   });
 
@@ -96,13 +106,13 @@ describe('discovery_integration', function() {
         environment_id: environment_id,
         configuration_id: configuration_id,
       },
-      function(err, res) {
+      serviceErrorUtils.checkErrorCode(200, function(err, res) {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         // console.log(res);
         expect(Array.isArray(res.collections)).toBeDefined();
         done(err);
-      }
+      })
     );
   });
 
@@ -117,12 +127,12 @@ describe('discovery_integration', function() {
         sort: ['+field_1', '-field_2'],
         natural_language_query: 'a question about stuff and things',
       },
-      function(err, res) {
+      serviceErrorUtils.checkErrorCode(200, function(err, res) {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         expect(Array.isArray(res.results)).toBeDefined();
         done(err);
-      }
+      })
     );
   });
 
@@ -135,11 +145,14 @@ describe('discovery_integration', function() {
         filename: 'sampleWord.docx',
       };
 
-      discovery.addDocument(document_obj, function(err, response) {
-        expect(err).toBeNull();
-        expect(response.document_id).toBeDefined();
-        done(err);
-      });
+      discovery.addDocument(
+        document_obj,
+        serviceErrorUtils.checkErrorCode(200, function(err, response) {
+          expect(err).toBeNull();
+          expect(response.document_id).toBeDefined();
+          done(err);
+        })
+      );
     });
 
     it('addDocument()', function(done) {
@@ -160,11 +173,14 @@ describe('discovery_integration', function() {
         },
       };
 
-      discovery.addDocument(document_obj, function(err, response) {
-        expect(err).toBeNull();
-        expect(response.document_id).toBeDefined();
-        done(err);
-      });
+      discovery.addDocument(
+        document_obj,
+        serviceErrorUtils.checkErrorCode(200, function(err, response) {
+          expect(err).toBeNull();
+          expect(response.document_id).toBeDefined();
+          done(err);
+        })
+      );
     });
 
     it('query()', function(done) {
@@ -174,13 +190,13 @@ describe('discovery_integration', function() {
           collection_id: collection_id,
           query: '',
         },
-        function(err, res) {
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
           expect(err).toBeNull();
           expect(res).toBeDefined();
           expect(typeof res.matching_results).toBe('number');
           expect(Array.isArray(res.results)).toBe(true);
           done(err);
-        }
+        })
       );
     });
 
@@ -191,7 +207,7 @@ describe('discovery_integration', function() {
           collection_id: collection_id,
           query: '',
         },
-        function(err, res) {
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
           expect(err).toBeNull();
           async.eachSeries(
             res.results,
@@ -203,15 +219,15 @@ describe('discovery_integration', function() {
                   collection_id: collection_id,
                   document_id: doc.id,
                 },
-                function(err, res) {
+                serviceErrorUtils.checkErrorCode(200, function(err, res) {
                   // console.log('deleted', err, res);
                   next(err);
-                }
+                })
               );
             },
             done
           );
-        }
+        })
       );
     });
   });
@@ -321,7 +337,9 @@ describe('discovery_integration', function() {
       };
 
       discovery.addDocument(addDocParams, function(error, response) {
-        if (error) done(error);
+        if (error) {
+          done(error.code);
+        }
         document_id = response.document_id;
 
         const queryParams = {
@@ -350,17 +368,20 @@ describe('discovery_integration', function() {
         },
       };
 
-      discovery.createEvent(createEventParams, function(err, res) {
-        expect(err).toBeNull();
-        expect(res.type).toBe(type);
-        expect(res.data.environment_id).toBe(environment_id);
-        expect(res.data.collection_id).toBe(collection_id);
-        expect(res.data.document_id).toBe(document_id);
-        expect(res.data.session_token).toBe(session_token);
-        expect(res.data.result_type).toBeDefined();
-        expect(res.data.query_id).toBeDefined();
-        done();
-      });
+      discovery.createEvent(
+        createEventParams,
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          expect(res.type).toBe(type);
+          expect(res.data.environment_id).toBe(environment_id);
+          expect(res.data.collection_id).toBe(collection_id);
+          expect(res.data.document_id).toBe(document_id);
+          expect(res.data.session_token).toBe(session_token);
+          expect(res.data.result_type).toBeDefined();
+          expect(res.data.query_id).toBeDefined();
+          done();
+        })
+      );
     });
 
     afterAll(function(done) {
@@ -377,59 +398,70 @@ describe('discovery_integration', function() {
 
   describe('metrics tests', function() {
     it('should get metrics event rate', function(done) {
-      discovery.getMetricsEventRate(function(err, res) {
-        expect(err).toBeNull();
-        expect(res.aggregations).toBeDefined();
-        expect(Array.isArray(res.aggregations)).toBe(true);
-        expect(res.aggregations[0].results).toBeDefined();
-        expect(Array.isArray(res.aggregations[0].results)).toBe(true);
-        expect(res.aggregations[0].results[0].event_rate).toBeDefined();
-        done();
-      });
+      discovery.getMetricsEventRate(
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          expect(res.aggregations).toBeDefined();
+          expect(Array.isArray(res.aggregations)).toBe(true);
+          expect(res.aggregations[0].results).toBeDefined();
+          expect(Array.isArray(res.aggregations[0].results)).toBe(true);
+          expect(res.aggregations[0].results[0].event_rate).toBeDefined();
+          done();
+        })
+      );
     });
     it('should get metrics query', function(done) {
-      discovery.getMetricsQuery(function(err, res) {
-        expect(err).toBeNull();
-        expect(res.aggregations).toBeDefined();
-        expect(Array.isArray(res.aggregations)).toBe(true);
-        expect(res.aggregations[0].results).toBeDefined();
-        expect(Array.isArray(res.aggregations[0].results)).toBe(true);
-        expect(res.aggregations[0].results[0].matching_results).toBeDefined();
-        done();
-      });
+      discovery.getMetricsQuery(
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          expect(res.aggregations).toBeDefined();
+          expect(Array.isArray(res.aggregations)).toBe(true);
+          expect(res.aggregations[0].results).toBeDefined();
+          expect(Array.isArray(res.aggregations[0].results)).toBe(true);
+          expect(res.aggregations[0].results[0].matching_results).toBeDefined();
+          done();
+        })
+      );
     });
     it('should get metrics query event', function(done) {
-      discovery.getMetricsQueryEvent(function(err, res) {
-        expect(err).toBeNull();
-        expect(res.aggregations).toBeDefined();
-        done();
-      });
+      discovery.getMetricsQueryEvent(
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          expect(res.aggregations).toBeDefined();
+          done();
+        })
+      );
     });
     it('should get metrics query no results', function(done) {
-      discovery.getMetricsQueryNoResults(function(err, res) {
-        expect(err).toBeNull();
-        expect(res.aggregations).toBeDefined();
-        expect(Array.isArray(res.aggregations)).toBe(true);
-        expect(res.aggregations[0].results).toBeDefined();
-        expect(Array.isArray(res.aggregations[0].results)).toBe(true);
-        expect(res.aggregations[0].results[0].matching_results).toBeDefined();
-        done();
-      });
+      discovery.getMetricsQueryNoResults(
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          expect(res.aggregations).toBeDefined();
+          expect(Array.isArray(res.aggregations)).toBe(true);
+          expect(res.aggregations[0].results).toBeDefined();
+          expect(Array.isArray(res.aggregations[0].results)).toBe(true);
+          expect(res.aggregations[0].results[0].matching_results).toBeDefined();
+          done();
+        })
+      );
     });
     it('should get metrics query token event', function(done) {
       const count = 2;
       const params = { count };
-      discovery.getMetricsQueryTokenEvent(params, function(err, res) {
-        expect(err).toBeNull();
-        expect(res.aggregations).toBeDefined();
-        expect(Array.isArray(res.aggregations)).toBe(true);
-        expect(res.aggregations[0].results).toBeDefined();
-        expect(Array.isArray(res.aggregations[0].results)).toBe(true);
-        expect(res.aggregations[0].results.length).toBe(count);
-        expect(res.aggregations[0].results[0].event_rate).toBeDefined();
-        done();
-      });
-    });
+      discovery.getMetricsQueryTokenEvent(
+        params,
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          expect(res.aggregations).toBeDefined();
+          expect(Array.isArray(res.aggregations)).toBe(true);
+          expect(res.aggregations[0].results).toBeDefined();
+          expect(Array.isArray(res.aggregations[0].results)).toBe(true);
+          expect(res.aggregations[0].results.length).toBe(count);
+          expect(res.aggregations[0].results[0].event_rate).toBeDefined();
+          done();
+        })
+      );
+    }, 40000);
   });
 
   describe('logs tests', function() {
@@ -442,12 +474,15 @@ describe('discovery_integration', function() {
         filter,
         sort: ['created_timestamp'],
       };
-      discovery.queryLog(params, function(err, res) {
-        expect(err).toBeNull();
-        expect(res.matching_results).toBeDefined();
-        expect(res.results).toBeDefined();
-        done();
-      });
+      discovery.queryLog(
+        params,
+        serviceErrorUtils.checkErrorCode(200, function(err, res) {
+          expect(err).toBeNull();
+          expect(res.matching_results).toBeDefined();
+          expect(res.results).toBeDefined();
+          done();
+        })
+      );
     });
   });
 
@@ -509,35 +544,44 @@ describe('discovery_integration', function() {
         stopword_file: fs.createReadStream(path.join(__dirname, '../resources/stopwords.txt')),
         stopword_filename: 'stopwords.txt',
       };
-      discovery.createStopwordList(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.type).toBeDefined();
-        expect(res.status).toBeDefined();
-        done();
-      });
+      discovery.createStopwordList(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.type).toBeDefined();
+          expect(res.status).toBeDefined();
+          done();
+        })
+      );
     });
     it('should getStopwordListStatus', function(done) {
       const params = {
         environment_id,
         collection_id,
       };
-      discovery.getStopwordListStatus(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.type).toBeDefined();
-        expect(res.status).toBeDefined();
-        done();
-      });
+      discovery.getStopwordListStatus(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.type).toBeDefined();
+          expect(res.status).toBeDefined();
+          done();
+        })
+      );
     });
     it('should deleteStopwordList', function(done) {
       const params = {
         environment_id,
         collection_id,
       };
-      discovery.deleteStopwordList(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res).toBe('');
-        done();
-      });
+      discovery.deleteStopwordList(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res).toBe('');
+          done();
+        })
+      );
     });
   });
   describe('gateways tests', function() {
@@ -547,57 +591,78 @@ describe('discovery_integration', function() {
         environment_id,
         name: 'node-sdk-test',
       };
-      discovery.createGateway(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.name).toBeDefined();
-        expect(res.status).toBeDefined();
-        expect(res.token_id).toBeDefined();
-        expect(res.token).toBeDefined();
-        expect(res.gateway_id).toBeDefined();
+      discovery.createGateway(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.name).toBeDefined();
+          expect(res.status).toBeDefined();
+          expect(res.token_id).toBeDefined();
+          expect(res.token).toBeDefined();
+          expect(res.gateway_id).toBeDefined();
 
-        gateway_id = res.gateway_id;
+          gateway_id = res.gateway_id;
 
-        done();
-      });
+          done();
+        })
+      );
     });
     it('should getGateway', function(done) {
+      if (!gateway_id) {
+        // We cannot run this test when gateway creation failed.
+        return done();
+      }
+
       const params = {
         environment_id,
         gateway_id,
       };
-      discovery.getGateway(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.name).toBeDefined();
-        expect(res.status).toBeDefined();
-        expect(res.token_id).toBeDefined();
-        expect(res.token).toBeDefined();
-        expect(res.gateway_id).toBeDefined();
-        done();
-      });
+      discovery.getGateway(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.name).toBeDefined();
+          expect(res.status).toBeDefined();
+          expect(res.token_id).toBeDefined();
+          expect(res.token).toBeDefined();
+          expect(res.gateway_id).toBeDefined();
+          done();
+        })
+      );
     });
     it('should listGateways', function(done) {
       const params = {
         environment_id,
       };
-      discovery.listGateways(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.gateways).toBeDefined();
-        expect(res.gateways.length).toBeTruthy();
-        done();
-      });
-    });
+      discovery.listGateways(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.gateways).toBeDefined();
+          expect(res.gateways.length).toBeTruthy();
+          done();
+        })
+      );
+    }, 60000);
     it('should deleteGateway', function(done) {
+      if (!gateway_id) {
+        // We cannot run this test when gateway creation failed.
+        return done();
+      }
       const params = {
         environment_id,
         gateway_id,
       };
-      discovery.deleteGateway(params, (err, res) => {
-        expect(err).toBeNull();
-        expect(res.gateway_id).toBeDefined();
-        expect(res.status).toBeDefined();
-        expect(res.status).toBe('deleted');
-        done();
-      });
+      discovery.deleteGateway(
+        params,
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          expect(err).toBeNull();
+          expect(res.gateway_id).toBeDefined();
+          expect(res.status).toBeDefined();
+          expect(res.status).toBe('deleted');
+          done();
+        })
+      );
     });
   });
 });
