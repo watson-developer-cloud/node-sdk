@@ -1,3 +1,10 @@
+## [4.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.0...v4.1.1) (2019-05-13)
+
+
+### Bug Fixes
+
+* do not read credentials file in browser ([718895c](https://github.com/watson-developer-cloud/node-sdk/commit/718895c))
+
 # [4.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.0.2...v4.1.0) (2019-04-29)
 
 
