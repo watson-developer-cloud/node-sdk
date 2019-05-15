@@ -11,6 +11,7 @@ Node.js client library to use the Watson APIs.
 
 <details>
   <summary>Table of Contents</summary>
+  
   * [Before you begin](#before-you-begin)
   * [Installation](#installation)
   * [Usage](#usage)
