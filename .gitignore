@@ -44,3 +44,5 @@ coverage.lcov
 .swagger-codegen-ignore
 *.log
 *.tmp
+.pre-commit-config.yaml
+.secrets.baseline
