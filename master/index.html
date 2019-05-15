@@ -319,7 +319,7 @@ assistant.message(params)
 				<p>Tokens are valid for 1 hour and may be sent using the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param.
 				Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.</p>
 				<blockquote>
-					<p><em>NOTE</em>: Authenticating with the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see <a href="https://console.bluemix.net/docs/services/watson/getting-started-iam.html#iam">Authenticating with IAM tokens</a> or the README in the IBM Watson SDK you use.
+					<p><em>NOTE</em>: Authenticating with the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see <a href="https://cloud.ibm.com/docs/services/watson?topic=watson-iam#iam">Authenticating with IAM tokens</a> or the README in the IBM Watson SDK you use.
 					The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.</p>
 				</blockquote>
 				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> watson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson'</span>);
