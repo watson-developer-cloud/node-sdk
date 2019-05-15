@@ -10,7 +10,7 @@ require('dotenv').load({ silent: true }); // imports environment properties from
 
 var textToSpeech = new TextToSpeechV1({
   // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
-  // environment properties, and then Bluemix's VCAP_SERVICES environment property
+  // environment properties, and then IBM Cloud's VCAP_SERVICES environment property
   // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
   // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
 });

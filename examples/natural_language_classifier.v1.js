@@ -15,7 +15,7 @@ var classifier = new NaturalLanguageClassifierV1({
   url: '<service_url>',
   version: '<version-date>',
   iam_apikey: '<iam_api_key>',
-  iam_url: '<iam_url>', // optional - the default value is https://iam.bluemix.net/identity/token
+  iam_url: '<iam_url>', // optional - the default value is https://iam.cloud.ibm.com/identity/token
 }); */
 
 // Creating a classifier

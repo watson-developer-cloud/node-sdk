@@ -75,7 +75,7 @@ personalityInsights.profile(
 
 /*
  * CSV output example:
- * https://console.bluemix.net/docs/services/personality-insights/output-csv.html#outputCSV
+ * https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-outputCSV#outputCSV
  */
 personalityInsights
   .profileAsCsv(

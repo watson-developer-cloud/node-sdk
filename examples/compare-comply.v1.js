@@ -5,7 +5,7 @@ const CompareComplyV1 = require('ibm-watson/compare-comply/v1');
 
 const compareComply = new CompareComplyV1({
   // if left unspecified here, the SDK will fall back to the COMPARE_COMPLY_IAM_APIKEY
-  // environment property, and then Bluemix's VCAP_SERVICES environment property
+  // environment property, and then IBM Cloud's VCAP_SERVICES environment property
   iam_apikey: 'YOUR APIKEY',
   url: 'https://gateway.watsonplatform.net/compare-comply/api',
   version: '2018-12-06'
