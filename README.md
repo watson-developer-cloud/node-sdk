@@ -11,7 +11,7 @@ Node.js client library to use the Watson APIs.
 
 <details>
   <summary>Table of Contents</summary>
-  
+
   * [Before you begin](#before-you-begin)
   * [Installation](#installation)
   * [Usage](#usage)
@@ -786,12 +786,12 @@ var assistant = new watson.AssistantV1({
 
 ## Debug
 
-This library relies on the `request` npm module writted by
-[request][request_github] to call the Watson Services. To debug the apps, add
-'request' to the `NODE_DEBUG` environment variable:
+This library relies on the `axios` npm module written by
+[axios](https://github.com/axios/axios) to call the Watson Services. To debug the apps, add
+'axios' to the `NODE_DEBUG` environment variable:
 
 ```sh
-$ NODE_DEBUG='request' node app.js
+$ NODE_DEBUG='axios' node app.js
 ```
 where `app.js` is your Node.js file.
 

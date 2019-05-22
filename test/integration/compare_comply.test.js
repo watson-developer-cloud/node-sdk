@@ -69,7 +69,7 @@ describe('compare_comply_integration', () => {
           done();
         })
       );
-    });
+    }, 10000);
   });
 
   describe('comparison', () => {
