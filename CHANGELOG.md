@@ -1,3 +1,10 @@
+## [4.1.2](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.1...v4.1.2) (2019-05-22)
+
+
+### Bug Fixes
+
+* enable axios debug, disable gzip ([4e86717](https://github.com/watson-developer-cloud/node-sdk/commit/4e86717))
+
 ## [4.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.0...v4.1.1) (2019-05-13)
 
 
