@@ -1,3 +1,11 @@
+## [4.1.3](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.2...v4.1.3) (2019-05-24)
+
+
+### Bug Fixes
+
+* don't return request object in detailed response ([31628ff](https://github.com/watson-developer-cloud/node-sdk/commit/31628ff))
+* don't return request object in detailed response ([#891](https://github.com/watson-developer-cloud/node-sdk/issues/891)) ([9f9174c](https://github.com/watson-developer-cloud/node-sdk/commit/9f9174c))
+
 ## [4.1.2](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.1...v4.1.2) (2019-05-22)
 
 
