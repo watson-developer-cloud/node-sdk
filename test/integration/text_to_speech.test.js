@@ -105,8 +105,6 @@ describe('text_to_speech_integration', function() {
           expect(response.headers).toBeDefined();
           expect(response.status).toBeDefined();
           expect(response.statusText).toBeDefined();
-          expect(response.request).toBeDefined();
-          expect(response.config).toBeDefined();
           done();
         })
         .catch(serviceErrorUtils.checkErrorCode(200, err => done(err)));
