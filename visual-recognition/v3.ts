@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { FileObject } from 'ibm-cloud-sdk-core';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -39,9 +38,18 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
-   * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
+   * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
+   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
+   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
+   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {VisualRecognitionV3}
    * @throws {Error}
@@ -97,7 +105,7 @@ class VisualRecognitionV3 extends BaseService {
    * - `explicit`: Evaluates whether the image might be pornographic.
    * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
    * details.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -154,10 +162,10 @@ class VisualRecognitionV3 extends BaseService {
    * **Important:** On April 2, 2018, the identity information in the response to calls to the Face model was removed.
    * The identity information refers to the `name` of the person, `score`, and `type_hierarchy` knowledge graph. For
    * details about the enhanced Face model, see the [Release
-   * notes](https://cloud.ibm.com/docs/services/visual-recognition/release-notes.html#2april2018).
+   * notes](https://cloud.ibm.com/docs/services/visual-recognition?topic=visual-recognition-release-notes#2april2018).
    *
    * Analyze and get data about faces in images. Responses can include estimated age and gender. This feature uses a
-   * built-in model, so no training is necessary. The Detect faces method does not support general biometric facial
+   * built-in model, so no training is necessary. The **Detect faces** method does not support general biometric facial
    * recognition.
    *
    * Supported image formats include .gif, .jpg, .png, and .tif. The maximum image size is 10 MB. The minimum
@@ -181,7 +189,7 @@ class VisualRecognitionV3 extends BaseService {
    * You can also include images with the **images_file** parameter.
    * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
    * details.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -257,7 +265,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -319,7 +327,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -370,7 +378,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -420,7 +428,7 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to
    * return a brief list of classifiers.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -463,7 +471,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * Update a custom classifier by adding new positive or negative classes or by adding new images to existing classes.
    * You must supply at least one set of positive or negative examples. For details, see [Updating custom
-   * classifiers](https://cloud.ibm.com/docs/services/visual-recognition/customizing.html#updating-custom-classifiers).
+   * classifiers](https://cloud.ibm.com/docs/services/visual-recognition?topic=visual-recognition-customizing#updating-custom-classifiers).
    *
    * Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class
    * names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.
@@ -491,7 +499,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -564,7 +572,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -621,11 +629,11 @@ class VisualRecognitionV3 extends BaseService {
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://cloud.ibm.com/docs/services/visual-recognition/information-security.html).
+   * security](https://cloud.ibm.com/docs/services/visual-recognition?topic=visual-recognition-information-security).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -687,17 +695,37 @@ namespace VisualRecognitionV3 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
+
+  /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
+  export interface JsonObject {
+    [key: string]: any;
+  }
 
   /*************************
    * request interfaces
@@ -721,7 +749,7 @@ namespace VisualRecognitionV3 {
     classifier_ids?: string[];
     /** The desired language of parts of the response. See the response for details. */
     accept_language?: ClassifyConstants.AcceptLanguage | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -755,7 +783,7 @@ namespace VisualRecognitionV3 {
     url?: string;
     /** The desired language of parts of the response. See the response for details. */
     accept_language?: DetectFacesConstants.AcceptLanguage | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -787,7 +815,7 @@ namespace VisualRecognitionV3 {
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -795,7 +823,7 @@ namespace VisualRecognitionV3 {
   export interface DeleteClassifierParams {
     /** The ID of the classifier. */
     classifier_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -803,7 +831,7 @@ namespace VisualRecognitionV3 {
   export interface GetClassifierParams {
     /** The ID of the classifier. */
     classifier_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -811,7 +839,7 @@ namespace VisualRecognitionV3 {
   export interface ListClassifiersParams {
     /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. */
     verbose?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -825,7 +853,7 @@ namespace VisualRecognitionV3 {
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -833,7 +861,7 @@ namespace VisualRecognitionV3 {
   export interface GetCoreMlModelParams {
     /** The ID of the classifier. */
     classifier_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -841,7 +869,7 @@ namespace VisualRecognitionV3 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 

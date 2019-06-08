@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { FileObject } from 'ibm-cloud-sdk-core';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -40,9 +39,18 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
-   * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
+   * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
+   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
+   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
+   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {SpeechToTextV1}
    */
@@ -65,7 +73,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - The identifier of the model in the form of its name from the output of the **Get
    * a model** method.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -118,7 +126,7 @@ class SpeechToTextV1 extends BaseService {
    * **See also:** [Languages and models](https://cloud.ibm.com/docs/services/speech-to-text/models.html).
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -336,7 +344,7 @@ class SpeechToTextV1 extends BaseService {
    * See [Numeric redaction](https://cloud.ibm.com/docs/services/speech-to-text/output.html#redaction).
    * @param {string} [params.content_type] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -422,7 +430,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The identifier of the asynchronous job that is to be used for the request. You must
    * make the request with credentials for the instance of the service that owns the job.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -480,7 +488,7 @@ class SpeechToTextV1 extends BaseService {
    * jobs](https://cloud.ibm.com/docs/services/speech-to-text/async.html#jobs).
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -730,7 +738,7 @@ class SpeechToTextV1 extends BaseService {
    * See [Numeric redaction](https://cloud.ibm.com/docs/services/speech-to-text/output.html#redaction).
    * @param {string} [params.content_type] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -810,7 +818,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The identifier of the asynchronous job that is to be used for the request. You must
    * make the request with credentials for the instance of the service that owns the job.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -892,7 +900,7 @@ class SpeechToTextV1 extends BaseService {
    * signature that it sends via the `X-Callback-Signature` header. The service includes the header during URL
    * verification and with every notification sent to the callback URL. It calculates the signature over the payload of
    * the notification. If you omit the parameter, the service does not send the header.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -948,7 +956,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.callback_url - The callback URL that is to be unregistered.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1026,7 +1034,7 @@ class SpeechToTextV1 extends BaseService {
    * model; for example, `en-US` for either of the US English language models.
    * @param {string} [params.description] - A description of the new custom language model. Use a localized description
    * that matches the language of the custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1088,7 +1096,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1145,7 +1153,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1204,7 +1212,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
    * models that are owned by the requesting credentials.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1257,7 +1265,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1421,7 +1429,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1531,7 +1539,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {boolean} [params.allow_overwrite] - If `true`, the specified corpus overwrites an existing corpus with the
    * same name. If `false`, the request fails if a corpus with the same name already exists. The parameter has no effect
    * if a corpus with the same name does not already exist.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1606,7 +1614,7 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {string} params.corpus_name - The name of the corpus for the custom language model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1666,7 +1674,7 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {string} params.corpus_name - The name of the corpus for the custom language model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1725,7 +1733,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1832,7 +1840,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.display_as] - An alternative spelling for the custom word when it appears in a transcript.
    * Use the parameter when you want the word to have a spelling that is different from its usual representation or from
    * its spelling in corpora training data.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1938,7 +1946,7 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {CustomWord[]} params.words - An array of `CustomWord` objects that provides information about each custom
    * word that is to be added to or updated in the custom language model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2006,8 +2014,8 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.word_name - The custom word that is to be deleted from the custom language model. URL-encode
    * the word if it includes non-ASCII characters. For more information, see [Character
-   * encoding](https://cloud.ibm.com/docs/services/speech-to-text/language-resource.html#charEncoding).
-   * @param {Object} [params.headers] - Custom request headers
+   * encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2067,8 +2075,8 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.word_name - The custom word that is to be read from the custom language model. URL-encode
    * the word if it includes non-ASCII characters. For more information, see [Character
-   * encoding](https://cloud.ibm.com/docs/services/speech-to-text/language-resource.html#charEncoding).
-   * @param {Object} [params.headers] - Custom request headers
+   * encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2141,7 +2149,7 @@ class SpeechToTextV1 extends BaseService {
    * ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count
    * ordering, values with the same count are ordered alphabetically. With the `curl` command, URL encode the `+` symbol
    * as `%2B`.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2250,7 +2258,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {boolean} [params.allow_overwrite] - If `true`, the specified grammar overwrites an existing grammar with
    * the same name. If `false`, the request fails if a grammar with the same name already exists. The parameter has no
    * effect if a grammar with the same name does not already exist.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2320,7 +2328,7 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {string} params.grammar_name - The name of the grammar for the custom language model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2379,7 +2387,7 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {string} params.grammar_name - The name of the grammar for the custom language model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2437,7 +2445,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2507,7 +2515,7 @@ class SpeechToTextV1 extends BaseService {
    * customization](https://cloud.ibm.com/docs/services/speech-to-text/custom.html#languageSupport).
    * @param {string} [params.description] - A description of the new custom acoustic model. Use a localized description
    * that matches the language of the custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2568,7 +2576,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2625,7 +2633,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2684,7 +2692,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
    * models that are owned by the requesting credentials.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2737,7 +2745,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2911,8 +2919,8 @@ class SpeechToTextV1 extends BaseService {
    * has been modified since it was last trained. Use this parameter only to force the upgrade of a custom acoustic
    * model that is trained with a custom language model, and only if you receive a 400 response code and the message `No
    * input data modified since last training`. See [Upgrading a custom acoustic
-   * model](https://cloud.ibm.com/docs/services/speech-to-text/custom-upgrade.html#upgradeAcoustic).
-   * @param {Object} [params.headers] - Custom request headers
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-customUpgrade#upgradeAcoustic).
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3088,7 +3096,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * For an archive-type resource, the media type of the archive file. For more information, see **Content types for
    * archive-type resources** in the method description.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3159,7 +3167,7 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3231,7 +3239,7 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3292,7 +3300,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3355,7 +3363,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3415,17 +3423,37 @@ namespace SpeechToTextV1 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
+
+  /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
+  export interface JsonObject {
+    [key: string]: any;
+  }
 
   /*************************
    * request interfaces
@@ -3435,7 +3463,7 @@ namespace SpeechToTextV1 {
   export interface GetModelParams {
     /** The identifier of the model in the form of its name from the output of the **Get a model** method. */
     model_id: GetModelConstants.ModelId | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3468,7 +3496,7 @@ namespace SpeechToTextV1 {
 
   /** Parameters for the `listModels` operation. */
   export interface ListModelsParams {
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3514,7 +3542,7 @@ namespace SpeechToTextV1 {
     redaction?: boolean;
     /** The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the method description. */
     content_type?: RecognizeConstants.ContentType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3568,13 +3596,13 @@ namespace SpeechToTextV1 {
   export interface CheckJobParams {
     /** The identifier of the asynchronous job that is to be used for the request. You must make the request with credentials for the instance of the service that owns the job. */
     id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
   /** Parameters for the `checkJobs` operation. */
   export interface CheckJobsParams {
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3628,7 +3656,7 @@ namespace SpeechToTextV1 {
     redaction?: boolean;
     /** The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio formats (content types)** in the method description. */
     content_type?: CreateJobConstants.ContentType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3689,7 +3717,7 @@ namespace SpeechToTextV1 {
   export interface DeleteJobParams {
     /** The identifier of the asynchronous job that is to be used for the request. You must make the request with credentials for the instance of the service that owns the job. */
     id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3699,7 +3727,7 @@ namespace SpeechToTextV1 {
     callback_url: string;
     /** A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the `X-Callback-Signature` header. The service includes the header during URL verification and with every notification sent to the callback URL. It calculates the signature over the payload of the notification. If you omit the parameter, the service does not send the header. */
     user_secret?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3707,7 +3735,7 @@ namespace SpeechToTextV1 {
   export interface UnregisterCallbackParams {
     /** The callback URL that is to be unregistered. */
     callback_url: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3721,7 +3749,7 @@ namespace SpeechToTextV1 {
     dialect?: string;
     /** A description of the new custom language model. Use a localized description that matches the language of the custom model. */
     description?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3753,7 +3781,7 @@ namespace SpeechToTextV1 {
   export interface DeleteLanguageModelParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3761,7 +3789,7 @@ namespace SpeechToTextV1 {
   export interface GetLanguageModelParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3769,7 +3797,7 @@ namespace SpeechToTextV1 {
   export interface ListLanguageModelsParams {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. */
     language?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3777,7 +3805,7 @@ namespace SpeechToTextV1 {
   export interface ResetLanguageModelParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3806,7 +3834,7 @@ namespace SpeechToTextV1 {
   export interface UpgradeLanguageModelParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3820,7 +3848,7 @@ namespace SpeechToTextV1 {
     corpus_file: NodeJS.ReadableStream|FileObject|Buffer;
     /** If `true`, the specified corpus overwrites an existing corpus with the same name. If `false`, the request fails if a corpus with the same name already exists. The parameter has no effect if a corpus with the same name does not already exist. */
     allow_overwrite?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3830,7 +3858,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The name of the corpus for the custom language model. */
     corpus_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3840,7 +3868,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The name of the corpus for the custom language model. */
     corpus_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3848,7 +3876,7 @@ namespace SpeechToTextV1 {
   export interface ListCorporaParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3864,7 +3892,7 @@ namespace SpeechToTextV1 {
     sounds_like?: string[];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data. */
     display_as?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3874,7 +3902,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** An array of `CustomWord` objects that provides information about each custom word that is to be added to or updated in the custom language model. */
     words: CustomWord[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3884,7 +3912,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The custom word that is to be deleted from the custom language model. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text/language-resource.html#charEncoding). */
     word_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3894,7 +3922,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The custom word that is to be read from the custom language model. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text/language-resource.html#charEncoding). */
     word_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3906,7 +3934,7 @@ namespace SpeechToTextV1 {
     word_type?: ListWordsConstants.WordType | string;
     /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With the `curl` command, URL encode the `+` symbol as `%2B`. */
     sort?: ListWordsConstants.Sort | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3938,7 +3966,7 @@ namespace SpeechToTextV1 {
     content_type: AddGrammarConstants.ContentType | string;
     /** If `true`, the specified grammar overwrites an existing grammar with the same name. If `false`, the request fails if a grammar with the same name already exists. The parameter has no effect if a grammar with the same name does not already exist. */
     allow_overwrite?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3957,7 +3985,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The name of the grammar for the custom language model. */
     grammar_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3967,7 +3995,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The name of the grammar for the custom language model. */
     grammar_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3975,7 +4003,7 @@ namespace SpeechToTextV1 {
   export interface ListGrammarsParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -3987,7 +4015,7 @@ namespace SpeechToTextV1 {
     base_model_name: CreateAcousticModelConstants.BaseModelName | string;
     /** A description of the new custom acoustic model. Use a localized description that matches the language of the custom model. */
     description?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4022,7 +4050,7 @@ namespace SpeechToTextV1 {
   export interface DeleteAcousticModelParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4030,7 +4058,7 @@ namespace SpeechToTextV1 {
   export interface GetAcousticModelParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4038,7 +4066,7 @@ namespace SpeechToTextV1 {
   export interface ListAcousticModelsParams {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. */
     language?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4046,7 +4074,7 @@ namespace SpeechToTextV1 {
   export interface ResetAcousticModelParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4068,7 +4096,7 @@ namespace SpeechToTextV1 {
     custom_language_model_id?: string;
     /** If `true`, forces the upgrade of a custom acoustic model for which no input data has been modified since it was last trained. Use this parameter only to force the upgrade of a custom acoustic model that is trained with a custom language model, and only if you receive a 400 response code and the message `No input data modified since last training`. See [Upgrading a custom acoustic model](https://cloud.ibm.com/docs/services/speech-to-text/custom-upgrade.html#upgradeAcoustic). */
     force?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4086,7 +4114,7 @@ namespace SpeechToTextV1 {
     allow_overwrite?: boolean;
     /** For an audio-type resource, the format (MIME type) of the audio. For more information, see **Content types for audio-type resources** in the method description. For an archive-type resource, the media type of the archive file. For more information, see **Content types for archive-type resources** in the method description. */
     content_type?: AddAudioConstants.ContentType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4138,7 +4166,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The name of the audio resource for the custom acoustic model. */
     audio_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4148,7 +4176,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The name of the audio resource for the custom acoustic model. */
     audio_name: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4156,7 +4184,7 @@ namespace SpeechToTextV1 {
   export interface ListAudioParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4164,7 +4192,7 @@ namespace SpeechToTextV1 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4437,7 +4465,7 @@ namespace SpeechToTextV1 {
     /** An array of alternative transcripts. The `alternatives` array can include additional requested output such as word confidence or timestamps. */
     alternatives: SpeechRecognitionAlternative[];
     /** A dictionary (or associative array) whose keys are the strings specified for `keywords` if both that parameter and `keywords_threshold` are specified. The value for each key is an array of matches spotted in the audio for that keyword. Each match is described by a `KeywordResult` object. A keyword for which no matches are found is omitted from the dictionary. The dictionary is omitted entirely if no matches are found for any keywords. */
-    keywords_result?: Object;
+    keywords_result?: JsonObject;
     /** An array of alternative hypotheses found for words of the input audio if a `word_alternatives_threshold` is specified. */
     word_alternatives?: WordAlternativeResults[];
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { FileObject } from 'ibm-cloud-sdk-core';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -41,9 +40,18 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
-   * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
+   * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
+   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
+   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
+   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {DiscoveryV1}
    * @throws {Error}
@@ -74,7 +82,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.description] - Description of the environment.
    * @param {string} [params.size] - Size of the environment. In the Lite plan the default and only accepted value is
    * `LT`, in all other plans the default is `S`.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -126,7 +134,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -175,7 +183,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -226,7 +234,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.name] - Show only the environment with the given name.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -272,7 +280,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string[]} params.collection_ids - A comma-separated list of collection IDs to be queried against.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -333,7 +341,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.description] - Description of the environment.
    * @param {string} [params.size] - Size that the environment should be increased to. Environment size cannot be
    * modified when using a Lite plan. Environment size can only increased and not decreased.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -411,7 +419,7 @@ class DiscoveryV1 extends BaseService {
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the
    * final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
    * @param {Source} [params.source] - Object containing source parameters for the configuration.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -477,7 +485,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.configuration_id - The ID of the configuration.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -528,7 +536,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.configuration_id - The ID of the configuration.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -581,7 +589,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Find configurations with the given name.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -651,7 +659,7 @@ class DiscoveryV1 extends BaseService {
    * @param {NormalizationOperation[]} [params.normalizations] - Defines operations that can be used to transform the
    * final output JSON into a normalized form. Operations are executed in the order that they appear in the array.
    * @param {Source} [params.source] - Object containing source parameters for the configuration.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -741,7 +749,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.configuration_id] - The ID of the configuration to use to process the document. If the
    * **configuration** form part is also provided (both are present at the same time), then the request will be
    * rejected.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -816,7 +824,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be created.
    * @param {string} [params.language] - The language of the documents stored in the collection, in the form of an ISO
    * 639-1 language code.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -875,7 +883,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -926,7 +934,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -979,7 +987,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1032,7 +1040,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - Find collections with the given name.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1090,7 +1098,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.name - The name of the collection.
    * @param {string} [params.description] - A description of the collection.
    * @param {string} [params.configuration_id] - The ID of the configuration in which the collection is to be updated.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1170,7 +1178,7 @@ class DiscoveryV1 extends BaseService {
    *  To create a uni-directional expansion, specify both an array of **input_terms** and an array of
    * **expanded_terms**. When items in the **input_terms** array are present in a query, they are expanded using the
    * items listed in the **expanded_terms** array.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1231,7 +1239,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.stopword_file - The content of the stopword list to ingest.
    * @param {string} params.stopword_filename - The filename for stopword_file.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1296,7 +1304,7 @@ class DiscoveryV1 extends BaseService {
    * @param {TokenDictRule[]} [params.tokenization_rules] - An array of tokenization rules. Each rule contains, the
    * original `text` string, component `tokens`, any alternate character set `readings`, and which `part_of_speech` the
    * text is from.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1356,7 +1364,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1409,7 +1417,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1461,7 +1469,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1513,7 +1521,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1566,7 +1574,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1620,7 +1628,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1710,7 +1718,7 @@ class DiscoveryV1 extends BaseService {
    *   "Creator": "Johnny Appleseed",
    *   "Subject": "Apples"
    * } ```.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1775,7 +1783,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1832,7 +1840,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.document_id - The ID of the document.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1903,7 +1911,7 @@ class DiscoveryV1 extends BaseService {
    *   "Creator": "Johnny Appleseed",
    *   "Subject": "Apples"
    * } ```.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2022,7 +2030,7 @@ class DiscoveryV1 extends BaseService {
    * towards field values closer to the current date. When a **number** type field is specified, returned results are
    * biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter.
    * @param {boolean} [params.logging_opt_out] - If `true`, queries are not stored in the Discovery **Logs** endpoint.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2138,7 +2146,7 @@ class DiscoveryV1 extends BaseService {
    * and reduce the scope.
    * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2260,7 +2268,7 @@ class DiscoveryV1 extends BaseService {
    * towards field values closer to the current date. When a **number** type field is specified, returned results are
    * biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter.
    * @param {boolean} [params.logging_opt_out] - If `true`, queries are not stored in the Discovery **Logs** endpoint.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2349,7 +2357,7 @@ class DiscoveryV1 extends BaseService {
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
    * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is
    * `0`. The maximum number of evidence items per query is 10,000.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2456,7 +2464,7 @@ class DiscoveryV1 extends BaseService {
    * and reduce the scope.
    * @param {string[]} [params.similar_fields] - A comma-separated list of field names that are used as a basis for
    * comparison to identify similar documents. If not specified, the entire document is used for comparison.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2542,7 +2550,7 @@ class DiscoveryV1 extends BaseService {
    * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
    * @param {number} [params.evidence_count] - The number of evidence items to return for each result. The default is
    * `0`. The maximum number of evidence items per query is 10,000.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2614,7 +2622,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
    * applied.
    * @param {TrainingExample[]} [params.examples] - Array of training examples.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2679,7 +2687,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.document_id] - The document ID associated with this training example.
    * @param {string} [params.cross_reference] - The cross reference associated with this training example.
    * @param {number} [params.relevance] - The relevance of the training example.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2741,7 +2749,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2794,7 +2802,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2849,7 +2857,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2904,7 +2912,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -2960,7 +2968,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
    * @param {string} params.example_id - The ID of the document as it is indexed.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3015,7 +3023,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3069,7 +3077,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.collection_id - The ID of the collection.
    * @param {string} params.query_id - The ID of the query used for training.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3127,7 +3135,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.example_id - The ID of the document as it is indexed.
    * @param {string} [params.cross_reference] - The example to add.
    * @param {number} [params.relevance] - The relevance value for this example.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3197,7 +3205,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3253,7 +3261,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.type - The event type to be created.
    * @param {EventData} params.data - Query event data object.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3312,7 +3320,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
    * `YYYY-MM-DDThh:mm:ssZ` format.
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3363,7 +3371,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
    * `YYYY-MM-DDThh:mm:ssZ` format.
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3416,7 +3424,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
    * `YYYY-MM-DDThh:mm:ssZ` format.
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3468,7 +3476,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.end_time] - Metric is computed from data recorded before this timestamp; must be in
    * `YYYY-MM-DDThh:mm:ssZ` format.
    * @param {string} [params.result_type] - The type of result to consider when calculating the metric.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3518,7 +3526,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
    * together in any one query is **10000**.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3576,7 +3584,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string[]} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3641,7 +3649,7 @@ class DiscoveryV1 extends BaseService {
    * @param {CredentialDetails} [params.credential_details] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3700,7 +3708,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.credential_id - The unique identifier for a set of source credentials.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3756,7 +3764,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.credential_id - The unique identifier for a set of source credentials.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3810,7 +3818,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3873,7 +3881,7 @@ class DiscoveryV1 extends BaseService {
    * @param {CredentialDetails} [params.credential_details] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3937,7 +3945,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} [params.name] - User-defined name.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -3995,7 +4003,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.gateway_id - The requested gateway ID.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -4048,7 +4056,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
    * @param {string} params.gateway_id - The requested gateway ID.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -4100,7 +4108,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environment_id - The ID of the environment.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -4162,17 +4170,37 @@ namespace DiscoveryV1 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
+
+  /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
+  export interface JsonObject {
+    [key: string]: any;
+  }
 
   /*************************
    * request interfaces
@@ -4186,7 +4214,7 @@ namespace DiscoveryV1 {
     description?: string;
     /** Size of the environment. In the Lite plan the default and only accepted value is `LT`, in all other plans the default is `S`. */
     size?: CreateEnvironmentConstants.Size | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4211,7 +4239,7 @@ namespace DiscoveryV1 {
   export interface DeleteEnvironmentParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4219,7 +4247,7 @@ namespace DiscoveryV1 {
   export interface GetEnvironmentParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4227,7 +4255,7 @@ namespace DiscoveryV1 {
   export interface ListEnvironmentsParams {
     /** Show only the environment with the given name. */
     name?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4237,7 +4265,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** A comma-separated list of collection IDs to be queried against. */
     collection_ids: string[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4251,7 +4279,7 @@ namespace DiscoveryV1 {
     description?: string;
     /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
     size?: UpdateEnvironmentConstants.Size | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4286,7 +4314,7 @@ namespace DiscoveryV1 {
     normalizations?: NormalizationOperation[];
     /** Object containing source parameters for the configuration. */
     source?: Source;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4296,7 +4324,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the configuration. */
     configuration_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4306,7 +4334,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the configuration. */
     configuration_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4316,7 +4344,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** Find configurations with the given name. */
     name?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4338,7 +4366,7 @@ namespace DiscoveryV1 {
     normalizations?: NormalizationOperation[];
     /** Object containing source parameters for the configuration. */
     source?: Source;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4360,7 +4388,7 @@ namespace DiscoveryV1 {
     step?: TestConfigurationInEnvironmentConstants.Step | string;
     /** The ID of the configuration to use to process the document. If the **configuration** form part is also provided (both are present at the same time), then the request will be rejected. */
     configuration_id?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4398,7 +4426,7 @@ namespace DiscoveryV1 {
     configuration_id?: string;
     /** The language of the documents stored in the collection, in the form of an ISO 639-1 language code. */
     language?: CreateCollectionConstants.Language | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4426,7 +4454,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4436,7 +4464,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4446,7 +4474,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4456,7 +4484,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** Find collections with the given name. */
     name?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4472,7 +4500,7 @@ namespace DiscoveryV1 {
     description?: string;
     /** The ID of the configuration in which the collection is to be updated. */
     configuration_id?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4484,7 +4512,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** An array of query expansion definitions. Each object in the **expansions** array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured as bidirectional or unidirectional. Bidirectional means that all terms are expanded to all other terms in the object. Unidirectional means that a set list of terms can be expanded into a second list of terms. To create a bi-directional expansion specify an **expanded_terms** array. When found in a query, all items in the **expanded_terms** array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of **input_terms** and an array of **expanded_terms**. When items in the **input_terms** array are present in a query, they are expanded using the items listed in the **expanded_terms** array. */
     expansions: Expansion[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4498,7 +4526,7 @@ namespace DiscoveryV1 {
     stopword_file: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for stopword_file. */
     stopword_filename: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4510,7 +4538,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** An array of tokenization rules. Each rule contains, the original `text` string, component `tokens`, any alternate character set `readings`, and which `part_of_speech` the text is from. */
     tokenization_rules?: TokenDictRule[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4520,7 +4548,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4530,7 +4558,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4540,7 +4568,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4550,7 +4578,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4560,7 +4588,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4570,7 +4598,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4588,7 +4616,7 @@ namespace DiscoveryV1 {
     file_content_type?: AddDocumentConstants.FileContentType | string;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
     metadata?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4613,7 +4641,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the document. */
     document_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4625,7 +4653,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the document. */
     document_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4645,7 +4673,7 @@ namespace DiscoveryV1 {
     file_content_type?: UpdateDocumentConstants.FileContentType | string;
     /** If you're using the Data Crawler to upload your documents, you can test a document against the type of metadata that the Data Crawler might send. The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:  ``` { "Creator": "Johnny Appleseed", "Subject": "Apples" } ```. */
     metadata?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4708,7 +4736,7 @@ namespace DiscoveryV1 {
     bias?: string;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4744,7 +4772,7 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4796,7 +4824,7 @@ namespace DiscoveryV1 {
     bias?: string;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     logging_opt_out?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4816,7 +4844,7 @@ namespace DiscoveryV1 {
     count?: number;
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4860,7 +4888,7 @@ namespace DiscoveryV1 {
     similar_document_ids?: string[];
     /** A comma-separated list of field names that are used as a basis for comparison to identify similar documents. If not specified, the entire document is used for comparison. */
     similar_fields?: string[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4881,7 +4909,7 @@ namespace DiscoveryV1 {
     count?: number;
     /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence items per query is 10,000. */
     evidence_count?: number;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4906,7 +4934,7 @@ namespace DiscoveryV1 {
     filter?: string;
     /** Array of training examples. */
     examples?: TrainingExample[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4924,7 +4952,7 @@ namespace DiscoveryV1 {
     cross_reference?: string;
     /** The relevance of the training example. */
     relevance?: number;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4934,7 +4962,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4946,7 +4974,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4960,7 +4988,7 @@ namespace DiscoveryV1 {
     query_id: string;
     /** The ID of the document as it is indexed. */
     example_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4972,7 +5000,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4986,7 +5014,7 @@ namespace DiscoveryV1 {
     query_id: string;
     /** The ID of the document as it is indexed. */
     example_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -4996,7 +5024,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The ID of the collection. */
     collection_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5008,7 +5036,7 @@ namespace DiscoveryV1 {
     collection_id: string;
     /** The ID of the query used for training. */
     query_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5026,7 +5054,7 @@ namespace DiscoveryV1 {
     cross_reference?: string;
     /** The relevance value for this example. */
     relevance?: number;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5034,7 +5062,7 @@ namespace DiscoveryV1 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5044,7 +5072,7 @@ namespace DiscoveryV1 {
     type: CreateEventConstants.Type | string;
     /** Query event data object. */
     data: EventData;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5064,7 +5092,7 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsEventRateConstants.ResultType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5084,7 +5112,7 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryConstants.ResultType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5104,7 +5132,7 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryEventConstants.ResultType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5124,7 +5152,7 @@ namespace DiscoveryV1 {
     end_time?: string;
     /** The type of result to consider when calculating the metric. */
     result_type?: GetMetricsQueryNoResultsConstants.ResultType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5140,7 +5168,7 @@ namespace DiscoveryV1 {
   export interface GetMetricsQueryTokenEventParams {
     /** Number of results to return. The maximum for the **count** and **offset** values together in any one query is **10000**. */
     count?: number;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5156,7 +5184,7 @@ namespace DiscoveryV1 {
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no prefix is specified. */
     sort?: string[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5168,7 +5196,7 @@ namespace DiscoveryV1 {
     source_type?: CreateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5190,7 +5218,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5200,7 +5228,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The unique identifier for a set of source credentials. */
     credential_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5208,7 +5236,7 @@ namespace DiscoveryV1 {
   export interface ListCredentialsParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5222,7 +5250,7 @@ namespace DiscoveryV1 {
     source_type?: UpdateCredentialsConstants.SourceType | string;
     /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
     credential_details?: CredentialDetails;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5244,7 +5272,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** User-defined name. */
     name?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5254,7 +5282,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The requested gateway ID. */
     gateway_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5264,7 +5292,7 @@ namespace DiscoveryV1 {
     environment_id: string;
     /** The requested gateway ID. */
     gateway_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5272,7 +5300,7 @@ namespace DiscoveryV1 {
   export interface ListGatewaysParams {
     /** The ID of the environment. */
     environment_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -5517,7 +5545,7 @@ namespace DiscoveryV1 {
     /** The step in the document conversion process that the snapshot object represents. */
     step?: string;
     /** Snapshot of the conversion. */
-    snapshot?: Object;
+    snapshot?: JsonObject;
   }
 
   /** Status information about a submitted document. */
@@ -5554,11 +5582,11 @@ namespace DiscoveryV1 {
     enrichment_name: string;
     /** If true, then most errors generated during the enrichment process will be treated as warnings and will not cause the document to fail processing. */
     ignore_downstream_errors?: boolean;
-    /** An object representing the configuration options to use for the `elements` enrichment. */
+    /** Options which are specific to a particular enrichment. */
     options?: EnrichmentOptions;
   }
 
-  /** An object representing the configuration options to use for the `elements` enrichment. */
+  /** Options which are specific to a particular enrichment. */
   export interface EnrichmentOptions {
     features?: NluEnrichmentFeatures;
     /** ISO 639-1 code indicating the language to use for the analysis. This code overrides the automatic language detection performed by the service. Valid codes are `ar` (Arabic), `en` (English), `fr` (French), `de` (German), `it` (Italian), `pt` (Portuguese), `ru` (Russian), `es` (Spanish), and `sv` (Swedish). **Note:** Not all features support all languages, automatic detection is recommended. */
@@ -6092,7 +6120,7 @@ namespace DiscoveryV1 {
     /** The unique identifier of the document. */
     id?: string;
     /** Metadata of the document. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of a query result. */
@@ -6194,7 +6222,7 @@ namespace DiscoveryV1 {
     /** The unique identifier of the document. */
     id?: string;
     /** Metadata of the document. */
-    metadata?: Object;
+    metadata?: JsonObject;
     /** The collection ID of the collection containing the document for this result. */
     collection_id?: string;
     /** Metadata of a query result. */

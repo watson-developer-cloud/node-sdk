@@ -1,18 +1,37 @@
+/**
+ * Copyright 2019 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
 const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
 const utils = require('../resources/unitTestUtils');
 
-const getOptions = utils.getOptions;
-const checkUrlAndMethod = utils.checkUrlAndMethod;
-const checkCallback = utils.checkCallback;
-const checkMediaHeaders = utils.checkMediaHeaders;
-const missingParamsSuccess = utils.missingParamsSuccess;
-const missingParamsError = utils.missingParamsError;
-const checkForEmptyObject = utils.checkForEmptyObject;
-const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const checkUserHeader = utils.checkUserHeader;
+const {
+  getOptions,
+  checkUrlAndMethod,
+  checkCallback,
+  checkMediaHeaders,
+  missingParamsSuccess,
+  expectToBePromise,
+  missingParamsError,
+  checkForEmptyObject,
+  checkRequiredParamsHandling,
+  checkUserHeader,
+} = utils;
+
 const noop = () => {};
 
 const service = {
@@ -57,7 +76,7 @@ describe('tone', () => {
       };
 
       // invoke method
-      toneAnalyzer.tone(params);
+      toneAnalyzer.tone(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -90,8 +109,23 @@ describe('tone', () => {
         },
       };
 
-      toneAnalyzer.tone(params);
+      toneAnalyzer.tone(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const tone_input = 'fake_tone_input';
+      const params = {
+        tone_input,
+      };
+
+      // invoke method
+      const tonePromise = toneAnalyzer.tone(params);
+      expectToBePromise(tonePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -116,6 +150,19 @@ describe('tone', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['tone_input'];
+
+      const tonePromise = toneAnalyzer.tone();
+      expectToBePromise(tonePromise);
+
+      tonePromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -136,7 +183,7 @@ describe('toneChat', () => {
       };
 
       // invoke method
-      toneAnalyzer.toneChat(params);
+      toneAnalyzer.toneChat(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -166,8 +213,23 @@ describe('toneChat', () => {
         },
       };
 
-      toneAnalyzer.toneChat(params);
+      toneAnalyzer.toneChat(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const utterances = 'fake_utterances';
+      const params = {
+        utterances,
+      };
+
+      // invoke method
+      const toneChatPromise = toneAnalyzer.toneChat(params);
+      expectToBePromise(toneChatPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -188,6 +250,19 @@ describe('toneChat', () => {
       const requiredParams = ['utterances'];
 
       toneAnalyzer.toneChat({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['utterances'];
+
+      const toneChatPromise = toneAnalyzer.toneChat();
+      expectToBePromise(toneChatPromise);
+
+      toneChatPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

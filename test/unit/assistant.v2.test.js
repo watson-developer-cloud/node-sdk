@@ -1,17 +1,35 @@
+/**
+ * Copyright 2019 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
 const AssistantV2 = require('../../assistant/v2');
 const utils = require('../resources/unitTestUtils');
 
-const getOptions = utils.getOptions;
-const checkUrlAndMethod = utils.checkUrlAndMethod;
-const checkCallback = utils.checkCallback;
-const checkMediaHeaders = utils.checkMediaHeaders;
-const missingParamsSuccess = utils.missingParamsSuccess;
-const missingParamsError = utils.missingParamsError;
-const checkForEmptyObject = utils.checkForEmptyObject;
-const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const {
+  getOptions,
+  checkUrlAndMethod,
+  checkCallback,
+  checkMediaHeaders,
+  missingParamsSuccess,
+  expectToBePromise,
+  missingParamsError,
+  checkForEmptyObject,
+  checkRequiredParamsHandling,
+} = utils;
 
 const noop = () => {};
 
@@ -47,7 +65,7 @@ describe('createSession', () => {
       };
 
       // invoke method
-      assistant.createSession(params);
+      assistant.createSession(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -75,8 +93,23 @@ describe('createSession', () => {
         },
       };
 
-      assistant.createSession(params);
+      assistant.createSession(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const params = {
+        assistant_id,
+      };
+
+      // invoke method
+      const createSessionPromise = assistant.createSession(params);
+      expectToBePromise(createSessionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -101,6 +134,19 @@ describe('createSession', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id'];
+
+      const createSessionPromise = assistant.createSession();
+      expectToBePromise(createSessionPromise);
+
+      createSessionPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -119,7 +165,7 @@ describe('deleteSession', () => {
       };
 
       // invoke method
-      assistant.deleteSession(params);
+      assistant.deleteSession(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -150,8 +196,25 @@ describe('deleteSession', () => {
         },
       };
 
-      assistant.deleteSession(params);
+      assistant.deleteSession(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const session_id = 'fake_session_id';
+      const params = {
+        assistant_id,
+        session_id,
+      };
+
+      // invoke method
+      const deleteSessionPromise = assistant.deleteSession(params);
+      expectToBePromise(deleteSessionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -172,6 +235,19 @@ describe('deleteSession', () => {
       const requiredParams = ['assistant_id', 'session_id'];
 
       assistant.deleteSession({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id', 'session_id'];
+
+      const deleteSessionPromise = assistant.deleteSession();
+      expectToBePromise(deleteSessionPromise);
+
+      deleteSessionPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -198,7 +274,7 @@ describe('message', () => {
       };
 
       // invoke method
-      assistant.message(params);
+      assistant.message(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -235,8 +311,25 @@ describe('message', () => {
         },
       };
 
-      assistant.message(params);
+      assistant.message(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const assistant_id = 'fake_assistant_id';
+      const session_id = 'fake_session_id';
+      const params = {
+        assistant_id,
+        session_id,
+      };
+
+      // invoke method
+      const messagePromise = assistant.message(params);
+      expectToBePromise(messagePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -257,6 +350,19 @@ describe('message', () => {
       const requiredParams = ['assistant_id', 'session_id'];
 
       assistant.message({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['assistant_id', 'session_id'];
+
+      const messagePromise = assistant.message();
+      expectToBePromise(messagePromise);
+
+      messagePromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

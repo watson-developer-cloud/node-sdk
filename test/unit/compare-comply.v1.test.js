@@ -1,19 +1,37 @@
+/**
+ * Copyright 2019 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
 const CompareComplyV1 = require('../../compare-comply/v1');
 const utils = require('../resources/unitTestUtils');
 
-const getOptions = utils.getOptions;
-const checkUrlAndMethod = utils.checkUrlAndMethod;
-const checkCallback = utils.checkCallback;
-const checkMediaHeaders = utils.checkMediaHeaders;
-const missingParamsSuccess = utils.missingParamsSuccess;
-const missingParamsError = utils.missingParamsError;
-const checkForEmptyObject = utils.checkForEmptyObject;
-const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const {
+  getOptions,
+  checkUrlAndMethod,
+  checkCallback,
+  checkMediaHeaders,
+  missingParamsSuccess,
+  expectToBePromise,
+  missingParamsError,
+  checkForEmptyObject,
+  checkRequiredParamsHandling,
+  checkDefaultSuccessArgs,
+} = utils;
 
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
 const noop = () => {};
 
 const service = {
@@ -54,7 +72,7 @@ describe('convertToHtml', () => {
       };
 
       // invoke method
-      compareComply.convertToHtml(params);
+      compareComply.convertToHtml(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -87,8 +105,25 @@ describe('convertToHtml', () => {
         },
       };
 
-      compareComply.convertToHtml(params);
+      compareComply.convertToHtml(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const file = 'fake_file';
+      const filename = 'fake_filename';
+      const params = {
+        file,
+        filename,
+      };
+
+      // invoke method
+      const convertToHtmlPromise = compareComply.convertToHtml(params);
+      expectToBePromise(convertToHtmlPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -113,6 +148,19 @@ describe('convertToHtml', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['file', 'filename'];
+
+      const convertToHtmlPromise = compareComply.convertToHtml();
+      expectToBePromise(convertToHtmlPromise);
+
+      convertToHtmlPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -133,7 +181,7 @@ describe('classifyElements', () => {
       };
 
       // invoke method
-      compareComply.classifyElements(params);
+      compareComply.classifyElements(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -163,8 +211,23 @@ describe('classifyElements', () => {
         },
       };
 
-      compareComply.classifyElements(params);
+      compareComply.classifyElements(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const file = 'fake_file';
+      const params = {
+        file,
+      };
+
+      // invoke method
+      const classifyElementsPromise = compareComply.classifyElements(params);
+      expectToBePromise(classifyElementsPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -189,6 +252,19 @@ describe('classifyElements', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['file'];
+
+      const classifyElementsPromise = compareComply.classifyElements();
+      expectToBePromise(classifyElementsPromise);
+
+      classifyElementsPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -209,7 +285,7 @@ describe('extractTables', () => {
       };
 
       // invoke method
-      compareComply.extractTables(params);
+      compareComply.extractTables(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -239,8 +315,23 @@ describe('extractTables', () => {
         },
       };
 
-      compareComply.extractTables(params);
+      compareComply.extractTables(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const file = 'fake_file';
+      const params = {
+        file,
+      };
+
+      // invoke method
+      const extractTablesPromise = compareComply.extractTables(params);
+      expectToBePromise(extractTablesPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -261,6 +352,19 @@ describe('extractTables', () => {
       const requiredParams = ['file'];
 
       compareComply.extractTables({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['file'];
+
+      const extractTablesPromise = compareComply.extractTables();
+      expectToBePromise(extractTablesPromise);
+
+      extractTablesPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -293,7 +397,7 @@ describe('compareDocuments', () => {
       };
 
       // invoke method
-      compareComply.compareDocuments(params);
+      compareComply.compareDocuments(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -329,8 +433,25 @@ describe('compareDocuments', () => {
         },
       };
 
-      compareComply.compareDocuments(params);
+      compareComply.compareDocuments(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const file_1 = 'fake_file_1';
+      const file_2 = 'fake_file_2';
+      const params = {
+        file_1,
+        file_2,
+      };
+
+      // invoke method
+      const compareDocumentsPromise = compareComply.compareDocuments(params);
+      expectToBePromise(compareDocumentsPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -355,6 +476,19 @@ describe('compareDocuments', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['file_1', 'file_2'];
+
+      const compareDocumentsPromise = compareComply.compareDocuments();
+      expectToBePromise(compareDocumentsPromise);
+
+      compareDocumentsPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -375,7 +509,7 @@ describe('addFeedback', () => {
       };
 
       // invoke method
-      compareComply.addFeedback(params);
+      compareComply.addFeedback(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -405,8 +539,23 @@ describe('addFeedback', () => {
         },
       };
 
-      compareComply.addFeedback(params);
+      compareComply.addFeedback(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const feedback_data = 'fake_feedback_data';
+      const params = {
+        feedback_data,
+      };
+
+      // invoke method
+      const addFeedbackPromise = compareComply.addFeedback(params);
+      expectToBePromise(addFeedbackPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -431,6 +580,19 @@ describe('addFeedback', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['feedback_data'];
+
+      const addFeedbackPromise = compareComply.addFeedback();
+      expectToBePromise(addFeedbackPromise);
+
+      addFeedbackPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -449,7 +611,7 @@ describe('deleteFeedback', () => {
       };
 
       // invoke method
-      compareComply.deleteFeedback(params);
+      compareComply.deleteFeedback(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -478,8 +640,23 @@ describe('deleteFeedback', () => {
         },
       };
 
-      compareComply.deleteFeedback(params);
+      compareComply.deleteFeedback(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const params = {
+        feedback_id,
+      };
+
+      // invoke method
+      const deleteFeedbackPromise = compareComply.deleteFeedback(params);
+      expectToBePromise(deleteFeedbackPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -504,6 +681,19 @@ describe('deleteFeedback', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['feedback_id'];
+
+      const deleteFeedbackPromise = compareComply.deleteFeedback();
+      expectToBePromise(deleteFeedbackPromise);
+
+      deleteFeedbackPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -522,7 +712,7 @@ describe('getFeedback', () => {
       };
 
       // invoke method
-      compareComply.getFeedback(params);
+      compareComply.getFeedback(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -551,8 +741,23 @@ describe('getFeedback', () => {
         },
       };
 
-      compareComply.getFeedback(params);
+      compareComply.getFeedback(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const params = {
+        feedback_id,
+      };
+
+      // invoke method
+      const getFeedbackPromise = compareComply.getFeedback(params);
+      expectToBePromise(getFeedbackPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -573,6 +778,19 @@ describe('getFeedback', () => {
       const requiredParams = ['feedback_id'];
 
       compareComply.getFeedback({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['feedback_id'];
+
+      const getFeedbackPromise = compareComply.getFeedback();
+      expectToBePromise(getFeedbackPromise);
+
+      getFeedbackPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -623,7 +841,7 @@ describe('listFeedback', () => {
       };
 
       // invoke method
-      compareComply.listFeedback(params);
+      compareComply.listFeedback(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -664,12 +882,24 @@ describe('listFeedback', () => {
         },
       };
 
-      compareComply.listFeedback(params);
+      compareComply.listFeedback(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listFeedbackPromise = compareComply.listFeedback(params);
+      expectToBePromise(listFeedbackPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      compareComply.listFeedback();
+      compareComply.listFeedback({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -708,7 +938,7 @@ describe('createBatch', () => {
       };
 
       // invoke method
-      compareComply.createBatch(params);
+      compareComply.createBatch(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -757,8 +987,35 @@ describe('createBatch', () => {
         },
       };
 
-      compareComply.createBatch(params);
+      compareComply.createBatch(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const _function = 'fake__function';
+      const input_credentials_file = 'fake_input_credentials_file';
+      const input_bucket_location = 'fake_input_bucket_location';
+      const input_bucket_name = 'fake_input_bucket_name';
+      const output_credentials_file = 'fake_output_credentials_file';
+      const output_bucket_location = 'fake_output_bucket_location';
+      const output_bucket_name = 'fake_output_bucket_name';
+      const params = {
+        _function,
+        input_credentials_file,
+        input_bucket_location,
+        input_bucket_name,
+        output_credentials_file,
+        output_bucket_location,
+        output_bucket_name,
+      };
+
+      // invoke method
+      const createBatchPromise = compareComply.createBatch(params);
+      expectToBePromise(createBatchPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -791,6 +1048,27 @@ describe('createBatch', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = [
+        '_function',
+        'input_credentials_file',
+        'input_bucket_location',
+        'input_bucket_name',
+        'output_credentials_file',
+        'output_bucket_location',
+        'output_bucket_name',
+      ];
+
+      const createBatchPromise = compareComply.createBatch();
+      expectToBePromise(createBatchPromise);
+
+      createBatchPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -807,7 +1085,7 @@ describe('getBatch', () => {
       };
 
       // invoke method
-      compareComply.getBatch(params);
+      compareComply.getBatch(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -835,8 +1113,23 @@ describe('getBatch', () => {
         },
       };
 
-      compareComply.getBatch(params);
+      compareComply.getBatch(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const batch_id = 'fake_batch_id';
+      const params = {
+        batch_id,
+      };
+
+      // invoke method
+      const getBatchPromise = compareComply.getBatch(params);
+      expectToBePromise(getBatchPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -861,6 +1154,19 @@ describe('getBatch', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['batch_id'];
+
+      const getBatchPromise = compareComply.getBatch();
+      expectToBePromise(getBatchPromise);
+
+      getBatchPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -874,7 +1180,7 @@ describe('listBatches', () => {
       const params = {};
 
       // invoke method
-      compareComply.listBatches(params);
+      compareComply.listBatches(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -899,12 +1205,24 @@ describe('listBatches', () => {
         },
       };
 
-      compareComply.listBatches(params);
+      compareComply.listBatches(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listBatchesPromise = compareComply.listBatches(params);
+      expectToBePromise(listBatchesPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      compareComply.listBatches();
+      compareComply.listBatches({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -933,7 +1251,7 @@ describe('updateBatch', () => {
       };
 
       // invoke method
-      compareComply.updateBatch(params);
+      compareComply.updateBatch(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -965,8 +1283,25 @@ describe('updateBatch', () => {
         },
       };
 
-      compareComply.updateBatch(params);
+      compareComply.updateBatch(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const batch_id = 'fake_batch_id';
+      const action = 'fake_action';
+      const params = {
+        batch_id,
+        action,
+      };
+
+      // invoke method
+      const updateBatchPromise = compareComply.updateBatch(params);
+      expectToBePromise(updateBatchPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -987,6 +1322,19 @@ describe('updateBatch', () => {
       const requiredParams = ['batch_id', 'action'];
 
       compareComply.updateBatch({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['batch_id', 'action'];
+
+      const updateBatchPromise = compareComply.updateBatch();
+      expectToBePromise(updateBatchPromise);
+
+      updateBatchPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
