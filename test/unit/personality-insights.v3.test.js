@@ -61,7 +61,6 @@ describe('profile', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const content = 'fake_content';
-      const accept = 'fake_accept';
       const content_language = 'fake_content_language';
       const accept_language = 'fake_accept_language';
       const raw_scores = 'fake_raw_scores';
@@ -70,7 +69,6 @@ describe('profile', () => {
       const content_type = 'fake_content_type';
       const params = {
         content,
-        accept,
         content_language,
         accept_language,
         raw_scores,
@@ -89,10 +87,9 @@ describe('profile', () => {
 
       checkUrlAndMethod(options, '/v3/profile', 'POST');
       checkCallback(createRequestMock);
-      const expectedAccept = accept;
+      const expectedAccept = 'application/json';
       const expectedContentType = content_type;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Accept', accept);
       checkUserHeader(createRequestMock, 'Content-Language', content_language);
       checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
       checkUserHeader(createRequestMock, 'Content-Type', content_type);
@@ -105,12 +102,10 @@ describe('profile', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const content = 'fake_content';
-      const accept = 'fake_accept';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         content,
-        accept,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
@@ -124,10 +119,8 @@ describe('profile', () => {
     test('should return a promise when no callback is given', () => {
       // parameters
       const content = 'fake_content';
-      const accept = 'fake_accept';
       const params = {
         content,
-        accept,
       };
 
       // invoke method
@@ -153,7 +146,7 @@ describe('profile', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['content', 'accept'];
+      const requiredParams = ['content'];
 
       personalityInsights.profile({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -163,12 +156,128 @@ describe('profile', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['content', 'accept'];
+      const requiredParams = ['content'];
 
       const profilePromise = personalityInsights.profile();
       expectToBePromise(profilePromise);
 
       profilePromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+
+describe('profileAsCsv', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const content = 'fake_content';
+      const content_language = 'fake_content_language';
+      const accept_language = 'fake_accept_language';
+      const raw_scores = 'fake_raw_scores';
+      const csv_headers = 'fake_csv_headers';
+      const consumption_preferences = 'fake_consumption_preferences';
+      const content_type = 'fake_content_type';
+      const params = {
+        content,
+        content_language,
+        accept_language,
+        raw_scores,
+        csv_headers,
+        consumption_preferences,
+        content_type,
+      };
+
+      // invoke method
+      personalityInsights.profileAsCsv(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v3/profile', 'POST');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'text/csv';
+      const expectedContentType = content_type;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      checkUserHeader(createRequestMock, 'Content-Language', content_language);
+      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
+      checkUserHeader(createRequestMock, 'Content-Type', content_type);
+      expect(options.body).toEqual(content);
+      expect(options.qs['raw_scores']).toEqual(raw_scores);
+      expect(options.qs['csv_headers']).toEqual(csv_headers);
+      expect(options.qs['consumption_preferences']).toEqual(consumption_preferences);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const content = 'fake_content';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        content,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      personalityInsights.profileAsCsv(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const content = 'fake_content';
+      const params = {
+        content,
+      };
+
+      // invoke method
+      const profileAsCsvPromise = personalityInsights.profileAsCsv(params);
+      expectToBePromise(profileAsCsvPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      personalityInsights.profileAsCsv(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['content'];
+
+      personalityInsights.profileAsCsv({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['content'];
+
+      const profileAsCsvPromise = personalityInsights.profileAsCsv();
+      expectToBePromise(profileAsCsvPromise);
+
+      profileAsCsvPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

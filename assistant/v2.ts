@@ -20,7 +20,7 @@ import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
+ * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and an integrated dialog editor to create conversation flows between your apps and your users.
  */
 
 class AssistantV2 extends BaseService {
@@ -77,8 +77,8 @@ class AssistantV2 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistant_id - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant tool, open the assistant settings and click **API Details**. For information about creating assistants,
-   * see the
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
@@ -133,8 +133,8 @@ class AssistantV2 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistant_id - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant tool, open the assistant settings and click **API Details**. For information about creating assistants,
-   * see the
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
@@ -197,8 +197,8 @@ class AssistantV2 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistant_id - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant tool, open the assistant settings and click **API Details**. For information about creating assistants,
-   * see the
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
@@ -315,7 +315,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `createSession` operation. */
   export interface CreateSessionParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant tool, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -323,7 +323,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `deleteSession` operation. */
   export interface DeleteSessionParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant tool, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;
@@ -333,7 +333,7 @@ namespace AssistantV2 {
 
   /** Parameters for the `message` operation. */
   export interface MessageParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant tool, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click **API Details**. For information about creating assistants, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task). **Note:** Currently, the v2 API does not support creating assistants. */
     assistant_id: string;
     /** Unique identifier of the session. */
     session_id: string;

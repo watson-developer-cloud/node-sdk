@@ -6213,10 +6213,12 @@ describe('createCredentials', () => {
       const environment_id = 'fake_environment_id';
       const source_type = 'fake_source_type';
       const credential_details = 'fake_credential_details';
+      const status = 'fake_status';
       const params = {
         environment_id,
         source_type,
         credential_details,
+        status,
       };
 
       // invoke method
@@ -6234,6 +6236,7 @@ describe('createCredentials', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['source_type']).toEqual(source_type);
       expect(options.body['credential_details']).toEqual(credential_details);
+      expect(options.body['status']).toEqual(status);
       expect(options.path['environment_id']).toEqual(environment_id);
     });
 
@@ -6634,11 +6637,13 @@ describe('updateCredentials', () => {
       const credential_id = 'fake_credential_id';
       const source_type = 'fake_source_type';
       const credential_details = 'fake_credential_details';
+      const status = 'fake_status';
       const params = {
         environment_id,
         credential_id,
         source_type,
         credential_details,
+        status,
       };
 
       // invoke method
@@ -6660,6 +6665,7 @@ describe('updateCredentials', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['source_type']).toEqual(source_type);
       expect(options.body['credential_details']).toEqual(credential_details);
+      expect(options.body['status']).toEqual(status);
       expect(options.path['environment_id']).toEqual(environment_id);
       expect(options.path['credential_id']).toEqual(credential_id);
     });

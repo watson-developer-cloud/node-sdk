@@ -16,11 +16,11 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Personality Insights service enables applications to derive insights from social media, enterprise data, or other digital communications. The service uses linguistic analytics to infer individuals' intrinsic personality characteristics, including Big Five, Needs, and Values, from digital communications such as email, text messages, tweets, and forum posts.  The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their personality characteristics. The service can infer consumption preferences based on the results of its analysis and, for JSON content that is timestamped, can report temporal behavior. * For information about the meaning of the models that the service uses to describe personality characteristics, see [Personality models](https://cloud.ibm.com/docs/services/personality-insights/models.html). * For information about the meaning of the consumption preferences, see [Consumption preferences](https://cloud.ibm.com/docs/services/personality-insights/preferences.html).   **Note:** Request logging is disabled for the Personality Insights service. Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header, the service does not log or retain data from requests and responses.
+ * The IBM Watson&trade; Personality Insights service enables applications to derive insights from social media, enterprise data, or other digital communications. The service uses linguistic analytics to infer individuals' intrinsic personality characteristics, including Big Five, Needs, and Values, from digital communications such as email, text messages, tweets, and forum posts.  The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their personality characteristics. The service can infer consumption preferences based on the results of its analysis and, for JSON content that is timestamped, can report temporal behavior. * For information about the meaning of the models that the service uses to describe personality characteristics, see [Personality models](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-models#models). * For information about the meaning of the consumption preferences, see [Consumption preferences](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-preferences#preferences).   **Note:** Request logging is disabled for the Personality Insights service. Regardless of whether you set the `X-Watson-Learning-Opt-Out` request header, the service does not log or retain data from requests and responses.
  */
 
 class PersonalityInsightsV3 extends BaseService {
@@ -77,8 +77,10 @@ class PersonalityInsightsV3 extends BaseService {
    * English, Japanese, Korean, or Spanish. It can return its results in a variety of languages.
    *
    * **See also:**
-   * * [Requesting a profile](https://cloud.ibm.com/docs/services/personality-insights/input.html)
-   * * [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient)
+   * * [Requesting a
+   * profile](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#input)
+   * * [Providing sufficient
+   * input](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#sufficient)
    *
    * ### Content types
    *
@@ -92,7 +94,7 @@ class PersonalityInsightsV3 extends BaseService {
    * encoding of the input text; for example, `Content-Type: text/plain;charset=utf-8`.
    *
    * **See also:** [Specifying request and response
-   * formats](https://cloud.ibm.com/docs/services/personality-insights/input.html#formats)
+   * formats](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#formats)
    *
    * ### Accept types
    *
@@ -101,14 +103,16 @@ class PersonalityInsightsV3 extends BaseService {
    * request optional column headers for CSV output.
    *
    * **See also:**
-   * * [Understanding a JSON profile](https://cloud.ibm.com/docs/services/personality-insights/output.html)
-   * * [Understanding a CSV profile](https://cloud.ibm.com/docs/services/personality-insights/output-csv.html).
+   * * [Understanding a JSON
+   * profile](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-output#output)
+   * * [Understanding a CSV
+   * profile](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-outputCSV#outputCSV).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Content|string} params.content - A maximum of 20 MB of content to analyze, though the service requires much
    * less text; for more information, see [Providing sufficient
-   * input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an
-   * object of type `Content`.
+   * input](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#sufficient). For
+   * JSON input, provide an object of type `Content`.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -133,7 +137,7 @@ class PersonalityInsightsV3 extends BaseService {
    * method description.
    *
    * Default: `text/plain`.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -192,8 +196,10 @@ class PersonalityInsightsV3 extends BaseService {
    * English, Japanese, Korean, or Spanish. It can return its results in a variety of languages.
    *
    * **See also:**
-   * * [Requesting a profile](https://cloud.ibm.com/docs/services/personality-insights/input.html)
-   * * [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient)
+   * * [Requesting a
+   * profile](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#input)
+   * * [Providing sufficient
+   * input](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#sufficient)
    *
    * ### Content types
    *
@@ -207,7 +213,7 @@ class PersonalityInsightsV3 extends BaseService {
    * encoding of the input text; for example, `Content-Type: text/plain;charset=utf-8`.
    *
    * **See also:** [Specifying request and response
-   * formats](https://cloud.ibm.com/docs/services/personality-insights/input.html#formats)
+   * formats](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#formats)
    *
    * ### Accept types
    *
@@ -216,14 +222,16 @@ class PersonalityInsightsV3 extends BaseService {
    * request optional column headers for CSV output.
    *
    * **See also:**
-   * * [Understanding a JSON profile](https://cloud.ibm.com/docs/services/personality-insights/output.html)
-   * * [Understanding a CSV profile](https://cloud.ibm.com/docs/services/personality-insights/output-csv.html).
+   * * [Understanding a JSON
+   * profile](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-output#output)
+   * * [Understanding a CSV
+   * profile](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-outputCSV#outputCSV).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Content|string} params.content - A maximum of 20 MB of content to analyze, though the service requires much
    * less text; for more information, see [Providing sufficient
-   * input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an
-   * object of type `Content`.
+   * input](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#sufficient). For
+   * JSON input, provide an object of type `Content`.
    * @param {string} [params.content_language] - The language of the input text for the request: Arabic, English,
    * Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is
    * interpreted as `en`.
@@ -248,7 +256,7 @@ class PersonalityInsightsV3 extends BaseService {
    * method description.
    *
    * Default: `text/plain`.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -355,7 +363,7 @@ namespace PersonalityInsightsV3 {
 
   /** Parameters for the `profile` operation. */
   export interface ProfileParams {
-    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
+    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileConstants.ContentLanguage | string;
@@ -407,7 +415,7 @@ namespace PersonalityInsightsV3 {
 
   /** Parameters for the `profileAsCsv` operation. */
   export interface ProfileAsCsvParams {
-    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights/input.html#sufficient). For JSON input, provide an object of type `Content`. */
+    /** A maximum of 20 MB of content to analyze, though the service requires much less text; for more information, see [Providing sufficient input](https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-input#sufficient). For JSON input, provide an object of type `Content`. */
     content: Content|string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. The effect of the **Content-Language** parameter depends on the **Content-Type** parameter. When **Content-Type** is `text/plain` or `text/html`, **Content-Language** is the only way to specify the language. When **Content-Type** is `application/json`, **Content-Language** overrides a language specified with the `language` parameter of a `ContentItem` object, and content items that specify a different language are ignored; omit this parameter to base the language on the specification of the content items. You can specify any combination of languages for **Content-Language** and **Accept-Language**. */
     content_language?: ProfileAsCsvConstants.ContentLanguage | string;
@@ -421,7 +429,7 @@ namespace PersonalityInsightsV3 {
     consumption_preferences?: boolean;
     /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
     content_type?: ProfileAsCsvConstants.ContentType | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -461,7 +469,7 @@ namespace PersonalityInsightsV3 {
    * model interfaces
    ************************/
 
-  /** Behavior. */
+  /** The temporal behavior for the input content. */
   export interface Behavior {
     /** The unique, non-localized identifier of the characteristic to which the results pertain. IDs have the form `behavior_{value}`. */
     trait_id: string;
@@ -473,7 +481,7 @@ namespace PersonalityInsightsV3 {
     percentage: number;
   }
 
-  /** ConsumptionPreferences. */
+  /** A consumption preference that the service inferred from the input content. */
   export interface ConsumptionPreferences {
     /** The unique, non-localized identifier of the consumption preference to which the results pertain. IDs have the form `consumption_preferences_{preference}`. */
     consumption_preference_id: string;
@@ -483,7 +491,7 @@ namespace PersonalityInsightsV3 {
     score: number;
   }
 
-  /** ConsumptionPreferencesCategory. */
+  /** The consumption preferences that the service inferred from the input content. */
   export interface ConsumptionPreferencesCategory {
     /** The unique, non-localized identifier of the consumption preferences category to which the results pertain. IDs have the form `consumption_preferences_{category}`. */
     consumption_preference_category_id: string;
@@ -493,13 +501,13 @@ namespace PersonalityInsightsV3 {
     consumption_preferences: ConsumptionPreferences[];
   }
 
-  /** Content. */
+  /** The full input content that the service is to analyze. */
   export interface Content {
     /** An array of `ContentItem` objects that provides the text that is to be analyzed. */
     content_items: ContentItem[];
   }
 
-  /** ContentItem. */
+  /** An input content item that the service is to analyze. */
   export interface ContentItem {
     /** The content that is to be analyzed. The service supports up to 20 MB of content for all `ContentItem` objects combined. */
     content: string;
@@ -521,7 +529,7 @@ namespace PersonalityInsightsV3 {
     forward?: boolean;
   }
 
-  /** Profile. */
+  /** The personality profile that the service generated for the input content. */
   export interface Profile {
     /** The language model that was used to process the input. */
     processed_language: string;
@@ -539,11 +547,11 @@ namespace PersonalityInsightsV3 {
     behavior?: Behavior[];
     /** If the **consumption_preferences** parameter is `true`, detailed results for each category of consumption preferences. Each element of the array provides information inferred from the input text for the individual preferences of that category. */
     consumption_preferences?: ConsumptionPreferencesCategory[];
-    /** Warning messages associated with the input text submitted with the request. The array is empty if the input generated no warnings. */
+    /** An array of warning messages that are associated with the input text for the request. The array is empty if the input generated no warnings. */
     warnings: Warning[];
   }
 
-  /** Trait. */
+  /** The characteristics that the service inferred from the input content. */
   export interface Trait {
     /** The unique, non-localized identifier of the characteristic to which the results pertain. IDs have the form * `big5_{characteristic}` for Big Five personality dimensions * `facet_{characteristic}` for Big Five personality facets * `need_{characteristic}` for Needs *`value_{characteristic}` for Values. */
     trait_id: string;
@@ -561,7 +569,7 @@ namespace PersonalityInsightsV3 {
     children?: Trait[];
   }
 
-  /** Warning. */
+  /** A warning message that is associated with the input content. */
   export interface Warning {
     /** The identifier of the warning message. */
     warning_id: string;

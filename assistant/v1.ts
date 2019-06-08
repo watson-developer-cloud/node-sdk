@@ -20,7 +20,7 @@ import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and integrated dialog tools to create conversation flows between your apps and your users.
+ * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and an integrated dialog editor to create conversation flows between your apps and your users.
  */
 
 class AssistantV1 extends BaseService {
@@ -4485,7 +4485,7 @@ namespace AssistantV1 {
   /** An object defining the message input to be sent to the Watson Assistant service if the user selects the corresponding option. */
   export interface DialogNodeOutputOptionsElementValue {
     /** An input object that includes the input text. */
-    input?: JsonObject;
+    input?: MessageInput;
     /** An array of intents to be used while processing the input. **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response to user input** method. */
     intents?: RuntimeIntent[];
     /** An array of entities to be used while processing the user input. **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response to user input** method. */
@@ -4904,7 +4904,7 @@ namespace AssistantV1 {
 
   /** Global settings for the workspace. */
   export interface WorkspaceSystemSettings {
-    /** Workspace settings related to the Watson Assistant tool. */
+    /** Workspace settings related to the Watson Assistant user interface. */
     tooling?: WorkspaceSystemSettingsTooling;
     /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
@@ -4924,7 +4924,7 @@ namespace AssistantV1 {
     sensitivity?: string;
   }
 
-  /** Workspace settings related to the Watson Assistant tool. */
+  /** Workspace settings related to the Watson Assistant user interface. */
   export interface WorkspaceSystemSettingsTooling {
     /** Whether the dialog JSON editor displays text responses within the `output.generic` object. */
     store_generic_responses?: boolean;
