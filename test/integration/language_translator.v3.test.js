@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const LanguageTranslatorV3 = require('../../language-translator/v3');
 const authHelper = require('../resources/auth_helper.js');
 const auth = authHelper.auth;
@@ -39,5 +40,126 @@ describe('language_translator_integration', function() {
       text: 'this is an important test that needs to work',
     };
     language_translator.identify(params, serviceErrorUtils.checkErrorCode(200, done));
+  });
+
+  describe('models', function() {
+    let base_model_id;
+    let model_id;
+    it('should list all the models', function(done) {
+      language_translator.listModels(
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          base_model_id = res.models[0].model_id;
+          done();
+        })
+      );
+    });
+
+    it('should create a model', function(done) {
+      language_translator.createModel(
+        {
+          base_model_id,
+          forced_glossary: fs.createReadStream('./test/resources/glossary.tmx'),
+        },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          model_id = res.model_id;
+          done();
+        })
+      );
+    });
+
+    it('should get the details of the model', function(done) {
+      if (!model_id) {
+        // We cannot run this test when model creation failed.
+        return done();
+      }
+
+      language_translator.getModel({ model_id }, serviceErrorUtils.checkErrorCode(200, done));
+    });
+
+    it('should delete the model', function(done) {
+      if (!model_id) {
+        // We cannot run this test when model creation failed.
+        return done();
+      }
+
+      language_translator.deleteModel({ model_id }, serviceErrorUtils.checkErrorCode(200, done));
+    });
+  });
+
+  describe('documentTranslation', function() {
+    let document_id;
+    // The service was down, could not test the test.
+    it('should translate document', function(done) {
+      language_translator.translateDocument(
+        {
+          file: fs.createReadStream('./test/resources/alchemy-text.txt'),
+          model_id: 'en-es',
+        },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          document_id = res.document_id;
+          done();
+        })
+      );
+    });
+
+    it('should list translated documents', function(done) {
+      language_translator.listDocuments(
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          done();
+        })
+      );
+      done();
+    });
+
+    it('should get translated document status', function(done) {
+      if (!document_id) {
+        // We cannot run this test when model creation failed.
+        return done();
+      }
+
+      language_translator.getDocumentStatus(
+        {
+          document_id,
+        },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          done();
+        })
+      );
+      done();
+    });
+
+    it('should get translated document', function(done) {
+      if (!document_id) {
+        // We cannot run this test when model creation failed.
+        return done();
+      }
+
+      language_translator.getTranslatedDocument(
+        {
+          document_id,
+        },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          done();
+        })
+      );
+      done();
+    });
+
+    it('should delete document', function(done) {
+      if (!document_id) {
+        // We cannot run this test when model creation failed.
+        return done();
+      }
+
+      language_translator.deleteDocument(
+        {
+          document_id,
+        },
+        serviceErrorUtils.checkErrorCode(200, (err, res) => {
+          done();
+        })
+      );
+      done();
+    });
   });
 });

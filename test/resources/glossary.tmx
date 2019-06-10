@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tmx version="1.4">
+  <header creationtool="" creationtoolversion=""
+  segtype="sentence" o-tmf="" adminlang="EN"
+  srclang="en" datatype="rtf" o-encoding="UTF-8" />
+  <body>
+    <tu>
+      <tuv xml:lang="en">
+        <seg>International Business Machines</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>International Business Machines</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="en">
+        <seg>patent</seg>
+      </tuv>
+      <tuv xml:lang="fr">
+        <seg>brevent</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

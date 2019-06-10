@@ -93,6 +93,9 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 
 - With some service instances, you authenticate to the API by using **[IAM](#iam)**.
 - In other instances, you authenticate by providing the **[username and password](#username-and-password)** for the service instance.
+- If you're using a Watson service on ICP, you'll need to authenticate in [a specific way](icp).
+
+To specify the type of authentication to use, there is an optional parameter called `authentication_type`. Possible values are `iam`, `basic`, and `icp4d`.
 
 ### Getting credentials
 
@@ -151,6 +154,39 @@ You supply either an IAM service **API key** or an **access token**:
 
 - Use the API key to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.
 - Use the access token if you want to manage the lifecycle yourself. For details, see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/services/watson/getting-started-iam.html). If you want to switch to API key, override your stored IAM credentials with an IAM API key.
+
+##### ICP
+
+Like IAM, you can pass in credentials to let the SDK manage an access token for you or directly supply an access token to do it yourself.
+
+If letting the SDK manage the token, you must set `authentication_type` to `icp4d`.
+
+```js
+const AssistantV1 = require('ibm-watson/assistant/v1');
+
+// letting the SDK manage the token
+const assistant = new AssistantV1({
+  url: '<Service ICP URL>',
+  icp4d_url: '<ICP token exchange base URL>',
+  username: '<username>',
+  password: '<password>',
+  authentication_type: 'icp4d',
+  disable_ssl_verification: true,
+});
+```
+
+```js
+const AssistantV1 = require('ibm-watson/assistant/v1');
+
+// assuming control of managing the access token
+const assistant = new AssistantV1({
+  url: '<Service ICP URL>',
+  icp4d_access_token: '<User-managed access token>',
+  disable_ssl_verification: true,
+});
+```
+
+Be sure to both disable SSL verification when authenticating and set the endpoint explicitly to the URL given in ICP.
 
 ###### Supplying the IAM API key
 
