@@ -148,7 +148,9 @@
 				<ul>
 					<li>With some service instances, you authenticate to the API by using <strong><a href="#iam">IAM</a></strong>.</li>
 					<li>In other instances, you authenticate by providing the <strong><a href="#username-and-password">username and password</a></strong> for the service instance.</li>
+					<li>If you&#39;re using a Watson service on ICP, you&#39;ll need to authenticate in <a href="icp">a specific way</a>.</li>
 				</ul>
+				<p>To specify the type of authentication to use, there is an optional parameter called <code>authentication_type</code>. Possible values are <code>iam</code>, <code>basic</code>, and <code>icp4d</code>.</p>
 				<h3 id="getting-credentials">Getting credentials</h3>
 				<p>To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:</p>
 				<ol>
@@ -185,6 +187,29 @@
 					<li>Use the API key to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.</li>
 					<li>Use the access token if you want to manage the lifecycle yourself. For details, see <a href="https://cloud.ibm.com/docs/services/watson/getting-started-iam.html">Authenticating with IAM tokens</a>. If you want to switch to API key, override your stored IAM credentials with an IAM API key.</li>
 				</ul>
+				<h5 id="icp">ICP</h5>
+				<p>Like IAM, you can pass in credentials to let the SDK manage an access token for you or directly supply an access token to do it yourself.</p>
+				<p>If you choose to let the SDK manage the token, <code>authentication_type</code> must be set to <code>icp4d</code>.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
+
+<span class="hljs-comment">// letting the SDK manage the token</span>
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;Service ICP URL&gt;'</span>,
+  <span class="hljs-attr">icp4d_url</span>: <span class="hljs-string">'&lt;ICP token exchange base URL&gt;'</span>,
+  <span class="hljs-attr">username</span>: <span class="hljs-string">'&lt;username&gt;'</span>,
+  <span class="hljs-attr">password</span>: <span class="hljs-string">'&lt;password&gt;'</span>,
+  <span class="hljs-attr">authentication_type</span>: <span class="hljs-string">'icp4d'</span>,
+  <span class="hljs-attr">disable_ssl_verification</span>: <span class="hljs-literal">true</span>,
+});</code></pre>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
+
+<span class="hljs-comment">// assuming control of managing the access token</span>
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;Service ICP URL&gt;'</span>,
+  <span class="hljs-attr">icp4d_access_token</span>: <span class="hljs-string">'&lt;User-managed access token&gt;'</span>,
+  <span class="hljs-attr">disable_ssl_verification</span>: <span class="hljs-literal">true</span>,
+});</code></pre>
+				<p>Be sure to both disable SSL verification when authenticating and set the endpoint explicitly to the URL given in ICP.</p>
 				<h6 id="supplying-the-iam-api-key">Supplying the IAM API key</h6>
 				<pre><code class="language-js"><span class="hljs-comment">// in the constructor, letting the SDK manage the IAM token</span>
 <span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({

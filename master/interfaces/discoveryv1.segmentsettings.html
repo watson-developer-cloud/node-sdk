@@ -89,6 +89,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.segmentsettings.html#annotated_fields" class="tsd-kind-icon">annotated_<wbr>fields</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.segmentsettings.html#enabled" class="tsd-kind-icon">enabled</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.segmentsettings.html#selector_tags" class="tsd-kind-icon">selector_<wbr>tags</a></li>
 							</ul>
@@ -99,12 +100,27 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="annotated_fields" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> annotated_<wbr>fields</h3>
+					<div class="tsd-signature tsd-kind-icon">annotated_<wbr>fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6314">discovery/v1.ts:6314</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines the annotated smart document understanding fields that the document is split on. The content of the annotated field that the segmentation splits at is used as the <strong>title</strong> field for that segmented result. For example, if the field <code>sub-title</code> is specified, when a document is uploaded each time the smart documement understanding conversion encounters a field of type <code>sub-title</code> the document is split at that point and the content of the field used as the title of the remaining content. Thnis split is performed for all instances of the listed fields in the uploaded document. Only valid if used with a collection that has <strong>enabled</strong> set to <code>true</code> in the <strong>smart_document_understanding</strong> object.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="enabled" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> enabled</h3>
 					<div class="tsd-signature tsd-kind-icon">enabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6237">discovery/v1.ts:6237</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6310">discovery/v1.ts:6310</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -119,12 +135,12 @@
 					<div class="tsd-signature tsd-kind-icon">selector_<wbr>tags<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6239">discovery/v1.ts:6239</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6312">discovery/v1.ts:6312</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Defines the heading level that splits into document segments. Valid values are h1, h2, h3, h4, h5, h6. The content of the header field that the segmentation splits at is used as the <strong>title</strong> field for that segmented result.</p>
+							<p>Defines the heading level that splits into document segments. Valid values are h1, h2, h3, h4, h5, h6. The content of the header field that the segmentation splits at is used as the <strong>title</strong> field for that segmented result. Only valid if used with a collection that has <strong>enabled</strong> set to <code>false</code> in the <strong>smart_document_understanding</strong> object.</p>
 						</div>
 					</div>
 				</section>
@@ -160,6 +176,9 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="discoveryv1.segmentsettings.html" class="tsd-kind-icon">Segment<wbr>Settings</a>
 								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.segmentsettings.html#annotated_fields" class="tsd-kind-icon">annotated_<wbr>fields</a>
+									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.segmentsettings.html#enabled" class="tsd-kind-icon">enabled</a>
 									</li>

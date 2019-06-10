@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>SpeechRecognitionResults.</p>
+						<p>The complete results for a speech recognition request.</p>
 					</div>
 				</div>
 			</section>
@@ -89,6 +89,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresults.html#audio_metrics" class="tsd-kind-icon">audio_<wbr>metrics</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresults.html#processing_metrics" class="tsd-kind-icon">processing_<wbr>metrics</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresults.html#result_index" class="tsd-kind-icon">result_<wbr>index</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresults.html#results" class="tsd-kind-icon">results</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresults.html#speaker_labels" class="tsd-kind-icon">speaker_<wbr>labels</a></li>
@@ -101,12 +103,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="audio_metrics" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> audio_<wbr>metrics</h3>
+					<div class="tsd-signature tsd-kind-icon">audio_<wbr>metrics<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.audiometrics.html" class="tsd-signature-type">AudioMetrics</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/speech-to-text/v1-generated.ts#L4614">speech-to-text/v1-generated.ts:4614</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If audio metrics are requested, information about the signal characteristics of the input audio.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="processing_metrics" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> processing_<wbr>metrics</h3>
+					<div class="tsd-signature tsd-kind-icon">processing_<wbr>metrics<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.processingmetrics.html" class="tsd-signature-type">ProcessingMetrics</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/speech-to-text/v1-generated.ts#L4612">speech-to-text/v1-generated.ts:4612</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If processing metrics are requested, information about the service&#39;s processing of the input audio.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="result_index" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> result_<wbr>index</h3>
 					<div class="tsd-signature tsd-kind-icon">result_<wbr>index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/speech-to-text/v1-generated.ts#L4450">speech-to-text/v1-generated.ts:4450</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/speech-to-text/v1-generated.ts#L4608">speech-to-text/v1-generated.ts:4608</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">results<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.speechrecognitionresult.html" class="tsd-signature-type">SpeechRecognitionResult</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/speech-to-text/v1-generated.ts#L4448">speech-to-text/v1-generated.ts:4448</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/speech-to-text/v1-generated.ts#L4606">speech-to-text/v1-generated.ts:4606</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,7 +168,7 @@
 					<div class="tsd-signature tsd-kind-icon">speaker_<wbr>labels<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.speakerlabelsresult.html" class="tsd-signature-type">SpeakerLabelsResult</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/speech-to-text/v1-generated.ts#L4452">speech-to-text/v1-generated.ts:4452</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/speech-to-text/v1-generated.ts#L4610">speech-to-text/v1-generated.ts:4610</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -151,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">warnings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/speech-to-text/v1-generated.ts#L4454">speech-to-text/v1-generated.ts:4454</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/speech-to-text/v1-generated.ts#L4616">speech-to-text/v1-generated.ts:4616</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -210,6 +242,12 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="speechtotextv1.speechrecognitionresults.html" class="tsd-kind-icon">Speech<wbr>Recognition<wbr>Results</a>
 								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.speechrecognitionresults.html#audio_metrics" class="tsd-kind-icon">audio_<wbr>metrics</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.speechrecognitionresults.html#processing_metrics" class="tsd-kind-icon">processing_<wbr>metrics</a>
+									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.speechrecognitionresults.html#result_index" class="tsd-kind-icon">result_<wbr>index</a>
 									</li>

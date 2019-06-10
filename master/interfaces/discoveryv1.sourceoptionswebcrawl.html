@@ -90,6 +90,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptionswebcrawl.html#allow_untrusted_certificate" class="tsd-kind-icon">allow_<wbr>untrusted_<wbr>certificate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptionswebcrawl.html#blacklist" class="tsd-kind-icon">blacklist</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptionswebcrawl.html#crawl_speed" class="tsd-kind-icon">crawl_<wbr>speed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptionswebcrawl.html#limit_to_starting_hosts" class="tsd-kind-icon">limit_<wbr>to_<wbr>starting_<wbr>hosts</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.sourceoptionswebcrawl.html#maximum_hops" class="tsd-kind-icon">maximum_<wbr>hops</a></li>
@@ -109,7 +110,7 @@
 					<div class="tsd-signature tsd-kind-icon">allow_<wbr>untrusted_<wbr>certificate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6313">discovery/v1.ts:6313</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6388">discovery/v1.ts:6388</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -119,12 +120,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="blacklist" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> blacklist</h3>
+					<div class="tsd-signature tsd-kind-icon">blacklist<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6396">discovery/v1.ts:6396</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of URL&#39;s to be excluded while crawling. The crawler will not follow links which contains this string. For example, listing <code>https://ibm.com/watson</code> also excludes <code>https://ibm.com/watson/discovery</code>.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="crawl_speed" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> crawl_<wbr>speed</h3>
 					<div class="tsd-signature tsd-kind-icon">crawl_<wbr>speed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6311">discovery/v1.ts:6311</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6386">discovery/v1.ts:6386</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">limit_<wbr>to_<wbr>starting_<wbr>hosts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6309">discovery/v1.ts:6309</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6384">discovery/v1.ts:6384</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">maximum_<wbr>hops<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6315">discovery/v1.ts:6315</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6390">discovery/v1.ts:6390</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -169,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">override_<wbr>robots_<wbr>txt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6319">discovery/v1.ts:6319</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6394">discovery/v1.ts:6394</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +200,7 @@
 					<div class="tsd-signature tsd-kind-icon">request_<wbr>timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6317">discovery/v1.ts:6317</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6392">discovery/v1.ts:6392</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L6307">discovery/v1.ts:6307</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L6382">discovery/v1.ts:6382</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -242,6 +258,9 @@
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.sourceoptionswebcrawl.html#allow_untrusted_certificate" class="tsd-kind-icon">allow_<wbr>untrusted_<wbr>certificate</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.sourceoptionswebcrawl.html#blacklist" class="tsd-kind-icon">blacklist</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.sourceoptionswebcrawl.html#crawl_speed" class="tsd-kind-icon">crawl_<wbr>speed</a>

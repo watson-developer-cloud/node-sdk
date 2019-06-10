@@ -90,6 +90,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.conversions.html#html" class="tsd-kind-icon">html</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.conversions.html#image_text_recognition" class="tsd-kind-icon">image_<wbr>text_<wbr>recognition</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.conversions.html#json_normalizations" class="tsd-kind-icon">json_<wbr>normalizations</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.conversions.html#pdf" class="tsd-kind-icon">pdf</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.conversions.html#segment" class="tsd-kind-icon">segment</a></li>
@@ -107,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">html<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.htmlsettings.html" class="tsd-signature-type">HtmlSettings</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L5370">discovery/v1.ts:5370</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L5417">discovery/v1.ts:5417</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -117,12 +118,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="image_text_recognition" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> image_<wbr>text_<wbr>recognition</h3>
+					<div class="tsd-signature tsd-kind-icon">image_<wbr>text_<wbr>recognition<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L5423">discovery/v1.ts:5423</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>When <code>true</code>, automatic text extraction from images (this includes images embedded in supported document formats, for example PDF, and suppported image formats, for example TIFF) is performed on documents uploaded to the collection. This field is supported on <strong>Advanced</strong> and higher plans only. <strong>Lite</strong> plans do not support image text recognition.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="json_normalizations" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> json_<wbr>normalizations</h3>
 					<div class="tsd-signature tsd-kind-icon">json_<wbr>normalizations<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.normalizationoperation.html" class="tsd-signature-type">NormalizationOperation</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L5374">discovery/v1.ts:5374</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L5421">discovery/v1.ts:5421</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -137,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">pdf<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.pdfsettings.html" class="tsd-signature-type">PdfSettings</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L5366">discovery/v1.ts:5366</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L5413">discovery/v1.ts:5413</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -152,7 +168,7 @@
 					<div class="tsd-signature tsd-kind-icon">segment<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.segmentsettings.html" class="tsd-signature-type">SegmentSettings</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L5372">discovery/v1.ts:5372</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L5419">discovery/v1.ts:5419</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -167,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">word<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.wordsettings.html" class="tsd-signature-type">WordSettings</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/discovery/v1.ts#L5368">discovery/v1.ts:5368</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/discovery/v1.ts#L5415">discovery/v1.ts:5415</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -210,6 +226,9 @@
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.conversions.html#html" class="tsd-kind-icon">html</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.conversions.html#image_text_recognition" class="tsd-kind-icon">image_<wbr>text_<wbr>recognition</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.conversions.html#json_normalizations" class="tsd-kind-icon">json_<wbr>normalizations</a>

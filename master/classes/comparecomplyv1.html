@@ -147,6 +147,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.getfeedback.html" class="tsd-kind-icon">Get<wbr>Feedback</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.getfeedbackparams.html" class="tsd-kind-icon">Get<wbr>Feedback<wbr>Params</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.htmlreturn.html" class="tsd-kind-icon">HTMLReturn</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.jsonobject.html" class="tsd-kind-icon">Json<wbr>Object</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.key.html" class="tsd-kind-icon">Key</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.keyvaluepair.html" class="tsd-kind-icon">Key<wbr>Value<wbr>Pair</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.label.html" class="tsd-kind-icon">Label</a></li>
@@ -158,6 +159,7 @@
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.originallabelsout.html" class="tsd-kind-icon">Original<wbr>Labels<wbr>Out</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.pagination.html" class="tsd-kind-icon">Pagination</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.parties.html" class="tsd-kind-icon">Parties</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/comparecomplyv1.response.html" class="tsd-kind-icon">Response</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.rowheaderids.html" class="tsd-kind-icon">Row<wbr>Header<wbr>Ids</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.rowheadertexts.html" class="tsd-kind-icon">Row<wbr>Header<wbr>Texts</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/comparecomplyv1.rowheadertextsnormalized.html" class="tsd-kind-icon">Row<wbr>Header<wbr>Texts<wbr>Normalized</a></li>
@@ -234,7 +236,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L894">compare-comply/v1.ts:894</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L918">compare-comply/v1.ts:918</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -247,7 +249,7 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span>, response<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, body<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">T</span>, response<span class="tsd-signature-symbol">?: </span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -260,7 +262,7 @@
 												<h5><span class="tsd-flag ts-flagOptional">Optional</span> body: <span class="tsd-signature-type">T</span></h5>
 											</li>
 											<li>
-												<h5><span class="tsd-flag ts-flagOptional">Optional</span> response: <span class="tsd-signature-type">AxiosResponse</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> response: <a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -276,7 +278,7 @@
 					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L881">compare-comply/v1.ts:881</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L890">compare-comply/v1.ts:890</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -288,7 +290,13 @@
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> headers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> authentication_<wbr>type<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> disable_<wbr>ssl_<wbr>verification<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> headers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">OutgoingHttpHeaders</span></h5>
 							</li>
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>access_<wbr>token<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
@@ -297,10 +305,25 @@
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>apikey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>client_<wbr>id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>client_<wbr>secret<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> iam_<wbr>url<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> icp4d_<wbr>access_<wbr>token<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> icp4d_<wbr>url<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> password<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> token<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
 								<h5><span class="tsd-flag ts-flagOptional">Optional</span> url<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
@@ -331,7 +354,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L31">compare-comply/v1.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L30">compare-comply/v1.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -371,7 +394,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService._options</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:54</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:60</li>
 						</ul>
 					</aside>
 				</section>
@@ -382,7 +405,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L30">compare-comply/v1.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L29">compare-comply/v1.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -393,7 +416,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.serviceDefaults</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:55</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:61</li>
 						</ul>
 					</aside>
 				</section>
@@ -404,7 +427,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L31">compare-comply/v1.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L30">compare-comply/v1.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -415,7 +438,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.tokenManager</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:56</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:62</li>
 						</ul>
 					</aside>
 				</section>
@@ -426,7 +449,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L29">compare-comply/v1.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L28">compare-comply/v1.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -443,7 +466,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L361">compare-comply/v1.ts:361</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L369">compare-comply/v1.ts:369</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -483,7 +506,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L148">compare-comply/v1.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L156">compare-comply/v1.ts:156</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -521,7 +544,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L288">compare-comply/v1.ts:288</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L296">compare-comply/v1.ts:296</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -559,7 +582,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L79">compare-comply/v1.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L87">compare-comply/v1.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -597,17 +620,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L659">compare-comply/v1.ts:659</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L668">compare-comply/v1.ts:668</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Submit a batch-processing request.</p>
 								</div>
-								<p>Run Compare and Comply methods over a collection of input documents.
-									<strong>Important:</strong> Batch processing requires the use of the <a href="https://cloud.ibm.com/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage">IBM Cloud Object Storage
+								<p>Run Compare and Comply methods over a collection of input documents.</p>
+								<p><strong>Important:</strong> Batch processing requires the use of the <a href="https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-about#about-ibm-cloud-object-storage">IBM Cloud Object Storage
 									service</a>.
-									The use of IBM Cloud Object Storage with Compare and Comply is discussed at <a href="https://cloud.ibm.com/docs/services/compare-comply/batching.html#before-you-batch">Using batch
+									The use of IBM Cloud Object Storage with Compare and Comply is discussed at <a href="https://cloud.ibm.com/docs/services/compare-comply?topic=compare-comply-batching#before-you-batch">Using batch
 								processing</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -640,7 +663,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:118</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:128</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -679,7 +702,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L419">compare-comply/v1.ts:419</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L427">compare-comply/v1.ts:427</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -717,7 +740,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L216">compare-comply/v1.ts:216</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L224">compare-comply/v1.ts:224</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -755,7 +778,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L727">compare-comply/v1.ts:727</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L736">compare-comply/v1.ts:736</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -793,14 +816,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L479">compare-comply/v1.ts:479</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L487">compare-comply/v1.ts:487</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>List a specified feedback entry.</p>
+									<p>Get a specified feedback entry.</p>
 								</div>
-								<p>Lists a feedback entry with a specified <code>feedback_id</code>.</p>
+								<p>Gets a feedback entry with a specified <code>feedback_id</code>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -832,7 +855,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getServiceCredentials</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:85</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:95</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -855,7 +878,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L777">compare-comply/v1.ts:777</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L786">compare-comply/v1.ts:786</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -890,7 +913,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L573">compare-comply/v1.ts:573</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L581">compare-comply/v1.ts:581</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -926,7 +949,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.preAuthenticate</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:108</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:118</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -953,14 +976,14 @@
 					<a name="setaccesstoken" class="tsd-anchor"></a>
 					<h3>set<wbr>Access<wbr>Token</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Access<wbr>Token<span class="tsd-signature-symbol">(</span>iam_access_token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Access<wbr>Token<span class="tsd-signature-symbol">(</span>access_token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setAccessToken</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:98</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:108</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -976,7 +999,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>iam_access_token: <span class="tsd-signature-type">string</span></h5>
+									<h5>access_token: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A valid, non-expired IAM access token</p>
 									</div>
@@ -996,7 +1019,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/289a62b/compare-comply/v1.ts#L823">compare-comply/v1.ts:823</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d45ad92/compare-comply/v1.ts#L832">compare-comply/v1.ts:832</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1178,6 +1201,9 @@
 								<a href="../interfaces/comparecomplyv1.htmlreturn.html" class="tsd-kind-icon">HTMLReturn</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/comparecomplyv1.jsonobject.html" class="tsd-kind-icon">Json<wbr>Object</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/comparecomplyv1.key.html" class="tsd-kind-icon">Key</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
@@ -1209,6 +1235,9 @@
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/comparecomplyv1.parties.html" class="tsd-kind-icon">Parties</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="../interfaces/comparecomplyv1.response.html" class="tsd-kind-icon">Response</a>
 							</li>
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/comparecomplyv1.rowheaderids.html" class="tsd-kind-icon">Row<wbr>Header<wbr>Ids</a>
