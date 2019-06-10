@@ -86,7 +86,7 @@ describe('language_translator_integration', function() {
     });
   });
 
-  describe('documentTranslation', function() {
+  describe('documentTranslation @slow', function() {
     let document_id;
     // The service was down, could not test the test.
     it('should translate document', function(done) {
