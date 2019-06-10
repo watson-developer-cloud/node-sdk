@@ -27,7 +27,7 @@ describe('compare_comply_integration', () => {
   });
 
   describe('elementClassification', () => {
-    test('classifyElements', done => {
+    test('classifyElements @slow', done => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
