@@ -159,7 +159,7 @@ You supply either an IAM service **API key** or an **access token**:
 
 Like IAM, you can pass in credentials to let the SDK manage an access token for you or directly supply an access token to do it yourself.
 
-If letting the SDK manage the token, you must set `authentication_type` to `icp4d`.
+If you choose to let the SDK manage the token, `authentication_type` must be set to `icp4d`.
 
 ```js
 const AssistantV1 = require('ibm-watson/assistant/v1');

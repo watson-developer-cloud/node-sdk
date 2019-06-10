@@ -1072,6 +1072,7 @@ describe('translateDocument', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const file = 'fake_file';
+      const filename = 'fake_filename';
       const file_content_type = 'fake_file_content_type';
       const model_id = 'fake_model_id';
       const source = 'fake_source';
@@ -1079,6 +1080,7 @@ describe('translateDocument', () => {
       const document_id = 'fake_document_id';
       const params = {
         file,
+        filename,
         file_content_type,
         model_id,
         source,
@@ -1100,6 +1102,7 @@ describe('translateDocument', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['file'].data).toEqual(file);
+      expect(options.formData['file'].filename).toEqual(filename);
       expect(options.formData['file'].contentType).toEqual(file_content_type);
       expect(options.formData['model_id']).toEqual(model_id);
       expect(options.formData['source']).toEqual(source);
@@ -1110,10 +1113,12 @@ describe('translateDocument', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const file = 'fake_file';
+      const filename = 'fake_filename';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
         file,
+        filename,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
@@ -1127,8 +1132,10 @@ describe('translateDocument', () => {
     test('should return a promise when no callback is given', () => {
       // parameters
       const file = 'fake_file';
+      const filename = 'fake_filename';
       const params = {
         file,
+        filename,
       };
 
       // invoke method
@@ -1154,7 +1161,7 @@ describe('translateDocument', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['file'];
+      const requiredParams = ['file', 'filename'];
 
       languageTranslator.translateDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1164,7 +1171,7 @@ describe('translateDocument', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['file'];
+      const requiredParams = ['file', 'filename'];
 
       const translateDocumentPromise = languageTranslator.translateDocument();
       expectToBePromise(translateDocumentPromise);

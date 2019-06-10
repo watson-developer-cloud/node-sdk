@@ -349,20 +349,6 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** Applies to US English, Japanese, and Korean transcription only.
    *
    * See [Numeric redaction](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-output#redaction).
-   * @param {boolean} [params.processing_metrics] - If `true`, requests processing metrics about the service's
-   * transcription of the input audio. The service returns processing metrics at the interval specified by the
-   * `processing_metrics_interval` parameter. It also returns processing metrics for transcription events, for example,
-   * for final and interim results. By default, the service returns no processing metrics.
-   * @param {number} [params.processing_metrics_interval] - Specifies the interval in real wall-clock seconds at which
-   * the service is to return processing metrics. The parameter is ignored unless the `processing_metrics` parameter is
-   * set to `true`.
-   *
-   * The parameter accepts a minimum value of 0.1 seconds. The level of precision is not restricted, so you can specify
-   * values such as 0.25 and 0.125.
-   *
-   * The service does not impose a maximum value. If you want to receive processing metrics only for transcription
-   * events instead of at periodic intervals, set the value to a large number. If the value is larger than the duration
-   * of the audio, the service returns processing metrics only for transcription events.
    * @param {boolean} [params.audio_metrics] - If `true`, requests detailed information about the signal characteristics
    * of the input audio. The service returns audio metrics with the final transcription results. By default, the service
    * returns no audio metrics.
@@ -410,8 +396,6 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customization_id,
       'grammar_name': _params.grammar_name,
       'redaction': _params.redaction,
-      'processing_metrics': _params.processing_metrics,
-      'processing_metrics_interval': _params.processing_metrics_interval,
       'audio_metrics': _params.audio_metrics
     };
 
@@ -1416,10 +1400,6 @@ class SpeechToTextV1 extends BaseService {
    *
    * The value that you assign is used for all recognition requests that use the model. You can override it for any
    * recognition request by specifying a customization weight for that request.
-   * @param {boolean} [params.strict] - If `false`, allows training of the custom language model to proceed as long as
-   * the model contains at least one valid resource. The method returns an array of `TrainingWarning` objects that lists
-   * any invalid resources. By default (`true`), training of a custom language model fails (status code 400) if the
-   * model contains one or more invalid resources (corpus files, grammar files, or custom words).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -1445,7 +1425,6 @@ class SpeechToTextV1 extends BaseService {
     const query = {
       'word_type_to_add': _params.word_type_to_add,
       'customization_weight': _params.customization_weight,
-      'strict': _params.strict
     };
 
     const path = {
@@ -2900,9 +2879,8 @@ class SpeechToTextV1 extends BaseService {
    * * The custom model contains less than 10 minutes or more than 200 hours of audio data.
    * * You passed an incompatible custom language model with the `custom_language_model_id` query parameter. Both custom
    * models must be based on the same version of the same base model.
-   * * The custom model contains one or more invalid audio resources. You can correct the invalid audio resources or set
-   * the `strict` parameter to `false` to exclude the invalid resources from the training. The model must contain at
-   * least one valid resource for training to succeed.
+   * * The custom model contains one or more invalid audio resources. You can correct the invalid audio resources.
+   * The model must contain at least one valid resource for training to succeed.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
@@ -2913,10 +2891,6 @@ class SpeechToTextV1 extends BaseService {
    * verbatim transcriptions of the audio resources or that contains words that are relevant to the contents of the
    * audio resources. The custom language model must be based on the same version of the same base model as the custom
    * acoustic model. The credentials specified with the request must own both custom models.
-   * @param {boolean} [params.strict] - If `false`, allows training of the custom acoustic model to proceed as long as
-   * the model contains at least one valid audio resource. The method returns an array of `TrainingWarning` objects that
-   * lists any invalid resources. By default (`true`), training of a custom acoustic model fails (status code 400) if
-   * the model contains one or more invalid audio resources.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -2941,7 +2915,6 @@ class SpeechToTextV1 extends BaseService {
  
     const query = {
       'custom_language_model_id': _params.custom_language_model_id,
-      'strict': _params.strict
     };
 
     const path = {
@@ -3916,8 +3889,6 @@ namespace SpeechToTextV1 {
     word_type_to_add?: TrainLanguageModelConstants.WordTypeToAdd | string;
     /** Specifies a customization weight for the custom language model. The customization weight tells the service how much weight to give to words from the custom language model compared to those from the base model for speech recognition. Specify a value between 0.0 and 1.0; the default is 0.3. The default value yields the best performance in general. Assign a higher value if your audio makes frequent use of OOV words from the custom model. Use caution when setting the weight: a higher value can improve the accuracy of phrases from the custom model's domain, but it can negatively affect performance on non-domain phrases. The value that you assign is used for all recognition requests that use the model. You can override it for any recognition request by specifying a customization weight for that request. */
     customization_weight?: number;
-    /** If `false`, allows training of the custom language model to proceed as long as the model contains at least one valid resource. The method returns an array of `TrainingWarning` objects that lists any invalid resources. By default (`true`), training of a custom language model fails (status code 400) if the model contains one or more invalid resources (corpus files, grammar files, or custom words). */
-    strict?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -4185,8 +4156,6 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The customization ID (GUID) of a custom language model that is to be used during training of the custom acoustic model. Specify a custom language model that has been trained with verbatim transcriptions of the audio resources or that contains words that are relevant to the contents of the audio resources. The custom language model must be based on the same version of the same base model as the custom acoustic model. The credentials specified with the request must own both custom models. */
     custom_language_model_id?: string;
-    /** If `false`, allows training of the custom acoustic model to proceed as long as the model contains at least one valid audio resource. The method returns an array of `TrainingWarning` objects that lists any invalid resources. By default (`true`), training of a custom acoustic model fails (status code 400) if the model contains one or more invalid audio resources. */
-    strict?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }

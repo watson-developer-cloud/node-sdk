@@ -687,6 +687,7 @@ class LanguageTranslatorV3 extends BaseService {
    * types](https://cloud.ibm.com/docs/services/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
    *
    * Maximum file size: **20 MB**.
+   * @param {string} params.filename - The filename for file.
    * @param {string} [params.file_content_type] - The content type of file.
    * @param {string} [params.model_id] - The model to use for translation. `model_id` or both `source` and `target` are
    * required.
@@ -701,7 +702,7 @@ class LanguageTranslatorV3 extends BaseService {
   public translateDocument(params: LanguageTranslatorV3.TranslateDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['file'];
+    const requiredParams = ['file', 'filename'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
@@ -718,6 +719,7 @@ class LanguageTranslatorV3 extends BaseService {
     const formData = {
       'file': {
         data: _params.file,
+        filename: _params.filename,
         contentType: _params.file_content_type
       },
       'model_id': _params.model_id,
@@ -934,6 +936,8 @@ namespace LanguageTranslatorV3 {
   export interface TranslateDocumentParams {
     /** The source file to translate. [Supported file types](https://cloud.ibm.com/docs/services/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats) Maximum file size: **20 MB**. */
     file: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for file. */
+    filename: string;
     /** The content type of file. */
     file_content_type?: TranslateDocumentConstants.FileContentType | string;
     /** The model to use for translation. `model_id` or both `source` and `target` are required. */

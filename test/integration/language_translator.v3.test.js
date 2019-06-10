@@ -113,7 +113,7 @@ describe('language_translator_integration', function() {
 
     it('should get translated document status', function(done) {
       if (!document_id) {
-        // We cannot run this test when model creation failed.
+        // We cannot run this test when document upload failed.
         return done();
       }
 
@@ -130,7 +130,7 @@ describe('language_translator_integration', function() {
 
     it('should get translated document', function(done) {
       if (!document_id) {
-        // We cannot run this test when model creation failed.
+        // We cannot run this test when document upload failed.
         return done();
       }
 
@@ -147,7 +147,7 @@ describe('language_translator_integration', function() {
 
     it('should delete document', function(done) {
       if (!document_id) {
-        // We cannot run this test when model creation failed.
+        // We cannot run this test when document upload failed.
         return done();
       }
 

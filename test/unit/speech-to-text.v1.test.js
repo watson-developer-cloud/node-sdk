@@ -242,8 +242,6 @@ describe('recognize', () => {
       const customization_id = 'fake_customization_id';
       const grammar_name = 'fake_grammar_name';
       const redaction = 'fake_redaction';
-      const processing_metrics = 'fake_processing_metrics';
-      const processing_metrics_interval = 'fake_processing_metrics_interval';
       const audio_metrics = 'fake_audio_metrics';
       const content_type = 'fake_content_type';
       const params = {
@@ -266,8 +264,6 @@ describe('recognize', () => {
         customization_id,
         grammar_name,
         redaction,
-        processing_metrics,
-        processing_metrics_interval,
         audio_metrics,
         content_type,
       };
@@ -305,8 +301,6 @@ describe('recognize', () => {
       expect(options.qs['customization_id']).toEqual(customization_id);
       expect(options.qs['grammar_name']).toEqual(grammar_name);
       expect(options.qs['redaction']).toEqual(redaction);
-      expect(options.qs['processing_metrics']).toEqual(processing_metrics);
-      expect(options.qs['processing_metrics_interval']).toEqual(processing_metrics_interval);
       expect(options.qs['audio_metrics']).toEqual(audio_metrics);
     });
 
@@ -1498,12 +1492,10 @@ describe('trainLanguageModel', () => {
       const customization_id = 'fake_customization_id';
       const word_type_to_add = 'fake_word_type_to_add';
       const customization_weight = 'fake_customization_weight';
-      const strict = 'fake_strict';
       const params = {
         customization_id,
         word_type_to_add,
         customization_weight,
-        strict,
       };
 
       // invoke method
@@ -1521,7 +1513,6 @@ describe('trainLanguageModel', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['word_type_to_add']).toEqual(word_type_to_add);
       expect(options.qs['customization_weight']).toEqual(customization_weight);
-      expect(options.qs['strict']).toEqual(strict);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
 
@@ -3587,11 +3578,9 @@ describe('trainAcousticModel', () => {
       // parameters
       const customization_id = 'fake_customization_id';
       const custom_language_model_id = 'fake_custom_language_model_id';
-      const strict = 'fake_strict';
       const params = {
         customization_id,
         custom_language_model_id,
-        strict,
       };
 
       // invoke method
@@ -3608,7 +3597,6 @@ describe('trainAcousticModel', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['custom_language_model_id']).toEqual(custom_language_model_id);
-      expect(options.qs['strict']).toEqual(strict);
       expect(options.path['customization_id']).toEqual(customization_id);
     });
 
