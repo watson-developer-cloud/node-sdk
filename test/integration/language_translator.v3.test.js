@@ -93,6 +93,7 @@ describe('language_translator_integration', function() {
       language_translator.translateDocument(
         {
           file: fs.createReadStream('./test/resources/alchemy-text.txt'),
+          filename: 'alchemy-text.txt',
           model_id: 'en-es',
         },
         serviceErrorUtils.checkErrorCode(200, (err, res) => {
