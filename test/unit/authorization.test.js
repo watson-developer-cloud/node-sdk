@@ -61,8 +61,8 @@ describe('authorization', function() {
       expect(rc_authorization.tokenManager).not.toBeNull();
 
       // mock the token manager request method
-      const requestMock = jest.spyOn(rc_authorization.tokenManager, 'requestToken');
-      requestMock.mockImplementation(cb => cb(null, { access_token: mock_token }));
+      const requestMock = jest.spyOn(rc_authorization.tokenManager, 'getToken');
+      requestMock.mockImplementation(cb => cb(null, mock_token));
 
       rc_authorization.getToken(checkToken(done));
     });

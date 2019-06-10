@@ -47,7 +47,10 @@ const QUERY_PARAMS_ALLOWED = [
   'language_customization_id',
   'customization_id',
   'acoustic_customization_id',
-  'access_token'
+  'access_token',
+  'processing_metrics',
+  'processing_metrics_interval',
+  'audio_metrics'
 ];
 
 interface RecognizeStream extends Duplex {

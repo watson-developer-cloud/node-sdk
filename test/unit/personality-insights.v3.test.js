@@ -1,18 +1,37 @@
+/**
+ * Copyright 2019 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
 const PersonalityInsightsV3 = require('../../personality-insights/v3');
 const utils = require('../resources/unitTestUtils');
 
-const getOptions = utils.getOptions;
-const checkUrlAndMethod = utils.checkUrlAndMethod;
-const checkCallback = utils.checkCallback;
-const checkMediaHeaders = utils.checkMediaHeaders;
-const missingParamsSuccess = utils.missingParamsSuccess;
-const missingParamsError = utils.missingParamsError;
-const checkForEmptyObject = utils.checkForEmptyObject;
-const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const checkUserHeader = utils.checkUserHeader;
+const {
+  getOptions,
+  checkUrlAndMethod,
+  checkCallback,
+  checkMediaHeaders,
+  missingParamsSuccess,
+  expectToBePromise,
+  missingParamsError,
+  checkForEmptyObject,
+  checkRequiredParamsHandling,
+  checkUserHeader,
+} = utils;
+
 const noop = () => {};
 
 const service = {
@@ -59,7 +78,7 @@ describe('profile', () => {
       };
 
       // invoke method
-      personalityInsights.profile(params);
+      personalityInsights.profile(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -93,8 +112,23 @@ describe('profile', () => {
         },
       };
 
-      personalityInsights.profile(params);
+      personalityInsights.profile(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const content = 'fake_content';
+      const params = {
+        content,
+      };
+
+      // invoke method
+      const profilePromise = personalityInsights.profile(params);
+      expectToBePromise(profilePromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -115,6 +149,19 @@ describe('profile', () => {
       const requiredParams = ['content'];
 
       personalityInsights.profile({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['content'];
+
+      const profilePromise = personalityInsights.profile();
+      expectToBePromise(profilePromise);
+
+      profilePromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
@@ -147,7 +194,7 @@ describe('profileAsCsv', () => {
       };
 
       // invoke method
-      personalityInsights.profileAsCsv(params);
+      personalityInsights.profileAsCsv(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -181,8 +228,23 @@ describe('profileAsCsv', () => {
         },
       };
 
-      personalityInsights.profileAsCsv(params);
+      personalityInsights.profileAsCsv(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const content = 'fake_content';
+      const params = {
+        content,
+      };
+
+      // invoke method
+      const profileAsCsvPromise = personalityInsights.profileAsCsv(params);
+      expectToBePromise(profileAsCsvPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -203,6 +265,19 @@ describe('profileAsCsv', () => {
       const requiredParams = ['content'];
 
       personalityInsights.profileAsCsv({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['content'];
+
+      const profileAsCsvPromise = personalityInsights.profileAsCsv();
+      expectToBePromise(profileAsCsvPromise);
+
+      profileAsCsvPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

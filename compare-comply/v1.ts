@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { FileObject } from 'ibm-cloud-sdk-core';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -39,9 +38,18 @@ class CompareComplyV1 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
-   * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
+   * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
+   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
+   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
+   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {CompareComplyV1}
    * @throws {Error}
@@ -72,7 +80,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -141,7 +149,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -209,7 +217,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -281,7 +289,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -354,7 +362,7 @@ class CompareComplyV1 extends BaseService {
    * @param {FeedbackDataInput} params.feedback_data - Feedback data for submission.
    * @param {string} [params.user_id] - An optional string identifying the user.
    * @param {string} [params.comment] - An optional comment on or description of the feedback.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -412,7 +420,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -462,9 +470,9 @@ class CompareComplyV1 extends BaseService {
   };
 
   /**
-   * List a specified feedback entry.
+   * Get a specified feedback entry.
    *
-   * Lists a feedback entry with a specified `feedback_id`.
+   * Gets a feedback entry with a specified `feedback_id`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.feedback_id - A string that specifies the feedback entry to be included in the output.
@@ -472,7 +480,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -566,7 +574,7 @@ class CompareComplyV1 extends BaseService {
    * ascending order (the default). Currently permitted sorting fields are `created`, `user_id`, and `document_title`.
    * @param {boolean} [params.include_total] - An optional boolean value. If specified as `true`, the `pagination`
    * object in the output includes a value called `total` that gives the total count of feedback created.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -627,10 +635,11 @@ class CompareComplyV1 extends BaseService {
    * Submit a batch-processing request.
    *
    * Run Compare and Comply methods over a collection of input documents.
+   *
    * **Important:** Batch processing requires the use of the [IBM Cloud Object Storage
-   * service](https://cloud.ibm.com/docs/services/cloud-object-storage/about-cos.html#about-ibm-cloud-object-storage).
+   * service](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-about#about-ibm-cloud-object-storage).
    * The use of IBM Cloud Object Storage with Compare and Comply is discussed at [Using batch
-   * processing](https://cloud.ibm.com/docs/services/compare-comply/batching.html#before-you-batch).
+   * processing](https://cloud.ibm.com/docs/services/compare-comply?topic=compare-comply-batching#before-you-batch).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params._function - The Compare and Comply method to run across the submitted input documents.
@@ -652,7 +661,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -720,7 +729,7 @@ class CompareComplyV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.batch_id - The ID of the batch-processing job whose information you want to retrieve.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -770,7 +779,7 @@ class CompareComplyV1 extends BaseService {
    * Lists batch-processing jobs submitted by users.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -816,7 +825,7 @@ class CompareComplyV1 extends BaseService {
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -884,17 +893,37 @@ namespace CompareComplyV1 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
+
+  /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
+  export interface JsonObject {
+    [key: string]: any;
+  }
 
   /*************************
    * request interfaces
@@ -910,7 +939,7 @@ namespace CompareComplyV1 {
     file_content_type?: ConvertToHtmlConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: ConvertToHtmlConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -943,7 +972,7 @@ namespace CompareComplyV1 {
     file_content_type?: ClassifyElementsConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: ClassifyElementsConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -975,7 +1004,7 @@ namespace CompareComplyV1 {
     file_content_type?: ExtractTablesConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: ExtractTablesConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1016,7 +1045,7 @@ namespace CompareComplyV1 {
     file_2_label?: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: CompareDocumentsConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1061,7 +1090,7 @@ namespace CompareComplyV1 {
     user_id?: string;
     /** An optional comment on or description of the feedback. */
     comment?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1071,7 +1100,7 @@ namespace CompareComplyV1 {
     feedback_id: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: DeleteFeedbackConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1090,7 +1119,7 @@ namespace CompareComplyV1 {
     feedback_id: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: GetFeedbackConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1137,7 +1166,7 @@ namespace CompareComplyV1 {
     sort?: string;
     /** An optional boolean value. If specified as `true`, the `pagination` object in the output includes a value called `total` that gives the total count of feedback created. */
     include_total?: boolean;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1159,7 +1188,7 @@ namespace CompareComplyV1 {
     output_bucket_name: string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: CreateBatchConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1182,13 +1211,13 @@ namespace CompareComplyV1 {
   export interface GetBatchParams {
     /** The ID of the batch-processing job whose information you want to retrieve. */
     batch_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
   /** Parameters for the `listBatches` operation. */
   export interface ListBatchesParams {
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1200,7 +1229,7 @@ namespace CompareComplyV1 {
     action: UpdateBatchConstants.Action | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing requests. */
     model?: UpdateBatchConstants.Model | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1276,7 +1305,7 @@ namespace CompareComplyV1 {
     updated?: string;
   }
 
-  /** The results of a successful `GET /v1/batches` request. */
+  /** The results of a successful **List Batches** request. */
   export interface Batches {
     /** A list of the status of all batch requests. */
     batches?: BatchStatus[];
@@ -1370,7 +1399,7 @@ namespace CompareComplyV1 {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The location of the column header cell in the current table as defined by its `begin` and `end` offsets, respectfully, in the input document. */
-    location?: Object;
+    location?: JsonObject;
     /** The textual contents of this cell from the input document without associated markup content. */
     text?: string;
     /** If you provide customization input, the normalized version of the cell text according to the customization; otherwise, the same value as `text`. */
@@ -1537,7 +1566,7 @@ namespace CompareComplyV1 {
     updated_labels: UpdatedLabelsIn;
   }
 
-  /** Information returned from the `POST /v1/feedback` method. */
+  /** Information returned from the **Add Feedback** method. */
   export interface FeedbackDataOutput {
     /** A string identifying the user adding the feedback. The only permitted value is `element_classification`. */
     feedback_type?: string;
@@ -1567,7 +1596,7 @@ namespace CompareComplyV1 {
     message?: string;
   }
 
-  /** The results of a successful `GET /v1/feedback` request. */
+  /** The results of a successful **List Feedback** request for all feedback. */
   export interface FeedbackList {
     /** A list of all feedback for the document. */
     feedback?: GetFeedback[];
@@ -1583,11 +1612,11 @@ namespace CompareComplyV1 {
     comment?: string;
     /** Timestamp listing the creation time of the feedback submission. */
     created?: string;
-    /** Information returned from the `POST /v1/feedback` method. */
+    /** Information returned from the **Add Feedback** method. */
     feedback_data?: FeedbackDataOutput;
   }
 
-  /** The results of a single feedback query. */
+  /** The results of a successful **Get Feedback** request for a single feedback entry. */
   export interface GetFeedback {
     /** A string uniquely identifying the feedback entry. */
     feedback_id?: string;
@@ -1595,7 +1624,7 @@ namespace CompareComplyV1 {
     created?: string;
     /** A string containing the user's comment about the feedback entry. */
     comment?: string;
-    /** Information returned from the `POST /v1/feedback` method. */
+    /** Information returned from the **Add Feedback** method. */
     feedback_data?: FeedbackDataOutput;
   }
 
@@ -1774,7 +1803,7 @@ namespace CompareComplyV1 {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
     /** The location of the table header cell in the current table as defined by its `begin` and `end` offsets, respectfully, in the input document. */
-    location?: Object;
+    location?: JsonObject;
     /** The textual contents of the cell from the input document without associated markup content. */
     text?: string;
     /** The `begin` index of this cell's `row` location in the current table. */

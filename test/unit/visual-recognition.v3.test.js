@@ -1,19 +1,38 @@
+/**
+ * Copyright 2019 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
 const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const utils = require('../resources/unitTestUtils');
 
-const getOptions = utils.getOptions;
-const checkUrlAndMethod = utils.checkUrlAndMethod;
-const checkCallback = utils.checkCallback;
-const checkMediaHeaders = utils.checkMediaHeaders;
-const missingParamsSuccess = utils.missingParamsSuccess;
-const missingParamsError = utils.missingParamsError;
-const checkForEmptyObject = utils.checkForEmptyObject;
-const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
-const checkUserHeader = utils.checkUserHeader;
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
+const {
+  getOptions,
+  checkUrlAndMethod,
+  checkCallback,
+  checkMediaHeaders,
+  missingParamsSuccess,
+  expectToBePromise,
+  missingParamsError,
+  checkForEmptyObject,
+  checkRequiredParamsHandling,
+  checkUserHeader,
+  checkDefaultSuccessArgs,
+} = utils;
+
 const noop = () => {};
 
 const service = {
@@ -62,7 +81,7 @@ describe('classify', () => {
       };
 
       // invoke method
-      visualRecognition.classify(params);
+      visualRecognition.classify(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -95,12 +114,24 @@ describe('classify', () => {
         },
       };
 
-      visualRecognition.classify(params);
+      visualRecognition.classify(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const classifyPromise = visualRecognition.classify(params);
+      expectToBePromise(classifyPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      visualRecognition.classify();
+      visualRecognition.classify({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -133,7 +164,7 @@ describe('detectFaces', () => {
       };
 
       // invoke method
-      visualRecognition.detectFaces(params);
+      visualRecognition.detectFaces(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -163,12 +194,24 @@ describe('detectFaces', () => {
         },
       };
 
-      visualRecognition.detectFaces(params);
+      visualRecognition.detectFaces(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const detectFacesPromise = visualRecognition.detectFaces(params);
+      expectToBePromise(detectFacesPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      visualRecognition.detectFaces();
+      visualRecognition.detectFaces({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -199,7 +242,7 @@ describe('createClassifier', () => {
       };
 
       // invoke method
-      visualRecognition.createClassifier(params);
+      visualRecognition.createClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -236,8 +279,25 @@ describe('createClassifier', () => {
         },
       };
 
-      visualRecognition.createClassifier(params);
+      visualRecognition.createClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const name = 'fake_name';
+      const positive_examples = { fake: 'fake_positive_examples' };
+      const params = {
+        name,
+        positive_examples,
+      };
+
+      // invoke method
+      const createClassifierPromise = visualRecognition.createClassifier(params);
+      expectToBePromise(createClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -262,6 +322,19 @@ describe('createClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['name', 'positive_examples'];
+
+      const createClassifierPromise = visualRecognition.createClassifier();
+      expectToBePromise(createClassifierPromise);
+
+      createClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -278,7 +351,7 @@ describe('deleteClassifier', () => {
       };
 
       // invoke method
-      visualRecognition.deleteClassifier(params);
+      visualRecognition.deleteClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -306,8 +379,23 @@ describe('deleteClassifier', () => {
         },
       };
 
-      visualRecognition.deleteClassifier(params);
+      visualRecognition.deleteClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const deleteClassifierPromise = visualRecognition.deleteClassifier(params);
+      expectToBePromise(deleteClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -332,6 +420,19 @@ describe('deleteClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const deleteClassifierPromise = visualRecognition.deleteClassifier();
+      expectToBePromise(deleteClassifierPromise);
+
+      deleteClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -348,7 +449,7 @@ describe('getClassifier', () => {
       };
 
       // invoke method
-      visualRecognition.getClassifier(params);
+      visualRecognition.getClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -376,8 +477,23 @@ describe('getClassifier', () => {
         },
       };
 
-      visualRecognition.getClassifier(params);
+      visualRecognition.getClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const getClassifierPromise = visualRecognition.getClassifier(params);
+      expectToBePromise(getClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -402,6 +518,19 @@ describe('getClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const getClassifierPromise = visualRecognition.getClassifier();
+      expectToBePromise(getClassifierPromise);
+
+      getClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -418,7 +547,7 @@ describe('listClassifiers', () => {
       };
 
       // invoke method
-      visualRecognition.listClassifiers(params);
+      visualRecognition.listClassifiers(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -444,12 +573,24 @@ describe('listClassifiers', () => {
         },
       };
 
-      visualRecognition.listClassifiers(params);
+      visualRecognition.listClassifiers(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listClassifiersPromise = visualRecognition.listClassifiers(params);
+      expectToBePromise(listClassifiersPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      visualRecognition.listClassifiers();
+      visualRecognition.listClassifiers({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
@@ -480,7 +621,7 @@ describe('updateClassifier', () => {
       };
 
       // invoke method
-      visualRecognition.updateClassifier(params);
+      visualRecognition.updateClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -515,8 +656,23 @@ describe('updateClassifier', () => {
         },
       };
 
-      visualRecognition.updateClassifier(params);
+      visualRecognition.updateClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const updateClassifierPromise = visualRecognition.updateClassifier(params);
+      expectToBePromise(updateClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -541,6 +697,19 @@ describe('updateClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const updateClassifierPromise = visualRecognition.updateClassifier();
+      expectToBePromise(updateClassifierPromise);
+
+      updateClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -557,7 +726,7 @@ describe('getCoreMlModel', () => {
       };
 
       // invoke method
-      visualRecognition.getCoreMlModel(params);
+      visualRecognition.getCoreMlModel(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -586,8 +755,23 @@ describe('getCoreMlModel', () => {
         },
       };
 
-      visualRecognition.getCoreMlModel(params);
+      visualRecognition.getCoreMlModel(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const getCoreMlModelPromise = visualRecognition.getCoreMlModel(params);
+      expectToBePromise(getCoreMlModelPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -612,6 +796,19 @@ describe('getCoreMlModel', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const getCoreMlModelPromise = visualRecognition.getCoreMlModel();
+      expectToBePromise(getCoreMlModelPromise);
+
+      getCoreMlModelPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -628,7 +825,7 @@ describe('deleteUserData', () => {
       };
 
       // invoke method
-      visualRecognition.deleteUserData(params);
+      visualRecognition.deleteUserData(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -656,8 +853,23 @@ describe('deleteUserData', () => {
         },
       };
 
-      visualRecognition.deleteUserData(params);
+      visualRecognition.deleteUserData(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const customer_id = 'fake_customer_id';
+      const params = {
+        customer_id,
+      };
+
+      // invoke method
+      const deleteUserDataPromise = visualRecognition.deleteUserData(params);
+      expectToBePromise(deleteUserDataPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -678,6 +890,19 @@ describe('deleteUserData', () => {
       const requiredParams = ['customer_id'];
 
       visualRecognition.deleteUserData({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['customer_id'];
+
+      const deleteUserDataPromise = visualRecognition.deleteUserData();
+      expectToBePromise(deleteUserDataPromise);
+
+      deleteUserDataPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

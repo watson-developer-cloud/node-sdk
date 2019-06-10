@@ -9,7 +9,7 @@ const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('compare_comply_integration', () => {
   const compare_comply = new CompareComply(auth.compare_comply);
-  describe('html conversion', () => {
+  describe('html conversion @slow', () => {
     test('convertToHtml', done => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
@@ -27,7 +27,7 @@ describe('compare_comply_integration', () => {
   });
 
   describe('elementClassification', () => {
-    test('classifyElements', done => {
+    test('classifyElements @slow', done => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
@@ -53,7 +53,7 @@ describe('compare_comply_integration', () => {
   });
 
   describe('tables', () => {
-    test('extractTables', done => {
+    test('extractTables @slow', done => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',

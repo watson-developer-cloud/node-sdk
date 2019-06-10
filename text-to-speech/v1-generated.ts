@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
-import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
-import { FileObject } from 'ibm-cloud-sdk-core';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * ### Service Overview The IBM&reg; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.   For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface. It also supports a WebSocket interface that provides both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. SSML is an XML-based markup language that provides text annotation for speech-synthesis applications.   The service also offers a customization interface. You can use the interface to define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic Representation (SPR).
+ * The IBM&reg; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.   For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface. It also supports a WebSocket interface that provides both plain text and SSML input, including the SSML &lt;mark&gt; element and word timings. SSML is an XML-based markup language that provides text annotation for speech-synthesis applications.   The service also offers a customization interface. You can use the interface to define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic Representation (SPR).
  */
 
 class TextToSpeechV1 extends BaseService {
@@ -40,9 +39,18 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
-   * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
+   * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
+   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
+   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
+   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {TextToSpeechV1}
    */
@@ -61,7 +69,8 @@ class TextToSpeechV1 extends BaseService {
    * about the voice. Specify a customization ID to obtain information for that custom voice model of the specified
    * voice. To list information about all available voices, use the **List voices** method.
    *
-   * **See also:** [Listing a specific voice](https://cloud.ibm.com/docs/services/text-to-speech/voices.html#listVoice).
+   * **See also:** [Listing a specific
+   * voice](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-voices#listVoice).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned.
@@ -69,7 +78,7 @@ class TextToSpeechV1 extends BaseService {
    * information is to be returned. You must make the request with service credentials created for the instance of the
    * service that owns the custom model. Omit the parameter to see information about the specified voice with no
    * customization.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -125,10 +134,10 @@ class TextToSpeechV1 extends BaseService {
    * details about the voice. To see information about a specific voice, use the **Get a voice** method.
    *
    * **See also:** [Listing all available
-   * voices](https://cloud.ibm.com/docs/services/text-to-speech/voices.html#listVoices).
+   * voices](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-voices#listVoices).
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -175,7 +184,8 @@ class TextToSpeechV1 extends BaseService {
    * The 5 KB limit includes any SSML tags that you specify. The service returns the synthesized audio stream as an
    * array of bytes.
    *
-   * **See also:** [The HTTP interface](https://cloud.ibm.com/docs/services/text-to-speech/http.html).
+   * **See also:** [The HTTP
+   * interface](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP).
    *
    * ### Audio formats (accept types)
    *
@@ -232,7 +242,8 @@ class TextToSpeechV1 extends BaseService {
    *   You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
    *
    * For more information about specifying an audio format, including additional details about some of the formats, see
-   * [Audio formats](https://cloud.ibm.com/docs/services/text-to-speech/audio-formats.html).
+   * [Audio formats](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-audioFormats#audioFormats).
+   *
    *
    * ### Warning messages
    *
@@ -253,7 +264,7 @@ class TextToSpeechV1 extends BaseService {
    * **Audio formats (accept types)** in the method description.
    *
    * Default: `audio/ogg;codecs=opus`.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -319,7 +330,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying a word from a
-   * language](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuWordsQueryLanguage).
+   * language](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The word for which the pronunciation is requested.
@@ -333,7 +344,7 @@ class TextToSpeechV1 extends BaseService {
    * the custom model's language. You must make the request with service credentials created for the instance of the
    * service that owns the custom model. Omit the parameter to see the translation for the specified voice with no
    * customization.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -394,7 +405,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Creating a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-models.html#cuModelsCreate).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new custom voice model.
@@ -402,7 +413,7 @@ class TextToSpeechV1 extends BaseService {
    * default language, `en-US`.
    * @param {string} [params.description] - A description of the new custom voice model. Specifying a description is
    * recommended.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -458,12 +469,12 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Deleting a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-models.html#cuModelsDelete).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsDelete).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
    * request with service credentials created for the instance of the service that owns the custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -516,12 +527,12 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-models.html#cuModelsQuery).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
    * request with service credentials created for the instance of the service that owns the custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -576,13 +587,13 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying all custom
-   * models](https://cloud.ibm.com/docs/services/text-to-speech/custom-models.html#cuModelsQueryAll).
+   * models](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The language for which custom voice models that are owned by the requesting
    * service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the
    * requester.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -642,10 +653,12 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:**
-   * * [Updating a custom model](https://cloud.ibm.com/docs/services/text-to-speech/custom-models.html#cuModelsUpdate)
+   * * [Updating a custom
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsUpdate)
    * * [Adding words to a Japanese custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
-   * * [Understanding customization](https://cloud.ibm.com/docs/services/text-to-speech/custom-intro.html).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
+   * * [Understanding
+   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -654,7 +667,7 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.description] - A new description for the custom voice model.
    * @param {Word[]} [params.words] - An array of `Word` objects that provides the words and their translations that are
    * to be added or updated for the custom voice model. Pass an empty array to make no additions or updates.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -732,10 +745,11 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:**
    * * [Adding a single word to a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuWordAdd)
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordAdd)
    * * [Adding words to a Japanese custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
-   * * [Understanding customization](https://cloud.ibm.com/docs/services/text-to-speech/custom-intro.html).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
+   * * [Understanding
+   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -748,8 +762,8 @@ class TextToSpeechV1 extends BaseService {
    * value to produce the correct intonation for the word. You can create only a single entry, with or without a single
    * part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word.
    * For more information, see [Working with Japanese
-   * entries](https://cloud.ibm.com/docs/services/text-to-speech/custom-rules.html#jaNotes).
-   * @param {Object} [params.headers] - Custom request headers
+   * entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes).
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -822,10 +836,11 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:**
    * * [Adding multiple words to a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuWordsAdd)
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd)
    * * [Adding words to a Japanese custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuJapaneseAdd)
-   * * [Understanding customization](https://cloud.ibm.com/docs/services/text-to-speech/custom-intro.html).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
+   * * [Understanding
+   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
@@ -836,7 +851,7 @@ class TextToSpeechV1 extends BaseService {
    * The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation
    * from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before
    * lowercase letters. The array is empty if the custom model contains no words.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -895,13 +910,13 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Deleting a word from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuWordDelete).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordDelete).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
    * request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be deleted from the custom voice model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -955,13 +970,13 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying a single word from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuWordQueryModel).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordQueryModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
    * request with service credentials created for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be queried from the custom voice model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1016,12 +1031,12 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying all words from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech/custom-entries.html#cuWordsQueryModel).
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
    * request with service credentials created for the instance of the service that owns the custom model.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1080,11 +1095,12 @@ class TextToSpeechV1 extends BaseService {
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes the
    * data.
    *
-   * **See also:** [Information security](https://cloud.ibm.com/docs/services/text-to-speech/information-security.html).
+   * **See also:** [Information
+   * security](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-information-security#information-security).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -1144,17 +1160,37 @@ namespace TextToSpeechV1 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
+
+  /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
+  export interface JsonObject {
+    [key: string]: any;
+  }
 
   /*************************
    * request interfaces
@@ -1166,7 +1202,7 @@ namespace TextToSpeechV1 {
     voice: GetVoiceConstants.Voice | string;
     /** The customization ID (GUID) of a custom voice model for which information is to be returned. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see information about the specified voice with no customization. */
     customization_id?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1174,21 +1210,21 @@ namespace TextToSpeechV1 {
   export namespace GetVoiceConstants {
     /** The voice for which information is to be returned. */
     export enum Voice {
+      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
-      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
-      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
-      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
-      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
       IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
@@ -1199,7 +1235,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `listVoices` operation. */
   export interface ListVoicesParams {
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1213,7 +1249,7 @@ namespace TextToSpeechV1 {
     customization_id?: string;
     /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
     accept?: SynthesizeConstants.Accept | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1221,21 +1257,21 @@ namespace TextToSpeechV1 {
   export namespace SynthesizeConstants {
     /** The voice to use for synthesis. */
     export enum Voice {
+      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
-      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
-      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
-      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
-      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
       IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
@@ -1270,7 +1306,7 @@ namespace TextToSpeechV1 {
     format?: GetPronunciationConstants.Format | string;
     /** The customization ID (GUID) of a custom voice model for which the pronunciation is to be returned. The language of a specified custom model must match the language of the specified voice. If the word is not defined in the specified custom model, the service returns the default translation for the custom model's language. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see the translation for the specified voice with no customization. */
     customization_id?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1278,21 +1314,21 @@ namespace TextToSpeechV1 {
   export namespace GetPronunciationConstants {
     /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. */
     export enum Voice {
+      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
-      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
-      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
-      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
-      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
       IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
@@ -1301,8 +1337,8 @@ namespace TextToSpeechV1 {
     }
     /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
     export enum Format {
-      IPA = 'ipa',
       IBM = 'ibm',
+      IPA = 'ipa',
     }
   }
 
@@ -1314,7 +1350,7 @@ namespace TextToSpeechV1 {
     language?: CreateVoiceModelConstants.Language | string;
     /** A description of the new custom voice model. Specifying a description is recommended. */
     description?: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1323,8 +1359,8 @@ namespace TextToSpeechV1 {
     /** The language of the new custom voice model. Omit the parameter to use the the default language, `en-US`. */
     export enum Language {
       DE_DE = 'de-DE',
-      EN_US = 'en-US',
       EN_GB = 'en-GB',
+      EN_US = 'en-US',
       ES_ES = 'es-ES',
       ES_LA = 'es-LA',
       ES_US = 'es-US',
@@ -1339,7 +1375,7 @@ namespace TextToSpeechV1 {
   export interface DeleteVoiceModelParams {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1347,7 +1383,7 @@ namespace TextToSpeechV1 {
   export interface GetVoiceModelParams {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1355,7 +1391,7 @@ namespace TextToSpeechV1 {
   export interface ListVoiceModelsParams {
     /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     language?: ListVoiceModelsConstants.Language | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1364,8 +1400,8 @@ namespace TextToSpeechV1 {
     /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     export enum Language {
       DE_DE = 'de-DE',
-      EN_US = 'en-US',
       EN_GB = 'en-GB',
+      EN_US = 'en-US',
       ES_ES = 'es-ES',
       ES_LA = 'es-LA',
       ES_US = 'es-US',
@@ -1386,7 +1422,7 @@ namespace TextToSpeechV1 {
     description?: string;
     /** An array of `Word` objects that provides the words and their translations that are to be added or updated for the custom voice model. Pass an empty array to make no additions or updates. */
     words?: Word[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1398,33 +1434,33 @@ namespace TextToSpeechV1 {
     word: string;
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes). */
     part_of_speech?: AddWordConstants.PartOfSpeech | string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
   /** Constants for the `addWord` operation. */
   export namespace AddWordConstants {
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes). */
     export enum PartOfSpeech {
-      JOSI = 'Josi',
-      MESI = 'Mesi',
-      KIGO = 'Kigo',
-      GOBI = 'Gobi',
       DOSI = 'Dosi',
-      JODO = 'Jodo',
-      KOYU = 'Koyu',
-      STBI = 'Stbi',
-      SUJI = 'Suji',
-      KEDO = 'Kedo',
       FUKU = 'Fuku',
-      KEYO = 'Keyo',
-      STTO = 'Stto',
-      RETA = 'Reta',
-      STZO = 'Stzo',
-      KATO = 'Kato',
+      GOBI = 'Gobi',
       HOKA = 'Hoka',
+      JODO = 'Jodo',
+      JOSI = 'Josi',
+      KATO = 'Kato',
+      KEDO = 'Kedo',
+      KEYO = 'Keyo',
+      KIGO = 'Kigo',
+      KOYU = 'Koyu',
+      MESI = 'Mesi',
+      RETA = 'Reta',
+      STBI = 'Stbi',
+      STTO = 'Stto',
+      STZO = 'Stzo',
+      SUJI = 'Suji',
     }
   }
 
@@ -1434,7 +1470,7 @@ namespace TextToSpeechV1 {
     customization_id: string;
     /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation. The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
     words: Word[];
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1444,7 +1480,7 @@ namespace TextToSpeechV1 {
     customization_id: string;
     /** The word that is to be deleted from the custom voice model. */
     word: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1454,7 +1490,7 @@ namespace TextToSpeechV1 {
     customization_id: string;
     /** The word that is to be queried from the custom voice model. */
     word: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1462,7 +1498,7 @@ namespace TextToSpeechV1 {
   export interface ListWordsParams {
     /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1470,7 +1506,7 @@ namespace TextToSpeechV1 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customer_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -1478,13 +1514,13 @@ namespace TextToSpeechV1 {
    * model interfaces
    ************************/
 
-  /** Pronunciation. */
+  /** The pronunciation of the specified text. */
   export interface Pronunciation {
     /** The pronunciation of the specified text in the requested voice and format. If a custom voice model is specified, the pronunciation also reflects that custom voice. */
     pronunciation: string;
   }
 
-  /** Describes the additional service features that are supported with the voice. */
+  /** Additional service features that are supported with the voice. */
   export interface SupportedFeatures {
     /** If `true`, the voice can be customized; if `false`, the voice cannot be customized. (Same as `customizable`.). */
     custom_pronunciation: boolean;
@@ -1492,15 +1528,15 @@ namespace TextToSpeechV1 {
     voice_transformation: boolean;
   }
 
-  /** Translation. */
+  /** Information about the translation for the specified text. */
   export interface Translation {
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes). */
     part_of_speech?: string;
   }
 
-  /** Voice. */
+  /** Information about an available voice model. */
   export interface Voice {
     /** The URI of the voice. */
     url: string;
@@ -1514,13 +1550,13 @@ namespace TextToSpeechV1 {
     description: string;
     /** If `true`, the voice can be customized; if `false`, the voice cannot be customized. (Same as `custom_pronunciation`; maintained for backward compatibility.). */
     customizable: boolean;
-    /** Describes the additional service features that are supported with the voice. */
+    /** Additional service features that are supported with the voice. */
     supported_features: SupportedFeatures;
     /** Returns information about a specified custom voice model. This field is returned only by the **Get a voice** method and only when you specify the customization ID of a custom voice model. */
     customization?: VoiceModel;
   }
 
-  /** VoiceModel. */
+  /** Information about an existing custom voice model. */
   export interface VoiceModel {
     /** The customization ID (GUID) of the custom voice model. The **Create a custom model** method returns only this field. It does not not return the other fields of this object. */
     customization_id: string;
@@ -1540,29 +1576,29 @@ namespace TextToSpeechV1 {
     words?: Word[];
   }
 
-  /** VoiceModels. */
+  /** Information about existing custom voice models. */
   export interface VoiceModels {
     /** An array of `VoiceModel` objects that provides information about each available custom voice model. The array is empty if the requesting service credentials own no custom voice models (if no language is specified) or own no custom voice models for the specified language. */
     customizations: VoiceModel[];
   }
 
-  /** Voices. */
+  /** Information about all available voice models. */
   export interface Voices {
     /** A list of available voices. */
     voices: Voice[];
   }
 
-  /** Word. */
+  /** Information about a word for the custom voice model. */
   export interface Word {
-    /** A word from the custom voice model. */
+    /** The word for the custom voice model. */
     word: string;
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation consists of one or more words that, when combined, sound like the word. */
     translation: string;
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech/custom-rules.html#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes). */
     part_of_speech?: string;
   }
 
-  /** Words. */
+  /** For the **Add custom words** method, one or more words that are to be added or updated for the custom voice model and the translation for each specified word. For the **List custom words** method, the words and their translations from the custom voice model. */
   export interface Words {
     /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation. The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
     words: Word[];

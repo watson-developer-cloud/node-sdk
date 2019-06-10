@@ -1,19 +1,37 @@
+/**
+ * Copyright 2019 IBM All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 'use strict';
 
 const helper = require('ibm-cloud-sdk-core');
 const NaturalLanguageClassifierV1 = require('../../natural-language-classifier/v1');
 const utils = require('../resources/unitTestUtils');
 
-const getOptions = utils.getOptions;
-const checkUrlAndMethod = utils.checkUrlAndMethod;
-const checkCallback = utils.checkCallback;
-const checkMediaHeaders = utils.checkMediaHeaders;
-const missingParamsSuccess = utils.missingParamsSuccess;
-const missingParamsError = utils.missingParamsError;
-const checkForEmptyObject = utils.checkForEmptyObject;
-const checkRequiredParamsHandling = utils.checkRequiredParamsHandling;
+const {
+  getOptions,
+  checkUrlAndMethod,
+  checkCallback,
+  checkMediaHeaders,
+  missingParamsSuccess,
+  expectToBePromise,
+  missingParamsError,
+  checkForEmptyObject,
+  checkRequiredParamsHandling,
+  checkDefaultSuccessArgs,
+} = utils;
 
-const checkDefaultSuccessArgs = utils.checkDefaultSuccessArgs;
 const noop = () => {};
 
 const service = {
@@ -51,7 +69,7 @@ describe('classify', () => {
       };
 
       // invoke method
-      naturalLanguageClassifier.classify(params);
+      naturalLanguageClassifier.classify(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -82,8 +100,25 @@ describe('classify', () => {
         },
       };
 
-      naturalLanguageClassifier.classify(params);
+      naturalLanguageClassifier.classify(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const text = 'fake_text';
+      const params = {
+        classifier_id,
+        text,
+      };
+
+      // invoke method
+      const classifyPromise = naturalLanguageClassifier.classify(params);
+      expectToBePromise(classifyPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -108,6 +143,19 @@ describe('classify', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id', 'text'];
+
+      const classifyPromise = naturalLanguageClassifier.classify();
+      expectToBePromise(classifyPromise);
+
+      classifyPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -126,7 +174,7 @@ describe('classifyCollection', () => {
       };
 
       // invoke method
-      naturalLanguageClassifier.classifyCollection(params);
+      naturalLanguageClassifier.classifyCollection(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -157,8 +205,25 @@ describe('classifyCollection', () => {
         },
       };
 
-      naturalLanguageClassifier.classifyCollection(params);
+      naturalLanguageClassifier.classifyCollection(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const collection = 'fake_collection';
+      const params = {
+        classifier_id,
+        collection,
+      };
+
+      // invoke method
+      const classifyCollectionPromise = naturalLanguageClassifier.classifyCollection(params);
+      expectToBePromise(classifyCollectionPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -183,6 +248,19 @@ describe('classifyCollection', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id', 'collection'];
+
+      const classifyCollectionPromise = naturalLanguageClassifier.classifyCollection();
+      expectToBePromise(classifyCollectionPromise);
+
+      classifyCollectionPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -201,7 +279,7 @@ describe('createClassifier', () => {
       };
 
       // invoke method
-      naturalLanguageClassifier.createClassifier(params);
+      naturalLanguageClassifier.createClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -234,8 +312,25 @@ describe('createClassifier', () => {
         },
       };
 
-      naturalLanguageClassifier.createClassifier(params);
+      naturalLanguageClassifier.createClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const metadata = 'fake_metadata';
+      const training_data = 'fake_training_data';
+      const params = {
+        metadata,
+        training_data,
+      };
+
+      // invoke method
+      const createClassifierPromise = naturalLanguageClassifier.createClassifier(params);
+      expectToBePromise(createClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -260,6 +355,19 @@ describe('createClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['metadata', 'training_data'];
+
+      const createClassifierPromise = naturalLanguageClassifier.createClassifier();
+      expectToBePromise(createClassifierPromise);
+
+      createClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -276,7 +384,7 @@ describe('deleteClassifier', () => {
       };
 
       // invoke method
-      naturalLanguageClassifier.deleteClassifier(params);
+      naturalLanguageClassifier.deleteClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -304,8 +412,23 @@ describe('deleteClassifier', () => {
         },
       };
 
-      naturalLanguageClassifier.deleteClassifier(params);
+      naturalLanguageClassifier.deleteClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier(params);
+      expectToBePromise(deleteClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -330,6 +453,19 @@ describe('deleteClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier();
+      expectToBePromise(deleteClassifierPromise);
+
+      deleteClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -346,7 +482,7 @@ describe('getClassifier', () => {
       };
 
       // invoke method
-      naturalLanguageClassifier.getClassifier(params);
+      naturalLanguageClassifier.getClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -374,8 +510,23 @@ describe('getClassifier', () => {
         },
       };
 
-      naturalLanguageClassifier.getClassifier(params);
+      naturalLanguageClassifier.getClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const getClassifierPromise = naturalLanguageClassifier.getClassifier(params);
+      expectToBePromise(getClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -400,6 +551,19 @@ describe('getClassifier', () => {
         done();
       });
     });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const getClassifierPromise = naturalLanguageClassifier.getClassifier();
+      expectToBePromise(getClassifierPromise);
+
+      getClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
   });
 });
 
@@ -413,7 +577,7 @@ describe('listClassifiers', () => {
       const params = {};
 
       // invoke method
-      naturalLanguageClassifier.listClassifiers(params);
+      naturalLanguageClassifier.listClassifiers(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -438,12 +602,24 @@ describe('listClassifiers', () => {
         },
       };
 
-      naturalLanguageClassifier.listClassifiers(params);
+      naturalLanguageClassifier.listClassifiers(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listClassifiersPromise = naturalLanguageClassifier.listClassifiers(params);
+      expectToBePromise(listClassifiersPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      naturalLanguageClassifier.listClassifiers();
+      naturalLanguageClassifier.listClassifiers({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 

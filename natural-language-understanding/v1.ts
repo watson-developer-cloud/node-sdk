@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 IBM All Rights Reserved.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import { AxiosResponse } from 'axios';
 import * as extend from 'extend';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) with Watson Knowledge Studio to detect custom entities, relations, and categories in Natural Language Understanding.
+ * Analyze various features of text content at scale. Provide text, raw HTML, or a public URL and IBM Watson Natural Language Understanding will give you results for the features you request. The service cleans HTML content before analysis by default, so the results can ignore most advertisements and other unwanted content.  You can create [custom models](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing) with Watson Knowledge Studio to detect custom entities, relations, and categories in Natural Language Understanding.
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
@@ -40,9 +40,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This option may be useful for requests that are proxied.
-   * @param {Object} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By default, all IBM Watson services log requests and their results. Logging is done only to improve the services for future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
+   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
+   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
+   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
+   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
+   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
+   * option may be useful for requests that are proxied.
+   * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
+   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
+   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
+   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
    * @constructor
    * @returns {NaturalLanguageUnderstandingV1}
    * @throws {Error}
@@ -84,21 +93,22 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [params.url] - The webpage to analyze. One of the `text`, `html`, or `url` parameters is required.
    * @param {boolean} [params.clean] - Set this to `false` to disable webpage cleaning. To learn more about webpage
    * cleaning, see the [Analyzing
-   * webpages](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html)
+   * webpages](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-analyzing-webpages)
    * documentation.
    * @param {string} [params.xpath] - An [XPath
-   * query](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html#xpath) to perform
-   * on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is analyzed.
-   * To analyze only the results of the XPath query, set the `clean` parameter to `false`.
+   * query](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-analyzing-webpages#xpath)
+   * to perform on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is
+   * analyzed. To analyze only the results of the XPath query, set the `clean` parameter to `false`.
    * @param {boolean} [params.fallback_to_raw] - Whether to use raw HTML content if text cleaning fails.
    * @param {boolean} [params.return_analyzed_text] - Whether or not to return the analyzed text.
    * @param {string} [params.language] - ISO 639-1 code that specifies the language of your text. This overrides
    * automatic language detection. Language support differs depending on the features you include in your analysis. See
-   * [Language support](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-
-   * understanding-language-support) for more information.
+   * [Language
+   * support](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-language-support)
+   * for more information.
    * @param {number} [params.limit_text_characters] - Sets the maximum number of characters that are processed by the
    * service.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -163,7 +173,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.model_id - Model ID of the model to delete.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -210,12 +220,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   /**
    * List models.
    *
-   * Lists Watson Knowledge Studio [custom
-   * models](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) that are deployed to
-   * your Natural Language Understanding service.
+   * Lists Watson Knowledge Studio [custom entities and relations
+   * models](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing)
+   * that are deployed to your Natural Language Understanding service.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {Object} [params.headers] - Custom request headers
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
@@ -266,17 +276,37 @@ namespace NaturalLanguageUnderstandingV1 {
     iam_access_token?: string;
     iam_apikey?: string;
     iam_url?: string;
+    iam_client_id?: string;
+    iam_client_secret?: string;
+    icp4d_access_token?: string;
+    icp4d_url?: string;
     username?: string;
     password?: string;
+    token?: string;
+    authentication_type?: string;
+    disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
-    headers?: object;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  export interface Response<T = any>  {
+    result: T;
+    data: T; // for compatibility
+    status: number;
+    statusText: string;
+    headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: AxiosResponse<T>) => void;
+  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
+
+  /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
+  export interface JsonObject {
+    [key: string]: any;
+  }
 
   /*************************
    * request interfaces
@@ -292,9 +322,9 @@ namespace NaturalLanguageUnderstandingV1 {
     html?: string;
     /** The webpage to analyze. One of the `text`, `html`, or `url` parameters is required. */
     url?: string;
-    /** Set this to `false` to disable webpage cleaning. To learn more about webpage cleaning, see the [Analyzing webpages](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html) documentation. */
+    /** Set this to `false` to disable webpage cleaning. To learn more about webpage cleaning, see the [Analyzing webpages](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-analyzing-webpages) documentation. */
     clean?: boolean;
-    /** An [XPath query](https://cloud.ibm.com/docs/services/natural-language-understanding/analyzing-webpages.html#xpath) to perform on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is analyzed. To analyze only the results of the XPath query, set the `clean` parameter to `false`. */
+    /** An [XPath query](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-analyzing-webpages#xpath) to perform on `html` or `url` input. Results of the query will be appended to the cleaned webpage text before it is analyzed. To analyze only the results of the XPath query, set the `clean` parameter to `false`. */
     xpath?: string;
     /** Whether to use raw HTML content if text cleaning fails. */
     fallback_to_raw?: boolean;
@@ -304,7 +334,7 @@ namespace NaturalLanguageUnderstandingV1 {
     language?: string;
     /** Sets the maximum number of characters that are processed by the service. */
     limit_text_characters?: number;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -312,13 +342,13 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface DeleteModelParams {
     /** Model ID of the model to delete. */
     model_id: string;
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
   /** Parameters for the `listModels` operation. */
   export interface ListModelsParams {
-    headers?: Object;
+    headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
@@ -326,7 +356,7 @@ namespace NaturalLanguageUnderstandingV1 {
    * model interfaces
    ************************/
 
-  /** Analysis results for each requested feature. */
+  /** Results of the analysis, organized by feature. */
   export interface AnalysisResults {
     /** Language used to analyze the text. */
     language?: string;
@@ -390,18 +420,34 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Returns a five-level taxonomy of the content. The top three categories are returned. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
   export interface CategoriesOptions {
+    /** Set this to `true` to return explanations for each categorization. **This is available only for English categories.**. */
+    explanation?: boolean;
     /** Maximum number of categories to return. */
     limit?: number;
-    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) ID to override the standard categories model. */
+    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing) ID to override the standard categories model. */
     model?: string;
+  }
+
+  /** Relevant text that contributed to the categorization. */
+  export interface CategoriesRelevantText {
+    /** Text from the analyzed source that supports the categorization. */
+    text?: string;
   }
 
   /** A categorization of the analyzed text. */
   export interface CategoriesResult {
-    /** The path to the category through the 5-level taxonomy hierarchy. For the complete list of categories, see the [Categories hierarchy](https://cloud.ibm.com/docs/services/natural-language-understanding/categories.html#categories-hierarchy) documentation. */
+    /** The path to the category through the 5-level taxonomy hierarchy. For the complete list of categories, see the [Categories hierarchy](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-categories#categories-hierarchy) documentation. */
     label?: string;
     /** Confidence score for the category classification. Higher values indicate greater confidence. */
     score?: number;
+    /** Information that helps to explain what contributed to the categories result. */
+    explanation?: CategoriesResultExplanation;
+  }
+
+  /** Information that helps to explain what contributed to the categories result. */
+  export interface CategoriesResultExplanation {
+    /** An array of relevant text from the source that contributed to the categorization. The sorted array begins with the phrase that contributed most significantly to the result, followed by phrases that were less and less impactful. */
+    relevant_text?: CategoriesRelevantText[];
   }
 
   /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
@@ -480,13 +526,13 @@ namespace NaturalLanguageUnderstandingV1 {
     sadness?: number;
   }
 
-  /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
+  /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-entity-types). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
   export interface EntitiesOptions {
     /** Maximum number of entities to return. */
     limit?: number;
     /** Set this to `true` to return locations of entity mentions. */
     mentions?: boolean;
-    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) ID to override the standard entity detection model. */
+    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing) ID to override the standard entity detection model. */
     model?: string;
     /** Set this to `true` to return sentiment information for detected entities. */
     sentiment?: boolean;
@@ -534,13 +580,13 @@ namespace NaturalLanguageUnderstandingV1 {
     concepts?: ConceptsOptions;
     /** Detects anger, disgust, fear, joy, or sadness that is conveyed in the content or by the context around target phrases specified in the targets parameter. You can analyze emotion for detected entities with `entities.emotion` and for keywords with `keywords.emotion`. Supported languages: English. */
     emotion?: EmotionOptions;
-    /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding/entity-types.html). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
+    /** Identifies people, cities, organizations, and other entities in the content. See [Entity types and subtypes](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-entity-types). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
     entities?: EntitiesOptions;
     /** Returns important keywords in the content. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. */
     keywords?: KeywordsOptions;
     /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
     metadata?: MetadataOptions;
-    /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](https://cloud.ibm.com/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
+    /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-relations). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
     relations?: RelationsOptions;
     /** Parses sentences into subject, action, and object form. Supported languages: English, German, Japanese, Korean, Spanish. */
     semantic_roles?: SemanticRolesOptions;
@@ -630,9 +676,9 @@ namespace NaturalLanguageUnderstandingV1 {
     type?: string;
   }
 
-  /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](https://cloud.ibm.com/docs/services/natural-language-understanding/relations.html). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
+  /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". See [Relation types](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-relations). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
   export interface RelationsOptions {
-    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding/customizing.html) ID to override the default model. */
+    /** Enter a [custom model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing) ID to override the default model. */
     model?: string;
   }
 
