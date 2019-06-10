@@ -5,12 +5,15 @@
 
 * change Object types to custom `JsonObject` ([800afbe](https://github.com/watson-developer-cloud/node-sdk/commit/800afbe))
 * updates from ibm-cloud-sdk-core: ([dfabc7a](https://github.com/watson-developer-cloud/node-sdk/commit/dfabc7a))
+  - expose the body in the detailed response under the field `result`
+  - add new token manager for ICP4D
+  - default request body size to Infinity
 
 
 ### Features
 
-* **language-translator:** the following methods have been added: ([a0f2c20](https://github.com/watson-developer-cloud/node-sdk/commit/a0f2c20))
-* address review comments ([5b09882](https://github.com/watson-developer-cloud/node-sdk/commit/5b09882))
+* **language-translator:** the following methods have been added: `deleteDocument`, `getDocumentStatus`, `getTranslatedDocument`, `listDocuments`, `translateDocument` ([a0f2c20](https://github.com/watson-developer-cloud/node-sdk/commit/a0f2c20))
+* Add `processing_metrics`, `processing_metrics_interval` and `audio_metrics` as query params in WebSocket `recognize` ([5b09882](https://github.com/watson-developer-cloud/node-sdk/commit/5b09882))
 
 ## [4.1.3](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.2...v4.1.3) (2019-05-24)
 
