@@ -1,3 +1,17 @@
+# [4.2.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.3...v4.2.0) (2019-06-10)
+
+
+### Bug Fixes
+
+* change Object types to custom `JsonObject` ([800afbe](https://github.com/watson-developer-cloud/node-sdk/commit/800afbe))
+* updates from ibm-cloud-sdk-core: ([dfabc7a](https://github.com/watson-developer-cloud/node-sdk/commit/dfabc7a))
+
+
+### Features
+
+* **language-translator:** the following methods have been added: ([a0f2c20](https://github.com/watson-developer-cloud/node-sdk/commit/a0f2c20))
+* address review comments ([5b09882](https://github.com/watson-developer-cloud/node-sdk/commit/5b09882))
+
 ## [4.1.3](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.2...v4.1.3) (2019-05-24)
 
 
