@@ -443,7 +443,7 @@ class VisualRecognitionV3 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'verbose': _params.verbose
     };
@@ -482,7 +482,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {Map<string, NodeJS.ReadableStream|FileObject|Buffer>} [params.positive_examples] - A dictionary that
+   * @param {Record<string, NodeJS.ReadableStream|NodeJS.ReadStream|FileObject|Buffer>} [params.positive_examples] - A dictionary that
    * contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class
    * in the classifier. The positive examples create or update classes in the classifier. You can include more than one
    * positive example file in a call.
@@ -494,7 +494,7 @@ class VisualRecognitionV3 extends BaseService {
    * maximum number of images is 10,000 images or 100 MB per .zip file.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negative_examples] - A .zip file of images that do not
+   * @param {NodeJS.ReadableStream|NodeJS.ReadStream|FileObject|Buffer} [params.negative_examples] - A .zip file of images that do not
    * depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
@@ -654,7 +654,7 @@ class VisualRecognitionV3 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'customer_id': _params.customer_id
     };
@@ -848,9 +848,9 @@ namespace VisualRecognitionV3 {
     /** The ID of the classifier. */
     classifier_id: string;
     /** A dictionary that contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
-    positive_examples?: Map<string, NodeJS.ReadableStream|FileObject|Buffer>;
+    positive_examples?: Record<string, NodeJS.ReadableStream|NodeJS.ReadStream|FileObject|Buffer>;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8. */
-    negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
+    negative_examples?: NodeJS.ReadableStream|NodeJS.ReadStream|FileObject|Buffer;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
     headers?: OutgoingHttpHeaders;
