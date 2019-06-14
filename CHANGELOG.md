@@ -1,3 +1,12 @@
+## [4.2.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.0...v4.2.1) (2019-06-14)
+
+
+### Bug Fixes
+
+* remove ReadStream since ReadableStream is correct ([b9f8c73](https://github.com/watson-developer-cloud/node-sdk/commit/b9f8c73))
+* update second occurence of Map to Record ([3ded63a](https://github.com/watson-developer-cloud/node-sdk/commit/3ded63a))
+* use Record instead of Map type for classifier update ([6dec631](https://github.com/watson-developer-cloud/node-sdk/commit/6dec631))
+
 # [4.2.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.1.3...v4.2.0) (2019-06-10)
 
 
