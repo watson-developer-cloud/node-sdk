@@ -133,11 +133,13 @@ class RecognizeStream extends Duplex {
   constructor(options) {
     // this stream only supports objectMode on the output side.
     // It must receive binary data input.
-    super(options);
     if (options.objectMode) {
       options.readableObjectMode = true;
-      this.readableObjectMode = true;
       delete options.objectMode;
+    }
+    super(options);
+    if (options.readableObjectMode && this.readableObjectMode === undefined) {
+      this.readableObjectMode = true;
     }
     this.options = options;
     this.listening = false;
