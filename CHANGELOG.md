@@ -1,3 +1,10 @@
+## [4.2.2](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.1...v4.2.2) (2019-07-12)
+
+
+### Bug Fixes
+
+* only set readableObjectMode in recognize-stream if not present ([#907](https://github.com/watson-developer-cloud/node-sdk/issues/907)) ([155c005](https://github.com/watson-developer-cloud/node-sdk/commit/155c005))
+
 ## [4.2.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.0...v4.2.1) (2019-06-14)
 
 
