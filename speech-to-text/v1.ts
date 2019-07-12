@@ -1,9 +1,6 @@
 import async = require('async');
 import extend = require('extend');
-import { getMissingParams } from 'ibm-cloud-sdk-core';
 import isStream = require('isstream');
-import pick = require('object.pick');
-import { parse } from 'url';
 import RecognizeStream = require('../lib/recognize-stream');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
 
@@ -41,7 +38,7 @@ const PARAMS_ALLOWED = [
  * @param corporaList
  * @return {boolean}
  */
-function isProcessing(corporaList): boolean {
+function isProcessing(corporaList: GeneratedSpeechToTextV1.Corpora): boolean {
   return corporaList.corpora.some(
     record => record['status'] === 'being_processed'
   );
@@ -53,7 +50,7 @@ function isProcessing(corporaList): boolean {
  * @param corporaList
  * @return {boolean}
  */
-function isAnalyzed(corporaList): boolean {
+function isAnalyzed(corporaList: GeneratedSpeechToTextV1.Corpora): boolean {
   return corporaList.corpora.some(record => record['status'] === 'analyzed');
 }
 
@@ -88,7 +85,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   static ERR_NO_CORPORA = 'ERR_NO_CORPORA';
   static ERR_TIMEOUT = 'ERR_TIMEOUT';
 
-  constructor(options) {
+  constructor(options: GeneratedSpeechToTextV1.Options) {
     super(options);
   }
 
@@ -146,14 +143,14 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
               self.listCorpora(params, (err, corpora) => {
                 if (err) {
                   done(err);
-                } else if (isProcessing(corpora)) {
+                } else if (corpora !== undefined && isProcessing(corpora)) {
                   // if the loop times out, async returns the last error, which will be this one.
                   err = new Error(
                     'Corpora is still being processed, try increasing interval or times params'
                   );
                   err.code = SpeechToTextV1.ERR_TIMEOUT;
                   done(err);
-                } else if (isAnalyzed(corpora)) {
+                } else if (corpora !== undefined && isAnalyzed(corpora)) {
                   done(null, corpora);
                 } else {
                   done(new Error('Unexpected corpus analysis status'));
@@ -209,7 +206,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return new RecognizeStream(params);
   }
 
-  recognize(params, callback) {
+  recognize(params: GeneratedSpeechToTextV1.RecognizeParams, callback: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.SpeechRecognitionResults>): Promise<any> | void {
     if (params && params.audio && isStream(params.audio) && !params.content_type) {
       callback(new Error('If providing `audio` as a Stream, `content_type` is required.'));
       return;
