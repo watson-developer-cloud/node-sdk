@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
+import { IncomingHttpHeaders } from 'http';
 import { BaseService } from 'ibm-cloud-sdk-core';
 import url = require('url');
 
 class AuthorizationV1 extends BaseService {
   static URL: string = 'https://stream.watsonplatform.net/authorization/api';
-  name;
-  serviceVersion;
+  name: string; // set by prototype to 'authorization'
+  serviceVersion: string; // set by prototype to 'v1'
+  // tslint:disable-next-line:variable-name
+  target_url?: string;
 
   /**
    * Authorization Service
@@ -34,9 +37,9 @@ class AuthorizationV1 extends BaseService {
    * @param {String} [options.url] url of the service for which auth tokens are being generated
    * @constructor
    */
-  constructor(options) {
+  constructor(options: AuthorizationV1.Options) {
     super(options);
-    this['target_url'] = options.url;
+    this.target_url = options.url;
     // replace the url to always point to /authorization/api
     const hostname = url.parse(this._options.url);
     hostname.pathname = '/authorization/api';
@@ -51,10 +54,10 @@ class AuthorizationV1 extends BaseService {
    * @param {String} [options.url] defaults to url supplied to constructor (if any)
    * @param {Function(err, token)} callback - called with a %-encoded token if CF
    */
-  getToken(params, callback) {
+  getToken(params: AuthorizationV1.GetTokenParams | AuthorizationV1.GetTokenCallback, callback?: AuthorizationV1.GetTokenCallback) {
     if (typeof params === 'function') {
       callback = params;
-      params = { url: this['target_url'] };
+      params = { url: this.target_url };
     }
 
     // if the service is an RC instance, return an IAM access token
@@ -82,5 +85,34 @@ class AuthorizationV1 extends BaseService {
 
 AuthorizationV1.prototype.name = 'authorization';
 AuthorizationV1.prototype.serviceVersion = 'v1';
+
+/*************************
+ * interfaces
+ ************************/
+
+namespace AuthorizationV1 {
+  /** Options for the AuthorizationV1 constructor */
+  export type Options = {
+    username: string;
+    password: string;
+    url?: string;
+  }
+
+  export interface GetTokenResponse {
+    result: string;
+    data: string; // for compatibility
+    status: number;
+    statusText: string;
+    headers: IncomingHttpHeaders;
+  }
+
+  /** The callback for the getToken request. */
+  export type GetTokenCallback = (error: any, token?: string, response?: GetTokenResponse) => void;
+
+  /** Parameters for the `getToken` operation */
+  export interface GetTokenParams {
+    url?: string;
+  }
+}
 
 export = AuthorizationV1;
