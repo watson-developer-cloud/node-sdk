@@ -3,6 +3,8 @@ sudo: false
 node_js:
 - 6
 - 8
+cache:
+  npm: false
 before_install:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ ! -z ${encrypted_ac3aacad7ba8_key} ] &&
   openssl aes-256-cbc -K $encrypted_ac3aacad7ba8_key
@@ -27,3 +29,4 @@ deploy:
   script: npx semantic-release
   on:
     node: 8
+    repo: watson-developer-cloud/node-sdk
