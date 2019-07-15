@@ -83,9 +83,6 @@ class RecognizeStream extends Duplex {
   private initialized: boolean;
   private finished: boolean;
   private socket;
-  private authenticated: boolean;
-
-
 
   /**
    * pipe()-able Node.js Duplex stream - accepts binary audio and emits text/objects in it's `data` events.
@@ -143,9 +140,6 @@ class RecognizeStream extends Duplex {
     this.listening = false;
     this.initialized = false;
     this.finished = false;
-
-    // is using iam, another authentication step is needed
-    this.authenticated = options.token_manager ? false : true;
 
     this.on('newListener', event => {
       if (!options.silent) {
@@ -529,14 +523,13 @@ class RecognizeStream extends Duplex {
    * @param {Function} callback
    */
   setAuthorizationHeaderToken(callback) {
-    if (!this.authenticated) {
+    if (this.options.token_manager) {
       this.options.token_manager.getToken((err, token) => {
         if (err) {
           callback(err);
         }
         const authHeader = { authorization: 'Bearer ' + token };
         this.options.headers = extend(authHeader, this.options.headers);
-        this.authenticated = true;
         callback(null);
       });
     } else {
