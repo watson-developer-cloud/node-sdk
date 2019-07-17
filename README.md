@@ -49,8 +49,8 @@ Node.js client library to use the Watson APIs.
 </details>
 
 ## ANNOUNCEMENTS!
-### New Major Version
-The new major version, `v4` has been released. The major new feature in this release is native support for Promises. There are some breaking changes - use the [migration guide](https://github.com/watson-developer-cloud/node-sdk/blob/master/UPGRADE-4.0.md) to navigate any changes that affect your code.
+### Deprecating support for Node versions 6 and 8
+Support for Node versions **6** and **8** has been deprecated and will be officially dropped in the next major release, v5, which is expected to be in September, 2019. Version 6 reached end of life in April 2019 and Version 8 reaches end of life on 31 December 2019.
 
 ### Package Rename
 This package has been moved under the name `ibm-watson`. The package is still available at `watson-developer-cloud`, but that will no longer receive updates. Use `ibm-watson` to stay up to date.
