@@ -57,7 +57,6 @@ class SynthesizeStream extends Readable {
   private options;
   private socket;
   private initialized: boolean;
-  private authenticated: boolean;
 
 
   /**
@@ -89,7 +88,6 @@ class SynthesizeStream extends Readable {
     super(options);
     this.options = options;
     this.initialized = false;
-    this.authenticated = options.token_manager ? false : true;
   }
 
   initialize() {
@@ -190,14 +188,13 @@ class SynthesizeStream extends Readable {
    * @param {Function} callback
    */
    setAuthorizationHeaderToken(callback) {
-    if (!this.authenticated) {
+    if (this.options.token_manager) {
       this.options.token_manager.getToken((err, token) => {
         if (err) {
           callback(err);
         }
         const authHeader = { authorization: 'Bearer ' + token };
         this.options.headers = extend(authHeader, this.options.headers);
-        this.authenticated = true;
         callback(null);
       });
     } else {
