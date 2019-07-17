@@ -1,3 +1,11 @@
+## [4.2.3](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.2...v4.2.3) (2019-07-17)
+
+
+### Bug Fixes
+
+* **speech-to-text:** support all allowed parameters in WebSocket method ([b91c1e2](https://github.com/watson-developer-cloud/node-sdk/commit/b91c1e2))
+* **speech-to-text:** support all allowed parameters in WebSocket… ([#915](https://github.com/watson-developer-cloud/node-sdk/issues/915)) ([e9ef5da](https://github.com/watson-developer-cloud/node-sdk/commit/e9ef5da))
+
 ## [4.2.2](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.1...v4.2.2) (2019-07-12)
 
 
