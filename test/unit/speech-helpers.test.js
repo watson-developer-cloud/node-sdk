@@ -31,7 +31,6 @@ describe('speech_to_text', function() {
       const stream = speech_to_text.recognizeUsingWebSocket();
       expect(stream.options.url).toBe(service.url);
       expect(stream.options.headers.authorization).toBeTruthy();
-      expect(stream.authenticated).toBe(true);
       expect(stream.options.token_manager).toBeUndefined();
     });
 
@@ -39,7 +38,6 @@ describe('speech_to_text', function() {
       const stream = rc_speech_to_text.recognizeUsingWebSocket();
       expect(stream.options.url).toBe(service.url);
       expect(stream.options.headers.authorization).toBeUndefined();
-      expect(stream.authenticated).toBe(false);
       expect(stream.options.token_manager).toBeDefined();
     });
   });
