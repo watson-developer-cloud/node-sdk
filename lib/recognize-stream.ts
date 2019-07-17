@@ -24,6 +24,11 @@ import websocket = require ('websocket');
 const w3cWebSocket = websocket.w3cwebsocket;
 
 const OPENING_MESSAGE_PARAMS_ALLOWED = [
+  'action',
+  'customization_weight',
+  'processing_metrics',
+  'processing_metrics_interval',
+  'audio_metrics',
   'inactivity_timeout',
   'timestamps',
   'word_confidence',
@@ -37,7 +42,7 @@ const OPENING_MESSAGE_PARAMS_ALLOWED = [
   'smart_formatting',
   'speaker_labels',
   'grammar_name',
-  'redaction'
+  'redaction',
 ];
 
 const QUERY_PARAMS_ALLOWED = [
@@ -48,9 +53,8 @@ const QUERY_PARAMS_ALLOWED = [
   'customization_id',
   'acoustic_customization_id',
   'access_token',
-  'processing_metrics',
-  'processing_metrics_interval',
-  'audio_metrics'
+  'base_model_version',
+  'x-watson-metadata',
 ];
 
 interface RecognizeStream extends Duplex {
