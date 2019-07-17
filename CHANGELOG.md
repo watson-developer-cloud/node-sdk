@@ -1,3 +1,10 @@
+## [4.2.4](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.3...v4.2.4) (2019-07-17)
+
+
+### Bug Fixes
+
+* refresh iam tokens in websocket methods ([#913](https://github.com/watson-developer-cloud/node-sdk/issues/913)) ([5a2876a](https://github.com/watson-developer-cloud/node-sdk/commit/5a2876a))
+
 ## [4.2.3](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.2...v4.2.3) (2019-07-17)
 
 
