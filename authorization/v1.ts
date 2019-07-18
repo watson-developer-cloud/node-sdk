@@ -35,6 +35,8 @@ class AuthorizationV1 extends BaseService {
    * @param {String} options.username
    * @param {String} options.password
    * @param {String} [options.url] url of the service for which auth tokens are being generated
+   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
+   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
    * @constructor
    */
   constructor(options: AuthorizationV1.Options) {
@@ -93,9 +95,11 @@ AuthorizationV1.prototype.serviceVersion = 'v1';
 namespace AuthorizationV1 {
   /** Options for the AuthorizationV1 constructor */
   export type Options = {
-    username: string;
-    password: string;
+    username?: string;
+    password?: string;
     url?: string;
+    iam_apikey?: string;
+    iam_url?: string;
   }
 
   export interface GetTokenResponse {
