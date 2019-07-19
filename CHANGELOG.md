@@ -1,3 +1,11 @@
+## [4.2.5](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.4...v4.2.5) (2019-07-19)
+
+
+### Bug Fixes
+
+* AuthorizationV1.Options requires type definitions for iam_a… ([#917](https://github.com/watson-developer-cloud/node-sdk/issues/917)) ([b38d692](https://github.com/watson-developer-cloud/node-sdk/commit/b38d692))
+* type definitions for iam_apikey and ibm_url ([13ac681](https://github.com/watson-developer-cloud/node-sdk/commit/13ac681))
+
 ## [4.2.4](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.3...v4.2.4) (2019-07-17)
 
 
