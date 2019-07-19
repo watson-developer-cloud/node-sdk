@@ -59,6 +59,9 @@ This package has been moved under the name `ibm-watson`. The package is still av
 ## Before you begin
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
 
+## Prerequisites
+- **Node >=10**: This SDK is tested with Node versions 10 and up. It may work on previous versions but this is not officially supported.
+
 ## Installation
 
 ```sh
