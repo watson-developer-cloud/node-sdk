@@ -1,4 +1,7 @@
-# Upgrading to ibm-watson@4.0
+# Upgrading to ibm-watson@5.0
+
+_Note: If migrating from a version less than 4.0, also see the [v4 migration guide wiki](https://github.com/watson-developer-cloud/node-sdk/wiki/v4-Migration-Guide)._
+
 - [Breaking changes](#breaking-changes)
    - [Support for Node v6 and v8 dropped](#support-for-node-v6-and-v8-dropped)
 
