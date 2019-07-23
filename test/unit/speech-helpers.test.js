@@ -21,24 +21,45 @@ const rc_service = {
 const speech_to_text = new SpeechToTextV1(service);
 const rc_speech_to_text = new SpeechToTextV1(rc_service);
 
-describe('speech_to_text', function() {
-  describe('recognizeUsingWebSocket()', function() {
-    it('should return a stream', function() {
+describe('speech_to_text', () => {
+  describe('recognizeUsingWebSocket()', () => {
+    it('should return a stream', () => {
       expect(isStream(speech_to_text.recognizeUsingWebSocket())).toBe(true);
     });
 
-    it('should pass the correct parameters into RecognizeStream', function() {
+    it('should pass the correct parameters into RecognizeStream', () => {
       const stream = speech_to_text.recognizeUsingWebSocket();
       expect(stream.options.url).toBe(service.url);
       expect(stream.options.headers.authorization).toBeTruthy();
       expect(stream.options.token_manager).toBeUndefined();
     });
 
-    it('should create a token manager in RecognizeStream if using IAM', function() {
+    it('should create a token manager in RecognizeStream if using IAM', () => {
       const stream = rc_speech_to_text.recognizeUsingWebSocket();
       expect(stream.options.url).toBe(service.url);
       expect(stream.options.headers.authorization).toBeUndefined();
       expect(stream.options.token_manager).toBeDefined();
+    });
+
+    it('should override stored header with new token on refresh', done => {
+      // create stream object
+      const stream = rc_speech_to_text.recognizeUsingWebSocket();
+
+      // mock the token request method
+      stream.options.token_manager.getToken = jest.fn(cb => cb(null, 'abc'));
+
+      // verify no header is set
+      expect(stream.options.headers.authorization).toBeUndefined();
+
+      // explicitly set a new header, simulating the first token call
+      stream.options.headers.authorization = 'Bearer xyz';
+
+      // request a new token and verify it has overriden the old one
+      stream.setAuthorizationHeaderToken(err => {
+        expect(err).toBeNull();
+        expect(stream.options.headers.authorization).toBe('Bearer abc');
+        done();
+      });
     });
   });
 });
