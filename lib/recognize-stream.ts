@@ -535,7 +535,7 @@ class RecognizeStream extends Duplex {
           callback(err);
         }
         const authHeader = { authorization: 'Bearer ' + token };
-        this.options.headers = extend(authHeader, this.options.headers);
+        this.options.headers = extend(this.options.headers, authHeader);
         callback(null);
       });
     } else {
