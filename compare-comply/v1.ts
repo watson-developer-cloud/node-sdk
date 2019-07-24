@@ -35,6 +35,8 @@ class CompareComplyV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/compare-comply/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of IBM Cloud. When running on IBM Cloud, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
+   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of IBM Cloud. When running on IBM Cloud, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
    * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
    * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
    * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
@@ -108,7 +110,7 @@ class CompareComplyV1 extends BaseService {
         contentType: _params.file_content_type
       }
     };
- 
+
     const query = {
       'model': _params.model
     };
@@ -176,7 +178,7 @@ class CompareComplyV1 extends BaseService {
         contentType: _params.file_content_type
       }
     };
- 
+
     const query = {
       'model': _params.model
     };
@@ -244,7 +246,7 @@ class CompareComplyV1 extends BaseService {
         contentType: _params.file_content_type
       }
     };
- 
+
     const query = {
       'model': _params.model
     };
@@ -320,7 +322,7 @@ class CompareComplyV1 extends BaseService {
         contentType: _params.file_2_content_type
       }
     };
- 
+
     const query = {
       'file_1_label': _params.file_1_label,
       'file_2_label': _params.file_2_label,
@@ -441,7 +443,7 @@ class CompareComplyV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'model': _params.model
     };
@@ -501,7 +503,7 @@ class CompareComplyV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'model': _params.model
     };
@@ -589,7 +591,7 @@ class CompareComplyV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'feedback_type': _params.feedback_type,
       'before': _params.before,
@@ -696,7 +698,7 @@ class CompareComplyV1 extends BaseService {
       'output_bucket_location': _params.output_bucket_location,
       'output_bucket_name': _params.output_bucket_name
     };
- 
+
     const query = {
       'function': _params._function,
       'model': _params.model
@@ -846,7 +848,7 @@ class CompareComplyV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'action': _params.action,
       'model': _params.model
@@ -1360,12 +1362,6 @@ namespace CompareComplyV1 {
     model_version?: string;
     /** Document elements identified by the service. */
     elements?: Element[];
-    /** Definition of tables identified in the input document. */
-    tables?: Tables[];
-    /** The structure of the input document. */
-    document_structure?: DocStructure;
-    /** Definitions of the parties identified in the input document. */
-    parties?: Parties[];
     /** The date or dates on which the document becomes effective. */
     effective_dates?: EffectiveDates[];
     /** The monetary amounts that identify the total amount of the contract that needs to be paid from one party to another. */
@@ -1373,7 +1369,17 @@ namespace CompareComplyV1 {
     /** The date or dates on which the document is to be terminated. */
     termination_dates?: TerminationDates[];
     /** The document's contract type or types as declared in the document. */
-    contract_type?: ContractType[];
+    contract_types?: ContractTypes[];
+    /** The duration or durations of the contract. */
+    contract_terms?: ContractTerms[];
+    /** The document's payment duration or durations. */
+    payment_terms?: PaymentTerms[];
+    /** Definition of tables identified in the input document. */
+    tables?: Tables[];
+    /** The structure of the input document. */
+    document_structure?: DocStructure;
+    /** Definitions of the parties identified in the input document. */
+    parties?: Parties[];
   }
 
   /** An array of values, each being the `id` value of a column header that is applicable to the current cell. */
@@ -1436,22 +1442,54 @@ namespace CompareComplyV1 {
     role?: string;
   }
 
+  /** Text that is related to the contents of the table and that precedes or follows the current table. */
+  export interface Contexts {
+    /** The related text. */
+    text?: string;
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+  }
+
   /** A monetary amount identified in the input document. */
   export interface ContractAmts {
-    /** The monetary amount. */
-    text?: string;
     /** The confidence level in the identification of the contract amount. */
     confidence_level?: string;
+    /** The monetary amount. */
+    text?: string;
+    /** The normalized form of the amount, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    text_normalized?: string;
+    /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+    interpretation?: Interpretation;
+    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    provenance_ids?: string[];
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+  }
+
+  /** The duration or durations of the contract. */
+  export interface ContractTerms {
+    /** The confidence level in the identification of the contract term. */
+    confidence_level?: string;
+    /** The contract term (duration). */
+    text?: string;
+    /** The normalized form of the contract term, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    text_normalized?: string;
+    /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+    interpretation?: Interpretation;
+    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
   }
 
   /** The contract type identified in the input document. */
-  export interface ContractType {
+  export interface ContractTypes {
+    /** The confidence level in the identification of the contract type. */
+    confidence_level?: string;
     /** The contract type. */
     text?: string;
-    /** The confidence level in the identification of the termination date. */
-    confidence_level?: string;
+    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
   }
@@ -1484,6 +1522,8 @@ namespace CompareComplyV1 {
     section_titles?: SectionTitles[];
     /** An array containing one object per section or subsection, in parallel with the `section_titles` array, that details the leading sentences in the corresponding section or subsection. */
     leading_sentences?: LeadingSentence[];
+    /** An array containing one object per paragraph, in parallel with the `section_titles` and `leading_sentences` arrays. */
+    paragraphs?: Paragraphs[];
   }
 
   /** Basic information about the input document. */
@@ -1500,10 +1540,14 @@ namespace CompareComplyV1 {
 
   /** An effective date. */
   export interface EffectiveDates {
-    /** The effective date, listed as a string. */
-    text?: string;
     /** The confidence level in the identification of the effective date. */
     confidence_level?: string;
+    /** The effective date, listed as a string. */
+    text?: string;
+    /** The normalized form of the effective date, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    text_normalized?: string;
+    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
   }
@@ -1642,6 +1686,16 @@ namespace CompareComplyV1 {
     html?: string;
   }
 
+  /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+  export interface Interpretation {
+    /** The value that was located in the normalized text. */
+    value?: string;
+    /** An integer or float expressing the numeric value of the `value` key. */
+    numeric_value?: number;
+    /** A string listing the unit of the value that was found in the normalized text. **Note:** The value of `unit` is the [ISO-4217 currency code](https://www.iso.org/iso-4217-currency-codes.html) identified for the currency amount (for example, `USD` or `EUR`). If the service cannot disambiguate a currency symbol (for example, `$` or `£`), the value of `unit` contains the ambiguous symbol as-is. */
+    unit?: string;
+  }
+
   /** A key in a key-value pair. */
   export interface Key {
     /** The unique ID of the key in the table. */
@@ -1686,6 +1740,14 @@ namespace CompareComplyV1 {
     end: number;
   }
 
+  /** A mention of a party. */
+  export interface Mention {
+    /** The name of the party. */
+    text?: string;
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+  }
+
   /** The original labeling from the input document, without the submitted feedback. */
   export interface OriginalLabelsIn {
     /** Description of the action specified by the element and whom it affects. */
@@ -1718,18 +1780,42 @@ namespace CompareComplyV1 {
     total?: number;
   }
 
+  /** The locations of each paragraph in the input document. */
+  export interface Paragraphs {
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+  }
+
   /** A party and its corresponding role, including address and contact information if identified. */
   export interface Parties {
-    /** A string identifying the party. */
+    /** The normalized form of the party's name. */
     party?: string;
-    /** A string that identifies the importance of the party. */
-    importance?: string;
     /** A string identifying the party's role. */
     role?: string;
-    /** List of the party's address or addresses. */
+    /** A string that identifies the importance of the party. */
+    importance?: string;
+    /** A list of the party's address or addresses. */
     addresses?: Address[];
-    /** List of the names and roles of contacts identified in the input document. */
+    /** A list of the names and roles of contacts identified in the input document. */
     contacts?: Contact[];
+    /** A list of the party's mentions in the input document. */
+    mentions?: Mention[];
+  }
+
+  /** The document's payment duration or durations. */
+  export interface PaymentTerms {
+    /** The confidence level in the identification of the payment term. */
+    confidence_level?: string;
+    /** The payment term (duration). */
+    text?: string;
+    /** The normalized form of the payment term, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    text_normalized?: string;
+    /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+    interpretation?: Interpretation;
+    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    provenance_ids?: string[];
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
   }
 
   /** An array of values, each being the `id` value of a row header that is applicable to this body cell. */
@@ -1828,6 +1914,14 @@ namespace CompareComplyV1 {
     tables?: Tables[];
   }
 
+  /** If identified, the title or caption of the current table of the form `Table x.: ...`. Empty when no title is identified. When exposed, the `title` is also excluded from the `contexts` array of the same table. */
+  export interface TableTitle {
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+    /** The text of the identified table title or caption. */
+    text?: string;
+  }
+
   /** The contents of the tables extracted from a document. */
   export interface Tables {
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
@@ -1836,24 +1930,32 @@ namespace CompareComplyV1 {
     text?: string;
     /** The table's section title, if identified. */
     section_title?: SectionTitle;
+    /** If identified, the title or caption of the current table of the form `Table x.: ...`. Empty when no title is identified. When exposed, the `title` is also excluded from the `contexts` array of the same table. */
+    title?: TableTitle;
     /** An array of table-level cells that apply as headers to all the other cells in the current table. */
     table_headers?: TableHeaders[];
     /** An array of row-level cells, each applicable as a header to other cells in the same row as itself, of the current table. */
     row_headers?: RowHeaders[];
     /** An array of column-level cells, each applicable as a header to other cells in the same column as itself, of the current table. */
     column_headers?: ColumnHeaders[];
-    /** An array of key-value pairs identified in the current table. */
-    key_value_pairs?: KeyValuePair[];
     /** An array of cells that are neither table header nor column header nor row header cells, of the current table with corresponding row and column header associations. */
     body_cells?: BodyCells[];
+    /** An array of objects that list text that is related to the table contents and that precedes or follows the current table. */
+    contexts?: Contexts[];
+    /** An array of key-value pairs identified in the current table. */
+    key_value_pairs?: KeyValuePair[];
   }
 
   /** Termination dates identified in the input document. */
   export interface TerminationDates {
-    /** The termination date. */
-    text?: string;
     /** The confidence level in the identification of the termination date. */
     confidence_level?: string;
+    /** The termination date. */
+    text?: string;
+    /** The normalized form of the termination date, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    text_normalized?: string;
+    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
   }
