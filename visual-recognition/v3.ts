@@ -249,9 +249,9 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new classifier. Encode special characters in UTF-8.
-   * @param {Record<string, NodeJS.ReadableStream|FileObject|Buffer>} params.positive_examples - A dictionary that contains
-   * the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the
-   * new classifier. You can include more than one positive example file in a call.
+   * @param {Record<string, NodeJS.ReadableStream|FileObject|Buffer>} params.positive_examples - A dictionary that
+   * contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class
+   * in the new classifier. You can include more than one positive example file in a call.
    *
    * Specify the parameter name by appending `_positive_examples` to the class name. For example,
    * `goldenretriever_positive_examples` creates the class **goldenretriever**.

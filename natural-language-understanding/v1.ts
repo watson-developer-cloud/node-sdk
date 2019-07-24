@@ -548,6 +548,8 @@ namespace NaturalLanguageUnderstandingV1 {
     text?: string;
     /** Relevance score from 0 to 1. Higher values indicate greater relevance. */
     relevance?: number;
+    /** Confidence in the entity identification from 0 to 1. Higher values indicate higher confidence. In standard entities requests, confidence is returned only for English text. All entities requests that use custom models return the confidence score. */
+    confidence?: number;
     /** Entity mentions and locations. */
     mentions?: EntityMention[];
     /** How many times the entity was mentioned in the text. */
@@ -566,6 +568,8 @@ namespace NaturalLanguageUnderstandingV1 {
     text?: string;
     /** Character offsets indicating the beginning and end of the mention in the analyzed text. */
     location?: number[];
+    /** Confidence in the entity identification from 0 to 1. Higher values indicate higher confidence. In standard entities requests, confidence is returned only for English text. All entities requests that use custom models return the confidence score. */
+    confidence?: number;
   }
 
   /** FeatureSentimentResults. */

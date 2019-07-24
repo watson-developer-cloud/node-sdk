@@ -249,7 +249,7 @@ class DiscoveryV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'name': _params.name
     };
@@ -301,7 +301,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'collection_ids': _params.collection_ids
     };
@@ -610,7 +610,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'name': _params.name
     };
@@ -780,7 +780,7 @@ class DiscoveryV1 extends BaseService {
       },
       'metadata': _params.metadata
     };
- 
+
     const query = {
       'step': _params.step,
       'configuration_id': _params.configuration_id
@@ -1062,7 +1062,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'name': _params.name
     };
@@ -2162,7 +2162,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'collection_ids': _params.collection_ids,
       'filter': _params.filter,
@@ -2475,7 +2475,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'filter': _params.filter,
       'query': _params.query,
@@ -3216,7 +3216,7 @@ class DiscoveryV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'customer_id': _params.customer_id
     };
@@ -3325,7 +3325,7 @@ class DiscoveryV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
@@ -3376,7 +3376,7 @@ class DiscoveryV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
@@ -3429,7 +3429,7 @@ class DiscoveryV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
@@ -3481,7 +3481,7 @@ class DiscoveryV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'start_time': _params.start_time,
       'end_time': _params.end_time,
@@ -3531,7 +3531,7 @@ class DiscoveryV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'count': _params.count
     };
@@ -3588,7 +3588,7 @@ class DiscoveryV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'filter': _params.filter,
       'query': _params.query,

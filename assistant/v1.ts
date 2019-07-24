@@ -74,6 +74,10 @@ class AssistantV1 extends BaseService {
    *
    * Send user input to a workspace and receive a response.
    *
+   * **Note:** For most applications, there are significant advantages to using the v2 runtime API instead. These
+   * advantages include ease of deployment, automatic state management, versioning, and search capabilities. For more
+   * information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-api-overview).
+   *
    * There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -121,7 +125,7 @@ class AssistantV1 extends BaseService {
       'context': _params.context,
       'output': _params.output
     };
- 
+
     const query = {
       'nodes_visited_details': _params.nodes_visited_details
     };
@@ -319,7 +323,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'include_audit': _params.include_audit,
@@ -379,7 +383,7 @@ class AssistantV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -472,7 +476,7 @@ class AssistantV1 extends BaseService {
       'dialog_nodes': _params.dialog_nodes,
       'counterexamples': _params.counterexamples
     };
- 
+
     const query = {
       'append': _params.append
     };
@@ -668,7 +672,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'include_audit': _params.include_audit
@@ -739,7 +743,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'page_limit': _params.page_limit,
@@ -1011,7 +1015,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'include_audit': _params.include_audit
     };
@@ -1079,7 +1083,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -1342,7 +1346,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'include_audit': _params.include_audit
     };
@@ -1408,7 +1412,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -1679,7 +1683,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'include_audit': _params.include_audit
@@ -1750,7 +1754,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'page_limit': _params.page_limit,
@@ -1902,7 +1906,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'include_audit': _params.include_audit
@@ -2113,7 +2117,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'include_audit': _params.include_audit
@@ -2185,7 +2189,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'export': _params._export,
       'page_limit': _params.page_limit,
@@ -2472,7 +2476,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'include_audit': _params.include_audit
     };
@@ -2542,7 +2546,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -2849,7 +2853,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'include_audit': _params.include_audit
     };
@@ -2915,7 +2919,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'page_limit': _params.page_limit,
       'include_count': _params.include_count,
@@ -3101,7 +3105,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'filter': _params.filter,
       'sort': _params.sort,
@@ -3165,7 +3169,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'sort': _params.sort,
       'filter': _params.filter,
@@ -3233,7 +3237,7 @@ class AssistantV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'customer_id': _params.customer_id
     };
@@ -4790,9 +4794,9 @@ namespace AssistantV1 {
     entity: string;
     /** An array of zero-based character offsets that indicate where the detected entity values begin and end in the input text. */
     location: number[];
-    /** The term in the input text that was recognized as an entity value. */
+    /** The entity value that was recognized in the user input. */
     value: string;
-    /** A decimal percentage that represents Watson's confidence in the entity. */
+    /** A decimal percentage that represents Watson's confidence in the recognized entity. */
     confidence?: number;
     /** Any metadata for the entity. */
     metadata?: JsonObject;

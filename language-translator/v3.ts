@@ -240,7 +240,7 @@ class LanguageTranslatorV3 extends BaseService {
    * files is limited to <b>250 MB</b>. To successfully train with a parallel corpus you must have at least <b>5,000
    * parallel sentences</b> in your corpus.
    *
-   * You can have a <b>maxium of 10 custom models per language pair</b>.
+   * You can have a <b>maximum of 10 custom models per language pair</b>.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.base_model_id - The model ID of the model to use as the base for customization. To see
@@ -288,7 +288,7 @@ class LanguageTranslatorV3 extends BaseService {
         contentType: 'application/octet-stream'
       }
     };
- 
+
     const query = {
       'base_model_id': _params.base_model_id,
       'name': _params.name
@@ -444,7 +444,7 @@ class LanguageTranslatorV3 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'source': _params.source,
       'target': _params.target,
