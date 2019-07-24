@@ -135,8 +135,6 @@ class PersonalityInsightsV3 extends BaseService {
    * results. By default, no consumption preferences are returned.
    * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
    * method description.
-   *
-   * Default: `text/plain`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -159,7 +157,7 @@ class PersonalityInsightsV3 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.content;
- 
+
     const query = {
       'raw_scores': _params.raw_scores,
       'csv_headers': _params.csv_headers,
@@ -254,8 +252,6 @@ class PersonalityInsightsV3 extends BaseService {
    * results. By default, no consumption preferences are returned.
    * @param {string} [params.content_type] - The type of the input. For more information, see **Content types** in the
    * method description.
-   *
-   * Default: `text/plain`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -278,7 +274,7 @@ class PersonalityInsightsV3 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.content;
- 
+
     const query = {
       'raw_scores': _params.raw_scores,
       'csv_headers': _params.csv_headers,
@@ -375,7 +371,7 @@ namespace PersonalityInsightsV3 {
     csv_headers?: boolean;
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    /** The type of the input. For more information, see **Content types** in the method description. */
     content_type?: ProfileConstants.ContentType | string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -405,7 +401,7 @@ namespace PersonalityInsightsV3 {
       ZH_CN = 'zh-cn',
       ZH_TW = 'zh-tw',
     }
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    /** The type of the input. For more information, see **Content types** in the method description. */
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',
@@ -427,7 +423,7 @@ namespace PersonalityInsightsV3 {
     csv_headers?: boolean;
     /** Indicates whether consumption preferences are returned with the results. By default, no consumption preferences are returned. */
     consumption_preferences?: boolean;
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    /** The type of the input. For more information, see **Content types** in the method description. */
     content_type?: ProfileAsCsvConstants.ContentType | string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -457,7 +453,7 @@ namespace PersonalityInsightsV3 {
       ZH_CN = 'zh-cn',
       ZH_TW = 'zh-tw',
     }
-    /** The type of the input. For more information, see **Content types** in the method description. Default: `text/plain`. */
+    /** The type of the input. For more information, see **Content types** in the method description. */
     export enum ContentType {
       APPLICATION_JSON = 'application/json',
       TEXT_HTML = 'text/html',

@@ -134,7 +134,7 @@ class ToneAnalyzerV3 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.tone_input;
- 
+
     const query = {
       'sentences': _params.sentences,
       'tones': _params.tones

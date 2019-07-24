@@ -66,8 +66,8 @@ class TextToSpeechV1 extends BaseService {
    * Get a voice.
    *
    * Gets information about the specified voice. The information includes the name, language, gender, and other details
-   * about the voice. Specify a customization ID to obtain information for that custom voice model of the specified
-   * voice. To list information about all available voices, use the **List voices** method.
+   * about the voice. Specify a customization ID to obtain information for a custom voice model that is defined for the
+   * language of the specified voice. To list information about all available voices, use the **List voices** method.
    *
    * **See also:** [Listing a specific
    * voice](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-voices#listVoice).
@@ -75,9 +75,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned.
    * @param {string} [params.customization_id] - The customization ID (GUID) of a custom voice model for which
-   * information is to be returned. You must make the request with service credentials created for the instance of the
-   * service that owns the custom model. Omit the parameter to see information about the specified voice with no
-   * customization.
+   * information is to be returned. You must make the request with credentials for the instance of the service that owns
+   * the custom model. Omit the parameter to see information about the specified voice with no customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -99,7 +98,7 @@ class TextToSpeechV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'customization_id': _params.customization_id
     };
@@ -257,13 +256,11 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.voice] - The voice to use for synthesis.
    * @param {string} [params.customization_id] - The customization ID (GUID) of a custom voice model to use for the
    * synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the
-   * indicated voice. You must make the request with service credentials created for the instance of the service that
-   * owns the custom model. Omit the parameter to use the specified voice with no customization.
+   * indicated voice. You must make the request with credentials for the instance of the service that owns the custom
+   * model. Omit the parameter to use the specified voice with no customization.
    * @param {string} [params.accept] - The requested format (MIME type) of the audio. You can use the `Accept` header or
    * the `accept` parameter to specify the audio format. For more information about specifying an audio format, see
    * **Audio formats (accept types)** in the method description.
-   *
-   * Default: `audio/ogg;codecs=opus`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -289,7 +286,7 @@ class TextToSpeechV1 extends BaseService {
     const body = {
       'text': _params.text
     };
- 
+
     const query = {
       'voice': _params.voice,
       'customization_id': _params.customization_id
@@ -341,9 +338,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.customization_id] - The customization ID (GUID) of a custom voice model for which the
    * pronunciation is to be returned. The language of a specified custom model must match the language of the specified
    * voice. If the word is not defined in the specified custom model, the service returns the default translation for
-   * the custom model's language. You must make the request with service credentials created for the instance of the
-   * service that owns the custom model. Omit the parameter to see the translation for the specified voice with no
-   * customization.
+   * the custom model's language. You must make the request with credentials for the instance of the service that owns
+   * the custom model. Omit the parameter to see the translation for the specified voice with no customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -365,7 +361,7 @@ class TextToSpeechV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'text': _params.text,
       'voice': _params.voice,
@@ -473,7 +469,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -531,7 +527,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -591,8 +587,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The language for which custom voice models that are owned by the requesting
-   * service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the
-   * requester.
+   * credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -608,7 +603,7 @@ class TextToSpeechV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'language': _params.language
     };
@@ -662,7 +657,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {string} [params.name] - A new name for the custom voice model.
    * @param {string} [params.description] - A new description for the custom voice model.
    * @param {Word[]} [params.words] - An array of `Word` objects that provides the words and their translations that are
@@ -753,7 +748,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be added or updated for the custom voice model.
    * @param {string} params.translation - The phonetic or sounds-like translation for the word. A phonetic translation
    * is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an
@@ -844,7 +839,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {Word[]} params.words - The **Add custom words** method accepts an array of `Word` objects. Each object
    * provides a word that is to be added or updated for the custom voice model and the word's translation.
    *
@@ -914,7 +909,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be deleted from the custom voice model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -974,7 +969,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be queried from the custom voice model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1035,7 +1030,7 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with service credentials created for the instance of the service that owns the custom model.
+   * request with credentials for the instance of the service that owns the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -1121,7 +1116,7 @@ class TextToSpeechV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'customer_id': _params.customer_id
     };
@@ -1200,7 +1195,7 @@ namespace TextToSpeechV1 {
   export interface GetVoiceParams {
     /** The voice for which information is to be returned. */
     voice: GetVoiceConstants.Voice | string;
-    /** The customization ID (GUID) of a custom voice model for which information is to be returned. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see information about the specified voice with no customization. */
+    /** The customization ID (GUID) of a custom voice model for which information is to be returned. You must make the request with credentials for the instance of the service that owns the custom model. Omit the parameter to see information about the specified voice with no customization. */
     customization_id?: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -1211,25 +1206,38 @@ namespace TextToSpeechV1 {
     /** The voice for which information is to be returned. */
     export enum Voice {
       DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
-      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
       DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
-      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
+      EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
-      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
+      EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
-      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
+      EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
-      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
+      EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
+      ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
+      ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
+      ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
+      ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
+      FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
-      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
+      IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
+      PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
+      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
+      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
+      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
     }
   }
 
@@ -1245,9 +1253,9 @@ namespace TextToSpeechV1 {
     text: string;
     /** The voice to use for synthesis. */
     voice?: SynthesizeConstants.Voice | string;
-    /** The customization ID (GUID) of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization. */
+    /** The customization ID (GUID) of a custom voice model to use for the synthesis. If a custom voice model is specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the request with credentials for the instance of the service that owns the custom model. Omit the parameter to use the specified voice with no customization. */
     customization_id?: string;
-    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
+    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. */
     accept?: SynthesizeConstants.Accept | string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -1258,27 +1266,40 @@ namespace TextToSpeechV1 {
     /** The voice to use for synthesis. */
     export enum Voice {
       DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
-      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
       DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
-      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
+      EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
-      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
+      EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
-      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
+      EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
-      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
+      EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
+      ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
+      ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
+      ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
+      ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
+      FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
-      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
+      IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
+      PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
+      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
+      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
+      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
     }
-    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. Default: `audio/ogg;codecs=opus`. */
+    /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. */
     export enum Accept {
       AUDIO_BASIC = 'audio/basic',
       AUDIO_FLAC = 'audio/flac',
@@ -1304,7 +1325,7 @@ namespace TextToSpeechV1 {
     voice?: GetPronunciationConstants.Voice | string;
     /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
     format?: GetPronunciationConstants.Format | string;
-    /** The customization ID (GUID) of a custom voice model for which the pronunciation is to be returned. The language of a specified custom model must match the language of the specified voice. If the word is not defined in the specified custom model, the service returns the default translation for the custom model's language. You must make the request with service credentials created for the instance of the service that owns the custom model. Omit the parameter to see the translation for the specified voice with no customization. */
+    /** The customization ID (GUID) of a custom voice model for which the pronunciation is to be returned. The language of a specified custom model must match the language of the specified voice. If the word is not defined in the specified custom model, the service returns the default translation for the custom model's language. You must make the request with credentials for the instance of the service that owns the custom model. Omit the parameter to see the translation for the specified voice with no customization. */
     customization_id?: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -1315,25 +1336,38 @@ namespace TextToSpeechV1 {
     /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. */
     export enum Voice {
       DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
-      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
       DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
-      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
+      EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
-      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
+      EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_LISAVOICE = 'en-US_LisaVoice',
-      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
+      EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
       EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
-      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
+      EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
+      ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
       ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
+      ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
       ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
+      ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
+      ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
+      FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
-      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
+      IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
+      PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
+      DE_DE_BIRGITV2VOICE = 'de-DE_BirgitV2Voice',
+      DE_DE_DIETERV2VOICE = 'de-DE_DieterV2Voice',
+      EN_US_ALLISONV2VOICE = 'en-US_AllisonV2Voice',
+      EN_US_LISAV2VOICE = 'en-US_LisaV2Voice',
+      EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
+      IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
     }
     /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
     export enum Format {
@@ -1373,7 +1407,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `deleteVoiceModel` operation. */
   export interface DeleteVoiceModelParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -1381,7 +1415,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `getVoiceModel` operation. */
   export interface GetVoiceModelParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -1389,7 +1423,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `listVoiceModels` operation. */
   export interface ListVoiceModelsParams {
-    /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
+    /** The language for which custom voice models that are owned by the requesting credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     language?: ListVoiceModelsConstants.Language | string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -1397,7 +1431,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `listVoiceModels` operation. */
   export namespace ListVoiceModelsConstants {
-    /** The language for which custom voice models that are owned by the requesting service credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
+    /** The language for which custom voice models that are owned by the requesting credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
     export enum Language {
       DE_DE = 'de-DE',
       EN_GB = 'en-GB',
@@ -1414,7 +1448,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `updateVoiceModel` operation. */
   export interface UpdateVoiceModelParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     /** A new name for the custom voice model. */
     name?: string;
@@ -1428,7 +1462,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `addWord` operation. */
   export interface AddWordParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     /** The word that is to be added or updated for the custom voice model. */
     word: string;
@@ -1466,7 +1500,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `addWords` operation. */
   export interface AddWordsParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation. The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
     words: Word[];
@@ -1476,7 +1510,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `deleteWord` operation. */
   export interface DeleteWordParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     /** The word that is to be deleted from the custom voice model. */
     word: string;
@@ -1486,7 +1520,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `getWord` operation. */
   export interface GetWordParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     /** The word that is to be queried from the custom voice model. */
     word: string;
@@ -1496,7 +1530,7 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `listWords` operation. */
   export interface ListWordsParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with service credentials created for the instance of the service that owns the custom model. */
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -1564,11 +1598,11 @@ namespace TextToSpeechV1 {
     name?: string;
     /** The language identifier of the custom voice model (for example, `en-US`). */
     language?: string;
-    /** The GUID of the service credentials for the instance of the service that owns the custom voice model. */
+    /** The GUID of the credentials for the instance of the service that owns the custom voice model. */
     owner?: string;
     /** The date and time in Coordinated Universal Time (UTC) at which the custom voice model was created. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     created?: string;
-    /** The date and time in Coordinated Universal Time (UTC) at which the custom voice model was last modified. Equals `created` when a new voice model is first added but has yet to be updated. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
+    /** The date and time in Coordinated Universal Time (UTC) at which the custom voice model was last modified. The `created` and `updated` fields are equal when a voice model is first added but has yet to be updated. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     last_modified?: string;
     /** The description of the custom voice model. */
     description?: string;
@@ -1578,7 +1612,7 @@ namespace TextToSpeechV1 {
 
   /** Information about existing custom voice models. */
   export interface VoiceModels {
-    /** An array of `VoiceModel` objects that provides information about each available custom voice model. The array is empty if the requesting service credentials own no custom voice models (if no language is specified) or own no custom voice models for the specified language. */
+    /** An array of `VoiceModel` objects that provides information about each available custom voice model. The array is empty if the requesting credentials own no custom voice models (if no language is specified) or own no custom voice models for the specified language. */
     customizations: VoiceModel[];
   }
 
