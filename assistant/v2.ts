@@ -429,6 +429,10 @@ namespace AssistantV2 {
     topic?: string;
     /** An array of objects describing the possible matching dialog nodes from which the user can choose. **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for Premium users. */
     suggestions?: DialogSuggestion[];
+    /** The title or introductory text to show before the response. This text is defined in the search skill configuration. */
+    header?: string;
+    /** An array of objects containing search results. */
+    results?: SearchResult[];
   }
 
   /** DialogSuggestion. */
@@ -547,7 +551,7 @@ namespace AssistantV2 {
     context?: MessageContext;
   }
 
-  /** A term from the request that was identified as an entity. */
+  /** The entity value that was recognized in the user input. */
   export interface RuntimeEntity {
     /** An entity detected in the input. */
     entity: string;
@@ -555,7 +559,7 @@ namespace AssistantV2 {
     location: number[];
     /** The term in the input text that was recognized as an entity value. */
     value: string;
-    /** A decimal percentage that represents Watson's confidence in the entity. */
+    /** A decimal percentage that represents Watson's confidence in the recognized entity. */
     confidence?: number;
     /** Any metadata for the entity. */
     metadata?: JsonObject;
@@ -569,6 +573,42 @@ namespace AssistantV2 {
     intent: string;
     /** A decimal percentage that represents Watson's confidence in the intent. */
     confidence: number;
+  }
+
+  /** SearchResult. */
+  export interface SearchResult {
+    /** The unique identifier of the document in the Discovery service collection. This property is included in responses from search skills, which are a beta feature available only to Plus or Premium plan users. */
+    id: string;
+    /** An object containing search result metadata from the Discovery service. */
+    result_metadata: SearchResultMetadata;
+    /** A description of the search result. This is taken from an abstract, summary, or highlight field in the Discovery service response, as specified in the search skill configuration. */
+    body?: string;
+    /** The title of the search result. This is taken from a title or name field in the Discovery service response, as specified in the search skill configuration. */
+    title?: string;
+    /** The URL of the original data object in its native data source. */
+    url?: string;
+    /** An object containing segments of text from search results with query-matching text highlighted using HTML <em> tags. */
+    highlight?: SearchResultHighlight;
+  }
+
+  /** An object containing segments of text from search results with query-matching text highlighted using HTML <em> tags. */
+  export interface SearchResultHighlight {
+    /** An array of strings containing segments taken from body text in the search results, with query-matching substrings highlighted. */
+    body?: string[];
+    /** An array of strings containing segments taken from title text in the search results, with query-matching substrings highlighted. */
+    title?: string[];
+    /** An array of strings containing segments taken from URLs in the search results, with query-matching substrings highlighted. */
+    url?: string[];
+    /** SearchResultHighlight accepts additional properties. */
+    [propName: string]: any;
+  }
+
+  /** An object containing search result metadata from the Discovery service. */
+  export interface SearchResultMetadata {
+    /** The confidence score for the given result. For more information about how the confidence is calculated, see the Discovery service [documentation](../discovery#query-your-collection). */
+    confidence?: number;
+    /** An unbounded measure of the relevance of a particular result, dependent on the query and matching document. A higher score indicates a greater match to the query parameters. */
+    score?: number;
   }
 
   /** SessionResponse. */
