@@ -91,7 +91,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.terminationdates.html#confidence_level" class="tsd-kind-icon">confidence_<wbr>level</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.terminationdates.html#location" class="tsd-kind-icon">location</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.terminationdates.html#provenance_ids" class="tsd-kind-icon">provenance_<wbr>ids</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.terminationdates.html#text" class="tsd-kind-icon">text</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.terminationdates.html#text_normalized" class="tsd-kind-icon">text_<wbr>normalized</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">confidence_<wbr>level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4b8df28/compare-comply/v1.ts#L1856">compare-comply/v1.ts:1856</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ca8135f/compare-comply/v1.ts#L1952">compare-comply/v1.ts:1952</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,7 +122,7 @@
 					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.location.html" class="tsd-signature-type">Location</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4b8df28/compare-comply/v1.ts#L1858">compare-comply/v1.ts:1858</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ca8135f/compare-comply/v1.ts#L1960">compare-comply/v1.ts:1960</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -130,17 +132,47 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="provenance_ids" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> provenance_<wbr>ids</h3>
+					<div class="tsd-signature tsd-kind-icon">provenance_<wbr>ids<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ca8135f/compare-comply/v1.ts#L1958">compare-comply/v1.ts:1958</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>One or more hash values that you can send to IBM to provide feedback or receive support.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="text" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text</h3>
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4b8df28/compare-comply/v1.ts#L1854">compare-comply/v1.ts:1854</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ca8135f/compare-comply/v1.ts#L1954">compare-comply/v1.ts:1954</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The termination date.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="text_normalized" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text_<wbr>normalized</h3>
+					<div class="tsd-signature tsd-kind-icon">text_<wbr>normalized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ca8135f/compare-comply/v1.ts#L1956">compare-comply/v1.ts:1956</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The normalized form of the termination date, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists.</p>
 						</div>
 					</div>
 				</section>
@@ -180,7 +212,13 @@
 										<a href="comparecomplyv1.terminationdates.html#location" class="tsd-kind-icon">location</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.terminationdates.html#provenance_ids" class="tsd-kind-icon">provenance_<wbr>ids</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="comparecomplyv1.terminationdates.html#text" class="tsd-kind-icon">text</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.terminationdates.html#text_normalized" class="tsd-kind-icon">text_<wbr>normalized</a>
 									</li>
 								</ul>
 							</li>
