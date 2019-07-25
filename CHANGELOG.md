@@ -1,3 +1,15 @@
+# [4.3.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.6...v4.3.0) (2019-07-25)
+
+
+### Bug Fixes
+
+* **compare-comply:** `contract_type` corrected to `contract_types` in model `ClassifyReturn` ([a114881](https://github.com/watson-developer-cloud/node-sdk/commit/a114881))
+
+
+### Features
+
+* **assistant-v2:** support for search skill added ([a1c4f6d](https://github.com/watson-developer-cloud/node-sdk/commit/a1c4f6d))
+
 ## [4.2.6](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.5...v4.2.6) (2019-07-23)
 
 
