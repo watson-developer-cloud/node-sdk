@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -371,100 +371,66 @@ describe('createClassifier', () => {
   });
 });
 
-describe('deleteClassifier', () => {
+describe('listClassifiers', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const params = {
-        classifier_id,
-      };
+      const params = {};
 
       // invoke method
-      naturalLanguageClassifier.deleteClassifier(params, noop);
+      naturalLanguageClassifier.listClassifiers(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'DELETE');
+      checkUrlAndMethod(options, '/v1/classifiers', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['classifier_id']).toEqual(classifier_id);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
-        classifier_id,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
         },
       };
 
-      naturalLanguageClassifier.deleteClassifier(params, noop);
+      naturalLanguageClassifier.listClassifiers(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const params = {
-        classifier_id,
-      };
+      const params = {};
 
       // invoke method
-      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier(params);
-      expectToBePromise(deleteClassifierPromise);
+      const listClassifiersPromise = naturalLanguageClassifier.listClassifiers(params);
+      expectToBePromise(listClassifiersPromise);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
+    test('should not have any problems when no parameters are passed in', () => {
+      // invoke the method
+      naturalLanguageClassifier.listClassifiers({}, noop);
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
-    test('should convert a `null` value for `params` to an empty object', done => {
-      naturalLanguageClassifier.deleteClassifier(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      naturalLanguageClassifier.deleteClassifier({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier();
-      expectToBePromise(deleteClassifierPromise);
-
-      deleteClassifierPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      naturalLanguageClassifier.listClassifiers(noop);
+      checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
@@ -567,66 +533,100 @@ describe('getClassifier', () => {
   });
 });
 
-describe('listClassifiers', () => {
+describe('deleteClassifier', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const params = {};
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
 
       // invoke method
-      naturalLanguageClassifier.listClassifiers(params, noop);
+      naturalLanguageClassifier.deleteClassifier(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/classifiers', 'GET');
+      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'DELETE');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['classifier_id']).toEqual(classifier_id);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
+      const classifier_id = 'fake_classifier_id';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
+        classifier_id,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
         },
       };
 
-      naturalLanguageClassifier.listClassifiers(params, noop);
+      naturalLanguageClassifier.deleteClassifier(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const params = {};
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
 
       // invoke method
-      const listClassifiersPromise = naturalLanguageClassifier.listClassifiers(params);
-      expectToBePromise(listClassifiersPromise);
+      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier(params);
+      expectToBePromise(deleteClassifierPromise);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
-    test('should not have any problems when no parameters are passed in', () => {
-      // invoke the method
-      naturalLanguageClassifier.listClassifiers({}, noop);
-      checkDefaultSuccessArgs(createRequestMock);
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
     });
 
-    test('should use argument as callback function if only one is passed in', () => {
-      // invoke the method
-      naturalLanguageClassifier.listClassifiers(noop);
-      checkDefaultSuccessArgs(createRequestMock);
+    test('should convert a `null` value for `params` to an empty object', done => {
+      naturalLanguageClassifier.deleteClassifier(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      naturalLanguageClassifier.deleteClassifier({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier();
+      expectToBePromise(deleteClassifierPromise);
+
+      deleteClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
     });
   });
 });

@@ -160,6 +160,63 @@ class AssistantV1 extends BaseService {
    ************************/
 
   /**
+   * List workspaces.
+   *
+   * List the workspaces associated with a Watson Assistant service instance.
+   *
+   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned workspaces will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listWorkspaces(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const query = {
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listWorkspaces');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Create workspace.
    *
    * Create a workspace based on component objects. You must provide workspace components defining the content of the
@@ -232,59 +289,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete workspace.
-   *
-   * Delete a workspace from the service instance.
-   *
-   * This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteWorkspace(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteWorkspace');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get information about a workspace.
    *
    * Get information about a workspace, optionally including all workspace content.
@@ -342,63 +346,6 @@ class AssistantV1 extends BaseService {
         method: 'GET',
         qs: query,
         path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List workspaces.
-   *
-   * List the workspaces associated with a Watson Assistant service instance.
-   *
-   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned workspaces will be sorted. To reverse the sort
-   * order, prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listWorkspaces(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listWorkspaces');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces',
-        method: 'GET',
-        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -506,9 +453,136 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Delete workspace.
+   *
+   * Delete a workspace from the service instance.
+   *
+   * This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteWorkspace(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteWorkspace');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * intents
    ************************/
+
+  /**
+   * List intents.
+   *
+   * List the intents for a workspace.
+   *
+   * With **export**=`false`, this operation is limited to 2000 requests per 30 minutes. With **export**=`true`, the
+   * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned intents will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listIntents(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'export': _params._export,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listIntents');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/intents',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Create intent.
@@ -581,61 +655,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete intent.
-   *
-   * Delete an intent from a workspace.
-   *
-   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.intent - The intent name.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteIntent(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'intent': _params.intent
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteIntent');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get intent.
    *
    * Get information about an intent, optionally including all intent content.
@@ -688,80 +707,6 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List intents.
-   *
-   * List the intents for a workspace.
-   *
-   * With **export**=`false`, this operation is limited to 2000 requests per 30 minutes. With **export**=`true`, the
-   * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
-   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
-   * content, including subelements, is included.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned intents will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listIntents(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'export': _params._export,
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listIntents');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents',
         method: 'GET',
         qs: query,
         path,
@@ -850,9 +795,135 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Delete intent.
+   *
+   * Delete an intent from a workspace.
+   *
+   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'intent'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteIntent(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteIntent');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * examples
    ************************/
+
+  /**
+   * List user input examples.
+   *
+   * List the user input examples for an intent, optionally including contextual entity mentions.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned examples will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'intent'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listExamples(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listExamples');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Create user input example.
@@ -925,63 +996,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete user input example.
-   *
-   * Delete a user input example from an intent.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.intent - The intent name.
-   * @param {string} params.text - The text of the user input example.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent', 'text'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteExample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'intent': _params.intent,
-      'text': _params.text
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteExample');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get user input example.
    *
    * Get information about a user input example.
@@ -1031,77 +1045,6 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List user input examples.
-   *
-   * List the user input examples for an intent, optionally including contextual entity mentions.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.intent - The intent name.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned examples will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listExamples(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'intent': _params.intent
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listExamples');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
         method: 'GET',
         qs: query,
         path,
@@ -1188,9 +1131,135 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Delete user input example.
+   *
+   * Delete a user input example from an intent.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.intent - The intent name.
+   * @param {string} params.text - The text of the user input example.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'intent', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteExample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'intent': _params.intent,
+      'text': _params.text
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteExample');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * counterexamples
    ************************/
+
+  /**
+   * List counterexamples.
+   *
+   * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned counterexamples will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCounterexamples(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listCounterexamples');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/counterexamples',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Create counterexample.
@@ -1259,61 +1328,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete counterexample.
-   *
-   * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'text'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteCounterexample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'text': _params.text
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteCounterexample');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get counterexample.
    *
    * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
@@ -1361,75 +1375,6 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List counterexamples.
-   *
-   * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned counterexamples will be sorted. To reverse the sort
-   * order, prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listCounterexamples(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listCounterexamples');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples',
         method: 'GET',
         qs: query,
         path,
@@ -1512,9 +1457,138 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Delete counterexample.
+   *
+   * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'text'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteCounterexample(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'text': _params.text
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteCounterexample');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * entities
    ************************/
+
+  /**
+   * List entities.
+   *
+   * List the entities for a workspace.
+   *
+   * With **export**=`false`, this operation is limited to 1000 requests per 30 minutes. With **export**=`true`, the
+   * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned entities will be sorted. To reverse the sort order,
+   * prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listEntities(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'export': _params._export,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listEntities');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/entities',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Create entity.
@@ -1592,61 +1666,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete entity.
-   *
-   * Delete an entity from a workspace, or disable a system entity.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteEntity(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'entity': _params.entity
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteEntity');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get entity.
    *
    * Get information about an entity, optionally including all entity content.
@@ -1699,80 +1718,6 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List entities.
-   *
-   * List the entities for a workspace.
-   *
-   * With **export**=`false`, this operation is limited to 1000 requests per 30 minutes. With **export**=`true`, the
-   * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
-   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
-   * content, including subelements, is included.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned entities will be sorted. To reverse the sort order,
-   * prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listEntities(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'export': _params._export,
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listEntities');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities',
         method: 'GET',
         qs: query,
         path,
@@ -1865,6 +1810,61 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Delete entity.
+   *
+   * Delete an entity from a workspace, or disable a system entity.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.entity - The name of the entity.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteEntity(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteEntity');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * mentions
    ************************/
@@ -1939,6 +1939,81 @@ class AssistantV1 extends BaseService {
   /*************************
    * values
    ************************/
+
+  /**
+   * List entity values.
+   *
+   * List the values for an entity.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.entity - The name of the entity.
+   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
+   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
+   * content, including subelements, is included.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned entity values will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'entity'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listValues(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'export': _params._export,
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listValues');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Create entity value.
@@ -2024,63 +2099,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete entity value.
-   *
-   * Delete a value from an entity.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity.
-   * @param {string} params.value - The text of the entity value.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteValue(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'entity': _params.entity,
-      'value': _params.value
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteValue');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get entity value.
    *
    * Get information about an entity value.
@@ -2134,81 +2152,6 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List entity values.
-   *
-   * List the values for an entity.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity.
-   * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
-   * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
-   * content, including subelements, is included.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned entity values will be sorted. To reverse the sort
-   * order, prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listValues(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'export': _params._export,
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'entity': _params.entity
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listValues');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
         method: 'GET',
         qs: query,
         path,
@@ -2309,9 +2252,139 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Delete entity value.
+   *
+   * Delete a value from an entity.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.entity - The name of the entity.
+   * @param {string} params.value - The text of the entity value.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'entity', 'value'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteValue(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteValue');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * synonyms
    ************************/
+
+  /**
+   * List entity value synonyms.
+   *
+   * List the synonyms for an entity value.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.entity - The name of the entity.
+   * @param {string} params.value - The text of the entity value.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned entity value synonyms will be sorted. To reverse
+   * the sort order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'entity', 'value'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listSynonyms(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listSynonyms');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Create entity value synonym.
@@ -2383,65 +2456,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete entity value synonym.
-   *
-   * Delete a synonym from an entity value.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity.
-   * @param {string} params.value - The text of the entity value.
-   * @param {string} params.synonym - The text of the synonym.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteSynonym(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'entity': _params.entity,
-      'value': _params.value,
-      'synonym': _params.synonym
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteSynonym');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get entity value synonym.
    *
    * Get information about a synonym of an entity value.
@@ -2493,79 +2507,6 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List entity value synonyms.
-   *
-   * List the synonyms for an entity value.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.entity - The name of the entity.
-   * @param {string} params.value - The text of the entity value.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned entity value synonyms will be sorted. To reverse
-   * the sort order, prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listSynonyms(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'entity': _params.entity,
-      'value': _params.value
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listSynonyms');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
         method: 'GET',
         qs: query,
         path,
@@ -2652,9 +2593,137 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Delete entity value synonym.
+   *
+   * Delete a synonym from an entity value.
+   *
+   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.entity - The name of the entity.
+   * @param {string} params.value - The text of the entity value.
+   * @param {string} params.synonym - The text of the synonym.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteSynonym(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'entity': _params.entity,
+      'value': _params.value,
+      'synonym': _params.synonym
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteSynonym');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * dialogNodes
    ************************/
+
+  /**
+   * List dialog nodes.
+   *
+   * List the dialog nodes for a workspace.
+   *
+   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} [params.sort] - The attribute by which returned dialog nodes will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['workspace_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listDialogNodes(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'page_limit': _params.page_limit,
+      'include_count': _params.include_count,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.include_audit
+    };
+
+    const path = {
+      'workspace_id': _params.workspace_id
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listDialogNodes');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/dialog_nodes',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Create dialog node.
@@ -2766,61 +2835,6 @@ class AssistantV1 extends BaseService {
   };
 
   /**
-   * Delete dialog node.
-   *
-   * Delete a dialog node from a workspace.
-   *
-   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id', 'dialog_node'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteDialogNode(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'workspace_id': _params.workspace_id,
-      'dialog_node': _params.dialog_node
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteDialogNode');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get dialog node.
    *
    * Get information about a dialog node.
@@ -2868,75 +2882,6 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List dialog nodes.
-   *
-   * List the dialog nodes for a workspace.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
-   * @param {string} [params.sort] - The attribute by which returned dialog nodes will be sorted. To reverse the sort
-   * order, prefix the value with a minus sign (`-`).
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
-   * timestamps) in the response.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['workspace_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listDialogNodes(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.include_audit
-    };
-
-    const path = {
-      'workspace_id': _params.workspace_id
-    };
-
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listDialogNodes');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/dialog_nodes',
         method: 'GET',
         qs: query,
         path,
@@ -3063,39 +3008,28 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
-  /*************************
-   * logs
-   ************************/
-
   /**
-   * List log events in all workspaces.
+   * Delete dialog node.
    *
-   * List the events from the logs of all workspaces in the service instance.
+   * Delete a dialog node from a workspace.
    *
-   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
-   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
+   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
-   * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
-   * or `request.context.metadata.deployment`. For more information, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
-   * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
-   * reverse the sort order, prefix the parameter value with a minus sign (`-`).
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<any> | void {
+  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['filter'];
+    const requiredParams = ['workspace_id', 'dialog_node'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listAllLogs(params, (err, bod, res) => {
+        this.deleteDialogNode(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -3106,20 +3040,18 @@ class AssistantV1 extends BaseService {
       return _callback(missingParams);
     }
 
-    const query = {
-      'filter': _params.filter,
-      'sort': _params.sort,
-      'page_limit': _params.page_limit,
-      'cursor': _params.cursor
+    const path = {
+      'workspace_id': _params.workspace_id,
+      'dialog_node': _params.dialog_node
     };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listAllLogs');
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteDialogNode');
 
     const parameters = {
       options: {
-        url: '/v1/logs',
-        method: 'GET',
-        qs: query,
+        url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+        method: 'DELETE',
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -3130,6 +3062,10 @@ class AssistantV1 extends BaseService {
 
     return this.createRequest(parameters, _callback);
   };
+
+  /*************************
+   * logs
+   ************************/
 
   /**
    * List log events in a workspace.
@@ -3189,6 +3125,70 @@ class AssistantV1 extends BaseService {
         method: 'GET',
         qs: query,
         path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * List log events in all workspaces.
+   *
+   * List the events from the logs of all workspaces in the service instance.
+   *
+   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
+   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
+   * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
+   * or `request.context.metadata.deployment`. For more information, see the
+   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
+   * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
+   * reverse the sort order, prefix the parameter value with a minus sign (`-`).
+   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['filter'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listAllLogs(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'filter': _params.filter,
+      'sort': _params.sort,
+      'page_limit': _params.page_limit,
+      'cursor': _params.cursor
+    };
+
+    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listAllLogs');
+
+    const parameters = {
+      options: {
+        url: '/v1/logs',
+        method: 'GET',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -3336,6 +3336,31 @@ namespace AssistantV1 {
     return_response?: boolean;
   }
 
+  /** Parameters for the `listWorkspaces` operation. */
+  export interface ListWorkspacesParams {
+    /** The number of records to return in each page of results. */
+    page_limit?: number;
+    /** Whether to include information about the number of records returned. */
+    include_count?: boolean;
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListWorkspacesConstants.Sort | string;
+    /** A token identifying the page of results to retrieve. */
+    cursor?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listWorkspaces` operation. */
+  export namespace ListWorkspacesConstants {
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      NAME = 'name',
+      UPDATED = 'updated',
+    }
+  }
+
   /** Parameters for the `createWorkspace` operation. */
   export interface CreateWorkspaceParams {
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -3362,14 +3387,6 @@ namespace AssistantV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `deleteWorkspace` operation. */
-  export interface DeleteWorkspaceParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
   /** Parameters for the `getWorkspace` operation. */
   export interface GetWorkspaceParams {
     /** Unique identifier of the workspace. */
@@ -3389,31 +3406,6 @@ namespace AssistantV1 {
     /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
     export enum Sort {
       STABLE = 'stable',
-    }
-  }
-
-  /** Parameters for the `listWorkspaces` operation. */
-  export interface ListWorkspacesParams {
-    /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: ListWorkspacesConstants.Sort | string;
-    /** A token identifying the page of results to retrieve. */
-    cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Constants for the `listWorkspaces` operation. */
-  export namespace ListWorkspacesConstants {
-    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    export enum Sort {
-      NAME = 'name',
-      UPDATED = 'updated',
     }
   }
 
@@ -3447,40 +3439,10 @@ namespace AssistantV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `createIntent` operation. */
-  export interface CreateIntentParams {
+  /** Parameters for the `deleteWorkspace` operation. */
+  export interface DeleteWorkspaceParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
-    intent: string;
-    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
-    description?: string;
-    /** An array of user input examples for the intent. */
-    examples?: Example[];
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteIntent` operation. */
-  export interface DeleteIntentParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The intent name. */
-    intent: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getIntent` operation. */
-  export interface GetIntentParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The intent name. */
-    intent: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    _export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3514,6 +3476,34 @@ namespace AssistantV1 {
     }
   }
 
+  /** Parameters for the `createIntent` operation. */
+  export interface CreateIntentParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
+    intent: string;
+    /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** An array of user input examples for the intent. */
+    examples?: Example[];
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getIntent` operation. */
+  export interface GetIntentParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The intent name. */
+    intent: string;
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    _export?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `updateIntent` operation. */
   export interface UpdateIntentParams {
     /** Unique identifier of the workspace. */
@@ -3530,42 +3520,12 @@ namespace AssistantV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `createExample` operation. */
-  export interface CreateExampleParams {
+  /** Parameters for the `deleteIntent` operation. */
+  export interface DeleteIntentParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The intent name. */
     intent: string;
-    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    text: string;
-    /** An array of contextual entity mentions. */
-    mentions?: Mention[];
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteExample` operation. */
-  export interface DeleteExampleParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The intent name. */
-    intent: string;
-    /** The text of the user input example. */
-    text: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getExample` operation. */
-  export interface GetExampleParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The intent name. */
-    intent: string;
-    /** The text of the user input example. */
-    text: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3599,6 +3559,34 @@ namespace AssistantV1 {
     }
   }
 
+  /** Parameters for the `createExample` operation. */
+  export interface CreateExampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The intent name. */
+    intent: string;
+    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    text: string;
+    /** An array of contextual entity mentions. */
+    mentions?: Mention[];
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getExample` operation. */
+  export interface GetExampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The intent name. */
+    intent: string;
+    /** The text of the user input example. */
+    text: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `updateExample` operation. */
   export interface UpdateExampleParams {
     /** Unique identifier of the workspace. */
@@ -3615,34 +3603,14 @@ namespace AssistantV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `createCounterexample` operation. */
-  export interface CreateCounterexampleParams {
+  /** Parameters for the `deleteExample` operation. */
+  export interface DeleteExampleParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The intent name. */
+    intent: string;
+    /** The text of the user input example. */
     text: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteCounterexample` operation. */
-  export interface DeleteCounterexampleParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). */
-    text: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getCounterexample` operation. */
-  export interface GetCounterexampleParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The text of a user input counterexample (for example, `What are you wearing?`). */
-    text: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3674,6 +3642,28 @@ namespace AssistantV1 {
     }
   }
 
+  /** Parameters for the `createCounterexample` operation. */
+  export interface CreateCounterexampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    text: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getCounterexample` operation. */
+  export interface GetCounterexampleParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
+    text: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `updateCounterexample` operation. */
   export interface UpdateCounterexampleParams {
     /** Unique identifier of the workspace. */
@@ -3686,44 +3676,12 @@ namespace AssistantV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `createEntity` operation. */
-  export interface CreateEntityParams {
+  /** Parameters for the `deleteCounterexample` operation. */
+  export interface DeleteCounterexampleParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
-    entity: string;
-    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
-    description?: string;
-    /** Any metadata related to the entity. */
-    metadata?: JsonObject;
-    /** Whether to use fuzzy matching for the entity. */
-    fuzzy_match?: boolean;
-    /** An array of objects describing the entity values. */
-    values?: CreateValue[];
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteEntity` operation. */
-  export interface DeleteEntityParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getEntity` operation. */
-  export interface GetEntityParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    _export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    /** The text of a user input counterexample (for example, `What are you wearing?`). */
+    text: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3757,6 +3715,38 @@ namespace AssistantV1 {
     }
   }
 
+  /** Parameters for the `createEntity` operation. */
+  export interface CreateEntityParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
+    entity: string;
+    /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** Any metadata related to the entity. */
+    metadata?: JsonObject;
+    /** Whether to use fuzzy matching for the entity. */
+    fuzzy_match?: boolean;
+    /** An array of objects describing the entity values. */
+    values?: CreateValue[];
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getEntity` operation. */
+  export interface GetEntityParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. */
+    entity: string;
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    _export?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `updateEntity` operation. */
   export interface UpdateEntityParams {
     /** Unique identifier of the workspace. */
@@ -3777,69 +3767,22 @@ namespace AssistantV1 {
     return_response?: boolean;
   }
 
+  /** Parameters for the `deleteEntity` operation. */
+  export interface DeleteEntityParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. */
+    entity: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `listMentions` operation. */
   export interface ListMentionsParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
-    _export?: boolean;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `createValue` operation. */
-  export interface CreateValueParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    value: string;
-    /** Any metadata related to the entity value. */
-    metadata?: JsonObject;
-    /** Specifies the type of entity value. */
-    value_type?: CreateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
-    patterns?: string[];
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Constants for the `createValue` operation. */
-  export namespace CreateValueConstants {
-    /** Specifies the type of entity value. */
-    export enum ValueType {
-      SYNONYMS = 'synonyms',
-      PATTERNS = 'patterns',
-    }
-  }
-
-  /** Parameters for the `deleteValue` operation. */
-  export interface DeleteValueParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    /** The text of the entity value. */
-    value: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getValue` operation. */
-  export interface GetValueParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    /** The text of the entity value. */
-    value: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
@@ -3879,6 +3822,51 @@ namespace AssistantV1 {
     }
   }
 
+  /** Parameters for the `createValue` operation. */
+  export interface CreateValueParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. */
+    entity: string;
+    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    value: string;
+    /** Any metadata related to the entity value. */
+    metadata?: JsonObject;
+    /** Specifies the type of entity value. */
+    value_type?: CreateValueConstants.ValueType | string;
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    synonyms?: string[];
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
+    patterns?: string[];
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `createValue` operation. */
+  export namespace CreateValueConstants {
+    /** Specifies the type of entity value. */
+    export enum ValueType {
+      SYNONYMS = 'synonyms',
+      PATTERNS = 'patterns',
+    }
+  }
+
+  /** Parameters for the `getValue` operation. */
+  export interface GetValueParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. */
+    entity: string;
+    /** The text of the entity value. */
+    value: string;
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    _export?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `updateValue` operation. */
   export interface UpdateValueParams {
     /** Unique identifier of the workspace. */
@@ -3910,46 +3898,14 @@ namespace AssistantV1 {
     }
   }
 
-  /** Parameters for the `createSynonym` operation. */
-  export interface CreateSynonymParams {
+  /** Parameters for the `deleteValue` operation. */
+  export interface DeleteValueParams {
     /** Unique identifier of the workspace. */
     workspace_id: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    synonym: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteSynonym` operation. */
-  export interface DeleteSynonymParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    /** The text of the entity value. */
-    value: string;
-    /** The text of the synonym. */
-    synonym: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getSynonym` operation. */
-  export interface GetSynonymParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. */
-    entity: string;
-    /** The text of the entity value. */
-    value: string;
-    /** The text of the synonym. */
-    synonym: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3985,6 +3941,36 @@ namespace AssistantV1 {
     }
   }
 
+  /** Parameters for the `createSynonym` operation. */
+  export interface CreateSynonymParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. */
+    entity: string;
+    /** The text of the entity value. */
+    value: string;
+    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    synonym: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getSynonym` operation. */
+  export interface GetSynonymParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. */
+    entity: string;
+    /** The text of the entity value. */
+    value: string;
+    /** The text of the synonym. */
+    synonym: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `updateSynonym` operation. */
   export interface UpdateSynonymParams {
     /** Unique identifier of the workspace. */
@@ -3999,6 +3985,47 @@ namespace AssistantV1 {
     new_synonym?: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
+  }
+
+  /** Parameters for the `deleteSynonym` operation. */
+  export interface DeleteSynonymParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The name of the entity. */
+    entity: string;
+    /** The text of the entity value. */
+    value: string;
+    /** The text of the synonym. */
+    synonym: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `listDialogNodes` operation. */
+  export interface ListDialogNodesParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The number of records to return in each page of results. */
+    page_limit?: number;
+    /** Whether to include information about the number of records returned. */
+    include_count?: boolean;
+    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    sort?: ListDialogNodesConstants.Sort | string;
+    /** A token identifying the page of results to retrieve. */
+    cursor?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    include_audit?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `listDialogNodes` operation. */
+  export namespace ListDialogNodesConstants {
+    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      DIALOG_NODE = 'dialog_node',
+      UPDATED = 'updated',
+    }
   }
 
   /** Parameters for the `createDialogNode` operation. */
@@ -4088,16 +4115,6 @@ namespace AssistantV1 {
     }
   }
 
-  /** Parameters for the `deleteDialogNode` operation. */
-  export interface DeleteDialogNodeParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The dialog node ID (for example, `get_order`). */
-    dialog_node: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
   /** Parameters for the `getDialogNode` operation. */
   export interface GetDialogNodeParams {
     /** Unique identifier of the workspace. */
@@ -4108,33 +4125,6 @@ namespace AssistantV1 {
     include_audit?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
-  }
-
-  /** Parameters for the `listDialogNodes` operation. */
-  export interface ListDialogNodesParams {
-    /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    sort?: ListDialogNodesConstants.Sort | string;
-    /** A token identifying the page of results to retrieve. */
-    cursor?: string;
-    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Constants for the `listDialogNodes` operation. */
-  export namespace ListDialogNodesConstants {
-    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
-    export enum Sort {
-      DIALOG_NODE = 'dialog_node',
-      UPDATED = 'updated',
-    }
   }
 
   /** Parameters for the `updateDialogNode` operation. */
@@ -4226,16 +4216,12 @@ namespace AssistantV1 {
     }
   }
 
-  /** Parameters for the `listAllLogs` operation. */
-  export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference). */
-    filter: string;
-    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
-    sort?: string;
-    /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** A token identifying the page of results to retrieve. */
-    cursor?: string;
+  /** Parameters for the `deleteDialogNode` operation. */
+  export interface DeleteDialogNodeParams {
+    /** Unique identifier of the workspace. */
+    workspace_id: string;
+    /** The dialog node ID (for example, `get_order`). */
+    dialog_node: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -4248,6 +4234,20 @@ namespace AssistantV1 {
     sort?: string;
     /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference). */
     filter?: string;
+    /** The number of records to return in each page of results. */
+    page_limit?: number;
+    /** A token identifying the page of results to retrieve. */
+    cursor?: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `listAllLogs` operation. */
+  export interface ListAllLogsParams {
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference). */
+    filter: string;
+    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
+    sort?: string;
     /** The number of records to return in each page of results. */
     page_limit?: number;
     /** A token identifying the page of results to retrieve. */

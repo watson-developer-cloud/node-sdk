@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -596,208 +596,6 @@ describe('addFeedback', () => {
   });
 });
 
-describe('deleteFeedback', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const feedback_id = 'fake_feedback_id';
-      const model = 'fake_model';
-      const params = {
-        feedback_id,
-        model,
-      };
-
-      // invoke method
-      compareComply.deleteFeedback(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'DELETE');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['model']).toEqual(model);
-      expect(options.path['feedback_id']).toEqual(feedback_id);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const feedback_id = 'fake_feedback_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        feedback_id,
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      compareComply.deleteFeedback(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const feedback_id = 'fake_feedback_id';
-      const params = {
-        feedback_id,
-      };
-
-      // invoke method
-      const deleteFeedbackPromise = compareComply.deleteFeedback(params);
-      expectToBePromise(deleteFeedbackPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      compareComply.deleteFeedback(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['feedback_id'];
-
-      compareComply.deleteFeedback({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['feedback_id'];
-
-      const deleteFeedbackPromise = compareComply.deleteFeedback();
-      expectToBePromise(deleteFeedbackPromise);
-
-      deleteFeedbackPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-  });
-});
-
-describe('getFeedback', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const feedback_id = 'fake_feedback_id';
-      const model = 'fake_model';
-      const params = {
-        feedback_id,
-        model,
-      };
-
-      // invoke method
-      compareComply.getFeedback(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['model']).toEqual(model);
-      expect(options.path['feedback_id']).toEqual(feedback_id);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const feedback_id = 'fake_feedback_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        feedback_id,
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      compareComply.getFeedback(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const feedback_id = 'fake_feedback_id';
-      const params = {
-        feedback_id,
-      };
-
-      // invoke method
-      const getFeedbackPromise = compareComply.getFeedback(params);
-      expectToBePromise(getFeedbackPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      compareComply.getFeedback(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['feedback_id'];
-
-      compareComply.getFeedback({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['feedback_id'];
-
-      const getFeedbackPromise = compareComply.getFeedback();
-      expectToBePromise(getFeedbackPromise);
-
-      getFeedbackPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-  });
-});
-
 describe('listFeedback', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -907,6 +705,208 @@ describe('listFeedback', () => {
       // invoke the method
       compareComply.listFeedback(noop);
       checkDefaultSuccessArgs(createRequestMock);
+    });
+  });
+});
+
+describe('getFeedback', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const model = 'fake_model';
+      const params = {
+        feedback_id,
+        model,
+      };
+
+      // invoke method
+      compareComply.getFeedback(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.qs['model']).toEqual(model);
+      expect(options.path['feedback_id']).toEqual(feedback_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        feedback_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      compareComply.getFeedback(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const params = {
+        feedback_id,
+      };
+
+      // invoke method
+      const getFeedbackPromise = compareComply.getFeedback(params);
+      expectToBePromise(getFeedbackPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      compareComply.getFeedback(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['feedback_id'];
+
+      compareComply.getFeedback({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['feedback_id'];
+
+      const getFeedbackPromise = compareComply.getFeedback();
+      expectToBePromise(getFeedbackPromise);
+
+      getFeedbackPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+
+describe('deleteFeedback', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const model = 'fake_model';
+      const params = {
+        feedback_id,
+        model,
+      };
+
+      // invoke method
+      compareComply.deleteFeedback(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'DELETE');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.qs['model']).toEqual(model);
+      expect(options.path['feedback_id']).toEqual(feedback_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        feedback_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      compareComply.deleteFeedback(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const feedback_id = 'fake_feedback_id';
+      const params = {
+        feedback_id,
+      };
+
+      // invoke method
+      const deleteFeedbackPromise = compareComply.deleteFeedback(params);
+      expectToBePromise(deleteFeedbackPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      compareComply.deleteFeedback(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['feedback_id'];
+
+      compareComply.deleteFeedback({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['feedback_id'];
+
+      const deleteFeedbackPromise = compareComply.deleteFeedback();
+      expectToBePromise(deleteFeedbackPromise);
+
+      deleteFeedbackPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
     });
   });
 });
@@ -1072,6 +1072,70 @@ describe('createBatch', () => {
   });
 });
 
+describe('listBatches', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      compareComply.listBatches(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v1/batches', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      compareComply.listBatches(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listBatchesPromise = compareComply.listBatches(params);
+      expectToBePromise(listBatchesPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+    test('should not have any problems when no parameters are passed in', () => {
+      // invoke the method
+      compareComply.listBatches({}, noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
+
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      compareComply.listBatches(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
+  });
+});
+
 describe('getBatch', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1166,70 +1230,6 @@ describe('getBatch', () => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
-  });
-});
-
-describe('listBatches', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      compareComply.listBatches(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v1/batches', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      compareComply.listBatches(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listBatchesPromise = compareComply.listBatches(params);
-      expectToBePromise(listBatchesPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-    test('should not have any problems when no parameters are passed in', () => {
-      // invoke the method
-      compareComply.listBatches({}, noop);
-      checkDefaultSuccessArgs(createRequestMock);
-    });
-
-    test('should use argument as callback function if only one is passed in', () => {
-      // invoke the method
-      compareComply.listBatches(noop);
-      checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });

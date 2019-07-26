@@ -63,6 +63,49 @@ class SpeechToTextV1 extends BaseService {
    ************************/
 
   /**
+   * List models.
+   *
+   * Lists all language models that are available for use with the service. The information includes the name of the
+   * model and its minimum sampling rate in Hertz, among other things.
+   *
+   * **See also:** [Languages and
+   * models](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-models#models).
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listModels(params?: SpeechToTextV1.ListModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listModels');
+
+    const parameters = {
+      options: {
+        url: '/v1/models',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Get a model.
    *
    * Gets information for a single specified language model that is available for use with the service. The information
@@ -107,49 +150,6 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/models/{model_id}',
         method: 'GET',
         path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List models.
-   *
-   * Lists all language models that are available for use with the service. The information includes the name of the
-   * model and its minimum sampling rate in Hertz, among other things.
-   *
-   * **See also:** [Languages and
-   * models](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-models#models).
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listModels(params?: SpeechToTextV1.ListModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listModels(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listModels');
-
-    const parameters = {
-      options: {
-        url: '/v1/models',
-        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -424,35 +424,57 @@ class SpeechToTextV1 extends BaseService {
    ************************/
 
   /**
-   * Check a job.
+   * Register a callback.
    *
-   * Returns information about the specified job. The response always includes the status of the job and its creation
-   * and update times. If the status is `completed`, the response includes the results of the recognition request. You
-   * must use credentials for the instance of the service that owns a job to list information about it.
+   * Registers a callback URL with the service for use with subsequent asynchronous recognition requests. The service
+   * attempts to register, or white-list, the callback URL if it is not already registered by sending a `GET` request to
+   * the callback URL. The service passes a random alphanumeric challenge string via the `challenge_string` parameter of
+   * the request. The request includes an `Accept` header that specifies `text/plain` as the required response type.
    *
-   * You can use the method to retrieve the results of any job, regardless of whether it was submitted with a callback
-   * URL and the `recognitions.completed_with_results` event, and you can retrieve the results multiple times for as
-   * long as they remain available. Use the **Check jobs** method to request information about the most recent jobs
-   * associated with the calling credentials.
+   * To be registered successfully, the callback URL must respond to the `GET` request from the service. The response
+   * must send status code 200 and must include the challenge string in its body. Set the `Content-Type` response header
+   * to `text/plain`. Upon receiving this response, the service responds to the original registration request with
+   * response code 201.
    *
-   * **See also:** [Checking the status and retrieving the results of a
-   * job](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#job).
+   * The service sends only a single `GET` request to the callback URL. If the service does not receive a reply with a
+   * response code of 200 and a body that echoes the challenge string sent by the service within five seconds, it does
+   * not white-list the URL; it instead sends status code 400 in response to the **Register a callback** request. If the
+   * requested callback URL is already white-listed, the service responds to the initial registration request with
+   * response code 200.
+   *
+   * If you specify a user secret with the request, the service uses it as a key to calculate an HMAC-SHA1 signature of
+   * the challenge string in its response to the `POST` request. It sends this signature in the `X-Callback-Signature`
+   * header of its `GET` request to the URL during registration. It also uses the secret to calculate a signature over
+   * the payload of every callback notification that uses the URL. The signature provides authentication and data
+   * integrity for HTTP communications.
+   *
+   * After you successfully register a callback URL, you can use it with an indefinite number of recognition requests.
+   * You can register a maximum of 20 callback URLS in a one-hour span of time.
+   *
+   * **See also:** [Registering a callback
+   * URL](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#register).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.id - The identifier of the asynchronous job that is to be used for the request. You must
-   * make the request with credentials for the instance of the service that owns the job.
+   * @param {string} params.callback_url - An HTTP or HTTPS URL to which callback notifications are to be sent. To be
+   * white-listed, the URL must successfully echo the challenge string during URL verification. During verification, the
+   * client can also check the signature that the service sends in the `X-Callback-Signature` header to verify the
+   * origin of the request.
+   * @param {string} [params.user_secret] - A user-specified string that the service uses to generate the HMAC-SHA1
+   * signature that it sends via the `X-Callback-Signature` header. The service includes the header during URL
+   * verification and with every notification sent to the callback URL. It calculates the signature over the payload of
+   * the notification. If you omit the parameter, the service does not send the header.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public checkJob(params: SpeechToTextV1.CheckJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): Promise<any> | void {
+  public registerCallback(params: SpeechToTextV1.RegisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RegisterStatus>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['id'];
+    const requiredParams = ['callback_url'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.checkJob(params, (err, bod, res) => {
+        this.registerCallback(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -463,17 +485,18 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
 
-    const path = {
-      'id': _params.id
+    const query = {
+      'callback_url': _params.callback_url,
+      'user_secret': _params.user_secret
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'checkJob');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'registerCallback');
 
     const parameters = {
       options: {
-        url: '/v1/recognitions/{id}',
-        method: 'GET',
-        path,
+        url: '/v1/register_callback',
+        method: 'POST',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -486,45 +509,52 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * Check jobs.
+   * Unregister a callback.
    *
-   * Returns the ID and status of the latest 100 outstanding jobs associated with the credentials with which it is
-   * called. The method also returns the creation and update times of each job, and, if a job was created with a
-   * callback URL and a user token, the user token for the job. To obtain the results for a job whose status is
-   * `completed` or not one of the latest 100 outstanding jobs, use the **Check a job** method. A job and its results
-   * remain available until you delete them with the **Delete a job** method or until the job's time to live expires,
-   * whichever comes first.
+   * Unregisters a callback URL that was previously white-listed with a **Register a callback** request for use with the
+   * asynchronous interface. Once unregistered, the URL can no longer be used with asynchronous recognition requests.
    *
-   * **See also:** [Checking the status of the latest
-   * jobs](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#jobs).
+   * **See also:** [Unregistering a callback
+   * URL](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#unregister).
    *
-   * @param {Object} [params] - The parameters to send to the service.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.callback_url - The callback URL that is to be unregistered.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public checkJobs(params?: SpeechToTextV1.CheckJobsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public unregisterCallback(params: SpeechToTextV1.UnregisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['callback_url'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.checkJobs(params, (err, bod, res) => {
+        this.unregisterCallback(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
     }
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'checkJobs');
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const query = {
+      'callback_url': _params.callback_url
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'unregisterCallback');
 
     const parameters = {
       options: {
-        url: '/v1/recognitions',
-        method: 'GET',
+        url: '/v1/unregister_callback',
+        method: 'POST',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
         }, _params.headers),
       }),
     };
@@ -842,6 +872,115 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
+   * Check jobs.
+   *
+   * Returns the ID and status of the latest 100 outstanding jobs associated with the credentials with which it is
+   * called. The method also returns the creation and update times of each job, and, if a job was created with a
+   * callback URL and a user token, the user token for the job. To obtain the results for a job whose status is
+   * `completed` or not one of the latest 100 outstanding jobs, use the **Check a job** method. A job and its results
+   * remain available until you delete them with the **Delete a job** method or until the job's time to live expires,
+   * whichever comes first.
+   *
+   * **See also:** [Checking the status of the latest
+   * jobs](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#jobs).
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public checkJobs(params?: SpeechToTextV1.CheckJobsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.checkJobs(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'checkJobs');
+
+    const parameters = {
+      options: {
+        url: '/v1/recognitions',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Check a job.
+   *
+   * Returns information about the specified job. The response always includes the status of the job and its creation
+   * and update times. If the status is `completed`, the response includes the results of the recognition request. You
+   * must use credentials for the instance of the service that owns a job to list information about it.
+   *
+   * You can use the method to retrieve the results of any job, regardless of whether it was submitted with a callback
+   * URL and the `recognitions.completed_with_results` event, and you can retrieve the results multiple times for as
+   * long as they remain available. Use the **Check jobs** method to request information about the most recent jobs
+   * associated with the calling credentials.
+   *
+   * **See also:** [Checking the status and retrieving the results of a
+   * job](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#job).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.id - The identifier of the asynchronous job that is to be used for the request. You must
+   * make the request with credentials for the instance of the service that owns the job.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public checkJob(params: SpeechToTextV1.CheckJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.checkJob(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'id': _params.id
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'checkJob');
+
+    const parameters = {
+      options: {
+        url: '/v1/recognitions/{id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Delete a job.
    *
    * Deletes the specified job. You cannot delete a job that the service is actively processing. Once you delete a job,
@@ -887,145 +1026,6 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/recognitions/{id}',
         method: 'DELETE',
         path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Register a callback.
-   *
-   * Registers a callback URL with the service for use with subsequent asynchronous recognition requests. The service
-   * attempts to register, or white-list, the callback URL if it is not already registered by sending a `GET` request to
-   * the callback URL. The service passes a random alphanumeric challenge string via the `challenge_string` parameter of
-   * the request. The request includes an `Accept` header that specifies `text/plain` as the required response type.
-   *
-   * To be registered successfully, the callback URL must respond to the `GET` request from the service. The response
-   * must send status code 200 and must include the challenge string in its body. Set the `Content-Type` response header
-   * to `text/plain`. Upon receiving this response, the service responds to the original registration request with
-   * response code 201.
-   *
-   * The service sends only a single `GET` request to the callback URL. If the service does not receive a reply with a
-   * response code of 200 and a body that echoes the challenge string sent by the service within five seconds, it does
-   * not white-list the URL; it instead sends status code 400 in response to the **Register a callback** request. If the
-   * requested callback URL is already white-listed, the service responds to the initial registration request with
-   * response code 200.
-   *
-   * If you specify a user secret with the request, the service uses it as a key to calculate an HMAC-SHA1 signature of
-   * the challenge string in its response to the `POST` request. It sends this signature in the `X-Callback-Signature`
-   * header of its `GET` request to the URL during registration. It also uses the secret to calculate a signature over
-   * the payload of every callback notification that uses the URL. The signature provides authentication and data
-   * integrity for HTTP communications.
-   *
-   * After you successfully register a callback URL, you can use it with an indefinite number of recognition requests.
-   * You can register a maximum of 20 callback URLS in a one-hour span of time.
-   *
-   * **See also:** [Registering a callback
-   * URL](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#register).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.callback_url - An HTTP or HTTPS URL to which callback notifications are to be sent. To be
-   * white-listed, the URL must successfully echo the challenge string during URL verification. During verification, the
-   * client can also check the signature that the service sends in the `X-Callback-Signature` header to verify the
-   * origin of the request.
-   * @param {string} [params.user_secret] - A user-specified string that the service uses to generate the HMAC-SHA1
-   * signature that it sends via the `X-Callback-Signature` header. The service includes the header during URL
-   * verification and with every notification sent to the callback URL. It calculates the signature over the payload of
-   * the notification. If you omit the parameter, the service does not send the header.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public registerCallback(params: SpeechToTextV1.RegisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RegisterStatus>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['callback_url'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.registerCallback(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'callback_url': _params.callback_url,
-      'user_secret': _params.user_secret
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'registerCallback');
-
-    const parameters = {
-      options: {
-        url: '/v1/register_callback',
-        method: 'POST',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Unregister a callback.
-   *
-   * Unregisters a callback URL that was previously white-listed with a **Register a callback** request for use with the
-   * asynchronous interface. Once unregistered, the URL can no longer be used with asynchronous recognition requests.
-   *
-   * **See also:** [Unregistering a callback
-   * URL](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-async#unregister).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.callback_url - The callback URL that is to be unregistered.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public unregisterCallback(params: SpeechToTextV1.UnregisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['callback_url'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.unregisterCallback(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const query = {
-      'callback_url': _params.callback_url
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'unregisterCallback');
-
-    const parameters = {
-      options: {
-        url: '/v1/unregister_callback',
-        method: 'POST',
-        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -1120,52 +1120,47 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * Delete a custom language model.
+   * List custom language models.
    *
-   * Deletes an existing custom language model. The custom model cannot be deleted if another request, such as adding a
-   * corpus or grammar to the model, is currently being processed. You must use credentials for the instance of the
-   * service that owns a model to delete it.
+   * Lists information about all custom language models that are owned by an instance of the service. Use the `language`
+   * parameter to see all custom language models for the specified language. Omit the parameter to see all custom
+   * language models for all languages. You must use credentials for the instance of the service that owns a model to
+   * list information about it.
    *
-   * **See also:** [Deleting a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageLanguageModels#deleteModel-language).
+   * **See also:** [Listing custom language
+   * models](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageLanguageModels#listModels-language).
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
-   * used for the request. You must make the request with credentials for the instance of the service that owns the
-   * custom model.
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
+   * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
+   * models that are owned by the requesting credentials.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteLanguageModel(params: SpeechToTextV1.DeleteLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id'];
+  public listLanguageModels(params?: SpeechToTextV1.ListLanguageModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteLanguageModel(params, (err, bod, res) => {
+        this.listLanguageModels(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
     }
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id
+    const query = {
+      'language': _params.language
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteLanguageModel');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listLanguageModels');
 
     const parameters = {
       options: {
-        url: '/v1/customizations/{customization_id}',
-        method: 'DELETE',
-        path,
+        url: '/v1/customizations',
+        method: 'GET',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -1235,68 +1230,14 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * List custom language models.
+   * Delete a custom language model.
    *
-   * Lists information about all custom language models that are owned by an instance of the service. Use the `language`
-   * parameter to see all custom language models for the specified language. Omit the parameter to see all custom
-   * language models for all languages. You must use credentials for the instance of the service that owns a model to
-   * list information about it.
+   * Deletes an existing custom language model. The custom model cannot be deleted if another request, such as adding a
+   * corpus or grammar to the model, is currently being processed. You must use credentials for the instance of the
+   * service that owns a model to delete it.
    *
-   * **See also:** [Listing custom language
-   * models](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageLanguageModels#listModels-language).
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
-   * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
-   * models that are owned by the requesting credentials.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listLanguageModels(params?: SpeechToTextV1.ListLanguageModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listLanguageModels(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const query = {
-      'language': _params.language
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listLanguageModels');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Reset a custom language model.
-   *
-   * Resets a custom language model by removing all corpora, grammars, and words from the model. Resetting a custom
-   * language model initializes the model to its state when it was first created. Metadata such as the name and language
-   * of the model are preserved, but the model's words resource is removed and must be re-created. You must use
-   * credentials for the instance of the service that owns a model to reset it.
-   *
-   * **See also:** [Resetting a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageLanguageModels#resetModel-language).
+   * **See also:** [Deleting a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageLanguageModels#deleteModel-language).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
@@ -1306,14 +1247,14 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public resetLanguageModel(params: SpeechToTextV1.ResetLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
+  public deleteLanguageModel(params: SpeechToTextV1.DeleteLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customization_id'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.resetLanguageModel(params, (err, bod, res) => {
+        this.deleteLanguageModel(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -1328,12 +1269,12 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customization_id
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'resetLanguageModel');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteLanguageModel');
 
     const parameters = {
       options: {
-        url: '/v1/customizations/{customization_id}/reset',
-        method: 'POST',
+        url: '/v1/customizations/{customization_id}',
+        method: 'DELETE',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -1404,7 +1345,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public trainLanguageModel(params: SpeechToTextV1.TrainLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.TrainingResponse>): Promise<any> | void {
+  public trainLanguageModel(params: SpeechToTextV1.TrainLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customization_id'];
@@ -1438,6 +1379,65 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/customizations/{customization_id}/train',
         method: 'POST',
         qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Reset a custom language model.
+   *
+   * Resets a custom language model by removing all corpora, grammars, and words from the model. Resetting a custom
+   * language model initializes the model to its state when it was first created. Metadata such as the name and language
+   * of the model are preserved, but the model's words resource is removed and must be re-created. You must use
+   * credentials for the instance of the service that owns a model to reset it.
+   *
+   * **See also:** [Resetting a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageLanguageModels#resetModel-language).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
+   * used for the request. You must make the request with credentials for the instance of the service that owns the
+   * custom model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public resetLanguageModel(params: SpeechToTextV1.ResetLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.resetLanguageModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'resetLanguageModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/reset',
+        method: 'POST',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -1519,6 +1519,64 @@ class SpeechToTextV1 extends BaseService {
   /*************************
    * customCorpora
    ************************/
+
+  /**
+   * List corpora.
+   *
+   * Lists information about all corpora from a custom language model. The information includes the total number of
+   * words and out-of-vocabulary (OOV) words, name, and status of each corpus. You must use credentials for the instance
+   * of the service that owns a model to list its corpora.
+   *
+   * **See also:** [Listing corpora for a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageCorpora#listCorpora).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
+   * used for the request. You must make the request with credentials for the instance of the service that owns the
+   * custom model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listCorpora(params: SpeechToTextV1.ListCorporaParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpora>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listCorpora(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listCorpora');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/corpora',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Add a corpus.
@@ -1646,6 +1704,66 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
+   * Get a corpus.
+   *
+   * Gets information about a corpus from a custom language model. The information includes the total number of words
+   * and out-of-vocabulary (OOV) words, name, and status of the corpus. You must use credentials for the instance of the
+   * service that owns a model to list its corpora.
+   *
+   * **See also:** [Listing corpora for a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageCorpora#listCorpora).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
+   * used for the request. You must make the request with credentials for the instance of the service that owns the
+   * custom model.
+   * @param {string} params.corpus_name - The name of the corpus for the custom language model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public getCorpus(params: SpeechToTextV1.GetCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpus>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id', 'corpus_name'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getCorpus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id,
+      'corpus_name': _params.corpus_name
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'getCorpus');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Delete a corpus.
    *
    * Deletes an existing corpus from a custom language model. The service removes any out-of-vocabulary (OOV) words that
@@ -1707,92 +1825,50 @@ class SpeechToTextV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /*************************
+   * customWords
+   ************************/
+
   /**
-   * Get a corpus.
+   * List custom words.
    *
-   * Gets information about a corpus from a custom language model. The information includes the total number of words
-   * and out-of-vocabulary (OOV) words, name, and status of the corpus. You must use credentials for the instance of the
-   * service that owns a model to list its corpora.
+   * Lists information about custom words from a custom language model. You can list all words from the custom model's
+   * words resource, only custom words that were added or modified by the user, or only out-of-vocabulary (OOV) words
+   * that were extracted from corpora or are recognized by grammars. You can also indicate the order in which the
+   * service is to return words; by default, the service lists words in ascending alphabetical order. You must use
+   * credentials for the instance of the service that owns a model to list information about its words.
    *
-   * **See also:** [Listing corpora for a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageCorpora#listCorpora).
+   * **See also:** [Listing words from a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageWords#listWords).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {string} params.corpus_name - The name of the corpus for the custom language model.
+   * @param {string} [params.word_type] - The type of words to be listed from the custom language model's words
+   * resource:
+   * * `all` (the default) shows all words.
+   * * `user` shows only custom words that were added or modified by the user directly.
+   * * `corpora` shows only OOV that were extracted from corpora.
+   * * `grammars` shows only OOV words that are recognized by grammars.
+   * @param {string} [params.sort] - Indicates the order in which the words are to be listed, `alphabetical` or by
+   * `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in
+   * ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical
+   * ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count
+   * ordering, values with the same count are ordered alphabetically. With the `curl` command, URL-encode the `+` symbol
+   * as `%2B`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getCorpus(params: SpeechToTextV1.GetCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpus>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id', 'corpus_name'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getCorpus(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id,
-      'corpus_name': _params.corpus_name
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'getCorpus');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List corpora.
-   *
-   * Lists information about all corpora from a custom language model. The information includes the total number of
-   * words and out-of-vocabulary (OOV) words, name, and status of each corpus. You must use credentials for the instance
-   * of the service that owns a model to list its corpora.
-   *
-   * **See also:** [Listing corpora for a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageCorpora#listCorpora).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
-   * used for the request. You must make the request with credentials for the instance of the service that owns the
-   * custom model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listCorpora(params: SpeechToTextV1.ListCorporaParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpora>): Promise<any> | void {
+  public listWords(params: SpeechToTextV1.ListWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Words>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customization_id'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listCorpora(params, (err, bod, res) => {
+        this.listWords(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -1803,16 +1879,22 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
 
+    const query = {
+      'word_type': _params.word_type,
+      'sort': _params.sort
+    };
+
     const path = {
       'customization_id': _params.customization_id
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listCorpora');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listWords');
 
     const parameters = {
       options: {
-        url: '/v1/customizations/{customization_id}/corpora',
+        url: '/v1/customizations/{customization_id}/words',
         method: 'GET',
+        qs: query,
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -1825,9 +1907,108 @@ class SpeechToTextV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
-  /*************************
-   * customWords
-   ************************/
+  /**
+   * Add custom words.
+   *
+   * Adds one or more custom words to a custom language model. The service populates the words resource for a custom
+   * model with out-of-vocabulary (OOV) words from each corpus or grammar that is added to the model. You can use this
+   * method to add additional words or to modify existing words in the words resource. The words resource for a model
+   * can contain a maximum of 90 thousand custom (OOV) words. This includes words that the service extracts from corpora
+   * and grammars and words that you add directly.
+   *
+   * You must use credentials for the instance of the service that owns a model to add or modify custom words for the
+   * model. Adding or modifying custom words does not affect the custom model until you train the model for the new data
+   * by using the **Train a custom language model** method.
+   *
+   * You add custom words by providing a `CustomWords` object, which is an array of `CustomWord` objects, one per word.
+   * You must use the object's `word` parameter to identify the word that is to be added. You can also provide one or
+   * both of the optional `sounds_like` and `display_as` fields for each word.
+   * * The `sounds_like` field provides an array of one or more pronunciations for the word. Use the parameter to
+   * specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce,
+   * foreign words, acronyms, and so on. For example, you might specify that the word `IEEE` can sound like `i triple
+   * e`. You can specify a maximum of five sounds-like pronunciations for a word.
+   * * The `display_as` field provides a different way of spelling the word in a transcript. Use the parameter when you
+   * want the word to appear different from its usual representation or from its spelling in training data. For example,
+   * you might indicate that the word `IBM(trademark)` is to be displayed as `IBM&trade;`.
+   *
+   * If you add a custom word that already exists in the words resource for the custom model, the new definition
+   * overwrites the existing data for the word. If the service encounters an error with the input data, it returns a
+   * failure code and does not add any of the words to the words resource.
+   *
+   * The call returns an HTTP 201 response code if the input data is valid. It then asynchronously processes the words
+   * to add them to the model's words resource. The time that it takes for the analysis to complete depends on the
+   * number of new words that you add but is generally faster than adding a corpus or grammar.
+   *
+   * You can monitor the status of the request by using the **List a custom language model** method to poll the model's
+   * status. Use a loop to check the status every 10 seconds. The method returns a `Customization` object that includes
+   * a `status` field. A status of `ready` means that the words have been added to the custom model. The service cannot
+   * accept requests to add new data or to train the model until the existing request completes.
+   *
+   * You can use the **List custom words** or **List a custom word** method to review the words that you add. Words with
+   * an invalid `sounds_like` field include an `error` field that describes the problem. You can use other words-related
+   * methods to correct errors, eliminate typos, and modify how words are pronounced as needed.
+   *
+   * **See also:**
+   * * [Working with custom
+   * words](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#workingWords)
+   * * [Add words to the custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-languageCreate#addWords).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
+   * used for the request. You must make the request with credentials for the instance of the service that owns the
+   * custom model.
+   * @param {CustomWord[]} params.words - An array of `CustomWord` objects that provides information about each custom
+   * word that is to be added to or updated in the custom language model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public addWords(params: SpeechToTextV1.AddWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id', 'words'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addWords(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const body = {
+      'words': _params.words
+    };
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'addWords');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Add a custom word.
@@ -1942,70 +2123,33 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * Add custom words.
+   * Get a custom word.
    *
-   * Adds one or more custom words to a custom language model. The service populates the words resource for a custom
-   * model with out-of-vocabulary (OOV) words from each corpus or grammar that is added to the model. You can use this
-   * method to add additional words or to modify existing words in the words resource. The words resource for a model
-   * can contain a maximum of 90 thousand custom (OOV) words. This includes words that the service extracts from corpora
-   * and grammars and words that you add directly.
+   * Gets information about a custom word from a custom language model. You must use credentials for the instance of the
+   * service that owns a model to list information about its words.
    *
-   * You must use credentials for the instance of the service that owns a model to add or modify custom words for the
-   * model. Adding or modifying custom words does not affect the custom model until you train the model for the new data
-   * by using the **Train a custom language model** method.
-   *
-   * You add custom words by providing a `CustomWords` object, which is an array of `CustomWord` objects, one per word.
-   * You must use the object's `word` parameter to identify the word that is to be added. You can also provide one or
-   * both of the optional `sounds_like` and `display_as` fields for each word.
-   * * The `sounds_like` field provides an array of one or more pronunciations for the word. Use the parameter to
-   * specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce,
-   * foreign words, acronyms, and so on. For example, you might specify that the word `IEEE` can sound like `i triple
-   * e`. You can specify a maximum of five sounds-like pronunciations for a word.
-   * * The `display_as` field provides a different way of spelling the word in a transcript. Use the parameter when you
-   * want the word to appear different from its usual representation or from its spelling in training data. For example,
-   * you might indicate that the word `IBM(trademark)` is to be displayed as `IBM&trade;`.
-   *
-   * If you add a custom word that already exists in the words resource for the custom model, the new definition
-   * overwrites the existing data for the word. If the service encounters an error with the input data, it returns a
-   * failure code and does not add any of the words to the words resource.
-   *
-   * The call returns an HTTP 201 response code if the input data is valid. It then asynchronously processes the words
-   * to add them to the model's words resource. The time that it takes for the analysis to complete depends on the
-   * number of new words that you add but is generally faster than adding a corpus or grammar.
-   *
-   * You can monitor the status of the request by using the **List a custom language model** method to poll the model's
-   * status. Use a loop to check the status every 10 seconds. The method returns a `Customization` object that includes
-   * a `status` field. A status of `ready` means that the words have been added to the custom model. The service cannot
-   * accept requests to add new data or to train the model until the existing request completes.
-   *
-   * You can use the **List custom words** or **List a custom word** method to review the words that you add. Words with
-   * an invalid `sounds_like` field include an `error` field that describes the problem. You can use other words-related
-   * methods to correct errors, eliminate typos, and modify how words are pronounced as needed.
-   *
-   * **See also:**
-   * * [Working with custom
-   * words](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#workingWords)
-   * * [Add words to the custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-languageCreate#addWords).
+   * **See also:** [Listing words from a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageWords#listWords).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {CustomWord[]} params.words - An array of `CustomWord` objects that provides information about each custom
-   * word that is to be added to or updated in the custom language model.
+   * @param {string} params.word_name - The custom word that is to be read from the custom language model. URL-encode
+   * the word if it includes non-ASCII characters. For more information, see [Character
+   * encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public addWords(params: SpeechToTextV1.AddWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
+  public getWord(params: SpeechToTextV1.GetWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Word>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['customization_id', 'words'];
+    const requiredParams = ['customization_id', 'word_name'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.addWords(params, (err, bod, res) => {
+        this.getWord(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -2016,27 +2160,22 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
 
-    const body = {
-      'words': _params.words
-    };
-
     const path = {
-      'customization_id': _params.customization_id
+      'customization_id': _params.customization_id,
+      'word_name': _params.word_name
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'addWords');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'getWord');
 
     const parameters = {
       options: {
-        url: '/v1/customizations/{customization_id}/words',
-        method: 'POST',
-        body,
+        url: '/v1/customizations/{customization_id}/words/{word_name}',
+        method: 'GET',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -2108,107 +2247,36 @@ class SpeechToTextV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /*************************
+   * customGrammars
+   ************************/
+
   /**
-   * Get a custom word.
+   * List grammars.
    *
-   * Gets information about a custom word from a custom language model. You must use credentials for the instance of the
-   * service that owns a model to list information about its words.
+   * Lists information about all grammars from a custom language model. The information includes the total number of
+   * out-of-vocabulary (OOV) words, name, and status of each grammar. You must use credentials for the instance of the
+   * service that owns a model to list its grammars.
    *
-   * **See also:** [Listing words from a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageWords#listWords).
+   * **See also:** [Listing grammars from a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageGrammars#listGrammars).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
-   * @param {string} params.word_name - The custom word that is to be read from the custom language model. URL-encode
-   * the word if it includes non-ASCII characters. For more information, see [Character
-   * encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getWord(params: SpeechToTextV1.GetWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Word>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id', 'word_name'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getWord(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id,
-      'word_name': _params.word_name
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'getWord');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations/{customization_id}/words/{word_name}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List custom words.
-   *
-   * Lists information about custom words from a custom language model. You can list all words from the custom model's
-   * words resource, only custom words that were added or modified by the user, or only out-of-vocabulary (OOV) words
-   * that were extracted from corpora or are recognized by grammars. You can also indicate the order in which the
-   * service is to return words; by default, the service lists words in ascending alphabetical order. You must use
-   * credentials for the instance of the service that owns a model to list information about its words.
-   *
-   * **See also:** [Listing words from a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageWords#listWords).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
-   * used for the request. You must make the request with credentials for the instance of the service that owns the
-   * custom model.
-   * @param {string} [params.word_type] - The type of words to be listed from the custom language model's words
-   * resource:
-   * * `all` (the default) shows all words.
-   * * `user` shows only custom words that were added or modified by the user directly.
-   * * `corpora` shows only OOV that were extracted from corpora.
-   * * `grammars` shows only OOV words that are recognized by grammars.
-   * @param {string} [params.sort] - Indicates the order in which the words are to be listed, `alphabetical` or by
-   * `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in
-   * ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical
-   * ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count
-   * ordering, values with the same count are ordered alphabetically. With the `curl` command, URL-encode the `+` symbol
-   * as `%2B`.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listWords(params: SpeechToTextV1.ListWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Words>): Promise<any> | void {
+  public listGrammars(params: SpeechToTextV1.ListGrammarsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammars>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customization_id'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listWords(params, (err, bod, res) => {
+        this.listGrammars(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -2219,22 +2287,16 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
 
-    const query = {
-      'word_type': _params.word_type,
-      'sort': _params.sort
-    };
-
     const path = {
       'customization_id': _params.customization_id
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listWords');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listGrammars');
 
     const parameters = {
       options: {
-        url: '/v1/customizations/{customization_id}/words',
+        url: '/v1/customizations/{customization_id}/grammars',
         method: 'GET',
-        qs: query,
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -2246,10 +2308,6 @@ class SpeechToTextV1 extends BaseService {
 
     return this.createRequest(parameters, _callback);
   };
-
-  /*************************
-   * customGrammars
-   ************************/
 
   /**
    * Add a grammar.
@@ -2368,68 +2426,6 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * Delete a grammar.
-   *
-   * Deletes an existing grammar from a custom language model. The service removes any out-of-vocabulary (OOV) words
-   * associated with the grammar from the custom model's words resource unless they were also added by another resource
-   * or they were modified in some way with the **Add custom words** or **Add a custom word** method. Removing a grammar
-   * does not affect the custom model until you train the model with the **Train a custom language model** method. You
-   * must use credentials for the instance of the service that owns a model to delete its grammar.
-   *
-   * **See also:** [Deleting a grammar from a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageGrammars#deleteGrammar).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
-   * used for the request. You must make the request with credentials for the instance of the service that owns the
-   * custom model.
-   * @param {string} params.grammar_name - The name of the grammar for the custom language model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteGrammar(params: SpeechToTextV1.DeleteGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id', 'grammar_name'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteGrammar(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id,
-      'grammar_name': _params.grammar_name
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteGrammar');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get a grammar.
    *
    * Gets information about a grammar from a custom language model. The information includes the total number of
@@ -2490,31 +2486,34 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * List grammars.
+   * Delete a grammar.
    *
-   * Lists information about all grammars from a custom language model. The information includes the total number of
-   * out-of-vocabulary (OOV) words, name, and status of each grammar. You must use credentials for the instance of the
-   * service that owns a model to list its grammars.
+   * Deletes an existing grammar from a custom language model. The service removes any out-of-vocabulary (OOV) words
+   * associated with the grammar from the custom model's words resource unless they were also added by another resource
+   * or they were modified in some way with the **Add custom words** or **Add a custom word** method. Removing a grammar
+   * does not affect the custom model until you train the model with the **Train a custom language model** method. You
+   * must use credentials for the instance of the service that owns a model to delete its grammar.
    *
-   * **See also:** [Listing grammars from a custom language
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageGrammars#listGrammars).
+   * **See also:** [Deleting a grammar from a custom language
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageGrammars#deleteGrammar).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom language model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
+   * @param {string} params.grammar_name - The name of the grammar for the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listGrammars(params: SpeechToTextV1.ListGrammarsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammars>): Promise<any> | void {
+  public deleteGrammar(params: SpeechToTextV1.DeleteGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['customization_id'];
+    const requiredParams = ['customization_id', 'grammar_name'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listGrammars(params, (err, bod, res) => {
+        this.deleteGrammar(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -2526,15 +2525,16 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customization_id
+      'customization_id': _params.customization_id,
+      'grammar_name': _params.grammar_name
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listGrammars');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteGrammar');
 
     const parameters = {
       options: {
-        url: '/v1/customizations/{customization_id}/grammars',
-        method: 'GET',
+        url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
+        method: 'DELETE',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -2621,52 +2621,47 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * Delete a custom acoustic model.
+   * List custom acoustic models.
    *
-   * Deletes an existing custom acoustic model. The custom model cannot be deleted if another request, such as adding an
-   * audio resource to the model, is currently being processed. You must use credentials for the instance of the service
-   * that owns a model to delete it.
+   * Lists information about all custom acoustic models that are owned by an instance of the service. Use the `language`
+   * parameter to see all custom acoustic models for the specified language. Omit the parameter to see all custom
+   * acoustic models for all languages. You must use credentials for the instance of the service that owns a model to
+   * list information about it.
    *
-   * **See also:** [Deleting a custom acoustic
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAcousticModels#deleteModel-acoustic).
+   * **See also:** [Listing custom acoustic
+   * models](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAcousticModels#listModels-acoustic).
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
-   * used for the request. You must make the request with credentials for the instance of the service that owns the
-   * custom model.
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
+   * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
+   * models that are owned by the requesting credentials.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteAcousticModel(params: SpeechToTextV1.DeleteAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id'];
+  public listAcousticModels(params?: SpeechToTextV1.ListAcousticModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteAcousticModel(params, (err, bod, res) => {
+        this.listAcousticModels(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
     }
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id
+    const query = {
+      'language': _params.language
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteAcousticModel');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listAcousticModels');
 
     const parameters = {
       options: {
-        url: '/v1/acoustic_customizations/{customization_id}',
-        method: 'DELETE',
-        path,
+        url: '/v1/acoustic_customizations',
+        method: 'GET',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -2736,70 +2731,14 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * List custom acoustic models.
+   * Delete a custom acoustic model.
    *
-   * Lists information about all custom acoustic models that are owned by an instance of the service. Use the `language`
-   * parameter to see all custom acoustic models for the specified language. Omit the parameter to see all custom
-   * acoustic models for all languages. You must use credentials for the instance of the service that owns a model to
-   * list information about it.
+   * Deletes an existing custom acoustic model. The custom model cannot be deleted if another request, such as adding an
+   * audio resource to the model, is currently being processed. You must use credentials for the instance of the service
+   * that owns a model to delete it.
    *
-   * **See also:** [Listing custom acoustic
-   * models](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAcousticModels#listModels-acoustic).
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
-   * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
-   * models that are owned by the requesting credentials.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listAcousticModels(params?: SpeechToTextV1.ListAcousticModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listAcousticModels(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const query = {
-      'language': _params.language
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listAcousticModels');
-
-    const parameters = {
-      options: {
-        url: '/v1/acoustic_customizations',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Reset a custom acoustic model.
-   *
-   * Resets a custom acoustic model by removing all audio resources from the model. Resetting a custom acoustic model
-   * initializes the model to its state when it was first created. Metadata such as the name and language of the model
-   * are preserved, but the model's audio resources are removed and must be re-created. The service cannot reset a model
-   * while it is handling another request for the model. The service cannot accept subsequent requests for the model
-   * until the existing reset request completes. You must use credentials for the instance of the service that owns a
-   * model to reset it.
-   *
-   * **See also:** [Resetting a custom acoustic
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAcousticModels#resetModel-acoustic).
+   * **See also:** [Deleting a custom acoustic
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAcousticModels#deleteModel-acoustic).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
@@ -2809,14 +2748,14 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public resetAcousticModel(params: SpeechToTextV1.ResetAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
+  public deleteAcousticModel(params: SpeechToTextV1.DeleteAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customization_id'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.resetAcousticModel(params, (err, bod, res) => {
+        this.deleteAcousticModel(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -2831,12 +2770,12 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customization_id
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'resetAcousticModel');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteAcousticModel');
 
     const parameters = {
       options: {
-        url: '/v1/acoustic_customizations/{customization_id}/reset',
-        method: 'POST',
+        url: '/v1/acoustic_customizations/{customization_id}',
+        method: 'DELETE',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -2907,7 +2846,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public trainAcousticModel(params: SpeechToTextV1.TrainAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.TrainingResponse>): Promise<any> | void {
+  public trainAcousticModel(params: SpeechToTextV1.TrainAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customization_id'];
@@ -2940,6 +2879,67 @@ class SpeechToTextV1 extends BaseService {
         url: '/v1/acoustic_customizations/{customization_id}/train',
         method: 'POST',
         qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Reset a custom acoustic model.
+   *
+   * Resets a custom acoustic model by removing all audio resources from the model. Resetting a custom acoustic model
+   * initializes the model to its state when it was first created. Metadata such as the name and language of the model
+   * are preserved, but the model's audio resources are removed and must be re-created. The service cannot reset a model
+   * while it is handling another request for the model. The service cannot accept subsequent requests for the model
+   * until the existing reset request completes. You must use credentials for the instance of the service that owns a
+   * model to reset it.
+   *
+   * **See also:** [Resetting a custom acoustic
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAcousticModels#resetModel-acoustic).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
+   * used for the request. You must make the request with credentials for the instance of the service that owns the
+   * custom model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public resetAcousticModel(params: SpeechToTextV1.ResetAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.resetAcousticModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'resetAcousticModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/reset',
+        method: 'POST',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -3042,6 +3042,66 @@ class SpeechToTextV1 extends BaseService {
   /*************************
    * customAudioResources
    ************************/
+
+  /**
+   * List audio resources.
+   *
+   * Lists information about all audio resources from a custom acoustic model. The information includes the name of the
+   * resource and information about its audio data, such as its duration. It also includes the status of the audio
+   * resource, which is important for checking the service's analysis of the resource in response to a request to add it
+   * to the custom acoustic model. You must use credentials for the instance of the service that owns a model to list
+   * its audio resources.
+   *
+   * **See also:** [Listing audio resources for a custom acoustic
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAudio#listAudio).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
+   * used for the request. You must make the request with credentials for the instance of the service that owns the
+   * custom model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listAudio(params: SpeechToTextV1.ListAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioResources>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listAudio(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listAudio');
+
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/audio',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Add an audio resource.
@@ -3223,70 +3283,6 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * Delete an audio resource.
-   *
-   * Deletes an existing audio resource from a custom acoustic model. Deleting an archive-type audio resource removes
-   * the entire archive of files. The service does not allow deletion of individual files from an archive resource.
-   *
-   * Removing an audio resource does not affect the custom model until you train the model on its updated data by using
-   * the **Train a custom acoustic model** method. You can delete an existing audio resource from a model while a
-   * different resource is being added to the model. You must use credentials for the instance of the service that owns
-   * a model to delete its audio resources.
-   *
-   * **See also:** [Deleting an audio resource from a custom acoustic
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAudio#deleteAudio).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
-   * used for the request. You must make the request with credentials for the instance of the service that owns the
-   * custom model.
-   * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteAudio(params: SpeechToTextV1.DeleteAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id', 'audio_name'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteAudio(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id,
-      'audio_name': _params.audio_name
-    };
-
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteAudio');
-
-    const parameters = {
-      options: {
-        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get an audio resource.
    *
    * Gets information about an audio resource from a custom acoustic model. The method returns an `AudioListing` object
@@ -3359,33 +3355,36 @@ class SpeechToTextV1 extends BaseService {
   };
 
   /**
-   * List audio resources.
+   * Delete an audio resource.
    *
-   * Lists information about all audio resources from a custom acoustic model. The information includes the name of the
-   * resource and information about its audio data, such as its duration. It also includes the status of the audio
-   * resource, which is important for checking the service's analysis of the resource in response to a request to add it
-   * to the custom acoustic model. You must use credentials for the instance of the service that owns a model to list
-   * its audio resources.
+   * Deletes an existing audio resource from a custom acoustic model. Deleting an archive-type audio resource removes
+   * the entire archive of files. The service does not allow deletion of individual files from an archive resource.
    *
-   * **See also:** [Listing audio resources for a custom acoustic
-   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAudio#listAudio).
+   * Removing an audio resource does not affect the custom model until you train the model on its updated data by using
+   * the **Train a custom acoustic model** method. You can delete an existing audio resource from a model while a
+   * different resource is being added to the model. You must use credentials for the instance of the service that owns
+   * a model to delete its audio resources.
+   *
+   * **See also:** [Deleting an audio resource from a custom acoustic
+   * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAudio#deleteAudio).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
+   * @param {string} params.audio_name - The name of the audio resource for the custom acoustic model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listAudio(params: SpeechToTextV1.ListAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioResources>): Promise<any> | void {
+  public deleteAudio(params: SpeechToTextV1.DeleteAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['customization_id'];
+    const requiredParams = ['customization_id', 'audio_name'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listAudio(params, (err, bod, res) => {
+        this.deleteAudio(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -3397,15 +3396,16 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customization_id
+      'customization_id': _params.customization_id,
+      'audio_name': _params.audio_name
     };
 
-    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'listAudio');
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'deleteAudio');
 
     const parameters = {
       options: {
-        url: '/v1/acoustic_customizations/{customization_id}/audio',
-        method: 'GET',
+        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        method: 'DELETE',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
@@ -3534,6 +3534,12 @@ namespace SpeechToTextV1 {
    * request interfaces
    ************************/
 
+  /** Parameters for the `listModels` operation. */
+  export interface ListModelsParams {
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `getModel` operation. */
   export interface GetModelParams {
     /** The identifier of the model in the form of its name from the output of the **Get a model** method. */
@@ -3567,12 +3573,6 @@ namespace SpeechToTextV1 {
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
       ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
     }
-  }
-
-  /** Parameters for the `listModels` operation. */
-  export interface ListModelsParams {
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `recognize` operation. */
@@ -3669,16 +3669,20 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Parameters for the `checkJob` operation. */
-  export interface CheckJobParams {
-    /** The identifier of the asynchronous job that is to be used for the request. You must make the request with credentials for the instance of the service that owns the job. */
-    id: string;
+  /** Parameters for the `registerCallback` operation. */
+  export interface RegisterCallbackParams {
+    /** An HTTP or HTTPS URL to which callback notifications are to be sent. To be white-listed, the URL must successfully echo the challenge string during URL verification. During verification, the client can also check the signature that the service sends in the `X-Callback-Signature` header to verify the origin of the request. */
+    callback_url: string;
+    /** A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the `X-Callback-Signature` header. The service includes the header during URL verification and with every notification sent to the callback URL. It calculates the signature over the payload of the notification. If you omit the parameter, the service does not send the header. */
+    user_secret?: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
-  /** Parameters for the `checkJobs` operation. */
-  export interface CheckJobsParams {
+  /** Parameters for the `unregisterCallback` operation. */
+  export interface UnregisterCallbackParams {
+    /** The callback URL that is to be unregistered. */
+    callback_url: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3796,28 +3800,24 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Parameters for the `deleteJob` operation. */
-  export interface DeleteJobParams {
+  /** Parameters for the `checkJobs` operation. */
+  export interface CheckJobsParams {
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `checkJob` operation. */
+  export interface CheckJobParams {
     /** The identifier of the asynchronous job that is to be used for the request. You must make the request with credentials for the instance of the service that owns the job. */
     id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
-  /** Parameters for the `registerCallback` operation. */
-  export interface RegisterCallbackParams {
-    /** An HTTP or HTTPS URL to which callback notifications are to be sent. To be white-listed, the URL must successfully echo the challenge string during URL verification. During verification, the client can also check the signature that the service sends in the `X-Callback-Signature` header to verify the origin of the request. */
-    callback_url: string;
-    /** A user-specified string that the service uses to generate the HMAC-SHA1 signature that it sends via the `X-Callback-Signature` header. The service includes the header during URL verification and with every notification sent to the callback URL. It calculates the signature over the payload of the notification. If you omit the parameter, the service does not send the header. */
-    user_secret?: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `unregisterCallback` operation. */
-  export interface UnregisterCallbackParams {
-    /** The callback URL that is to be unregistered. */
-    callback_url: string;
+  /** Parameters for the `deleteJob` operation. */
+  export interface DeleteJobParams {
+    /** The identifier of the asynchronous job that is to be used for the request. You must make the request with credentials for the instance of the service that owns the job. */
+    id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3860,10 +3860,10 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Parameters for the `deleteLanguageModel` operation. */
-  export interface DeleteLanguageModelParams {
-    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
+  /** Parameters for the `listLanguageModels` operation. */
+  export interface ListLanguageModelsParams {
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. */
+    language?: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -3876,16 +3876,8 @@ namespace SpeechToTextV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listLanguageModels` operation. */
-  export interface ListLanguageModelsParams {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. */
-    language?: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `resetLanguageModel` operation. */
-  export interface ResetLanguageModelParams {
+  /** Parameters for the `deleteLanguageModel` operation. */
+  export interface DeleteLanguageModelParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: OutgoingHttpHeaders;
@@ -3913,8 +3905,24 @@ namespace SpeechToTextV1 {
     }
   }
 
+  /** Parameters for the `resetLanguageModel` operation. */
+  export interface ResetLanguageModelParams {
+    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `upgradeLanguageModel` operation. */
   export interface UpgradeLanguageModelParams {
+    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `listCorpora` operation. */
+  export interface ListCorporaParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: OutgoingHttpHeaders;
@@ -3935,16 +3943,6 @@ namespace SpeechToTextV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `deleteCorpus` operation. */
-  export interface DeleteCorpusParams {
-    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The name of the corpus for the custom language model. */
-    corpus_name: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
   /** Parameters for the `getCorpus` operation. */
   export interface GetCorpusParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
@@ -3955,56 +3953,12 @@ namespace SpeechToTextV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listCorpora` operation. */
-  export interface ListCorporaParams {
+  /** Parameters for the `deleteCorpus` operation. */
+  export interface DeleteCorpusParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `addWord` operation. */
-  export interface AddWordParams {
-    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The custom word that is to be added to or updated in the custom language model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding). */
-    word_name: string;
-    /** For the **Add custom words** method, you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. Omit this parameter for the **Add a custom word** method. */
-    word?: string;
-    /** An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. * For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. * For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not including spaces. */
-    sounds_like?: string[];
-    /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data. */
-    display_as?: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `addWords` operation. */
-  export interface AddWordsParams {
-    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** An array of `CustomWord` objects that provides information about each custom word that is to be added to or updated in the custom language model. */
-    words: CustomWord[];
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteWord` operation. */
-  export interface DeleteWordParams {
-    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The custom word that is to be deleted from the custom language model. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding). */
-    word_name: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getWord` operation. */
-  export interface GetWordParams {
-    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The custom word that is to be read from the custom language model. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding). */
-    word_name: string;
+    /** The name of the corpus for the custom language model. */
+    corpus_name: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -4037,6 +3991,60 @@ namespace SpeechToTextV1 {
     }
   }
 
+  /** Parameters for the `addWords` operation. */
+  export interface AddWordsParams {
+    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    /** An array of `CustomWord` objects that provides information about each custom word that is to be added to or updated in the custom language model. */
+    words: CustomWord[];
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `addWord` operation. */
+  export interface AddWordParams {
+    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    /** The custom word that is to be added to or updated in the custom language model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding). */
+    word_name: string;
+    /** For the **Add custom words** method, you must specify the custom word that is to be added to or updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. Omit this parameter for the **Add a custom word** method. */
+    word?: string;
+    /** An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users. * For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word. * For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation from the base vocabulary. A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not including spaces. */
+    sounds_like?: string[];
+    /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want the word to have a spelling that is different from its usual representation or from its spelling in corpora training data. */
+    display_as?: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getWord` operation. */
+  export interface GetWordParams {
+    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    /** The custom word that is to be read from the custom language model. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding). */
+    word_name: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `deleteWord` operation. */
+  export interface DeleteWordParams {
+    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    /** The custom word that is to be deleted from the custom language model. URL-encode the word if it includes non-ASCII characters. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding). */
+    word_name: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `listGrammars` operation. */
+  export interface ListGrammarsParams {
+    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `addGrammar` operation. */
   export interface AddGrammarParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
@@ -4062,16 +4070,6 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Parameters for the `deleteGrammar` operation. */
-  export interface DeleteGrammarParams {
-    /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The name of the grammar for the custom language model. */
-    grammar_name: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
   /** Parameters for the `getGrammar` operation. */
   export interface GetGrammarParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
@@ -4082,10 +4080,12 @@ namespace SpeechToTextV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listGrammars` operation. */
-  export interface ListGrammarsParams {
+  /** Parameters for the `deleteGrammar` operation. */
+  export interface DeleteGrammarParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
+    /** The name of the grammar for the custom language model. */
+    grammar_name: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -4129,10 +4129,10 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Parameters for the `deleteAcousticModel` operation. */
-  export interface DeleteAcousticModelParams {
-    /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
+  /** Parameters for the `listAcousticModels` operation. */
+  export interface ListAcousticModelsParams {
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. */
+    language?: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -4145,16 +4145,8 @@ namespace SpeechToTextV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listAcousticModels` operation. */
-  export interface ListAcousticModelsParams {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. */
-    language?: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `resetAcousticModel` operation. */
-  export interface ResetAcousticModelParams {
+  /** Parameters for the `deleteAcousticModel` operation. */
+  export interface DeleteAcousticModelParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
     headers?: OutgoingHttpHeaders;
@@ -4171,6 +4163,14 @@ namespace SpeechToTextV1 {
     return_response?: boolean;
   }
 
+  /** Parameters for the `resetAcousticModel` operation. */
+  export interface ResetAcousticModelParams {
+    /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `upgradeAcousticModel` operation. */
   export interface UpgradeAcousticModelParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
@@ -4179,6 +4179,14 @@ namespace SpeechToTextV1 {
     custom_language_model_id?: string;
     /** If `true`, forces the upgrade of a custom acoustic model for which no input data has been modified since it was last trained. Use this parameter only to force the upgrade of a custom acoustic model that is trained with a custom language model, and only if you receive a 400 response code and the message `No input data modified since last training`. See [Upgrading a custom acoustic model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-customUpgrade#upgradeAcoustic). */
     force?: boolean;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `listAudio` operation. */
+  export interface ListAudioParams {
+    /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -4243,16 +4251,6 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Parameters for the `deleteAudio` operation. */
-  export interface DeleteAudioParams {
-    /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The name of the audio resource for the custom acoustic model. */
-    audio_name: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
   /** Parameters for the `getAudio` operation. */
   export interface GetAudioParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
@@ -4263,10 +4261,12 @@ namespace SpeechToTextV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listAudio` operation. */
-  export interface ListAudioParams {
+  /** Parameters for the `deleteAudio` operation. */
+  export interface DeleteAudioParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
+    /** The name of the audio resource for the custom acoustic model. */
+    audio_name: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }

@@ -254,43 +254,33 @@ class NaturalLanguageClassifierV1 extends BaseService {
   };
 
   /**
-   * Delete classifier.
+   * List classifiers.
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.classifier_id - Classifier ID to delete.
+   * Returns an empty array if no classifiers are available.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['classifier_id'];
+  public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteClassifier(params, (err, bod, res) => {
+        this.listClassifiers(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
     }
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'classifier_id': _params.classifier_id
-    };
-
-    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'deleteClassifier');
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'listClassifiers');
 
     const parameters = {
       options: {
-        url: '/v1/classifiers/{classifier_id}',
-        method: 'DELETE',
-        path,
+        url: '/v1/classifiers',
+        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -354,33 +344,43 @@ class NaturalLanguageClassifierV1 extends BaseService {
   };
 
   /**
-   * List classifiers.
+   * Delete classifier.
    *
-   * Returns an empty array if no classifiers are available.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.classifier_id - Classifier ID to delete.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.ClassifierList>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams, callback?: NaturalLanguageClassifierV1.Callback<NaturalLanguageClassifierV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['classifier_id'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listClassifiers(params, (err, bod, res) => {
+        this.deleteClassifier(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
     }
 
-    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'listClassifiers');
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'classifier_id': _params.classifier_id
+    };
+
+    const sdkHeaders = getSdkHeaders('natural_language_classifier', 'v1', 'deleteClassifier');
 
     const parameters = {
       options: {
-        url: '/v1/classifiers',
-        method: 'GET',
+        url: '/v1/classifiers/{classifier_id}',
+        method: 'DELETE',
+        path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -475,10 +475,8 @@ namespace NaturalLanguageClassifierV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `deleteClassifier` operation. */
-  export interface DeleteClassifierParams {
-    /** Classifier ID to delete. */
-    classifier_id: string;
+  /** Parameters for the `listClassifiers` operation. */
+  export interface ListClassifiersParams {
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -491,8 +489,10 @@ namespace NaturalLanguageClassifierV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listClassifiers` operation. */
-  export interface ListClassifiersParams {
+  /** Parameters for the `deleteClassifier` operation. */
+  export interface DeleteClassifierParams {
+    /** Classifier ID to delete. */
+    classifier_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }

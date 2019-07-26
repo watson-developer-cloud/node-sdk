@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -161,6 +161,70 @@ describe('translate', () => {
   });
 });
 
+describe('listIdentifiableLanguages', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      languageTranslator.listIdentifiableLanguages(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v3/identifiable_languages', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      languageTranslator.listIdentifiableLanguages(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const params = {};
+
+      // invoke method
+      const listIdentifiableLanguagesPromise = languageTranslator.listIdentifiableLanguages(params);
+      expectToBePromise(listIdentifiableLanguagesPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+    test('should not have any problems when no parameters are passed in', () => {
+      // invoke the method
+      languageTranslator.listIdentifiableLanguages({}, noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
+
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      languageTranslator.listIdentifiableLanguages(noop);
+      checkDefaultSuccessArgs(createRequestMock);
+    });
+  });
+});
+
 describe('identify', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -259,28 +323,38 @@ describe('identify', () => {
   });
 });
 
-describe('listIdentifiableLanguages', () => {
+describe('listModels', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const params = {};
+      const source = 'fake_source';
+      const target = 'fake_target';
+      const default_models = 'fake_default_models';
+      const params = {
+        source,
+        target,
+        default_models,
+      };
 
       // invoke method
-      languageTranslator.listIdentifiableLanguages(params, noop);
+      languageTranslator.listModels(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v3/identifiable_languages', 'GET');
+      checkUrlAndMethod(options, '/v3/models', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.qs['source']).toEqual(source);
+      expect(options.qs['target']).toEqual(target);
+      expect(options.qs['default']).toEqual(default_models);
     });
 
     test('should prioritize user-given headers', () => {
@@ -294,7 +368,7 @@ describe('listIdentifiableLanguages', () => {
         },
       };
 
-      languageTranslator.listIdentifiableLanguages(params, noop);
+      languageTranslator.listModels(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
 
@@ -303,21 +377,21 @@ describe('listIdentifiableLanguages', () => {
       const params = {};
 
       // invoke method
-      const listIdentifiableLanguagesPromise = languageTranslator.listIdentifiableLanguages(params);
-      expectToBePromise(listIdentifiableLanguagesPromise);
+      const listModelsPromise = languageTranslator.listModels(params);
+      expectToBePromise(listModelsPromise);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
     test('should not have any problems when no parameters are passed in', () => {
       // invoke the method
-      languageTranslator.listIdentifiableLanguages({}, noop);
+      languageTranslator.listModels({}, noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
 
     test('should use argument as callback function if only one is passed in', () => {
       // invoke the method
-      languageTranslator.listIdentifiableLanguages(noop);
+      languageTranslator.listModels(noop);
       checkDefaultSuccessArgs(createRequestMock);
     });
   });
@@ -628,378 +702,6 @@ describe('getModel', () => {
   });
 });
 
-describe('listModels', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const source = 'fake_source';
-      const target = 'fake_target';
-      const default_models = 'fake_default_models';
-      const params = {
-        source,
-        target,
-        default_models,
-      };
-
-      // invoke method
-      languageTranslator.listModels(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v3/models', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['source']).toEqual(source);
-      expect(options.qs['target']).toEqual(target);
-      expect(options.qs['default']).toEqual(default_models);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      languageTranslator.listModels(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listModelsPromise = languageTranslator.listModels(params);
-      expectToBePromise(listModelsPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-    test('should not have any problems when no parameters are passed in', () => {
-      // invoke the method
-      languageTranslator.listModels({}, noop);
-      checkDefaultSuccessArgs(createRequestMock);
-    });
-
-    test('should use argument as callback function if only one is passed in', () => {
-      // invoke the method
-      languageTranslator.listModels(noop);
-      checkDefaultSuccessArgs(createRequestMock);
-    });
-  });
-});
-
-describe('deleteDocument', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const params = {
-        document_id,
-      };
-
-      // invoke method
-      languageTranslator.deleteDocument(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v3/documents/{document_id}', 'DELETE');
-      checkCallback(createRequestMock);
-      const expectedAccept = undefined;
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['document_id']).toEqual(document_id);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        document_id,
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      languageTranslator.deleteDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const params = {
-        document_id,
-      };
-
-      // invoke method
-      const deleteDocumentPromise = languageTranslator.deleteDocument(params);
-      expectToBePromise(deleteDocumentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      languageTranslator.deleteDocument(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['document_id'];
-
-      languageTranslator.deleteDocument({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['document_id'];
-
-      const deleteDocumentPromise = languageTranslator.deleteDocument();
-      expectToBePromise(deleteDocumentPromise);
-
-      deleteDocumentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-  });
-});
-
-describe('getDocumentStatus', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const params = {
-        document_id,
-      };
-
-      // invoke method
-      languageTranslator.getDocumentStatus(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v3/documents/{document_id}', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['document_id']).toEqual(document_id);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        document_id,
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      languageTranslator.getDocumentStatus(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const params = {
-        document_id,
-      };
-
-      // invoke method
-      const getDocumentStatusPromise = languageTranslator.getDocumentStatus(params);
-      expectToBePromise(getDocumentStatusPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      languageTranslator.getDocumentStatus(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['document_id'];
-
-      languageTranslator.getDocumentStatus({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['document_id'];
-
-      const getDocumentStatusPromise = languageTranslator.getDocumentStatus();
-      expectToBePromise(getDocumentStatusPromise);
-
-      getDocumentStatusPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-  });
-});
-
-describe('getTranslatedDocument', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const accept = 'fake_accept';
-      const params = {
-        document_id,
-        accept,
-      };
-
-      // invoke method
-      languageTranslator.getTranslatedDocument(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v3/documents/{document_id}/translated_document', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = accept;
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Accept', accept);
-      expect(options.path['document_id']).toEqual(document_id);
-      expect(options.responseType).toBe('stream');
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        document_id,
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      languageTranslator.getTranslatedDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const document_id = 'fake_document_id';
-      const params = {
-        document_id,
-      };
-
-      // invoke method
-      const getTranslatedDocumentPromise = languageTranslator.getTranslatedDocument(params);
-      expectToBePromise(getTranslatedDocumentPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      languageTranslator.getTranslatedDocument(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['document_id'];
-
-      languageTranslator.getTranslatedDocument({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['document_id'];
-
-      const getTranslatedDocumentPromise = languageTranslator.getTranslatedDocument();
-      expectToBePromise(getTranslatedDocumentPromise);
-
-      getTranslatedDocumentPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-  });
-});
-
 describe('listDocuments', () => {
   describe('positive tests', () => {
     beforeAll(() => {
@@ -1177,6 +879,304 @@ describe('translateDocument', () => {
       expectToBePromise(translateDocumentPromise);
 
       translateDocumentPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+
+describe('getDocumentStatus', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const params = {
+        document_id,
+      };
+
+      // invoke method
+      languageTranslator.getDocumentStatus(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v3/documents/{document_id}', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['document_id']).toEqual(document_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        document_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      languageTranslator.getDocumentStatus(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const params = {
+        document_id,
+      };
+
+      // invoke method
+      const getDocumentStatusPromise = languageTranslator.getDocumentStatus(params);
+      expectToBePromise(getDocumentStatusPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      languageTranslator.getDocumentStatus(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['document_id'];
+
+      languageTranslator.getDocumentStatus({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['document_id'];
+
+      const getDocumentStatusPromise = languageTranslator.getDocumentStatus();
+      expectToBePromise(getDocumentStatusPromise);
+
+      getDocumentStatusPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+
+describe('deleteDocument', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const params = {
+        document_id,
+      };
+
+      // invoke method
+      languageTranslator.deleteDocument(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v3/documents/{document_id}', 'DELETE');
+      checkCallback(createRequestMock);
+      const expectedAccept = undefined;
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['document_id']).toEqual(document_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        document_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      languageTranslator.deleteDocument(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const params = {
+        document_id,
+      };
+
+      // invoke method
+      const deleteDocumentPromise = languageTranslator.deleteDocument(params);
+      expectToBePromise(deleteDocumentPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      languageTranslator.deleteDocument(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['document_id'];
+
+      languageTranslator.deleteDocument({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['document_id'];
+
+      const deleteDocumentPromise = languageTranslator.deleteDocument();
+      expectToBePromise(deleteDocumentPromise);
+
+      deleteDocumentPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+
+describe('getTranslatedDocument', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const accept = 'fake_accept';
+      const params = {
+        document_id,
+        accept,
+      };
+
+      // invoke method
+      languageTranslator.getTranslatedDocument(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v3/documents/{document_id}/translated_document', 'GET');
+      checkCallback(createRequestMock);
+      const expectedAccept = accept;
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      checkUserHeader(createRequestMock, 'Accept', accept);
+      expect(options.path['document_id']).toEqual(document_id);
+      expect(options.responseType).toBe('stream');
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        document_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      languageTranslator.getTranslatedDocument(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const document_id = 'fake_document_id';
+      const params = {
+        document_id,
+      };
+
+      // invoke method
+      const getTranslatedDocumentPromise = languageTranslator.getTranslatedDocument(params);
+      expectToBePromise(getTranslatedDocumentPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      languageTranslator.getTranslatedDocument(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['document_id'];
+
+      languageTranslator.getTranslatedDocument({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['document_id'];
+
+      const getTranslatedDocumentPromise = languageTranslator.getTranslatedDocument();
+      expectToBePromise(getTranslatedDocumentPromise);
+
+      getTranslatedDocumentPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
