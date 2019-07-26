@@ -376,7 +376,7 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.audio;
- 
+
     const query = {
       'model': _params.model,
       'language_customization_id': _params.language_customization_id,
@@ -792,7 +792,7 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.audio;
- 
+
     const query = {
       'model': _params.model,
       'callback_url': _params.callback_url,
@@ -958,7 +958,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'callback_url': _params.callback_url,
       'user_secret': _params.user_secret
@@ -1014,7 +1014,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'callback_url': _params.callback_url
     };
@@ -1264,7 +1264,7 @@ class SpeechToTextV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'language': _params.language
     };
@@ -1421,10 +1421,10 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'word_type_to_add': _params.word_type_to_add,
-      'customization_weight': _params.customization_weight,
+      'customization_weight': _params.customization_weight
     };
 
     const path = {
@@ -1567,10 +1567,14 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.corpus_name - The name of the new corpus for the custom language model. Use a localized name
    * that matches the language of the custom model and reflects the contents of the corpus.
    * * Include a maximum of 128 characters in the name.
-   * * Do not include spaces, slashes, or backslashes in the name.
+   * * Do not use characters that need to be URL-encoded. For example, do not use spaces, slashes, backslashes, colons,
+   * ampersands, double quotes, plus signs, equals signs, questions marks, and so on in the name. (The service does not
+   * prevent the use of these characters. But because they must be URL-encoded wherever used, their use is strongly
+   * discouraged.)
    * * Do not use the name of an existing corpus or grammar that is already defined for the custom model.
    * * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by
    * the user.
+   * * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.corpus_file - A plain text file that contains the training
    * data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8
    * encoding if it encounters non-ASCII characters.
@@ -1610,7 +1614,7 @@ class SpeechToTextV1 extends BaseService {
         contentType: 'text/plain'
       }
     };
- 
+
     const query = {
       'allow_overwrite': _params.allow_overwrite
     };
@@ -2191,7 +2195,7 @@ class SpeechToTextV1 extends BaseService {
    * `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in
    * ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical
    * ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count
-   * ordering, values with the same count are ordered alphabetically. With the `curl` command, URL encode the `+` symbol
+   * ordering, values with the same count are ordered alphabetically. With the `curl` command, URL-encode the `+` symbol
    * as `%2B`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2214,7 +2218,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'word_type': _params.word_type,
       'sort': _params.sort
@@ -2289,10 +2293,14 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.grammar_name - The name of the new grammar for the custom language model. Use a localized
    * name that matches the language of the custom model and reflects the contents of the grammar.
    * * Include a maximum of 128 characters in the name.
-   * * Do not include spaces, slashes, or backslashes in the name.
+   * * Do not use characters that need to be URL-encoded. For example, do not use spaces, slashes, backslashes, colons,
+   * ampersands, double quotes, plus signs, equals signs, questions marks, and so on in the name. (The service does not
+   * prevent the use of these characters. But because they must be URL-encoded wherever used, their use is strongly
+   * discouraged.)
    * * Do not use the name of an existing grammar or corpus that is already defined for the custom model.
    * * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by
    * the user.
+   * * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service.
    * @param {string} params.grammar_file - A plain text file that contains the grammar in the format specified by the
    * `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using any other encoding can lead to
    * issues when compiling the grammar or to unexpected results in decoding. The service ignores an encoding that is
@@ -2328,7 +2336,7 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.grammar_file;
- 
+
     const query = {
       'allow_overwrite': _params.allow_overwrite
     };
@@ -2757,7 +2765,7 @@ class SpeechToTextV1 extends BaseService {
         });
       });
     }
- 
+
     const query = {
       'language': _params.language
     };
@@ -2785,8 +2793,10 @@ class SpeechToTextV1 extends BaseService {
    *
    * Resets a custom acoustic model by removing all audio resources from the model. Resetting a custom acoustic model
    * initializes the model to its state when it was first created. Metadata such as the name and language of the model
-   * are preserved, but the model's audio resources are removed and must be re-created. You must use credentials for the
-   * instance of the service that owns a model to reset it.
+   * are preserved, but the model's audio resources are removed and must be re-created. The service cannot reset a model
+   * while it is handling another request for the model. The service cannot accept subsequent requests for the model
+   * until the existing reset request completes. You must use credentials for the instance of the service that owns a
+   * model to reset it.
    *
    * **See also:** [Resetting a custom acoustic
    * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAcousticModels#resetModel-acoustic).
@@ -2856,8 +2866,9 @@ class SpeechToTextV1 extends BaseService {
    * You can monitor the status of the training by using the **Get a custom acoustic model** method to poll the model's
    * status. Use a loop to check the status once a minute. The method returns an `AcousticModel` object that includes
    * `status` and `progress` fields. A status of `available` indicates that the custom model is trained and ready to
-   * use. The service cannot accept subsequent training requests, or requests to add new audio resources, until the
-   * existing request completes.
+   * use. The service cannot train a model while it is handling another request for the model. The service cannot accept
+   * subsequent training requests, or requests to add new audio resources, until the existing training request
+   * completes.
    *
    * You can use the optional `custom_language_model_id` parameter to specify the GUID of a separately created custom
    * language model that is to be used during training. Train with a custom language model if you have verbatim
@@ -2879,8 +2890,9 @@ class SpeechToTextV1 extends BaseService {
    * * The custom model contains less than 10 minutes or more than 200 hours of audio data.
    * * You passed an incompatible custom language model with the `custom_language_model_id` query parameter. Both custom
    * models must be based on the same version of the same base model.
-   * * The custom model contains one or more invalid audio resources. You can correct the invalid audio resources.
-   * The model must contain at least one valid resource for training to succeed.
+   * * The custom model contains one or more invalid audio resources. You can correct the invalid audio resources or set
+   * the `strict` parameter to `false` to exclude the invalid resources from the training. The model must contain at
+   * least one valid resource for training to succeed.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
@@ -2912,9 +2924,9 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
-      'custom_language_model_id': _params.custom_language_model_id,
+      'custom_language_model_id': _params.custom_language_model_id
     };
 
     const path = {
@@ -2953,8 +2965,9 @@ class SpeechToTextV1 extends BaseService {
    * monitor the status of the upgrade by using the **Get a custom acoustic model** method to poll the model's status.
    * The method returns an `AcousticModel` object that includes `status` and `progress` fields. Use a loop to check the
    * status once a minute. While it is being upgraded, the custom model has the status `upgrading`. When the upgrade is
-   * complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent requests
-   * for the model until the upgrade completes.
+   * complete, the model resumes the status that it had prior to upgrade. The service cannot upgrade a model while it is
+   * handling another request for the model. The service cannot accept subsequent requests for the model until the
+   * existing upgrade request completes.
    *
    * If the custom acoustic model was trained with a separately created custom language model, you must use the
    * `custom_language_model_id` parameter to specify the GUID of that custom language model. The custom language model
@@ -2997,7 +3010,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'custom_language_model_id': _params.custom_language_model_id,
       'force': _params.force
@@ -3043,18 +3056,18 @@ class SpeechToTextV1 extends BaseService {
    * audio resources in any format that the service supports for speech recognition.
    *
    * You can use this method to add any number of audio resources to a custom model by calling the method once for each
-   * audio or archive file. But the addition of one audio resource must be fully complete before you can add another.
-   * You must add a minimum of 10 minutes and a maximum of 200 hours of audio that includes speech, not just silence, to
-   * a custom acoustic model before you can train it. No audio resource, audio- or archive-type, can be larger than 100
-   * MB. To add an audio resource that has the same name as an existing audio resource, set the `allow_overwrite`
-   * parameter to `true`; otherwise, the request fails.
+   * audio or archive file. You can add multiple different audio resources at the same time. You must add a minimum of
+   * 10 minutes and a maximum of 200 hours of audio that includes speech, not just silence, to a custom acoustic model
+   * before you can train it. No audio resource, audio- or archive-type, can be larger than 100 MB. To add an audio
+   * resource that has the same name as an existing audio resource, set the `allow_overwrite` parameter to `true`;
+   * otherwise, the request fails.
    *
    * The method is asynchronous. It can take several seconds to complete depending on the duration of the audio and, in
    * the case of an archive file, the total number of audio files being processed. The service returns a 201 response
    * code if the audio is valid. It then asynchronously analyzes the contents of the audio file or files and
    * automatically extracts information about the audio such as its length, sampling rate, and encoding. You cannot
-   * submit requests to add additional audio resources to a custom acoustic model, or to train the model, until the
-   * service's analysis of all audio files for the current request completes.
+   * submit requests to train or upgrade the model until the service's analysis of all audio resources for current
+   * requests completes.
    *
    * To determine the status of the service's analysis of the audio, use the **Get an audio resource** method to poll
    * the status of the audio. The method accepts the customization ID of the custom model and the name of the audio
@@ -3116,11 +3129,8 @@ class SpeechToTextV1 extends BaseService {
    *
    * ### Naming restrictions for embedded audio files
    *
-   *  The name of an audio file that is embedded within an archive-type resource must meet the following restrictions:
-   * * Include a maximum of 128 characters in the file name; this includes the file extension.
-   * * Do not include spaces, slashes, or backslashes in the file name.
-   * * Do not use the name of an audio file that has already been added to the custom model as part of an archive-type
-   * resource.
+   *  The name of an audio file that is contained in an archive-type resource can include a maximum of 128 characters.
+   * This includes the file extension and all elements of the name (for example, slashes).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom acoustic model that is to be
@@ -3129,7 +3139,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.audio_name - The name of the new audio resource for the custom acoustic model. Use a
    * localized name that matches the language of the custom model and reflects the contents of the resource.
    * * Include a maximum of 128 characters in the name.
-   * * Do not include spaces, slashes, or backslashes in the name.
+   * * Do not use characters that need to be URL-encoded. For example, do not use spaces, slashes, backslashes, colons,
+   * ampersands, double quotes, plus signs, equals signs, questions marks, and so on in the name. (The service does not
+   * prevent the use of these characters. But because they must be URL-encoded wherever used, their use is strongly
+   * discouraged.)
    * * Do not use the name of an audio resource that has already been added to the custom model.
    * @param {NodeJS.ReadableStream|FileObject|Buffer} params.audio_resource - The audio resource that is to be added to
    * the custom acoustic model, an individual audio file or an archive file.
@@ -3177,7 +3190,7 @@ class SpeechToTextV1 extends BaseService {
       return _callback(missingParams);
     }
     const body = _params.audio_resource;
- 
+
     const query = {
       'allow_overwrite': _params.allow_overwrite
     };
@@ -3213,10 +3226,12 @@ class SpeechToTextV1 extends BaseService {
    * Delete an audio resource.
    *
    * Deletes an existing audio resource from a custom acoustic model. Deleting an archive-type audio resource removes
-   * the entire archive of files; the current interface does not allow deletion of individual files from an archive
-   * resource. Removing an audio resource does not affect the custom model until you train the model on its updated data
-   * by using the **Train a custom acoustic model** method. You must use credentials for the instance of the service
-   * that owns a model to delete its audio resources.
+   * the entire archive of files. The service does not allow deletion of individual files from an archive resource.
+   *
+   * Removing an audio resource does not affect the custom model until you train the model on its updated data by using
+   * the **Train a custom acoustic model** method. You can delete an existing audio resource from a model while a
+   * different resource is being added to the model. You must use credentials for the instance of the service that owns
+   * a model to delete its audio resources.
    *
    * **See also:** [Deleting an audio resource from a custom acoustic
    * model](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-manageAudio#deleteAudio).
@@ -3444,7 +3459,7 @@ class SpeechToTextV1 extends BaseService {
     if (missingParams) {
       return _callback(missingParams);
     }
- 
+
     const query = {
       'customer_id': _params.customer_id
     };
@@ -3910,7 +3925,7 @@ namespace SpeechToTextV1 {
   export interface AddCorpusParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the new corpus for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the corpus. * Include a maximum of 128 characters in the name. * Do not include spaces, slashes, or backslashes in the name. * Do not use the name of an existing corpus or grammar that is already defined for the custom model. * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by the user. */
+    /** The name of the new corpus for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the corpus. * Include a maximum of 128 characters in the name. * Do not use characters that need to be URL-encoded. For example, do not use spaces, slashes, backslashes, colons, ampersands, double quotes, plus signs, equals signs, questions marks, and so on in the name. (The service does not prevent the use of these characters. But because they must be URL-encoded wherever used, their use is strongly discouraged.) * Do not use the name of an existing corpus or grammar that is already defined for the custom model. * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by the user. * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service. */
     corpus_name: string;
     /** A plain text file that contains the training data for the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it encounters non-ASCII characters. Make sure that you know the character encoding of the file. You must use that encoding when working with the words in the custom language model. For more information, see [Character encoding](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-corporaWords#charEncoding). With the `curl` command, use the `--data-binary` option to upload the file for the request. */
     corpus_file: NodeJS.ReadableStream|FileObject|Buffer;
@@ -4000,7 +4015,7 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The type of words to be listed from the custom language model's words resource: * `all` (the default) shows all words. * `user` shows only custom words that were added or modified by the user directly. * `corpora` shows only OOV that were extracted from corpora. * `grammars` shows only OOV words that are recognized by grammars. */
     word_type?: ListWordsConstants.WordType | string;
-    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With the `curl` command, URL encode the `+` symbol as `%2B`. */
+    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With the `curl` command, URL-encode the `+` symbol as `%2B`. */
     sort?: ListWordsConstants.Sort | string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
@@ -4015,7 +4030,7 @@ namespace SpeechToTextV1 {
       CORPORA = 'corpora',
       GRAMMARS = 'grammars',
     }
-    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With the `curl` command, URL encode the `+` symbol as `%2B`. */
+    /** Indicates the order in which the words are to be listed, `alphabetical` or by `count`. You can prepend an optional `+` or `-` to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With the `curl` command, URL-encode the `+` symbol as `%2B`. */
     export enum Sort {
       ALPHABETICAL = 'alphabetical',
       COUNT = 'count',
@@ -4026,7 +4041,7 @@ namespace SpeechToTextV1 {
   export interface AddGrammarParams {
     /** The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the new grammar for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the grammar. * Include a maximum of 128 characters in the name. * Do not include spaces, slashes, or backslashes in the name. * Do not use the name of an existing grammar or corpus that is already defined for the custom model. * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by the user. */
+    /** The name of the new grammar for the custom language model. Use a localized name that matches the language of the custom model and reflects the contents of the grammar. * Include a maximum of 128 characters in the name. * Do not use characters that need to be URL-encoded. For example, do not use spaces, slashes, backslashes, colons, ampersands, double quotes, plus signs, equals signs, questions marks, and so on in the name. (The service does not prevent the use of these characters. But because they must be URL-encoded wherever used, their use is strongly discouraged.) * Do not use the name of an existing grammar or corpus that is already defined for the custom model. * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by the user. * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service. */
     grammar_name: string;
     /** A plain text file that contains the grammar in the format specified by the `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using any other encoding can lead to issues when compiling the grammar or to unexpected results in decoding. The service ignores an encoding that is specified in the header of the grammar. With the `curl` command, use the `--data-binary` option to upload the file for the request. */
     grammar_file: string;
@@ -4172,7 +4187,7 @@ namespace SpeechToTextV1 {
   export interface AddAudioParams {
     /** The customization ID (GUID) of the custom acoustic model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
-    /** The name of the new audio resource for the custom acoustic model. Use a localized name that matches the language of the custom model and reflects the contents of the resource. * Include a maximum of 128 characters in the name. * Do not include spaces, slashes, or backslashes in the name. * Do not use the name of an audio resource that has already been added to the custom model. */
+    /** The name of the new audio resource for the custom acoustic model. Use a localized name that matches the language of the custom model and reflects the contents of the resource. * Include a maximum of 128 characters in the name. * Do not use characters that need to be URL-encoded. For example, do not use spaces, slashes, backslashes, colons, ampersands, double quotes, plus signs, equals signs, questions marks, and so on in the name. (The service does not prevent the use of these characters. But because they must be URL-encoded wherever used, their use is strongly discouraged.) * Do not use the name of an audio resource that has already been added to the custom model. */
     audio_name: string;
     /** The audio resource that is to be added to the custom acoustic model, an individual audio file or an archive file. With the `curl` command, use the `--data-binary` option to upload the file for the request. */
     audio_resource: NodeJS.ReadableStream|FileObject|Buffer;
@@ -4274,6 +4289,8 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The date and time in Coordinated Universal Time (UTC) at which the custom acoustic model was created. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     created?: string;
+    /** The date and time in Coordinated Universal Time (UTC) at which the custom acoustic model was last modified. The `created` and `updated` fields are equal when an acoustic model is first added but has yet to be updated. The value is provided in full ISO 8601 format (YYYY-MM-DDThh:mm:ss.sTZD). */
+    updated?: string;
     /** The language identifier of the custom acoustic model (for example, `en-US`). */
     language?: string;
     /** A list of the available versions of the custom acoustic model. Each element of the array indicates a version of the base model with which the custom model can be used. Multiple versions exist only if the custom model has been upgraded; otherwise, only a single version is shown. */
@@ -4454,6 +4471,8 @@ namespace SpeechToTextV1 {
     customization_id: string;
     /** The date and time in Coordinated Universal Time (UTC) at which the custom language model was created. The value is provided in full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`). */
     created?: string;
+    /** The date and time in Coordinated Universal Time (UTC) at which the custom language model was last modified. The `created` and `updated` fields are equal when a language model is first added but has yet to be updated. The value is provided in full ISO 8601 format (YYYY-MM-DDThh:mm:ss.sTZD). */
+    updated?: string;
     /** The language identifier of the custom language model (for example, `en-US`). */
     language?: string;
     /** The dialect of the language for the custom language model. By default, the dialect matches the language of the base model; for example, `en-US` for either of the US English language models. For Spanish models, the field indicates the dialect for which the model was created: * `es-ES` for Castilian Spanish (the default) * `es-LA` for Latin American Spanish * `es-US` for North American (Mexican) Spanish. */
@@ -4496,7 +4515,7 @@ namespace SpeechToTextV1 {
     speaker_labels?: number;
   }
 
-  /** If processing metrics are requested, information about the service's processing of the input audio. */
+  /** If processing metrics are requested, information about the service's processing of the input audio. Processing metrics are not available with the synchronous **Recognize audio** method. */
   export interface ProcessingMetrics {
     /** Detailed timing information about the service's processing of the input audio. */
     processed_audio: ProcessedAudio;
@@ -4608,7 +4627,7 @@ namespace SpeechToTextV1 {
     result_index?: number;
     /** An array of `SpeakerLabelsResult` objects that identifies which words were spoken by which speakers in a multi-person exchange. The array is returned only if the `speaker_labels` parameter is `true`. When interim results are also requested for methods that support them, it is possible for a `SpeechRecognitionResults` object to include only the `speaker_labels` field. */
     speaker_labels?: SpeakerLabelsResult[];
-    /** If processing metrics are requested, information about the service's processing of the input audio. */
+    /** If processing metrics are requested, information about the service's processing of the input audio. Processing metrics are not available with the synchronous **Recognize audio** method. */
     processing_metrics?: ProcessingMetrics;
     /** If audio metrics are requested, information about the signal characteristics of the input audio. */
     audio_metrics?: AudioMetrics;
@@ -4632,10 +4651,10 @@ namespace SpeechToTextV1 {
 
   /** A warning from training of a custom language or custom acoustic model. */
   export interface TrainingWarning {
-    /** A warning message that lists the invalid resources that are excluded from the custom model's training. The message has the following format: `Analysis of the following {resource_type} has not completed successfully: [{resource_names}]. They will be excluded from custom {model_type} model training.`. */
-    description: string;
     /** An identifier for the type of invalid resources listed in the `description` field. */
-    warning_id: string;
+    code: string;
+    /** A warning message that lists the invalid resources that are excluded from the custom model's training. The message has the following format: `Analysis of the following {resource_type} has not completed successfully: [{resource_names}]. They will be excluded from custom {model_type} model training.`. */
+    message: string;
   }
 
   /** Information about a word from a custom language model. */
