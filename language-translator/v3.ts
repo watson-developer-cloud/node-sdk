@@ -134,6 +134,46 @@ class LanguageTranslatorV3 extends BaseService {
    ************************/
 
   /**
+   * List identifiable languages.
+   *
+   * Lists the languages that the service can identify. Returns the language code (for example, `en` for English or `es`
+   * for Spanish) and name of each language.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listIdentifiableLanguages(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
+
+    const parameters = {
+      options: {
+        url: '/v3/identifiable_languages',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Identify language.
    *
    * Identifies the language of the input text.
@@ -182,35 +222,51 @@ class LanguageTranslatorV3 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /*************************
+   * models
+   ************************/
+
   /**
-   * List identifiable languages.
+   * List models.
    *
-   * Lists the languages that the service can identify. Returns the language code (for example, `en` for English or `es`
-   * for Spanish) and name of each language.
+   * Lists available translation models.
    *
    * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.source] - Specify a language code to filter results by source language.
+   * @param {string} [params.target] - Specify a language code to filter results by target language.
+   * @param {boolean} [params.default_models] - If the default parameter isn't specified, the service will return all
+   * models (default and non-default) for each language pair. To return only default models, set this to `true`. To
+   * return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM
+   * provided base model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): Promise<any> | void {
+  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): Promise<any> | void {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listIdentifiableLanguages(params, (err, bod, res) => {
+        this.listModels(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
     }
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
+    const query = {
+      'source': _params.source,
+      'target': _params.target,
+      'default': _params.default_models
+    };
+
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
 
     const parameters = {
       options: {
-        url: '/v3/identifiable_languages',
+        url: '/v3/models',
         method: 'GET',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -221,10 +277,6 @@ class LanguageTranslatorV3 extends BaseService {
 
     return this.createRequest(parameters, _callback);
   };
-
-  /*************************
-   * models
-   ************************/
 
   /**
    * Create model.
@@ -417,223 +469,9 @@ class LanguageTranslatorV3 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
-  /**
-   * List models.
-   *
-   * Lists available translation models.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.source] - Specify a language code to filter results by source language.
-   * @param {string} [params.target] - Specify a language code to filter results by target language.
-   * @param {boolean} [params.default_models] - If the default parameter isn't specified, the service will return all
-   * models (default and non-default) for each language pair. To return only default models, set this to `true`. To
-   * return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM
-   * provided base model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listModels(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const query = {
-      'source': _params.source,
-      'target': _params.target,
-      'default': _params.default_models
-    };
-
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
-
-    const parameters = {
-      options: {
-        url: '/v3/models',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
   /*************************
    * documentTranslation
    ************************/
-
-  /**
-   * Delete document.
-   *
-   * Deletes a document.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.document_id - Document ID of the document to delete.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteDocument(params: LanguageTranslatorV3.DeleteDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['document_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteDocument(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'document_id': _params.document_id
-    };
-
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteDocument');
-
-    const parameters = {
-      options: {
-        url: '/v3/documents/{document_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Get document status.
-   *
-   * Gets the translation status of a document.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.document_id - The document ID of the document.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public getDocumentStatus(params: LanguageTranslatorV3.GetDocumentStatusParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['document_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getDocumentStatus(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'document_id': _params.document_id
-    };
-
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getDocumentStatus');
-
-    const parameters = {
-      options: {
-        url: '/v3/documents/{document_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Get translated document.
-   *
-   * Gets the translated document associated with the given document ID.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.document_id - The document ID of the document that was submitted for translation.
-   * @param {string} [params.accept] - The type of the response: application/powerpoint, application/mspowerpoint,
-   * application/x-rtf, application/json, application/xml, application/vnd.ms-excel,
-   * application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint,
-   * application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword,
-   * application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-   * application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation,
-   * application/vnd.oasis.opendocument.text, application/pdf, application/rtf, text/html, text/json, text/plain,
-   * text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For
-   * example, 'text/html;charset=utf-8'.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public getTranslatedDocument(params: LanguageTranslatorV3.GetTranslatedDocumentParams, callback?: LanguageTranslatorV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['document_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getTranslatedDocument(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'document_id': _params.document_id
-    };
-
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getTranslatedDocument');
-
-    const parameters = {
-      options: {
-        url: '/v3/documents/{document_id}/translated_document',
-        method: 'GET',
-        path,
-        responseType: 'stream',
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': _params.accept
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
 
   /**
    * List documents.
@@ -747,6 +585,168 @@ class LanguageTranslatorV3 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Get document status.
+   *
+   * Gets the translation status of a document.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.document_id - The document ID of the document.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public getDocumentStatus(params: LanguageTranslatorV3.GetDocumentStatusParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getDocumentStatus(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'document_id': _params.document_id
+    };
+
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getDocumentStatus');
+
+    const parameters = {
+      options: {
+        url: '/v3/documents/{document_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete document.
+   *
+   * Deletes a document.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.document_id - Document ID of the document to delete.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteDocument(params: LanguageTranslatorV3.DeleteDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'document_id': _params.document_id
+    };
+
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteDocument');
+
+    const parameters = {
+      options: {
+        url: '/v3/documents/{document_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Get translated document.
+   *
+   * Gets the translated document associated with the given document ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.document_id - The document ID of the document that was submitted for translation.
+   * @param {string} [params.accept] - The type of the response: application/powerpoint, application/mspowerpoint,
+   * application/x-rtf, application/json, application/xml, application/vnd.ms-excel,
+   * application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint,
+   * application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword,
+   * application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+   * application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation,
+   * application/vnd.oasis.opendocument.text, application/pdf, application/rtf, text/html, text/json, text/plain,
+   * text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For
+   * example, 'text/html;charset=utf-8'.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public getTranslatedDocument(params: LanguageTranslatorV3.GetTranslatedDocumentParams, callback?: LanguageTranslatorV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['document_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getTranslatedDocument(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'document_id': _params.document_id
+    };
+
+    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getTranslatedDocument');
+
+    const parameters = {
+      options: {
+        url: '/v3/documents/{document_id}/translated_document',
+        method: 'GET',
+        path,
+        responseType: 'stream',
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': _params.accept
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
 }
 
 LanguageTranslatorV3.prototype.name = 'language_translator';
@@ -815,6 +815,12 @@ namespace LanguageTranslatorV3 {
     return_response?: boolean;
   }
 
+  /** Parameters for the `listIdentifiableLanguages` operation. */
+  export interface ListIdentifiableLanguagesParams {
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `identify` operation. */
   export interface IdentifyParams {
     /** Input text in UTF-8 format. */
@@ -823,8 +829,14 @@ namespace LanguageTranslatorV3 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listIdentifiableLanguages` operation. */
-  export interface ListIdentifiableLanguagesParams {
+  /** Parameters for the `listModels` operation. */
+  export interface ListModelsParams {
+    /** Specify a language code to filter results by source language. */
+    source?: string;
+    /** Specify a language code to filter results by target language. */
+    target?: string;
+    /** If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM provided base model. */
+    default_models?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -859,73 +871,6 @@ namespace LanguageTranslatorV3 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listModels` operation. */
-  export interface ListModelsParams {
-    /** Specify a language code to filter results by source language. */
-    source?: string;
-    /** Specify a language code to filter results by target language. */
-    target?: string;
-    /** If the default parameter isn't specified, the service will return all models (default and non-default) for each language pair. To return only default models, set this to `true`. To return only non-default models, set this to `false`. There is exactly one default model per language pair, the IBM provided base model. */
-    default_models?: boolean;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteDocument` operation. */
-  export interface DeleteDocumentParams {
-    /** Document ID of the document to delete. */
-    document_id: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getDocumentStatus` operation. */
-  export interface GetDocumentStatusParams {
-    /** The document ID of the document. */
-    document_id: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getTranslatedDocument` operation. */
-  export interface GetTranslatedDocumentParams {
-    /** The document ID of the document that was submitted for translation. */
-    document_id: string;
-    /** The type of the response: application/powerpoint, application/mspowerpoint, application/x-rtf, application/json, application/xml, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation, application/vnd.oasis.opendocument.text, application/pdf, application/rtf, text/html, text/json, text/plain, text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
-    accept?: GetTranslatedDocumentConstants.Accept | string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Constants for the `getTranslatedDocument` operation. */
-  export namespace GetTranslatedDocumentConstants {
-    /** The type of the response: application/powerpoint, application/mspowerpoint, application/x-rtf, application/json, application/xml, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation, application/vnd.oasis.opendocument.text, application/pdf, application/rtf, text/html, text/json, text/plain, text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
-    export enum Accept {
-      APPLICATION_POWERPOINT = 'application/powerpoint',
-      APPLICATION_MSPOWERPOINT = 'application/mspowerpoint',
-      APPLICATION_X_RTF = 'application/x-rtf',
-      APPLICATION_JSON = 'application/json',
-      APPLICATION_XML = 'application/xml',
-      APPLICATION_VND_MS_EXCEL = 'application/vnd.ms-excel',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      APPLICATION_VND_MS_POWERPOINT = 'application/vnd.ms-powerpoint',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION = 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-      APPLICATION_MSWORD = 'application/msword',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET = 'application/vnd.oasis.opendocument.spreadsheet',
-      APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION = 'application/vnd.oasis.opendocument.presentation',
-      APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT = 'application/vnd.oasis.opendocument.text',
-      APPLICATION_PDF = 'application/pdf',
-      APPLICATION_RTF = 'application/rtf',
-      TEXT_HTML = 'text/html',
-      TEXT_JSON = 'text/json',
-      TEXT_PLAIN = 'text/plain',
-      TEXT_RICHTEXT = 'text/richtext',
-      TEXT_RTF = 'text/rtf',
-      TEXT_XML = 'text/xml',
-    }
-  }
-
   /** Parameters for the `listDocuments` operation. */
   export interface ListDocumentsParams {
     headers?: OutgoingHttpHeaders;
@@ -956,6 +901,61 @@ namespace LanguageTranslatorV3 {
   export namespace TranslateDocumentConstants {
     /** The content type of file. */
     export enum FileContentType {
+      APPLICATION_POWERPOINT = 'application/powerpoint',
+      APPLICATION_MSPOWERPOINT = 'application/mspowerpoint',
+      APPLICATION_X_RTF = 'application/x-rtf',
+      APPLICATION_JSON = 'application/json',
+      APPLICATION_XML = 'application/xml',
+      APPLICATION_VND_MS_EXCEL = 'application/vnd.ms-excel',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      APPLICATION_VND_MS_POWERPOINT = 'application/vnd.ms-powerpoint',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION = 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET = 'application/vnd.oasis.opendocument.spreadsheet',
+      APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION = 'application/vnd.oasis.opendocument.presentation',
+      APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT = 'application/vnd.oasis.opendocument.text',
+      APPLICATION_PDF = 'application/pdf',
+      APPLICATION_RTF = 'application/rtf',
+      TEXT_HTML = 'text/html',
+      TEXT_JSON = 'text/json',
+      TEXT_PLAIN = 'text/plain',
+      TEXT_RICHTEXT = 'text/richtext',
+      TEXT_RTF = 'text/rtf',
+      TEXT_XML = 'text/xml',
+    }
+  }
+
+  /** Parameters for the `getDocumentStatus` operation. */
+  export interface GetDocumentStatusParams {
+    /** The document ID of the document. */
+    document_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `deleteDocument` operation. */
+  export interface DeleteDocumentParams {
+    /** Document ID of the document to delete. */
+    document_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getTranslatedDocument` operation. */
+  export interface GetTranslatedDocumentParams {
+    /** The document ID of the document that was submitted for translation. */
+    document_id: string;
+    /** The type of the response: application/powerpoint, application/mspowerpoint, application/x-rtf, application/json, application/xml, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation, application/vnd.oasis.opendocument.text, application/pdf, application/rtf, text/html, text/json, text/plain, text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+    accept?: GetTranslatedDocumentConstants.Accept | string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Constants for the `getTranslatedDocument` operation. */
+  export namespace GetTranslatedDocumentConstants {
+    /** The type of the response: application/powerpoint, application/mspowerpoint, application/x-rtf, application/json, application/xml, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.spreadsheet, application/vnd.oasis.opendocument.presentation, application/vnd.oasis.opendocument.text, application/pdf, application/rtf, text/html, text/json, text/plain, text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For example, 'text/html;charset=utf-8'. */
+    export enum Accept {
       APPLICATION_POWERPOINT = 'application/powerpoint',
       APPLICATION_MSPOWERPOINT = 'application/mspowerpoint',
       APPLICATION_X_RTF = 'application/x-rtf',

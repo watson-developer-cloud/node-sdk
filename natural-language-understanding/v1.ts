@@ -167,6 +167,47 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    ************************/
 
   /**
+   * List models.
+   *
+   * Lists Watson Knowledge Studio [custom entities and relations
+   * models](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing)
+   * that are deployed to your Natural Language Understanding service.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listModels(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'listModels');
+
+    const parameters = {
+      options: {
+        url: '/v1/models',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Delete model.
    *
    * Deletes a custom model.
@@ -206,47 +247,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         url: '/v1/models/{model_id}',
         method: 'DELETE',
         path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List models.
-   *
-   * Lists Watson Knowledge Studio [custom entities and relations
-   * models](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing)
-   * that are deployed to your Natural Language Understanding service.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listModels(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'listModels');
-
-    const parameters = {
-      options: {
-        url: '/v1/models',
-        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -338,16 +338,16 @@ namespace NaturalLanguageUnderstandingV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `deleteModel` operation. */
-  export interface DeleteModelParams {
-    /** Model ID of the model to delete. */
-    model_id: string;
+  /** Parameters for the `listModels` operation. */
+  export interface ListModelsParams {
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
 
-  /** Parameters for the `listModels` operation. */
-  export interface ListModelsParams {
+  /** Parameters for the `deleteModel` operation. */
+  export interface DeleteModelParams {
+    /** Model ID of the model to delete. */
+    model_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }

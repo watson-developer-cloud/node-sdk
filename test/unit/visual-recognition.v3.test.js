@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * Copyright 2019 IBM All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -338,100 +338,70 @@ describe('createClassifier', () => {
   });
 });
 
-describe('deleteClassifier', () => {
+describe('listClassifiers', () => {
   describe('positive tests', () => {
     beforeAll(() => {
       missingParamsMock.mockReturnValue(missingParamsSuccess);
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const verbose = 'fake_verbose';
       const params = {
-        classifier_id,
+        verbose,
       };
 
       // invoke method
-      visualRecognition.deleteClassifier(params, noop);
+      visualRecognition.listClassifiers(params, noop);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
 
       const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v3/classifiers/{classifier_id}', 'DELETE');
+      checkUrlAndMethod(options, '/v3/classifiers', 'GET');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['classifier_id']).toEqual(classifier_id);
+      expect(options.qs['verbose']).toEqual(verbose);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
       const accept = 'fake/header';
       const contentType = 'fake/header';
       const params = {
-        classifier_id,
         headers: {
           Accept: accept,
           'Content-Type': contentType,
         },
       };
 
-      visualRecognition.deleteClassifier(params, noop);
+      visualRecognition.listClassifiers(params, noop);
       checkMediaHeaders(createRequestMock, accept, contentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const params = {
-        classifier_id,
-      };
+      const params = {};
 
       // invoke method
-      const deleteClassifierPromise = visualRecognition.deleteClassifier(params);
-      expectToBePromise(deleteClassifierPromise);
+      const listClassifiersPromise = visualRecognition.listClassifiers(params);
+      expectToBePromise(listClassifiersPromise);
 
       // assert that create request was called
       expect(createRequestMock).toHaveBeenCalledTimes(1);
     });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
+    test('should not have any problems when no parameters are passed in', () => {
+      // invoke the method
+      visualRecognition.listClassifiers({}, noop);
+      checkDefaultSuccessArgs(createRequestMock);
     });
 
-    test('should convert a `null` value for `params` to an empty object', done => {
-      visualRecognition.deleteClassifier(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      visualRecognition.deleteClassifier({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifier_id'];
-
-      const deleteClassifierPromise = visualRecognition.deleteClassifier();
-      expectToBePromise(deleteClassifierPromise);
-
-      deleteClassifierPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
+    test('should use argument as callback function if only one is passed in', () => {
+      // invoke the method
+      visualRecognition.listClassifiers(noop);
+      checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
@@ -530,74 +500,6 @@ describe('getClassifier', () => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
-  });
-});
-
-describe('listClassifiers', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const verbose = 'fake_verbose';
-      const params = {
-        verbose,
-      };
-
-      // invoke method
-      visualRecognition.listClassifiers(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v3/classifiers', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['verbose']).toEqual(verbose);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
-      const params = {
-        headers: {
-          Accept: accept,
-          'Content-Type': contentType,
-        },
-      };
-
-      visualRecognition.listClassifiers(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listClassifiersPromise = visualRecognition.listClassifiers(params);
-      expectToBePromise(listClassifiersPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-    test('should not have any problems when no parameters are passed in', () => {
-      // invoke the method
-      visualRecognition.listClassifiers({}, noop);
-      checkDefaultSuccessArgs(createRequestMock);
-    });
-
-    test('should use argument as callback function if only one is passed in', () => {
-      // invoke the method
-      visualRecognition.listClassifiers(noop);
-      checkDefaultSuccessArgs(createRequestMock);
     });
   });
 });
@@ -706,6 +608,104 @@ describe('updateClassifier', () => {
       expectToBePromise(updateClassifierPromise);
 
       updateClassifierPromise.catch(err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+  });
+});
+
+describe('deleteClassifier', () => {
+  describe('positive tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsSuccess);
+    });
+    test('should pass the right params to createRequest', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      visualRecognition.deleteClassifier(params, noop);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+      const options = getOptions(createRequestMock);
+
+      checkUrlAndMethod(options, '/v3/classifiers/{classifier_id}', 'DELETE');
+      checkCallback(createRequestMock);
+      const expectedAccept = 'application/json';
+      const expectedContentType = undefined;
+      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      expect(options.path['classifier_id']).toEqual(classifier_id);
+    });
+
+    test('should prioritize user-given headers', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const accept = 'fake/header';
+      const contentType = 'fake/header';
+      const params = {
+        classifier_id,
+        headers: {
+          Accept: accept,
+          'Content-Type': contentType,
+        },
+      };
+
+      visualRecognition.deleteClassifier(params, noop);
+      checkMediaHeaders(createRequestMock, accept, contentType);
+    });
+
+    test('should return a promise when no callback is given', () => {
+      // parameters
+      const classifier_id = 'fake_classifier_id';
+      const params = {
+        classifier_id,
+      };
+
+      // invoke method
+      const deleteClassifierPromise = visualRecognition.deleteClassifier(params);
+      expectToBePromise(deleteClassifierPromise);
+
+      // assert that create request was called
+      expect(createRequestMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('negative tests', () => {
+    beforeAll(() => {
+      missingParamsMock.mockReturnValue(missingParamsError);
+    });
+
+    test('should convert a `null` value for `params` to an empty object', done => {
+      visualRecognition.deleteClassifier(null, () => {
+        checkForEmptyObject(missingParamsMock);
+        done();
+      });
+    });
+
+    test('should enforce required parameters', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      visualRecognition.deleteClassifier({}, err => {
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+    });
+
+    test('should reject promise when required params are not given', done => {
+      // required parameters for this method
+      const requiredParams = ['classifier_id'];
+
+      const deleteClassifierPromise = visualRecognition.deleteClassifier();
+      expectToBePromise(deleteClassifierPromise);
+
+      deleteClassifierPromise.catch(err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });

@@ -63,6 +63,49 @@ class TextToSpeechV1 extends BaseService {
    ************************/
 
   /**
+   * List voices.
+   *
+   * Lists all voices available for use with the service. The information includes the name, language, gender, and other
+   * details about the voice. To see information about a specific voice, use the **Get a voice** method.
+   *
+   * **See also:** [Listing all available
+   * voices](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-voices#listVoices).
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listVoices(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listVoices');
+
+    const parameters = {
+      options: {
+        url: '/v1/voices',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
    * Get a voice.
    *
    * Gets information about the specified voice. The information includes the name, language, gender, and other details
@@ -115,49 +158,6 @@ class TextToSpeechV1 extends BaseService {
         method: 'GET',
         qs: query,
         path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * List voices.
-   *
-   * Lists all voices available for use with the service. The information includes the name, language, gender, and other
-   * details about the voice. To see information about a specific voice, use the **Get a voice** method.
-   *
-   * **See also:** [Listing all available
-   * voices](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-voices#listVoices).
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listVoices(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listVoices');
-
-    const parameters = {
-      options: {
-        url: '/v1/voices',
-        method: 'GET',
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -457,122 +457,6 @@ class TextToSpeechV1 extends BaseService {
   };
 
   /**
-   * Delete a custom model.
-   *
-   * Deletes the specified custom voice model. You must use credentials for the instance of the service that owns a
-   * model to delete it.
-   *
-   * **Note:** This method is currently a beta release.
-   *
-   * **See also:** [Deleting a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsDelete).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with credentials for the instance of the service that owns the custom model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteVoiceModel(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id
-    };
-
-    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteVoiceModel');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations/{customization_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Get a custom model.
-   *
-   * Gets all information about a specified custom voice model. In addition to metadata such as the name and description
-   * of the voice model, the output includes the words and their translations as defined in the model. To see just the
-   * metadata for a voice model, use the **List custom models** method.
-   *
-   * **Note:** This method is currently a beta release.
-   *
-   * **See also:** [Querying a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with credentials for the instance of the service that owns the custom model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getVoiceModel(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id
-    };
-
-    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getVoiceModel');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations/{customization_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * List custom models.
    *
    * Lists metadata such as the name and description for all custom voice models that are owned by an instance of the
@@ -714,9 +598,271 @@ class TextToSpeechV1 extends BaseService {
     return this.createRequest(parameters, _callback);
   };
 
+  /**
+   * Get a custom model.
+   *
+   * Gets all information about a specified custom voice model. In addition to metadata such as the name and description
+   * of the voice model, the output includes the words and their translations as defined in the model. To see just the
+   * metadata for a voice model, use the **List custom models** method.
+   *
+   * **Note:** This method is currently a beta release.
+   *
+   * **See also:** [Querying a custom
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
+   * request with credentials for the instance of the service that owns the custom model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.getVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getVoiceModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete a custom model.
+   *
+   * Deletes the specified custom voice model. You must use credentials for the instance of the service that owns a
+   * model to delete it.
+   *
+   * **Note:** This method is currently a beta release.
+   *
+   * **See also:** [Deleting a custom
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsDelete).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
+   * request with credentials for the instance of the service that owns the custom model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteVoiceModel(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteVoiceModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
   /*************************
    * customWords
    ************************/
+
+  /**
+   * Add custom words.
+   *
+   * Adds one or more words and their translations to the specified custom voice model. Adding a new translation for a
+   * word that already exists in a custom model overwrites the word's existing translation. A custom model can contain
+   * no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add
+   * words to it.
+   *
+   * You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
+   * words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
+   * representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation
+   *
+   *   <code>&lt;phoneme alphabet=\"ipa\" ph=\"t&#601;m&#712;&#593;to\"&gt;&lt;/phoneme&gt;</code>
+   *
+   *   or in the proprietary IBM Symbolic Phonetic Representation (SPR)
+   *
+   *   <code>&lt;phoneme alphabet=\"ibm\" ph=\"1gAstroEntxrYFXs\"&gt;&lt;/phoneme&gt;</code>
+   *
+   * **Note:** This method is currently a beta release.
+   *
+   * **See also:**
+   * * [Adding multiple words to a custom
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd)
+   * * [Adding words to a Japanese custom
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
+   * * [Understanding
+   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
+   * request with credentials for the instance of the service that owns the custom model.
+   * @param {Word[]} params.words - The **Add custom words** method accepts an array of `Word` objects. Each object
+   * provides a word that is to be added or updated for the custom voice model and the word's translation.
+   *
+   * The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation
+   * from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before
+   * lowercase letters. The array is empty if the custom model contains no words.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id', 'words'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.addWords(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const body = {
+      'words': _params.words
+    };
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'addWords');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * List custom words.
+   *
+   * Lists all of the words and their translations for the specified custom voice model. The output shows the
+   * translations as they are defined in the model. You must use credentials for the instance of the service that owns a
+   * model to list its words.
+   *
+   * **Note:** This method is currently a beta release.
+   *
+   * **See also:** [Querying all words from a custom
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryModel).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
+   * request with credentials for the instance of the service that owns the custom model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customization_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.listWords(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'customization_id': _params.customization_id
+    };
+
+    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listWords');
+
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
 
   /**
    * Add a custom word.
@@ -810,152 +956,6 @@ class TextToSpeechV1 extends BaseService {
   };
 
   /**
-   * Add custom words.
-   *
-   * Adds one or more words and their translations to the specified custom voice model. Adding a new translation for a
-   * word that already exists in a custom model overwrites the word's existing translation. A custom model can contain
-   * no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add
-   * words to it.
-   *
-   * You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
-   * words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
-   * representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation
-   *
-   *   <code>&lt;phoneme alphabet=\"ipa\" ph=\"t&#601;m&#712;&#593;to\"&gt;&lt;/phoneme&gt;</code>
-   *
-   *   or in the proprietary IBM Symbolic Phonetic Representation (SPR)
-   *
-   *   <code>&lt;phoneme alphabet=\"ibm\" ph=\"1gAstroEntxrYFXs\"&gt;&lt;/phoneme&gt;</code>
-   *
-   * **Note:** This method is currently a beta release.
-   *
-   * **See also:**
-   * * [Adding multiple words to a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd)
-   * * [Adding words to a Japanese custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
-   * * [Understanding
-   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with credentials for the instance of the service that owns the custom model.
-   * @param {Word[]} params.words - The **Add custom words** method accepts an array of `Word` objects. Each object
-   * provides a word that is to be added or updated for the custom voice model and the word's translation.
-   *
-   * The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation
-   * from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before
-   * lowercase letters. The array is empty if the custom model contains no words.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id', 'words'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.addWords(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const body = {
-      'words': _params.words
-    };
-
-    const path = {
-      'customization_id': _params.customization_id
-    };
-
-    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'addWords');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations/{customization_id}/words',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Delete a custom word.
-   *
-   * Deletes a single word from the specified custom voice model. You must use credentials for the instance of the
-   * service that owns a model to delete its words.
-   *
-   * **Note:** This method is currently a beta release.
-   *
-   * **See also:** [Deleting a word from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordDelete).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
-   * request with credentials for the instance of the service that owns the custom model.
-   * @param {string} params.word - The word that is to be deleted from the custom voice model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['customization_id', 'word'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteWord(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'customization_id': _params.customization_id,
-      'word': _params.word
-    };
-
-    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteWord');
-
-    const parameters = {
-      options: {
-        url: '/v1/customizations/{customization_id}/words/{word}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
    * Get a custom word.
    *
    * Gets the translation for a single word from the specified custom model. The output shows the translation as it is
@@ -1017,32 +1017,32 @@ class TextToSpeechV1 extends BaseService {
   };
 
   /**
-   * List custom words.
+   * Delete a custom word.
    *
-   * Lists all of the words and their translations for the specified custom voice model. The output shows the
-   * translations as they are defined in the model. You must use credentials for the instance of the service that owns a
-   * model to list its words.
+   * Deletes a single word from the specified custom voice model. You must use credentials for the instance of the
+   * service that owns a model to delete its words.
    *
    * **Note:** This method is currently a beta release.
    *
-   * **See also:** [Querying all words from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryModel).
+   * **See also:** [Deleting a word from a custom
+   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordDelete).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customization_id - The customization ID (GUID) of the custom voice model. You must make the
    * request with credentials for the instance of the service that owns the custom model.
+   * @param {string} params.word - The word that is to be deleted from the custom voice model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): Promise<any> | void {
+  public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['customization_id'];
+    const requiredParams = ['customization_id', 'word'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listWords(params, (err, bod, res) => {
+        this.deleteWord(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
@@ -1054,20 +1054,20 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customization_id
+      'customization_id': _params.customization_id,
+      'word': _params.word
     };
 
-    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listWords');
+    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteWord');
 
     const parameters = {
       options: {
-        url: '/v1/customizations/{customization_id}/words',
-        method: 'GET',
+        url: '/v1/customizations/{customization_id}/words/{word}',
+        method: 'DELETE',
         path,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
         }, _params.headers),
       }),
     };
@@ -1191,6 +1191,12 @@ namespace TextToSpeechV1 {
    * request interfaces
    ************************/
 
+  /** Parameters for the `listVoices` operation. */
+  export interface ListVoicesParams {
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
   /** Parameters for the `getVoice` operation. */
   export interface GetVoiceParams {
     /** The voice for which information is to be returned. */
@@ -1239,12 +1245,6 @@ namespace TextToSpeechV1 {
       EN_US_MICHAELV2VOICE = 'en-US_MichaelV2Voice',
       IT_IT_FRANCESCAV2VOICE = 'it-IT_FrancescaV2Voice',
     }
-  }
-
-  /** Parameters for the `listVoices` operation. */
-  export interface ListVoicesParams {
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `synthesize` operation. */
@@ -1405,22 +1405,6 @@ namespace TextToSpeechV1 {
     }
   }
 
-  /** Parameters for the `deleteVoiceModel` operation. */
-  export interface DeleteVoiceModelParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `getVoiceModel` operation. */
-  export interface GetVoiceModelParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
   /** Parameters for the `listVoiceModels` operation. */
   export interface ListVoiceModelsParams {
     /** The language for which custom voice models that are owned by the requesting credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester. */
@@ -1456,6 +1440,40 @@ namespace TextToSpeechV1 {
     description?: string;
     /** An array of `Word` objects that provides the words and their translations that are to be added or updated for the custom voice model. Pass an empty array to make no additions or updates. */
     words?: Word[];
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `getVoiceModel` operation. */
+  export interface GetVoiceModelParams {
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `deleteVoiceModel` operation. */
+  export interface DeleteVoiceModelParams {
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `addWords` operation. */
+  export interface AddWordsParams {
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
+    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation. The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
+    words: Word[];
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `listWords` operation. */
+  export interface ListWordsParams {
+    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
+    customization_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -1498,26 +1516,6 @@ namespace TextToSpeechV1 {
     }
   }
 
-  /** Parameters for the `addWords` operation. */
-  export interface AddWordsParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to be added or updated for the custom voice model and the word's translation. The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if the custom model contains no words. */
-    words: Word[];
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `deleteWord` operation. */
-  export interface DeleteWordParams {
-    /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
-    customization_id: string;
-    /** The word that is to be deleted from the custom voice model. */
-    word: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
   /** Parameters for the `getWord` operation. */
   export interface GetWordParams {
     /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
@@ -1528,10 +1526,12 @@ namespace TextToSpeechV1 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `listWords` operation. */
-  export interface ListWordsParams {
+  /** Parameters for the `deleteWord` operation. */
+  export interface DeleteWordParams {
     /** The customization ID (GUID) of the custom voice model. You must make the request with credentials for the instance of the service that owns the custom model. */
     customization_id: string;
+    /** The word that is to be deleted from the custom voice model. */
+    word: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }

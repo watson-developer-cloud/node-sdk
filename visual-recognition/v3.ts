@@ -323,43 +323,38 @@ class VisualRecognitionV3 extends BaseService {
   };
 
   /**
-   * Delete a classifier.
+   * Retrieve a list of classifiers.
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to
+   * return a brief list of classifiers.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['classifier_id'];
+  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): Promise<any> | void {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteClassifier(params, (err, bod, res) => {
+        this.listClassifiers(params, (err, bod, res) => {
           err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
         });
       });
     }
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const path = {
-      'classifier_id': _params.classifier_id
+    const query = {
+      'verbose': _params.verbose
     };
 
-    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteClassifier');
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'listClassifiers');
 
     const parameters = {
       options: {
-        url: '/v3/classifiers/{classifier_id}',
-        method: 'DELETE',
-        path,
+        url: '/v3/classifiers',
+        method: 'GET',
+        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -411,50 +406,6 @@ class VisualRecognitionV3 extends BaseService {
         url: '/v3/classifiers/{classifier_id}',
         method: 'GET',
         path,
-      },
-      defaultOptions: extend(true, {}, this._options, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Retrieve a list of classifiers.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to
-   * return a brief list of classifiers.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): Promise<any> | void {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listClassifiers(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
-        });
-      });
-    }
-
-    const query = {
-      'verbose': _params.verbose
-    };
-
-    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'listClassifiers');
-
-    const parameters = {
-      options: {
-        url: '/v3/classifiers',
-        method: 'GET',
-        qs: query,
       },
       defaultOptions: extend(true, {}, this._options, {
         headers: extend(true, sdkHeaders, {
@@ -553,6 +504,55 @@ class VisualRecognitionV3 extends BaseService {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters, _callback);
+  };
+
+  /**
+   * Delete a classifier.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<any> | void {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['classifier_id'];
+
+    if (!_callback) {
+      return new Promise((resolve, reject) => {
+        this.deleteClassifier(params, (err, bod, res) => {
+          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        });
+      });
+    }
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return _callback(missingParams);
+    }
+
+    const path = {
+      'classifier_id': _params.classifier_id
+    };
+
+    const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteClassifier');
+
+    const parameters = {
+      options: {
+        url: '/v3/classifiers/{classifier_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this._options, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
         }, _params.headers),
       }),
     };
@@ -819,10 +819,10 @@ namespace VisualRecognitionV3 {
     return_response?: boolean;
   }
 
-  /** Parameters for the `deleteClassifier` operation. */
-  export interface DeleteClassifierParams {
-    /** The ID of the classifier. */
-    classifier_id: string;
+  /** Parameters for the `listClassifiers` operation. */
+  export interface ListClassifiersParams {
+    /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. */
+    verbose?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -831,14 +831,6 @@ namespace VisualRecognitionV3 {
   export interface GetClassifierParams {
     /** The ID of the classifier. */
     classifier_id: string;
-    headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
-  }
-
-  /** Parameters for the `listClassifiers` operation. */
-  export interface ListClassifiersParams {
-    /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. */
-    verbose?: boolean;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
@@ -853,6 +845,14 @@ namespace VisualRecognitionV3 {
     negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
     /** The filename for negative_examples. */
     negative_examples_filename?: string;
+    headers?: OutgoingHttpHeaders;
+    return_response?: boolean;
+  }
+
+  /** Parameters for the `deleteClassifier` operation. */
+  export interface DeleteClassifierParams {
+    /** The ID of the classifier. */
+    classifier_id: string;
     headers?: OutgoingHttpHeaders;
     return_response?: boolean;
   }
