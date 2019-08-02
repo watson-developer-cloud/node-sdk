@@ -4178,6 +4178,8 @@ namespace DiscoveryV1 {
     disable_ssl_verification?: boolean;
     use_unauthenticated?: boolean;
     headers?: OutgoingHttpHeaders;
+    /** Allow additional request config parameters */
+    [propName: string]: any;
   }
 
   export interface Response<T = any>  {
