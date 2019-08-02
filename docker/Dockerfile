@@ -3,8 +3,9 @@ FROM node:12-slim
 
 #Install Git
 RUN apt-get update && \
-    apt list -a git && \
-    apt-get install -y --no-install-recommends git=1:2.*
+    apt-get install -y --no-install-recommends git=1:2.* && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 #Clone SDK repo to app directory
 RUN git clone https://github.com/watson-developer-cloud/node-sdk.git
