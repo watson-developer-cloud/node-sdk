@@ -1,3 +1,10 @@
+## [4.3.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.0...v4.3.1) (2019-08-05)
+
+
+### Bug Fixes
+
+* extend constructor options types to allow additional properties ([#925](https://github.com/watson-developer-cloud/node-sdk/issues/925)) ([03d241a](https://github.com/watson-developer-cloud/node-sdk/commit/03d241a))
+
 # [4.3.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.2.6...v4.3.0) (2019-07-25)
 
 
