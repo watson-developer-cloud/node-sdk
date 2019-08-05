@@ -100,6 +100,8 @@ namespace AuthorizationV1 {
     url?: string;
     iam_apikey?: string;
     iam_url?: string;
+    /** Allow additional request config parameters */
+    [propName: string]: any;
   }
 
   export interface GetTokenResponse {
