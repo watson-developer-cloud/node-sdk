@@ -3,6 +3,3 @@ FROM node:12-slim
 
 #Install the node SDK
 RUN npm install ibm-watson
-
-
-
