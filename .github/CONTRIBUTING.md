@@ -7,7 +7,7 @@ or [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson).
 
 # Code
 
-* Our style guide is based on [Google's](https://google.github.io/styleguide/jsguide.html), most of it is automaticaly enforced (and can be automatically applied with `npm run autofix`)
+* Our style guide is based on [Google's](https://google.github.io/styleguide/jsguide.html), most of it is automaticaly enforced (and can be automatically applied with `npm run tslint:fix` or `npm run eslint:fix`)
 * Commits should follow the [Angular commit message guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#-commit-message-guidelines). This is because our release tool uses this format for determining release versions and generating changelogs. To make this easier, we recommend using the [Commitizen CLI](https://github.com/commitizen/cz-cli) with the `cz-conventional-changelog` adapter.
 
 # Issues
@@ -22,12 +22,16 @@ already encountered this issue.
 If you want to contribute to the repository, follow these steps:
 
 1. Fork the repo.
-2. Develop and test your code changes: `npm install -d && npm test`.
+2. Install dependencies: `npm install`
+3. Build the code: `npm run build`
+4. Verify the build before beginning your changes: `npm run test-unit`
+2. Develop and test your code changes.
 3. Travis-CI will run the tests for all services once your changes are merged.
 4. Add a test for your changes. Only refactoring and documentation changes require no new tests.
 5. Make the test pass.
-6. Commit your changes.
+6. Commit your changes. Remember the follow the correct commit message guidelines.
 7. Push to your fork and submit a pull request.
+8. Be sure to sign the CLA.
 
 # Developer's Certificate of Origin 1.1
 
@@ -57,18 +61,15 @@ By making a contribution to this project, I certify that:
 
 ## Tests
 
-Ideally, we'd like to see both unit and innervation tests on each method.
-(Unit tests do not actually connect to the Watson service, integration tests do.)
+Out of the box, `npm test` runs linting, unit tests, and integration tests (which require credentials). To run only the unit tests (sufficient for most cases), use `npm run test-unit`.
 
-Out of the box, `npm test` runs linting and unit tests, but skips the integration tests,
-because they require credentials.
-
-To run integration tests, copy `test/resources/auth.example.js` to `test/resources/auth.js` and fill in credentials for
-the service(s) you wish to test.
+To run integration tests, copy `test/resources/auth.example.js` to `test/resources/auth.js` and fill in credentials for the service(s) you wish to test.
 
 Currently this enables integration tests for all services so, unless all credentials are supplied, some tests will fail.
 (This will be improved eventually.)
 
-To run only specific tests, pass the file name to mocha. For example:
+To run only specific tests, pass the file name to `jest`. For example:
 
-node ./node_modules/mocha/bin/_mocha test/integration/test.conversation.js
+`npm i -g jest`
+`jest test/integration/personality_insights.v3.test.js`
+See [this page](https://jestjs.io/docs/en/cli) for all the options you can use to further configure `jest`.
