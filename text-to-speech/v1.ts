@@ -1,8 +1,7 @@
 import extend = require('extend');
+import { getSdkHeaders } from '../lib/common';
 import SynthesizeStream = require('../lib/synthesize-stream');
 import GeneratedTextToSpeechV1 = require('./v1-generated');
-// tslint:disable-next-line:no-var-requires
-const pkg = require('../package.json');
 
 class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
   constructor(options) {
@@ -87,11 +86,13 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
       params.token_manager = this.tokenManager;
     }
 
+    // include analytics headers
+    const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'synthesizeUsingWebSocket');
+
     params.headers = extend(
-      {
-        'user-agent': pkg.name + '-nodejs-' + pkg.version,
-        authorization: this._options.headers.Authorization
-      },
+      true,
+      sdkHeaders,
+      { authorization: this._options.headers.Authorization },
       params.headers
     );
 
