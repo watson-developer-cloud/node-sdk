@@ -1,3 +1,10 @@
+## [4.3.2](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.1...v4.3.2) (2019-08-07)
+
+
+### Bug Fixes
+
+* **core:** share request config across all requests ([#928](https://github.com/watson-developer-cloud/node-sdk/issues/928)) ([7fd5577](https://github.com/watson-developer-cloud/node-sdk/commit/7fd5577))
+
 ## [4.3.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.0...v4.3.1) (2019-08-05)
 
 
