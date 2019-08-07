@@ -24,6 +24,7 @@ Node.js client library to use the Watson APIs.
   * [Sending request headers](#sending-request-headers)
   * [Parsing HTTP response](#parsing-http-response)
   * [Data collection opt-out](#data-collection-opt-out)
+  * [Using the SDK behind a corporate proxy](#using-the-sdk-behind-a-corporate-proxy)
   * [Documentation](#documentation)
   * [Questions](#questions)
   * [IBM Watson services](#ibm-watson-services)
@@ -266,18 +267,6 @@ discovery.listEnvironments((err, res) => {
 });
 ```
 
-### Setting the service URL
-
-You can set the service URL by calling the setServiceUrl() method.
-
-```javascript
-const discovery = new DiscoveryV1({
-  version: '<version-date>'
-});
-
-discovery.setServiceUrl('https://gateway-wdc.watsonplatform.net/discovery/api');
-```
-
 ### Sending request headers
 
 Custom headers can be passed with any request. Each method has an optional parameter `headers` which can be used to pass in these custom headers, which can override headers that we use as parameters.
@@ -349,6 +338,24 @@ var myInstance = new watson.WhateverServiceV1({
   headers: {
     "X-Watson-Learning-Opt-Out": true
   }
+});
+```
+
+### Using the SDK behind a corporate proxy
+
+To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package [`tunnel`](https://github.com/koichik/node-tunnel/) for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set `proxy` to `false` in the service constructor. See this example configuration:
+```js
+const tunnel = require('tunnel');
+const AssistantV1 = require('ibm-watson/assistant/v1');
+
+const assistant = new AssistantV1({
+  iam_apikey: 'fakekey1234',
+  version: '2019-02-28',
+  httpsAgent: tunnel.httpsOverHttp({
+    host: 'some.host.org',
+    port: 1234,
+  }),
+  proxy: false,
 });
 ```
 
