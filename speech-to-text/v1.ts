@@ -1,16 +1,9 @@
 import async = require('async');
 import extend = require('extend');
 import isStream = require('isstream');
+import { getSdkHeaders } from '../lib/common';
 import RecognizeStream = require('../lib/recognize-stream');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
-
-// tslint:disable-next-line:no-var-requires
-const pkg = require('../package.json');
-
-const protocols = {
-  https: require('https'),
-  http: require('http')
-};
 
 const PARAMS_ALLOWED = [
   'max_alternatives',
@@ -192,11 +185,13 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       params.token_manager = this.tokenManager;
     }
 
+    // include analytics headers
+    const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'recognizeUsingWebSocket');
+
     params.headers = extend(
-      {
-        'user-agent': pkg.name + '-nodejs-' + pkg.version,
-        authorization: this._options.headers.Authorization
-      },
+      true,
+      sdkHeaders,
+      { authorization: this._options.headers.Authorization },
       params.headers
     );
 

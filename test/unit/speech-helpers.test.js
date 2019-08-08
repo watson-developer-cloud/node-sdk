@@ -31,6 +31,10 @@ describe('speech_to_text', () => {
       const stream = speech_to_text.recognizeUsingWebSocket();
       expect(stream.options.url).toBe(service.url);
       expect(stream.options.headers.authorization).toBeTruthy();
+      expect(stream.options.headers['User-Agent']).toBeTruthy();
+      expect(stream.options.headers['X-IBMCloud-SDK-Analytics']).toBe(
+        'service_name=speech_to_text;service_version=v1;operation_id=recognizeUsingWebSocket;async=true'
+      );
       expect(stream.options.token_manager).toBeUndefined();
     });
 
