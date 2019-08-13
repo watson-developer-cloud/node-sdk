@@ -4,6 +4,12 @@ import os = require('os');
 const pkg = require('../package.json');
 
 export function getSdkHeaders(serviceName: string, serviceVersion: string, operationId: string): any {
+  // disable analytics headers in the browser - they cause cors issues
+  const isBrowser = typeof window !== 'undefined';
+  if (isBrowser) {
+    return {};
+  }
+
   const sdkName = 'watson-apis-node-sdk';
   const sdkVersion = pkg.version;
   const osName = os.platform();
