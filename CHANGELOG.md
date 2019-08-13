@@ -1,3 +1,11 @@
+## [4.3.4](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.3...v4.3.4) (2019-08-13)
+
+
+### Bug Fixes
+
+* disable analytics headers in browser to fix cors issues ([bdcf9d6](https://github.com/watson-developer-cloud/node-sdk/commit/bdcf9d6))
+* disable analytics headers in browser to fix cors issues ([#932](https://github.com/watson-developer-cloud/node-sdk/issues/932)) ([bba47a0](https://github.com/watson-developer-cloud/node-sdk/commit/bba47a0))
+
 ## [4.3.3](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.2...v4.3.3) (2019-08-08)
 
 
