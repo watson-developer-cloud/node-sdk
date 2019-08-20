@@ -1,3 +1,10 @@
+# [4.4.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.4...v4.4.0) (2019-08-20)
+
+
+### Features
+
+* **compare-comply:** new model ContractCurrencies added ([#935](https://github.com/watson-developer-cloud/node-sdk/issues/935)) ([132ad09](https://github.com/watson-developer-cloud/node-sdk/commit/132ad09))
+
 ## [4.3.4](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.3...v4.3.4) (2019-08-13)
 
 
