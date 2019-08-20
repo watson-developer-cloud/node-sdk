@@ -430,8 +430,8 @@ class CompareComplyV1 extends BaseService {
    * @param {string} [params.model_version] - An optional string that filters the output to include only feedback with
    * the specified `model_version`.
    * @param {string} [params.category_removed] - An optional string in the form of a comma-separated list of categories.
-   * If this is specified, the service filters the output to include only feedback that has at least one category from
-   * the list removed.
+   * If it is specified, the service filters the output to include only feedback that has at least one category from the
+   * list removed.
    * @param {string} [params.category_added] - An optional string in the form of a comma-separated list of categories.
    * If this is specified, the service filters the output to include only feedback that has at least one category from
    * the list added.
@@ -1112,7 +1112,7 @@ namespace CompareComplyV1 {
     model_id?: string;
     /** An optional string that filters the output to include only feedback with the specified `model_version`. */
     model_version?: string;
-    /** An optional string in the form of a comma-separated list of categories. If this is specified, the service filters the output to include only feedback that has at least one category from the list removed. */
+    /** An optional string in the form of a comma-separated list of categories. If it is specified, the service filters the output to include only feedback that has at least one category from the list removed. */
     category_removed?: string;
     /** An optional string in the form of a comma-separated list of categories. If this is specified, the service filters the output to include only feedback that has at least one category from the list added. */
     category_added?: string;
@@ -1269,7 +1269,7 @@ namespace CompareComplyV1 {
     element_pair?: ElementPair[];
     /** Specifies whether the aligned element is identical. Elements are considered identical despite minor differences such as leading punctuation, end-of-sentence punctuation, whitespace, the presence or absence of definite or indefinite articles, and others. */
     identical_text?: boolean;
-    /** One or more hashed values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
     /** Indicates that the elements aligned are contractual clauses of significance. */
     significant_elements?: boolean;
@@ -1331,12 +1331,18 @@ namespace CompareComplyV1 {
     column_index_begin?: number;
     /** The `end` index of this cell's `column` location in the current table. */
     column_index_end?: number;
-    row_header_ids?: RowHeaderIds[];
-    row_header_texts?: RowHeaderTexts[];
-    row_header_texts_normalized?: RowHeaderTextsNormalized[];
-    column_header_ids?: ColumnHeaderIds[];
-    column_header_texts?: ColumnHeaderTexts[];
-    column_header_texts_normalized?: ColumnHeaderTextsNormalized[];
+    /** An array that contains the `id` value of a row header that is applicable to this body cell. */
+    row_header_ids?: string[];
+    /** An array that contains the `text` value of a row header that is applicable to this body cell. */
+    row_header_texts?: string[];
+    /** If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as `row_header_texts`. */
+    row_header_texts_normalized?: string[];
+    /** An array that contains the `id` value of a column header that is applicable to the current cell. */
+    column_header_ids?: string[];
+    /** An array that contains the `text` value of a column header that is applicable to the current cell. */
+    column_header_texts?: string[];
+    /** If you provide customization input, the normalized version of the column header texts according to the customization; otherwise, the same value as `column_header_texts`. */
+    column_header_texts_normalized?: string[];
     attributes?: Attribute[];
   }
 
@@ -1344,7 +1350,7 @@ namespace CompareComplyV1 {
   export interface Category {
     /** The category of the associated element. */
     label?: string;
-    /** One or more hashed values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
   }
 
@@ -1368,38 +1374,22 @@ namespace CompareComplyV1 {
     effective_dates?: EffectiveDates[];
     /** The monetary amounts that identify the total amount of the contract that needs to be paid from one party to another. */
     contract_amounts?: ContractAmts[];
-    /** The date or dates on which the document is to be terminated. */
+    /** The dates on which the document is to be terminated. */
     termination_dates?: TerminationDates[];
-    /** The document's contract type or types as declared in the document. */
+    /** The contract type as declared in the document. */
     contract_types?: ContractTypes[];
-    /** The duration or durations of the contract. */
+    /** The durations of the contract. */
     contract_terms?: ContractTerms[];
-    /** The document's payment duration or durations. */
+    /** The document's payment durations. */
     payment_terms?: PaymentTerms[];
+    /** The contract currencies as declared in the document. */
+    contract_currencies?: ContractCurrencies[];
     /** Definition of tables identified in the input document. */
     tables?: Tables[];
     /** The structure of the input document. */
     document_structure?: DocStructure;
     /** Definitions of the parties identified in the input document. */
     parties?: Parties[];
-  }
-
-  /** An array of values, each being the `id` value of a column header that is applicable to the current cell. */
-  export interface ColumnHeaderIds {
-    /** The `id` value of a column header. */
-    id?: string;
-  }
-
-  /** An array of values, each being the `text` value of a column header that is applicable to the current cell. */
-  export interface ColumnHeaderTexts {
-    /** The `text` value of a column header. */
-    text?: string;
-  }
-
-  /** If you provide customization input, the normalized version of the column header texts according to the customization; otherwise, the same value as `column_header_texts`. */
-  export interface ColumnHeaderTextsNormalized {
-    /** The normalized version of a column header text. */
-    text_normalized?: string;
   }
 
   /** Column-level cells, each applicable as a header to other cells in the same column as itself, of the current table. */
@@ -1458,11 +1448,25 @@ namespace CompareComplyV1 {
     confidence_level?: string;
     /** The monetary amount. */
     text?: string;
-    /** The normalized form of the amount, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The normalized form of the amount, which is listed as a string. This element is optional; it is returned only if normalized text exists. */
     text_normalized?: string;
-    /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The details of the normalized text, if applicable. This element is optional; it is returned only if normalized text exists. */
     interpretation?: Interpretation;
-    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
+    provenance_ids?: string[];
+    /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+    location?: Location;
+  }
+
+  /** The contract currencies that are declared in the document. */
+  export interface ContractCurrencies {
+    /** The confidence level in the identification of the contract currency. */
+    confidence_level?: string;
+    /** The contract currency. */
+    text?: string;
+    /** The normalized form of the contract currency, which is listed as a string in [ISO-4217](https://www.iso.org/iso-4217-currency-codes.html) format. This element is optional; it is returned only if normalized text exists. */
+    text_normalized?: string;
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1474,11 +1478,11 @@ namespace CompareComplyV1 {
     confidence_level?: string;
     /** The contract term (duration). */
     text?: string;
-    /** The normalized form of the contract term, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The normalized form of the contract term, which is listed as a string. This element is optional; it is returned only if normalized text exists. */
     text_normalized?: string;
-    /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The details of the normalized text, if applicable. This element is optional; it is returned only if normalized text exists. */
     interpretation?: Interpretation;
-    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1490,7 +1494,7 @@ namespace CompareComplyV1 {
     confidence_level?: string;
     /** The contract type. */
     text?: string;
-    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1546,9 +1550,9 @@ namespace CompareComplyV1 {
     confidence_level?: string;
     /** The effective date, listed as a string. */
     text?: string;
-    /** The normalized form of the effective date, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The normalized form of the effective date, which is listed as a string. This element is optional; it is returned only if normalized text exists. */
     text_normalized?: string;
-    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1688,7 +1692,7 @@ namespace CompareComplyV1 {
     html?: string;
   }
 
-  /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+  /** The details of the normalized text, if applicable. This element is optional; it is returned only if normalized text exists. */
   export interface Interpretation {
     /** The value that was located in the normalized text. */
     value?: string;
@@ -1712,8 +1716,8 @@ namespace CompareComplyV1 {
   export interface KeyValuePair {
     /** A key in a key-value pair. */
     key?: Key;
-    /** A value in a key-value pair. */
-    value?: Value;
+    /** A list of values in a key-value pair. */
+    value?: Value[];
   }
 
   /** A pair of `nature` and `party` objects. The `nature` object identifies the effect of the element on the identified `party`, and the `party` object identifies the affected party. */
@@ -1810,32 +1814,14 @@ namespace CompareComplyV1 {
     confidence_level?: string;
     /** The payment term (duration). */
     text?: string;
-    /** The normalized form of the payment term, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The normalized form of the payment term, which is listed as a string. This element is optional; it is returned only if normalized text exists. */
     text_normalized?: string;
-    /** The details of the normalized text, if applicable. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The details of the normalized text, if applicable. This element is optional; it is returned only if normalized text exists. */
     interpretation?: Interpretation;
-    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
-  }
-
-  /** An array of values, each being the `id` value of a row header that is applicable to this body cell. */
-  export interface RowHeaderIds {
-    /** The `id` values of a row header. */
-    id?: string;
-  }
-
-  /** An array of values, each being the `text` value of a row header that is applicable to this body cell. */
-  export interface RowHeaderTexts {
-    /** The `text` value of a row header. */
-    text?: string;
-  }
-
-  /** If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as `row_header_texts`. */
-  export interface RowHeaderTextsNormalized {
-    /** The normalized version of a row header text. */
-    text_normalized?: string;
   }
 
   /** Row-level cells, each applicable as a header to other cells in the same row as itself, of the current table. */
@@ -1954,9 +1940,9 @@ namespace CompareComplyV1 {
     confidence_level?: string;
     /** The termination date. */
     text?: string;
-    /** The normalized form of the termination date, which is listed as a string. This element is optional; that is, the service output lists it only if normalized text exists. */
+    /** The normalized form of the termination date, which is listed as a string. This element is optional; it is returned only if normalized text exists. */
     text_normalized?: string;
-    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
     /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
     location?: Location;
@@ -1966,7 +1952,7 @@ namespace CompareComplyV1 {
   export interface TypeLabel {
     /** A pair of `nature` and `party` objects. The `nature` object identifies the effect of the element on the identified `party`, and the `party` object identifies the affected party. */
     label?: Label;
-    /** One or more hash values that you can send to IBM to provide feedback or receive support. */
+    /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
   }
 
