@@ -3,7 +3,12 @@ import os = require('os');
 // tslint:disable-next-line:no-var-requires
 const pkg = require('../package.json');
 
-export function getSdkHeaders(serviceName: string, serviceVersion: string, operationId: string): any {
+export type SdkHeaders = {
+  'User-Agent': string;
+  'X-IBMCloud-SDK-Analytics': string;
+}
+
+export function getSdkHeaders(serviceName: string, serviceVersion: string, operationId: string): SdkHeaders | {} {
   // disable analytics headers in the browser - they cause cors issues
   const isBrowser = typeof window !== 'undefined';
   if (isBrowser) {
