@@ -90,8 +90,11 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.contractamts.html#confidence_level" class="tsd-kind-icon">confidence_<wbr>level</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.contractamts.html#interpretation" class="tsd-kind-icon">interpretation</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.contractamts.html#location" class="tsd-kind-icon">location</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.contractamts.html#provenance_ids" class="tsd-kind-icon">provenance_<wbr>ids</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.contractamts.html#text" class="tsd-kind-icon">text</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.contractamts.html#text_normalized" class="tsd-kind-icon">text_<wbr>normalized</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">confidence_<wbr>level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1444">compare-comply/v1.ts:1444</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1448">compare-comply/v1.ts:1448</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -115,12 +118,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="interpretation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> interpretation</h3>
+					<div class="tsd-signature tsd-kind-icon">interpretation<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.interpretation.html" class="tsd-signature-type">Interpretation</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1454">compare-comply/v1.ts:1454</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The details of the normalized text, if applicable. This element is optional; it is returned only if normalized text exists.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="location" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> location</h3>
 					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.location.html" class="tsd-signature-type">Location</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1446">compare-comply/v1.ts:1446</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1458">compare-comply/v1.ts:1458</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -130,17 +148,47 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="provenance_ids" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> provenance_<wbr>ids</h3>
+					<div class="tsd-signature tsd-kind-icon">provenance_<wbr>ids<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1456">compare-comply/v1.ts:1456</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Hashed values that you can send to IBM to provide feedback or receive support.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="text" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text</h3>
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1442">compare-comply/v1.ts:1442</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1450">compare-comply/v1.ts:1450</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The monetary amount.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="text_normalized" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text_<wbr>normalized</h3>
+					<div class="tsd-signature tsd-kind-icon">text_<wbr>normalized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1452">compare-comply/v1.ts:1452</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The normalized form of the amount, which is listed as a string. This element is optional; it is returned only if normalized text exists.</p>
 						</div>
 					</div>
 				</section>
@@ -177,10 +225,19 @@
 										<a href="comparecomplyv1.contractamts.html#confidence_level" class="tsd-kind-icon">confidence_<wbr>level</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.contractamts.html#interpretation" class="tsd-kind-icon">interpretation</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="comparecomplyv1.contractamts.html#location" class="tsd-kind-icon">location</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.contractamts.html#provenance_ids" class="tsd-kind-icon">provenance_<wbr>ids</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="comparecomplyv1.contractamts.html#text" class="tsd-kind-icon">text</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.contractamts.html#text_normalized" class="tsd-kind-icon">text_<wbr>normalized</a>
 									</li>
 								</ul>
 							</li>

@@ -92,6 +92,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.parties.html#addresses" class="tsd-kind-icon">addresses</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.parties.html#contacts" class="tsd-kind-icon">contacts</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.parties.html#importance" class="tsd-kind-icon">importance</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.parties.html#mentions" class="tsd-kind-icon">mentions</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.parties.html#party" class="tsd-kind-icon">party</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.parties.html#role" class="tsd-kind-icon">role</a></li>
 							</ul>
@@ -107,12 +108,12 @@
 					<div class="tsd-signature tsd-kind-icon">addresses<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.address.html" class="tsd-signature-type">Address</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1730">compare-comply/v1.ts:1730</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1804">compare-comply/v1.ts:1804</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>List of the party&#39;s address or addresses.</p>
+							<p>A list of the party&#39;s address or addresses.</p>
 						</div>
 					</div>
 				</section>
@@ -122,12 +123,12 @@
 					<div class="tsd-signature tsd-kind-icon">contacts<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.contact.html" class="tsd-signature-type">Contact</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1732">compare-comply/v1.ts:1732</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1806">compare-comply/v1.ts:1806</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>List of the names and roles of contacts identified in the input document.</p>
+							<p>A list of the names and roles of contacts identified in the input document.</p>
 						</div>
 					</div>
 				</section>
@@ -137,7 +138,7 @@
 					<div class="tsd-signature tsd-kind-icon">importance<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1726">compare-comply/v1.ts:1726</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1802">compare-comply/v1.ts:1802</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,17 +148,32 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="mentions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> mentions</h3>
+					<div class="tsd-signature tsd-kind-icon">mentions<span class="tsd-signature-symbol">:</span> <a href="comparecomplyv1.mention.html" class="tsd-signature-type">Mention</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1808">compare-comply/v1.ts:1808</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A list of the party&#39;s mentions in the input document.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="party" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> party</h3>
 					<div class="tsd-signature tsd-kind-icon">party<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1724">compare-comply/v1.ts:1724</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1798">compare-comply/v1.ts:1798</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A string identifying the party.</p>
+							<p>The normalized form of the party&#39;s name.</p>
 						</div>
 					</div>
 				</section>
@@ -167,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">role<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1728">compare-comply/v1.ts:1728</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/compare-comply/v1.ts#L1800">compare-comply/v1.ts:1800</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -213,6 +229,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="comparecomplyv1.parties.html#importance" class="tsd-kind-icon">importance</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="comparecomplyv1.parties.html#mentions" class="tsd-kind-icon">mentions</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="comparecomplyv1.parties.html#party" class="tsd-kind-icon">party</a>

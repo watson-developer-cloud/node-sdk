@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ColumnHeaderTexts | ibm-watson</title>
+	<title>SearchResult | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/comparecomplyv1.html">CompareComplyV1</a>
+					<a href="../classes/assistantv2.html">AssistantV2</a>
 				</li>
 				<li>
-					<a href="comparecomplyv1.columnheadertexts.html">ColumnHeaderTexts</a>
+					<a href="assistantv2.searchresult.html">SearchResult</a>
 				</li>
 			</ul>
-			<h1>Interface ColumnHeaderTexts</h1>
+			<h1>Interface SearchResult</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An array of values, each being the <code>text</code> value of a column header that is applicable to the current cell.</p>
+						<p>SearchResult.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ColumnHeaderTexts</span>
+						<span class="target">SearchResult</span>
 					</li>
 				</ul>
 			</section>
@@ -89,7 +89,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="comparecomplyv1.columnheadertexts.html#text" class="tsd-kind-icon">text</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresult.html#body" class="tsd-kind-icon">body</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresult.html#highlight" class="tsd-kind-icon">highlight</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresult.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresult.html#result_metadata" class="tsd-kind-icon">result_<wbr>metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresult.html#title" class="tsd-kind-icon">title</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresult.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,17 +103,92 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="text" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text</h3>
-					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="body" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> body</h3>
+					<div class="tsd-signature tsd-kind-icon">body<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/964534b/compare-comply/v1.ts#L1388">compare-comply/v1.ts:1388</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/assistant/v2.ts#L587">assistant/v2.ts:587</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The <code>text</code> value of a column header.</p>
+							<p>A description of the search result. This is taken from an abstract, summary, or highlight field in the Discovery service response, as specified in the search skill configuration.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="highlight" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> highlight</h3>
+					<div class="tsd-signature tsd-kind-icon">highlight<span class="tsd-signature-symbol">:</span> <a href="assistantv2.searchresulthighlight.html" class="tsd-signature-type">SearchResultHighlight</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/assistant/v2.ts#L593">assistant/v2.ts:593</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An object containing segments of text from search results with query-matching text highlighted using HTML <em> tags.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/assistant/v2.ts#L583">assistant/v2.ts:583</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The unique identifier of the document in the Discovery service collection. This property is included in responses from search skills, which are a beta feature available only to Plus or Premium plan users.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="result_metadata" class="tsd-anchor"></a>
+					<h3>result_<wbr>metadata</h3>
+					<div class="tsd-signature tsd-kind-icon">result_<wbr>metadata<span class="tsd-signature-symbol">:</span> <a href="assistantv2.searchresultmetadata.html" class="tsd-signature-type">SearchResultMetadata</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/assistant/v2.ts#L585">assistant/v2.ts:585</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An object containing search result metadata from the Discovery service.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="title" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> title</h3>
+					<div class="tsd-signature tsd-kind-icon">title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/assistant/v2.ts#L589">assistant/v2.ts:589</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The title of the search result. This is taken from a title or name field in the Discovery service response, as specified in the search skill configuration.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="url" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c11c85/assistant/v2.ts#L591">assistant/v2.ts:591</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The URL of the original data object in its native data source.</p>
 						</div>
 					</div>
 				</section>
@@ -127,22 +207,31 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="comparecomplyv1.columnheadertexts.html" class="tsd-kind-icon">Column<wbr>Header<wbr>Texts</a>
+								<a href="assistantv2.searchresult.html" class="tsd-kind-icon">Search<wbr>Result</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="comparecomplyv1.columnheadertexts.html#text" class="tsd-kind-icon">text</a>
+										<a href="assistantv2.searchresult.html#body" class="tsd-kind-icon">body</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.searchresult.html#highlight" class="tsd-kind-icon">highlight</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.searchresult.html#id" class="tsd-kind-icon">id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.searchresult.html#result_metadata" class="tsd-kind-icon">result_<wbr>metadata</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.searchresult.html#title" class="tsd-kind-icon">title</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.searchresult.html#url" class="tsd-kind-icon">url</a>
 									</li>
 								</ul>
 							</li>
@@ -150,6 +239,12 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>

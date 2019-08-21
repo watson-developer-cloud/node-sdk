@@ -87,6 +87,7 @@
 						<li><a href="#sending-request-headers">Sending request headers</a></li>
 						<li><a href="#parsing-http-response">Parsing HTTP response</a></li>
 						<li><a href="#data-collection-opt-out">Data collection opt-out</a></li>
+						<li><a href="#using-the-sdk-behind-a-corporate-proxy">Using the SDK behind a corporate proxy</a></li>
 						<li><a href="#documentation">Documentation</a></li>
 						<li><a href="#questions">Questions</a></li>
 						<li><a href="#ibm-watson-services">IBM Watson services</a><ul>
@@ -113,8 +114,8 @@
 					</ul>
 				</details>
 				<h2 id="announcements-">ANNOUNCEMENTS!</h2>
-				<h3 id="new-major-version">New Major Version</h3>
-				<p>The new major version, <code>v4</code> has been released. The major new feature in this release is native support for Promises. There are some breaking changes - use the <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/UPGRADE-4.0.md">migration guide</a> to navigate any changes that affect your code.</p>
+				<h3 id="supporting-node-versions-10-">Supporting Node versions 10+</h3>
+				<p>The SDK will no longer be tested with Node versions 6 and 8. Support will be officially dropped in v5.</p>
 				<h3 id="package-rename">Package Rename</h3>
 				<p>This package has been moved under the name <code>ibm-watson</code>. The package is still available at <code>watson-developer-cloud</code>, but that will no longer receive updates. Use <code>ibm-watson</code> to stay up to date.</p>
 				<h2 id="before-you-begin">Before you begin</h2>
@@ -272,13 +273,6 @@ discovery.listEnvironments(<span class="hljs-function">(<span class="hljs-params
     <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(res, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
   }
 });</code></pre>
-				<h3 id="setting-the-service-url">Setting the service URL</h3>
-				<p>You can set the service URL by calling the setServiceUrl() method.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
-  <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>
-});
-
-discovery.setServiceUrl(<span class="hljs-string">'https://gateway-wdc.watsonplatform.net/discovery/api'</span>);</code></pre>
 				<h3 id="sending-request-headers">Sending request headers</h3>
 				<p>Custom headers can be passed with any request. Each method has an optional parameter <code>headers</code> which can be used to pass in these custom headers, which can override headers that we use as parameters.</p>
 				<p>For example, this is how you can pass in custom headers to Watson Assistant service. In this example, the <code>&#39;custom&#39;</code> value for <code>&#39;Accept-Language&#39;</code> will override the default header for <code>&#39;Accept-Language&#39;</code>, and the <code>&#39;Custom-Header&#39;</code> while not overriding the default headers, will additionally be sent with the request.</p>
@@ -334,6 +328,20 @@ assistant.message(params)
   headers: {
     <span class="hljs-string">"X-Watson-Learning-Opt-Out"</span>: <span class="hljs-literal">true</span>
   }
+});</code></pre>
+				<h3 id="using-the-sdk-behind-a-corporate-proxy">Using the SDK behind a corporate proxy</h3>
+				<p>To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package <a href="https://github.com/koichik/node-tunnel/"><code>tunnel</code></a> for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set <code>proxy</code> to <code>false</code> in the service constructor. See this example configuration:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> tunnel = <span class="hljs-built_in">require</span>(<span class="hljs-string">'tunnel'</span>);
+<span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
+
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+  <span class="hljs-attr">iam_apikey</span>: <span class="hljs-string">'fakekey1234'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-28'</span>,
+  <span class="hljs-attr">httpsAgent</span>: tunnel.httpsOverHttp({
+    <span class="hljs-attr">host</span>: <span class="hljs-string">'some.host.org'</span>,
+    <span class="hljs-attr">port</span>: <span class="hljs-number">1234</span>,
+  }),
+  <span class="hljs-attr">proxy</span>: <span class="hljs-literal">false</span>,
 });</code></pre>
 				<h3 id="configuring-the-http-client">Configuring the HTTP client</h3>
 				<p>The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️</p>
