@@ -97,7 +97,7 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 
 - With some service instances, you authenticate to the API by using **[IAM](#iam)**.
 - In other instances, you authenticate by providing the **[username and password](#username-and-password)** for the service instance.
-- If you're using a Watson service on ICP, you'll need to authenticate in [a specific way](icp).
+- If you're using a Watson service on ICP, you'll need to authenticate in [a specific way](#icp).
 
 To specify the type of authentication to use, there is an optional parameter called `authentication_type`. Possible values are `iam`, `basic`, and `icp4d`.
 
