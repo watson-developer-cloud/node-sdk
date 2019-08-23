@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2014, 2019.
+ * (C) Copyright IBM Corp. 2018, 2019.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,38 @@
  * limitations under the License
  */
 
-import extend = require('extend');
+import { OutgoingHttpHeaders } from 'http';
 import { qs } from 'ibm-cloud-sdk-core';
 import pick = require('object.pick');
-import { Readable } from 'stream';
-import websocket = require ('websocket');
+import { Readable, ReadableOptions } from 'stream';
+import { w3cwebsocket as w3cWebSocket } from 'websocket';
+import { processUserParameters, setAuthorizationHeader } from './websocket-utils';
 
-const w3cWebSocket = websocket.w3cwebsocket;
+// these options represent the superset of the base params,
+// query params, and opening message params, with the keys
+// in lowerCamelCase format so we can expose a consistent style
+// to the user. this object should be updated any time either
+// payloadParamsAllowed or queryParamsAllowed is changed
+interface Options extends ReadableOptions {
+  /* base options */
+  url?: string;
+  headers?: OutgoingHttpHeaders;
+  tokenManager?: any;
+  rejectUnauthorized?: boolean;
 
-const PAYLOAD_PARAMS_ALLOWED = [
-  'text',
-  'accept',
-  'timings'
-];
+  /* payload options */
+  text: string;
+  accept: string;
+  timings?: string[];
 
-const QUERY_PARAMS_ALLOWED = [
-  'watson-token',
-  'voice',
-  'customization_id',
-  'x-watson-learning-opt-out',
-  'x-watson-metadata',
-  'access_token'
-];
+  /* query params */
+  accessToken?: string;
+  watsonToken?: string;
+  voice?: string;
+  customizationId?: string;
+  xWatsonLearningOptOut?: boolean;
+  xWatsonMetadata?: string;
+}
 
 interface SynthesizeStream extends Readable {
   _readableState;
@@ -54,7 +64,7 @@ class SynthesizeStream extends Readable {
 
   static WEBSOCKET_CONNECTION_ERROR: string = 'WebSocket connection error';
 
-  private options;
+  private options: Options;
   private socket;
   private initialized: boolean;
 
@@ -67,24 +77,23 @@ class SynthesizeStream extends Readable {
    *
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for IAM token request management by the SDK.
    *
-   * @param {Object} options
-   * @param {String} options.text - The text that us to be synthesized. Provide plain text or text that is annotated with SSML. SSML input can include the SSML <mark> element. Pass a maximum of 5 KB of text. 
-   * @param {String} options.accept - The requested audio format (MIME type) of the audio.
-   * @param {String[]} [options.timings] - An array that specifies whether the service is to return word timing information for all strings of the input text
-   * @param {String} [options.voice='en-US_MichaelVoice'] - The voice that is to be used for the synthesis.
-   * @param {String} [options.customization_id] - The customization ID (GUID) of a custom voice model that is to be used for the synthesis.
-   * @param {String} [options.url='wss://stream.watsonplatform.net/speech-to-text/api'] base URL for service
-   * @param {String} [options.watson-token] - Auth token
-   * @param {String} [options.access_token] - IAM auth token
-   * @param {Object} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
-   * @param {Boolean} [options.x-watson-learning-opt-out=false] - set to true to opt-out of allowing Watson to use this request to improve it's services
-   * @param {String} [options.x-watson-metadata] - Associates a customer ID with data that is passed over the connection.
-   * @param {IamTokenManagerV1} [options.token_manager] - Token manager for authenticating with IAM
-   * @param {Boolean} [options.rejectUnauthorized] - If true, disable SSL verification for the WebSocket connection
-   *
+   * @param {Options} options
+   * @param {string} [url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
+   * @param {OutgoingHttpHeaders} [headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
+   * @param {any} [tokenManager] - Token manager for authenticating with IAM
+   * @param {boolean} [rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
+   * @param {string} text - The text that us to be synthesized
+   * @param {string} accept - The requested format (MIME type) of the audio
+   * @param {string[]} [timings] - An array that specifies whether the service is to return word timing information for all strings of the input text
+   * @param {string} [accessToken] - Bearer token to put in query string
+   * @param {string} [watsonToken] - Valid Watson authentication token (for Cloud Foundry)
+   * @param {string} [voice] - The voice to use for the synthesis (default='en-US_MichaelVoice')
+   * @param {string} [customizationId] - The customization ID (GUID) of a custom voice model that is to be used for the synthesis
+   * @param {boolean} [xWatsonLearningOptOut] - Indicates whether IBM can use data that is sent over the connection to improve the service for future users (default=false)
+   * @param {string} [xWatsonMetadata] - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
    * @constructor
    */
-  constructor(options) {
+  constructor(options: Options) {
     super(options);
     this.options = options;
     this.initialized = false;
@@ -93,9 +102,19 @@ class SynthesizeStream extends Readable {
   initialize() {
     const options = this.options;
 
-    const queryParams = pick(options, QUERY_PARAMS_ALLOWED);
+    // process query params
+    const queryParamsAllowed = [
+      'access_token',
+      'watson-token',
+      'voice',
+      'customization_id',
+      'x-watson-learning-opt-out',
+      'x-watson-metadata',
+    ];
+    const queryParams = processUserParameters(options, queryParamsAllowed);
     const queryString = qs.stringify(queryParams);
 
+    // synthesize the url
     const url =
       (options.url || 'wss://stream.watsonplatform.net/text-to-speech/api')
         .replace(/^http/, 'ws') + 
@@ -115,7 +134,13 @@ class SynthesizeStream extends Readable {
     const self = this;
 
     socket.onopen = () => {
-      const payload = pick(options, PAYLOAD_PARAMS_ALLOWED);
+      // process the payload params
+      const payloadParamsAllowed = [
+        'text',
+        'accept',
+        'timings',
+      ];
+      const payload = processUserParameters(options, payloadParamsAllowed);
       socket.send(JSON.stringify(payload));
       /**
        * emitted once the WebSocket connection has been established
@@ -165,7 +190,7 @@ class SynthesizeStream extends Readable {
     // even though we aren't controlling the read from websocket,
     // we can take advantage of the fact that _read is async and hack
     // this funtion to retrieve a token if the service is using IAM auth
-    this.setAuthorizationHeaderToken(err => {
+    setAuthorizationHeader(this.options, err => {
       if (err) {
         this.emit('error', err);
         this.push(null);
@@ -176,30 +201,6 @@ class SynthesizeStream extends Readable {
         this.initialize();
       }
     });
-  }
-
-  /**
-   * This function retrieves an IAM access token and stores it in the
-   * request header before calling the callback function, which will
-   * execute the next iteration of `_read()`
-   *
-   *
-   * @private
-   * @param {Function} callback
-   */
-   setAuthorizationHeaderToken(callback) {
-    if (this.options.token_manager) {
-      this.options.token_manager.getToken((err, token) => {
-        if (err) {
-          callback(err);
-        }
-        const authHeader = { authorization: 'Bearer ' + token };
-        this.options.headers = extend(this.options.headers, authHeader);
-        callback(null);
-      });
-    } else {
-      callback(null);
-    }
   }
 }
 
