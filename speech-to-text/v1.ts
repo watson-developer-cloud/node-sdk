@@ -182,7 +182,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
 
     // if using iam, pass the token manager to the RecognizeStream object
     if (this.tokenManager) {
-      params.token_manager = this.tokenManager;
+      params.tokenManager = this.tokenManager;
     }
 
     // include analytics headers
