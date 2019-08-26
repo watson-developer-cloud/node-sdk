@@ -14,3 +14,6 @@ The SDK no longer supports Node versions 6 and 8, as reflected in the `engines` 
 - Support for the `token` parameter has been removed
 - Support for the `customization_id` parameter has been removed
 - Method `setAuthorizationHeaderToken` has been removed from the WebSocket Stream classes. It now exists as a shared function called `setAuthorizationHeader` in `lib/websocket-utils.ts`.
+
+#### RecognizeStream
+- `RecognizeStream.readableObjectMode` will always be a Boolean value - before, it could have been `undefined`. This is to align with the new convention in Node 12.
