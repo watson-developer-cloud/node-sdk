@@ -355,8 +355,10 @@ const assistant = new AssistantV1({
   iam_apikey: 'fakekey1234',
   version: '2019-02-28',
   httpsAgent: tunnel.httpsOverHttp({
-    host: 'some.host.org',
-    port: 1234,
+    proxy: {
+      host: 'some.host.org',
+      port: 1234,
+    },
   }),
   proxy: false,
 });
