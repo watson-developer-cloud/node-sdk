@@ -334,8 +334,10 @@ assistant.message(params)
   <span class="hljs-attr">iam_apikey</span>: <span class="hljs-string">'fakekey1234'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-28'</span>,
   <span class="hljs-attr">httpsAgent</span>: tunnel.httpsOverHttp({
-    <span class="hljs-attr">host</span>: <span class="hljs-string">'some.host.org'</span>,
-    <span class="hljs-attr">port</span>: <span class="hljs-number">1234</span>,
+    <span class="hljs-attr">proxy</span>: {
+      <span class="hljs-attr">host</span>: <span class="hljs-string">'some.host.org'</span>,
+      <span class="hljs-attr">port</span>: <span class="hljs-number">1234</span>,
+    },
   }),
   <span class="hljs-attr">proxy</span>: <span class="hljs-literal">false</span>,
 });</code></pre>
