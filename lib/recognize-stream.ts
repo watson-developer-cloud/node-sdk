@@ -140,8 +140,8 @@ class RecognizeStream extends Duplex {
       delete options.objectMode;
     }
     super(options);
-    if (options.readableObjectMode && this.readableObjectMode === undefined) {
-      this.readableObjectMode = true;
+    if (this.readableObjectMode === undefined) {
+      this.readableObjectMode = options.readableObjectMode === true;
     }
     this.options = options;
     this.listening = false;
