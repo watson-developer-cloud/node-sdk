@@ -78,19 +78,19 @@ class SynthesizeStream extends Readable {
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for IAM token request management by the SDK.
    *
    * @param {Options} options
-   * @param {string} [url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
-   * @param {OutgoingHttpHeaders} [headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
-   * @param {any} [tokenManager] - Token manager for authenticating with IAM
-   * @param {boolean} [rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
-   * @param {string} text - The text that us to be synthesized
-   * @param {string} accept - The requested format (MIME type) of the audio
-   * @param {string[]} [timings] - An array that specifies whether the service is to return word timing information for all strings of the input text
-   * @param {string} [accessToken] - Bearer token to put in query string
-   * @param {string} [watsonToken] - Valid Watson authentication token (for Cloud Foundry)
-   * @param {string} [voice] - The voice to use for the synthesis (default='en-US_MichaelVoice')
-   * @param {string} [customizationId] - The customization ID (GUID) of a custom voice model that is to be used for the synthesis
-   * @param {boolean} [xWatsonLearningOptOut] - Indicates whether IBM can use data that is sent over the connection to improve the service for future users (default=false)
-   * @param {string} [xWatsonMetadata] - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
+   * @param {string} [options.url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
+   * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
+   * @param {any} [options.tokenManager] - Token manager for authenticating with IAM
+   * @param {boolean} [options.rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
+   * @param {string} options.text - The text that us to be synthesized
+   * @param {string} options.accept - The requested format (MIME type) of the audio
+   * @param {string[]} [options.timings] - An array that specifies whether the service is to return word timing information for all strings of the input text
+   * @param {string} [options.accessToken] - Bearer token to put in query string
+   * @param {string} [options.watsonToken] - Valid Watson authentication token (for Cloud Foundry)
+   * @param {string} [options.voice] - The voice to use for the synthesis (default='en-US_MichaelVoice')
+   * @param {string} [options.customizationId] - The customization ID (GUID) of a custom voice model that is to be used for the synthesis
+   * @param {boolean} [options.xWatsonLearningOptOut] - Indicates whether IBM can use data that is sent over the connection to improve the service for future users (default=false)
+   * @param {string} [options.xWatsonMetadata] - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
    * @constructor
    */
   constructor(options: Options) {

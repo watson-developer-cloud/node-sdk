@@ -31,8 +31,8 @@ describe('websocket utility functions', () => {
       ];
       const userOptions = {
         kebabCase: 'some value',
-        snake_case: 'some value',
-        camelcase: 'some value',
+        snakeCase: 'some value',
+        camelCase: 'some value',
         lowercase: 'some value',
         mIxEdCaSe: 'some value',
         notInTheList: 'some value',
@@ -41,8 +41,31 @@ describe('websocket utility functions', () => {
       Object.keys(processedValues).forEach(param => {
         expect(intendedValues).toContain(param);
       });
-      expect(processedValues.notInTheList).toBeUndefined();
-      expect(processedValues.unused_param).toBeUndefined();
+      expect(processedValues).toEqual({
+        'kebab-case': 'some value',
+        snake_case: 'some value',
+        camelCase: 'some value',
+        lowercase: 'some value',
+        mIxED_CaSe: 'some value',
+      });
+    });
+
+    it('should warn the user if they provide the service name for a parameter', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+      const intendedValues = ['kebab-case', 'snake_case'];
+      const userOptions = {
+        kebabCase: 'some value',
+        snake_case: 'some value',
+        notInTheList: 'some value',
+      };
+      const processedValues = processUserParameters(userOptions, intendedValues);
+      expect(consoleSpy).toHaveBeenCalledTimes(1);
+      expect(consoleSpy.mock.calls[0][0]).toBe(
+        'Unrecognized parameter: "snake_case". Did you mean "snakeCase"?'
+      );
+      expect(processedValues['kebab-case']).toBe('some value');
+      expect(Object.keys(processedValues).length).toBe(1);
+      consoleSpy.mockRestore();
     });
   });
 

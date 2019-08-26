@@ -109,38 +109,38 @@ class RecognizeStream extends Duplex {
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for auto-detection of content type (for wav/flac/opus audio).
    *
    * @param {Options} options
-   * @param {string} [url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
-   * @param {OutgoingHttpHeaders} [headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
-   * @param {boolean} [readableObjectMode] - Emit `result` objects instead of string Buffers for the `data` events. Does not affect input (which must be binary)
-   * @param {boolean} [objectMode] - Alias for readableObjectMode
-   * @param {any} [tokenManager] - Token manager for authenticating with IAM
-   * @param {boolean} [rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
-   * @param {string} accessToken - Bearer token to put in query string
-   * @param {string} watsonToken - Valid Watson authentication token (for Cloud Foundry)
-   * @param {string} model - The identifier of the model that is to be used for all recognition requests sent over the connection
-   * @param {string} languageCustomizationId - The customization ID (GUID) of a custom language model that is to be used for all requests sent over the connection
-   * @param {string} acousticCustomizationId - The customization ID (GUID) of a custom acoustic model that is to be used for the request
-   * @param {string} baseModelVersion - The version of the specified base model that is to be used for all requests sent over the connection
-   * @param {boolean} xWatsonLearningOptOut - Indicates whether IBM can use data that is sent over the connection to improve the service for future users (default=false)
-   * @param {string} xWatsonMetadata - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
-   * @param {string} contentType - The format (MIME type) of the audio
-   * @param {number} customizationWeight - Tell the service how much weight to give to words from the custom language model compared to those from the base model for the current request
-   * @param {number} inactivityTimeout - The time in seconds after which, if only silence (no speech) is detected in the audio, the connection is closed (default=30)
-   * @param {boolean} interimResults - If true, the service returns interim results as a stream of JSON SpeechRecognitionResults objects (default=false)
-   * @param {string[]} keywords - An array of keyword strings to spot in the audio
-   * @param {number} keywordsThreshold - A confidence value that is the lower bound for spotting a keyword
-   * @param {number} maxAlternatives - The maximum number of alternative transcripts that the service is to return (default=1)
-   * @param {number} wordAlternativesThreshold - A confidence value that is the lower bound for identifying a hypothesis as a possible word alternative
-   * @param {boolean} wordConfidence - If true, the service returns a confidence measure in the range of 0.0 to 1.0 for each word (default=false)
-   * @param {boolean} timestamps - If true, the service returns time alignment for each word (default=false)
-   * @param {boolean} profanityFilter - If true, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks (default=true)
-   * @param {boolean} smartFormatting - If true, the service converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations (default=false)
-   * @param {boolean} speakerLabels - If true, the response includes labels that identify which words were spoken by which participants in a multi-person exchange (default=false)
-   * @param {string} grammarName - The name of a grammar that is to be used with the recognition request
-   * @param {boolean} redaction - If true, the service redacts, or masks, numeric data from final transcripts (default=false)
-   * @param {boolean} processingMetrics - If true, requests processing metrics about the service's transcription of the input audio (default=false)
-   * @param {number} processingMetricsInterval - Specifies the interval in seconds at which the service is to return processing metrics
-   * @param {boolean} audioMetrics - If true, requests detailed information about the signal characteristics of the input audio (detailed=false)
+   * @param {string} [options.url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
+   * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
+   * @param {boolean} [options.readableObjectMode] - Emit `result` objects instead of string Buffers for the `data` events. Does not affect input (which must be binary)
+   * @param {boolean} [options.objectMode] - Alias for readableObjectMode
+   * @param {any} [options.tokenManager] - Token manager for authenticating with IAM
+   * @param {boolean} [options.rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
+   * @param {string} [options.accessToken] - Bearer token to put in query string
+   * @param {string} [options.watsonToken] - Valid Watson authentication token (for Cloud Foundry)
+   * @param {string} [options.model] - The identifier of the model that is to be used for all recognition requests sent over the connection
+   * @param {string} [options.languageCustomizationId] - The customization ID (GUID) of a custom language model that is to be used for all requests sent over the connection
+   * @param {string} [options.acousticCustomizationId] - The customization ID (GUID) of a custom acoustic model that is to be used for the request
+   * @param {string} [options.baseModelVersion] - The version of the specified base model that is to be used for all requests sent over the connection
+   * @param {boolean} [options.xWatsonLearningOptOut] - Indicates whether IBM can use data that is sent over the connection to improve the service for future users (default=false)
+   * @param {string} [options.xWatsonMetadata] - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
+   * @param {string} [options.contentType] - The format (MIME type) of the audio
+   * @param {number} [options.customizationWeight] - Tell the service how much weight to give to words from the custom language model compared to those from the base model for the current request
+   * @param {number} [options.inactivityTimeout] - The time in seconds after which, if only silence (no speech) is detected in the audio, the connection is closed (default=30)
+   * @param {boolean} [options.interimResults] - If true, the service returns interim results as a stream of JSON SpeechRecognitionResults objects (default=false)
+   * @param {string[]} [options.keywords] - An array of keyword strings to spot in the audio
+   * @param {number} [options.keywordsThreshold] - A confidence value that is the lower bound for spotting a keyword
+   * @param {number} [options.maxAlternatives] - The maximum number of alternative transcripts that the service is to return (default=1)
+   * @param {number} [options.wordAlternativesThreshold] - A confidence value that is the lower bound for identifying a hypothesis as a possible word alternative
+   * @param {boolean} [options.wordConfidence] - If true, the service returns a confidence measure in the range of 0.0 to 1.0 for each word (default=false)
+   * @param {boolean} [options.timestamps] - If true, the service returns time alignment for each word (default=false)
+   * @param {boolean} [options.profanityFilter] - If true, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks (default=true)
+   * @param {boolean} [options.smartFormatting] - If true, the service converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations (default=false)
+   * @param {boolean} [options.speakerLabels] - If true, the response includes labels that identify which words were spoken by which participants in a multi-person exchange (default=false)
+   * @param {string} [options.grammarName] - The name of a grammar that is to be used with the recognition request
+   * @param {boolean} [options.redaction] - If true, the service redacts, or masks, numeric data from final transcripts (default=false)
+   * @param {boolean} [options.processingMetrics] - If true, requests processing metrics about the service's transcription of the input audio (default=false)
+   * @param {number} [options.processingMetricsInterval] - Specifies the interval in seconds at which the service is to return processing metrics
+   * @param {boolean} [options.audioMetrics] - If true, requests detailed information about the signal characteristics of the input audio (detailed=false)
    * @constructor
    */
   constructor(options: Options) {

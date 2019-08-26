@@ -35,6 +35,9 @@ export function processUserParameters(options: any, allowedParams: string[]): an
     const keyName = camelcase(param);
     if (options[keyName] !== undefined) {
       processedOptions[param] = options[keyName];
+    } else if (options[param] !== undefined) {
+      // if the user used the service property name, warn them and give them the name to use
+      console.warn(`Unrecognized parameter: "${param}". Did you mean "${keyName}"?`);
     }
   });
 
