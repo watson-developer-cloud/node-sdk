@@ -14,48 +14,58 @@
  * limitations under the License
  */
 
-import extend = require('extend');
+import { OutgoingHttpHeaders } from 'http';
 import { contentType, qs } from 'ibm-cloud-sdk-core';
 import omit = require('object.omit');
 import pick = require('object.pick');
-import { Duplex } from 'stream';
-import websocket = require ('websocket');
+import { Duplex, DuplexOptions } from 'stream';
+import { w3cwebsocket as w3cWebSocket } from 'websocket';
+import { processUserParameters, setAuthorizationHeader } from './websocket-utils';
 
-const w3cWebSocket = websocket.w3cwebsocket;
+// these options represent the superset of the base params,
+// query params, and opening message params, with the keys
+// in lowerCamelCase format so we can expose a consistent style
+// to the user. this object should be updated any time either
+// openingMessageParamsAllowed or queryParamsAllowed is changed
+interface Options extends DuplexOptions {
+  /* Base Properties */
+  url?: string;
+  headers?: OutgoingHttpHeaders;
+  readableObjectMode?: boolean;
+  objectMode?: boolean;
+  tokenManager?: any;
+  rejectUnauthorized?: boolean;
 
-const OPENING_MESSAGE_PARAMS_ALLOWED = [
-  'action',
-  'customization_weight',
-  'processing_metrics',
-  'processing_metrics_interval',
-  'audio_metrics',
-  'inactivity_timeout',
-  'timestamps',
-  'word_confidence',
-  'content-type',
-  'interim_results',
-  'keywords',
-  'keywords_threshold',
-  'max_alternatives',
-  'word_alternatives_threshold',
-  'profanity_filter',
-  'smart_formatting',
-  'speaker_labels',
-  'grammar_name',
-  'redaction',
-];
+  /* Query Params*/
+  accessToken: string;
+  watsonToken: string;
+  model: string;
+  languageCustomizationId: string;
+  acousticCustomizationId: string;
+  baseModelVersion: string;
+  xWatsonLearningOptOut: boolean;
+  xWatsonMetadata: string;
 
-const QUERY_PARAMS_ALLOWED = [
-  'model',
-  'X-Watson-Learning-Opt-Out',
-  'watson-token',
-  'language_customization_id',
-  'customization_id',
-  'acoustic_customization_id',
-  'access_token',
-  'base_model_version',
-  'x-watson-metadata',
-];
+  /* Opening Message Params */
+  contentType: string;
+  customizationWeight: number;
+  inactivityTimeout: number;
+  interimResults: boolean;
+  keywords: string[];
+  keywordsThreshold: number;
+  maxAlternatives: number;
+  wordAlternativesThreshold: number;
+  wordConfidence: boolean;
+  timestamps: boolean;
+  profanityFilter: boolean;
+  smartFormatting: boolean;
+  speakerLabels: boolean;
+  grammarName: string;
+  redaction: boolean;
+  processingMetrics: boolean;
+  processingMetricsInterval: number;
+  audioMetrics: boolean;
+}
 
 interface RecognizeStream extends Duplex {
   _writableState;
@@ -82,7 +92,7 @@ class RecognizeStream extends Duplex {
     return contentType.fromHeader(buffer);
   }
 
-  private options;
+  private options: Options;
   private listening: boolean;
   private initialized: boolean;
   private finished: boolean;
@@ -98,41 +108,42 @@ class RecognizeStream extends Duplex {
    *
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for auto-detection of content type (for wav/flac/opus audio).
    *
-   * @param {Object} options
-   * @param {String} [options.model='en-US_BroadbandModel'] - voice model to use. Microphone streaming only supports broadband models.
-   * @param {String} [options.url='wss://stream.watsonplatform.net/speech-to-text/api'] base URL for service
-   * @param {String} [options.token] - Auth token
-   * @param {String} [options.access_token] - IAM auth token
-   * @param {Object} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
-   * @param {String} [options.content-type='audio/wav'] - content type of audio; can be automatically determined from file header in most cases. only wav, flac, ogg/opus, and webm are supported
-   * @param {Boolean} [options.interim_results=false] - Send back non-final previews of each "sentence" as it is being processed. These results are ignored in text mode.
-   * @param {Boolean} [options.word_confidence=false] - include confidence scores with results.
-   * @param {Boolean} [options.timestamps=false] - include timestamps with results.
-   * @param {Number} [options.max_alternatives=1] - maximum number of alternative transcriptions to include.
-   * @param {Array<String>} [options.keywords] - a list of keywords to search for in the audio
-   * @param {Number} [options.keywords_threshold] - Number between 0 and 1 representing the minimum confidence before including a keyword in the results. Required when options.keywords is set
-   * @param {Number} [options.word_alternatives_threshold] - Number between 0 and 1 representing the minimum confidence before including an alternative word in the results. Must be set to enable word alternatives,
-   * @param {Boolean} [options.profanity_filter=false] - set to true to filter out profanity and replace the words with *'s
-   * @param {Number} [options.inactivity_timeout=30] - how many seconds of silence before automatically closing the stream. use -1 for infinity
-   * @param {Boolean} [options.readableObjectMode=false] - emit `result` objects instead of string Buffers for the `data` events. Does not affect input (which must be binary)
-   * @param {Boolean} [options.objectMode=false] - alias for options.readableObjectMode
-   * @param {Number} [options.X-Watson-Learning-Opt-Out=false] - set to true to opt-out of allowing Watson to use this request to improve it's services
-   * @param {Boolean} [options.smart_formatting=false] - formats numeric values such as dates, times, currency, etc.
-   * @param {String} [options.language_customization_id] - Language customization ID
-   * @param {String} [options.customization_id] - Customization ID (DEPRECATED)
-   * @param {String} [options.acoustic_customization_id] - Acoustic customization ID
-   * @param {IamTokenManagerV1} [options.token_manager] - Token manager for authenticating with IAM
-   * @param {string} [options.base_model_version] - The version of the specified base model that is to be used with recognition request or, for the **Create a session** method, with the new session.
-   * Multiple versions of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily for use with custom models that have been upgraded for a new base model.
-   * The default value depends on whether the parameter is used with or without a custom model. For more information, see [Base model version](https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-input#version).
-   * @param {Boolean} [options.rejectUnauthorized] - If true, disable SSL verification for the WebSocket connection
-   * @param {String} [options.agent] - custom http(s) agent, useful for using the sdk behind a proxy (Node only)
-   * @param {String} [options.grammar_name] - The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must also use the `language_customization_id` parameter to specify the name of the custom language model for which the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it does not recognize other custom words from the model's words resource. See [Grammars](https://cloud.ibm.com/docs/services/speech-to-text/output.html)
-   * @param {Boolean} [options.redaction] - If `true`, the service redacts, or masks, numeric data from final transcripts. The feature redacts any number that has three or more consecutive digits by replacing each digit with an `X` character. It is intended to redact sensitive numeric data, such as credit card numbers. By default, the service performs no redaction. When you enable redaction, the service automatically enables smart formatting, regardless of whether you explicitly disable that feature. To ensure maximum security, the service also disables keyword spotting (ignores the `keywords` and `keywords_threshold` parameters) and returns only a single final transcript (forces the `max_alternatives` parameter to be `1`). **Note:** Applies to US English, Japanese, and Korean transcription only. See [Numeric redaction](https://cloud.ibm.com/docs/services/speech-to-text/output.html#redaction)
-   *
+   * @param {Options} options
+   * @param {string} [options.url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
+   * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
+   * @param {boolean} [options.readableObjectMode] - Emit `result` objects instead of string Buffers for the `data` events. Does not affect input (which must be binary)
+   * @param {boolean} [options.objectMode] - Alias for readableObjectMode
+   * @param {any} [options.tokenManager] - Token manager for authenticating with IAM
+   * @param {boolean} [options.rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
+   * @param {string} [options.accessToken] - Bearer token to put in query string
+   * @param {string} [options.watsonToken] - Valid Watson authentication token (for Cloud Foundry)
+   * @param {string} [options.model] - The identifier of the model that is to be used for all recognition requests sent over the connection
+   * @param {string} [options.languageCustomizationId] - The customization ID (GUID) of a custom language model that is to be used for all requests sent over the connection
+   * @param {string} [options.acousticCustomizationId] - The customization ID (GUID) of a custom acoustic model that is to be used for the request
+   * @param {string} [options.baseModelVersion] - The version of the specified base model that is to be used for all requests sent over the connection
+   * @param {boolean} [options.xWatsonLearningOptOut] - Indicates whether IBM can use data that is sent over the connection to improve the service for future users (default=false)
+   * @param {string} [options.xWatsonMetadata] - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
+   * @param {string} [options.contentType] - The format (MIME type) of the audio
+   * @param {number} [options.customizationWeight] - Tell the service how much weight to give to words from the custom language model compared to those from the base model for the current request
+   * @param {number} [options.inactivityTimeout] - The time in seconds after which, if only silence (no speech) is detected in the audio, the connection is closed (default=30)
+   * @param {boolean} [options.interimResults] - If true, the service returns interim results as a stream of JSON SpeechRecognitionResults objects (default=false)
+   * @param {string[]} [options.keywords] - An array of keyword strings to spot in the audio
+   * @param {number} [options.keywordsThreshold] - A confidence value that is the lower bound for spotting a keyword
+   * @param {number} [options.maxAlternatives] - The maximum number of alternative transcripts that the service is to return (default=1)
+   * @param {number} [options.wordAlternativesThreshold] - A confidence value that is the lower bound for identifying a hypothesis as a possible word alternative
+   * @param {boolean} [options.wordConfidence] - If true, the service returns a confidence measure in the range of 0.0 to 1.0 for each word (default=false)
+   * @param {boolean} [options.timestamps] - If true, the service returns time alignment for each word (default=false)
+   * @param {boolean} [options.profanityFilter] - If true, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks (default=true)
+   * @param {boolean} [options.smartFormatting] - If true, the service converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations (default=false)
+   * @param {boolean} [options.speakerLabels] - If true, the response includes labels that identify which words were spoken by which participants in a multi-person exchange (default=false)
+   * @param {string} [options.grammarName] - The name of a grammar that is to be used with the recognition request
+   * @param {boolean} [options.redaction] - If true, the service redacts, or masks, numeric data from final transcripts (default=false)
+   * @param {boolean} [options.processingMetrics] - If true, requests processing metrics about the service's transcription of the input audio (default=false)
+   * @param {number} [options.processingMetricsInterval] - Specifies the interval in seconds at which the service is to return processing metrics
+   * @param {boolean} [options.audioMetrics] - If true, requests detailed information about the signal characteristics of the input audio (detailed=false)
    * @constructor
    */
-  constructor(options) {
+  constructor(options: Options) {
     // this stream only supports objectMode on the output side.
     // It must receive binary data input.
     if (options.objectMode) {
@@ -147,91 +158,62 @@ class RecognizeStream extends Duplex {
     this.listening = false;
     this.initialized = false;
     this.finished = false;
-
-    this.on('newListener', event => {
-      if (!options.silent) {
-        if (
-          event === 'results' ||
-          event === 'result' ||
-          event === 'speaker_labels'
-        ) {
-          // eslint-disable-next-line no-console
-          console.log(
-            new Error(
-              'Watson Speech to Text RecognizeStream: the ' +
-                event +
-                ' event was deprecated. ' +
-                "Please set {objectMode: true} and listen for the 'data' event instead. " +
-                'Pass {silent: true} to disable this message.'
-            )
-          );
-        } else if (event === 'connection-close') {
-          // eslint-disable-next-line no-console
-          console.log(
-            new Error(
-              'Watson Speech to Text RecognizeStream: the ' +
-                event +
-                ' event was deprecated. ' +
-                "Please listen for the 'close' event instead. " +
-                'Pass {silent: true} to disable this message.'
-            )
-          );
-        } else if (event === 'connect') {
-          // eslint-disable-next-line no-console
-          console.log(
-            new Error(
-              'Watson Speech to Text RecognizeStream: the ' +
-                event +
-                ' event was deprecated. ' +
-                "Please listen for the 'open' event instead. " +
-                'Pass {silent: true} to disable this message.'
-            )
-          );
-        }
-      }
-    });
   }
 
   initialize() {
     const options = this.options;
 
-    if (options.token && !options['watson-token']) {
-      console.warn(
-        'Authenticating with the X-Watson-Authorization-Token header or the `watson-token` query param is deprecated.' +
-        ' The token continues to work with Cloud Foundry services, but is not' +
-        ' supported for services that use Identity and Access Management (IAM) authentication.' +
-        ' For details see Authenticating with IAM tokens or the README in the IBM Watson SDK you use.'
-      );
-      options['watson-token'] = options.token;
-    }
-    if (options.content_type && !options['content-type']) {
-      options['content-type'] = options.content_type;
-    }
+    // compatibility
     if (options['X-WDC-PL-OPT-OUT'] && !options['X-Watson-Learning-Opt-Out']) {
       options['X-Watson-Learning-Opt-Out'] = options['X-WDC-PL-OPT-OUT'];
     }
 
-    // compatibility code for the deprecated param, customization_id
-    if (options.customization_id && !options.language_customization_id) {
-      options.language_customization_id = options.customization_id;
-      delete options.customization_id;
+    // process query params
+    const queryParamsAllowed: string[] = [
+      'access_token',
+      'watson-token',
+      'model',
+      'language_customization_id',
+      'acoustic_customization_id',
+      'base_model_version',
+      'x-watson-learning-opt-out',
+      'x-watson-metadata',
+    ];
+    const queryParams = processUserParameters(options, queryParamsAllowed);
+    if (!queryParams.language_customization_id && !queryParams.model) {
+      queryParams.model = 'en-US_BroadbandModel';
     }
-
-    const queryParams = extend(
-      'language_customization_id' in options
-        ? pick(options, QUERY_PARAMS_ALLOWED)
-        : { model: 'en-US_BroadbandModel' },
-      pick(options, QUERY_PARAMS_ALLOWED)
-    );
-
     const queryString = qs.stringify(queryParams);
+
+    // synthesize the url
     const url =
       (options.url || 'wss://stream.watsonplatform.net/speech-to-text/api'
       ).replace(/^http/, 'ws') +
       '/v1/recognize?' +
       queryString;
 
-    const openingMessage = pick(options, OPENING_MESSAGE_PARAMS_ALLOWED);
+    // process opening payload params
+    const openingMessageParamsAllowed: string[] = [
+      'customization_weight',
+      'processing_metrics',
+      'processing_metrics_interval',
+      'audio_metrics',
+      'inactivity_timeout',
+      'timestamps',
+      'word_confidence',
+      'content-type',
+      'interim_results',
+      'keywords',
+      'keywords_threshold',
+      'max_alternatives',
+      'word_alternatives_threshold',
+      'profanity_filter',
+      'smart_formatting',
+      'speaker_labels',
+      'grammar_name',
+      'redaction',
+    ];
+    const openingMessage = processUserParameters(options, openingMessageParamsAllowed);
     openingMessage.action = 'start';
 
     const self = this;
@@ -439,7 +421,7 @@ class RecognizeStream extends Duplex {
 
 
   _write(chunk, encoding, callback): void {
-    this.setAuthorizationHeaderToken(err => {
+    setAuthorizationHeader(this.options, err => {
       if (err) {
         this.emit('error', err);
         this.push(null);
@@ -452,10 +434,10 @@ class RecognizeStream extends Duplex {
       }
 
       if (!this.initialized) {
-        if (!this.options['content-type'] && !this.options.content_type) {
+        if (!this.options.contentType) {
           const ct = RecognizeStream.getContentType(chunk);
           if (ct) {
-            this.options['content-type'] = ct;
+            this.options.contentType = ct;
           } else {
             const error = new Error(
               'Unable to determine content-type from file header, please specify manually.'
@@ -524,30 +506,6 @@ class RecognizeStream extends Duplex {
         this.on('error', reject);
       }
     });
-  }
-
-  /**
-   * This function retrieves an IAM access token and stores it in the
-   * request header before calling the callback function, which will
-   * execute the next iteration of `_write()`
-   *
-   *
-   * @private
-   * @param {Function} callback
-   */
-  setAuthorizationHeaderToken(callback) {
-    if (this.options.token_manager) {
-      this.options.token_manager.getToken((err, token) => {
-        if (err) {
-          callback(err);
-        }
-        const authHeader = { authorization: 'Bearer ' + token };
-        this.options.headers = extend(this.options.headers, authHeader);
-        callback(null);
-      });
-    } else {
-      callback(null);
-    }
   }
 }
 
