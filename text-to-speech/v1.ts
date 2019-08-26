@@ -83,7 +83,7 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
 
     // if using iam, pass the token manager to the SynthesizeStream object
     if (this.tokenManager) {
-      params.token_manager = this.tokenManager;
+      params.tokenManager = this.tokenManager;
     }
 
     // if the user configured a custom https client, use it in the websocket method
