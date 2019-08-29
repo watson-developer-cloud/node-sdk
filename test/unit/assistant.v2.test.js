@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const AssistantV2 = require('../../assistant/v2');
 const utils = require('../resources/unitTestUtils');
 
@@ -34,8 +35,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url: 'https://gateway.watsonplatform.net/assistant/api/assistant/api',
   version: '2018-10-18',
 };
@@ -59,9 +59,9 @@ describe('createSession', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
+      const assistantId = 'fake_assistantId';
       const params = {
-        assistant_id,
+        assistantId,
       };
 
       // invoke method
@@ -77,31 +77,31 @@ describe('createSession', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['assistant_id']).toEqual(assistant_id);
+      expect(options.path['assistant_id']).toEqual(assistantId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const assistantId = 'fake_assistantId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        assistant_id,
+        assistantId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createSession(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
+      const assistantId = 'fake_assistantId';
       const params = {
-        assistant_id,
+        assistantId,
       };
 
       // invoke method
@@ -127,7 +127,7 @@ describe('createSession', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['assistant_id'];
+      const requiredParams = ['assistantId'];
 
       assistant.createSession({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -137,7 +137,7 @@ describe('createSession', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['assistant_id'];
+      const requiredParams = ['assistantId'];
 
       const createSessionPromise = assistant.createSession();
       expectToBePromise(createSessionPromise);
@@ -157,11 +157,11 @@ describe('deleteSession', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
-      const session_id = 'fake_session_id';
+      const assistantId = 'fake_assistantId';
+      const sessionId = 'fake_sessionId';
       const params = {
-        assistant_id,
-        session_id,
+        assistantId,
+        sessionId,
       };
 
       // invoke method
@@ -177,36 +177,36 @@ describe('deleteSession', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['assistant_id']).toEqual(assistant_id);
-      expect(options.path['session_id']).toEqual(session_id);
+      expect(options.path['assistant_id']).toEqual(assistantId);
+      expect(options.path['session_id']).toEqual(sessionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
-      const session_id = 'fake_session_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const assistantId = 'fake_assistantId';
+      const sessionId = 'fake_sessionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        assistant_id,
-        session_id,
+        assistantId,
+        sessionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteSession(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
-      const session_id = 'fake_session_id';
+      const assistantId = 'fake_assistantId';
+      const sessionId = 'fake_sessionId';
       const params = {
-        assistant_id,
-        session_id,
+        assistantId,
+        sessionId,
       };
 
       // invoke method
@@ -232,7 +232,7 @@ describe('deleteSession', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['assistant_id', 'session_id'];
+      const requiredParams = ['assistantId', 'sessionId'];
 
       assistant.deleteSession({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -242,7 +242,7 @@ describe('deleteSession', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['assistant_id', 'session_id'];
+      const requiredParams = ['assistantId', 'sessionId'];
 
       const deleteSessionPromise = assistant.deleteSession();
       expectToBePromise(deleteSessionPromise);
@@ -262,13 +262,13 @@ describe('message', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
-      const session_id = 'fake_session_id';
+      const assistantId = 'fake_assistantId';
+      const sessionId = 'fake_sessionId';
       const input = 'fake_input';
       const context = 'fake_context';
       const params = {
-        assistant_id,
-        session_id,
+        assistantId,
+        sessionId,
         input,
         context,
       };
@@ -292,36 +292,36 @@ describe('message', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['input']).toEqual(input);
       expect(options.body['context']).toEqual(context);
-      expect(options.path['assistant_id']).toEqual(assistant_id);
-      expect(options.path['session_id']).toEqual(session_id);
+      expect(options.path['assistant_id']).toEqual(assistantId);
+      expect(options.path['session_id']).toEqual(sessionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
-      const session_id = 'fake_session_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const assistantId = 'fake_assistantId';
+      const sessionId = 'fake_sessionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        assistant_id,
-        session_id,
+        assistantId,
+        sessionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.message(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const assistant_id = 'fake_assistant_id';
-      const session_id = 'fake_session_id';
+      const assistantId = 'fake_assistantId';
+      const sessionId = 'fake_sessionId';
       const params = {
-        assistant_id,
-        session_id,
+        assistantId,
+        sessionId,
       };
 
       // invoke method
@@ -347,7 +347,7 @@ describe('message', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['assistant_id', 'session_id'];
+      const requiredParams = ['assistantId', 'sessionId'];
 
       assistant.message({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -357,7 +357,7 @@ describe('message', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['assistant_id', 'session_id'];
+      const requiredParams = ['assistantId', 'sessionId'];
 
       const messagePromise = assistant.message();
       expectToBePromise(messagePromise);

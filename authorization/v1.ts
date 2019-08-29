@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import { IncomingHttpHeaders } from 'http';
-import { BaseService } from 'ibm-cloud-sdk-core';
+import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
+import { Authenticator, BaseService, TokenRequestBasedAuthenticator } from 'ibm-cloud-sdk-core';
+import { BaseServiceOptions } from 'ibm-cloud-sdk-core/lib/base_service';
 import url = require('url');
 
 class AuthorizationV1 extends BaseService {
@@ -23,7 +24,7 @@ class AuthorizationV1 extends BaseService {
   name: string; // set by prototype to 'authorization'
   serviceVersion: string; // set by prototype to 'v1'
   // tslint:disable-next-line:variable-name
-  target_url?: string;
+  targetUrl?: string;
 
   /**
    * Authorization Service
@@ -32,20 +33,15 @@ class AuthorizationV1 extends BaseService {
    * Tokens expire after one hour.
    *
    * @param {Object} options
-   * @param {String} options.username
-   * @param {String} options.password
-   * @param {String} [options.url] url of the service for which auth tokens are being generated
-   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
-   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
    * @constructor
    */
-  constructor(options: AuthorizationV1.Options) {
+  constructor(options: BaseServiceOptions) {
     super(options);
-    this.target_url = options.url;
+    this.targetUrl = options.url;
     // replace the url to always point to /authorization/api
-    const hostname = url.parse(this._options.url);
+    const hostname = url.parse(this.baseOptions.url);
     hostname.pathname = '/authorization/api';
-    this._options.url = url.format(hostname);
+    this.baseOptions.url = url.format(hostname);
   }
 
   /**
@@ -59,14 +55,17 @@ class AuthorizationV1 extends BaseService {
   getToken(params: AuthorizationV1.GetTokenParams | AuthorizationV1.GetTokenCallback, callback?: AuthorizationV1.GetTokenCallback) {
     if (typeof params === 'function') {
       callback = params;
-      params = { url: this.target_url };
+      params = { url: this.targetUrl };
     }
 
-    // if the service is an RC instance, return an IAM access token
-    if (this.tokenManager) {
-      // callback should expect (err, token) format,
-      // which is what the token manager will pass in
-      return this.tokenManager.getToken(callback);
+    const authenticator = this.getAuthenticator();
+
+    // if the authenticator is managing a token, return that token
+    if (authenticator instanceof TokenRequestBasedAuthenticator) {
+      const options = { headers: {} };
+      return authenticator.authenticate(options, err => {
+        callback(err, parseTokenFromHeader(options.headers));
+      });
     }
 
     // otherwise, return a CF Watson token
@@ -79,7 +78,7 @@ class AuthorizationV1 extends BaseService {
         method: 'GET',
         url: '/v1/token?url=' + params.url
       },
-      defaultOptions: this._options
+      defaultOptions: this.baseOptions
     };
     return this.createRequest(parameters, callback);
   }
@@ -95,30 +94,30 @@ AuthorizationV1.prototype.serviceVersion = 'v1';
 namespace AuthorizationV1 {
   /** Options for the AuthorizationV1 constructor */
   export type Options = {
-    username?: string;
-    password?: string;
-    url?: string;
-    iam_apikey?: string;
-    iam_url?: string;
+    authenticator: Authenticator;
     /** Allow additional request config parameters */
     [propName: string]: any;
   }
 
   export interface GetTokenResponse {
     result: string;
-    data: string; // for compatibility
-    status: number;
-    statusText: string;
-    headers: IncomingHttpHeaders;
+    status?: number;
+    statusText?: string;
+    headers?: IncomingHttpHeaders;
   }
 
   /** The callback for the getToken request. */
-  export type GetTokenCallback = (error: any, token?: string, response?: GetTokenResponse) => void;
+  export type GetTokenCallback = (error?: Error, response?: string|GetTokenResponse) => void;
 
   /** Parameters for the `getToken` operation */
   export interface GetTokenParams {
     url?: string;
   }
+}
+
+function parseTokenFromHeader(headers) {
+  // get token from format `basic TOKEN` or `bearer TOKEN`
+  return headers.Authorization ? headers.Authorization.split(' ')[1] : null;
 }
 
 export = AuthorizationV1;

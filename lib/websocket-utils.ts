@@ -43,27 +43,3 @@ export function processUserParameters(options: any, allowedParams: string[]): an
 
   return processedOptions;
 }
-
-/**
- * This function retrieves an access token and stores it in the
- * request header before calling the callback function.
- *
- * @param {object} options - the internal options of a websocket stream class
- * @param {Function} callback
- */
- export function setAuthorizationHeader(options: any, callback: Function): void {
-  // assuming the token manger would fall under property 'tokenManager'
-  // this will likely change with the new authenticators anyways
-  if (options.tokenManager) {
-    options.tokenManager.getToken((err, token) => {
-      if (err) {
-        return callback(err);
-      }
-      const authHeader = { authorization: 'Bearer ' + token };
-      options.headers = extend(options.headers, authHeader);
-      callback(null);
-    });
-  } else {
-    callback(null);
-  }
-}

@@ -1,31 +1,31 @@
 'use strict';
 
+const { BasicAuthenticator } = require('ibm-cloud-sdk-core');
 const isStream = require('isstream');
+const websocket = require('websocket');
 const SpeechToTextV1 = require('../../speech-to-text/v1');
 const TextToSpeechV1 = require('../../text-to-speech/v1');
-const websocket = require('websocket');
 
-const service = {
+const url = 'http://ibm.com:80';
+const version = 'v1';
+const authenticator = new BasicAuthenticator({
   username: 'batman',
   password: 'bruce-wayne',
-  url: 'http://ibm.com:80',
-  version: 'v1',
-};
+});
 
-const rcService = {
-  iam_apikey: 'abc123',
-  url: 'http://ibm.com:80',
-  version: 'v1',
+const sttService = {
+  url,
+  version,
+  authenticator,
 };
 
 const ttsService = {
-  iam_apikey: 'abc123',
-  url: 'http://ibm.com:80',
-  version: 'v1',
+  url,
+  version,
+  authenticator,
 };
 
-const speechToText = new SpeechToTextV1(service);
-const rcSpeechToText = new SpeechToTextV1(rcService);
+const speechToText = new SpeechToTextV1(sttService);
 const textToSpeech = new TextToSpeechV1(ttsService);
 
 const socketSpy = jest.spyOn(websocket, 'w3cwebsocket').mockImplementation(() => {});
@@ -38,20 +38,12 @@ describe('speech to text helpers', () => {
 
     it('should pass the correct parameters into RecognizeStream', () => {
       const stream = speechToText.recognizeUsingWebSocket();
-      expect(stream.options.url).toBe(service.url);
-      expect(stream.options.headers.authorization).toBeTruthy();
+      expect(stream.options.url).toBe(sttService.url);
       expect(stream.options.headers['User-Agent']).toBeTruthy();
       expect(stream.options.headers['X-IBMCloud-SDK-Analytics']).toBe(
         'service_name=speech_to_text;service_version=v1;operation_id=recognizeUsingWebSocket;async=true'
       );
-      expect(stream.options.tokenManager).toBeUndefined();
-    });
-
-    it('should create a token manager in RecognizeStream if using IAM', () => {
-      const stream = rcSpeechToText.recognizeUsingWebSocket();
-      expect(stream.options.url).toBe(service.url);
-      expect(stream.options.headers.authorization).toBeUndefined();
-      expect(stream.options.tokenManager).toBeDefined();
+      expect(stream.authenticator).toBeDefined();
     });
 
     it('should construct the proper url from all query params', () => {
@@ -94,13 +86,13 @@ describe('text to speech helpers', () => {
 
     it('should pass the correct parameters into RecognizeStream', () => {
       const stream = textToSpeech.synthesizeUsingWebSocket();
-      expect(stream.options.url).toBe(service.url);
+      expect(stream.options.url).toBe(ttsService.url);
       expect(stream.options.headers.authorization).toBeUndefined();
       expect(stream.options.headers['User-Agent']).toBeTruthy();
       expect(stream.options.headers['X-IBMCloud-SDK-Analytics']).toBe(
         'service_name=text_to_speech;service_version=v1;operation_id=synthesizeUsingWebSocket;async=true'
       );
-      expect(stream.options.tokenManager).toBeDefined();
+      expect(stream.authenticator).toBeDefined();
     });
 
     it('should construct the proper url from all query params', () => {
