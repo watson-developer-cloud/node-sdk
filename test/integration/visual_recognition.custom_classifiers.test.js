@@ -4,7 +4,6 @@ const { IamAuthenticator } = require('../../auth');
 const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.visual_recognition;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const async = require('async');
 
@@ -19,6 +18,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 8);
 
+  const options = authHelper.auth.visual_recognition;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const visual_recognition = new VisualRecognitionV3(
     Object.assign({}, options.v3, {

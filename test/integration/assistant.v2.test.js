@@ -3,10 +3,10 @@
 const AssistantV2 = require('../../assistant/v2');
 const { IamAuthenticator } = require('../../auth');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.assistant;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
 describe('assistant v2 integration', function() {
+  const options = authHelper.auth.assistant;
   options.version = '2019-03-27';
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const assistant = new AssistantV2(options);

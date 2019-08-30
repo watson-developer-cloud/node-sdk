@@ -5,7 +5,6 @@ const { IamAuthenticator } = require('../../auth');
 const PersonalityInsightsV3 = require('../../personality-insights/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.personality_insights;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
@@ -13,6 +12,7 @@ describe('personality_insights_v3_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
+  const options = authHelper.auth.personality_insights;
   options.version = '2019-03-27';
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const personality_insights = new PersonalityInsightsV3(options);

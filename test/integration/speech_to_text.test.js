@@ -2,7 +2,6 @@
 
 const { IamAuthenticator } = require('../../auth');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.speech_to_text;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const SpeechToTextV1 = require('../../speech-to-text/v1');
 const fs = require('fs');
@@ -17,6 +16,7 @@ const TWO_MINUTES = 2 * 60 * 1000;
 describe('speech_to_text_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
+  const options = authHelper.auth.speech_to_text;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const speech_to_text = new SpeechToTextV1(options);
 

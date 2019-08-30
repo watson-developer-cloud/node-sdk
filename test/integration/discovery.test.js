@@ -3,7 +3,6 @@
 const { IamAuthenticator } = require('../../auth');
 const DiscoveryV1 = require('../../discovery/v1');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.discovery;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const async = require('async');
 const fs = require('fs');
@@ -14,6 +13,7 @@ const THIRTY_SECONDS = 30000;
 describe('discovery_integration', function() {
   jest.setTimeout(THIRTY_SECONDS);
 
+  const options = authHelper.auth.discovery;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
 
   const environmentId = options.environmentId;

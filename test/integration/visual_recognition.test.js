@@ -3,7 +3,6 @@ const fs = require('fs');
 const { IamAuthenticator } = require('../../auth');
 const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.visual_recognition;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const serviceErrorUtils = require('../resources/service_error_util');
 
@@ -13,6 +12,7 @@ describe('visual_recognition_integration', function() {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 4);
 
+  const options = authHelper.auth.visual_recognition;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const visual_recognition = new VisualRecognitionV3(
     Object.assign({}, options, {

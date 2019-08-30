@@ -4,7 +4,6 @@ const fs = require('fs');
 const { IamAuthenticator } = require('../../auth');
 const LanguageTranslatorV3 = require('../../language-translator/v3');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.language_translator;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
@@ -12,6 +11,7 @@ const TWENTY_SECONDS = 20000;
 describe('language_translator_integration', function() {
   jest.setTimeout(TWENTY_SECONDS * 2);
 
+  const options = authHelper.auth.language_translator;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   options.version = '2019-03-27';
   const language_translator = new LanguageTranslatorV3(options);

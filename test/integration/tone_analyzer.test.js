@@ -5,7 +5,6 @@ const { IamAuthenticator } = require('../../auth');
 const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.tone_analyzer;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 const serviceErrorUtils = require('../resources/service_error_util');
@@ -13,6 +12,7 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('tone_analyzer_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
+  const options = authHelper.auth.tone_analyzer;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   options.version = '2019-03-27';
   const tone_analyzer = new ToneAnalyzerV3(options);

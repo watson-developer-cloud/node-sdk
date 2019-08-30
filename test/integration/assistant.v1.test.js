@@ -4,7 +4,6 @@ const assign = require('object.assign'); // for node v0.12 compatibility
 const AssistantV1 = require('../../assistant/v1');
 const { IamAuthenticator } = require('../../auth');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.assistant;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const serviceErrorUtils = require('../resources/service_error_util');
 
@@ -103,6 +102,7 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 
 describe('assistant_integration', function() {
   jest.setTimeout(TEN_SECONDS);
+  const options = authHelper.auth.assistant;
   options.version = '2019-03-27';
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const assistant = new AssistantV1(options);

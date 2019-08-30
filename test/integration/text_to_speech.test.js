@@ -4,7 +4,6 @@ const { IamAuthenticator } = require('../../auth');
 const TextToSpeechV1 = require('../../text-to-speech/v1');
 const wav = require('wav');
 const authHelper = require('../resources/auth_helper.js');
-const options = authHelper.auth.text_to_speech;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 const serviceErrorUtils = require('../resources/service_error_util');
@@ -12,6 +11,7 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('text_to_speech_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
+  const options = authHelper.auth.text_to_speech;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const text_to_speech = new TextToSpeechV1(options);
 
