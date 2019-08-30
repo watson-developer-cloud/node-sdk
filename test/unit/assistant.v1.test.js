@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const AssistantV1 = require('../../assistant/v1');
 const utils = require('../resources/unitTestUtils');
 
@@ -35,8 +36,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url: 'https://gateway.watsonplatform.net/assistant/api/assistant/api',
   version: '2018-10-18',
 };
@@ -60,23 +60,23 @@ describe('message', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const input = 'fake_input';
       const intents = 'fake_intents';
       const entities = 'fake_entities';
-      const alternate_intents = 'fake_alternate_intents';
+      const alternateIntents = 'fake_alternateIntents';
       const context = 'fake_context';
       const output = 'fake_output';
-      const nodes_visited_details = 'fake_nodes_visited_details';
+      const nodesVisitedDetails = 'fake_nodesVisitedDetails';
       const params = {
-        workspace_id,
+        workspaceId,
         input,
         intents,
         entities,
-        alternate_intents,
+        alternateIntents,
         context,
         output,
-        nodes_visited_details,
+        nodesVisitedDetails,
       };
 
       // invoke method
@@ -95,35 +95,35 @@ describe('message', () => {
       expect(options.body['input']).toEqual(input);
       expect(options.body['intents']).toEqual(intents);
       expect(options.body['entities']).toEqual(entities);
-      expect(options.body['alternate_intents']).toEqual(alternate_intents);
+      expect(options.body['alternate_intents']).toEqual(alternateIntents);
       expect(options.body['context']).toEqual(context);
       expect(options.body['output']).toEqual(output);
-      expect(options.qs['nodes_visited_details']).toEqual(nodes_visited_details);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['nodes_visited_details']).toEqual(nodesVisitedDetails);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.message(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -149,7 +149,7 @@ describe('message', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.message({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -159,7 +159,7 @@ describe('message', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const messagePromise = assistant.message();
       expectToBePromise(messagePromise);
@@ -179,17 +179,15 @@ describe('listWorkspaces', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        page_limit,
-        include_count,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -205,26 +203,25 @@ describe('listWorkspaces', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listWorkspaces(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -263,22 +260,22 @@ describe('createWorkspace', () => {
       const description = 'fake_description';
       const language = 'fake_language';
       const metadata = 'fake_metadata';
-      const learning_opt_out = 'fake_learning_opt_out';
-      const system_settings = 'fake_system_settings';
+      const learningOptOut = 'fake_learningOptOut';
+      const systemSettings = 'fake_systemSettings';
       const intents = 'fake_intents';
       const entities = 'fake_entities';
-      const dialog_nodes = 'fake_dialog_nodes';
+      const dialogNodes = 'fake_dialogNodes';
       const counterexamples = 'fake_counterexamples';
       const params = {
         name,
         description,
         language,
         metadata,
-        learning_opt_out,
-        system_settings,
+        learningOptOut,
+        systemSettings,
         intents,
         entities,
-        dialog_nodes,
+        dialogNodes,
         counterexamples,
       };
 
@@ -299,27 +296,27 @@ describe('createWorkspace', () => {
       expect(options.body['description']).toEqual(description);
       expect(options.body['language']).toEqual(language);
       expect(options.body['metadata']).toEqual(metadata);
-      expect(options.body['learning_opt_out']).toEqual(learning_opt_out);
-      expect(options.body['system_settings']).toEqual(system_settings);
+      expect(options.body['learning_opt_out']).toEqual(learningOptOut);
+      expect(options.body['system_settings']).toEqual(systemSettings);
       expect(options.body['intents']).toEqual(intents);
       expect(options.body['entities']).toEqual(entities);
-      expect(options.body['dialog_nodes']).toEqual(dialog_nodes);
+      expect(options.body['dialog_nodes']).toEqual(dialogNodes);
       expect(options.body['counterexamples']).toEqual(counterexamples);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createWorkspace(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -354,14 +351,14 @@ describe('getWorkspace', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const _export = 'fake__export';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const sort = 'fake_sort';
       const params = {
-        workspace_id,
+        workspaceId,
         _export,
-        include_audit,
+        includeAudit,
         sort,
       };
 
@@ -379,33 +376,33 @@ describe('getWorkspace', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['include_audit']).toEqual(include_audit);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
       expect(options.qs['sort']).toEqual(sort);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getWorkspace(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -431,7 +428,7 @@ describe('getWorkspace', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.getWorkspace({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -441,7 +438,7 @@ describe('getWorkspace', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const getWorkspacePromise = assistant.getWorkspace();
       expectToBePromise(getWorkspacePromise);
@@ -461,29 +458,29 @@ describe('updateWorkspace', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const name = 'fake_name';
       const description = 'fake_description';
       const language = 'fake_language';
       const metadata = 'fake_metadata';
-      const learning_opt_out = 'fake_learning_opt_out';
-      const system_settings = 'fake_system_settings';
+      const learningOptOut = 'fake_learningOptOut';
+      const systemSettings = 'fake_systemSettings';
       const intents = 'fake_intents';
       const entities = 'fake_entities';
-      const dialog_nodes = 'fake_dialog_nodes';
+      const dialogNodes = 'fake_dialogNodes';
       const counterexamples = 'fake_counterexamples';
       const append = 'fake_append';
       const params = {
-        workspace_id,
+        workspaceId,
         name,
         description,
         language,
         metadata,
-        learning_opt_out,
-        system_settings,
+        learningOptOut,
+        systemSettings,
         intents,
         entities,
-        dialog_nodes,
+        dialogNodes,
         counterexamples,
         append,
       };
@@ -505,38 +502,38 @@ describe('updateWorkspace', () => {
       expect(options.body['description']).toEqual(description);
       expect(options.body['language']).toEqual(language);
       expect(options.body['metadata']).toEqual(metadata);
-      expect(options.body['learning_opt_out']).toEqual(learning_opt_out);
-      expect(options.body['system_settings']).toEqual(system_settings);
+      expect(options.body['learning_opt_out']).toEqual(learningOptOut);
+      expect(options.body['system_settings']).toEqual(systemSettings);
       expect(options.body['intents']).toEqual(intents);
       expect(options.body['entities']).toEqual(entities);
-      expect(options.body['dialog_nodes']).toEqual(dialog_nodes);
+      expect(options.body['dialog_nodes']).toEqual(dialogNodes);
       expect(options.body['counterexamples']).toEqual(counterexamples);
       expect(options.qs['append']).toEqual(append);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateWorkspace(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -562,7 +559,7 @@ describe('updateWorkspace', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.updateWorkspace({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -572,7 +569,7 @@ describe('updateWorkspace', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const updateWorkspacePromise = assistant.updateWorkspace();
       expectToBePromise(updateWorkspacePromise);
@@ -592,9 +589,9 @@ describe('deleteWorkspace', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -610,31 +607,31 @@ describe('deleteWorkspace', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteWorkspace(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -660,7 +657,7 @@ describe('deleteWorkspace', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.deleteWorkspace({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -670,7 +667,7 @@ describe('deleteWorkspace', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const deleteWorkspacePromise = assistant.deleteWorkspace();
       expectToBePromise(deleteWorkspacePromise);
@@ -690,21 +687,19 @@ describe('listIntents', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const _export = 'fake__export';
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         _export,
-        page_limit,
-        include_count,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -721,36 +716,35 @@ describe('listIntents', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listIntents(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -776,7 +770,7 @@ describe('listIntents', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.listIntents({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -786,7 +780,7 @@ describe('listIntents', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const listIntentsPromise = assistant.listIntents();
       expectToBePromise(listIntentsPromise);
@@ -806,12 +800,12 @@ describe('createIntent', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const description = 'fake_description';
       const examples = 'fake_examples';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         description,
         examples,
@@ -833,34 +827,34 @@ describe('createIntent', () => {
       expect(options.body['intent']).toEqual(intent);
       expect(options.body['description']).toEqual(description);
       expect(options.body['examples']).toEqual(examples);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createIntent(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
       };
 
@@ -887,7 +881,7 @@ describe('createIntent', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       assistant.createIntent({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -897,7 +891,7 @@ describe('createIntent', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       const createIntentPromise = assistant.createIntent();
       expectToBePromise(createIntentPromise);
@@ -917,15 +911,15 @@ describe('getIntent', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const _export = 'fake__export';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         _export,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -942,36 +936,36 @@ describe('getIntent', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getIntent(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
       };
 
@@ -998,7 +992,7 @@ describe('getIntent', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       assistant.getIntent({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1008,7 +1002,7 @@ describe('getIntent', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       const getIntentPromise = assistant.getIntent();
       expectToBePromise(getIntentPromise);
@@ -1028,17 +1022,17 @@ describe('updateIntent', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
-      const new_intent = 'fake_new_intent';
-      const new_description = 'fake_new_description';
-      const new_examples = 'fake_new_examples';
+      const newIntent = 'fake_newIntent';
+      const newDescription = 'fake_newDescription';
+      const newExamples = 'fake_newExamples';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
-        new_intent,
-        new_description,
-        new_examples,
+        newIntent,
+        newDescription,
+        newExamples,
       };
 
       // invoke method
@@ -1054,38 +1048,38 @@ describe('updateIntent', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['intent']).toEqual(new_intent);
-      expect(options.body['description']).toEqual(new_description);
-      expect(options.body['examples']).toEqual(new_examples);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.body['intent']).toEqual(newIntent);
+      expect(options.body['description']).toEqual(newDescription);
+      expect(options.body['examples']).toEqual(newExamples);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateIntent(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
       };
 
@@ -1112,7 +1106,7 @@ describe('updateIntent', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       assistant.updateIntent({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1122,7 +1116,7 @@ describe('updateIntent', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       const updateIntentPromise = assistant.updateIntent();
       expectToBePromise(updateIntentPromise);
@@ -1142,10 +1136,10 @@ describe('deleteIntent', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
       };
 
@@ -1162,35 +1156,35 @@ describe('deleteIntent', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteIntent(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
       };
 
@@ -1217,7 +1211,7 @@ describe('deleteIntent', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       assistant.deleteIntent({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1227,7 +1221,7 @@ describe('deleteIntent', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       const deleteIntentPromise = assistant.deleteIntent();
       expectToBePromise(deleteIntentPromise);
@@ -1247,21 +1241,19 @@ describe('listExamples', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
-        page_limit,
-        include_count,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -1277,40 +1269,39 @@ describe('listExamples', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listExamples(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
       };
 
@@ -1337,7 +1328,7 @@ describe('listExamples', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       assistant.listExamples({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1347,7 +1338,7 @@ describe('listExamples', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent'];
+      const requiredParams = ['workspaceId', 'intent'];
 
       const listExamplesPromise = assistant.listExamples();
       expectToBePromise(listExamplesPromise);
@@ -1367,12 +1358,12 @@ describe('createExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
       const mentions = 'fake_mentions';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
         mentions,
@@ -1393,38 +1384,38 @@ describe('createExample', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['text']).toEqual(text);
       expect(options.body['mentions']).toEqual(mentions);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
       };
@@ -1452,7 +1443,7 @@ describe('createExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       assistant.createExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1462,7 +1453,7 @@ describe('createExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       const createExamplePromise = assistant.createExample();
       expectToBePromise(createExamplePromise);
@@ -1482,15 +1473,15 @@ describe('getExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -1510,40 +1501,40 @@ describe('getExample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
       expect(options.path['text']).toEqual(text);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
       };
@@ -1571,7 +1562,7 @@ describe('getExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       assistant.getExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1581,7 +1572,7 @@ describe('getExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       const getExamplePromise = assistant.getExample();
       expectToBePromise(getExamplePromise);
@@ -1601,17 +1592,17 @@ describe('updateExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
-      const new_text = 'fake_new_text';
-      const new_mentions = 'fake_new_mentions';
+      const newText = 'fake_newText';
+      const newMentions = 'fake_newMentions';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
-        new_text,
-        new_mentions,
+        newText,
+        newMentions,
       };
 
       // invoke method
@@ -1631,41 +1622,41 @@ describe('updateExample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['text']).toEqual(new_text);
-      expect(options.body['mentions']).toEqual(new_mentions);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.body['text']).toEqual(newText);
+      expect(options.body['mentions']).toEqual(newMentions);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
       expect(options.path['text']).toEqual(text);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
       };
@@ -1693,7 +1684,7 @@ describe('updateExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       assistant.updateExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1703,7 +1694,7 @@ describe('updateExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       const updateExamplePromise = assistant.updateExample();
       expectToBePromise(updateExamplePromise);
@@ -1723,11 +1714,11 @@ describe('deleteExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
       };
@@ -1749,39 +1740,39 @@ describe('deleteExample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['intent']).toEqual(intent);
       expect(options.path['text']).toEqual(text);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const intent = 'fake_intent';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         intent,
         text,
       };
@@ -1809,7 +1800,7 @@ describe('deleteExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       assistant.deleteExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1819,7 +1810,7 @@ describe('deleteExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'intent', 'text'];
+      const requiredParams = ['workspaceId', 'intent', 'text'];
 
       const deleteExamplePromise = assistant.deleteExample();
       expectToBePromise(deleteExamplePromise);
@@ -1839,19 +1830,17 @@ describe('listCounterexamples', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const workspaceId = 'fake_workspaceId';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
-        page_limit,
-        include_count,
+        workspaceId,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -1867,36 +1856,35 @@ describe('listCounterexamples', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listCounterexamples(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -1922,7 +1910,7 @@ describe('listCounterexamples', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.listCounterexamples({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1932,7 +1920,7 @@ describe('listCounterexamples', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const listCounterexamplesPromise = assistant.listCounterexamples();
       expectToBePromise(listCounterexamplesPromise);
@@ -1952,10 +1940,10 @@ describe('createCounterexample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
       };
 
@@ -1973,34 +1961,34 @@ describe('createCounterexample', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['text']).toEqual(text);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createCounterexample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
       };
 
@@ -2027,7 +2015,7 @@ describe('createCounterexample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       assistant.createCounterexample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2037,7 +2025,7 @@ describe('createCounterexample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       const createCounterexamplePromise = assistant.createCounterexample();
       expectToBePromise(createCounterexamplePromise);
@@ -2057,13 +2045,13 @@ describe('getCounterexample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -2079,36 +2067,36 @@ describe('getCounterexample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['text']).toEqual(text);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getCounterexample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
       };
 
@@ -2135,7 +2123,7 @@ describe('getCounterexample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       assistant.getCounterexample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2145,7 +2133,7 @@ describe('getCounterexample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       const getCounterexamplePromise = assistant.getCounterexample();
       expectToBePromise(getCounterexamplePromise);
@@ -2165,13 +2153,13 @@ describe('updateCounterexample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
-      const new_text = 'fake_new_text';
+      const newText = 'fake_newText';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
-        new_text,
+        newText,
       };
 
       // invoke method
@@ -2187,36 +2175,36 @@ describe('updateCounterexample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['text']).toEqual(new_text);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.body['text']).toEqual(newText);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['text']).toEqual(text);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateCounterexample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
       };
 
@@ -2243,7 +2231,7 @@ describe('updateCounterexample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       assistant.updateCounterexample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2253,7 +2241,7 @@ describe('updateCounterexample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       const updateCounterexamplePromise = assistant.updateCounterexample();
       expectToBePromise(updateCounterexamplePromise);
@@ -2273,10 +2261,10 @@ describe('deleteCounterexample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
       };
 
@@ -2293,35 +2281,35 @@ describe('deleteCounterexample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['text']).toEqual(text);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteCounterexample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const text = 'fake_text';
       const params = {
-        workspace_id,
+        workspaceId,
         text,
       };
 
@@ -2348,7 +2336,7 @@ describe('deleteCounterexample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       assistant.deleteCounterexample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2358,7 +2346,7 @@ describe('deleteCounterexample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'text'];
+      const requiredParams = ['workspaceId', 'text'];
 
       const deleteCounterexamplePromise = assistant.deleteCounterexample();
       expectToBePromise(deleteCounterexamplePromise);
@@ -2378,21 +2366,19 @@ describe('listEntities', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const _export = 'fake__export';
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         _export,
-        page_limit,
-        include_count,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -2409,36 +2395,35 @@ describe('listEntities', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listEntities(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -2464,7 +2449,7 @@ describe('listEntities', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.listEntities({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2474,7 +2459,7 @@ describe('listEntities', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const listEntitiesPromise = assistant.listEntities();
       expectToBePromise(listEntitiesPromise);
@@ -2494,18 +2479,18 @@ describe('createEntity', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const description = 'fake_description';
       const metadata = 'fake_metadata';
-      const fuzzy_match = 'fake_fuzzy_match';
+      const fuzzyMatch = 'fake_fuzzyMatch';
       const values = 'fake_values';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         description,
         metadata,
-        fuzzy_match,
+        fuzzyMatch,
         values,
       };
 
@@ -2525,36 +2510,36 @@ describe('createEntity', () => {
       expect(options.body['entity']).toEqual(entity);
       expect(options.body['description']).toEqual(description);
       expect(options.body['metadata']).toEqual(metadata);
-      expect(options.body['fuzzy_match']).toEqual(fuzzy_match);
+      expect(options.body['fuzzy_match']).toEqual(fuzzyMatch);
       expect(options.body['values']).toEqual(values);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createEntity(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
       };
 
@@ -2581,7 +2566,7 @@ describe('createEntity', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       assistant.createEntity({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2591,7 +2576,7 @@ describe('createEntity', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       const createEntityPromise = assistant.createEntity();
       expectToBePromise(createEntityPromise);
@@ -2611,15 +2596,15 @@ describe('getEntity', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const _export = 'fake__export';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         _export,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -2636,36 +2621,36 @@ describe('getEntity', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getEntity(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
       };
 
@@ -2692,7 +2677,7 @@ describe('getEntity', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       assistant.getEntity({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2702,7 +2687,7 @@ describe('getEntity', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       const getEntityPromise = assistant.getEntity();
       expectToBePromise(getEntityPromise);
@@ -2722,21 +2707,21 @@ describe('updateEntity', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
-      const new_entity = 'fake_new_entity';
-      const new_description = 'fake_new_description';
-      const new_metadata = 'fake_new_metadata';
-      const new_fuzzy_match = 'fake_new_fuzzy_match';
-      const new_values = 'fake_new_values';
+      const newEntity = 'fake_newEntity';
+      const newDescription = 'fake_newDescription';
+      const newMetadata = 'fake_newMetadata';
+      const newFuzzyMatch = 'fake_newFuzzyMatch';
+      const newValues = 'fake_newValues';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
-        new_entity,
-        new_description,
-        new_metadata,
-        new_fuzzy_match,
-        new_values,
+        newEntity,
+        newDescription,
+        newMetadata,
+        newFuzzyMatch,
+        newValues,
       };
 
       // invoke method
@@ -2752,40 +2737,40 @@ describe('updateEntity', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['entity']).toEqual(new_entity);
-      expect(options.body['description']).toEqual(new_description);
-      expect(options.body['metadata']).toEqual(new_metadata);
-      expect(options.body['fuzzy_match']).toEqual(new_fuzzy_match);
-      expect(options.body['values']).toEqual(new_values);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.body['entity']).toEqual(newEntity);
+      expect(options.body['description']).toEqual(newDescription);
+      expect(options.body['metadata']).toEqual(newMetadata);
+      expect(options.body['fuzzy_match']).toEqual(newFuzzyMatch);
+      expect(options.body['values']).toEqual(newValues);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateEntity(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
       };
 
@@ -2812,7 +2797,7 @@ describe('updateEntity', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       assistant.updateEntity({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2822,7 +2807,7 @@ describe('updateEntity', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       const updateEntityPromise = assistant.updateEntity();
       expectToBePromise(updateEntityPromise);
@@ -2842,10 +2827,10 @@ describe('deleteEntity', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
       };
 
@@ -2862,35 +2847,35 @@ describe('deleteEntity', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteEntity(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
       };
 
@@ -2917,7 +2902,7 @@ describe('deleteEntity', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       assistant.deleteEntity({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2927,7 +2912,7 @@ describe('deleteEntity', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       const deleteEntityPromise = assistant.deleteEntity();
       expectToBePromise(deleteEntityPromise);
@@ -2947,15 +2932,15 @@ describe('listMentions', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const _export = 'fake__export';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         _export,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -2972,36 +2957,36 @@ describe('listMentions', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listMentions(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
       };
 
@@ -3028,7 +3013,7 @@ describe('listMentions', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       assistant.listMentions({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3038,7 +3023,7 @@ describe('listMentions', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       const listMentionsPromise = assistant.listMentions();
       expectToBePromise(listMentionsPromise);
@@ -3058,23 +3043,21 @@ describe('listValues', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const _export = 'fake__export';
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         _export,
-        page_limit,
-        include_count,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -3091,40 +3074,39 @@ describe('listValues', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listValues(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
       };
 
@@ -3151,7 +3133,7 @@ describe('listValues', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       assistant.listValues({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3161,7 +3143,7 @@ describe('listValues', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity'];
+      const requiredParams = ['workspaceId', 'entity'];
 
       const listValuesPromise = assistant.listValues();
       expectToBePromise(listValuesPromise);
@@ -3181,19 +3163,19 @@ describe('createValue', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const metadata = 'fake_metadata';
-      const value_type = 'fake_value_type';
+      const type = 'fake_type';
       const synonyms = 'fake_synonyms';
       const patterns = 'fake_patterns';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         metadata,
-        value_type,
+        type,
         synonyms,
         patterns,
       };
@@ -3213,41 +3195,41 @@ describe('createValue', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['value']).toEqual(value);
       expect(options.body['metadata']).toEqual(metadata);
-      expect(options.body['type']).toEqual(value_type);
+      expect(options.body['type']).toEqual(type);
       expect(options.body['synonyms']).toEqual(synonyms);
       expect(options.body['patterns']).toEqual(patterns);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createValue(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
       };
@@ -3275,7 +3257,7 @@ describe('createValue', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       assistant.createValue({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3285,7 +3267,7 @@ describe('createValue', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       const createValuePromise = assistant.createValue();
       expectToBePromise(createValuePromise);
@@ -3305,17 +3287,17 @@ describe('getValue', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const _export = 'fake__export';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         _export,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -3336,40 +3318,40 @@ describe('getValue', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['export']).toEqual(_export);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getValue(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
       };
@@ -3397,7 +3379,7 @@ describe('getValue', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       assistant.getValue({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3407,7 +3389,7 @@ describe('getValue', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       const getValuePromise = assistant.getValue();
       expectToBePromise(getValuePromise);
@@ -3427,23 +3409,23 @@ describe('updateValue', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
-      const new_value = 'fake_new_value';
-      const new_metadata = 'fake_new_metadata';
-      const new_value_type = 'fake_new_value_type';
-      const new_synonyms = 'fake_new_synonyms';
-      const new_patterns = 'fake_new_patterns';
+      const newValue = 'fake_newValue';
+      const newMetadata = 'fake_newMetadata';
+      const newType = 'fake_newType';
+      const newSynonyms = 'fake_newSynonyms';
+      const newPatterns = 'fake_newPatterns';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
-        new_value,
-        new_metadata,
-        new_value_type,
-        new_synonyms,
-        new_patterns,
+        newValue,
+        newMetadata,
+        newType,
+        newSynonyms,
+        newPatterns,
       };
 
       // invoke method
@@ -3463,44 +3445,44 @@ describe('updateValue', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['value']).toEqual(new_value);
-      expect(options.body['metadata']).toEqual(new_metadata);
-      expect(options.body['type']).toEqual(new_value_type);
-      expect(options.body['synonyms']).toEqual(new_synonyms);
-      expect(options.body['patterns']).toEqual(new_patterns);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.body['value']).toEqual(newValue);
+      expect(options.body['metadata']).toEqual(newMetadata);
+      expect(options.body['type']).toEqual(newType);
+      expect(options.body['synonyms']).toEqual(newSynonyms);
+      expect(options.body['patterns']).toEqual(newPatterns);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateValue(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
       };
@@ -3528,7 +3510,7 @@ describe('updateValue', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       assistant.updateValue({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3538,7 +3520,7 @@ describe('updateValue', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       const updateValuePromise = assistant.updateValue();
       expectToBePromise(updateValuePromise);
@@ -3558,11 +3540,11 @@ describe('deleteValue', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
       };
@@ -3584,39 +3566,39 @@ describe('deleteValue', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteValue(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
       };
@@ -3644,7 +3626,7 @@ describe('deleteValue', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       assistant.deleteValue({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3654,7 +3636,7 @@ describe('deleteValue', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       const deleteValuePromise = assistant.deleteValue();
       expectToBePromise(deleteValuePromise);
@@ -3674,23 +3656,21 @@ describe('listSynonyms', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
-        page_limit,
-        include_count,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -3710,44 +3690,43 @@ describe('listSynonyms', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listSynonyms(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
       };
@@ -3775,7 +3754,7 @@ describe('listSynonyms', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       assistant.listSynonyms({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3785,7 +3764,7 @@ describe('listSynonyms', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value'];
+      const requiredParams = ['workspaceId', 'entity', 'value'];
 
       const listSynonymsPromise = assistant.listSynonyms();
       expectToBePromise(listSynonymsPromise);
@@ -3805,12 +3784,12 @@ describe('createSynonym', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
@@ -3834,42 +3813,42 @@ describe('createSynonym', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['synonym']).toEqual(synonym);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createSynonym(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
@@ -3898,7 +3877,7 @@ describe('createSynonym', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       assistant.createSynonym({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3908,7 +3887,7 @@ describe('createSynonym', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       const createSynonymPromise = assistant.createSynonym();
       expectToBePromise(createSynonymPromise);
@@ -3928,17 +3907,17 @@ describe('getSynonym', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -3958,8 +3937,8 @@ describe('getSynonym', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
       expect(options.path['synonym']).toEqual(synonym);
@@ -3967,35 +3946,35 @@ describe('getSynonym', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getSynonym(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
@@ -4024,7 +4003,7 @@ describe('getSynonym', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       assistant.getSynonym({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4034,7 +4013,7 @@ describe('getSynonym', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       const getSynonymPromise = assistant.getSynonym();
       expectToBePromise(getSynonymPromise);
@@ -4054,17 +4033,17 @@ describe('updateSynonym', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
-      const new_synonym = 'fake_new_synonym';
+      const newSynonym = 'fake_newSynonym';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
-        new_synonym,
+        newSynonym,
       };
 
       // invoke method
@@ -4084,8 +4063,8 @@ describe('updateSynonym', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['synonym']).toEqual(new_synonym);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.body['synonym']).toEqual(newSynonym);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
       expect(options.path['synonym']).toEqual(synonym);
@@ -4093,35 +4072,35 @@ describe('updateSynonym', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateSynonym(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
@@ -4150,7 +4129,7 @@ describe('updateSynonym', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       assistant.updateSynonym({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4160,7 +4139,7 @@ describe('updateSynonym', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       const updateSynonymPromise = assistant.updateSynonym();
       expectToBePromise(updateSynonymPromise);
@@ -4180,12 +4159,12 @@ describe('deleteSynonym', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
@@ -4208,7 +4187,7 @@ describe('deleteSynonym', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
       expect(options.path['entity']).toEqual(entity);
       expect(options.path['value']).toEqual(value);
       expect(options.path['synonym']).toEqual(synonym);
@@ -4216,35 +4195,35 @@ describe('deleteSynonym', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteSynonym(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const entity = 'fake_entity';
       const value = 'fake_value';
       const synonym = 'fake_synonym';
       const params = {
-        workspace_id,
+        workspaceId,
         entity,
         value,
         synonym,
@@ -4273,7 +4252,7 @@ describe('deleteSynonym', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       assistant.deleteSynonym({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4283,7 +4262,7 @@ describe('deleteSynonym', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+      const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
       const deleteSynonymPromise = assistant.deleteSynonym();
       expectToBePromise(deleteSynonymPromise);
@@ -4303,19 +4282,17 @@ describe('listDialogNodes', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const page_limit = 'fake_page_limit';
-      const include_count = 'fake_include_count';
+      const workspaceId = 'fake_workspaceId';
+      const pageLimit = 'fake_pageLimit';
       const sort = 'fake_sort';
       const cursor = 'fake_cursor';
-      const include_audit = 'fake_include_audit';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
-        page_limit,
-        include_count,
+        workspaceId,
+        pageLimit,
         sort,
         cursor,
-        include_audit,
+        includeAudit,
       };
 
       // invoke method
@@ -4331,36 +4308,35 @@ describe('listDialogNodes', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['page_limit']).toEqual(page_limit);
-      expect(options.qs['include_count']).toEqual(include_count);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listDialogNodes(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -4386,7 +4362,7 @@ describe('listDialogNodes', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.listDialogNodes({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4396,7 +4372,7 @@ describe('listDialogNodes', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const listDialogNodesPromise = assistant.listDialogNodes();
       expectToBePromise(listDialogNodesPromise);
@@ -4416,45 +4392,45 @@ describe('createDialogNode', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
       const description = 'fake_description';
       const conditions = 'fake_conditions';
       const parent = 'fake_parent';
-      const previous_sibling = 'fake_previous_sibling';
+      const previousSibling = 'fake_previousSibling';
       const output = 'fake_output';
       const context = 'fake_context';
       const metadata = 'fake_metadata';
-      const next_step = 'fake_next_step';
+      const nextStep = 'fake_nextStep';
       const title = 'fake_title';
-      const node_type = 'fake_node_type';
-      const event_name = 'fake_event_name';
+      const type = 'fake_type';
+      const eventName = 'fake_eventName';
       const variable = 'fake_variable';
       const actions = 'fake_actions';
-      const digress_in = 'fake_digress_in';
-      const digress_out = 'fake_digress_out';
-      const digress_out_slots = 'fake_digress_out_slots';
-      const user_label = 'fake_user_label';
+      const digressIn = 'fake_digressIn';
+      const digressOut = 'fake_digressOut';
+      const digressOutSlots = 'fake_digressOutSlots';
+      const userLabel = 'fake_userLabel';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
         description,
         conditions,
         parent,
-        previous_sibling,
+        previousSibling,
         output,
         context,
         metadata,
-        next_step,
+        nextStep,
         title,
-        node_type,
-        event_name,
+        type,
+        eventName,
         variable,
         actions,
-        digress_in,
-        digress_out,
-        digress_out_slots,
-        user_label,
+        digressIn,
+        digressOut,
+        digressOutSlots,
+        userLabel,
       };
 
       // invoke method
@@ -4470,53 +4446,53 @@ describe('createDialogNode', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['dialog_node']).toEqual(dialog_node);
+      expect(options.body['dialog_node']).toEqual(dialogNode);
       expect(options.body['description']).toEqual(description);
       expect(options.body['conditions']).toEqual(conditions);
       expect(options.body['parent']).toEqual(parent);
-      expect(options.body['previous_sibling']).toEqual(previous_sibling);
+      expect(options.body['previous_sibling']).toEqual(previousSibling);
       expect(options.body['output']).toEqual(output);
       expect(options.body['context']).toEqual(context);
       expect(options.body['metadata']).toEqual(metadata);
-      expect(options.body['next_step']).toEqual(next_step);
+      expect(options.body['next_step']).toEqual(nextStep);
       expect(options.body['title']).toEqual(title);
-      expect(options.body['type']).toEqual(node_type);
-      expect(options.body['event_name']).toEqual(event_name);
+      expect(options.body['type']).toEqual(type);
+      expect(options.body['event_name']).toEqual(eventName);
       expect(options.body['variable']).toEqual(variable);
       expect(options.body['actions']).toEqual(actions);
-      expect(options.body['digress_in']).toEqual(digress_in);
-      expect(options.body['digress_out']).toEqual(digress_out);
-      expect(options.body['digress_out_slots']).toEqual(digress_out_slots);
-      expect(options.body['user_label']).toEqual(user_label);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.body['digress_in']).toEqual(digressIn);
+      expect(options.body['digress_out']).toEqual(digressOut);
+      expect(options.body['digress_out_slots']).toEqual(digressOutSlots);
+      expect(options.body['user_label']).toEqual(userLabel);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.createDialogNode(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
       };
 
       // invoke method
@@ -4542,7 +4518,7 @@ describe('createDialogNode', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       assistant.createDialogNode({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4552,7 +4528,7 @@ describe('createDialogNode', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       const createDialogNodePromise = assistant.createDialogNode();
       expectToBePromise(createDialogNodePromise);
@@ -4572,13 +4548,13 @@ describe('getDialogNode', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
-      const include_audit = 'fake_include_audit';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
+      const includeAudit = 'fake_includeAudit';
       const params = {
-        workspace_id,
-        dialog_node,
-        include_audit,
+        workspaceId,
+        dialogNode,
+        includeAudit,
       };
 
       // invoke method
@@ -4594,37 +4570,37 @@ describe('getDialogNode', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['include_audit']).toEqual(include_audit);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
-      expect(options.path['dialog_node']).toEqual(dialog_node);
+      expect(options.qs['include_audit']).toEqual(includeAudit);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
+      expect(options.path['dialog_node']).toEqual(dialogNode);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.getDialogNode(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
       };
 
       // invoke method
@@ -4650,7 +4626,7 @@ describe('getDialogNode', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       assistant.getDialogNode({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4660,7 +4636,7 @@ describe('getDialogNode', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       const getDialogNodePromise = assistant.getDialogNode();
       expectToBePromise(getDialogNodePromise);
@@ -4680,47 +4656,47 @@ describe('updateDialogNode', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
-      const new_dialog_node = 'fake_new_dialog_node';
-      const new_description = 'fake_new_description';
-      const new_conditions = 'fake_new_conditions';
-      const new_parent = 'fake_new_parent';
-      const new_previous_sibling = 'fake_new_previous_sibling';
-      const new_output = 'fake_new_output';
-      const new_context = 'fake_new_context';
-      const new_metadata = 'fake_new_metadata';
-      const new_next_step = 'fake_new_next_step';
-      const new_title = 'fake_new_title';
-      const new_node_type = 'fake_new_node_type';
-      const new_event_name = 'fake_new_event_name';
-      const new_variable = 'fake_new_variable';
-      const new_actions = 'fake_new_actions';
-      const new_digress_in = 'fake_new_digress_in';
-      const new_digress_out = 'fake_new_digress_out';
-      const new_digress_out_slots = 'fake_new_digress_out_slots';
-      const new_user_label = 'fake_new_user_label';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
+      const newDialogNode = 'fake_newDialogNode';
+      const newDescription = 'fake_newDescription';
+      const newConditions = 'fake_newConditions';
+      const newParent = 'fake_newParent';
+      const newPreviousSibling = 'fake_newPreviousSibling';
+      const newOutput = 'fake_newOutput';
+      const newContext = 'fake_newContext';
+      const newMetadata = 'fake_newMetadata';
+      const newNextStep = 'fake_newNextStep';
+      const newTitle = 'fake_newTitle';
+      const newType = 'fake_newType';
+      const newEventName = 'fake_newEventName';
+      const newVariable = 'fake_newVariable';
+      const newActions = 'fake_newActions';
+      const newDigressIn = 'fake_newDigressIn';
+      const newDigressOut = 'fake_newDigressOut';
+      const newDigressOutSlots = 'fake_newDigressOutSlots';
+      const newUserLabel = 'fake_newUserLabel';
       const params = {
-        workspace_id,
-        dialog_node,
-        new_dialog_node,
-        new_description,
-        new_conditions,
-        new_parent,
-        new_previous_sibling,
-        new_output,
-        new_context,
-        new_metadata,
-        new_next_step,
-        new_title,
-        new_node_type,
-        new_event_name,
-        new_variable,
-        new_actions,
-        new_digress_in,
-        new_digress_out,
-        new_digress_out_slots,
-        new_user_label,
+        workspaceId,
+        dialogNode,
+        newDialogNode,
+        newDescription,
+        newConditions,
+        newParent,
+        newPreviousSibling,
+        newOutput,
+        newContext,
+        newMetadata,
+        newNextStep,
+        newTitle,
+        newType,
+        newEventName,
+        newVariable,
+        newActions,
+        newDigressIn,
+        newDigressOut,
+        newDigressOutSlots,
+        newUserLabel,
       };
 
       // invoke method
@@ -4740,54 +4716,54 @@ describe('updateDialogNode', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['dialog_node']).toEqual(new_dialog_node);
-      expect(options.body['description']).toEqual(new_description);
-      expect(options.body['conditions']).toEqual(new_conditions);
-      expect(options.body['parent']).toEqual(new_parent);
-      expect(options.body['previous_sibling']).toEqual(new_previous_sibling);
-      expect(options.body['output']).toEqual(new_output);
-      expect(options.body['context']).toEqual(new_context);
-      expect(options.body['metadata']).toEqual(new_metadata);
-      expect(options.body['next_step']).toEqual(new_next_step);
-      expect(options.body['title']).toEqual(new_title);
-      expect(options.body['type']).toEqual(new_node_type);
-      expect(options.body['event_name']).toEqual(new_event_name);
-      expect(options.body['variable']).toEqual(new_variable);
-      expect(options.body['actions']).toEqual(new_actions);
-      expect(options.body['digress_in']).toEqual(new_digress_in);
-      expect(options.body['digress_out']).toEqual(new_digress_out);
-      expect(options.body['digress_out_slots']).toEqual(new_digress_out_slots);
-      expect(options.body['user_label']).toEqual(new_user_label);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
-      expect(options.path['dialog_node']).toEqual(dialog_node);
+      expect(options.body['dialog_node']).toEqual(newDialogNode);
+      expect(options.body['description']).toEqual(newDescription);
+      expect(options.body['conditions']).toEqual(newConditions);
+      expect(options.body['parent']).toEqual(newParent);
+      expect(options.body['previous_sibling']).toEqual(newPreviousSibling);
+      expect(options.body['output']).toEqual(newOutput);
+      expect(options.body['context']).toEqual(newContext);
+      expect(options.body['metadata']).toEqual(newMetadata);
+      expect(options.body['next_step']).toEqual(newNextStep);
+      expect(options.body['title']).toEqual(newTitle);
+      expect(options.body['type']).toEqual(newType);
+      expect(options.body['event_name']).toEqual(newEventName);
+      expect(options.body['variable']).toEqual(newVariable);
+      expect(options.body['actions']).toEqual(newActions);
+      expect(options.body['digress_in']).toEqual(newDigressIn);
+      expect(options.body['digress_out']).toEqual(newDigressOut);
+      expect(options.body['digress_out_slots']).toEqual(newDigressOutSlots);
+      expect(options.body['user_label']).toEqual(newUserLabel);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
+      expect(options.path['dialog_node']).toEqual(dialogNode);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.updateDialogNode(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
       };
 
       // invoke method
@@ -4813,7 +4789,7 @@ describe('updateDialogNode', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       assistant.updateDialogNode({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4823,7 +4799,7 @@ describe('updateDialogNode', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       const updateDialogNodePromise = assistant.updateDialogNode();
       expectToBePromise(updateDialogNodePromise);
@@ -4843,11 +4819,11 @@ describe('deleteDialogNode', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
       };
 
       // invoke method
@@ -4867,36 +4843,36 @@ describe('deleteDialogNode', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
-      expect(options.path['dialog_node']).toEqual(dialog_node);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
+      expect(options.path['dialog_node']).toEqual(dialogNode);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteDialogNode(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const dialog_node = 'fake_dialog_node';
+      const workspaceId = 'fake_workspaceId';
+      const dialogNode = 'fake_dialogNode';
       const params = {
-        workspace_id,
-        dialog_node,
+        workspaceId,
+        dialogNode,
       };
 
       // invoke method
@@ -4922,7 +4898,7 @@ describe('deleteDialogNode', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       assistant.deleteDialogNode({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4932,7 +4908,7 @@ describe('deleteDialogNode', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id', 'dialog_node'];
+      const requiredParams = ['workspaceId', 'dialogNode'];
 
       const deleteDialogNodePromise = assistant.deleteDialogNode();
       expectToBePromise(deleteDialogNodePromise);
@@ -4952,16 +4928,16 @@ describe('listLogs', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const sort = 'fake_sort';
       const filter = 'fake_filter';
-      const page_limit = 'fake_page_limit';
+      const pageLimit = 'fake_pageLimit';
       const cursor = 'fake_cursor';
       const params = {
-        workspace_id,
+        workspaceId,
         sort,
         filter,
-        page_limit,
+        pageLimit,
         cursor,
       };
 
@@ -4980,33 +4956,33 @@ describe('listLogs', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['filter']).toEqual(filter);
-      expect(options.qs['page_limit']).toEqual(page_limit);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['cursor']).toEqual(cursor);
-      expect(options.path['workspace_id']).toEqual(workspace_id);
+      expect(options.path['workspace_id']).toEqual(workspaceId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const workspaceId = 'fake_workspaceId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        workspace_id,
+        workspaceId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listLogs(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const workspace_id = 'fake_workspace_id';
+      const workspaceId = 'fake_workspaceId';
       const params = {
-        workspace_id,
+        workspaceId,
       };
 
       // invoke method
@@ -5032,7 +5008,7 @@ describe('listLogs', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       assistant.listLogs({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5042,7 +5018,7 @@ describe('listLogs', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['workspace_id'];
+      const requiredParams = ['workspaceId'];
 
       const listLogsPromise = assistant.listLogs();
       expectToBePromise(listLogsPromise);
@@ -5064,12 +5040,12 @@ describe('listAllLogs', () => {
       // parameters
       const filter = 'fake_filter';
       const sort = 'fake_sort';
-      const page_limit = 'fake_page_limit';
+      const pageLimit = 'fake_pageLimit';
       const cursor = 'fake_cursor';
       const params = {
         filter,
         sort,
-        page_limit,
+        pageLimit,
         cursor,
       };
 
@@ -5088,25 +5064,25 @@ describe('listAllLogs', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['filter']).toEqual(filter);
       expect(options.qs['sort']).toEqual(sort);
-      expect(options.qs['page_limit']).toEqual(page_limit);
+      expect(options.qs['page_limit']).toEqual(pageLimit);
       expect(options.qs['cursor']).toEqual(cursor);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const filter = 'fake_filter';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         filter,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.listAllLogs(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -5169,9 +5145,9 @@ describe('deleteUserData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
+      const customerId = 'fake_customerId';
       const params = {
-        customer_id,
+        customerId,
       };
 
       // invoke method
@@ -5187,31 +5163,31 @@ describe('deleteUserData', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['customer_id']).toEqual(customer_id);
+      expect(options.qs['customer_id']).toEqual(customerId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const customerId = 'fake_customerId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        customer_id,
+        customerId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       assistant.deleteUserData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
+      const customerId = 'fake_customerId';
       const params = {
-        customer_id,
+        customerId,
       };
 
       // invoke method
@@ -5237,7 +5213,7 @@ describe('deleteUserData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['customer_id'];
+      const requiredParams = ['customerId'];
 
       assistant.deleteUserData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5247,7 +5223,7 @@ describe('deleteUserData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['customer_id'];
+      const requiredParams = ['customerId'];
 
       const deleteUserDataPromise = assistant.deleteUserData();
       expectToBePromise(deleteUserDataPromise);

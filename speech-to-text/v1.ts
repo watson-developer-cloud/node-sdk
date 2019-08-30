@@ -5,26 +5,6 @@ import { getSdkHeaders } from '../lib/common';
 import RecognizeStream = require('../lib/recognize-stream');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
 
-const PARAMS_ALLOWED = [
-  'max_alternatives',
-  'timestamps',
-  'word_confidence',
-  'inactivity_timeout',
-  'model',
-  'content-type', // this is accepted in querystring by the service, but methods here all accept content_type and then set a header
-  'interim_results',
-  'keywords',
-  'keywords_threshold',
-  'word_alternatives_threshold',
-  'profanity_filter',
-  'smart_formatting',
-  'customization_id',
-  'acoustic_customization_id',
-  'speaker_labels',
-  'customization_weight',
-  'base_model_version'
-];
-
 /**
  * Check if there is a corpus that is still being processed
  * @private
@@ -75,10 +55,11 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         // validate that it has at least one corpus
         (next) => {
           self.listCorpora(params, (err, res) => {
+            const result = res.result;
             if (err) {
               return next(err);
             }
-            if (!res.corpora.length) {
+            if (!result.corpora.length) {
               err = new Error(
                 'Customization has no corpa and therefore corpus cannot be analyzed'
               );
@@ -106,7 +87,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
           async.retry(
             options,
             (done) => {
-              self.listCorpora(params, (err, corpora) => {
+              self.listCorpora(params, (err, res) => {
+                const corpora = res.result;
                 if (err) {
                   done(err);
                 } else if (corpora !== undefined && isProcessing(corpora)) {
@@ -128,10 +110,11 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         }
       ],
       (err, res) => {
+        const result = res.result;
         if (err) {
           return callback(err);
         }
-        callback(null, res[1]); // callback with the final customization object
+        callback(null, result[1]); // callback with the final customization object
       }
     );
   }
@@ -144,19 +127,10 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    */
   recognizeUsingWebSocket(params) {
     params = params || {};
-    params.url = this._options.url;
+    params.url = this.baseOptions.url;
 
-    // if using iam, headers will not be a property on _options
-    // and the line `authorization: this._options.headers.Authorization`
-    // will crash the code
-    if (!this._options.headers) {
-      this._options.headers = {};
-    }
-
-    // if using iam, pass the token manager to the RecognizeStream object
-    if (this.tokenManager) {
-      params.tokenManager = this.tokenManager;
-    }
+    // pass the Authenticator to the RecognizeStream object
+    params.authenticator = this.getAuthenticator();
 
     // if the user configured a custom https client, use it in the websocket method
     // let httpsAgent take precedence, default to null
@@ -168,19 +142,18 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     params.headers = extend(
       true,
       sdkHeaders,
-      { authorization: this._options.headers.Authorization },
       params.headers
     );
 
     // allow user to disable ssl verification when using websockets
-    params.rejectUnauthorized = this._options.rejectUnauthorized;
+    params.disableSslVerification = this.baseOptions.disableSslVerification;
 
     return new RecognizeStream(params);
   }
 
   recognize(params: GeneratedSpeechToTextV1.RecognizeParams, callback: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.SpeechRecognitionResults>): Promise<any> | void {
-    if (params && params.audio && isStream(params.audio) && !params.content_type) {
-      callback(new Error('If providing `audio` as a Stream, `content_type` is required.'));
+    if (params && params.audio && isStream(params.audio) && !params.contentType) {
+      callback(new Error('If providing `audio` as a Stream, `contentType` is required.'));
       return;
     }
 
@@ -221,7 +194,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     async.retry(
       options,
       (next) => {
-        self.getLanguageModel(params, (err, customization) => {
+        self.getLanguageModel(params, (err, res) => {
+          const customization = err ? null : res.result;
           if (err) {
             next(err);
           } else if (

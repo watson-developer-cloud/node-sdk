@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const LanguageTranslatorV3 = require('../../language-translator/v3');
 const utils = require('../resources/unitTestUtils');
 
@@ -36,8 +37,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url: 'https://gateway.watsonplatform.net/language-translator/api/language-translator/api',
   version: '2018-10-18',
 };
@@ -62,12 +62,12 @@ describe('translate', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const text = 'fake_text';
-      const model_id = 'fake_model_id';
+      const modelId = 'fake_modelId';
       const source = 'fake_source';
       const target = 'fake_target';
       const params = {
         text,
-        model_id,
+        modelId,
         source,
         target,
       };
@@ -86,7 +86,7 @@ describe('translate', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['text']).toEqual(text);
-      expect(options.body['model_id']).toEqual(model_id);
+      expect(options.body['model_id']).toEqual(modelId);
       expect(options.body['source']).toEqual(source);
       expect(options.body['target']).toEqual(target);
     });
@@ -94,18 +94,18 @@ describe('translate', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.translate(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -187,17 +187,17 @@ describe('listIdentifiableLanguages', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.listIdentifiableLanguages(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -256,18 +256,18 @@ describe('identify', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const text = 'fake_text';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         text,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.identify(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -332,11 +332,11 @@ describe('listModels', () => {
       // parameters
       const source = 'fake_source';
       const target = 'fake_target';
-      const default_models = 'fake_default_models';
+      const _default = 'fake__default';
       const params = {
         source,
         target,
-        default_models,
+        _default,
       };
 
       // invoke method
@@ -354,22 +354,22 @@ describe('listModels', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['source']).toEqual(source);
       expect(options.qs['target']).toEqual(target);
-      expect(options.qs['default']).toEqual(default_models);
+      expect(options.qs['default']).toEqual(_default);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.listModels(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -404,14 +404,14 @@ describe('createModel', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const base_model_id = 'fake_base_model_id';
-      const forced_glossary = 'fake_forced_glossary';
-      const parallel_corpus = 'fake_parallel_corpus';
+      const baseModelId = 'fake_baseModelId';
+      const forcedGlossary = 'fake_forcedGlossary';
+      const parallelCorpus = 'fake_parallelCorpus';
       const name = 'fake_name';
       const params = {
-        base_model_id,
-        forced_glossary,
-        parallel_corpus,
+        baseModelId,
+        forcedGlossary,
+        parallelCorpus,
         name,
       };
 
@@ -428,36 +428,36 @@ describe('createModel', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.formData['forced_glossary'].data).toEqual(forced_glossary);
+      expect(options.formData['forced_glossary'].data).toEqual(forcedGlossary);
       expect(options.formData['forced_glossary'].contentType).toEqual('application/octet-stream');
-      expect(options.formData['parallel_corpus'].data).toEqual(parallel_corpus);
+      expect(options.formData['parallel_corpus'].data).toEqual(parallelCorpus);
       expect(options.formData['parallel_corpus'].contentType).toEqual('application/octet-stream');
-      expect(options.qs['base_model_id']).toEqual(base_model_id);
+      expect(options.qs['base_model_id']).toEqual(baseModelId);
       expect(options.qs['name']).toEqual(name);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const base_model_id = 'fake_base_model_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const baseModelId = 'fake_baseModelId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        base_model_id,
+        baseModelId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.createModel(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const base_model_id = 'fake_base_model_id';
+      const baseModelId = 'fake_baseModelId';
       const params = {
-        base_model_id,
+        baseModelId,
       };
 
       // invoke method
@@ -483,7 +483,7 @@ describe('createModel', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['base_model_id'];
+      const requiredParams = ['baseModelId'];
 
       languageTranslator.createModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -493,7 +493,7 @@ describe('createModel', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['base_model_id'];
+      const requiredParams = ['baseModelId'];
 
       const createModelPromise = languageTranslator.createModel();
       expectToBePromise(createModelPromise);
@@ -513,9 +513,9 @@ describe('deleteModel', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const model_id = 'fake_model_id';
+      const modelId = 'fake_modelId';
       const params = {
-        model_id,
+        modelId,
       };
 
       // invoke method
@@ -531,31 +531,31 @@ describe('deleteModel', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['model_id']).toEqual(model_id);
+      expect(options.path['model_id']).toEqual(modelId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const model_id = 'fake_model_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const modelId = 'fake_modelId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        model_id,
+        modelId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.deleteModel(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const model_id = 'fake_model_id';
+      const modelId = 'fake_modelId';
       const params = {
-        model_id,
+        modelId,
       };
 
       // invoke method
@@ -581,7 +581,7 @@ describe('deleteModel', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['model_id'];
+      const requiredParams = ['modelId'];
 
       languageTranslator.deleteModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -591,7 +591,7 @@ describe('deleteModel', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['model_id'];
+      const requiredParams = ['modelId'];
 
       const deleteModelPromise = languageTranslator.deleteModel();
       expectToBePromise(deleteModelPromise);
@@ -611,9 +611,9 @@ describe('getModel', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const model_id = 'fake_model_id';
+      const modelId = 'fake_modelId';
       const params = {
-        model_id,
+        modelId,
       };
 
       // invoke method
@@ -629,31 +629,31 @@ describe('getModel', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['model_id']).toEqual(model_id);
+      expect(options.path['model_id']).toEqual(modelId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const model_id = 'fake_model_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const modelId = 'fake_modelId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        model_id,
+        modelId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.getModel(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const model_id = 'fake_model_id';
+      const modelId = 'fake_modelId';
       const params = {
-        model_id,
+        modelId,
       };
 
       // invoke method
@@ -679,7 +679,7 @@ describe('getModel', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['model_id'];
+      const requiredParams = ['modelId'];
 
       languageTranslator.getModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -689,7 +689,7 @@ describe('getModel', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['model_id'];
+      const requiredParams = ['modelId'];
 
       const getModelPromise = languageTranslator.getModel();
       expectToBePromise(getModelPromise);
@@ -728,17 +728,17 @@ describe('listDocuments', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.listDocuments(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -775,19 +775,19 @@ describe('translateDocument', () => {
       // parameters
       const file = 'fake_file';
       const filename = 'fake_filename';
-      const file_content_type = 'fake_file_content_type';
-      const model_id = 'fake_model_id';
+      const fileContentType = 'fake_fileContentType';
+      const modelId = 'fake_modelId';
       const source = 'fake_source';
       const target = 'fake_target';
-      const document_id = 'fake_document_id';
+      const documentId = 'fake_documentId';
       const params = {
         file,
         filename,
-        file_content_type,
-        model_id,
+        fileContentType,
+        modelId,
         source,
         target,
-        document_id,
+        documentId,
       };
 
       // invoke method
@@ -805,30 +805,30 @@ describe('translateDocument', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['file'].data).toEqual(file);
       expect(options.formData['file'].filename).toEqual(filename);
-      expect(options.formData['file'].contentType).toEqual(file_content_type);
-      expect(options.formData['model_id']).toEqual(model_id);
+      expect(options.formData['file'].contentType).toEqual(fileContentType);
+      expect(options.formData['model_id']).toEqual(modelId);
       expect(options.formData['source']).toEqual(source);
       expect(options.formData['target']).toEqual(target);
-      expect(options.formData['document_id']).toEqual(document_id);
+      expect(options.formData['document_id']).toEqual(documentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const file = 'fake_file';
       const filename = 'fake_filename';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         file,
         filename,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.translateDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -893,9 +893,9 @@ describe('getDocumentStatus', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const document_id = 'fake_document_id';
+      const documentId = 'fake_documentId';
       const params = {
-        document_id,
+        documentId,
       };
 
       // invoke method
@@ -911,31 +911,31 @@ describe('getDocumentStatus', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['document_id']).toEqual(document_id);
+      expect(options.path['document_id']).toEqual(documentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const documentId = 'fake_documentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        document_id,
+        documentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.getDocumentStatus(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const document_id = 'fake_document_id';
+      const documentId = 'fake_documentId';
       const params = {
-        document_id,
+        documentId,
       };
 
       // invoke method
@@ -961,7 +961,7 @@ describe('getDocumentStatus', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['document_id'];
+      const requiredParams = ['documentId'];
 
       languageTranslator.getDocumentStatus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -971,7 +971,7 @@ describe('getDocumentStatus', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['document_id'];
+      const requiredParams = ['documentId'];
 
       const getDocumentStatusPromise = languageTranslator.getDocumentStatus();
       expectToBePromise(getDocumentStatusPromise);
@@ -991,9 +991,9 @@ describe('deleteDocument', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const document_id = 'fake_document_id';
+      const documentId = 'fake_documentId';
       const params = {
-        document_id,
+        documentId,
       };
 
       // invoke method
@@ -1009,31 +1009,31 @@ describe('deleteDocument', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['document_id']).toEqual(document_id);
+      expect(options.path['document_id']).toEqual(documentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const documentId = 'fake_documentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        document_id,
+        documentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.deleteDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const document_id = 'fake_document_id';
+      const documentId = 'fake_documentId';
       const params = {
-        document_id,
+        documentId,
       };
 
       // invoke method
@@ -1059,7 +1059,7 @@ describe('deleteDocument', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['document_id'];
+      const requiredParams = ['documentId'];
 
       languageTranslator.deleteDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1069,7 +1069,7 @@ describe('deleteDocument', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['document_id'];
+      const requiredParams = ['documentId'];
 
       const deleteDocumentPromise = languageTranslator.deleteDocument();
       expectToBePromise(deleteDocumentPromise);
@@ -1089,10 +1089,10 @@ describe('getTranslatedDocument', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const document_id = 'fake_document_id';
+      const documentId = 'fake_documentId';
       const accept = 'fake_accept';
       const params = {
-        document_id,
+        documentId,
         accept,
       };
 
@@ -1110,32 +1110,32 @@ describe('getTranslatedDocument', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       checkUserHeader(createRequestMock, 'Accept', accept);
-      expect(options.path['document_id']).toEqual(document_id);
+      expect(options.path['document_id']).toEqual(documentId);
       expect(options.responseType).toBe('stream');
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const documentId = 'fake_documentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        document_id,
+        documentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       languageTranslator.getTranslatedDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const document_id = 'fake_document_id';
+      const documentId = 'fake_documentId';
       const params = {
-        document_id,
+        documentId,
       };
 
       // invoke method
@@ -1161,7 +1161,7 @@ describe('getTranslatedDocument', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['document_id'];
+      const requiredParams = ['documentId'];
 
       languageTranslator.getTranslatedDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1171,7 +1171,7 @@ describe('getTranslatedDocument', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['document_id'];
+      const requiredParams = ['documentId'];
 
       const getTranslatedDocumentPromise = languageTranslator.getTranslatedDocument();
       expectToBePromise(getTranslatedDocumentPromise);

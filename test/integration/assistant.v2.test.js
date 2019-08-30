@@ -1,63 +1,57 @@
 'use strict';
 
 const AssistantV2 = require('../../assistant/v2');
+const { IamAuthenticator } = require('../../auth');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
-const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('assistant v2 integration', function() {
-  const auth = authHelper.auth.assistant;
-  auth.version = '2019-03-27';
-  auth.iam_apikey = auth.apikey;
-  const assistant = new AssistantV2(auth);
-  const assistant_id = auth.assistantId;
-  let session_id;
+  const options = authHelper.auth.assistant;
+  options.version = '2019-03-27';
+  options.authenticator = new IamAuthenticator({ apikey: options.apikey });
+  const assistant = new AssistantV2(options);
+  const assistantId = options.assistantId;
+  let sessionId;
 
   it('should createSession', function(done) {
     const params = {
-      assistant_id,
+      assistantId,
     };
-    assistant.createSession(
-      params,
-      serviceErrorUtils.checkErrorCode(200, function(err, res) {
-        expect(err).toBeNull();
-        expect(res.session_id).toBeDefined();
-        session_id = res.session_id;
-        done();
-      })
-    );
+    assistant.createSession(params, (err, { result }) => {
+      expect(err).toBeNull();
+      expect(result.session_id).toBeDefined();
+      sessionId = result.session_id;
+      done();
+    });
   });
 
   it('should message - generic', function(done) {
-    if (!session_id) {
+    if (!sessionId) {
       // We cannot run this test when session creation failed.
       return done();
     }
 
     const params = {
-      assistant_id,
-      session_id,
+      assistantId,
+      sessionId,
     };
 
-    assistant.message(
-      params,
-      serviceErrorUtils.checkErrorCode(200, function(err, res) {
-        expect(err).toBeNull();
-        expect(res.output).toBeDefined();
-        expect(Array.isArray(res.output.generic)).toBe(true);
-        expect(res.output.generic[0].response_type).toBe('text');
-        expect(res.output.generic[0].text).toBeDefined();
-        expect(Array.isArray(res.output.intents)).toBe(true);
-        expect(Array.isArray(res.output.entities)).toBe(true);
-        expect(res.output.intents.length).toBe(0);
-        expect(res.output.entities.length).toBe(0);
-        done();
-      })
-    );
+    assistant.message(params, (err, { result }) => {
+      expect(err).toBeNull();
+      expect(result.output).toBeDefined();
+      expect(Array.isArray(result.output.generic)).toBe(true);
+      expect(result.output.generic[0].response_type).toBe('text');
+      expect(result.output.generic[0].text).toBeDefined();
+      expect(Array.isArray(result.output.intents)).toBe(true);
+      expect(Array.isArray(result.output.entities)).toBe(true);
+      expect(result.output.intents.length).toBe(0);
+      expect(result.output.entities.length).toBe(0);
+      done();
+    });
   });
 
   it('should message - non-generic (Promise)', function(done) {
-    if (!session_id) {
+    if (!sessionId) {
       // We cannot run this test when session creation failed.
       return done();
     }
@@ -66,45 +60,40 @@ describe('assistant v2 integration', function() {
       text: 'please tell me a joke',
     };
     const params = {
-      assistant_id,
-      session_id,
+      assistantId,
+      sessionId,
       input,
     };
 
     assistant
       .message(params)
-      .then(res => {
-        expect(res.output).toBeDefined();
-        expect(Array.isArray(res.output.generic)).toBe(true);
-        expect(res.output.generic[0].response_type).toBe('text');
-        expect(res.output.generic[0].text).toBeDefined();
-        expect(Array.isArray(res.output.intents)).toBe(true);
-        expect(Array.isArray(res.output.entities)).toBe(true);
-        done();
+      .catch(err => {
+        done(err);
       })
-      .catch(
-        serviceErrorUtils.checkErrorCode(200, err => {
-          throw new Error(err);
-        })
-      );
+      .then(({ result }) => {
+        expect(result.output).toBeDefined();
+        expect(Array.isArray(result.output.generic)).toBe(true);
+        expect(result.output.generic[0].response_type).toBe('text');
+        expect(result.output.generic[0].text).toBeDefined();
+        expect(Array.isArray(result.output.intents)).toBe(true);
+        expect(Array.isArray(result.output.entities)).toBe(true);
+        done();
+      });
   });
 
   it('should deleteSession', function(done) {
-    if (!session_id) {
+    if (!sessionId) {
       // We cannot run this test when session creation failed.
       return done();
     }
 
     const params = {
-      assistant_id,
-      session_id,
+      assistantId: options.assistantId,
+      sessionId,
     };
-    assistant.deleteSession(
-      params,
-      serviceErrorUtils.checkErrorCode(200, function(err, res) {
-        expect(err).toBeNull();
-        done();
-      })
-    );
+    assistant.deleteSession(params, (err, { result }) => {
+      expect(err).toBeNull();
+      done();
+    });
   });
 });

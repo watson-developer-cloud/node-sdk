@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const PersonalityInsightsV3 = require('../../personality-insights/v3');
 const utils = require('../resources/unitTestUtils');
 
@@ -35,8 +36,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url: 'https://gateway.watsonplatform.net/personality-insights/api/personality-insights/api',
   version: '2018-10-18',
 };
@@ -61,20 +61,20 @@ describe('profile', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const content = 'fake_content';
-      const content_language = 'fake_content_language';
-      const accept_language = 'fake_accept_language';
-      const raw_scores = 'fake_raw_scores';
-      const csv_headers = 'fake_csv_headers';
-      const consumption_preferences = 'fake_consumption_preferences';
-      const content_type = 'fake_content_type';
+      const contentType = 'fake_contentType';
+      const contentLanguage = 'fake_contentLanguage';
+      const acceptLanguage = 'fake_acceptLanguage';
+      const rawScores = 'fake_rawScores';
+      const csvHeaders = 'fake_csvHeaders';
+      const consumptionPreferences = 'fake_consumptionPreferences';
       const params = {
         content,
-        content_language,
-        accept_language,
-        raw_scores,
-        csv_headers,
-        consumption_preferences,
-        content_type,
+        contentType,
+        contentLanguage,
+        acceptLanguage,
+        rawScores,
+        csvHeaders,
+        consumptionPreferences,
       };
 
       // invoke method
@@ -88,32 +88,32 @@ describe('profile', () => {
       checkUrlAndMethod(options, '/v3/profile', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = content_type;
+      const expectedContentType = contentType;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Content-Language', content_language);
-      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
-      checkUserHeader(createRequestMock, 'Content-Type', content_type);
+      checkUserHeader(createRequestMock, 'Content-Type', contentType);
+      checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
+      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
       expect(options.body).toEqual(content);
-      expect(options.qs['raw_scores']).toEqual(raw_scores);
-      expect(options.qs['csv_headers']).toEqual(csv_headers);
-      expect(options.qs['consumption_preferences']).toEqual(consumption_preferences);
+      expect(options.qs['raw_scores']).toEqual(rawScores);
+      expect(options.qs['csv_headers']).toEqual(csvHeaders);
+      expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const content = 'fake_content';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         content,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       personalityInsights.profile(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -177,20 +177,20 @@ describe('profileAsCsv', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const content = 'fake_content';
-      const content_language = 'fake_content_language';
-      const accept_language = 'fake_accept_language';
-      const raw_scores = 'fake_raw_scores';
-      const csv_headers = 'fake_csv_headers';
-      const consumption_preferences = 'fake_consumption_preferences';
-      const content_type = 'fake_content_type';
+      const contentType = 'fake_contentType';
+      const contentLanguage = 'fake_contentLanguage';
+      const acceptLanguage = 'fake_acceptLanguage';
+      const rawScores = 'fake_rawScores';
+      const csvHeaders = 'fake_csvHeaders';
+      const consumptionPreferences = 'fake_consumptionPreferences';
       const params = {
         content,
-        content_language,
-        accept_language,
-        raw_scores,
-        csv_headers,
-        consumption_preferences,
-        content_type,
+        contentType,
+        contentLanguage,
+        acceptLanguage,
+        rawScores,
+        csvHeaders,
+        consumptionPreferences,
       };
 
       // invoke method
@@ -204,32 +204,32 @@ describe('profileAsCsv', () => {
       checkUrlAndMethod(options, '/v3/profile', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'text/csv';
-      const expectedContentType = content_type;
+      const expectedContentType = contentType;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Content-Language', content_language);
-      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
-      checkUserHeader(createRequestMock, 'Content-Type', content_type);
+      checkUserHeader(createRequestMock, 'Content-Type', contentType);
+      checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
+      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
       expect(options.body).toEqual(content);
-      expect(options.qs['raw_scores']).toEqual(raw_scores);
-      expect(options.qs['csv_headers']).toEqual(csv_headers);
-      expect(options.qs['consumption_preferences']).toEqual(consumption_preferences);
+      expect(options.qs['raw_scores']).toEqual(rawScores);
+      expect(options.qs['csv_headers']).toEqual(csvHeaders);
+      expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const content = 'fake_content';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         content,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       personalityInsights.profileAsCsv(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {

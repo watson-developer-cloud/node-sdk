@@ -1,61 +1,77 @@
 'use strict';
 
 const fs = require('fs');
+const { IamAuthenticator } = require('../../auth');
 const PersonalityInsightsV3 = require('../../personality-insights/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
-const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('personality_insights_v3_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-  const auth = authHelper.auth.personality_insights;
-  auth.version = '2019-03-27';
-  auth.iam_apikey = auth.apikey;
-  const personality_insights = new PersonalityInsightsV3(auth);
+  const options = authHelper.auth.personality_insights;
+  options.version = '2019-03-27';
+  options.authenticator = new IamAuthenticator({ apikey: options.apikey });
+  const personality_insights = new PersonalityInsightsV3(options);
 
   it('profile with text content', function(done) {
     const params = {
       content: mobydick,
-      content_type: 'text/plain',
+      contentType: 'text/plain',
     };
-    personality_insights.profile(params, serviceErrorUtils.checkErrorCode(200, done));
+    personality_insights.profile(params, (err, res) => {
+      expect(err).toBeNull();
+      expect(res).toBeDefined();
+      done();
+    });
   });
 
   it('profile with text content and all params', function(done) {
     const params = {
       content: mobydick,
-      content_type: 'text/plain',
-      content_language: 'en',
-      accept_language: 'en',
-      raw_scores: true,
-      consumption_preferences: true,
+      contentType: 'text/plain',
+      contentLanguage: 'en',
+      acceptLanguage: 'en',
+      rawScores: true,
+      consumptionPreferences: true,
     };
-    personality_insights.profile(params, serviceErrorUtils.checkErrorCode(200, done));
+    personality_insights.profile(params, (err, res) => {
+      expect(err).toBeNull();
+      expect(res).toBeDefined();
+      done();
+    });
   });
 
   it('profile with html content', function(done) {
     const params = {
       content: '<div>' + mobydick + '</div>',
-      content_type: 'text/html',
+      contentType: 'text/html',
     };
-    personality_insights.profile(params, serviceErrorUtils.checkErrorCode(200, done));
+    personality_insights.profile(params, (err, res) => {
+      expect(err).toBeNull();
+      expect(res).toBeDefined();
+      done();
+    });
   });
 
   it('profile with csv response', function(done) {
     const params = {
       content: mobydick,
-      content_type: 'text/plain',
-      raw_scores: true,
-      consumption_preferences: true,
-      csv_headers: true,
+      contentType: 'text/plain',
+      rawScores: true,
+      consumptionPreferences: true,
+      csvHeaders: true,
       headers: {
         accept: 'text/csv',
       },
     };
-    personality_insights.profileAsCsv(params, serviceErrorUtils.checkErrorCode(200, done));
+    personality_insights.profileAsCsv(params, (err, res) => {
+      expect(err).toBeNull();
+      expect(res).toBeDefined();
+      done();
+    });
   });
 });

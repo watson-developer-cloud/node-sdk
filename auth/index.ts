@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * (C) Copyright IBM Corp. 2019.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * @module iam-token-manager-v1
- */
-
-import { IamTokenManagerV1 } from 'ibm-cloud-sdk-core';
-export = IamTokenManagerV1;
+export {
+  NoAuthAuthenticator,
+  BasicAuthenticator,
+  BearerTokenAuthenticator,
+  IamAuthenticator,
+  CloudPakForDataAuthenticator,
+  IamTokenManager,
+  Cp4dTokenManager,
+  getAuthenticatorFromEnvironment,
+} from 'ibm-cloud-sdk-core';

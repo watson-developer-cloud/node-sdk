@@ -16,7 +16,7 @@
 
 'use strict';
 
-const { processUserParameters, setAuthorizationHeader } = require('../../lib/websocket-utils');
+const { processUserParameters } = require('../../lib/websocket-utils');
 
 describe('websocket utility functions', () => {
   describe('processUserParameters', () => {
@@ -66,69 +66,6 @@ describe('websocket utility functions', () => {
       expect(processedValues['kebab-case']).toBe('some value');
       expect(Object.keys(processedValues).length).toBe(1);
       consoleSpy.mockRestore();
-    });
-  });
-
-  describe('setAuthorizationHeader', () => {
-    const mockedTokenManager = jest.fn();
-    let optionsWithTokenManager;
-
-    beforeEach(() => {
-      // default implementation
-      mockedTokenManager.mockImplementation(cb => cb(null, 'abc'));
-
-      // clear the options before each test
-      optionsWithTokenManager = {
-        tokenManager: {
-          getToken: mockedTokenManager,
-        },
-        headers: {},
-      };
-    });
-
-    afterEach(() => {
-      mockedTokenManager.mockReset();
-    });
-
-    it('should override stored header with new token on refresh', done => {
-      const options = optionsWithTokenManager;
-
-      // verify no header is set
-      expect(options.headers.authorization).toBeUndefined();
-
-      // explicitly set a new header, simulating the first token call
-      options.headers.authorization = 'Bearer xyz';
-
-      // request a new token and verify it has overriden the old one
-      setAuthorizationHeader(options, err => {
-        expect(mockedTokenManager).toHaveBeenCalled();
-        expect(err).toBeNull();
-        expect(options.headers.authorization).toBe('Bearer abc');
-        done();
-      });
-    });
-
-    it('should send error back through callback if received from token retrieval', done => {
-      const options = optionsWithTokenManager;
-      const fakeError = 'error';
-      mockedTokenManager.mockImplementation(cb => cb(fakeError, null));
-
-      setAuthorizationHeader(options, err => {
-        expect(mockedTokenManager).toHaveBeenCalled();
-        expect(err).toBe(fakeError);
-        done();
-      });
-    });
-
-    it('should call callback immediately if no token manager is present', done => {
-      const options = {};
-
-      setAuthorizationHeader(options, err => {
-        expect(mockedTokenManager).not.toHaveBeenCalled();
-        expect(err).toBeNull();
-        expect(Object.keys(options).length).toBe(0);
-        done();
-      });
     });
   });
 });

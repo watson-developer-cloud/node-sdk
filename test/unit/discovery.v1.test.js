@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const DiscoveryV1 = require('../../discovery/v1');
 const utils = require('../resources/unitTestUtils');
 
@@ -36,8 +37,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url: 'https://gateway.watsonplatform.net/discovery/api/discovery/api',
   version: '2018-10-18',
 };
@@ -91,18 +91,18 @@ describe('createEnvironment', () => {
     test('should prioritize user-given headers', () => {
       // parameters
       const name = 'fake_name';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         name,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createEnvironment(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -188,17 +188,17 @@ describe('listEnvironments', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listEnvironments(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -233,9 +233,9 @@ describe('getEnvironment', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -251,31 +251,31 @@ describe('getEnvironment', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getEnvironment(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -301,7 +301,7 @@ describe('getEnvironment', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.getEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -311,7 +311,7 @@ describe('getEnvironment', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const getEnvironmentPromise = discovery.getEnvironment();
       expectToBePromise(getEnvironmentPromise);
@@ -331,12 +331,12 @@ describe('updateEnvironment', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const description = 'fake_description';
       const size = 'fake_size';
       const params = {
-        environment_id,
+        environmentId,
         name,
         description,
         size,
@@ -358,31 +358,31 @@ describe('updateEnvironment', () => {
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
       expect(options.body['size']).toEqual(size);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.updateEnvironment(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -408,7 +408,7 @@ describe('updateEnvironment', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.updateEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -418,7 +418,7 @@ describe('updateEnvironment', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const updateEnvironmentPromise = discovery.updateEnvironment();
       expectToBePromise(updateEnvironmentPromise);
@@ -438,9 +438,9 @@ describe('deleteEnvironment', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -456,31 +456,31 @@ describe('deleteEnvironment', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteEnvironment(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -506,7 +506,7 @@ describe('deleteEnvironment', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.deleteEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -516,7 +516,7 @@ describe('deleteEnvironment', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const deleteEnvironmentPromise = discovery.deleteEnvironment();
       expectToBePromise(deleteEnvironmentPromise);
@@ -536,11 +536,11 @@ describe('listFields', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
+      const environmentId = 'fake_environmentId';
+      const collectionIds = 'fake_collectionIds';
       const params = {
-        environment_id,
-        collection_ids,
+        environmentId,
+        collectionIds,
       };
 
       // invoke method
@@ -556,36 +556,36 @@ describe('listFields', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['collection_ids']).toEqual(collection_ids);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.qs['collection_ids']).toEqual(collectionIds);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionIds = 'fake_collectionIds';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_ids,
+        environmentId,
+        collectionIds,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listFields(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
+      const environmentId = 'fake_environmentId';
+      const collectionIds = 'fake_collectionIds';
       const params = {
-        environment_id,
-        collection_ids,
+        environmentId,
+        collectionIds,
       };
 
       // invoke method
@@ -611,7 +611,7 @@ describe('listFields', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_ids'];
+      const requiredParams = ['environmentId', 'collectionIds'];
 
       discovery.listFields({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -621,7 +621,7 @@ describe('listFields', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_ids'];
+      const requiredParams = ['environmentId', 'collectionIds'];
 
       const listFieldsPromise = discovery.listFields();
       expectToBePromise(listFieldsPromise);
@@ -641,7 +641,7 @@ describe('createConfiguration', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const description = 'fake_description';
       const conversions = 'fake_conversions';
@@ -649,7 +649,7 @@ describe('createConfiguration', () => {
       const normalizations = 'fake_normalizations';
       const source = 'fake_source';
       const params = {
-        environment_id,
+        environmentId,
         name,
         description,
         conversions,
@@ -677,34 +677,34 @@ describe('createConfiguration', () => {
       expect(options.body['enrichments']).toEqual(enrichments);
       expect(options.body['normalizations']).toEqual(normalizations);
       expect(options.body['source']).toEqual(source);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         name,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createConfiguration(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const params = {
-        environment_id,
+        environmentId,
         name,
       };
 
@@ -731,7 +731,7 @@ describe('createConfiguration', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'name'];
+      const requiredParams = ['environmentId', 'name'];
 
       discovery.createConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -741,7 +741,7 @@ describe('createConfiguration', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'name'];
+      const requiredParams = ['environmentId', 'name'];
 
       const createConfigurationPromise = discovery.createConfiguration();
       expectToBePromise(createConfigurationPromise);
@@ -761,10 +761,10 @@ describe('listConfigurations', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const params = {
-        environment_id,
+        environmentId,
         name,
       };
 
@@ -782,31 +782,31 @@ describe('listConfigurations', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listConfigurations(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -832,7 +832,7 @@ describe('listConfigurations', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.listConfigurations({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -842,7 +842,7 @@ describe('listConfigurations', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const listConfigurationsPromise = discovery.listConfigurations();
       expectToBePromise(listConfigurationsPromise);
@@ -862,11 +862,11 @@ describe('getConfiguration', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
       };
 
       // invoke method
@@ -886,36 +886,36 @@ describe('getConfiguration', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['configuration_id']).toEqual(configuration_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['configuration_id']).toEqual(configurationId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getConfiguration(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
       };
 
       // invoke method
@@ -941,7 +941,7 @@ describe('getConfiguration', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id'];
+      const requiredParams = ['environmentId', 'configurationId'];
 
       discovery.getConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -951,7 +951,7 @@ describe('getConfiguration', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id'];
+      const requiredParams = ['environmentId', 'configurationId'];
 
       const getConfigurationPromise = discovery.getConfiguration();
       expectToBePromise(getConfigurationPromise);
@@ -971,8 +971,8 @@ describe('updateConfiguration', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
       const name = 'fake_name';
       const description = 'fake_description';
       const conversions = 'fake_conversions';
@@ -980,8 +980,8 @@ describe('updateConfiguration', () => {
       const normalizations = 'fake_normalizations';
       const source = 'fake_source';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
         name,
         description,
         conversions,
@@ -1013,39 +1013,39 @@ describe('updateConfiguration', () => {
       expect(options.body['enrichments']).toEqual(enrichments);
       expect(options.body['normalizations']).toEqual(normalizations);
       expect(options.body['source']).toEqual(source);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['configuration_id']).toEqual(configuration_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['configuration_id']).toEqual(configurationId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
       const name = 'fake_name';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
         name,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.updateConfiguration(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
       const name = 'fake_name';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
         name,
       };
 
@@ -1072,7 +1072,7 @@ describe('updateConfiguration', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id', 'name'];
+      const requiredParams = ['environmentId', 'configurationId', 'name'];
 
       discovery.updateConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1082,7 +1082,7 @@ describe('updateConfiguration', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id', 'name'];
+      const requiredParams = ['environmentId', 'configurationId', 'name'];
 
       const updateConfigurationPromise = discovery.updateConfiguration();
       expectToBePromise(updateConfigurationPromise);
@@ -1102,11 +1102,11 @@ describe('deleteConfiguration', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
       };
 
       // invoke method
@@ -1126,36 +1126,36 @@ describe('deleteConfiguration', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['configuration_id']).toEqual(configuration_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['configuration_id']).toEqual(configurationId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteConfiguration(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const configuration_id = 'fake_configuration_id';
+      const environmentId = 'fake_environmentId';
+      const configurationId = 'fake_configurationId';
       const params = {
-        environment_id,
-        configuration_id,
+        environmentId,
+        configurationId,
       };
 
       // invoke method
@@ -1181,7 +1181,7 @@ describe('deleteConfiguration', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id'];
+      const requiredParams = ['environmentId', 'configurationId'];
 
       discovery.deleteConfiguration({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1191,7 +1191,7 @@ describe('deleteConfiguration', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'configuration_id'];
+      const requiredParams = ['environmentId', 'configurationId'];
 
       const deleteConfigurationPromise = discovery.deleteConfiguration();
       expectToBePromise(deleteConfigurationPromise);
@@ -1211,23 +1211,23 @@ describe('testConfigurationInEnvironment', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const configuration = 'fake_configuration';
       const file = 'fake_file';
       const filename = 'fake_filename';
-      const file_content_type = 'fake_file_content_type';
+      const fileContentType = 'fake_fileContentType';
       const metadata = 'fake_metadata';
       const step = 'fake_step';
-      const configuration_id = 'fake_configuration_id';
+      const configurationId = 'fake_configurationId';
       const params = {
-        environment_id,
+        environmentId,
         configuration,
         file,
         filename,
-        file_content_type,
+        fileContentType,
         metadata,
         step,
-        configuration_id,
+        configurationId,
       };
 
       // invoke method
@@ -1246,35 +1246,35 @@ describe('testConfigurationInEnvironment', () => {
       expect(options.formData['configuration']).toEqual(configuration);
       expect(options.formData['file'].data).toEqual(file);
       expect(options.formData['file'].filename).toEqual(filename);
-      expect(options.formData['file'].contentType).toEqual(file_content_type);
+      expect(options.formData['file'].contentType).toEqual(fileContentType);
       expect(options.formData['metadata']).toEqual(metadata);
       expect(options.qs['step']).toEqual(step);
-      expect(options.qs['configuration_id']).toEqual(configuration_id);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.qs['configuration_id']).toEqual(configurationId);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.testConfigurationInEnvironment(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -1302,7 +1302,7 @@ describe('testConfigurationInEnvironment', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.testConfigurationInEnvironment({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1312,7 +1312,7 @@ describe('testConfigurationInEnvironment', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const testConfigurationInEnvironmentPromise = discovery.testConfigurationInEnvironment();
       expectToBePromise(testConfigurationInEnvironmentPromise);
@@ -1332,16 +1332,16 @@ describe('createCollection', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const description = 'fake_description';
-      const configuration_id = 'fake_configuration_id';
+      const configurationId = 'fake_configurationId';
       const language = 'fake_language';
       const params = {
-        environment_id,
+        environmentId,
         name,
         description,
-        configuration_id,
+        configurationId,
         language,
       };
 
@@ -1360,36 +1360,36 @@ describe('createCollection', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
-      expect(options.body['configuration_id']).toEqual(configuration_id);
+      expect(options.body['configuration_id']).toEqual(configurationId);
       expect(options.body['language']).toEqual(language);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         name,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createCollection(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const params = {
-        environment_id,
+        environmentId,
         name,
       };
 
@@ -1416,7 +1416,7 @@ describe('createCollection', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'name'];
+      const requiredParams = ['environmentId', 'name'];
 
       discovery.createCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1426,7 +1426,7 @@ describe('createCollection', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'name'];
+      const requiredParams = ['environmentId', 'name'];
 
       const createCollectionPromise = discovery.createCollection();
       expectToBePromise(createCollectionPromise);
@@ -1446,10 +1446,10 @@ describe('listCollections', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const params = {
-        environment_id,
+        environmentId,
         name,
       };
 
@@ -1467,31 +1467,31 @@ describe('listCollections', () => {
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['name']).toEqual(name);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listCollections(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -1517,7 +1517,7 @@ describe('listCollections', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.listCollections({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1527,7 +1527,7 @@ describe('listCollections', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const listCollectionsPromise = discovery.listCollections();
       expectToBePromise(listCollectionsPromise);
@@ -1547,11 +1547,11 @@ describe('getCollection', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -1571,36 +1571,36 @@ describe('getCollection', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getCollection(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -1626,7 +1626,7 @@ describe('getCollection', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.getCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1636,7 +1636,7 @@ describe('getCollection', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const getCollectionPromise = discovery.getCollection();
       expectToBePromise(getCollectionPromise);
@@ -1656,17 +1656,17 @@ describe('updateCollection', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const name = 'fake_name';
       const description = 'fake_description';
-      const configuration_id = 'fake_configuration_id';
+      const configurationId = 'fake_configurationId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         name,
         description,
-        configuration_id,
+        configurationId,
       };
 
       // invoke method
@@ -1688,37 +1688,37 @@ describe('updateCollection', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['name']).toEqual(name);
       expect(options.body['description']).toEqual(description);
-      expect(options.body['configuration_id']).toEqual(configuration_id);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.body['configuration_id']).toEqual(configurationId);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.updateCollection(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -1744,7 +1744,7 @@ describe('updateCollection', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.updateCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1754,7 +1754,7 @@ describe('updateCollection', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const updateCollectionPromise = discovery.updateCollection();
       expectToBePromise(updateCollectionPromise);
@@ -1774,11 +1774,11 @@ describe('deleteCollection', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -1798,36 +1798,36 @@ describe('deleteCollection', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteCollection(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -1853,7 +1853,7 @@ describe('deleteCollection', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.deleteCollection({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1863,7 +1863,7 @@ describe('deleteCollection', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const deleteCollectionPromise = discovery.deleteCollection();
       expectToBePromise(deleteCollectionPromise);
@@ -1883,11 +1883,11 @@ describe('listCollectionFields', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -1907,36 +1907,36 @@ describe('listCollectionFields', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listCollectionFields(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -1962,7 +1962,7 @@ describe('listCollectionFields', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.listCollectionFields({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -1972,7 +1972,7 @@ describe('listCollectionFields', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const listCollectionFieldsPromise = discovery.listCollectionFields();
       expectToBePromise(listCollectionFieldsPromise);
@@ -1992,11 +1992,11 @@ describe('listExpansions', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2016,36 +2016,36 @@ describe('listExpansions', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listExpansions(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2071,7 +2071,7 @@ describe('listExpansions', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.listExpansions({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2081,7 +2081,7 @@ describe('listExpansions', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const listExpansionsPromise = discovery.listExpansions();
       expectToBePromise(listExpansionsPromise);
@@ -2101,12 +2101,12 @@ describe('createExpansions', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const expansions = 'fake_expansions';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         expansions,
       };
 
@@ -2128,39 +2128,39 @@ describe('createExpansions', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['expansions']).toEqual(expansions);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const expansions = 'fake_expansions';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         expansions,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createExpansions(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const expansions = 'fake_expansions';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         expansions,
       };
 
@@ -2187,7 +2187,7 @@ describe('createExpansions', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'expansions'];
+      const requiredParams = ['environmentId', 'collectionId', 'expansions'];
 
       discovery.createExpansions({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2197,7 +2197,7 @@ describe('createExpansions', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'expansions'];
+      const requiredParams = ['environmentId', 'collectionId', 'expansions'];
 
       const createExpansionsPromise = discovery.createExpansions();
       expectToBePromise(createExpansionsPromise);
@@ -2217,11 +2217,11 @@ describe('deleteExpansions', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2241,36 +2241,36 @@ describe('deleteExpansions', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteExpansions(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2296,7 +2296,7 @@ describe('deleteExpansions', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.deleteExpansions({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2306,7 +2306,7 @@ describe('deleteExpansions', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const deleteExpansionsPromise = discovery.deleteExpansions();
       expectToBePromise(deleteExpansionsPromise);
@@ -2326,11 +2326,11 @@ describe('getTokenizationDictionaryStatus', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2350,36 +2350,36 @@ describe('getTokenizationDictionaryStatus', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getTokenizationDictionaryStatus(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2407,7 +2407,7 @@ describe('getTokenizationDictionaryStatus', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.getTokenizationDictionaryStatus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2417,7 +2417,7 @@ describe('getTokenizationDictionaryStatus', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const getTokenizationDictionaryStatusPromise = discovery.getTokenizationDictionaryStatus();
       expectToBePromise(getTokenizationDictionaryStatusPromise);
@@ -2437,13 +2437,13 @@ describe('createTokenizationDictionary', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const tokenization_rules = 'fake_tokenization_rules';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const tokenizationRules = 'fake_tokenizationRules';
       const params = {
-        environment_id,
-        collection_id,
-        tokenization_rules,
+        environmentId,
+        collectionId,
+        tokenizationRules,
       };
 
       // invoke method
@@ -2463,37 +2463,37 @@ describe('createTokenizationDictionary', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['tokenization_rules']).toEqual(tokenization_rules);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.body['tokenization_rules']).toEqual(tokenizationRules);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createTokenizationDictionary(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2519,7 +2519,7 @@ describe('createTokenizationDictionary', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.createTokenizationDictionary({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2529,7 +2529,7 @@ describe('createTokenizationDictionary', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const createTokenizationDictionaryPromise = discovery.createTokenizationDictionary();
       expectToBePromise(createTokenizationDictionaryPromise);
@@ -2549,11 +2549,11 @@ describe('deleteTokenizationDictionary', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2573,36 +2573,36 @@ describe('deleteTokenizationDictionary', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteTokenizationDictionary(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2628,7 +2628,7 @@ describe('deleteTokenizationDictionary', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.deleteTokenizationDictionary({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2638,7 +2638,7 @@ describe('deleteTokenizationDictionary', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const deleteTokenizationDictionaryPromise = discovery.deleteTokenizationDictionary();
       expectToBePromise(deleteTokenizationDictionaryPromise);
@@ -2658,11 +2658,11 @@ describe('getStopwordListStatus', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2682,36 +2682,36 @@ describe('getStopwordListStatus', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getStopwordListStatus(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2737,7 +2737,7 @@ describe('getStopwordListStatus', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.getStopwordListStatus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2747,7 +2747,7 @@ describe('getStopwordListStatus', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const getStopwordListStatusPromise = discovery.getStopwordListStatus();
       expectToBePromise(getStopwordListStatusPromise);
@@ -2767,15 +2767,15 @@ describe('createStopwordList', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const stopword_file = 'fake_stopword_file';
-      const stopword_filename = 'fake_stopword_filename';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const stopwordFile = 'fake_stopwordFile';
+      const stopwordFilename = 'fake_stopwordFilename';
       const params = {
-        environment_id,
-        collection_id,
-        stopword_file,
-        stopword_filename,
+        environmentId,
+        collectionId,
+        stopwordFile,
+        stopwordFilename,
       };
 
       // invoke method
@@ -2795,47 +2795,47 @@ describe('createStopwordList', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.formData['stopword_file'].data).toEqual(stopword_file);
-      expect(options.formData['stopword_file'].filename).toEqual(stopword_filename);
+      expect(options.formData['stopword_file'].data).toEqual(stopwordFile);
+      expect(options.formData['stopword_file'].filename).toEqual(stopwordFilename);
       expect(options.formData['stopword_file'].contentType).toEqual('application/octet-stream');
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const stopword_file = 'fake_stopword_file';
-      const stopword_filename = 'fake_stopword_filename';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const stopwordFile = 'fake_stopwordFile';
+      const stopwordFilename = 'fake_stopwordFilename';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        stopword_file,
-        stopword_filename,
+        environmentId,
+        collectionId,
+        stopwordFile,
+        stopwordFilename,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createStopwordList(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const stopword_file = 'fake_stopword_file';
-      const stopword_filename = 'fake_stopword_filename';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const stopwordFile = 'fake_stopwordFile';
+      const stopwordFilename = 'fake_stopwordFilename';
       const params = {
-        environment_id,
-        collection_id,
-        stopword_file,
-        stopword_filename,
+        environmentId,
+        collectionId,
+        stopwordFile,
+        stopwordFilename,
       };
 
       // invoke method
@@ -2861,12 +2861,7 @@ describe('createStopwordList', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = [
-        'environment_id',
-        'collection_id',
-        'stopword_file',
-        'stopword_filename',
-      ];
+      const requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
 
       discovery.createStopwordList({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2876,12 +2871,7 @@ describe('createStopwordList', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = [
-        'environment_id',
-        'collection_id',
-        'stopword_file',
-        'stopword_filename',
-      ];
+      const requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
 
       const createStopwordListPromise = discovery.createStopwordList();
       expectToBePromise(createStopwordListPromise);
@@ -2901,11 +2891,11 @@ describe('deleteStopwordList', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2925,36 +2915,36 @@ describe('deleteStopwordList', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteStopwordList(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -2980,7 +2970,7 @@ describe('deleteStopwordList', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.deleteStopwordList({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -2990,7 +2980,7 @@ describe('deleteStopwordList', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const deleteStopwordListPromise = discovery.deleteStopwordList();
       expectToBePromise(deleteStopwordListPromise);
@@ -3010,18 +3000,18 @@ describe('addDocument', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const file = 'fake_file';
       const filename = 'fake_filename';
-      const file_content_type = 'fake_file_content_type';
+      const fileContentType = 'fake_fileContentType';
       const metadata = 'fake_metadata';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         file,
         filename,
-        file_content_type,
+        fileContentType,
         metadata,
       };
 
@@ -3044,38 +3034,38 @@ describe('addDocument', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['file'].data).toEqual(file);
       expect(options.formData['file'].filename).toEqual(filename);
-      expect(options.formData['file'].contentType).toEqual(file_content_type);
+      expect(options.formData['file'].contentType).toEqual(fileContentType);
       expect(options.formData['metadata']).toEqual(metadata);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.addDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -3101,7 +3091,7 @@ describe('addDocument', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.addDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3111,7 +3101,7 @@ describe('addDocument', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const addDocumentPromise = discovery.addDocument();
       expectToBePromise(addDocumentPromise);
@@ -3131,13 +3121,13 @@ describe('getDocumentStatus', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
       };
 
       // invoke method
@@ -3157,41 +3147,41 @@ describe('getDocumentStatus', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['document_id']).toEqual(document_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['document_id']).toEqual(documentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getDocumentStatus(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
       };
 
       // invoke method
@@ -3217,7 +3207,7 @@ describe('getDocumentStatus', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
       discovery.getDocumentStatus({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3227,7 +3217,7 @@ describe('getDocumentStatus', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
       const getDocumentStatusPromise = discovery.getDocumentStatus();
       expectToBePromise(getDocumentStatusPromise);
@@ -3247,20 +3237,20 @@ describe('updateDocument', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
       const file = 'fake_file';
       const filename = 'fake_filename';
-      const file_content_type = 'fake_file_content_type';
+      const fileContentType = 'fake_fileContentType';
       const metadata = 'fake_metadata';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
         file,
         filename,
-        file_content_type,
+        fileContentType,
         metadata,
       };
 
@@ -3283,43 +3273,43 @@ describe('updateDocument', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['file'].data).toEqual(file);
       expect(options.formData['file'].filename).toEqual(filename);
-      expect(options.formData['file'].contentType).toEqual(file_content_type);
+      expect(options.formData['file'].contentType).toEqual(fileContentType);
       expect(options.formData['metadata']).toEqual(metadata);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['document_id']).toEqual(document_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['document_id']).toEqual(documentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.updateDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
       };
 
       // invoke method
@@ -3345,7 +3335,7 @@ describe('updateDocument', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
       discovery.updateDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3355,7 +3345,7 @@ describe('updateDocument', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
       const updateDocumentPromise = discovery.updateDocument();
       expectToBePromise(updateDocumentPromise);
@@ -3375,13 +3365,13 @@ describe('deleteDocument', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
       };
 
       // invoke method
@@ -3401,41 +3391,41 @@ describe('deleteDocument', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['document_id']).toEqual(document_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['document_id']).toEqual(documentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteDocument(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const document_id = 'fake_document_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const documentId = 'fake_documentId';
       const params = {
-        environment_id,
-        collection_id,
-        document_id,
+        environmentId,
+        collectionId,
+        documentId,
       };
 
       // invoke method
@@ -3461,7 +3451,7 @@ describe('deleteDocument', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
       discovery.deleteDocument({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3471,7 +3461,7 @@ describe('deleteDocument', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'document_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
       const deleteDocumentPromise = discovery.deleteDocument();
       expectToBePromise(deleteDocumentPromise);
@@ -3491,53 +3481,53 @@ describe('query', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const filter = 'fake_filter';
       const query = 'fake_query';
-      const natural_language_query = 'fake_natural_language_query';
+      const naturalLanguageQuery = 'fake_naturalLanguageQuery';
       const passages = 'fake_passages';
       const aggregation = 'fake_aggregation';
       const count = 'fake_count';
-      const return_fields = 'fake_return_fields';
+      const _return = 'fake__return';
       const offset = 'fake_offset';
       const sort = 'fake_sort';
       const highlight = 'fake_highlight';
-      const passages_fields = 'fake_passages_fields';
-      const passages_count = 'fake_passages_count';
-      const passages_characters = 'fake_passages_characters';
+      const passagesFields = 'fake_passagesFields';
+      const passagesCount = 'fake_passagesCount';
+      const passagesCharacters = 'fake_passagesCharacters';
       const deduplicate = 'fake_deduplicate';
-      const deduplicate_field = 'fake_deduplicate_field';
-      const collection_ids = 'fake_collection_ids';
+      const deduplicateField = 'fake_deduplicateField';
+      const collectionIds = 'fake_collectionIds';
       const similar = 'fake_similar';
-      const similar_document_ids = 'fake_similar_document_ids';
-      const similar_fields = 'fake_similar_fields';
+      const similarDocumentIds = 'fake_similarDocumentIds';
+      const similarFields = 'fake_similarFields';
       const bias = 'fake_bias';
-      const logging_opt_out = 'fake_logging_opt_out';
+      const xWatsonLoggingOptOut = 'fake_xWatsonLoggingOptOut';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         filter,
         query,
-        natural_language_query,
+        naturalLanguageQuery,
         passages,
         aggregation,
         count,
-        return_fields,
+        _return,
         offset,
         sort,
         highlight,
-        passages_fields,
-        passages_count,
-        passages_characters,
+        passagesFields,
+        passagesCount,
+        passagesCharacters,
         deduplicate,
-        deduplicate_field,
-        collection_ids,
+        deduplicateField,
+        collectionIds,
         similar,
-        similar_document_ids,
-        similar_fields,
+        similarDocumentIds,
+        similarFields,
         bias,
-        logging_opt_out,
+        xWatsonLoggingOptOut,
       };
 
       // invoke method
@@ -3557,57 +3547,57 @@ describe('query', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'X-Watson-Logging-Opt-Out', logging_opt_out);
+      checkUserHeader(createRequestMock, 'X-Watson-Logging-Opt-Out', xWatsonLoggingOptOut);
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['query']).toEqual(query);
-      expect(options.body['natural_language_query']).toEqual(natural_language_query);
+      expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
       expect(options.body['passages']).toEqual(passages);
       expect(options.body['aggregation']).toEqual(aggregation);
       expect(options.body['count']).toEqual(count);
-      expect(options.body['return']).toEqual(return_fields);
+      expect(options.body['return']).toEqual(_return);
       expect(options.body['offset']).toEqual(offset);
       expect(options.body['sort']).toEqual(sort);
       expect(options.body['highlight']).toEqual(highlight);
-      expect(options.body['passages.fields']).toEqual(passages_fields);
-      expect(options.body['passages.count']).toEqual(passages_count);
-      expect(options.body['passages.characters']).toEqual(passages_characters);
+      expect(options.body['passages.fields']).toEqual(passagesFields);
+      expect(options.body['passages.count']).toEqual(passagesCount);
+      expect(options.body['passages.characters']).toEqual(passagesCharacters);
       expect(options.body['deduplicate']).toEqual(deduplicate);
-      expect(options.body['deduplicate.field']).toEqual(deduplicate_field);
-      expect(options.body['collection_ids']).toEqual(collection_ids);
+      expect(options.body['deduplicate.field']).toEqual(deduplicateField);
+      expect(options.body['collection_ids']).toEqual(collectionIds);
       expect(options.body['similar']).toEqual(similar);
-      expect(options.body['similar.document_ids']).toEqual(similar_document_ids);
-      expect(options.body['similar.fields']).toEqual(similar_fields);
+      expect(options.body['similar.document_ids']).toEqual(similarDocumentIds);
+      expect(options.body['similar.fields']).toEqual(similarFields);
       expect(options.body['bias']).toEqual(bias);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.query(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -3633,7 +3623,7 @@ describe('query', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.query({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3643,7 +3633,7 @@ describe('query', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const queryPromise = discovery.query();
       expectToBePromise(queryPromise);
@@ -3663,45 +3653,45 @@ describe('queryNotices', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const filter = 'fake_filter';
       const query = 'fake_query';
-      const natural_language_query = 'fake_natural_language_query';
+      const naturalLanguageQuery = 'fake_naturalLanguageQuery';
       const passages = 'fake_passages';
       const aggregation = 'fake_aggregation';
       const count = 'fake_count';
-      const return_fields = 'fake_return_fields';
+      const _return = 'fake__return';
       const offset = 'fake_offset';
       const sort = 'fake_sort';
       const highlight = 'fake_highlight';
-      const passages_fields = 'fake_passages_fields';
-      const passages_count = 'fake_passages_count';
-      const passages_characters = 'fake_passages_characters';
-      const deduplicate_field = 'fake_deduplicate_field';
+      const passagesFields = 'fake_passagesFields';
+      const passagesCount = 'fake_passagesCount';
+      const passagesCharacters = 'fake_passagesCharacters';
+      const deduplicateField = 'fake_deduplicateField';
       const similar = 'fake_similar';
-      const similar_document_ids = 'fake_similar_document_ids';
-      const similar_fields = 'fake_similar_fields';
+      const similarDocumentIds = 'fake_similarDocumentIds';
+      const similarFields = 'fake_similarFields';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         filter,
         query,
-        natural_language_query,
+        naturalLanguageQuery,
         passages,
         aggregation,
         count,
-        return_fields,
+        _return,
         offset,
         sort,
         highlight,
-        passages_fields,
-        passages_count,
-        passages_characters,
-        deduplicate_field,
+        passagesFields,
+        passagesCount,
+        passagesCharacters,
+        deduplicateField,
         similar,
-        similar_document_ids,
-        similar_fields,
+        similarDocumentIds,
+        similarFields,
       };
 
       // invoke method
@@ -3723,51 +3713,51 @@ describe('queryNotices', () => {
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.qs['filter']).toEqual(filter);
       expect(options.qs['query']).toEqual(query);
-      expect(options.qs['natural_language_query']).toEqual(natural_language_query);
+      expect(options.qs['natural_language_query']).toEqual(naturalLanguageQuery);
       expect(options.qs['passages']).toEqual(passages);
       expect(options.qs['aggregation']).toEqual(aggregation);
       expect(options.qs['count']).toEqual(count);
-      expect(options.qs['return']).toEqual(return_fields);
+      expect(options.qs['return']).toEqual(_return);
       expect(options.qs['offset']).toEqual(offset);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['highlight']).toEqual(highlight);
-      expect(options.qs['passages.fields']).toEqual(passages_fields);
-      expect(options.qs['passages.count']).toEqual(passages_count);
-      expect(options.qs['passages.characters']).toEqual(passages_characters);
-      expect(options.qs['deduplicate.field']).toEqual(deduplicate_field);
+      expect(options.qs['passages.fields']).toEqual(passagesFields);
+      expect(options.qs['passages.count']).toEqual(passagesCount);
+      expect(options.qs['passages.characters']).toEqual(passagesCharacters);
+      expect(options.qs['deduplicate.field']).toEqual(deduplicateField);
       expect(options.qs['similar']).toEqual(similar);
-      expect(options.qs['similar.document_ids']).toEqual(similar_document_ids);
-      expect(options.qs['similar.fields']).toEqual(similar_fields);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.qs['similar.document_ids']).toEqual(similarDocumentIds);
+      expect(options.qs['similar.fields']).toEqual(similarFields);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.queryNotices(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -3793,7 +3783,7 @@ describe('queryNotices', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.queryNotices({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3803,7 +3793,7 @@ describe('queryNotices', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const queryNoticesPromise = discovery.queryNotices();
       expectToBePromise(queryNoticesPromise);
@@ -3823,51 +3813,51 @@ describe('federatedQuery', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const filter = 'fake_filter';
       const query = 'fake_query';
-      const natural_language_query = 'fake_natural_language_query';
+      const naturalLanguageQuery = 'fake_naturalLanguageQuery';
       const passages = 'fake_passages';
       const aggregation = 'fake_aggregation';
       const count = 'fake_count';
-      const return_fields = 'fake_return_fields';
+      const _return = 'fake__return';
       const offset = 'fake_offset';
       const sort = 'fake_sort';
       const highlight = 'fake_highlight';
-      const passages_fields = 'fake_passages_fields';
-      const passages_count = 'fake_passages_count';
-      const passages_characters = 'fake_passages_characters';
+      const passagesFields = 'fake_passagesFields';
+      const passagesCount = 'fake_passagesCount';
+      const passagesCharacters = 'fake_passagesCharacters';
       const deduplicate = 'fake_deduplicate';
-      const deduplicate_field = 'fake_deduplicate_field';
-      const collection_ids = 'fake_collection_ids';
+      const deduplicateField = 'fake_deduplicateField';
+      const collectionIds = 'fake_collectionIds';
       const similar = 'fake_similar';
-      const similar_document_ids = 'fake_similar_document_ids';
-      const similar_fields = 'fake_similar_fields';
+      const similarDocumentIds = 'fake_similarDocumentIds';
+      const similarFields = 'fake_similarFields';
       const bias = 'fake_bias';
-      const logging_opt_out = 'fake_logging_opt_out';
+      const xWatsonLoggingOptOut = 'fake_xWatsonLoggingOptOut';
       const params = {
-        environment_id,
+        environmentId,
         filter,
         query,
-        natural_language_query,
+        naturalLanguageQuery,
         passages,
         aggregation,
         count,
-        return_fields,
+        _return,
         offset,
         sort,
         highlight,
-        passages_fields,
-        passages_count,
-        passages_characters,
+        passagesFields,
+        passagesCount,
+        passagesCharacters,
         deduplicate,
-        deduplicate_field,
-        collection_ids,
+        deduplicateField,
+        collectionIds,
         similar,
-        similar_document_ids,
-        similar_fields,
+        similarDocumentIds,
+        similarFields,
         bias,
-        logging_opt_out,
+        xWatsonLoggingOptOut,
       };
 
       // invoke method
@@ -3883,52 +3873,52 @@ describe('federatedQuery', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'X-Watson-Logging-Opt-Out', logging_opt_out);
+      checkUserHeader(createRequestMock, 'X-Watson-Logging-Opt-Out', xWatsonLoggingOptOut);
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['query']).toEqual(query);
-      expect(options.body['natural_language_query']).toEqual(natural_language_query);
+      expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
       expect(options.body['passages']).toEqual(passages);
       expect(options.body['aggregation']).toEqual(aggregation);
       expect(options.body['count']).toEqual(count);
-      expect(options.body['return']).toEqual(return_fields);
+      expect(options.body['return']).toEqual(_return);
       expect(options.body['offset']).toEqual(offset);
       expect(options.body['sort']).toEqual(sort);
       expect(options.body['highlight']).toEqual(highlight);
-      expect(options.body['passages.fields']).toEqual(passages_fields);
-      expect(options.body['passages.count']).toEqual(passages_count);
-      expect(options.body['passages.characters']).toEqual(passages_characters);
+      expect(options.body['passages.fields']).toEqual(passagesFields);
+      expect(options.body['passages.count']).toEqual(passagesCount);
+      expect(options.body['passages.characters']).toEqual(passagesCharacters);
       expect(options.body['deduplicate']).toEqual(deduplicate);
-      expect(options.body['deduplicate.field']).toEqual(deduplicate_field);
-      expect(options.body['collection_ids']).toEqual(collection_ids);
+      expect(options.body['deduplicate.field']).toEqual(deduplicateField);
+      expect(options.body['collection_ids']).toEqual(collectionIds);
       expect(options.body['similar']).toEqual(similar);
-      expect(options.body['similar.document_ids']).toEqual(similar_document_ids);
-      expect(options.body['similar.fields']).toEqual(similar_fields);
+      expect(options.body['similar.document_ids']).toEqual(similarDocumentIds);
+      expect(options.body['similar.fields']).toEqual(similarFields);
       expect(options.body['bias']).toEqual(bias);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.federatedQuery(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -3954,7 +3944,7 @@ describe('federatedQuery', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.federatedQuery({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -3964,7 +3954,7 @@ describe('federatedQuery', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const federatedQueryPromise = discovery.federatedQuery();
       expectToBePromise(federatedQueryPromise);
@@ -3984,37 +3974,37 @@ describe('federatedQueryNotices', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
+      const environmentId = 'fake_environmentId';
+      const collectionIds = 'fake_collectionIds';
       const filter = 'fake_filter';
       const query = 'fake_query';
-      const natural_language_query = 'fake_natural_language_query';
+      const naturalLanguageQuery = 'fake_naturalLanguageQuery';
       const aggregation = 'fake_aggregation';
       const count = 'fake_count';
-      const return_fields = 'fake_return_fields';
+      const _return = 'fake__return';
       const offset = 'fake_offset';
       const sort = 'fake_sort';
       const highlight = 'fake_highlight';
-      const deduplicate_field = 'fake_deduplicate_field';
+      const deduplicateField = 'fake_deduplicateField';
       const similar = 'fake_similar';
-      const similar_document_ids = 'fake_similar_document_ids';
-      const similar_fields = 'fake_similar_fields';
+      const similarDocumentIds = 'fake_similarDocumentIds';
+      const similarFields = 'fake_similarFields';
       const params = {
-        environment_id,
-        collection_ids,
+        environmentId,
+        collectionIds,
         filter,
         query,
-        natural_language_query,
+        naturalLanguageQuery,
         aggregation,
         count,
-        return_fields,
+        _return,
         offset,
         sort,
         highlight,
-        deduplicate_field,
+        deduplicateField,
         similar,
-        similar_document_ids,
-        similar_fields,
+        similarDocumentIds,
+        similarFields,
       };
 
       // invoke method
@@ -4030,49 +4020,49 @@ describe('federatedQueryNotices', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['collection_ids']).toEqual(collection_ids);
+      expect(options.qs['collection_ids']).toEqual(collectionIds);
       expect(options.qs['filter']).toEqual(filter);
       expect(options.qs['query']).toEqual(query);
-      expect(options.qs['natural_language_query']).toEqual(natural_language_query);
+      expect(options.qs['natural_language_query']).toEqual(naturalLanguageQuery);
       expect(options.qs['aggregation']).toEqual(aggregation);
       expect(options.qs['count']).toEqual(count);
-      expect(options.qs['return']).toEqual(return_fields);
+      expect(options.qs['return']).toEqual(_return);
       expect(options.qs['offset']).toEqual(offset);
       expect(options.qs['sort']).toEqual(sort);
       expect(options.qs['highlight']).toEqual(highlight);
-      expect(options.qs['deduplicate.field']).toEqual(deduplicate_field);
+      expect(options.qs['deduplicate.field']).toEqual(deduplicateField);
       expect(options.qs['similar']).toEqual(similar);
-      expect(options.qs['similar.document_ids']).toEqual(similar_document_ids);
-      expect(options.qs['similar.fields']).toEqual(similar_fields);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.qs['similar.document_ids']).toEqual(similarDocumentIds);
+      expect(options.qs['similar.fields']).toEqual(similarFields);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionIds = 'fake_collectionIds';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_ids,
+        environmentId,
+        collectionIds,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.federatedQueryNotices(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_ids = 'fake_collection_ids';
+      const environmentId = 'fake_environmentId';
+      const collectionIds = 'fake_collectionIds';
       const params = {
-        environment_id,
-        collection_ids,
+        environmentId,
+        collectionIds,
       };
 
       // invoke method
@@ -4098,7 +4088,7 @@ describe('federatedQueryNotices', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_ids'];
+      const requiredParams = ['environmentId', 'collectionIds'];
 
       discovery.federatedQueryNotices({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4108,7 +4098,7 @@ describe('federatedQueryNotices', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_ids'];
+      const requiredParams = ['environmentId', 'collectionIds'];
 
       const federatedQueryNoticesPromise = discovery.federatedQueryNotices();
       expectToBePromise(federatedQueryNoticesPromise);
@@ -4128,21 +4118,21 @@ describe('queryEntities', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const feature = 'fake_feature';
       const entity = 'fake_entity';
       const context = 'fake_context';
       const count = 'fake_count';
-      const evidence_count = 'fake_evidence_count';
+      const evidenceCount = 'fake_evidenceCount';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         feature,
         entity,
         context,
         count,
-        evidence_count,
+        evidenceCount,
       };
 
       // invoke method
@@ -4166,37 +4156,37 @@ describe('queryEntities', () => {
       expect(options.body['entity']).toEqual(entity);
       expect(options.body['context']).toEqual(context);
       expect(options.body['count']).toEqual(count);
-      expect(options.body['evidence_count']).toEqual(evidence_count);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.body['evidence_count']).toEqual(evidenceCount);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.queryEntities(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -4222,7 +4212,7 @@ describe('queryEntities', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.queryEntities({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4232,7 +4222,7 @@ describe('queryEntities', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const queryEntitiesPromise = discovery.queryEntities();
       expectToBePromise(queryEntitiesPromise);
@@ -4252,23 +4242,23 @@ describe('queryRelations', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const entities = 'fake_entities';
       const context = 'fake_context';
       const sort = 'fake_sort';
       const filter = 'fake_filter';
       const count = 'fake_count';
-      const evidence_count = 'fake_evidence_count';
+      const evidenceCount = 'fake_evidenceCount';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         entities,
         context,
         sort,
         filter,
         count,
-        evidence_count,
+        evidenceCount,
       };
 
       // invoke method
@@ -4293,37 +4283,37 @@ describe('queryRelations', () => {
       expect(options.body['sort']).toEqual(sort);
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['count']).toEqual(count);
-      expect(options.body['evidence_count']).toEqual(evidence_count);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.body['evidence_count']).toEqual(evidenceCount);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.queryRelations(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -4349,7 +4339,7 @@ describe('queryRelations', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.queryRelations({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4359,7 +4349,7 @@ describe('queryRelations', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const queryRelationsPromise = discovery.queryRelations();
       expectToBePromise(queryRelationsPromise);
@@ -4379,11 +4369,11 @@ describe('listTrainingData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -4403,36 +4393,36 @@ describe('listTrainingData', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listTrainingData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -4458,7 +4448,7 @@ describe('listTrainingData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.listTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4468,7 +4458,7 @@ describe('listTrainingData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const listTrainingDataPromise = discovery.listTrainingData();
       expectToBePromise(listTrainingDataPromise);
@@ -4488,15 +4478,15 @@ describe('addTrainingData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const natural_language_query = 'fake_natural_language_query';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const naturalLanguageQuery = 'fake_naturalLanguageQuery';
       const filter = 'fake_filter';
       const examples = 'fake_examples';
       const params = {
-        environment_id,
-        collection_id,
-        natural_language_query,
+        environmentId,
+        collectionId,
+        naturalLanguageQuery,
         filter,
         examples,
       };
@@ -4518,39 +4508,39 @@ describe('addTrainingData', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['natural_language_query']).toEqual(natural_language_query);
+      expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
       expect(options.body['filter']).toEqual(filter);
       expect(options.body['examples']).toEqual(examples);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.addTrainingData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -4576,7 +4566,7 @@ describe('addTrainingData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.addTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4586,7 +4576,7 @@ describe('addTrainingData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const addTrainingDataPromise = discovery.addTrainingData();
       expectToBePromise(addTrainingDataPromise);
@@ -4606,11 +4596,11 @@ describe('deleteAllTrainingData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -4630,36 +4620,36 @@ describe('deleteAllTrainingData', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteAllTrainingData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
       const params = {
-        environment_id,
-        collection_id,
+        environmentId,
+        collectionId,
       };
 
       // invoke method
@@ -4685,7 +4675,7 @@ describe('deleteAllTrainingData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       discovery.deleteAllTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4695,7 +4685,7 @@ describe('deleteAllTrainingData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id'];
+      const requiredParams = ['environmentId', 'collectionId'];
 
       const deleteAllTrainingDataPromise = discovery.deleteAllTrainingData();
       expectToBePromise(deleteAllTrainingDataPromise);
@@ -4715,13 +4705,13 @@ describe('getTrainingData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
       };
 
       // invoke method
@@ -4741,41 +4731,41 @@ describe('getTrainingData', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['query_id']).toEqual(query_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['query_id']).toEqual(queryId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getTrainingData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
       };
 
       // invoke method
@@ -4801,7 +4791,7 @@ describe('getTrainingData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       discovery.getTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4811,7 +4801,7 @@ describe('getTrainingData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       const getTrainingDataPromise = discovery.getTrainingData();
       expectToBePromise(getTrainingDataPromise);
@@ -4831,13 +4821,13 @@ describe('deleteTrainingData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
       };
 
       // invoke method
@@ -4857,41 +4847,41 @@ describe('deleteTrainingData', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['query_id']).toEqual(query_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['query_id']).toEqual(queryId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteTrainingData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
       };
 
       // invoke method
@@ -4917,7 +4907,7 @@ describe('deleteTrainingData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       discovery.deleteTrainingData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -4927,7 +4917,7 @@ describe('deleteTrainingData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       const deleteTrainingDataPromise = discovery.deleteTrainingData();
       expectToBePromise(deleteTrainingDataPromise);
@@ -4947,13 +4937,13 @@ describe('listTrainingExamples', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
       };
 
       // invoke method
@@ -4973,41 +4963,41 @@ describe('listTrainingExamples', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['query_id']).toEqual(query_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['query_id']).toEqual(queryId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listTrainingExamples(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
       };
 
       // invoke method
@@ -5033,7 +5023,7 @@ describe('listTrainingExamples', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       discovery.listTrainingExamples({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5043,7 +5033,7 @@ describe('listTrainingExamples', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       const listTrainingExamplesPromise = discovery.listTrainingExamples();
       expectToBePromise(listTrainingExamplesPromise);
@@ -5063,18 +5053,18 @@ describe('createTrainingExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const document_id = 'fake_document_id';
-      const cross_reference = 'fake_cross_reference';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const documentId = 'fake_documentId';
+      const crossReference = 'fake_crossReference';
       const relevance = 'fake_relevance';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        document_id,
-        cross_reference,
+        environmentId,
+        collectionId,
+        queryId,
+        documentId,
+        crossReference,
         relevance,
       };
 
@@ -5095,44 +5085,44 @@ describe('createTrainingExample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['document_id']).toEqual(document_id);
-      expect(options.body['cross_reference']).toEqual(cross_reference);
+      expect(options.body['document_id']).toEqual(documentId);
+      expect(options.body['cross_reference']).toEqual(crossReference);
       expect(options.body['relevance']).toEqual(relevance);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['query_id']).toEqual(query_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['query_id']).toEqual(queryId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createTrainingExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
+        environmentId,
+        collectionId,
+        queryId,
       };
 
       // invoke method
@@ -5158,7 +5148,7 @@ describe('createTrainingExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       discovery.createTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5168,7 +5158,7 @@ describe('createTrainingExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
       const createTrainingExamplePromise = discovery.createTrainingExample();
       expectToBePromise(createTrainingExamplePromise);
@@ -5188,15 +5178,15 @@ describe('deleteTrainingExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
       };
 
       // invoke method
@@ -5216,46 +5206,46 @@ describe('deleteTrainingExample', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['query_id']).toEqual(query_id);
-      expect(options.path['example_id']).toEqual(example_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['query_id']).toEqual(queryId);
+      expect(options.path['example_id']).toEqual(exampleId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteTrainingExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
       };
 
       // invoke method
@@ -5281,7 +5271,7 @@ describe('deleteTrainingExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
       discovery.deleteTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5291,7 +5281,7 @@ describe('deleteTrainingExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
       const deleteTrainingExamplePromise = discovery.deleteTrainingExample();
       expectToBePromise(deleteTrainingExamplePromise);
@@ -5311,18 +5301,18 @@ describe('updateTrainingExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
-      const cross_reference = 'fake_cross_reference';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
+      const crossReference = 'fake_crossReference';
       const relevance = 'fake_relevance';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
-        cross_reference,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
+        crossReference,
         relevance,
       };
 
@@ -5343,48 +5333,48 @@ describe('updateTrainingExample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['cross_reference']).toEqual(cross_reference);
+      expect(options.body['cross_reference']).toEqual(crossReference);
       expect(options.body['relevance']).toEqual(relevance);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['query_id']).toEqual(query_id);
-      expect(options.path['example_id']).toEqual(example_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['query_id']).toEqual(queryId);
+      expect(options.path['example_id']).toEqual(exampleId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.updateTrainingExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
       };
 
       // invoke method
@@ -5410,7 +5400,7 @@ describe('updateTrainingExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
       discovery.updateTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5420,7 +5410,7 @@ describe('updateTrainingExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
       const updateTrainingExamplePromise = discovery.updateTrainingExample();
       expectToBePromise(updateTrainingExamplePromise);
@@ -5440,15 +5430,15 @@ describe('getTrainingExample', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
       };
 
       // invoke method
@@ -5468,46 +5458,46 @@ describe('getTrainingExample', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['collection_id']).toEqual(collection_id);
-      expect(options.path['query_id']).toEqual(query_id);
-      expect(options.path['example_id']).toEqual(example_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['collection_id']).toEqual(collectionId);
+      expect(options.path['query_id']).toEqual(queryId);
+      expect(options.path['example_id']).toEqual(exampleId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getTrainingExample(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const collection_id = 'fake_collection_id';
-      const query_id = 'fake_query_id';
-      const example_id = 'fake_example_id';
+      const environmentId = 'fake_environmentId';
+      const collectionId = 'fake_collectionId';
+      const queryId = 'fake_queryId';
+      const exampleId = 'fake_exampleId';
       const params = {
-        environment_id,
-        collection_id,
-        query_id,
-        example_id,
+        environmentId,
+        collectionId,
+        queryId,
+        exampleId,
       };
 
       // invoke method
@@ -5533,7 +5523,7 @@ describe('getTrainingExample', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
       discovery.getTrainingExample({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5543,7 +5533,7 @@ describe('getTrainingExample', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'collection_id', 'query_id', 'example_id'];
+      const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
       const getTrainingExamplePromise = discovery.getTrainingExample();
       expectToBePromise(getTrainingExamplePromise);
@@ -5563,9 +5553,9 @@ describe('deleteUserData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
+      const customerId = 'fake_customerId';
       const params = {
-        customer_id,
+        customerId,
       };
 
       // invoke method
@@ -5581,31 +5571,31 @@ describe('deleteUserData', () => {
       const expectedAccept = undefined;
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['customer_id']).toEqual(customer_id);
+      expect(options.qs['customer_id']).toEqual(customerId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const customerId = 'fake_customerId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        customer_id,
+        customerId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteUserData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
+      const customerId = 'fake_customerId';
       const params = {
-        customer_id,
+        customerId,
       };
 
       // invoke method
@@ -5631,7 +5621,7 @@ describe('deleteUserData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['customer_id'];
+      const requiredParams = ['customerId'];
 
       discovery.deleteUserData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -5641,7 +5631,7 @@ describe('deleteUserData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['customer_id'];
+      const requiredParams = ['customerId'];
 
       const deleteUserDataPromise = discovery.deleteUserData();
       expectToBePromise(deleteUserDataPromise);
@@ -5689,19 +5679,19 @@ describe('createEvent', () => {
       // parameters
       const type = 'fake_type';
       const data = 'fake_data';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         type,
         data,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createEvent(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -5801,17 +5791,17 @@ describe('queryLog', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.queryLog(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -5846,13 +5836,13 @@ describe('getMetricsQuery', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const start_time = 'fake_start_time';
-      const end_time = 'fake_end_time';
-      const result_type = 'fake_result_type';
+      const startTime = 'fake_startTime';
+      const endTime = 'fake_endTime';
+      const resultType = 'fake_resultType';
       const params = {
-        start_time,
-        end_time,
-        result_type,
+        startTime,
+        endTime,
+        resultType,
       };
 
       // invoke method
@@ -5868,24 +5858,24 @@ describe('getMetricsQuery', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['start_time']).toEqual(start_time);
-      expect(options.qs['end_time']).toEqual(end_time);
-      expect(options.qs['result_type']).toEqual(result_type);
+      expect(options.qs['start_time']).toEqual(startTime);
+      expect(options.qs['end_time']).toEqual(endTime);
+      expect(options.qs['result_type']).toEqual(resultType);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getMetricsQuery(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -5920,13 +5910,13 @@ describe('getMetricsQueryEvent', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const start_time = 'fake_start_time';
-      const end_time = 'fake_end_time';
-      const result_type = 'fake_result_type';
+      const startTime = 'fake_startTime';
+      const endTime = 'fake_endTime';
+      const resultType = 'fake_resultType';
       const params = {
-        start_time,
-        end_time,
-        result_type,
+        startTime,
+        endTime,
+        resultType,
       };
 
       // invoke method
@@ -5942,24 +5932,24 @@ describe('getMetricsQueryEvent', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['start_time']).toEqual(start_time);
-      expect(options.qs['end_time']).toEqual(end_time);
-      expect(options.qs['result_type']).toEqual(result_type);
+      expect(options.qs['start_time']).toEqual(startTime);
+      expect(options.qs['end_time']).toEqual(endTime);
+      expect(options.qs['result_type']).toEqual(resultType);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getMetricsQueryEvent(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -5994,13 +5984,13 @@ describe('getMetricsQueryNoResults', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const start_time = 'fake_start_time';
-      const end_time = 'fake_end_time';
-      const result_type = 'fake_result_type';
+      const startTime = 'fake_startTime';
+      const endTime = 'fake_endTime';
+      const resultType = 'fake_resultType';
       const params = {
-        start_time,
-        end_time,
-        result_type,
+        startTime,
+        endTime,
+        resultType,
       };
 
       // invoke method
@@ -6016,24 +6006,24 @@ describe('getMetricsQueryNoResults', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['start_time']).toEqual(start_time);
-      expect(options.qs['end_time']).toEqual(end_time);
-      expect(options.qs['result_type']).toEqual(result_type);
+      expect(options.qs['start_time']).toEqual(startTime);
+      expect(options.qs['end_time']).toEqual(endTime);
+      expect(options.qs['result_type']).toEqual(resultType);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getMetricsQueryNoResults(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -6068,13 +6058,13 @@ describe('getMetricsEventRate', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const start_time = 'fake_start_time';
-      const end_time = 'fake_end_time';
-      const result_type = 'fake_result_type';
+      const startTime = 'fake_startTime';
+      const endTime = 'fake_endTime';
+      const resultType = 'fake_resultType';
       const params = {
-        start_time,
-        end_time,
-        result_type,
+        startTime,
+        endTime,
+        resultType,
       };
 
       // invoke method
@@ -6090,24 +6080,24 @@ describe('getMetricsEventRate', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['start_time']).toEqual(start_time);
-      expect(options.qs['end_time']).toEqual(end_time);
-      expect(options.qs['result_type']).toEqual(result_type);
+      expect(options.qs['start_time']).toEqual(startTime);
+      expect(options.qs['end_time']).toEqual(endTime);
+      expect(options.qs['result_type']).toEqual(resultType);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getMetricsEventRate(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -6165,17 +6155,17 @@ describe('getMetricsQueryTokenEvent', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getMetricsQueryTokenEvent(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -6210,9 +6200,9 @@ describe('listCredentials', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -6228,31 +6218,31 @@ describe('listCredentials', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listCredentials(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -6278,7 +6268,7 @@ describe('listCredentials', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.listCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -6288,7 +6278,7 @@ describe('listCredentials', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const listCredentialsPromise = discovery.listCredentials();
       expectToBePromise(listCredentialsPromise);
@@ -6308,14 +6298,14 @@ describe('createCredentials', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const source_type = 'fake_source_type';
-      const credential_details = 'fake_credential_details';
+      const environmentId = 'fake_environmentId';
+      const sourceType = 'fake_sourceType';
+      const credentialDetails = 'fake_credentialDetails';
       const status = 'fake_status';
       const params = {
-        environment_id,
-        source_type,
-        credential_details,
+        environmentId,
+        sourceType,
+        credentialDetails,
         status,
       };
 
@@ -6332,34 +6322,34 @@ describe('createCredentials', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['source_type']).toEqual(source_type);
-      expect(options.body['credential_details']).toEqual(credential_details);
+      expect(options.body['source_type']).toEqual(sourceType);
+      expect(options.body['credential_details']).toEqual(credentialDetails);
       expect(options.body['status']).toEqual(status);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createCredentials(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -6385,7 +6375,7 @@ describe('createCredentials', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.createCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -6395,7 +6385,7 @@ describe('createCredentials', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const createCredentialsPromise = discovery.createCredentials();
       expectToBePromise(createCredentialsPromise);
@@ -6415,11 +6405,11 @@ describe('getCredentials', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
       };
 
       // invoke method
@@ -6439,36 +6429,36 @@ describe('getCredentials', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['credential_id']).toEqual(credential_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['credential_id']).toEqual(credentialId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getCredentials(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
       };
 
       // invoke method
@@ -6494,7 +6484,7 @@ describe('getCredentials', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
+      const requiredParams = ['environmentId', 'credentialId'];
 
       discovery.getCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -6504,7 +6494,7 @@ describe('getCredentials', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
+      const requiredParams = ['environmentId', 'credentialId'];
 
       const getCredentialsPromise = discovery.getCredentials();
       expectToBePromise(getCredentialsPromise);
@@ -6524,16 +6514,16 @@ describe('updateCredentials', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
-      const source_type = 'fake_source_type';
-      const credential_details = 'fake_credential_details';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
+      const sourceType = 'fake_sourceType';
+      const credentialDetails = 'fake_credentialDetails';
       const status = 'fake_status';
       const params = {
-        environment_id,
-        credential_id,
-        source_type,
-        credential_details,
+        environmentId,
+        credentialId,
+        sourceType,
+        credentialDetails,
         status,
       };
 
@@ -6554,39 +6544,39 @@ describe('updateCredentials', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['source_type']).toEqual(source_type);
-      expect(options.body['credential_details']).toEqual(credential_details);
+      expect(options.body['source_type']).toEqual(sourceType);
+      expect(options.body['credential_details']).toEqual(credentialDetails);
       expect(options.body['status']).toEqual(status);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['credential_id']).toEqual(credential_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['credential_id']).toEqual(credentialId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.updateCredentials(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
       };
 
       // invoke method
@@ -6612,7 +6602,7 @@ describe('updateCredentials', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
+      const requiredParams = ['environmentId', 'credentialId'];
 
       discovery.updateCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -6622,7 +6612,7 @@ describe('updateCredentials', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
+      const requiredParams = ['environmentId', 'credentialId'];
 
       const updateCredentialsPromise = discovery.updateCredentials();
       expectToBePromise(updateCredentialsPromise);
@@ -6642,11 +6632,11 @@ describe('deleteCredentials', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
       };
 
       // invoke method
@@ -6666,36 +6656,36 @@ describe('deleteCredentials', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['credential_id']).toEqual(credential_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['credential_id']).toEqual(credentialId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteCredentials(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const credential_id = 'fake_credential_id';
+      const environmentId = 'fake_environmentId';
+      const credentialId = 'fake_credentialId';
       const params = {
-        environment_id,
-        credential_id,
+        environmentId,
+        credentialId,
       };
 
       // invoke method
@@ -6721,7 +6711,7 @@ describe('deleteCredentials', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
+      const requiredParams = ['environmentId', 'credentialId'];
 
       discovery.deleteCredentials({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -6731,7 +6721,7 @@ describe('deleteCredentials', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'credential_id'];
+      const requiredParams = ['environmentId', 'credentialId'];
 
       const deleteCredentialsPromise = discovery.deleteCredentials();
       expectToBePromise(deleteCredentialsPromise);
@@ -6751,9 +6741,9 @@ describe('listGateways', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -6769,31 +6759,31 @@ describe('listGateways', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.listGateways(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -6819,7 +6809,7 @@ describe('listGateways', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.listGateways({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -6829,7 +6819,7 @@ describe('listGateways', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const listGatewaysPromise = discovery.listGateways();
       expectToBePromise(listGatewaysPromise);
@@ -6849,10 +6839,10 @@ describe('createGateway', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const name = 'fake_name';
       const params = {
-        environment_id,
+        environmentId,
         name,
       };
 
@@ -6870,31 +6860,31 @@ describe('createGateway', () => {
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.body['name']).toEqual(name);
-      expect(options.path['environment_id']).toEqual(environment_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
+        environmentId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.createGateway(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
+      const environmentId = 'fake_environmentId';
       const params = {
-        environment_id,
+        environmentId,
       };
 
       // invoke method
@@ -6920,7 +6910,7 @@ describe('createGateway', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       discovery.createGateway({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -6930,7 +6920,7 @@ describe('createGateway', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id'];
+      const requiredParams = ['environmentId'];
 
       const createGatewayPromise = discovery.createGateway();
       expectToBePromise(createGatewayPromise);
@@ -6950,11 +6940,11 @@ describe('getGateway', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const gateway_id = 'fake_gateway_id';
+      const environmentId = 'fake_environmentId';
+      const gatewayId = 'fake_gatewayId';
       const params = {
-        environment_id,
-        gateway_id,
+        environmentId,
+        gatewayId,
       };
 
       // invoke method
@@ -6970,36 +6960,36 @@ describe('getGateway', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['gateway_id']).toEqual(gateway_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['gateway_id']).toEqual(gatewayId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const gateway_id = 'fake_gateway_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const gatewayId = 'fake_gatewayId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        gateway_id,
+        environmentId,
+        gatewayId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.getGateway(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const gateway_id = 'fake_gateway_id';
+      const environmentId = 'fake_environmentId';
+      const gatewayId = 'fake_gatewayId';
       const params = {
-        environment_id,
-        gateway_id,
+        environmentId,
+        gatewayId,
       };
 
       // invoke method
@@ -7025,7 +7015,7 @@ describe('getGateway', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'gateway_id'];
+      const requiredParams = ['environmentId', 'gatewayId'];
 
       discovery.getGateway({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -7035,7 +7025,7 @@ describe('getGateway', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'gateway_id'];
+      const requiredParams = ['environmentId', 'gatewayId'];
 
       const getGatewayPromise = discovery.getGateway();
       expectToBePromise(getGatewayPromise);
@@ -7055,11 +7045,11 @@ describe('deleteGateway', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const gateway_id = 'fake_gateway_id';
+      const environmentId = 'fake_environmentId';
+      const gatewayId = 'fake_gatewayId';
       const params = {
-        environment_id,
-        gateway_id,
+        environmentId,
+        gatewayId,
       };
 
       // invoke method
@@ -7079,36 +7069,36 @@ describe('deleteGateway', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['environment_id']).toEqual(environment_id);
-      expect(options.path['gateway_id']).toEqual(gateway_id);
+      expect(options.path['environment_id']).toEqual(environmentId);
+      expect(options.path['gateway_id']).toEqual(gatewayId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const gateway_id = 'fake_gateway_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const environmentId = 'fake_environmentId';
+      const gatewayId = 'fake_gatewayId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        environment_id,
-        gateway_id,
+        environmentId,
+        gatewayId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       discovery.deleteGateway(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const environment_id = 'fake_environment_id';
-      const gateway_id = 'fake_gateway_id';
+      const environmentId = 'fake_environmentId';
+      const gatewayId = 'fake_gatewayId';
       const params = {
-        environment_id,
-        gateway_id,
+        environmentId,
+        gatewayId,
       };
 
       // invoke method
@@ -7134,7 +7124,7 @@ describe('deleteGateway', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'gateway_id'];
+      const requiredParams = ['environmentId', 'gatewayId'];
 
       discovery.deleteGateway({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -7144,7 +7134,7 @@ describe('deleteGateway', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['environment_id', 'gateway_id'];
+      const requiredParams = ['environmentId', 'gatewayId'];
 
       const deleteGatewayPromise = discovery.deleteGateway();
       expectToBePromise(deleteGatewayPromise);

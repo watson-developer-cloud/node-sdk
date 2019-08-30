@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const NaturalLanguageUnderstandingV1 = require('../../natural-language-understanding/v1');
 const utils = require('../resources/unitTestUtils');
 
@@ -35,8 +36,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url:
     'https://gateway.watsonplatform.net/natural-language-understanding/api/natural-language-understanding/api',
   version: '2018-10-18',
@@ -67,10 +67,10 @@ describe('analyze', () => {
       const url = 'fake_url';
       const clean = 'fake_clean';
       const xpath = 'fake_xpath';
-      const fallback_to_raw = 'fake_fallback_to_raw';
-      const return_analyzed_text = 'fake_return_analyzed_text';
+      const fallbackToRaw = 'fake_fallbackToRaw';
+      const returnAnalyzedText = 'fake_returnAnalyzedText';
       const language = 'fake_language';
-      const limit_text_characters = 'fake_limit_text_characters';
+      const limitTextCharacters = 'fake_limitTextCharacters';
       const params = {
         features,
         text,
@@ -78,10 +78,10 @@ describe('analyze', () => {
         url,
         clean,
         xpath,
-        fallback_to_raw,
-        return_analyzed_text,
+        fallbackToRaw,
+        returnAnalyzedText,
         language,
-        limit_text_characters,
+        limitTextCharacters,
       };
 
       // invoke method
@@ -103,27 +103,27 @@ describe('analyze', () => {
       expect(options.body['url']).toEqual(url);
       expect(options.body['clean']).toEqual(clean);
       expect(options.body['xpath']).toEqual(xpath);
-      expect(options.body['fallback_to_raw']).toEqual(fallback_to_raw);
-      expect(options.body['return_analyzed_text']).toEqual(return_analyzed_text);
+      expect(options.body['fallback_to_raw']).toEqual(fallbackToRaw);
+      expect(options.body['return_analyzed_text']).toEqual(returnAnalyzedText);
       expect(options.body['language']).toEqual(language);
-      expect(options.body['limit_text_characters']).toEqual(limit_text_characters);
+      expect(options.body['limit_text_characters']).toEqual(limitTextCharacters);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const features = 'fake_features';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         features,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       naturalLanguageUnderstanding.analyze(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -205,17 +205,17 @@ describe('listModels', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       naturalLanguageUnderstanding.listModels(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -250,9 +250,9 @@ describe('deleteModel', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const model_id = 'fake_model_id';
+      const modelId = 'fake_modelId';
       const params = {
-        model_id,
+        modelId,
       };
 
       // invoke method
@@ -268,31 +268,31 @@ describe('deleteModel', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['model_id']).toEqual(model_id);
+      expect(options.path['model_id']).toEqual(modelId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const model_id = 'fake_model_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const modelId = 'fake_modelId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        model_id,
+        modelId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       naturalLanguageUnderstanding.deleteModel(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const model_id = 'fake_model_id';
+      const modelId = 'fake_modelId';
       const params = {
-        model_id,
+        modelId,
       };
 
       // invoke method
@@ -318,7 +318,7 @@ describe('deleteModel', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['model_id'];
+      const requiredParams = ['modelId'];
 
       naturalLanguageUnderstanding.deleteModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -328,7 +328,7 @@ describe('deleteModel', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['model_id'];
+      const requiredParams = ['modelId'];
 
       const deleteModelPromise = naturalLanguageUnderstanding.deleteModel();
       expectToBePromise(deleteModelPromise);

@@ -72,19 +72,10 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
    */
   synthesizeUsingWebSocket(params) {
     params = params || {};
-    params.url = this._options.url;
+    params.url = this.baseOptions.url;
 
-    // if using iam, headers will not be a property on _options
-    // and the line `authorization: this._options.headers.Authorization`
-    // will crash the code
-    if (!this._options.headers) {
-      this._options.headers = {};
-    }
-
-    // if using iam, pass the token manager to the SynthesizeStream object
-    if (this.tokenManager) {
-      params.tokenManager = this.tokenManager;
-    }
+    // pass the Authenticator to the SynthesizeStream object
+    params.authenticator = this.getAuthenticator();
 
     // if the user configured a custom https client, use it in the websocket method
     // let httpsAgent take precedence, default to null
@@ -96,12 +87,11 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
     params.headers = extend(
       true,
       sdkHeaders,
-      { authorization: this._options.headers.Authorization },
       params.headers
     );
 
     // allow user to disable ssl verification when using websockets
-    params.rejectUnauthorized = this._options.rejectUnauthorized;
+    params.disableSslVerification = this.baseOptions.disableSslVerification;
 
     // SynthesizeStream.main(params);
     return new SynthesizeStream(params);
