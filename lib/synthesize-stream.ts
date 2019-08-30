@@ -15,11 +15,11 @@
  */
 
 import { OutgoingHttpHeaders } from 'http';
-import { qs } from 'ibm-cloud-sdk-core';
+import { Authenticator, qs } from 'ibm-cloud-sdk-core';
 import pick = require('object.pick');
 import { Readable, ReadableOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
-import { processUserParameters, setAuthorizationHeader } from './websocket-utils';
+import { processUserParameters } from './websocket-utils';
 
 // these options represent the superset of the base params,
 // query params, and opening message params, with the keys
@@ -28,10 +28,10 @@ import { processUserParameters, setAuthorizationHeader } from './websocket-utils
 // payloadParamsAllowed or queryParamsAllowed is changed
 interface Options extends ReadableOptions {
   /* base options */
+  authenticator: Authenticator;
   url?: string;
   headers?: OutgoingHttpHeaders;
-  tokenManager?: any;
-  rejectUnauthorized?: boolean;
+  disableSslVerification?: boolean;
 
   /* payload options */
   text: string;
@@ -66,6 +66,7 @@ class SynthesizeStream extends Readable {
   static WEBSOCKET_CONNECTION_ERROR: string = 'WebSocket connection error';
 
   private options: Options;
+  private authenticator: Authenticator;
   private socket;
   private initialized: boolean;
 
@@ -79,10 +80,10 @@ class SynthesizeStream extends Readable {
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for IAM token request management by the SDK.
    *
    * @param {Options} options
+   * @param {Authenticator} options.authenticator - Authenticator to add Authorization header
    * @param {string} [options.url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
    * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
-   * @param {any} [options.tokenManager] - Token manager for authenticating with IAM
-   * @param {boolean} [options.rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
+   * @param {boolean} [options.disableSslVerification] - If true, disable SSL verification for the WebSocket connection (default=false)
    * @param {string} options.text - The text that us to be synthesized
    * @param {string} options.accept - The requested format (MIME type) of the audio
    * @param {string[]} [options.timings] - An array that specifies whether the service is to return word timing information for all strings of the input text
@@ -98,6 +99,7 @@ class SynthesizeStream extends Readable {
     super(options);
     this.options = options;
     this.initialized = false;
+    this.authenticator = options.authenticator;
   }
 
   initialize() {
@@ -133,7 +135,7 @@ class SynthesizeStream extends Readable {
       null,
       options.headers,
       requestOptions,
-      { tlsOptions: { rejectUnauthorized: options.rejectUnauthorized }}
+      { tlsOptions: { rejectUnauthorized: !options.disableSslVerification }}
     ));
 
     // use class context within arrow functions
@@ -226,7 +228,7 @@ class SynthesizeStream extends Readable {
     // even though we aren't controlling the read from websocket,
     // we can take advantage of the fact that _read is async and hack
     // this funtion to retrieve a token if the service is using IAM auth
-    setAuthorizationHeader(this.options, err => {
+    this.authenticator.authenticate(this.options, err => {
       if (err) {
         this.emit('error', err);
         this.push(null);

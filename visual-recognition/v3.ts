@@ -16,11 +16,14 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.
+ * The IBM Watson&trade; Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces
+ *  in images you upload to the service. You can create and train a custom classifier to identify subjects that suit
+ * your needs.
  */
 
 class VisualRecognitionV3 extends BaseService {
@@ -33,34 +36,30 @@ class VisualRecognitionV3 extends BaseService {
    * Construct a VisualRecognitionV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
+   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
+   * the API version for the date you specify, or the most recent version before that date. Note that you should not
+   * programmatically specify the current date at runtime, in case the API has been updated since your application's
+   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
+   * application is ready for a later version.
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/visual-recognition/api'). The base url may differ between IBM Cloud regions.
-   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
-   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
-   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
-   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
-   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
-   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
-   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
-   * option may be useful for requests that are proxied.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
-   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
-   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
-   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
    * @returns {VisualRecognitionV3}
    * @throws {Error}
    */
   constructor(options: VisualRecognitionV3.Options) {
+    // default to reading the authenticator from the environment
+    if (!options.authenticator) {
+      options.authenticator = getAuthenticatorFromEnvironment('watson_vision_combined');
+    }
     super(options);
     // check if 'version' was provided
-    if (typeof this._options.version === 'undefined') {
+    if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
     }
-    this._options.qs.version = options.version;
+    this.baseOptions.qs.version = options.version;
   }
 
   /*************************
@@ -73,14 +72,14 @@ class VisualRecognitionV3 extends BaseService {
    * Classify images with built-in or custom classifiers.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (.gif, .jpg, .png, .tif) or
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.imagesFile] - An image file (.gif, .jpg, .png, .tif) or
    * .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100
    * MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8
    * encoding if it encounters non-ASCII characters.
    *
    * You can also include an image with the **url** parameter.
-   * @param {string} [params.images_filename] - The filename for images_file.
-   * @param {string} [params.images_file_content_type] - The content type of images_file.
+   * @param {string} [params.imagesFilename] - The filename for imagesFile.
+   * @param {string} [params.imagesFileContentType] - The content type of imagesFile.
    * @param {string} [params.url] - The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended
    * pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224
    * pixels. The maximum image size is 10 MB.
@@ -95,7 +94,7 @@ class VisualRecognitionV3 extends BaseService {
    * - Use `me` to classify against all your custom classifiers. However, for better performance use **classifier_ids**
    * to specify the specific custom classifiers to apply.
    * - Use both `IBM` and `me` to analyze the image against both classifier categories.
-   * @param {string[]} [params.classifier_ids] - Which classifiers to apply. Overrides the **owners** parameter. You can
+   * @param {string[]} [params.classifierIds] - Which classifiers to apply. Overrides the **owners** parameter. You can
    * specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both
    * **classifier_ids** and **owners** parameters are empty.
    *
@@ -103,7 +102,7 @@ class VisualRecognitionV3 extends BaseService {
    * - `default`: Returns classes from thousands of general tags.
    * - `food`: Enhances specificity and accuracy for images of food items.
    * - `explicit`: Evaluates whether the image might be pornographic.
-   * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
+   * @param {string} [params.acceptLanguage] - The desired language of parts of the response. See the response for
    * details.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -115,21 +114,21 @@ class VisualRecognitionV3 extends BaseService {
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.classify(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.classify(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
     const formData = {
       'images_file': {
-        data: _params.images_file,
-        filename: _params.images_filename,
-        contentType: _params.images_file_content_type
+        data: _params.imagesFile,
+        filename: _params.imagesFilename,
+        contentType: _params.imagesFileContentType
       },
       'url': _params.url,
       'threshold': _params.threshold,
       'owners': _params.owners,
-      'classifier_ids': _params.classifier_ids
+      'classifier_ids': _params.classifierIds
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'classify');
@@ -140,11 +139,11 @@ class VisualRecognitionV3 extends BaseService {
         method: 'POST',
         formData
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-          'Accept-Language': _params.accept_language
+          'Accept-Language': _params.acceptLanguage
         }, _params.headers),
       }),
     };
@@ -173,21 +172,21 @@ class VisualRecognitionV3 extends BaseService {
    * 224 x 224 pixels.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.images_file] - An image file (gif, .jpg, .png, .tif.) or
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.imagesFile] - An image file (gif, .jpg, .png, .tif.) or
    * .zip file with images. Limit the .zip file to 100 MB. You can include a maximum of 15 images in a request.
    *
    * Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8
    * encoding if it encounters non-ASCII characters.
    *
    * You can also include an image with the **url** parameter.
-   * @param {string} [params.images_filename] - The filename for images_file.
-   * @param {string} [params.images_file_content_type] - The content type of images_file.
+   * @param {string} [params.imagesFilename] - The filename for imagesFile.
+   * @param {string} [params.imagesFileContentType] - The content type of imagesFile.
    * @param {string} [params.url] - The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The
    * minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at
    * least 224 x 224 pixels. The maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL.
    *
    * You can also include images with the **images_file** parameter.
-   * @param {string} [params.accept_language] - The desired language of parts of the response. See the response for
+   * @param {string} [params.acceptLanguage] - The desired language of parts of the response. See the response for
    * details.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -199,16 +198,16 @@ class VisualRecognitionV3 extends BaseService {
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.detectFaces(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.detectFaces(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
     const formData = {
       'images_file': {
-        data: _params.images_file,
-        filename: _params.images_filename,
-        contentType: _params.images_file_content_type
+        data: _params.imagesFile,
+        filename: _params.imagesFilename,
+        contentType: _params.imagesFileContentType
       },
       'url': _params.url
     };
@@ -221,11 +220,11 @@ class VisualRecognitionV3 extends BaseService {
         method: 'POST',
         formData
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
-          'Accept-Language': _params.accept_language
+          'Accept-Language': _params.acceptLanguage
         }, _params.headers),
       }),
     };
@@ -241,15 +240,21 @@ class VisualRecognitionV3 extends BaseService {
    * Create a classifier.
    *
    * Train a new multi-faceted classifier on the uploaded image data. Create your custom classifier with positive or
-   * negative examples. Include at least two sets of examples, either two positive example files or one positive and one
-   * negative file. You can upload a maximum of 256 MB per call.
+   * negative example training images. Include at least two sets of examples, either two positive example files or one
+   * positive and one negative file. You can upload a maximum of 256 MB per call.
    *
-   * Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class
-   * names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.
+   * **Tips when creating:**
+   *
+   * - If you set the **X-Watson-Learning-Opt-Out** header parameter to `true` when you create a classifier, the example
+   * training images are not stored. Save your training images locally. For more information, see [Data
+   * collection](#data-collection).
+   *
+   * - Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and
+   * class names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new classifier. Encode special characters in UTF-8.
-   * @param {Record<string, NodeJS.ReadableStream|FileObject|Buffer>} params.positive_examples - A dictionary that
+   * @param {Record<string, NodeJS.ReadableStream|FileObject|Buffer>} params.positiveExamples - A dictionary that
    * contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class
    * in the new classifier. You can include more than one positive example file in a call.
    *
@@ -260,11 +265,11 @@ class VisualRecognitionV3 extends BaseService {
    * maximum number of images is 10,000 images or 100 MB per .zip file.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negative_examples] - A .zip file of images that do not
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negativeExamples] - A .zip file of images that do not
    * depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
+   * @param {string} [params.negativeExamplesFilename] - The filename for negativeExamples.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -272,12 +277,12 @@ class VisualRecognitionV3 extends BaseService {
   public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['name', 'positive_examples'];
+    const requiredParams = ['name', 'positiveExamples'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createClassifier(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createClassifier(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -289,16 +294,16 @@ class VisualRecognitionV3 extends BaseService {
     const formData = {
       'name': _params.name,
       'negative_examples': {
-        data: _params.negative_examples,
-        filename: _params.negative_examples_filename,
+        data: _params.negativeExamples,
+        filename: _params.negativeExamplesFilename,
         contentType: 'application/octet-stream'
       }
     };
 
-    Object.keys(_params.positive_examples || {}).forEach(key => {
+    Object.keys(_params.positiveExamples || {}).forEach(key => {
       const partName = `${key}_positive_examples`
       formData[partName] = {
-        data: _params.positive_examples[key],
+        data: _params.positiveExamples[key],
         contentType: 'application/octet-stream',
       };
     });
@@ -311,7 +316,7 @@ class VisualRecognitionV3 extends BaseService {
         method: 'POST',
         formData
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
@@ -338,8 +343,8 @@ class VisualRecognitionV3 extends BaseService {
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listClassifiers(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listClassifiers(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -356,7 +361,7 @@ class VisualRecognitionV3 extends BaseService {
         method: 'GET',
         qs: query,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -372,7 +377,7 @@ class VisualRecognitionV3 extends BaseService {
    * Retrieve information about a custom classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -380,12 +385,12 @@ class VisualRecognitionV3 extends BaseService {
   public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['classifier_id'];
+    const requiredParams = ['classifierId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getClassifier(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getClassifier(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -396,7 +401,7 @@ class VisualRecognitionV3 extends BaseService {
     }
 
     const path = {
-      'classifier_id': _params.classifier_id
+      'classifier_id': _params.classifierId
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getClassifier');
@@ -407,7 +412,7 @@ class VisualRecognitionV3 extends BaseService {
         method: 'GET',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -427,13 +432,19 @@ class VisualRecognitionV3 extends BaseService {
    * Encode all names in UTF-8 if they contain non-ASCII characters (.zip and image file names, and classifier and class
    * names). The service assumes UTF-8 encoding if it encounters non-ASCII characters.
    *
-   * **Tip:** Don't make retraining calls on a classifier until the status is ready. When you submit retraining requests
-   * in parallel, the last request overwrites the previous requests. The retrained property shows the last time the
+   * **Tips about retraining:**
+   *
+   * - You can't update the classifier if the **X-Watson-Learning-Opt-Out** header parameter was set to `true` when the
+   * classifier was created. Training images are not stored in that case. Instead, create another classifier. For more
+   * information, see [Data collection](#data-collection).
+   *
+   * - Don't make retraining calls on a classifier until the status is ready. When you submit retraining requests in
+   * parallel, the last request overwrites the previous requests. The `retrained` property shows the last time the
    * classifier retraining finished.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.classifier_id - The ID of the classifier.
-   * @param {Record<string, NodeJS.ReadableStream|FileObject|Buffer>} [params.positive_examples] - A dictionary that
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {Record<string, NodeJS.ReadableStream|FileObject|Buffer>} [params.positiveExamples] - A dictionary that
    * contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class
    * in the classifier. The positive examples create or update classes in the classifier. You can include more than one
    * positive example file in a call.
@@ -445,11 +456,11 @@ class VisualRecognitionV3 extends BaseService {
    * maximum number of images is 10,000 images or 100 MB per .zip file.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negative_examples] - A .zip file of images that do not
+   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.negativeExamples] - A .zip file of images that do not
    * depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {string} [params.negative_examples_filename] - The filename for negative_examples.
+   * @param {string} [params.negativeExamplesFilename] - The filename for negativeExamples.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -457,12 +468,12 @@ class VisualRecognitionV3 extends BaseService {
   public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['classifier_id'];
+    const requiredParams = ['classifierId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateClassifier(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateClassifier(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -473,22 +484,22 @@ class VisualRecognitionV3 extends BaseService {
     }
     const formData = {
       'negative_examples': {
-        data: _params.negative_examples,
-        filename: _params.negative_examples_filename,
+        data: _params.negativeExamples,
+        filename: _params.negativeExamplesFilename,
         contentType: 'application/octet-stream'
       }
     };
 
-    Object.keys(_params.positive_examples || {}).forEach(key => {
+    Object.keys(_params.positiveExamples || {}).forEach(key => {
       const partName = `${key}_positive_examples`
       formData[partName] = {
-        data: _params.positive_examples[key],
+        data: _params.positiveExamples[key],
         contentType: 'application/octet-stream',
       };
     });
 
     const path = {
-      'classifier_id': _params.classifier_id
+      'classifier_id': _params.classifierId
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'updateClassifier');
@@ -500,7 +511,7 @@ class VisualRecognitionV3 extends BaseService {
         path,
         formData
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data',
@@ -515,7 +526,7 @@ class VisualRecognitionV3 extends BaseService {
    * Delete a classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -523,12 +534,12 @@ class VisualRecognitionV3 extends BaseService {
   public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['classifier_id'];
+    const requiredParams = ['classifierId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteClassifier(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteClassifier(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -539,7 +550,7 @@ class VisualRecognitionV3 extends BaseService {
     }
 
     const path = {
-      'classifier_id': _params.classifier_id
+      'classifier_id': _params.classifierId
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteClassifier');
@@ -550,7 +561,7 @@ class VisualRecognitionV3 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -567,11 +578,11 @@ class VisualRecognitionV3 extends BaseService {
   /**
    * Retrieve a Core ML model of a classifier.
    *
-   * Download a Core ML model file (.mlmodel) of a custom classifier that returns <tt>\"core_ml_enabled\": true</tt> in
+   * Download a Core ML model file (.mlmodel) of a custom classifier that returns <tt>"core_ml_enabled": true</tt> in
    * the classifier details.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.classifier_id - The ID of the classifier.
+   * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -579,12 +590,12 @@ class VisualRecognitionV3 extends BaseService {
   public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['classifier_id'];
+    const requiredParams = ['classifierId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getCoreMlModel(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getCoreMlModel(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -595,7 +606,7 @@ class VisualRecognitionV3 extends BaseService {
     }
 
     const path = {
-      'classifier_id': _params.classifier_id
+      'classifier_id': _params.classifierId
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getCoreMlModel');
@@ -607,7 +618,7 @@ class VisualRecognitionV3 extends BaseService {
         path,
         responseType: 'stream',
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/octet-stream',
         }, _params.headers),
@@ -632,7 +643,7 @@ class VisualRecognitionV3 extends BaseService {
    * security](https://cloud.ibm.com/docs/services/visual-recognition?topic=visual-recognition-information-security).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
+   * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -640,12 +651,12 @@ class VisualRecognitionV3 extends BaseService {
   public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['customer_id'];
+    const requiredParams = ['customerId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteUserData(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteUserData(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -656,7 +667,7 @@ class VisualRecognitionV3 extends BaseService {
     }
 
     const query = {
-      'customer_id': _params.customer_id
+      'customer_id': _params.customerId
     };
 
     const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteUserData');
@@ -667,7 +678,7 @@ class VisualRecognitionV3 extends BaseService {
         method: 'DELETE',
         qs: query,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -692,19 +703,8 @@ namespace VisualRecognitionV3 {
   export type Options = {
     version: string;
     url?: string;
-    iam_access_token?: string;
-    iam_apikey?: string;
-    iam_url?: string;
-    iam_client_id?: string;
-    iam_client_secret?: string;
-    icp4d_access_token?: string;
-    icp4d_url?: string;
-    username?: string;
-    password?: string;
-    token?: string;
-    authentication_type?: string;
-    disable_ssl_verification?: boolean;
-    use_unauthenticated?: boolean;
+    authenticator: Authenticator;
+    disableSslVerification?: boolean;
     headers?: OutgoingHttpHeaders;
     /** Allow additional request config parameters */
     [propName: string]: any;
@@ -712,14 +712,13 @@ namespace VisualRecognitionV3 {
 
   export interface Response<T = any>  {
     result: T;
-    data: T; // for compatibility
     status: number;
     statusText: string;
     headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
+  export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -735,24 +734,50 @@ namespace VisualRecognitionV3 {
 
   /** Parameters for the `classify` operation. */
   export interface ClassifyParams {
-    /** An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
-    images_file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for images_file. */
-    images_filename?: string;
-    /** The content type of images_file. */
-    images_file_content_type?: string;
-    /** The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum image size is 10 MB. You can also include images with the **images_file** parameter. */
+    /** An image file (.gif, .jpg, .png, .tif) or .zip file with images. Maximum image size is 10 MB. Include no
+     *  more than 20 images and limit the .zip file to 100 MB. Encode the image and .zip file names in UTF-8 if they
+     *  contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters.
+     *
+     *  You can also include an image with the **url** parameter.
+     */
+    imagesFile?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for imagesFile. */
+    imagesFilename?: string;
+    /** The content type of imagesFile. */
+    imagesFileContentType?: string;
+    /** The URL of an image (.gif, .jpg, .png, .tif) to analyze. The minimum recommended pixel density is 32X32
+     *  pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum
+     *  image size is 10 MB.
+     *
+     *  You can also include images with the **images_file** parameter.
+     */
     url?: string;
-    /** The minimum score a class must have to be displayed in the response. Set the threshold to `0.0` to return all identified classes. */
+    /** The minimum score a class must have to be displayed in the response. Set the threshold to `0.0` to return
+     *  all identified classes.
+     */
     threshold?: number;
-    /** The categories of classifiers to apply. The **classifier_ids** parameter overrides **owners**, so make sure that **classifier_ids** is empty. - Use `IBM` to classify against the `default` general classifier. You get the same result if both **classifier_ids** and **owners** parameters are empty. - Use `me` to classify against all your custom classifiers. However, for better performance use **classifier_ids** to specify the specific custom classifiers to apply. - Use both `IBM` and `me` to analyze the image against both classifier categories. */
+    /** The categories of classifiers to apply. The **classifier_ids** parameter overrides **owners**, so make sure
+     *  that **classifier_ids** is empty.
+     *  - Use `IBM` to classify against the `default` general classifier. You get the same result if both
+     *  **classifier_ids** and **owners** parameters are empty.
+     *  - Use `me` to classify against all your custom classifiers. However, for better performance use
+     *  **classifier_ids** to specify the specific custom classifiers to apply.
+     *  - Use both `IBM` and `me` to analyze the image against both classifier categories.
+     */
     owners?: string[];
-    /** Which classifiers to apply. Overrides the **owners** parameter. You can specify both custom and built-in classifier IDs. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters are empty. The following built-in classifier IDs require no training: - `default`: Returns classes from thousands of general tags. - `food`: Enhances specificity and accuracy for images of food items. - `explicit`: Evaluates whether the image might be pornographic. */
-    classifier_ids?: string[];
+    /** Which classifiers to apply. Overrides the **owners** parameter. You can specify both custom and built-in
+     *  classifier IDs. The built-in `default` classifier is used if both **classifier_ids** and **owners** parameters
+     *  are empty.
+     *
+     *  The following built-in classifier IDs require no training:
+     *  - `default`: Returns classes from thousands of general tags.
+     *  - `food`: Enhances specificity and accuracy for images of food items.
+     *  - `explicit`: Evaluates whether the image might be pornographic.
+     */
+    classifierIds?: string[];
     /** The desired language of parts of the response. See the response for details. */
-    accept_language?: ClassifyConstants.AcceptLanguage | string;
+    acceptLanguage?: ClassifyConstants.AcceptLanguage | string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `classify` operation. */
@@ -775,18 +800,29 @@ namespace VisualRecognitionV3 {
 
   /** Parameters for the `detectFaces` operation. */
   export interface DetectFacesParams {
-    /** An image file (gif, .jpg, .png, .tif.) or .zip file with images. Limit the .zip file to 100 MB. You can include a maximum of 15 images in a request. Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if it encounters non-ASCII characters. You can also include an image with the **url** parameter. */
-    images_file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for images_file. */
-    images_filename?: string;
-    /** The content type of images_file. */
-    images_file_content_type?: string;
-    /** The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The minimum recommended pixel density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels. The maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL. You can also include images with the **images_file** parameter. */
+    /** An image file (gif, .jpg, .png, .tif.) or .zip file with images. Limit the .zip file to 100 MB. You can
+     *  include a maximum of 15 images in a request.
+     *
+     *  Encode the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8
+     *  encoding if it encounters non-ASCII characters.
+     *
+     *  You can also include an image with the **url** parameter.
+     */
+    imagesFile?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for imagesFile. */
+    imagesFilename?: string;
+    /** The content type of imagesFile. */
+    imagesFileContentType?: string;
+    /** The URL of an image to analyze. Must be in .gif, .jpg, .png, or .tif format. The minimum recommended pixel
+     *  density is 32X32 pixels, but the service tends to perform better with images that are at least 224 x 224 pixels.
+     *  The maximum image size is 10 MB. Redirects are followed, so you can use a shortened URL.
+     *
+     *  You can also include images with the **images_file** parameter.
+     */
     url?: string;
     /** The desired language of parts of the response. See the response for details. */
-    accept_language?: DetectFacesConstants.AcceptLanguage | string;
+    acceptLanguage?: DetectFacesConstants.AcceptLanguage | string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `detectFaces` operation. */
@@ -811,68 +847,92 @@ namespace VisualRecognitionV3 {
   export interface CreateClassifierParams {
     /** The name of the new classifier. Encode special characters in UTF-8. */
     name: string;
-    /** A dictionary that contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class **goldenretriever**. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
-    positive_examples: Record<string, NodeJS.ReadableStream|FileObject|Buffer>;
-    /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8. */
-    negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for negative_examples. */
-    negative_examples_filename?: string;
+    /** A dictionary that contains the value for each classname. The value is a .zip file of images that depict the
+     *  visual subject of a class in the new classifier. You can include more than one positive example file in a call.
+     *
+     *  Specify the parameter name by appending `_positive_examples` to the class name. For example,
+     *  `goldenretriever_positive_examples` creates the class **goldenretriever**.
+     *
+     *  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The
+     *  maximum number of images is 10,000 images or 100 MB per .zip file.
+     *
+     *  Encode special characters in the file name in UTF-8.
+     */
+    positiveExamples: Record<string, NodeJS.ReadableStream|FileObject|Buffer>;
+    /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier.
+     *  Must contain a minimum of 10 images.
+     *
+     *  Encode special characters in the file name in UTF-8.
+     */
+    negativeExamples?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for negativeExamples. */
+    negativeExamplesFilename?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listClassifiers` operation. */
   export interface ListClassifiersParams {
-    /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of classifiers. */
+    /** Specify `true` to return details about the classifiers. Omit this parameter to return a brief list of
+     *  classifiers.
+     */
     verbose?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getClassifier` operation. */
   export interface GetClassifierParams {
     /** The ID of the classifier. */
-    classifier_id: string;
+    classifierId: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateClassifier` operation. */
   export interface UpdateClassifierParams {
     /** The ID of the classifier. */
-    classifier_id: string;
-    /** A dictionary that contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the classifier. The positive examples create or update classes in the classifier. You can include more than one positive example file in a call. Specify the parameter name by appending `_positive_examples` to the class name. For example, `goldenretriever_positive_examples` creates the class `goldenretriever`. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8. */
-    positive_examples?: Record<string, NodeJS.ReadableStream|FileObject|Buffer>;
-    /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8. */
-    negative_examples?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for negative_examples. */
-    negative_examples_filename?: string;
+    classifierId: string;
+    /** A dictionary that contains the value for each classname. The value is a .zip file of images that depict the
+     *  visual subject of a class in the classifier. The positive examples create or update classes in the classifier.
+     *  You can include more than one positive example file in a call.
+     *
+     *  Specify the parameter name by appending `_positive_examples` to the class name. For example,
+     *  `goldenretriever_positive_examples` creates the class `goldenretriever`.
+     *
+     *  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The
+     *  maximum number of images is 10,000 images or 100 MB per .zip file.
+     *
+     *  Encode special characters in the file name in UTF-8.
+     */
+    positiveExamples?: Record<string, NodeJS.ReadableStream|FileObject|Buffer>;
+    /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier.
+     *  Must contain a minimum of 10 images.
+     *
+     *  Encode special characters in the file name in UTF-8.
+     */
+    negativeExamples?: NodeJS.ReadableStream|FileObject|Buffer;
+    /** The filename for negativeExamples. */
+    negativeExamplesFilename?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteClassifier` operation. */
   export interface DeleteClassifierParams {
     /** The ID of the classifier. */
-    classifier_id: string;
+    classifierId: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getCoreMlModel` operation. */
   export interface GetCoreMlModelParams {
     /** The ID of the classifier. */
-    classifier_id: string;
+    classifierId: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
-    customer_id: string;
+    customerId: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /*************************
@@ -882,16 +942,26 @@ namespace VisualRecognitionV3 {
   /** A category within a classifier. */
   export interface Class {
     /** The name of the class. */
-    class_name: string;
+    _class: string;
   }
 
   /** Result of a class within a classifier. */
   export interface ClassResult {
-    /** Name of the class. Class names are translated in the language defined by the **Accept-Language** request header for the build-in classifier IDs (`default`, `food`, and `explicit`). Class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name. */
-    class_name: string;
-    /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5. */
+    /** Name of the class.
+     *
+     *  Class names are translated in the language defined by the **Accept-Language** request header for the build-in
+     *  classifier IDs (`default`, `food`, and `explicit`). Class names of custom classifiers are not translated. The
+     *  response might not be in the specified language when the requested language is not supported or when there is no
+     *  translation for the class name.
+     */
+    _class: string;
+    /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that
+     *  the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5.
+     */
     score: number;
-    /** Knowledge graph of the property. For example, `/fruit/pome/apple/eating apple/Granny Smith`. Included only if identified. */
+    /** Knowledge graph of the property. For example, `/fruit/pome/apple/eating apple/Granny Smith`. Included only
+     *  if identified.
+     */
     type_hierarchy?: string;
   }
 
@@ -903,7 +973,9 @@ namespace VisualRecognitionV3 {
     resolved_url?: string;
     /** Relative path of the image file if uploaded directly. Not returned when the image is passed by URL. */
     image?: string;
-    /** Information about what might have caused a failure, such as an image that is too large. Not returned when there is no error. */
+    /** Information about what might have caused a failure, such as an image that is too large. Not returned when
+     *  there is no error.
+     */
     error?: ErrorInfo;
     /** The classifiers. */
     classifiers: ClassifierResult[];
@@ -917,7 +989,10 @@ namespace VisualRecognitionV3 {
     images_processed?: number;
     /** Classified images. */
     images: ClassifiedImage[];
-    /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
+    /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip
+     *  file and a list of image URLs will still complete, but does not return the expected output. Not returned when
+     *  there is no warning.
+     */
     warnings?: WarningInfo[];
   }
 
@@ -939,9 +1014,13 @@ namespace VisualRecognitionV3 {
     created?: string;
     /** Classes that define a classifier. */
     classes?: Class[];
-    /** Date and time in Coordinated Universal Time (UTC) that the classifier was updated. Might not be returned by some requests. Identical to `updated` and retained for backward compatibility. */
+    /** Date and time in Coordinated Universal Time (UTC) that the classifier was updated. Might not be returned by
+     *  some requests. Identical to `updated` and retained for backward compatibility.
+     */
     retrained?: string;
-    /** Date and time in Coordinated Universal Time (UTC) that the classifier was most recently updated. The field matches either `retrained` or `created`. Might not be returned by some requests. */
+    /** Date and time in Coordinated Universal Time (UTC) that the classifier was most recently updated. The field
+     *  matches either `retrained` or `created`. Might not be returned by some requests.
+     */
     updated?: string;
   }
 
@@ -967,7 +1046,10 @@ namespace VisualRecognitionV3 {
     images_processed: number;
     /** The images. */
     images: ImageWithFaces[];
-    /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip file and a list of image URLs will still complete, but does not return the expected output. Not returned when there is no warning. */
+    /** Information about what might cause less than optimal output. For example, a request sent with a corrupt .zip
+     *  file and a list of image URLs will still complete, but does not return the expected output. Not returned when
+     *  there is no warning.
+     */
     warnings?: WarningInfo[];
   }
 
@@ -997,7 +1079,9 @@ namespace VisualRecognitionV3 {
     min?: number;
     /** Estimated maximum age. */
     max?: number;
-    /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value for the property. */
+    /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value
+     *  for the property.
+     */
     score: number;
   }
 
@@ -1007,7 +1091,9 @@ namespace VisualRecognitionV3 {
     gender: string;
     /** The word for "male" or "female" in the language defined by the **Accept-Language** request header. */
     gender_label: string;
-    /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value for the property. */
+    /** Confidence score in the range of 0 to 1. A higher score indicates greater confidence in the estimated value
+     *  for the property.
+     */
     score: number;
   }
 
@@ -1033,7 +1119,9 @@ namespace VisualRecognitionV3 {
     source_url?: string;
     /** Fully resolved URL of the image after redirects are followed. Not returned when the image is uploaded. */
     resolved_url?: string;
-    /** Information about what might have caused a failure, such as an image that is too large. Not returned when there is no error. */
+    /** Information about what might have caused a failure, such as an image that is too large. Not returned when
+     *  there is no error.
+     */
     error?: ErrorInfo;
   }
 

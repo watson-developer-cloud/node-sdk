@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const utils = require('../resources/unitTestUtils');
 
@@ -36,8 +37,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url: 'https://gateway.watsonplatform.net/visual-recognition/api/visual-recognition/api',
   version: '2018-10-18',
 };
@@ -61,23 +61,23 @@ describe('classify', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const images_file = 'fake_images_file';
-      const images_filename = 'fake_images_filename';
-      const images_file_content_type = 'fake_images_file_content_type';
+      const imagesFile = 'fake_imagesFile';
+      const imagesFilename = 'fake_imagesFilename';
+      const imagesFileContentType = 'fake_imagesFileContentType';
       const url = 'fake_url';
       const threshold = 'fake_threshold';
       const owners = 'fake_owners';
-      const classifier_ids = 'fake_classifier_ids';
-      const accept_language = 'fake_accept_language';
+      const classifierIds = 'fake_classifierIds';
+      const acceptLanguage = 'fake_acceptLanguage';
       const params = {
-        images_file,
-        images_filename,
-        images_file_content_type,
+        imagesFile,
+        imagesFilename,
+        imagesFileContentType,
         url,
         threshold,
         owners,
-        classifier_ids,
-        accept_language,
+        classifierIds,
+        acceptLanguage,
       };
 
       // invoke method
@@ -93,29 +93,29 @@ describe('classify', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
-      expect(options.formData['images_file'].data).toEqual(images_file);
-      expect(options.formData['images_file'].filename).toEqual(images_filename);
-      expect(options.formData['images_file'].contentType).toEqual(images_file_content_type);
+      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
+      expect(options.formData['images_file'].data).toEqual(imagesFile);
+      expect(options.formData['images_file'].filename).toEqual(imagesFilename);
+      expect(options.formData['images_file'].contentType).toEqual(imagesFileContentType);
       expect(options.formData['url']).toEqual(url);
       expect(options.formData['threshold']).toEqual(threshold);
       expect(options.formData['owners']).toEqual(owners);
-      expect(options.formData['classifier_ids']).toEqual(classifier_ids);
+      expect(options.formData['classifier_ids']).toEqual(classifierIds);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.classify(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -150,17 +150,17 @@ describe('detectFaces', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const images_file = 'fake_images_file';
-      const images_filename = 'fake_images_filename';
-      const images_file_content_type = 'fake_images_file_content_type';
+      const imagesFile = 'fake_imagesFile';
+      const imagesFilename = 'fake_imagesFilename';
+      const imagesFileContentType = 'fake_imagesFileContentType';
       const url = 'fake_url';
-      const accept_language = 'fake_accept_language';
+      const acceptLanguage = 'fake_acceptLanguage';
       const params = {
-        images_file,
-        images_filename,
-        images_file_content_type,
+        imagesFile,
+        imagesFilename,
+        imagesFileContentType,
         url,
-        accept_language,
+        acceptLanguage,
       };
 
       // invoke method
@@ -176,26 +176,26 @@ describe('detectFaces', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
-      expect(options.formData['images_file'].data).toEqual(images_file);
-      expect(options.formData['images_file'].filename).toEqual(images_filename);
-      expect(options.formData['images_file'].contentType).toEqual(images_file_content_type);
+      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
+      expect(options.formData['images_file'].data).toEqual(imagesFile);
+      expect(options.formData['images_file'].filename).toEqual(imagesFilename);
+      expect(options.formData['images_file'].contentType).toEqual(imagesFileContentType);
       expect(options.formData['url']).toEqual(url);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.detectFaces(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -231,14 +231,14 @@ describe('createClassifier', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const name = 'fake_name';
-      const positive_examples = { fake: 'fake_positive_examples' };
-      const negative_examples = 'fake_negative_examples';
-      const negative_examples_filename = 'fake_negative_examples_filename';
+      const positiveExamples = { fake: 'fake_positiveExamples' };
+      const negativeExamples = 'fake_negativeExamples';
+      const negativeExamplesFilename = 'fake_negativeExamplesFilename';
       const params = {
         name,
-        positive_examples,
-        negative_examples,
-        negative_examples_filename,
+        positiveExamples,
+        negativeExamples,
+        negativeExamplesFilename,
       };
 
       // invoke method
@@ -255,41 +255,41 @@ describe('createClassifier', () => {
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       expect(options.formData['name']).toEqual(name);
-      expect(options.formData['fake_positive_examples'].data).toEqual(positive_examples['fake']);
+      expect(options.formData['fake_positive_examples'].data).toEqual(positiveExamples['fake']);
       expect(options.formData['fake_positive_examples'].contentType).toEqual(
         'application/octet-stream'
       );
-      expect(options.formData['negative_examples'].data).toEqual(negative_examples);
-      expect(options.formData['negative_examples'].filename).toEqual(negative_examples_filename);
+      expect(options.formData['negative_examples'].data).toEqual(negativeExamples);
+      expect(options.formData['negative_examples'].filename).toEqual(negativeExamplesFilename);
       expect(options.formData['negative_examples'].contentType).toEqual('application/octet-stream');
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const name = 'fake_name';
-      const positive_examples = { fake: 'fake_positive_examples' };
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const positiveExamples = { fake: 'fake_positiveExamples' };
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         name,
-        positive_examples,
+        positiveExamples,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.createClassifier(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
       const name = 'fake_name';
-      const positive_examples = { fake: 'fake_positive_examples' };
+      const positiveExamples = { fake: 'fake_positiveExamples' };
       const params = {
         name,
-        positive_examples,
+        positiveExamples,
       };
 
       // invoke method
@@ -315,7 +315,7 @@ describe('createClassifier', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['name', 'positive_examples'];
+      const requiredParams = ['name', 'positiveExamples'];
 
       visualRecognition.createClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -325,7 +325,7 @@ describe('createClassifier', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['name', 'positive_examples'];
+      const requiredParams = ['name', 'positiveExamples'];
 
       const createClassifierPromise = visualRecognition.createClassifier();
       expectToBePromise(createClassifierPromise);
@@ -368,17 +368,17 @@ describe('listClassifiers', () => {
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.listClassifiers(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
@@ -413,9 +413,9 @@ describe('getClassifier', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const classifierId = 'fake_classifierId';
       const params = {
-        classifier_id,
+        classifierId,
       };
 
       // invoke method
@@ -431,31 +431,31 @@ describe('getClassifier', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['classifier_id']).toEqual(classifier_id);
+      expect(options.path['classifier_id']).toEqual(classifierId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const classifierId = 'fake_classifierId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        classifier_id,
+        classifierId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.getClassifier(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const classifierId = 'fake_classifierId';
       const params = {
-        classifier_id,
+        classifierId,
       };
 
       // invoke method
@@ -481,7 +481,7 @@ describe('getClassifier', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       visualRecognition.getClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -491,7 +491,7 @@ describe('getClassifier', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       const getClassifierPromise = visualRecognition.getClassifier();
       expectToBePromise(getClassifierPromise);
@@ -511,15 +511,15 @@ describe('updateClassifier', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const positive_examples = { fake: 'fake_positive_examples' };
-      const negative_examples = 'fake_negative_examples';
-      const negative_examples_filename = 'fake_negative_examples_filename';
+      const classifierId = 'fake_classifierId';
+      const positiveExamples = { fake: 'fake_positiveExamples' };
+      const negativeExamples = 'fake_negativeExamples';
+      const negativeExamplesFilename = 'fake_negativeExamplesFilename';
       const params = {
-        classifier_id,
-        positive_examples,
-        negative_examples,
-        negative_examples_filename,
+        classifierId,
+        positiveExamples,
+        negativeExamples,
+        negativeExamplesFilename,
       };
 
       // invoke method
@@ -535,38 +535,38 @@ describe('updateClassifier', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'multipart/form-data';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.formData['fake_positive_examples'].data).toEqual(positive_examples['fake']);
+      expect(options.formData['fake_positive_examples'].data).toEqual(positiveExamples['fake']);
       expect(options.formData['fake_positive_examples'].contentType).toEqual(
         'application/octet-stream'
       );
-      expect(options.formData['negative_examples'].data).toEqual(negative_examples);
-      expect(options.formData['negative_examples'].filename).toEqual(negative_examples_filename);
+      expect(options.formData['negative_examples'].data).toEqual(negativeExamples);
+      expect(options.formData['negative_examples'].filename).toEqual(negativeExamplesFilename);
       expect(options.formData['negative_examples'].contentType).toEqual('application/octet-stream');
-      expect(options.path['classifier_id']).toEqual(classifier_id);
+      expect(options.path['classifier_id']).toEqual(classifierId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const classifierId = 'fake_classifierId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        classifier_id,
+        classifierId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.updateClassifier(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const classifierId = 'fake_classifierId';
       const params = {
-        classifier_id,
+        classifierId,
       };
 
       // invoke method
@@ -592,7 +592,7 @@ describe('updateClassifier', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       visualRecognition.updateClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -602,7 +602,7 @@ describe('updateClassifier', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       const updateClassifierPromise = visualRecognition.updateClassifier();
       expectToBePromise(updateClassifierPromise);
@@ -622,9 +622,9 @@ describe('deleteClassifier', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const classifierId = 'fake_classifierId';
       const params = {
-        classifier_id,
+        classifierId,
       };
 
       // invoke method
@@ -640,31 +640,31 @@ describe('deleteClassifier', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['classifier_id']).toEqual(classifier_id);
+      expect(options.path['classifier_id']).toEqual(classifierId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const classifierId = 'fake_classifierId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        classifier_id,
+        classifierId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.deleteClassifier(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const classifierId = 'fake_classifierId';
       const params = {
-        classifier_id,
+        classifierId,
       };
 
       // invoke method
@@ -690,7 +690,7 @@ describe('deleteClassifier', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       visualRecognition.deleteClassifier({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -700,7 +700,7 @@ describe('deleteClassifier', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       const deleteClassifierPromise = visualRecognition.deleteClassifier();
       expectToBePromise(deleteClassifierPromise);
@@ -720,9 +720,9 @@ describe('getCoreMlModel', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const classifierId = 'fake_classifierId';
       const params = {
-        classifier_id,
+        classifierId,
       };
 
       // invoke method
@@ -738,32 +738,32 @@ describe('getCoreMlModel', () => {
       const expectedAccept = 'application/octet-stream';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['classifier_id']).toEqual(classifier_id);
+      expect(options.path['classifier_id']).toEqual(classifierId);
       expect(options.responseType).toBe('stream');
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const classifierId = 'fake_classifierId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        classifier_id,
+        classifierId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.getCoreMlModel(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const classifier_id = 'fake_classifier_id';
+      const classifierId = 'fake_classifierId';
       const params = {
-        classifier_id,
+        classifierId,
       };
 
       // invoke method
@@ -789,7 +789,7 @@ describe('getCoreMlModel', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       visualRecognition.getCoreMlModel({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -799,7 +799,7 @@ describe('getCoreMlModel', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['classifier_id'];
+      const requiredParams = ['classifierId'];
 
       const getCoreMlModelPromise = visualRecognition.getCoreMlModel();
       expectToBePromise(getCoreMlModelPromise);
@@ -819,9 +819,9 @@ describe('deleteUserData', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
+      const customerId = 'fake_customerId';
       const params = {
-        customer_id,
+        customerId,
       };
 
       // invoke method
@@ -837,31 +837,31 @@ describe('deleteUserData', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = undefined;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.qs['customer_id']).toEqual(customer_id);
+      expect(options.qs['customer_id']).toEqual(customerId);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const customerId = 'fake_customerId';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        customer_id,
+        customerId,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       visualRecognition.deleteUserData(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const customer_id = 'fake_customer_id';
+      const customerId = 'fake_customerId';
       const params = {
-        customer_id,
+        customerId,
       };
 
       // invoke method
@@ -887,7 +887,7 @@ describe('deleteUserData', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['customer_id'];
+      const requiredParams = ['customerId'];
 
       visualRecognition.deleteUserData({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -897,7 +897,7 @@ describe('deleteUserData', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['customer_id'];
+      const requiredParams = ['customerId'];
 
       const deleteUserDataPromise = visualRecognition.deleteUserData();
       expectToBePromise(deleteUserDataPromise);

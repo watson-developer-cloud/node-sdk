@@ -6,10 +6,40 @@ _Note: If migrating from a version less than 4.0, also see the [v4 migration gui
    - [Support for Node v6 and v8 dropped](#support-for-node-v6-and-v8-dropped)
 
 ## Breaking changes
+### Authentication mechanism redesigned - READ THIS
+The SDK service constructors now accept `Authenticator` objects that are used to authenticate requests. The constructors **no longer accept** individual credentials like `username` and `password`. Rather, an `Authenticator` must be instantiated and passed to the constructor.
+
+An `Authenticator` can either be initialized programmatically or read from the environment using the method `getAuthenticatorFromEnvironment`.
+
+More details to come.
+
+### All parameter names changed to lower camel case - READ THIS
+To maintain a consistent style for the SDK, parameter names will now be formatted with the case convention "lowerCamelCase". For example, the parameter `workspace_id` is now `workspaceId`. This applies to all top-level parameters passed in to any method or constructor. This does not apply to sub-properties of models, which will still use "lower_snake_case".
+
+### Detailed response is always returned
+The "detailed response" (the full response, including headers and status code) is now always returned. Before we would preferentially return the body. The body is available under the key `result`. The key `data` is no longer used. This applies to both Promises and Callbacks.
+
+#### Promises
+The detailed response is always returned. The `return_response` parameter is removed.
+```js
+const response = await listWorkspaces();
+console.log(response.result); // prints the body
+console.log(response.headers); // prints the headers
+```
+
+#### Callbacks
+The detailed response is sent in the second argument position, after the error. There is no third argument position.
+```js
+listWorkspaces((err, res) => {
+  console.log(res.result); // prints the body
+  console.log(res.headers); // prints the headers
+});
+```
+
 ### Support for Node v6 and v8 dropped
 The SDK no longer supports Node versions 6 and 8, as reflected in the `engines` property in the package.json file. Version 6 reached end of life in April 2019 and Version 8 reaches end of life on 31 December 2019.
 
-### WebSocket Methods
+### WebSocket methods
 - All parameters are now lower camel case
 - Support for the `token` parameter has been removed
 - Support for the `customization_id` parameter has been removed
@@ -17,3 +47,57 @@ The SDK no longer supports Node versions 6 and 8, as reflected in the `engines` 
 
 #### RecognizeStream
 - `RecognizeStream.readableObjectMode` will always be a Boolean value - before, it could have been `undefined`. This is to align with the new convention in Node 12.
+
+### Breaking changes by service
+#### Assistant v1
+- Parameter `include_count` removed from method `listEntities`
+- Parameter `include_count` removed from method `listValues`
+- Parameter `include_count` removed from method `listSynonyms`
+- Parameter `include_count` removed from method `listDialogNodes`
+- Parameter `value_type` renamed to `type` in method `createValue`
+- Parameter `new_value_type` renamed to `newType` in method `updateValue`
+- Parameter `node_type` renamed to `type` in method `createDialogNode`
+- Parameter `new_node_type` renamed to `newType`in method `updateDialogNode`
+- Interface `DialogRuntimeResponseGeneric` removed
+- Interface `DialogSuggestions` removed
+- Additional properties no longer supported for interface `LogMessage`
+- Additional properties no longer supported for interface `RuntimeEntity`
+- Additional properties no longer supported for interface `RuntimeIntent`
+- Property `value_type` renamed to `type` in interface `Value`
+
+#### Assistant v2
+- Property `action_type` renamed to `type` in interface `DialogNodeAction`
+- Interface `DialogRuntimeResponseGeneric` removed
+
+#### Compare Comply
+- Parameter `filename` removed from method `convertToHtml`
+
+#### Discovery
+- Parameter `return_fields` renamed to `_return` in method `query`
+- Parameter `logging_opt_out` renamed to `xWatsonLoggingOptOut` in method `query`
+- Parameter `return_fields` renamed to `_return` in method `federatedQuery`
+- Parameter `logging_opt_out` renamed to `xWatsonLoggingOptOut` in method `federatedQuery`
+- Parameter `return_fields` renamed to `_return` in method `queryNotices`
+- Parameter `return_fields` renamed to `_return` in method `federatedQueryNotices`
+- Property `field_name` renamed to `field` in interface `Field`
+- Property `field_type` renamed to `type` in interface `Field`
+
+#### Language Translator
+- Parameter `default_models` renamed to `_default` in method `listModels`
+- Property `translation_output` renamed to `translation` in interface `Translation`
+
+#### Natural Language Classifier
+- Parameter `metadata` renamed to `trainingMetadata` in method `createClassifier`
+
+#### Text to Speech
+- The following voices are removed:
+  - `DE_DE_BIRGITV2VOICE`
+  - `DE_DE_DIETERV2VOICE`
+  - `EN_US_ALLISONV2VOICE`
+  - `EN_US_LISAV2VOICE`
+  - `EN_US_MICHAELV2VOICE`
+  - `IT_IT_FRANCESCAV2VOICE`
+
+#### Visual Recognition
+- Property `class_name` renamed to `_class` in interface `ClassResult`
+

@@ -16,11 +16,13 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and an integrated dialog editor to create conversation flows between your apps and your users.
+ * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and an integrated
+ * dialog editor to create conversation flows between your apps and your users.
  */
 
 class AssistantV1 extends BaseService {
@@ -33,36 +35,30 @@ class AssistantV1 extends BaseService {
    * Construct a AssistantV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses the API version for the date you specify, or the most recent version before that date. Note that you should not programmatically specify the current date at runtime, in case the API has been updated since your application's release. Instead, specify a version date that is compatible with your application, and don't change it until your application is ready for a later version.
+   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
+   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
+   * the API version for the date you specify, or the most recent version before that date. Note that you should not
+   * programmatically specify the current date at runtime, in case the API has been updated since your application's
+   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
+   * application is ready for a later version.
    * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between IBM Cloud regions.
-   * @param {string} [options.username] - The username used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of IBM Cloud. When running on IBM Cloud, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {string} [options.password] - The password used to authenticate with the service. Username and password credentials are only required to run your application locally or outside of IBM Cloud. When running on IBM Cloud, the credentials will be automatically loaded from the `VCAP_SERVICES` environment variable.
-   * @param {string} [options.iam_access_token] - An IAM access token fully managed by the application. Responsibility falls on the application to refresh the token, either before it expires or reactively upon receiving a 401 from the service, as any requests made with an expired token will fail.
-   * @param {string} [options.iam_apikey] - An API key that can be used to request IAM tokens. If this API key is provided, the SDK will manage the token and handle the refreshing.
-   * @param {string} [options.iam_url] - An optional URL for the IAM service API. Defaults to 'https://iam.cloud.ibm.com/identity/token'.
-   * @param {string} [options.iam_client_id] - client id (username) for request to iam service
-   * @param {string} [options.iam_client_secret] - client secret (password) for request to iam service
-   * @param {string} [options.icp4d_access_token] - icp for data access token provided and managed by user
-   * @param {string} [options.icp4d_url] - icp for data base url - used for authentication
-   * @param {string} [options.authentication_type] - authentication pattern to be used. can be iam, basic, or icp4d
-   * @param {boolean} [options.use_unauthenticated] - Set to `true` to avoid including an authorization header. This
-   * option may be useful for requests that are proxied.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {boolean} [options.headers.X-Watson-Learning-Opt-Out] - Set to `true` to opt-out of data collection. By
-   * default, all IBM Watson services log requests and their results. Logging is done only to improve the services for
-   * future users. The logged data is not shared or made public. If you are concerned with protecting the privacy of
-   * users' personal information or otherwise do not want your requests to be logged, you can opt out of logging.
+   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
    * @returns {AssistantV1}
    * @throws {Error}
    */
   constructor(options: AssistantV1.Options) {
+    // default to reading the authenticator from the environment
+    if (!options.authenticator) {
+      options.authenticator = getAuthenticatorFromEnvironment('conversation');
+    }
     super(options);
     // check if 'version' was provided
-    if (typeof this._options.version === 'undefined') {
+    if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
     }
-    this._options.qs.version = options.version;
+    this.baseOptions.qs.version = options.version;
   }
 
   /*************************
@@ -81,19 +77,19 @@ class AssistantV1 extends BaseService {
    * There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {MessageInput} [params.input] - An input object that includes the input text.
    * @param {RuntimeIntent[]} [params.intents] - Intents to use when evaluating the user input. Include intents from the
    * previous response to continue using those intents rather than trying to recognize intents in the new input.
    * @param {RuntimeEntity[]} [params.entities] - Entities to use when evaluating the message. Include entities from the
    * previous response to continue using those entities rather than detecting entities in the new input.
-   * @param {boolean} [params.alternate_intents] - Whether to return more than one intent. A value of `true` indicates
+   * @param {boolean} [params.alternateIntents] - Whether to return more than one intent. A value of `true` indicates
    * that all matching intents are returned.
    * @param {Context} [params.context] - State information for the conversation. To maintain state, include the context
    * from the previous response.
    * @param {OutputData} [params.output] - An output object that includes the response to the user, the dialog nodes
    * that were triggered, and messages from the log.
-   * @param {boolean} [params.nodes_visited_details] - Whether to include additional diagnostic information about the
+   * @param {boolean} [params.nodesVisitedDetails] - Whether to include additional diagnostic information about the
    * dialog nodes that were visited during processing of the message.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -102,12 +98,12 @@ class AssistantV1 extends BaseService {
   public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.message(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.message(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -121,17 +117,17 @@ class AssistantV1 extends BaseService {
       'input': _params.input,
       'intents': _params.intents,
       'entities': _params.entities,
-      'alternate_intents': _params.alternate_intents,
+      'alternate_intents': _params.alternateIntents,
       'context': _params.context,
       'output': _params.output
     };
 
     const query = {
-      'nodes_visited_details': _params.nodes_visited_details
+      'nodes_visited_details': _params.nodesVisitedDetails
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'message');
@@ -144,7 +140,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -167,12 +163,11 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned workspaces will be sorted. To reverse the sort
    * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -184,18 +179,17 @@ class AssistantV1 extends BaseService {
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listWorkspaces(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listWorkspaces(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
 
     const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listWorkspaces');
@@ -206,7 +200,7 @@ class AssistantV1 extends BaseService {
         method: 'GET',
         qs: query,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -231,13 +225,13 @@ class AssistantV1 extends BaseService {
    * return, newline, or tab characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {JsonObject} [params.metadata] - Any metadata related to the workspace.
-   * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace (including artifacts such as
+   * @param {boolean} [params.learningOptOut] - Whether training data from the workspace (including artifacts such as
    * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
    * data is not to be used.
-   * @param {WorkspaceSystemSettings} [params.system_settings] - Global settings for the workspace.
+   * @param {WorkspaceSystemSettings} [params.systemSettings] - Global settings for the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects describing the entities for the workspace.
-   * @param {DialogNode[]} [params.dialog_nodes] - An array of objects describing the dialog nodes in the workspace.
+   * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
    * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
    * marked as irrelevant input.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -250,8 +244,8 @@ class AssistantV1 extends BaseService {
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createWorkspace(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createWorkspace(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -261,11 +255,11 @@ class AssistantV1 extends BaseService {
       'description': _params.description,
       'language': _params.language,
       'metadata': _params.metadata,
-      'learning_opt_out': _params.learning_opt_out,
-      'system_settings': _params.system_settings,
+      'learning_opt_out': _params.learningOptOut,
+      'system_settings': _params.systemSettings,
       'intents': _params.intents,
       'entities': _params.entities,
-      'dialog_nodes': _params.dialog_nodes,
+      'dialog_nodes': _params.dialogNodes,
       'counterexamples': _params.counterexamples
     };
 
@@ -277,7 +271,7 @@ class AssistantV1 extends BaseService {
         method: 'POST',
         body,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -297,11 +291,11 @@ class AssistantV1 extends BaseService {
    * limit is 20 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {string} [params.sort] - Indicates how the returned workspace data will be sorted. This parameter is valid
    * only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending
@@ -313,12 +307,12 @@ class AssistantV1 extends BaseService {
   public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getWorkspace(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getWorkspace(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -330,12 +324,12 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'include_audit': _params.include_audit,
+      'include_audit': _params.includeAudit,
       'sort': _params.sort
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getWorkspace');
@@ -347,7 +341,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -366,20 +360,20 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 30 request per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
    * tab characters.
    * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
    * return, newline, or tab characters.
    * @param {string} [params.language] - The language of the workspace.
    * @param {JsonObject} [params.metadata] - Any metadata related to the workspace.
-   * @param {boolean} [params.learning_opt_out] - Whether training data from the workspace (including artifacts such as
+   * @param {boolean} [params.learningOptOut] - Whether training data from the workspace (including artifacts such as
    * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
    * data is not to be used.
-   * @param {WorkspaceSystemSettings} [params.system_settings] - Global settings for the workspace.
+   * @param {WorkspaceSystemSettings} [params.systemSettings] - Global settings for the workspace.
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects describing the entities for the workspace.
-   * @param {DialogNode[]} [params.dialog_nodes] - An array of objects describing the dialog nodes in the workspace.
+   * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
    * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
    * marked as irrelevant input.
    * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If
@@ -396,12 +390,12 @@ class AssistantV1 extends BaseService {
   public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateWorkspace(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateWorkspace(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -416,11 +410,11 @@ class AssistantV1 extends BaseService {
       'description': _params.description,
       'language': _params.language,
       'metadata': _params.metadata,
-      'learning_opt_out': _params.learning_opt_out,
-      'system_settings': _params.system_settings,
+      'learning_opt_out': _params.learningOptOut,
+      'system_settings': _params.systemSettings,
       'intents': _params.intents,
       'entities': _params.entities,
-      'dialog_nodes': _params.dialog_nodes,
+      'dialog_nodes': _params.dialogNodes,
       'counterexamples': _params.counterexamples
     };
 
@@ -429,7 +423,7 @@ class AssistantV1 extends BaseService {
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateWorkspace');
@@ -442,7 +436,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -461,7 +455,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -469,12 +463,12 @@ class AssistantV1 extends BaseService {
   public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteWorkspace(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteWorkspace(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -485,7 +479,7 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteWorkspace');
@@ -496,7 +490,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -519,16 +513,15 @@ class AssistantV1 extends BaseService {
    * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned intents will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -537,12 +530,12 @@ class AssistantV1 extends BaseService {
   public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listIntents(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listIntents(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -554,15 +547,14 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listIntents');
@@ -574,7 +566,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -595,7 +587,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
    * - It cannot begin with the reserved prefix `sys-`.
@@ -609,12 +601,12 @@ class AssistantV1 extends BaseService {
   public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent'];
+    const requiredParams = ['workspaceId', 'intent'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createIntent(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createIntent(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -631,7 +623,7 @@ class AssistantV1 extends BaseService {
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createIntent');
@@ -643,7 +635,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -663,12 +655,12 @@ class AssistantV1 extends BaseService {
    * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -677,12 +669,12 @@ class AssistantV1 extends BaseService {
   public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent'];
+    const requiredParams = ['workspaceId', 'intent'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getIntent(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getIntent(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -694,11 +686,11 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent
     };
 
@@ -711,7 +703,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -733,15 +725,15 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {string} [params.new_intent] - The name of the intent. This string must conform to the following
+   * @param {string} [params.newIntent] - The name of the intent. This string must conform to the following
    * restrictions:
    * - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
    * - It cannot begin with the reserved prefix `sys-`.
-   * @param {string} [params.new_description] - The description of the intent. This string cannot contain carriage
+   * @param {string} [params.newDescription] - The description of the intent. This string cannot contain carriage
    * return, newline, or tab characters.
-   * @param {Example[]} [params.new_examples] - An array of user input examples for the intent.
+   * @param {Example[]} [params.newExamples] - An array of user input examples for the intent.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -749,12 +741,12 @@ class AssistantV1 extends BaseService {
   public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent'];
+    const requiredParams = ['workspaceId', 'intent'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateIntent(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateIntent(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -765,13 +757,13 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'intent': _params.new_intent,
-      'description': _params.new_description,
-      'examples': _params.new_examples
+      'intent': _params.newIntent,
+      'description': _params.newDescription,
+      'examples': _params.newExamples
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent
     };
 
@@ -784,7 +776,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -803,7 +795,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -812,12 +804,12 @@ class AssistantV1 extends BaseService {
   public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent'];
+    const requiredParams = ['workspaceId', 'intent'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteIntent(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteIntent(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -828,7 +820,7 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent
     };
 
@@ -840,7 +832,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -862,14 +854,13 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned examples will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -878,12 +869,12 @@ class AssistantV1 extends BaseService {
   public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent'];
+    const requiredParams = ['workspaceId', 'intent'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listExamples(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listExamples(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -894,15 +885,14 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent
     };
 
@@ -915,7 +905,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -936,7 +926,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of a user input example. This string must conform to the following
    * restrictions:
@@ -950,12 +940,12 @@ class AssistantV1 extends BaseService {
   public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent', 'text'];
+    const requiredParams = ['workspaceId', 'intent', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createExample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createExample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -971,7 +961,7 @@ class AssistantV1 extends BaseService {
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent
     };
 
@@ -984,7 +974,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1003,10 +993,10 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1015,12 +1005,12 @@ class AssistantV1 extends BaseService {
   public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent', 'text'];
+    const requiredParams = ['workspaceId', 'intent', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getExample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getExample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1031,11 +1021,11 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent,
       'text': _params.text
     };
@@ -1049,7 +1039,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1070,14 +1060,14 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
-   * @param {string} [params.new_text] - The text of the user input example. This string must conform to the following
+   * @param {string} [params.newText] - The text of the user input example. This string must conform to the following
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * @param {Mention[]} [params.new_mentions] - An array of contextual entity mentions.
+   * @param {Mention[]} [params.newMentions] - An array of contextual entity mentions.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -1085,12 +1075,12 @@ class AssistantV1 extends BaseService {
   public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent', 'text'];
+    const requiredParams = ['workspaceId', 'intent', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateExample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateExample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1101,12 +1091,12 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'text': _params.new_text,
-      'mentions': _params.new_mentions
+      'text': _params.newText,
+      'mentions': _params.newMentions
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent,
       'text': _params.text
     };
@@ -1120,7 +1110,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1139,7 +1129,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -1149,12 +1139,12 @@ class AssistantV1 extends BaseService {
   public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'intent', 'text'];
+    const requiredParams = ['workspaceId', 'intent', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteExample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteExample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1165,7 +1155,7 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'intent': _params.intent,
       'text': _params.text
     };
@@ -1178,7 +1168,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1200,13 +1190,12 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned counterexamples will be sorted. To reverse the sort
    * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1215,12 +1204,12 @@ class AssistantV1 extends BaseService {
   public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listCounterexamples(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listCounterexamples(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1231,15 +1220,14 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listCounterexamples');
@@ -1251,7 +1239,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1272,7 +1260,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the
    * following restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
@@ -1284,12 +1272,12 @@ class AssistantV1 extends BaseService {
   public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'text'];
+    const requiredParams = ['workspaceId', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createCounterexample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createCounterexample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1304,7 +1292,7 @@ class AssistantV1 extends BaseService {
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createCounterexample');
@@ -1316,7 +1304,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1335,9 +1323,9 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1346,12 +1334,12 @@ class AssistantV1 extends BaseService {
   public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'text'];
+    const requiredParams = ['workspaceId', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getCounterexample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getCounterexample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1362,11 +1350,11 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'text': _params.text
     };
 
@@ -1379,7 +1367,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1400,10 +1388,10 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
-   * @param {string} [params.new_text] - The text of a user input marked as irrelevant input. This string must conform
-   * to the following restrictions:
+   * @param {string} [params.newText] - The text of a user input marked as irrelevant input. This string must conform to
+   * the following restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -1413,12 +1401,12 @@ class AssistantV1 extends BaseService {
   public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'text'];
+    const requiredParams = ['workspaceId', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateCounterexample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateCounterexample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1429,11 +1417,11 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'text': _params.new_text
+      'text': _params.newText
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'text': _params.text
     };
 
@@ -1446,7 +1434,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1465,7 +1453,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1474,12 +1462,12 @@ class AssistantV1 extends BaseService {
   public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'text'];
+    const requiredParams = ['workspaceId', 'text'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteCounterexample(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteCounterexample(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1490,7 +1478,7 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'text': _params.text
     };
 
@@ -1502,7 +1490,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1525,16 +1513,15 @@ class AssistantV1 extends BaseService {
    * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned entities will be sorted. To reverse the sort order,
    * prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1543,12 +1530,12 @@ class AssistantV1 extends BaseService {
   public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listEntities(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listEntities(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1560,15 +1547,14 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listEntities');
@@ -1580,7 +1566,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1601,7 +1587,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
    * - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity
@@ -1609,7 +1595,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.description] - The description of the entity. This string cannot contain carriage return,
    * newline, or tab characters.
    * @param {JsonObject} [params.metadata] - Any metadata related to the entity.
-   * @param {boolean} [params.fuzzy_match] - Whether to use fuzzy matching for the entity.
+   * @param {boolean} [params.fuzzyMatch] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1618,12 +1604,12 @@ class AssistantV1 extends BaseService {
   public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
+    const requiredParams = ['workspaceId', 'entity'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createEntity(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createEntity(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1637,12 +1623,12 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity,
       'description': _params.description,
       'metadata': _params.metadata,
-      'fuzzy_match': _params.fuzzy_match,
+      'fuzzy_match': _params.fuzzyMatch,
       'values': _params.values
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createEntity');
@@ -1654,7 +1640,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1674,12 +1660,12 @@ class AssistantV1 extends BaseService {
    * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1688,12 +1674,12 @@ class AssistantV1 extends BaseService {
   public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
+    const requiredParams = ['workspaceId', 'entity'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getEntity(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getEntity(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1705,11 +1691,11 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity
     };
 
@@ -1722,7 +1708,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1744,17 +1730,17 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
-   * @param {string} [params.new_entity] - The name of the entity. This string must conform to the following
+   * @param {string} [params.newEntity] - The name of the entity. This string must conform to the following
    * restrictions:
    * - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
    * - It cannot begin with the reserved prefix `sys-`.
-   * @param {string} [params.new_description] - The description of the entity. This string cannot contain carriage
+   * @param {string} [params.newDescription] - The description of the entity. This string cannot contain carriage
    * return, newline, or tab characters.
-   * @param {JsonObject} [params.new_metadata] - Any metadata related to the entity.
-   * @param {boolean} [params.new_fuzzy_match] - Whether to use fuzzy matching for the entity.
-   * @param {CreateValue[]} [params.new_values] - An array of objects describing the entity values.
+   * @param {JsonObject} [params.newMetadata] - Any metadata related to the entity.
+   * @param {boolean} [params.newFuzzyMatch] - Whether to use fuzzy matching for the entity.
+   * @param {CreateValue[]} [params.newValues] - An array of objects describing the entity values.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -1762,12 +1748,12 @@ class AssistantV1 extends BaseService {
   public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
+    const requiredParams = ['workspaceId', 'entity'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateEntity(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateEntity(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1778,15 +1764,15 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'entity': _params.new_entity,
-      'description': _params.new_description,
-      'metadata': _params.new_metadata,
-      'fuzzy_match': _params.new_fuzzy_match,
-      'values': _params.new_values
+      'entity': _params.newEntity,
+      'description': _params.newDescription,
+      'metadata': _params.newMetadata,
+      'fuzzy_match': _params.newFuzzyMatch,
+      'values': _params.newValues
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity
     };
 
@@ -1799,7 +1785,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1818,7 +1804,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1827,12 +1813,12 @@ class AssistantV1 extends BaseService {
   public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
+    const requiredParams = ['workspaceId', 'entity'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteEntity(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteEntity(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1843,7 +1829,7 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity
     };
 
@@ -1855,7 +1841,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1878,12 +1864,12 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1892,12 +1878,12 @@ class AssistantV1 extends BaseService {
   public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
+    const requiredParams = ['workspaceId', 'entity'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listMentions(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listMentions(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1909,11 +1895,11 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity
     };
 
@@ -1926,7 +1912,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -1948,17 +1934,16 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned entity values will be sorted. To reverse the sort
    * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -1967,12 +1952,12 @@ class AssistantV1 extends BaseService {
   public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity'];
+    const requiredParams = ['workspaceId', 'entity'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listValues(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listValues(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -1984,15 +1969,14 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity
     };
 
@@ -2005,7 +1989,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2026,14 +2010,14 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value. This string must conform to the following
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {JsonObject} [params.metadata] - Any metadata related to the entity value.
-   * @param {string} [params.value_type] - Specifies the type of entity value.
+   * @param {string} [params.type] - Specifies the type of entity value.
    * @param {string[]} [params.synonyms] - An array of synonyms for the entity value. A value can specify either
    * synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following
    * resrictions:
@@ -2050,12 +2034,12 @@ class AssistantV1 extends BaseService {
   public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value'];
+    const requiredParams = ['workspaceId', 'entity', 'value'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createValue(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createValue(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2068,13 +2052,13 @@ class AssistantV1 extends BaseService {
     const body = {
       'value': _params.value,
       'metadata': _params.metadata,
-      'type': _params.value_type,
+      'type': _params.type,
       'synonyms': _params.synonyms,
       'patterns': _params.patterns
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity
     };
 
@@ -2087,7 +2071,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -2106,13 +2090,13 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
    * **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all
    * content, including subelements, is included.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2121,12 +2105,12 @@ class AssistantV1 extends BaseService {
   public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value'];
+    const requiredParams = ['workspaceId', 'entity', 'value'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getValue(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getValue(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2138,11 +2122,11 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'export': _params._export,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value
     };
@@ -2156,7 +2140,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2178,21 +2162,21 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {string} [params.new_value] - The text of the entity value. This string must conform to the following
+   * @param {string} [params.newValue] - The text of the entity value. This string must conform to the following
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * @param {JsonObject} [params.new_metadata] - Any metadata related to the entity value.
-   * @param {string} [params.new_value_type] - Specifies the type of entity value.
-   * @param {string[]} [params.new_synonyms] - An array of synonyms for the entity value. A value can specify either
+   * @param {JsonObject} [params.newMetadata] - Any metadata related to the entity value.
+   * @param {string} [params.newType] - Specifies the type of entity value.
+   * @param {string[]} [params.newSynonyms] - An array of synonyms for the entity value. A value can specify either
    * synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following
    * resrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
-   * @param {string[]} [params.new_patterns] - An array of patterns for the entity value. A value can specify either
+   * @param {string[]} [params.newPatterns] - An array of patterns for the entity value. A value can specify either
    * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more
    * information about how to specify a pattern, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
@@ -2203,12 +2187,12 @@ class AssistantV1 extends BaseService {
   public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value'];
+    const requiredParams = ['workspaceId', 'entity', 'value'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateValue(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateValue(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2219,15 +2203,15 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'value': _params.new_value,
-      'metadata': _params.new_metadata,
-      'type': _params.new_value_type,
-      'synonyms': _params.new_synonyms,
-      'patterns': _params.new_patterns
+      'value': _params.newValue,
+      'metadata': _params.newMetadata,
+      'type': _params.newType,
+      'synonyms': _params.newSynonyms,
+      'patterns': _params.newPatterns
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value
     };
@@ -2241,7 +2225,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -2260,7 +2244,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -2270,12 +2254,12 @@ class AssistantV1 extends BaseService {
   public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value'];
+    const requiredParams = ['workspaceId', 'entity', 'value'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteValue(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteValue(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2286,7 +2270,7 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value
     };
@@ -2299,7 +2283,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2321,15 +2305,14 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned entity value synonyms will be sorted. To reverse
    * the sort order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2338,12 +2321,12 @@ class AssistantV1 extends BaseService {
   public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value'];
+    const requiredParams = ['workspaceId', 'entity', 'value'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listSynonyms(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listSynonyms(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2354,15 +2337,14 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value
     };
@@ -2376,7 +2358,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2397,7 +2379,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:
@@ -2410,12 +2392,12 @@ class AssistantV1 extends BaseService {
   public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createSynonym(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createSynonym(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2430,7 +2412,7 @@ class AssistantV1 extends BaseService {
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value
     };
@@ -2444,7 +2426,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -2463,11 +2445,11 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2476,12 +2458,12 @@ class AssistantV1 extends BaseService {
   public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getSynonym(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getSynonym(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2492,11 +2474,11 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value,
       'synonym': _params.synonym
@@ -2511,7 +2493,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2532,11 +2514,11 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
-   * @param {string} [params.new_synonym] - The text of the synonym. This string must conform to the following
+   * @param {string} [params.newSynonym] - The text of the synonym. This string must conform to the following
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
@@ -2547,12 +2529,12 @@ class AssistantV1 extends BaseService {
   public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateSynonym(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateSynonym(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2563,11 +2545,11 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'synonym': _params.new_synonym
+      'synonym': _params.newSynonym
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value,
       'synonym': _params.synonym
@@ -2582,7 +2564,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -2601,7 +2583,7 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
@@ -2612,12 +2594,12 @@ class AssistantV1 extends BaseService {
   public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'entity', 'value', 'synonym'];
+    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteSynonym(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteSynonym(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2628,7 +2610,7 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id,
+      'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value,
       'synonym': _params.synonym
@@ -2642,7 +2624,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2664,13 +2646,12 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
-   * @param {boolean} [params.include_count] - Whether to include information about the number of records returned.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned dialog nodes will be sorted. To reverse the sort
    * order, prefix the value with a minus sign (`-`).
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2679,12 +2660,12 @@ class AssistantV1 extends BaseService {
   public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listDialogNodes(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listDialogNodes(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2695,15 +2676,14 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'page_limit': _params.page_limit,
-      'include_count': _params.include_count,
+      'page_limit': _params.pageLimit,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listDialogNodes');
@@ -2715,7 +2695,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2736,8 +2716,8 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.dialog_node - The dialog node ID. This string must conform to the following restrictions:
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {string} params.dialogNode - The dialog node ID. This string must conform to the following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
    * @param {string} [params.description] - The description of the dialog node. This string cannot contain carriage
    * return, newline, or tab characters.
@@ -2745,27 +2725,26 @@ class AssistantV1 extends BaseService {
    * carriage return, newline, or tab characters.
    * @param {string} [params.parent] - The ID of the parent dialog node. This property is omitted if the dialog node has
    * no parent.
-   * @param {string} [params.previous_sibling] - The ID of the previous sibling dialog node. This property is omitted if
+   * @param {string} [params.previousSibling] - The ID of the previous sibling dialog node. This property is omitted if
    * the dialog node has no previous sibling.
    * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
    * @param {JsonObject} [params.context] - The context for the dialog node.
    * @param {JsonObject} [params.metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.next_step] - The next step to execute following this dialog node.
+   * @param {DialogNodeNextStep} [params.nextStep] - The next step to execute following this dialog node.
    * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
-   * @param {string} [params.node_type] - How the dialog node is processed.
-   * @param {string} [params.event_name] - How an `event_handler` node is processed.
+   * @param {string} [params.type] - How the dialog node is processed.
+   * @param {string} [params.eventName] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
    * @param {DialogNodeAction[]} [params.actions] - An array of objects describing any actions to be invoked by the
    * dialog node.
-   * @param {string} [params.digress_in] - Whether this top-level dialog node can be digressed into.
-   * @param {string} [params.digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.digress_out_slots] - Whether the user can digress to top-level nodes while filling out
-   * slots.
-   * @param {string} [params.user_label] - A label that can be displayed externally to describe the purpose of the node
+   * @param {string} [params.digressIn] - Whether this top-level dialog node can be digressed into.
+   * @param {string} [params.digressOut] - Whether this dialog node can be returned to after a digression.
+   * @param {string} [params.digressOutSlots] - Whether the user can digress to top-level nodes while filling out slots.
+   * @param {string} [params.userLabel] - A label that can be displayed externally to describe the purpose of the node
    * to users.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2774,12 +2753,12 @@ class AssistantV1 extends BaseService {
   public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'dialog_node'];
+    const requiredParams = ['workspaceId', 'dialogNode'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.createDialogNode(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.createDialogNode(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2790,28 +2769,28 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'dialog_node': _params.dialog_node,
+      'dialog_node': _params.dialogNode,
       'description': _params.description,
       'conditions': _params.conditions,
       'parent': _params.parent,
-      'previous_sibling': _params.previous_sibling,
+      'previous_sibling': _params.previousSibling,
       'output': _params.output,
       'context': _params.context,
       'metadata': _params.metadata,
-      'next_step': _params.next_step,
+      'next_step': _params.nextStep,
       'title': _params.title,
-      'type': _params.node_type,
-      'event_name': _params.event_name,
+      'type': _params.type,
+      'event_name': _params.eventName,
       'variable': _params.variable,
       'actions': _params.actions,
-      'digress_in': _params.digress_in,
-      'digress_out': _params.digress_out,
-      'digress_out_slots': _params.digress_out_slots,
-      'user_label': _params.user_label
+      'digress_in': _params.digressIn,
+      'digress_out': _params.digressOut,
+      'digress_out_slots': _params.digressOutSlots,
+      'user_label': _params.userLabel
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createDialogNode');
@@ -2823,7 +2802,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -2842,9 +2821,9 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
-   * @param {boolean} [params.include_audit] - Whether to include the audit properties (`created` and `updated`
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2853,12 +2832,12 @@ class AssistantV1 extends BaseService {
   public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'dialog_node'];
+    const requiredParams = ['workspaceId', 'dialogNode'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.getDialogNode(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.getDialogNode(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2869,12 +2848,12 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'include_audit': _params.include_audit
+      'include_audit': _params.includeAudit
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
-      'dialog_node': _params.dialog_node
+      'workspace_id': _params.workspaceId,
+      'dialog_node': _params.dialogNode
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getDialogNode');
@@ -2886,7 +2865,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -2907,38 +2886,38 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
-   * @param {string} [params.new_dialog_node] - The dialog node ID. This string must conform to the following
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
+   * @param {string} [params.newDialogNode] - The dialog node ID. This string must conform to the following
    * restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
-   * @param {string} [params.new_description] - The description of the dialog node. This string cannot contain carriage
+   * @param {string} [params.newDescription] - The description of the dialog node. This string cannot contain carriage
    * return, newline, or tab characters.
-   * @param {string} [params.new_conditions] - The condition that will trigger the dialog node. This string cannot
+   * @param {string} [params.newConditions] - The condition that will trigger the dialog node. This string cannot
    * contain carriage return, newline, or tab characters.
-   * @param {string} [params.new_parent] - The ID of the parent dialog node. This property is omitted if the dialog node
+   * @param {string} [params.newParent] - The ID of the parent dialog node. This property is omitted if the dialog node
    * has no parent.
-   * @param {string} [params.new_previous_sibling] - The ID of the previous sibling dialog node. This property is
-   * omitted if the dialog node has no previous sibling.
-   * @param {DialogNodeOutput} [params.new_output] - The output of the dialog node. For more information about how to
+   * @param {string} [params.newPreviousSibling] - The ID of the previous sibling dialog node. This property is omitted
+   * if the dialog node has no previous sibling.
+   * @param {DialogNodeOutput} [params.newOutput] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
-   * @param {JsonObject} [params.new_context] - The context for the dialog node.
-   * @param {JsonObject} [params.new_metadata] - The metadata for the dialog node.
-   * @param {DialogNodeNextStep} [params.new_next_step] - The next step to execute following this dialog node.
-   * @param {string} [params.new_title] - The alias used to identify the dialog node. This string must conform to the
+   * @param {JsonObject} [params.newContext] - The context for the dialog node.
+   * @param {JsonObject} [params.newMetadata] - The metadata for the dialog node.
+   * @param {DialogNodeNextStep} [params.newNextStep] - The next step to execute following this dialog node.
+   * @param {string} [params.newTitle] - The alias used to identify the dialog node. This string must conform to the
    * following restrictions:
    * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
-   * @param {string} [params.new_node_type] - How the dialog node is processed.
-   * @param {string} [params.new_event_name] - How an `event_handler` node is processed.
-   * @param {string} [params.new_variable] - The location in the dialog context where output is stored.
-   * @param {DialogNodeAction[]} [params.new_actions] - An array of objects describing any actions to be invoked by the
+   * @param {string} [params.newType] - How the dialog node is processed.
+   * @param {string} [params.newEventName] - How an `event_handler` node is processed.
+   * @param {string} [params.newVariable] - The location in the dialog context where output is stored.
+   * @param {DialogNodeAction[]} [params.newActions] - An array of objects describing any actions to be invoked by the
    * dialog node.
-   * @param {string} [params.new_digress_in] - Whether this top-level dialog node can be digressed into.
-   * @param {string} [params.new_digress_out] - Whether this dialog node can be returned to after a digression.
-   * @param {string} [params.new_digress_out_slots] - Whether the user can digress to top-level nodes while filling out
+   * @param {string} [params.newDigressIn] - Whether this top-level dialog node can be digressed into.
+   * @param {string} [params.newDigressOut] - Whether this dialog node can be returned to after a digression.
+   * @param {string} [params.newDigressOutSlots] - Whether the user can digress to top-level nodes while filling out
    * slots.
-   * @param {string} [params.new_user_label] - A label that can be displayed externally to describe the purpose of the
+   * @param {string} [params.newUserLabel] - A label that can be displayed externally to describe the purpose of the
    * node to users.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2947,12 +2926,12 @@ class AssistantV1 extends BaseService {
   public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'dialog_node'];
+    const requiredParams = ['workspaceId', 'dialogNode'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.updateDialogNode(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.updateDialogNode(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -2963,29 +2942,29 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'dialog_node': _params.new_dialog_node,
-      'description': _params.new_description,
-      'conditions': _params.new_conditions,
-      'parent': _params.new_parent,
-      'previous_sibling': _params.new_previous_sibling,
-      'output': _params.new_output,
-      'context': _params.new_context,
-      'metadata': _params.new_metadata,
-      'next_step': _params.new_next_step,
-      'title': _params.new_title,
-      'type': _params.new_node_type,
-      'event_name': _params.new_event_name,
-      'variable': _params.new_variable,
-      'actions': _params.new_actions,
-      'digress_in': _params.new_digress_in,
-      'digress_out': _params.new_digress_out,
-      'digress_out_slots': _params.new_digress_out_slots,
-      'user_label': _params.new_user_label
+      'dialog_node': _params.newDialogNode,
+      'description': _params.newDescription,
+      'conditions': _params.newConditions,
+      'parent': _params.newParent,
+      'previous_sibling': _params.newPreviousSibling,
+      'output': _params.newOutput,
+      'context': _params.newContext,
+      'metadata': _params.newMetadata,
+      'next_step': _params.newNextStep,
+      'title': _params.newTitle,
+      'type': _params.newType,
+      'event_name': _params.newEventName,
+      'variable': _params.newVariable,
+      'actions': _params.newActions,
+      'digress_in': _params.newDigressIn,
+      'digress_out': _params.newDigressOut,
+      'digress_out_slots': _params.newDigressOutSlots,
+      'user_label': _params.newUserLabel
     };
 
     const path = {
-      'workspace_id': _params.workspace_id,
-      'dialog_node': _params.dialog_node
+      'workspace_id': _params.workspaceId,
+      'dialog_node': _params.dialogNode
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateDialogNode');
@@ -2997,7 +2976,7 @@ class AssistantV1 extends BaseService {
         body,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -3016,8 +2995,8 @@ class AssistantV1 extends BaseService {
    * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
-   * @param {string} params.dialog_node - The dialog node ID (for example, `get_order`).
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -3025,12 +3004,12 @@ class AssistantV1 extends BaseService {
   public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id', 'dialog_node'];
+    const requiredParams = ['workspaceId', 'dialogNode'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteDialogNode(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteDialogNode(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -3041,8 +3020,8 @@ class AssistantV1 extends BaseService {
     }
 
     const path = {
-      'workspace_id': _params.workspace_id,
-      'dialog_node': _params.dialog_node
+      'workspace_id': _params.workspaceId,
+      'dialog_node': _params.dialogNode
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteDialogNode');
@@ -3053,7 +3032,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -3076,13 +3055,13 @@ class AssistantV1 extends BaseService {
    * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspace_id - Unique identifier of the workspace.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
    * filter. For more information, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -3091,12 +3070,12 @@ class AssistantV1 extends BaseService {
   public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['workspace_id'];
+    const requiredParams = ['workspaceId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listLogs(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listLogs(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -3109,12 +3088,12 @@ class AssistantV1 extends BaseService {
     const query = {
       'sort': _params.sort,
       'filter': _params.filter,
-      'page_limit': _params.page_limit,
+      'page_limit': _params.pageLimit,
       'cursor': _params.cursor
     };
 
     const path = {
-      'workspace_id': _params.workspace_id
+      'workspace_id': _params.workspaceId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listLogs');
@@ -3126,7 +3105,7 @@ class AssistantV1 extends BaseService {
         qs: query,
         path,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -3151,7 +3130,7 @@ class AssistantV1 extends BaseService {
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
-   * @param {number} [params.page_limit] - The number of records to return in each page of results.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -3164,8 +3143,8 @@ class AssistantV1 extends BaseService {
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.listAllLogs(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.listAllLogs(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -3178,7 +3157,7 @@ class AssistantV1 extends BaseService {
     const query = {
       'filter': _params.filter,
       'sort': _params.sort,
-      'page_limit': _params.page_limit,
+      'page_limit': _params.pageLimit,
       'cursor': _params.cursor
     };
 
@@ -3190,7 +3169,7 @@ class AssistantV1 extends BaseService {
         method: 'GET',
         qs: query,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -3215,7 +3194,7 @@ class AssistantV1 extends BaseService {
    * security](https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.customer_id - The customer ID for which all data is to be deleted.
+   * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -3223,12 +3202,12 @@ class AssistantV1 extends BaseService {
   public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['customer_id'];
+    const requiredParams = ['customerId'];
 
     if (!_callback) {
       return new Promise((resolve, reject) => {
-        this.deleteUserData(params, (err, bod, res) => {
-          err ? reject(err) : _params.return_response ? resolve(res) : resolve(bod);
+        this.deleteUserData(params, (err, res) => {
+          err ? reject(err) : resolve(res);
         });
       });
     }
@@ -3239,7 +3218,7 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'customer_id': _params.customer_id
+      'customer_id': _params.customerId
     };
 
     const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteUserData');
@@ -3250,7 +3229,7 @@ class AssistantV1 extends BaseService {
         method: 'DELETE',
         qs: query,
       },
-      defaultOptions: extend(true, {}, this._options, {
+      defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
         }, _params.headers),
@@ -3275,19 +3254,8 @@ namespace AssistantV1 {
   export type Options = {
     version: string;
     url?: string;
-    iam_access_token?: string;
-    iam_apikey?: string;
-    iam_url?: string;
-    iam_client_id?: string;
-    iam_client_secret?: string;
-    icp4d_access_token?: string;
-    icp4d_url?: string;
-    username?: string;
-    password?: string;
-    token?: string;
-    authentication_type?: string;
-    disable_ssl_verification?: boolean;
-    use_unauthenticated?: boolean;
+    authenticator: Authenticator;
+    disableSslVerification?: boolean;
     headers?: OutgoingHttpHeaders;
     /** Allow additional request config parameters */
     [propName: string]: any;
@@ -3295,14 +3263,13 @@ namespace AssistantV1 {
 
   export interface Response<T = any>  {
     result: T;
-    data: T; // for compatibility
     status: number;
     statusText: string;
     headers: IncomingHttpHeaders;
   }
 
   /** The callback for a service request. */
-  export type Callback<T> = (error: any, body?: T, response?: Response<T>) => void;
+  export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
   export interface Empty { }
@@ -3319,39 +3286,45 @@ namespace AssistantV1 {
   /** Parameters for the `message` operation. */
   export interface MessageParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** An input object that includes the input text. */
     input?: MessageInput;
-    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
+    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
+     *  those intents rather than trying to recognize intents in the new input.
+     */
     intents?: RuntimeIntent[];
-    /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
+    /** Entities to use when evaluating the message. Include entities from the previous response to continue using
+     *  those entities rather than detecting entities in the new input.
+     */
     entities?: RuntimeEntity[];
     /** Whether to return more than one intent. A value of `true` indicates that all matching intents are returned. */
-    alternate_intents?: boolean;
+    alternateIntents?: boolean;
     /** State information for the conversation. To maintain state, include the context from the previous response. */
     context?: Context;
-    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages
+     *  from the log.
+     */
     output?: OutputData;
-    /** Whether to include additional diagnostic information about the dialog nodes that were visited during processing of the message. */
-    nodes_visited_details?: boolean;
+    /** Whether to include additional diagnostic information about the dialog nodes that were visited during
+     *  processing of the message.
+     */
+    nodesVisitedDetails?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listWorkspaces` operation. */
   export interface ListWorkspacesParams {
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with
+     *  a minus sign (`-`).
+     */
     sort?: ListWorkspacesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listWorkspaces` operation. */
@@ -3373,34 +3346,39 @@ namespace AssistantV1 {
     language?: string;
     /** Any metadata related to the workspace. */
     metadata?: JsonObject;
-    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
-    learning_opt_out?: boolean;
+    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by
+     *  IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+     */
+    learningOptOut?: boolean;
     /** Global settings for the workspace. */
-    system_settings?: WorkspaceSystemSettings;
+    systemSettings?: WorkspaceSystemSettings;
     /** An array of objects defining the intents for the workspace. */
     intents?: CreateIntent[];
     /** An array of objects describing the entities for the workspace. */
     entities?: CreateEntity[];
     /** An array of objects describing the dialog nodes in the workspace. */
-    dialog_nodes?: DialogNode[];
+    dialogNodes?: DialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getWorkspace` operation. */
   export interface GetWorkspaceParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    workspaceId: string;
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
-    /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
+    includeAudit?: boolean;
+    /** Indicates how the returned workspace data will be sorted. This parameter is valid only if **export**=`true`.
+     *  Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order.
+     */
     sort?: GetWorkspaceConstants.Sort | string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `getWorkspace` operation. */
@@ -3414,7 +3392,7 @@ namespace AssistantV1 {
   /** Parameters for the `updateWorkspace` operation. */
   export interface UpdateWorkspaceParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     name?: string;
     /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -3423,50 +3401,59 @@ namespace AssistantV1 {
     language?: string;
     /** Any metadata related to the workspace. */
     metadata?: JsonObject;
-    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
-    learning_opt_out?: boolean;
+    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by
+     *  IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+     */
+    learningOptOut?: boolean;
     /** Global settings for the workspace. */
-    system_settings?: WorkspaceSystemSettings;
+    systemSettings?: WorkspaceSystemSettings;
     /** An array of objects defining the intents for the workspace. */
     intents?: CreateIntent[];
     /** An array of objects describing the entities for the workspace. */
     entities?: CreateEntity[];
     /** An array of objects describing the dialog nodes in the workspace. */
-    dialog_nodes?: DialogNode[];
+    dialogNodes?: DialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
-    /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`, elements included in the new data completely replace the corresponding existing elements, including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities. If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new data collide with existing elements, the update request fails. */
+    /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`,
+     *  elements included in the new data completely replace the corresponding existing elements, including all
+     *  subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in
+     *  the workspace are discarded and replaced with the new entities.
+     *
+     *  If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the
+     *  new data collide with existing elements, the update request fails.
+     */
     append?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteWorkspace` operation. */
   export interface DeleteWorkspaceParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listIntents` operation. */
   export interface ListIntentsParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    workspaceId: string;
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned intents will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned intents will be sorted. To reverse the sort order, prefix the value with a
+     *  minus sign (`-`).
+     */
     sort?: ListIntentsConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listIntents` operation. */
@@ -3481,75 +3468,79 @@ namespace AssistantV1 {
   /** Parameters for the `createIntent` operation. */
   export interface CreateIntentParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
+    workspaceId: string;
+    /** The name of the intent. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
+     *  - It cannot begin with the reserved prefix `sys-`.
+     */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** An array of user input examples for the intent. */
     examples?: Example[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getIntent` operation. */
   export interface GetIntentParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateIntent` operation. */
   export interface UpdateIntentParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
-    new_intent?: string;
+    /** The name of the intent. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
+     *  - It cannot begin with the reserved prefix `sys-`.
+     */
+    newIntent?: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
-    new_description?: string;
+    newDescription?: string;
     /** An array of user input examples for the intent. */
-    new_examples?: Example[];
+    newExamples?: Example[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteIntent` operation. */
   export interface DeleteIntentParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listExamples` operation. */
   export interface ListExamplesParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned examples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned examples will be sorted. To reverse the sort order, prefix the value with a
+     *  minus sign (`-`).
+     */
     sort?: ListExamplesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listExamples` operation. */
@@ -3564,75 +3555,76 @@ namespace AssistantV1 {
   /** Parameters for the `createExample` operation. */
   export interface CreateExampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
-    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of a user input example. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     text: string;
     /** An array of contextual entity mentions. */
     mentions?: Mention[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getExample` operation. */
   export interface GetExampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
     /** The text of the user input example. */
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateExample` operation. */
   export interface UpdateExampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
     /** The text of the user input example. */
     text: string;
-    /** The text of the user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    new_text?: string;
+    /** The text of the user input example. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
+    newText?: string;
     /** An array of contextual entity mentions. */
-    new_mentions?: Mention[];
+    newMentions?: Mention[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteExample` operation. */
   export interface DeleteExampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The intent name. */
     intent: string;
     /** The text of the user input example. */
     text: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listCounterexamples` operation. */
   export interface ListCounterexamplesParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned counterexamples will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned counterexamples will be sorted. To reverse the sort order, prefix the value
+     *  with a minus sign (`-`).
+     */
     sort?: ListCounterexamplesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listCounterexamples` operation. */
@@ -3647,65 +3639,69 @@ namespace AssistantV1 {
   /** Parameters for the `createCounterexample` operation. */
   export interface CreateCounterexampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    workspaceId: string;
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     text: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getCounterexample` operation. */
   export interface GetCounterexampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateCounterexample` operation. */
   export interface UpdateCounterexampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    new_text?: string;
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
+    newText?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteCounterexample` operation. */
   export interface DeleteCounterexampleParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listEntities` operation. */
   export interface ListEntitiesParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    workspaceId: string;
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned entities will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned entities will be sorted. To reverse the sort order, prefix the value with a
+     *  minus sign (`-`).
+     */
     sort?: ListEntitiesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listEntities` operation. */
@@ -3720,99 +3716,109 @@ namespace AssistantV1 {
   /** Parameters for the `createEntity` operation. */
   export interface CreateEntityParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
+    workspaceId: string;
+    /** The name of the entity. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
+     *  - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system
+     *  entity that you want to enable. (Any entity content specified with the request is ignored.).
+     */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
     /** Any metadata related to the entity. */
     metadata?: JsonObject;
     /** Whether to use fuzzy matching for the entity. */
-    fuzzy_match?: boolean;
+    fuzzyMatch?: boolean;
     /** An array of objects describing the entity values. */
     values?: CreateValue[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getEntity` operation. */
   export interface GetEntityParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateEntity` operation. */
   export interface UpdateEntityParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - It cannot begin with the reserved prefix `sys-`. */
-    new_entity?: string;
+    /** The name of the entity. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
+     *  - It cannot begin with the reserved prefix `sys-`.
+     */
+    newEntity?: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
-    new_description?: string;
+    newDescription?: string;
     /** Any metadata related to the entity. */
-    new_metadata?: JsonObject;
+    newMetadata?: JsonObject;
     /** Whether to use fuzzy matching for the entity. */
-    new_fuzzy_match?: boolean;
+    newFuzzyMatch?: boolean;
     /** An array of objects describing the entity values. */
-    new_values?: CreateValue[];
+    newValues?: CreateValue[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteEntity` operation. */
   export interface DeleteEntityParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listMentions` operation. */
   export interface ListMentionsParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listValues` operation. */
   export interface ListValuesParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned entity values will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned entity values will be sorted. To reverse the sort order, prefix the value
+     *  with a minus sign (`-`).
+     */
     sort?: ListValuesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listValues` operation. */
@@ -3827,27 +3833,37 @@ namespace AssistantV1 {
   /** Parameters for the `createValue` operation. */
   export interface CreateValueParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of the entity value. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: JsonObject;
     /** Specifies the type of entity value. */
-    value_type?: CreateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    type?: CreateValueConstants.Type | string;
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A synonym must conform to the following resrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
+     *  pattern, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     */
     patterns?: string[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `createValue` operation. */
   export namespace CreateValueConstants {
     /** Specifies the type of entity value. */
-    export enum ValueType {
+    export enum Type {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
     }
@@ -3856,45 +3872,57 @@ namespace AssistantV1 {
   /** Parameters for the `getValue` operation. */
   export interface GetValueParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data includes only information about the element itself. If **export**=`true`, all content, including subelements, is included. */
+    /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
+     *  includes only information about the element itself. If **export**=`true`, all content, including subelements, is
+     *  included.
+     */
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateValue` operation. */
   export interface UpdateValueParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    new_value?: string;
+    /** The text of the entity value. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
+    newValue?: string;
     /** Any metadata related to the entity value. */
-    new_metadata?: JsonObject;
+    newMetadata?: JsonObject;
     /** Specifies the type of entity value. */
-    new_value_type?: UpdateValueConstants.ValueType | string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    new_synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
-    new_patterns?: string[];
+    newType?: UpdateValueConstants.Type | string;
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A synonym must conform to the following resrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
+    newSynonyms?: string[];
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
+     *  pattern, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     */
+    newPatterns?: string[];
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `updateValue` operation. */
   export namespace UpdateValueConstants {
     /** Specifies the type of entity value. */
-    export enum ValueType {
+    export enum Type {
       SYNONYMS = 'synonyms',
       PATTERNS = 'patterns',
     }
@@ -3903,35 +3931,33 @@ namespace AssistantV1 {
   /** Parameters for the `deleteValue` operation. */
   export interface DeleteValueParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listSynonyms` operation. */
   export interface ListSynonymsParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned entity value synonyms will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned entity value synonyms will be sorted. To reverse the sort order, prefix the
+     *  value with a minus sign (`-`).
+     */
     sort?: ListSynonymsConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listSynonyms` operation. */
@@ -3946,21 +3972,23 @@ namespace AssistantV1 {
   /** Parameters for the `createSynonym` operation. */
   export interface CreateSynonymParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of the synonym. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     synonym: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `getSynonym` operation. */
   export interface GetSynonymParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
@@ -3968,31 +3996,32 @@ namespace AssistantV1 {
     /** The text of the synonym. */
     synonym: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateSynonym` operation. */
   export interface UpdateSynonymParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
     /** The text of the synonym. */
     synonym: string;
-    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
-    new_synonym?: string;
+    /** The text of the synonym. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
+    newSynonym?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteSynonym` operation. */
   export interface DeleteSynonymParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
@@ -4000,25 +4029,23 @@ namespace AssistantV1 {
     /** The text of the synonym. */
     synonym: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listDialogNodes` operation. */
   export interface ListDialogNodesParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
-    /** Whether to include information about the number of records returned. */
-    include_count?: boolean;
-    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    pageLimit?: number;
+    /** The attribute by which returned dialog nodes will be sorted. To reverse the sort order, prefix the value
+     *  with a minus sign (`-`).
+     */
     sort?: ListDialogNodesConstants.Sort | string;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `listDialogNodes` operation. */
@@ -4033,51 +4060,60 @@ namespace AssistantV1 {
   /** Parameters for the `createDialogNode` operation. */
   export interface CreateDialogNodeParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
-    dialog_node: string;
+    workspaceId: string;
+    /** The dialog node ID. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+     */
+    dialogNode: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab
+     *  characters.
+     */
     conditions?: string;
     /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     parent?: string;
-    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous sibling. */
-    previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
+    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous
+     *  sibling.
+     */
+    previousSibling?: string;
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+     */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: JsonObject;
     /** The metadata for the dialog node. */
     metadata?: JsonObject;
     /** The next step to execute following this dialog node. */
-    next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
+    nextStep?: DialogNodeNextStep;
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+     */
     title?: string;
     /** How the dialog node is processed. */
-    node_type?: CreateDialogNodeConstants.NodeType | string;
+    type?: CreateDialogNodeConstants.Type | string;
     /** How an `event_handler` node is processed. */
-    event_name?: CreateDialogNodeConstants.EventName | string;
+    eventName?: CreateDialogNodeConstants.EventName | string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
     /** Whether this top-level dialog node can be digressed into. */
-    digress_in?: CreateDialogNodeConstants.DigressIn | string;
+    digressIn?: CreateDialogNodeConstants.DigressIn | string;
     /** Whether this dialog node can be returned to after a digression. */
-    digress_out?: CreateDialogNodeConstants.DigressOut | string;
+    digressOut?: CreateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
-    digress_out_slots?: CreateDialogNodeConstants.DigressOutSlots | string;
+    digressOutSlots?: CreateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
-    user_label?: string;
+    userLabel?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `createDialogNode` operation. */
   export namespace CreateDialogNodeConstants {
     /** How the dialog node is processed. */
-    export enum NodeType {
+    export enum Type {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
       FRAME = 'frame',
@@ -4120,65 +4156,73 @@ namespace AssistantV1 {
   /** Parameters for the `getDialogNode` operation. */
   export interface GetDialogNodeParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The dialog node ID (for example, `get_order`). */
-    dialog_node: string;
+    dialogNode: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
-    include_audit?: boolean;
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `updateDialogNode` operation. */
   export interface UpdateDialogNodeParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The dialog node ID (for example, `get_order`). */
-    dialog_node: string;
-    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
-    new_dialog_node?: string;
+    dialogNode: string;
+    /** The dialog node ID. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+     */
+    newDialogNode?: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
-    new_description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters. */
-    new_conditions?: string;
+    newDescription?: string;
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab
+     *  characters.
+     */
+    newConditions?: string;
     /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
-    new_parent?: string;
-    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous sibling. */
-    new_previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
-    new_output?: DialogNodeOutput;
+    newParent?: string;
+    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous
+     *  sibling.
+     */
+    newPreviousSibling?: string;
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+     */
+    newOutput?: DialogNodeOutput;
     /** The context for the dialog node. */
-    new_context?: JsonObject;
+    newContext?: JsonObject;
     /** The metadata for the dialog node. */
-    new_metadata?: JsonObject;
+    newMetadata?: JsonObject;
     /** The next step to execute following this dialog node. */
-    new_next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
-    new_title?: string;
+    newNextStep?: DialogNodeNextStep;
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+     */
+    newTitle?: string;
     /** How the dialog node is processed. */
-    new_node_type?: UpdateDialogNodeConstants.NodeType | string;
+    newType?: UpdateDialogNodeConstants.Type | string;
     /** How an `event_handler` node is processed. */
-    new_event_name?: UpdateDialogNodeConstants.EventName | string;
+    newEventName?: UpdateDialogNodeConstants.EventName | string;
     /** The location in the dialog context where output is stored. */
-    new_variable?: string;
+    newVariable?: string;
     /** An array of objects describing any actions to be invoked by the dialog node. */
-    new_actions?: DialogNodeAction[];
+    newActions?: DialogNodeAction[];
     /** Whether this top-level dialog node can be digressed into. */
-    new_digress_in?: UpdateDialogNodeConstants.DigressIn | string;
+    newDigressIn?: UpdateDialogNodeConstants.DigressIn | string;
     /** Whether this dialog node can be returned to after a digression. */
-    new_digress_out?: UpdateDialogNodeConstants.DigressOut | string;
+    newDigressOut?: UpdateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
-    new_digress_out_slots?: UpdateDialogNodeConstants.DigressOutSlots | string;
+    newDigressOutSlots?: UpdateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
-    new_user_label?: string;
+    newUserLabel?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Constants for the `updateDialogNode` operation. */
   export namespace UpdateDialogNodeConstants {
     /** How the dialog node is processed. */
-    export enum NodeType {
+    export enum Type {
       STANDARD = 'standard',
       EVENT_HANDLER = 'event_handler',
       FRAME = 'frame',
@@ -4221,49 +4265,56 @@ namespace AssistantV1 {
   /** Parameters for the `deleteDialogNode` operation. */
   export interface DeleteDialogNodeParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
+    workspaceId: string;
     /** The dialog node ID (for example, `get_order`). */
-    dialog_node: string;
+    dialogNode: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listLogs` operation. */
   export interface ListLogsParams {
     /** Unique identifier of the workspace. */
-    workspace_id: string;
-    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
+    workspaceId: string;
+    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order,
+     *  prefix the parameter value with a minus sign (`-`).
+     */
     sort?: string;
-    /** A cacheable parameter that limits the results to those matching the specified filter. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information,
+     *  see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
+     */
     filter?: string;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
+    pageLimit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
-    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id` or `request.context.metadata.deployment`. For more information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference). */
+    /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a
+     *  filter query that includes a value for `language`, as well as a value for `workspace_id` or
+     *  `request.context.metadata.deployment`. For more information, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
+     */
     filter: string;
-    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order, prefix the parameter value with a minus sign (`-`). */
+    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order,
+     *  prefix the parameter value with a minus sign (`-`).
+     */
     sort?: string;
     /** The number of records to return in each page of results. */
-    page_limit?: number;
+    pageLimit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /** Parameters for the `deleteUserData` operation. */
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
-    customer_id: string;
+    customerId: string;
     headers?: OutgoingHttpHeaders;
-    return_response?: boolean;
   }
 
   /*************************
@@ -4292,7 +4343,10 @@ namespace AssistantV1 {
 
   /** Counterexample. */
   export interface Counterexample {
-    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     text: string;
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4310,7 +4364,11 @@ namespace AssistantV1 {
 
   /** CreateEntity. */
   export interface CreateEntity {
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
+    /** The name of the entity. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
+     *  - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system
+     *  entity that you want to enable. (Any entity content specified with the request is ignored.).
+     */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
@@ -4328,7 +4386,10 @@ namespace AssistantV1 {
 
   /** CreateIntent. */
   export interface CreateIntent {
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
+    /** The name of the intent. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
+     *  - It cannot begin with the reserved prefix `sys-`.
+     */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
@@ -4342,15 +4403,26 @@ namespace AssistantV1 {
 
   /** CreateValue. */
   export interface CreateValue {
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of the entity value. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: JsonObject;
     /** Specifies the type of entity value. */
-    value_type?: string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    type?: string;
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A synonym must conform to the following resrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
+     *  pattern, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     */
     patterns?: string[];
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4360,17 +4432,25 @@ namespace AssistantV1 {
 
   /** DialogNode. */
   export interface DialogNode {
-    /** The dialog node ID. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
+    /** The dialog node ID. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+     */
     dialog_node: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
-    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab characters. */
+    /** The condition that will trigger the dialog node. This string cannot contain carriage return, newline, or tab
+     *  characters.
+     */
     conditions?: string;
     /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     parent?: string;
-    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous sibling. */
+    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous
+     *  sibling.
+     */
     previous_sibling?: string;
-    /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
+    /** The output of the dialog node. For more information about how to specify dialog node output, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+     */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
     context?: JsonObject;
@@ -4378,10 +4458,12 @@ namespace AssistantV1 {
     metadata?: JsonObject;
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters. */
+    /** The alias used to identify the dialog node. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+     */
     title?: string;
     /** How the dialog node is processed. */
-    node_type?: string;
+    type?: string;
     /** How an `event_handler` node is processed. */
     event_name?: string;
     /** The location in the dialog context where output is stored. */
@@ -4409,7 +4491,7 @@ namespace AssistantV1 {
     /** The name of the action. */
     name: string;
     /** The type of action to invoke. */
-    action_type?: string;
+    type?: string;
     /** A map of key/value pairs to be provided to the action. */
     parameters?: JsonObject;
     /** The location in the dialog context where the result of the action is stored. */
@@ -4428,7 +4510,26 @@ namespace AssistantV1 {
 
   /** The next step to execute following this dialog node. */
   export interface DialogNodeNextStep {
-    /** What happens after the dialog node completes. The valid values depend on the node type: - The following values are valid for any node: - `get_user_input` - `skip_user_input` - `jump_to` - If the node is of type `event_handler` and its parent node is of type `slot` or `frame`, additional values are also valid: - if **event_name**=`filled` and the type of the parent node is `slot`: - `reprompt` - `skip_all_slots` - if **event_name**=`nomatch` and the type of the parent node is `slot`: - `reprompt` - `skip_slot` - `skip_all_slots` - if **event_name**=`generic` and the type of the parent node is `frame`: - `reprompt` - `skip_slot` - `skip_all_slots` If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. */
+    /** What happens after the dialog node completes. The valid values depend on the node type:
+     *  - The following values are valid for any node:
+     *    - `get_user_input`
+     *    - `skip_user_input`
+     *    - `jump_to`
+     *  - If the node is of type `event_handler` and its parent node is of type `slot` or `frame`, additional values are
+     *  also valid:
+     *    - if **event_name**=`filled` and the type of the parent node is `slot`:
+     *      - `reprompt`
+     *      - `skip_all_slots`
+     *  - if **event_name**=`nomatch` and the type of the parent node is `slot`:
+     *      - `reprompt`
+     *      - `skip_slot`
+     *      - `skip_all_slots`
+     *  - if **event_name**=`generic` and the type of the parent node is `frame`:
+     *      - `reprompt`
+     *      - `skip_slot`
+     *      - `skip_all_slots`
+     *       If you specify `jump_to`, then you must also specify a value for the `dialog_node` property.
+     */
     behavior: string;
     /** The ID of the dialog node to process next. This parameter is required if **behavior**=`jump_to`. */
     dialog_node?: string;
@@ -4448,17 +4549,28 @@ namespace AssistantV1 {
 
   /** DialogNodeOutputGeneric. */
   export interface DialogNodeOutputGeneric {
-    /** The type of response returned by the dialog node. The specified response type must be supported by the client application or channel. */
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     *
+     *  **Note:** The **search_skill** response type is available only for Plus and Premium users, and is used only by
+     *  the v2 runtime API.
+     */
     response_type: string;
     /** A list of one or more objects defining text responses. Required when **response_type**=`text`. */
     values?: DialogNodeOutputTextValuesElement[];
-    /** How a response is selected from the list, if more than one response is specified. Valid only when **response_type**=`text`. */
+    /** How a response is selected from the list, if more than one response is specified. Valid only when
+     *  **response_type**=`text`.
+     */
     selection_policy?: string;
     /** The delimiter to use as a separator between responses when `selection_policy`=`multiline`. */
     delimiter?: string;
-    /** How long to pause, in milliseconds. The valid values are from 0 to 10000. Valid only when **response_type**=`pause`. */
+    /** How long to pause, in milliseconds. The valid values are from 0 to 10000. Valid only when
+     *  **response_type**=`pause`.
+     */
     time?: number;
-    /** Whether to send a "user is typing" event during the pause. Ignored if the channel does not support this event. Valid only when **response_type**=`pause`. */
+    /** Whether to send a "user is typing" event during the pause. Ignored if the channel does not support this
+     *  event. Valid only when **response_type**=`pause`.
+     */
     typing?: boolean;
     /** The URL of the image. Required when **response_type**=`image`. */
     source?: string;
@@ -4466,17 +4578,41 @@ namespace AssistantV1 {
     title?: string;
     /** An optional description to show with the response. Valid only when **response_type**=`image` or `option`. */
     description?: string;
-    /** The preferred type of control to display, if supported by the channel. Valid only when **response_type**=`option`. */
+    /** The preferred type of control to display, if supported by the channel. Valid only when
+     *  **response_type**=`option`.
+     */
     preference?: string;
-    /** An array of objects describing the options from which the user can choose. You can include up to 20 options. Required when **response_type**=`option`. */
+    /** An array of objects describing the options from which the user can choose. You can include up to 20 options.
+     *  Required when **response_type**=`option`.
+     */
     options?: DialogNodeOutputOptionsElement[];
-    /** An optional message to be sent to the human agent who will be taking over the conversation. Valid only when **reponse_type**=`connect_to_agent`. */
+    /** An optional message to be sent to the human agent who will be taking over the conversation. Valid only when
+     *  **reponse_type**=`connect_to_agent`.
+     */
     message_to_human_agent?: string;
+    /** The text of the search query. This can be either a natural-language query or a query that uses the Discovery
+     *  query language syntax, depending on the value of the **query_type** property. For more information, see the
+     *  [Discovery service
+     *  documentation](https://cloud.ibm.com/docs/services/discovery/query-operators.html#query-operators). Required
+     *  when **response_type**=`search_skill`.
+     */
+    query?: string;
+    /** The type of the search query. Required when **response_type**=`search_skill`. */
+    query_type?: string;
+    /** An optional filter that narrows the set of documents to be searched. For more information, see the
+     *  [Discovery service documentation]([Discovery service
+     *  documentation](https://cloud.ibm.com/docs/services/discovery/query-parameters.html#filter).
+     */
+    filter?: string;
+    /** The version of the Discovery service API to use for the query. */
+    discovery_version?: string;
   }
 
   /** Options that modify how specified output is handled. */
   export interface DialogNodeOutputModifiers {
-    /** Whether values in the output will overwrite output values in an array specified by previously executed dialog nodes. If this option is set to `false`, new values will be appended to previously specified values. */
+    /** Whether values in the output will overwrite output values in an array specified by previously executed
+     *  dialog nodes. If this option is set to `false`, new values will be appended to previously specified values.
+     */
     overwrite?: boolean;
   }
 
@@ -4484,7 +4620,9 @@ namespace AssistantV1 {
   export interface DialogNodeOutputOptionsElement {
     /** The user-facing label for the option. */
     label: string;
-    /** An object defining the message input to be sent to the Watson Assistant service if the user selects the corresponding option. */
+    /** An object defining the message input to be sent to the Watson Assistant service if the user selects the
+     *  corresponding option.
+     */
     value: DialogNodeOutputOptionsElementValue;
   }
 
@@ -4492,15 +4630,25 @@ namespace AssistantV1 {
   export interface DialogNodeOutputOptionsElementValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
-    /** An array of intents to be used while processing the input. **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response to user input** method. */
+    /** An array of intents to be used while processing the input.
+     *
+     *  **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response
+     *  to user input** method.
+     */
     intents?: RuntimeIntent[];
-    /** An array of entities to be used while processing the user input. **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response to user input** method. */
+    /** An array of entities to be used while processing the user input.
+     *
+     *  **Note:** This property is supported for backward compatibility with applications that use the v1 **Get response
+     *  to user input** method.
+     */
     entities?: RuntimeEntity[];
   }
 
   /** DialogNodeOutputTextValuesElement. */
   export interface DialogNodeOutputTextValuesElement {
-    /** The text of a response. This string can include newline characters (`\\n`), Markdown tagging, or other special characters, if supported by the channel. */
+    /** The text of a response. This string can include newline characters (`\n`), Markdown tagging, or other
+     *  special characters, if supported by the channel.
+     */
     text?: string;
   }
 
@@ -4514,9 +4662,56 @@ namespace AssistantV1 {
     conditions?: string;
   }
 
-  /** DialogRuntimeResponseGeneric. */
-  export interface DialogRuntimeResponseGeneric {
-    /** The type of response returned by the dialog node. The specified response type must be supported by the client application or channel. **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for Premium users. */
+  /** DialogSuggestion. */
+  export interface DialogSuggestion {
+    /** The user-facing label for the disambiguation option. This label is taken from the **user_label** property of
+     *  the corresponding dialog node.
+     */
+    label: string;
+    /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if
+     *  the user selects the corresponding disambiguation option.
+     */
+    value: DialogSuggestionValue;
+    /** The dialog output that will be returned from the Watson Assistant service if the user selects the
+     *  corresponding option.
+     */
+    output?: DialogSuggestionOutput;
+    /** The ID of the dialog node that the **label** property is taken from. The **label** property is populated
+     *  using the value of the dialog node's **user_label** property.
+     */
+    dialog_node?: string;
+  }
+
+  /** The dialog output that will be returned from the Watson Assistant service if the user selects the corresponding option. */
+  export interface DialogSuggestionOutput {
+    /** An array of the nodes that were triggered to create the response, in the order in which they were visited.
+     *  This information is useful for debugging and for tracing the path taken through the node tree.
+     */
+    nodes_visited?: string[];
+    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during
+     *  processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message
+     *  request.
+     */
+    nodes_visited_details?: DialogNodeVisitedDetails[];
+    /** An array of responses to the user. */
+    text: string[];
+    /** Output intended for any channel. It is the responsibility of the client application to implement the
+     *  supported response types.
+     */
+    generic?: DialogSuggestionResponseGeneric[];
+    /** DialogSuggestionOutput accepts additional properties. */
+    [propName: string]: any;
+  }
+
+  /** DialogSuggestionResponseGeneric. */
+  export interface DialogSuggestionResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     *
+     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
+     *  Plus and Premium users. The **search_skill** response type is available only for Plus and Premium users, and is
+     *  used only by the v2 runtime API.
+     */
     response_type: string;
     /** The text of the response. */
     text?: string;
@@ -4536,23 +4731,13 @@ namespace AssistantV1 {
     options?: DialogNodeOutputOptionsElement[];
     /** A message to be sent to the human agent who will be taking over the conversation. */
     message_to_human_agent?: string;
-    /** A label identifying the topic of the conversation, derived from the **user_label** property of the relevant node. */
+    /** A label identifying the topic of the conversation, derived from the **user_label** property of the relevant
+     *  node.
+     */
     topic?: string;
-    /** The ID of the dialog node that the **topic** property is taken from. The **topic** property is populated using the value of the dialog node's **user_label** property. */
-    dialog_node?: string;
-    /** An array of objects describing the possible matching dialog nodes from which the user can choose. **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for Premium users. */
-    suggestions?: DialogSuggestion[];
-  }
-
-  /** DialogSuggestion. */
-  export interface DialogSuggestion {
-    /** The user-facing label for the disambiguation option. This label is taken from the **user_label** property of the corresponding dialog node. */
-    label: string;
-    /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. */
-    value: DialogSuggestionValue;
-    /** The dialog output that will be returned from the Watson Assistant service if the user selects the corresponding option. */
-    output?: JsonObject;
-    /** The ID of the dialog node that the **label** property is taken from. The **label** property is populated using the value of the dialog node's **user_label** property. */
+    /** The ID of the dialog node that the **topic** property is taken from. The **topic** property is populated
+     *  using the value of the dialog node's **user_label** property.
+     */
     dialog_node?: string;
   }
 
@@ -4568,7 +4753,11 @@ namespace AssistantV1 {
 
   /** Entity. */
   export interface Entity {
-    /** The name of the entity. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, and hyphen characters. - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system entity that you want to enable. (Any entity content specified with the request is ignored.). */
+    /** The name of the entity. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
+     *  - If you specify an entity name beginning with the reserved prefix `sys-`, it must be the name of a system
+     *  entity that you want to enable. (Any entity content specified with the request is ignored.).
+     */
     entity: string;
     /** The description of the entity. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
@@ -4598,7 +4787,9 @@ namespace AssistantV1 {
     text: string;
     /** The name of the intent. */
     intent: string;
-    /** An array of zero-based character offsets that indicate where the entity mentions begin and end in the input text. */
+    /** An array of zero-based character offsets that indicate where the entity mentions begin and end in the input
+     *  text.
+     */
     location: number[];
   }
 
@@ -4612,7 +4803,10 @@ namespace AssistantV1 {
 
   /** Example. */
   export interface Example {
-    /** The text of a user input example. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of a user input example. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     text: string;
     /** An array of contextual entity mentions. */
     mentions?: Mention[];
@@ -4632,7 +4826,10 @@ namespace AssistantV1 {
 
   /** Intent. */
   export interface Intent {
-    /** The name of the intent. This string must conform to the following restrictions: - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters. - It cannot begin with the reserved prefix `sys-`. */
+    /** The name of the intent. This string must conform to the following restrictions:
+     *  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
+     *  - It cannot begin with the reserved prefix `sys-`.
+     */
     intent: string;
     /** The description of the intent. This string cannot contain carriage return, newline, or tab characters. */
     description?: string;
@@ -4684,8 +4881,6 @@ namespace AssistantV1 {
     level: string;
     /** The text of the log message. */
     msg: string;
-    /** LogMessage accepts additional properties. */
-    [propName: string]: any;
   }
 
   /** The pagination data for the returned objects. */
@@ -4702,15 +4897,23 @@ namespace AssistantV1 {
   export interface Mention {
     /** The name of the entity. */
     entity: string;
-    /** An array of zero-based character offsets that indicate where the entity mentions begin and end in the input text. */
+    /** An array of zero-based character offsets that indicate where the entity mentions begin and end in the input
+     *  text.
+     */
     location: number[];
   }
 
   /** Metadata related to the message. */
   export interface MessageContextMetadata {
-    /** A label identifying the deployment environment, used for filtering log data. This string cannot contain carriage return, newline, or tab characters. */
+    /** A label identifying the deployment environment, used for filtering log data. This string cannot contain
+     *  carriage return, newline, or tab characters.
+     */
     deployment?: string;
-    /** A string value that identifies the user who is interacting with the workspace. The client must provide a unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this user ID is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or tab characters. */
+    /** A string value that identifies the user who is interacting with the workspace. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this
+     *  user ID is used to identify unique users for billing purposes. This string cannot contain carriage return,
+     *  newline, or tab characters.
+     */
     user_id?: string;
   }
 
@@ -4726,15 +4929,21 @@ namespace AssistantV1 {
   export interface MessageRequest {
     /** An input object that includes the input text. */
     input?: MessageInput;
-    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input. */
+    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
+     *  those intents rather than trying to recognize intents in the new input.
+     */
     intents?: RuntimeIntent[];
-    /** Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input. */
+    /** Entities to use when evaluating the message. Include entities from the previous response to continue using
+     *  those entities rather than detecting entities in the new input.
+     */
     entities?: RuntimeEntity[];
     /** Whether to return more than one intent. A value of `true` indicates that all matching intents are returned. */
     alternate_intents?: boolean;
     /** State information for the conversation. To maintain state, include the context from the previous response. */
     context?: Context;
-    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages
+     *  from the log.
+     */
     output?: OutputData;
     /** An array of objects describing any actions requested by the dialog node. */
     actions?: DialogNodeAction[];
@@ -4752,7 +4961,9 @@ namespace AssistantV1 {
     alternate_intents?: boolean;
     /** State information for the conversation. To maintain state, include the context from the previous response. */
     context: Context;
-    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
+    /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages
+     *  from the log.
+     */
     output: OutputData;
     /** An array of objects describing any actions requested by the dialog node. */
     actions?: DialogNodeAction[];
@@ -4760,16 +4971,23 @@ namespace AssistantV1 {
 
   /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
   export interface OutputData {
+    /** An array of the nodes that were triggered to create the response, in the order in which they were visited.
+     *  This information is useful for debugging and for tracing the path taken through the node tree.
+     */
+    nodes_visited?: string[];
+    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during
+     *  processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message
+     *  request.
+     */
+    nodes_visited_details?: DialogNodeVisitedDetails[];
     /** An array of up to 50 messages logged with the request. */
     log_messages: LogMessage[];
     /** An array of responses to the user. */
     text: string[];
-    /** Output intended for any channel. It is the responsibility of the client application to implement the supported response types. */
-    generic?: DialogRuntimeResponseGeneric[];
-    /** An array of the nodes that were triggered to create the response, in the order in which they were visited. This information is useful for debugging and for tracing the path taken through the node tree. */
-    nodes_visited?: string[];
-    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during processing of the input message. Included only if **nodes_visited_details** is set to `true` in the message request. */
-    nodes_visited_details?: DialogNodeVisitedDetails[];
+    /** Output intended for any channel. It is the responsibility of the client application to implement the
+     *  supported response types.
+     */
+    generic?: RuntimeResponseGeneric[];
     /** OutputData accepts additional properties. */
     [propName: string]: any;
   }
@@ -4794,7 +5012,9 @@ namespace AssistantV1 {
   export interface RuntimeEntity {
     /** An entity detected in the input. */
     entity: string;
-    /** An array of zero-based character offsets that indicate where the detected entity values begin and end in the input text. */
+    /** An array of zero-based character offsets that indicate where the detected entity values begin and end in the
+     *  input text.
+     */
     location: number[];
     /** The entity value that was recognized in the user input. */
     value: string;
@@ -4804,8 +5024,6 @@ namespace AssistantV1 {
     metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
-    /** RuntimeEntity accepts additional properties. */
-    [propName: string]: any;
   }
 
   /** An intent identified in the user input. */
@@ -4814,13 +5032,57 @@ namespace AssistantV1 {
     intent: string;
     /** A decimal percentage that represents Watson's confidence in the intent. */
     confidence: number;
-    /** RuntimeIntent accepts additional properties. */
-    [propName: string]: any;
+  }
+
+  /** RuntimeResponseGeneric. */
+  export interface RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     *
+     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
+     *  Plus and Premium users.
+     */
+    response_type: string;
+    /** The text of the response. */
+    text?: string;
+    /** How long to pause, in milliseconds. */
+    time?: number;
+    /** Whether to send a "user is typing" event during the pause. */
+    typing?: boolean;
+    /** The URL of the image. */
+    source?: string;
+    /** The title or introductory text to show before the response. */
+    title?: string;
+    /** The description to show with the the response. */
+    description?: string;
+    /** The preferred type of control to display. */
+    preference?: string;
+    /** An array of objects describing the options from which the user can choose. */
+    options?: DialogNodeOutputOptionsElement[];
+    /** A message to be sent to the human agent who will be taking over the conversation. */
+    message_to_human_agent?: string;
+    /** A label identifying the topic of the conversation, derived from the **user_label** property of the relevant
+     *  node.
+     */
+    topic?: string;
+    /** The ID of the dialog node that the **topic** property is taken from. The **topic** property is populated
+     *  using the value of the dialog node's **user_label** property.
+     */
+    dialog_node?: string;
+    /** An array of objects describing the possible matching dialog nodes from which the user can choose.
+     *
+     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for
+     *  Premium users.
+     */
+    suggestions?: DialogSuggestion[];
   }
 
   /** Synonym. */
   export interface Synonym {
-    /** The text of the synonym. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of the synonym. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     synonym: string;
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4844,15 +5106,26 @@ namespace AssistantV1 {
 
   /** Value. */
   export interface Value {
-    /** The text of the entity value. This string must conform to the following restrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    /** The text of the entity value. This string must conform to the following restrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     value: string;
     /** Any metadata related to the entity value. */
     metadata?: JsonObject;
     /** Specifies the type of entity value. */
-    value_type: string;
-    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A synonym must conform to the following resrictions: - It cannot contain carriage return, newline, or tab characters. - It cannot consist of only whitespace characters. */
+    type: string;
+    /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A synonym must conform to the following resrictions:
+     *  - It cannot contain carriage return, newline, or tab characters.
+     *  - It cannot consist of only whitespace characters.
+     */
     synonyms?: string[];
-    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more information about how to specify a pattern, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based). */
+    /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
+     *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
+     *  pattern, see the
+     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     */
     patterns?: string[];
     /** The timestamp for creation of the object. */
     created?: string;
@@ -4878,7 +5151,9 @@ namespace AssistantV1 {
     language: string;
     /** Any metadata related to the workspace. */
     metadata?: JsonObject;
-    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training data is not to be used. */
+    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by
+     *  IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+     */
     learning_opt_out: boolean;
     /** Global settings for the workspace. */
     system_settings?: WorkspaceSystemSettings;
@@ -4912,7 +5187,10 @@ namespace AssistantV1 {
   export interface WorkspaceSystemSettings {
     /** Workspace settings related to the Watson Assistant user interface. */
     tooling?: WorkspaceSystemSettingsTooling;
-    /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
+    /** Workspace settings related to the disambiguation feature.
+     *
+     *  **Note:** This feature is available only to Premium users.
+     */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
     human_agent_assist?: JsonObject;
@@ -4922,11 +5200,15 @@ namespace AssistantV1 {
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;
-    /** The user-facing label for the option users can select if none of the suggested options is correct. If no value is specified for this property, this option does not appear. */
+    /** The user-facing label for the option users can select if none of the suggested options is correct. If no
+     *  value is specified for this property, this option does not appear.
+     */
     none_of_the_above_prompt?: string;
     /** Whether the disambiguation feature is enabled for the workspace. */
     enabled?: boolean;
-    /** The sensitivity of the disambiguation feature to intent detection conflicts. Set to **high** if you want the disambiguation feature to be triggered more often. This can be useful for testing or demonstration purposes. */
+    /** The sensitivity of the disambiguation feature to intent detection conflicts. Set to **high** if you want the
+     *  disambiguation feature to be triggered more often. This can be useful for testing or demonstration purposes.
+     */
     sensitivity?: string;
   }
 

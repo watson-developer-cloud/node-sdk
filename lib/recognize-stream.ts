@@ -15,12 +15,12 @@
  */
 
 import { OutgoingHttpHeaders } from 'http';
-import { contentType, qs } from 'ibm-cloud-sdk-core';
+import { Authenticator, contentType, qs } from 'ibm-cloud-sdk-core';
 import omit = require('object.omit');
 import pick = require('object.pick');
 import { Duplex, DuplexOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
-import { processUserParameters, setAuthorizationHeader } from './websocket-utils';
+import { processUserParameters } from './websocket-utils';
 
 // these options represent the superset of the base params,
 // query params, and opening message params, with the keys
@@ -29,12 +29,12 @@ import { processUserParameters, setAuthorizationHeader } from './websocket-utils
 // openingMessageParamsAllowed or queryParamsAllowed is changed
 interface Options extends DuplexOptions {
   /* Base Properties */
+  authenticator: Authenticator;
   url?: string;
   headers?: OutgoingHttpHeaders;
   readableObjectMode?: boolean;
   objectMode?: boolean;
-  tokenManager?: any;
-  rejectUnauthorized?: boolean;
+  disableSslVerification?: boolean;
 
   /* Query Params*/
   accessToken: string;
@@ -93,6 +93,7 @@ class RecognizeStream extends Duplex {
   }
 
   private options: Options;
+  private authenticator: Authenticator;
   private listening: boolean;
   private initialized: boolean;
   private finished: boolean;
@@ -109,12 +110,12 @@ class RecognizeStream extends Duplex {
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for auto-detection of content type (for wav/flac/opus audio).
    *
    * @param {Options} options
+   * @param {Authenticator} options.authenticator - Authenticator to add Authorization header
    * @param {string} [options.url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
    * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
    * @param {boolean} [options.readableObjectMode] - Emit `result` objects instead of string Buffers for the `data` events. Does not affect input (which must be binary)
    * @param {boolean} [options.objectMode] - Alias for readableObjectMode
-   * @param {any} [options.tokenManager] - Token manager for authenticating with IAM
-   * @param {boolean} [options.rejectUnauthorized] - If false, disable SSL verification for the WebSocket connection (default=true)
+   * @param {boolean} [options.disableSslVerification] - If true, disable SSL verification for the WebSocket connection (default=false)
    * @param {string} [options.accessToken] - Bearer token to put in query string
    * @param {string} [options.watsonToken] - Valid Watson authentication token (for Cloud Foundry)
    * @param {string} [options.model] - The identifier of the model that is to be used for all recognition requests sent over the connection
@@ -158,6 +159,7 @@ class RecognizeStream extends Duplex {
     this.listening = false;
     this.initialized = false;
     this.finished = false;
+    this.authenticator = options.authenticator;
   }
 
   initialize() {
@@ -236,7 +238,7 @@ class RecognizeStream extends Duplex {
       null,
       options.headers,
       requestOptions,
-      { tlsOptions: { rejectUnauthorized: options.rejectUnauthorized }}
+      { tlsOptions: { rejectUnauthorized: !options.disableSslVerification }}
     ));
 
     // when the input stops, let the service know that we're done
@@ -421,7 +423,7 @@ class RecognizeStream extends Duplex {
 
 
   _write(chunk, encoding, callback): void {
-    setAuthorizationHeader(this.options, err => {
+    this.authenticator.authenticate(this.options, err => {
       if (err) {
         this.emit('error', err);
         this.push(null);
