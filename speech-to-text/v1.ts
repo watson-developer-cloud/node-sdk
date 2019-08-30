@@ -218,7 +218,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       options,
       (next) => {
         self.getLanguageModel(params, (err, res) => {
-          const customization = res.result;
+          const customization = err ? null : res.result;
           if (err) {
             next(err);
           } else if (

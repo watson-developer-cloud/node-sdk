@@ -1,9 +1,10 @@
 'use strict';
 const fs = require('fs');
+const { IamAuthenticator } = require('../../auth');
 const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
+const options = authHelper.auth.visual_recognition;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const async = require('async');
 
@@ -18,8 +19,9 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 8);
 
+  options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const visual_recognition = new VisualRecognitionV3(
-    Object.assign({}, auth.visual_recognition_rc.v3, {
+    Object.assign({}, options.v3, {
       version: '2019-03-27',
     })
   );
@@ -38,9 +40,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
           function(cls, next) {
             // eslint-disable-next-line no-console
             console.log('Deleting old classifier before running tests', cls);
-            visual_recognition.deleteClassifier({ classifier_id: cls.classifier_id }, function(
-              err
-            ) {
+            visual_recognition.deleteClassifier({ classifierId: cls.classifier_id }, err => {
               if (err) {
                 // eslint-disable-next-line no-console
                 console.error('error deleting classifier:', err, cls);
@@ -64,12 +64,10 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
       visual_recognition.createClassifier(
         {
           name: 'light_dark_test_temporary',
-          light_positive_examples: fs.createReadStream(
+          lightPositiveExamples: fs.createReadStream(
             path.join(__dirname, '../resources/light.zip')
           ),
-          dark_positive_examples: fs.createReadStream(
-            path.join(__dirname, '../resources/dark.zip')
-          ),
+          darkPositiveExamples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip')),
         },
         function(err, response) {
           if (err) {
@@ -95,10 +93,11 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
     });
 
     it('getClassifier()', function(done) {
-      visual_recognition.getClassifier({ classifier_id: classifier_id }, function(err, classifier) {
+      visual_recognition.getClassifier({ classifierId: classifier_id }, function(err, res) {
         if (err) {
           return done(err);
         }
+        const classifier = res.result;
         expect(classifier.classifier_id).toBe(classifier_id);
         expect(classifier.name).toBe('light_dark_test_temporary');
         const classes = [];
@@ -116,7 +115,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
         //  This evil recursive function will be used to verify that the classifier
         //  has finished training. 'resolve' and 'reject' are functions from an
         //  enclosing promise (or a follow-on callback for resolve if you prefer)
-        visual_recognition.getClassifier({ classifier_id: classifier_id }, function(err, response) {
+        visual_recognition.getClassifier({ classifierId: classifier_id }, function(err, response) {
           if (err) {
             reject(err);
             return;
