@@ -15,7 +15,8 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core');
+const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
+const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
 const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
 const utils = require('../resources/unitTestUtils');
 
@@ -35,8 +36,7 @@ const {
 const noop = () => {};
 
 const service = {
-  username: 'batman',
-  password: 'bruce-wayne',
+  authenticator: new NoAuthAuthenticator(),
   url: 'https://gateway.watsonplatform.net/tone-analyzer/api/tone-analyzer/api',
   version: '2018-10-18',
 };
@@ -60,19 +60,19 @@ describe('tone', () => {
     });
     test('should pass the right params to createRequest', () => {
       // parameters
-      const tone_input = 'fake_tone_input';
+      const toneInput = 'fake_toneInput';
+      const contentType = 'fake_contentType';
       const sentences = 'fake_sentences';
       const tones = 'fake_tones';
-      const content_language = 'fake_content_language';
-      const accept_language = 'fake_accept_language';
-      const content_type = 'fake_content_type';
+      const contentLanguage = 'fake_contentLanguage';
+      const acceptLanguage = 'fake_acceptLanguage';
       const params = {
-        tone_input,
+        toneInput,
+        contentType,
         sentences,
         tones,
-        content_language,
-        accept_language,
-        content_type,
+        contentLanguage,
+        acceptLanguage,
       };
 
       // invoke method
@@ -86,38 +86,38 @@ describe('tone', () => {
       checkUrlAndMethod(options, '/v3/tone', 'POST');
       checkCallback(createRequestMock);
       const expectedAccept = 'application/json';
-      const expectedContentType = content_type;
+      const expectedContentType = contentType;
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Content-Language', content_language);
-      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
-      checkUserHeader(createRequestMock, 'Content-Type', content_type);
-      expect(options.body).toEqual(tone_input);
+      checkUserHeader(createRequestMock, 'Content-Type', contentType);
+      checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
+      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
+      expect(options.body).toEqual(toneInput);
       expect(options.qs['sentences']).toEqual(sentences);
       expect(options.qs['tones']).toEqual(tones);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
-      const tone_input = 'fake_tone_input';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const toneInput = 'fake_toneInput';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
-        tone_input,
+        toneInput,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       toneAnalyzer.tone(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {
       // parameters
-      const tone_input = 'fake_tone_input';
+      const toneInput = 'fake_toneInput';
       const params = {
-        tone_input,
+        toneInput,
       };
 
       // invoke method
@@ -143,7 +143,7 @@ describe('tone', () => {
 
     test('should enforce required parameters', done => {
       // required parameters for this method
-      const requiredParams = ['tone_input'];
+      const requiredParams = ['toneInput'];
 
       toneAnalyzer.tone({}, err => {
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
@@ -153,7 +153,7 @@ describe('tone', () => {
 
     test('should reject promise when required params are not given', done => {
       // required parameters for this method
-      const requiredParams = ['tone_input'];
+      const requiredParams = ['toneInput'];
 
       const tonePromise = toneAnalyzer.tone();
       expectToBePromise(tonePromise);
@@ -174,12 +174,12 @@ describe('toneChat', () => {
     test('should pass the right params to createRequest', () => {
       // parameters
       const utterances = 'fake_utterances';
-      const content_language = 'fake_content_language';
-      const accept_language = 'fake_accept_language';
+      const contentLanguage = 'fake_contentLanguage';
+      const acceptLanguage = 'fake_acceptLanguage';
       const params = {
         utterances,
-        content_language,
-        accept_language,
+        contentLanguage,
+        acceptLanguage,
       };
 
       // invoke method
@@ -195,26 +195,26 @@ describe('toneChat', () => {
       const expectedAccept = 'application/json';
       const expectedContentType = 'application/json';
       checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Content-Language', content_language);
-      checkUserHeader(createRequestMock, 'Accept-Language', accept_language);
+      checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
+      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
       expect(options.body['utterances']).toEqual(utterances);
     });
 
     test('should prioritize user-given headers', () => {
       // parameters
       const utterances = 'fake_utterances';
-      const accept = 'fake/header';
-      const contentType = 'fake/header';
+      const userAccept = 'fake/header';
+      const userContentType = 'fake/header';
       const params = {
         utterances,
         headers: {
-          Accept: accept,
-          'Content-Type': contentType,
+          Accept: userAccept,
+          'Content-Type': userContentType,
         },
       };
 
       toneAnalyzer.toneChat(params, noop);
-      checkMediaHeaders(createRequestMock, accept, contentType);
+      checkMediaHeaders(createRequestMock, userAccept, userContentType);
     });
 
     test('should return a promise when no callback is given', () => {

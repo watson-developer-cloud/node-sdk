@@ -1,23 +1,27 @@
 'use strict';
 
 const Authorization = require('../../authorization/v1');
+const { BasicAuthenticator, IamAuthenticator } = require('ibm-cloud-sdk-core');
 
 describe('authorization', function() {
   const url = 'http://ibm.com:80/text-to-speech-beta/api/foo/bar';
   const service = {
-    username: 'batman',
-    password: 'bruce-wayne',
     url,
-    version: 'v1',
+    authenticator: new BasicAuthenticator({
+      username: 'batman',
+      password: 'bruce-wayne',
+    }),
   };
 
-  const rc_service = {
-    iam_apikey: 'abc123',
-    version: 'v1',
+  const serviceManagedToken = {
+    url,
+    authenticator: new IamAuthenticator({
+      apikey: 'abc123',
+    }),
   };
 
   const authorization = new Authorization(service);
-  const rc_authorization = new Authorization(rc_service);
+  const authorizationIam = new Authorization(serviceManagedToken);
 
   const createRequestMock = jest.spyOn(authorization, 'createRequest');
   createRequestMock.mockImplementation((params, cb) => cb(null, mock_token));
@@ -58,13 +62,13 @@ describe('authorization', function() {
     });
 
     it('should return an iam access token if given iam_api_key', function(done) {
-      expect(rc_authorization.tokenManager).not.toBeNull();
+      expect(authorizationIam.tokenManager).not.toBeNull();
 
       // mock the token manager request method
-      const requestMock = jest.spyOn(rc_authorization.tokenManager, 'getToken');
+      const requestMock = jest.spyOn(authorizationIam.authenticator.tokenManager, 'getToken');
       requestMock.mockImplementation(cb => cb(null, mock_token));
 
-      rc_authorization.getToken(checkToken(done));
+      authorizationIam.getToken(checkToken(done));
     });
   });
 });

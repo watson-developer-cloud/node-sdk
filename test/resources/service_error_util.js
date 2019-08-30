@@ -1,8 +1,8 @@
 module.exports = {
-  checkErrorCode: (code, cb) => (err, res, response) => {
+  checkErrorCode: (code, cb) => (err, res) => {
     if (err && err.code) {
       expect(err.code).toBe(code);
     }
-    return cb(err, res, response);
+    return cb(err, res);
   },
 };

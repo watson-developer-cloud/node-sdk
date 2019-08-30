@@ -1,8 +1,8 @@
 'use strict';
 const fs = require('fs');
+const { IamAuthenticator } = require('../../auth');
 const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const serviceErrorUtils = require('../resources/service_error_util');
 
@@ -12,8 +12,10 @@ describe('visual_recognition_integration', function() {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 4);
 
+  const options = authHelper.auth.visual_recognition;
+  options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const visual_recognition = new VisualRecognitionV3(
-    Object.assign({}, auth.visual_recognition, {
+    Object.assign({}, options, {
       version: '2019-03-27',
     })
   );
@@ -21,11 +23,11 @@ describe('visual_recognition_integration', function() {
   describe('classify()', function() {
     it('should classify an uploaded image', function(done) {
       const params = {
-        images_file: fs.createReadStream(__dirname + '/../resources/car.png'),
+        imagesFile: fs.createReadStream(__dirname + '/../resources/car.png'),
       };
       visual_recognition.classify(
         params,
-        serviceErrorUtils.checkErrorCode(200, function(err, result) {
+        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
           if (err) {
             return done(err);
           }
@@ -45,11 +47,11 @@ describe('visual_recognition_integration', function() {
 
     it('should classify from a buffer', function(done) {
       const params = {
-        images_file: fs.readFileSync(__dirname + '/../resources/car.png'),
+        imagesFile: fs.readFileSync(__dirname + '/../resources/car.png'),
       };
       visual_recognition.classify(
         params,
-        serviceErrorUtils.checkErrorCode(200, function(err, result) {
+        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
           if (err) {
             return done(err);
           }
@@ -72,7 +74,7 @@ describe('visual_recognition_integration', function() {
       };
       visual_recognition.classify(
         params,
-        serviceErrorUtils.checkErrorCode(200, function(err, result) {
+        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
           if (err) {
             return done(err);
           }
@@ -100,11 +102,11 @@ describe('visual_recognition_integration', function() {
   describe('detectFaces()', function() {
     it('should detect faces in an uploaded image', function(done) {
       const params = {
-        images_file: fs.createReadStream(__dirname + '/../resources/obama.jpg'),
+        imagesFile: fs.createReadStream(__dirname + '/../resources/obama.jpg'),
       };
       visual_recognition.detectFaces(
         params,
-        serviceErrorUtils.checkErrorCode(200, function(err, result) {
+        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
           if (err) {
             return done(err);
           }
@@ -127,7 +129,7 @@ describe('visual_recognition_integration', function() {
       };
       visual_recognition.detectFaces(
         params,
-        serviceErrorUtils.checkErrorCode(200, function(err, result) {
+        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
           if (err) {
             return done(err);
           }
