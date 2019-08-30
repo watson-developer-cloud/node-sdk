@@ -89,12 +89,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createlanguagemodelparams.html#base_model_name" class="tsd-kind-icon">base_<wbr>model_<wbr>name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createlanguagemodelparams.html#basemodelname" class="tsd-kind-icon">base<wbr>Model<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createlanguagemodelparams.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createlanguagemodelparams.html#dialect" class="tsd-kind-icon">dialect</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createlanguagemodelparams.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createlanguagemodelparams.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.createlanguagemodelparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,18 +102,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="base_model_name" class="tsd-anchor"></a>
-					<h3>base_<wbr>model_<wbr>name</h3>
-					<div class="tsd-signature tsd-kind-icon">base_<wbr>model_<wbr>name<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.createlanguagemodelconstants.basemodelname.html" class="tsd-signature-type">BaseModelName</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="basemodelname" class="tsd-anchor"></a>
+					<h3>base<wbr>Model<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">base<wbr>Model<wbr>Name<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.createlanguagemodelconstants.basemodelname.html" class="tsd-signature-type">BaseModelName</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L3832">speech-to-text/v1-generated.ts:3832</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L4130">speech-to-text/v1-generated.ts:4130</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the base language model that is to be customized by the new custom language model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports language model customization, use the <strong>Get a model</strong> method and check that the attribute <code>custom_language_model</code> is set to <code>true</code>. You can also refer to <a href="https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-customization#languageSupport">Language support for customization</a>.</p>
+							<p>The name of the base language model that is to be customized by the new custom language model. The new
+							custom model can be used only with the base model that it customizes.</p>
 						</div>
+						<p> To determine whether a base model supports language model customization, use the <strong>Get a model</strong> method and
+							check that the attribute <code>custom_language_model</code> is set to <code>true</code>. You can also refer to <a href="https://cloud.ibm.com/docs/services/speech-to-text?topic=speech-to-text-customization#languageSupport">Language support for
+						customization</a>.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -123,12 +126,13 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L3836">speech-to-text/v1-generated.ts:3836</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L4152">speech-to-text/v1-generated.ts:4152</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A description of the new custom language model. Use a localized description that matches the language of the custom model.</p>
+							<p>A description of the new custom language model. Use a localized description that matches the language of the
+							custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -138,13 +142,28 @@
 					<div class="tsd-signature tsd-kind-icon">dialect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L3834">speech-to-text/v1-generated.ts:3834</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L4148">speech-to-text/v1-generated.ts:4148</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The dialect of the specified language that is to be used with the custom language model. The parameter is meaningful only for Spanish models, for which the service creates a custom language model that is suited for speech in one of the following dialects: * <code>es-ES</code> for Castilian Spanish (the default) * <code>es-LA</code> for Latin American Spanish * <code>es-US</code> for North American (Mexican) Spanish A specified dialect must be valid for the base model. By default, the dialect matches the language of the base model; for example, <code>en-US</code> for either of the US English language models.</p>
+							<p>The dialect of the specified language that is to be used with the custom language model. For most languages,
+								the dialect matches the language of the base model by default. For example, <code>en-US</code> is used for either of the US
+							English language models.</p>
 						</div>
+						<p> For a Spanish language, the service creates a custom language model that is suited for speech in one of the
+						following dialects:</p>
+						<ul>
+							<li><code>es-ES</code> for Castilian Spanish (<code>es-ES</code> models)</li>
+							<li><code>es-LA</code> for Latin American Spanish (<code>es-AR</code>, <code>es-CL</code>, <code>es-CO</code>, and <code>es-PE</code> models)</li>
+							<li><p><code>es-US</code> for Mexican (North American) Spanish (<code>es-MX</code> models)</p>
+								<p>The parameter is meaningful only for Spanish models, for which you can always safely omit the parameter to have
+								the service create the correct mapping.</p>
+								<p>If you specify the <code>dialect</code> parameter for non-Spanish language models, its value must match the language of the
+									base model. If you specify the <code>dialect</code> for Spanish language models, its value must match one of the defined
+								mappings as indicated (<code>es-ES</code>, <code>es-LA</code>, or <code>es-MX</code>). All dialect values are case-insensitive.</p>
+							</li>
+						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -153,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L3837">speech-to-text/v1-generated.ts:3837</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L4153">speech-to-text/v1-generated.ts:4153</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -163,24 +182,16 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L3830">speech-to-text/v1-generated.ts:3830</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L4122">speech-to-text/v1-generated.ts:4122</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A user-defined name for the new custom language model. Use a name that is unique among all custom language models that you own. Use a localized name that matches the language of the custom model. Use a name that describes the domain of the custom model, such as <code>Medical custom model</code> or <code>Legal custom model</code>.</p>
+							<p>A user-defined name for the new custom language model. Use a name that is unique among all custom language
+								models that you own. Use a localized name that matches the language of the custom model. Use a name that
+							describes the domain of the custom model, such as <code>Medical custom model</code> or <code>Legal custom model</code>.</p>
 						</div>
 					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="return_response" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
-					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L3838">speech-to-text/v1-generated.ts:3838</a></li>
-						</ul>
-					</aside>
 				</section>
 			</section>
 		</div>
@@ -233,7 +244,7 @@
 								<a href="speechtotextv1.createlanguagemodelparams.html" class="tsd-kind-icon">Create<wbr>Language<wbr>Model<wbr>Params</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.createlanguagemodelparams.html#base_model_name" class="tsd-kind-icon">base_<wbr>model_<wbr>name</a>
+										<a href="speechtotextv1.createlanguagemodelparams.html#basemodelname" class="tsd-kind-icon">base<wbr>Model<wbr>Name</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.createlanguagemodelparams.html#description" class="tsd-kind-icon">description</a>
@@ -246,9 +257,6 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.createlanguagemodelparams.html#name" class="tsd-kind-icon">name</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.createlanguagemodelparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
 									</li>
 								</ul>
 							</li>
@@ -267,6 +275,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

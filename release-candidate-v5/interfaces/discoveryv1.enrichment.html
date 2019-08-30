@@ -91,7 +91,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.enrichment.html#description" class="tsd-kind-icon">description</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.enrichment.html#destination_field" class="tsd-kind-icon">destination_<wbr>field</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.enrichment.html#enrichment_name" class="tsd-kind-icon">enrichment_<wbr>name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.enrichment.html#enrichment" class="tsd-kind-icon">enrichment</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.enrichment.html#ignore_downstream_errors" class="tsd-kind-icon">ignore_<wbr>downstream_<wbr>errors</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.enrichment.html#options" class="tsd-kind-icon">options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.enrichment.html#overwrite" class="tsd-kind-icon">overwrite</a></li>
@@ -109,7 +109,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5599">discovery/v1.ts:5599</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5853">discovery/v1.ts:5853</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -124,28 +124,36 @@
 					<div class="tsd-signature tsd-kind-icon">destination_<wbr>field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5601">discovery/v1.ts:5601</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5858">discovery/v1.ts:5858</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Field where enrichments will be stored. This field must already exist or be at most 1 level deeper than an existing field. For example, if <code>text</code> is a top-level field with no sub-fields, <code>text.foo</code> is a valid destination but <code>text.foo.bar</code> is not.</p>
+							<p>Field where enrichments will be stored. This field must already exist or be at most 1 level deeper than an
+								existing field. For example, if <code>text</code> is a top-level field with no sub-fields, <code>text.foo</code> is a valid
+							destination but <code>text.foo.bar</code> is not.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="enrichment_name" class="tsd-anchor"></a>
-					<h3>enrichment_<wbr>name</h3>
-					<div class="tsd-signature tsd-kind-icon">enrichment_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="enrichment" class="tsd-anchor"></a>
+					<h3>enrichment</h3>
+					<div class="tsd-signature tsd-kind-icon">enrichment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5607">discovery/v1.ts:5607</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5877">discovery/v1.ts:5877</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Name of the enrichment service to call. Current options are <code>natural_language_understanding</code> and <code>elements</code>. When using <code>natual_language_understanding</code>, the <strong>options</strong> object must contain Natural Language Understanding options. When using <code>elements</code> the <strong>options</strong> object must contain Element Classification options. Additionally, when using the <code>elements</code> enrichment the configuration specified and files ingested must meet all the criteria specified in <a href="https://cloud.ibm.com/docs/services/discovery?topic=discovery-element-classification#element-classification">the documentation</a>.</p>
+							<p>Name of the enrichment service to call. Current options are <code>natural_language_understanding</code> and <code>elements</code>.</p>
 						</div>
+						<p>  When using <code>natual_language_understanding</code>, the <strong>options</strong> object must contain Natural Language Understanding
+						options.</p>
+						<p>  When using <code>elements</code> the <strong>options</strong> object must contain Element Classification options. Additionally, when
+							using the <code>elements</code> enrichment the configuration specified and files ingested must meet all the criteria
+							specified in <a href="https://cloud.ibm.com/docs/services/discovery?topic=discovery-element-classification#element-classification">the
+						documentation</a>.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -154,12 +162,13 @@
 					<div class="tsd-signature tsd-kind-icon">ignore_<wbr>downstream_<wbr>errors<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5609">discovery/v1.ts:5609</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5881">discovery/v1.ts:5881</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If true, then most errors generated during the enrichment process will be treated as warnings and will not cause the document to fail processing.</p>
+							<p>If true, then most errors generated during the enrichment process will be treated as warnings and will not
+							cause the document to fail processing.</p>
 						</div>
 					</div>
 				</section>
@@ -169,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.enrichmentoptions.html" class="tsd-signature-type">EnrichmentOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5611">discovery/v1.ts:5611</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5883">discovery/v1.ts:5883</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +193,7 @@
 					<div class="tsd-signature tsd-kind-icon">overwrite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5605">discovery/v1.ts:5605</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5866">discovery/v1.ts:5866</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -199,13 +208,15 @@
 					<div class="tsd-signature tsd-kind-icon">source_<wbr>field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5603">discovery/v1.ts:5603</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5864">discovery/v1.ts:5864</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Field to be enriched. Arrays can be specified as the <strong>source_field</strong> if the <strong>enrichment</strong> service for this enrichment is set to <code>natural_language_undstanding</code>.</p>
+							<p>Field to be enriched.</p>
 						</div>
+						<p> Arrays can be specified as the <strong>source_field</strong> if the <strong>enrichment</strong> service for this enrichment is set to
+						<code>natural_language_undstanding</code>.</p>
 					</div>
 				</section>
 			</section>
@@ -247,7 +258,7 @@
 										<a href="discoveryv1.enrichment.html#destination_field" class="tsd-kind-icon">destination_<wbr>field</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.enrichment.html#enrichment_name" class="tsd-kind-icon">enrichment_<wbr>name</a>
+										<a href="discoveryv1.enrichment.html#enrichment" class="tsd-kind-icon">enrichment</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="discoveryv1.enrichment.html#ignore_downstream_errors" class="tsd-kind-icon">ignore_<wbr>downstream_<wbr>errors</a>
@@ -296,6 +307,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

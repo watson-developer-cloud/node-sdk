@@ -104,12 +104,25 @@
 					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/personality-insights/v3.ts#L575">personality-insights/v3.ts:575</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/personality-insights/v3.ts#L695">personality-insights/v3.ts:695</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The message associated with the <code>warning_id</code>: * <code>WORD_COUNT_MESSAGE</code>: &quot;There were {number} words in the input. We need a minimum of 600, preferably 1,200 or more, to compute statistically significant estimates.&quot; * <code>JSON_AS_TEXT</code>: &quot;Request input was processed as text/plain as indicated, however detected a JSON input. Did you mean application/json?&quot; * <code>CONTENT_TRUNCATED</code>: &quot;For maximum accuracy while also optimizing processing time, only the first 250KB of input text (excluding markup) was analyzed. Accuracy levels off at approximately 3,000 words so this did not affect the accuracy of the profile.&quot; * <code>PARTIAL_TEXT_USED</code>, &quot;The text provided to compute the profile was trimmed for performance reasons. This action does not affect the accuracy of the output, as not all of the input text was required.&quot; Applies only when Arabic input text exceeds a threshold at which additional words do not contribute to the accuracy of the profile.</p>
+							<p>The message associated with the <code>warning_id</code>:</p>
+							<ul>
+								<li><code>WORD_COUNT_MESSAGE</code>: &quot;There were {number} words in the input. We need a minimum of 600, preferably 1,200 or
+								more, to compute statistically significant estimates.&quot;</li>
+								<li><code>JSON_AS_TEXT</code>: &quot;Request input was processed as text/plain as indicated, however detected a JSON input. Did
+								you mean application/json?&quot;</li>
+								<li><code>CONTENT_TRUNCATED</code>: &quot;For maximum accuracy while also optimizing processing time, only the first 250KB of
+									input text (excluding markup) was analyzed. Accuracy levels off at approximately 3,000 words so this did not
+								affect the accuracy of the profile.&quot;</li>
+								<li><code>PARTIAL_TEXT_USED</code>, &quot;The text provided to compute the profile was trimmed for performance reasons. This
+									action does not affect the accuracy of the output, as not all of the input text was required.&quot; Applies only when
+									Arabic input text exceeds a threshold at which additional words do not contribute to the accuracy of the
+								profile.</li>
+							</ul>
 						</div>
 					</div>
 				</section>
@@ -119,7 +132,7 @@
 					<div class="tsd-signature tsd-kind-icon">warning_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/personality-insights/v3.ts#L573">personality-insights/v3.ts:573</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/personality-insights/v3.ts#L681">personality-insights/v3.ts:681</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -226,19 +239,13 @@
 								<a href="../classes/personalityinsightsv3.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="../classes/personalityinsightsv3.html#_options" class="tsd-kind-icon">_options</a>
+								<a href="../classes/personalityinsightsv3.html#baseoptions" class="tsd-kind-icon">base<wbr>Options</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
 								<a href="../classes/personalityinsightsv3.html#name" class="tsd-kind-icon">name</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="../classes/personalityinsightsv3.html#servicedefaults" class="tsd-kind-icon">service<wbr>Defaults</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
 								<a href="../classes/personalityinsightsv3.html#serviceversion" class="tsd-kind-icon">service<wbr>Version</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="../classes/personalityinsightsv3.html#tokenmanager" class="tsd-kind-icon">token<wbr>Manager</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 								<a href="../classes/personalityinsightsv3.html#url-1" class="tsd-kind-icon">URL</a>
@@ -247,19 +254,13 @@
 								<a href="../classes/personalityinsightsv3.html#createrequest" class="tsd-kind-icon">create<wbr>Request</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/personalityinsightsv3.html#getservicecredentials" class="tsd-kind-icon">get<wbr>Service<wbr>Credentials</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="../classes/personalityinsightsv3.html#preauthenticate" class="tsd-kind-icon">pre<wbr>Authenticate</a>
+								<a href="../classes/personalityinsightsv3.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/personalityinsightsv3.html#profile-1" class="tsd-kind-icon">profile</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="../classes/personalityinsightsv3.html#profileascsv" class="tsd-kind-icon">profile<wbr>AsCsv</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/personalityinsightsv3.html#setaccesstoken" class="tsd-kind-icon">set<wbr>Access<wbr>Token</a>
 							</li>
 						</ul>
 					</li>
@@ -282,6 +283,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

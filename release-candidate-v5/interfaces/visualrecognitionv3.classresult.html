@@ -89,7 +89,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classresult.html#class_name" class="tsd-kind-icon">class_<wbr>name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classresult.html#_class" class="tsd-kind-icon">_class</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classresult.html#score" class="tsd-kind-icon">score</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.classresult.html#type_hierarchy" class="tsd-kind-icon">type_<wbr>hierarchy</a></li>
 							</ul>
@@ -100,18 +100,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="class_name" class="tsd-anchor"></a>
-					<h3>class_<wbr>name</h3>
-					<div class="tsd-signature tsd-kind-icon">class_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="_class" class="tsd-anchor"></a>
+					<h3>_class</h3>
+					<div class="tsd-signature tsd-kind-icon">_class<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L891">visual-recognition/v3.ts:891</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L957">visual-recognition/v3.ts:957</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Name of the class. Class names are translated in the language defined by the <strong>Accept-Language</strong> request header for the build-in classifier IDs (<code>default</code>, <code>food</code>, and <code>explicit</code>). Class names of custom classifiers are not translated. The response might not be in the specified language when the requested language is not supported or when there is no translation for the class name.</p>
+							<p>Name of the class.</p>
 						</div>
+						<p> Class names are translated in the language defined by the <strong>Accept-Language</strong> request header for the build-in
+							classifier IDs (<code>default</code>, <code>food</code>, and <code>explicit</code>). Class names of custom classifiers are not translated. The
+							response might not be in the specified language when the requested language is not supported or when there is no
+						translation for the class name.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -120,12 +124,13 @@
 					<div class="tsd-signature tsd-kind-icon">score<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L893">visual-recognition/v3.ts:893</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L961">visual-recognition/v3.ts:961</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5.</p>
+							<p>Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that
+							the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5.</p>
 						</div>
 					</div>
 				</section>
@@ -135,12 +140,13 @@
 					<div class="tsd-signature tsd-kind-icon">type_<wbr>hierarchy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L895">visual-recognition/v3.ts:895</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L965">visual-recognition/v3.ts:965</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Knowledge graph of the property. For example, <code>/fruit/pome/apple/eating apple/Granny Smith</code>. Included only if identified.</p>
+							<p>Knowledge graph of the property. For example, <code>/fruit/pome/apple/eating apple/Granny Smith</code>. Included only
+							if identified.</p>
 						</div>
 					</div>
 				</section>
@@ -204,7 +210,7 @@
 								<a href="visualrecognitionv3.classresult.html" class="tsd-kind-icon">Class<wbr>Result</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="visualrecognitionv3.classresult.html#class_name" class="tsd-kind-icon">class_<wbr>name</a>
+										<a href="visualrecognitionv3.classresult.html#_class" class="tsd-kind-icon">_class</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="visualrecognitionv3.classresult.html#score" class="tsd-kind-icon">score</a>
@@ -220,6 +226,9 @@
 				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

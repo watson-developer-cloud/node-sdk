@@ -103,13 +103,22 @@
 					<div class="tsd-signature tsd-kind-icon">expansions<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.expansion.html" class="tsd-signature-type">Expansion</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L5686">discovery/v1.ts:5686</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L5990">discovery/v1.ts:5990</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An array of query expansion definitions. Each object in the <strong>expansions</strong> array represents a term or set of terms that will be expanded into other terms. Each expansion object can be configured as bidirectional or unidirectional. Bidirectional means that all terms are expanded to all other terms in the object. Unidirectional means that a set list of terms can be expanded into a second list of terms. To create a bi-directional expansion specify an <strong>expanded_terms</strong> array. When found in a query, all items in the <strong>expanded_terms</strong> array are then expanded to the other items in the same array. To create a uni-directional expansion, specify both an array of <strong>input_terms</strong> and an array of <strong>expanded_terms</strong>. When items in the <strong>input_terms</strong> array are present in a query, they are expanded using the items listed in the <strong>expanded_terms</strong> array.</p>
+							<p>An array of query expansion definitions.</p>
 						</div>
+						<p>  Each object in the <strong>expansions</strong> array represents a term or set of terms that will be expanded into other
+							terms. Each expansion object can be configured as bidirectional or unidirectional. Bidirectional means that all
+							terms are expanded to all other terms in the object. Unidirectional means that a set list of terms can be
+						expanded into a second list of terms.</p>
+						<p>  To create a bi-directional expansion specify an <strong>expanded_terms</strong> array. When found in a query, all items in
+						the <strong>expanded_terms</strong> array are then expanded to the other items in the same array.</p>
+						<p>  To create a uni-directional expansion, specify both an array of <strong>input_terms</strong> and an array of
+							<strong>expanded_terms</strong>. When items in the <strong>input_terms</strong> array are present in a query, they are expanded using the
+						items listed in the <strong>expanded_terms</strong> array.</p>
 					</div>
 				</section>
 			</section>
@@ -182,6 +191,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

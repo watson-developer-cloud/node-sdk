@@ -116,7 +116,7 @@
 					<div class="tsd-signature tsd-kind-icon">base_<wbr>model_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4491">speech-to-text/v1-generated.ts:4491</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5177">speech-to-text/v1-generated.ts:5177</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -131,12 +131,13 @@
 					<div class="tsd-signature tsd-kind-icon">created<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4475">speech-to-text/v1-generated.ts:4475</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5147">speech-to-text/v1-generated.ts:5147</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The date and time in Coordinated Universal Time (UTC) at which the custom language model was created. The value is provided in full ISO 8601 format (<code>YYYY-MM-DDThh:mm:ss.sTZD</code>).</p>
+							<p>The date and time in Coordinated Universal Time (UTC) at which the custom language model was created. The
+							value is provided in full ISO 8601 format (<code>YYYY-MM-DDThh:mm:ss.sTZD</code>).</p>
 						</div>
 					</div>
 				</section>
@@ -146,12 +147,13 @@
 					<div class="tsd-signature tsd-kind-icon">customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4473">speech-to-text/v1-generated.ts:4473</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5143">speech-to-text/v1-generated.ts:5143</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The customization ID (GUID) of the custom language model. The <strong>Create a custom language model</strong> method returns only this field of the object; it does not return the other fields.</p>
+							<p>The customization ID (GUID) of the custom language model. The <strong>Create a custom language model</strong> method
+							returns only this field of the object; it does not return the other fields.</p>
 						</div>
 					</div>
 				</section>
@@ -161,7 +163,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4489">speech-to-text/v1-generated.ts:4489</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5175">speech-to-text/v1-generated.ts:5175</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -176,13 +178,21 @@
 					<div class="tsd-signature tsd-kind-icon">dialect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4481">speech-to-text/v1-generated.ts:4481</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5164">speech-to-text/v1-generated.ts:5164</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The dialect of the language for the custom language model. By default, the dialect matches the language of the base model; for example, <code>en-US</code> for either of the US English language models. For Spanish models, the field indicates the dialect for which the model was created: * <code>es-ES</code> for Castilian Spanish (the default) * <code>es-LA</code> for Latin American Spanish * <code>es-US</code> for North American (Mexican) Spanish.</p>
+							<p>The dialect of the language for the custom language model. For non-Spanish models, the field matches the
+								language of the base model; for example, <code>en-US</code> for either of the US English language models. For Spanish
+							models, the field indicates the dialect for which the model was created:</p>
+							<ul>
+								<li><code>es-ES</code> for Castilian Spanish (<code>es-ES</code> models)</li>
+								<li><code>es-LA</code> for Latin American Spanish (<code>es-AR</code>, <code>es-CL</code>, <code>es-CO</code>, and <code>es-PE</code> models)</li>
+								<li><code>es-US</code> for Mexican (North American) Spanish (<code>es-MX</code> models)</li>
+							</ul>
 						</div>
+						<p> Dialect values are case-insensitive.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -191,12 +201,14 @@
 					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4497">speech-to-text/v1-generated.ts:4497</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5198">speech-to-text/v1-generated.ts:5198</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If an error occurred while adding a grammar file to the custom language model, a message that describes an <code>Internal Server Error</code> and includes the string <code>Cannot compile grammar</code>. The status of the custom model is not affected by the error, but the grammar cannot be used with the model.</p>
+							<p>If an error occurred while adding a grammar file to the custom language model, a message that describes an
+								<code>Internal Server Error</code> and includes the string <code>Cannot compile grammar</code>. The status of the custom model is not
+							affected by the error, but the grammar cannot be used with the model.</p>
 						</div>
 					</div>
 				</section>
@@ -206,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4479">speech-to-text/v1-generated.ts:4479</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5154">speech-to-text/v1-generated.ts:5154</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -221,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4487">speech-to-text/v1-generated.ts:4487</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5173">speech-to-text/v1-generated.ts:5173</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -236,7 +248,7 @@
 					<div class="tsd-signature tsd-kind-icon">owner<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4485">speech-to-text/v1-generated.ts:4485</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5171">speech-to-text/v1-generated.ts:5171</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -251,12 +263,14 @@
 					<div class="tsd-signature tsd-kind-icon">progress<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4495">speech-to-text/v1-generated.ts:4495</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5193">speech-to-text/v1-generated.ts:5193</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A percentage that indicates the progress of the custom language model&#39;s current training. A value of <code>100</code> means that the model is fully trained. <strong>Note:</strong> The <code>progress</code> field does not currently reflect the progress of the training. The field changes from <code>0</code> to <code>100</code> when training is complete.</p>
+							<p>A percentage that indicates the progress of the custom language model&#39;s current training. A value of <code>100</code>
+								means that the model is fully trained. <strong>Note:</strong> The <code>progress</code> field does not currently reflect the progress of
+							the training. The field changes from <code>0</code> to <code>100</code> when training is complete.</p>
 						</div>
 					</div>
 				</section>
@@ -266,12 +280,22 @@
 					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4493">speech-to-text/v1-generated.ts:4493</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5188">speech-to-text/v1-generated.ts:5188</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The current status of the custom language model: * <code>pending</code>: The model was created but is waiting either for valid training data to be added or for the service to finish analyzing added data. * <code>ready</code>: The model contains valid data and is ready to be trained. If the model contains a mix of valid and invalid resources, you need to set the <code>strict</code> parameter to <code>false</code> for the training to proceed. * <code>training</code>: The model is currently being trained. * <code>available</code>: The model is trained and ready to use. * <code>upgrading</code>: The model is currently being upgraded. * <code>failed</code>: Training of the model failed.</p>
+							<p>The current status of the custom language model:</p>
+							<ul>
+								<li><code>pending</code>: The model was created but is waiting either for valid training data to be added or for the service
+								to finish analyzing added data.</li>
+								<li><code>ready</code>: The model contains valid data and is ready to be trained. If the model contains a mix of valid and
+								invalid resources, you need to set the <code>strict</code> parameter to <code>false</code> for the training to proceed.</li>
+								<li><code>training</code>: The model is currently being trained.</li>
+								<li><code>available</code>: The model is trained and ready to use.</li>
+								<li><code>upgrading</code>: The model is currently being upgraded.</li>
+								<li><code>failed</code>: Training of the model failed.</li>
+							</ul>
 						</div>
 					</div>
 				</section>
@@ -281,12 +305,14 @@
 					<div class="tsd-signature tsd-kind-icon">updated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4477">speech-to-text/v1-generated.ts:4477</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5152">speech-to-text/v1-generated.ts:5152</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The date and time in Coordinated Universal Time (UTC) at which the custom language model was last modified. The <code>created</code> and <code>updated</code> fields are equal when a language model is first added but has yet to be updated. The value is provided in full ISO 8601 format (YYYY-MM-DDThh:mm:ss.sTZD).</p>
+							<p>The date and time in Coordinated Universal Time (UTC) at which the custom language model was last modified.
+								The <code>created</code> and <code>updated</code> fields are equal when a language model is first added but has yet to be updated. The
+							value is provided in full ISO 8601 format (YYYY-MM-DDThh:mm:ss.sTZD).</p>
 						</div>
 					</div>
 				</section>
@@ -296,12 +322,14 @@
 					<div class="tsd-signature tsd-kind-icon">versions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4483">speech-to-text/v1-generated.ts:4483</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5169">speech-to-text/v1-generated.ts:5169</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A list of the available versions of the custom language model. Each element of the array indicates a version of the base model with which the custom model can be used. Multiple versions exist only if the custom model has been upgraded; otherwise, only a single version is shown.</p>
+							<p>A list of the available versions of the custom language model. Each element of the array indicates a version
+								of the base model with which the custom model can be used. Multiple versions exist only if the custom model has
+							been upgraded; otherwise, only a single version is shown.</p>
 						</div>
 					</div>
 				</section>
@@ -311,12 +339,13 @@
 					<div class="tsd-signature tsd-kind-icon">warnings<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/speech-to-text/v1-generated.ts#L4499">speech-to-text/v1-generated.ts:4499</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/speech-to-text/v1-generated.ts#L5202">speech-to-text/v1-generated.ts:5202</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If the request included unknown parameters, the following message: <code>Unexpected query parameter(s) [&#39;parameters&#39;] detected</code>, where <code>parameters</code> is a list that includes a quoted string for each unknown parameter.</p>
+							<p>If the request included unknown parameters, the following message: <code>Unexpected query parameter(s)
+ [&#39;parameters&#39;] detected</code>, where <code>parameters</code> is a list that includes a quoted string for each unknown parameter.</p>
 						</div>
 					</div>
 				</section>
@@ -429,6 +458,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

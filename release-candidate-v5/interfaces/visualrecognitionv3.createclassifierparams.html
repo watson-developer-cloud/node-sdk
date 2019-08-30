@@ -91,10 +91,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#negative_examples" class="tsd-kind-icon">negative_<wbr>examples</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#negative_examples_filename" class="tsd-kind-icon">negative_<wbr>examples_<wbr>filename</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#positive_examples" class="tsd-kind-icon">positive_<wbr>examples</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#negativeexamples" class="tsd-kind-icon">negative<wbr>Examples</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#negativeexamplesfilename" class="tsd-kind-icon">negative<wbr>Examples<wbr>Filename</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="visualrecognitionv3.createclassifierparams.html#positiveexamples" class="tsd-kind-icon">positive<wbr>Examples</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L820">visual-recognition/v3.ts:820</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L870">visual-recognition/v3.ts:870</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -118,7 +117,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L813">visual-recognition/v3.ts:813</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L849">visual-recognition/v3.ts:849</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -128,59 +127,57 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="negative_examples" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> negative_<wbr>examples</h3>
-					<div class="tsd-signature tsd-kind-icon">negative_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
+					<a name="negativeexamples" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> negative<wbr>Examples</h3>
+					<div class="tsd-signature tsd-kind-icon">negative<wbr>Examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L817">visual-recognition/v3.ts:817</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L867">visual-recognition/v3.ts:867</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A .zip file of images that do not depict the visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images. Encode special characters in the file name in UTF-8.</p>
+							<p>A .zip file of images that do not depict the visual subject of any of the classes of the new classifier.
+							Must contain a minimum of 10 images.</p>
 						</div>
+						<p> Encode special characters in the file name in UTF-8.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="negative_examples_filename" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> negative_<wbr>examples_<wbr>filename</h3>
-					<div class="tsd-signature tsd-kind-icon">negative_<wbr>examples_<wbr>filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="negativeexamplesfilename" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> negative<wbr>Examples<wbr>Filename</h3>
+					<div class="tsd-signature tsd-kind-icon">negative<wbr>Examples<wbr>Filename<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L819">visual-recognition/v3.ts:819</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L869">visual-recognition/v3.ts:869</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The filename for negative_examples.</p>
+							<p>The filename for negativeExamples.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="positive_examples" class="tsd-anchor"></a>
-					<h3>positive_<wbr>examples</h3>
-					<div class="tsd-signature tsd-kind-icon">positive_<wbr>examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<a name="positiveexamples" class="tsd-anchor"></a>
+					<h3>positive<wbr>Examples</h3>
+					<div class="tsd-signature tsd-kind-icon">positive<wbr>Examples<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L815">visual-recognition/v3.ts:815</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/visual-recognition/v3.ts#L861">visual-recognition/v3.ts:861</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A dictionary that contains the value for each classname. The value is a .zip file of images that depict the visual subject of a class in the new classifier. You can include more than one positive example file in a call. Specify the parameter name by appending <code>_positive_examples</code> to the class name. For example, <code>goldenretriever_positive_examples</code> creates the class <strong>goldenretriever</strong>. Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The maximum number of images is 10,000 images or 100 MB per .zip file. Encode special characters in the file name in UTF-8.</p>
+							<p>A dictionary that contains the value for each classname. The value is a .zip file of images that depict the
+							visual subject of a class in the new classifier. You can include more than one positive example file in a call.</p>
 						</div>
+						<p> Specify the parameter name by appending <code>_positive_examples</code> to the class name. For example,
+						<code>goldenretriever_positive_examples</code> creates the class <strong>goldenretriever</strong>.</p>
+						<p> Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The
+						maximum number of images is 10,000 images or 100 MB per .zip file.</p>
+						<p> Encode special characters in the file name in UTF-8.</p>
 					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="return_response" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
-					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/visual-recognition/v3.ts#L821">visual-recognition/v3.ts:821</a></li>
-						</ul>
-					</aside>
 				</section>
 			</section>
 		</div>
@@ -248,16 +245,13 @@
 										<a href="visualrecognitionv3.createclassifierparams.html#name" class="tsd-kind-icon">name</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="visualrecognitionv3.createclassifierparams.html#negative_examples" class="tsd-kind-icon">negative_<wbr>examples</a>
+										<a href="visualrecognitionv3.createclassifierparams.html#negativeexamples" class="tsd-kind-icon">negative<wbr>Examples</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="visualrecognitionv3.createclassifierparams.html#negative_examples_filename" class="tsd-kind-icon">negative_<wbr>examples_<wbr>filename</a>
+										<a href="visualrecognitionv3.createclassifierparams.html#negativeexamplesfilename" class="tsd-kind-icon">negative<wbr>Examples<wbr>Filename</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="visualrecognitionv3.createclassifierparams.html#positive_examples" class="tsd-kind-icon">positive_<wbr>examples</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="visualrecognitionv3.createclassifierparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
+										<a href="visualrecognitionv3.createclassifierparams.html#positiveexamples" class="tsd-kind-icon">positive<wbr>Examples</a>
 									</li>
 								</ul>
 							</li>
@@ -267,6 +261,9 @@
 				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

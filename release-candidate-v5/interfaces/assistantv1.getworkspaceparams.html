@@ -91,10 +91,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#_export" class="tsd-kind-icon">_export</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#headers" class="tsd-kind-icon">headers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#include_audit" class="tsd-kind-icon">include_<wbr>audit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#includeaudit" class="tsd-kind-icon">include<wbr>Audit</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#sort" class="tsd-kind-icon">sort</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#workspace_id" class="tsd-kind-icon">workspace_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.getworkspaceparams.html#workspaceid" class="tsd-kind-icon">workspace<wbr>Id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,12 +107,14 @@
 					<div class="tsd-signature tsd-kind-icon">_export<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/assistant/v1.ts#L3397">assistant/v1.ts:3397</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/assistant/v1.ts#L3374">assistant/v1.ts:3374</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Whether to include all element content in the returned data. If <strong>export</strong>=<code>false</code>, the returned data includes only information about the element itself. If <strong>export</strong>=<code>true</code>, all content, including subelements, is included.</p>
+							<p>Whether to include all element content in the returned data. If <strong>export</strong>=<code>false</code>, the returned data
+								includes only information about the element itself. If <strong>export</strong>=<code>true</code>, all content, including subelements, is
+							included.</p>
 						</div>
 					</div>
 				</section>
@@ -123,17 +124,17 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/assistant/v1.ts#L3402">assistant/v1.ts:3402</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/assistant/v1.ts#L3381">assistant/v1.ts:3381</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="include_audit" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> include_<wbr>audit</h3>
-					<div class="tsd-signature tsd-kind-icon">include_<wbr>audit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="includeaudit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> include<wbr>Audit</h3>
+					<div class="tsd-signature tsd-kind-icon">include<wbr>Audit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/assistant/v1.ts#L3399">assistant/v1.ts:3399</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/assistant/v1.ts#L3376">assistant/v1.ts:3376</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -143,37 +144,28 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="return_response" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
-					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/assistant/v1.ts#L3403">assistant/v1.ts:3403</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="sort" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sort</h3>
 					<div class="tsd-signature tsd-kind-icon">sort<span class="tsd-signature-symbol">:</span> <a href="../enums/assistantv1.getworkspaceconstants.sort.html" class="tsd-signature-type">Sort</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/assistant/v1.ts#L3401">assistant/v1.ts:3401</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/assistant/v1.ts#L3380">assistant/v1.ts:3380</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Indicates how the returned workspace data will be sorted. This parameter is valid only if <strong>export</strong>=<code>true</code>. Specify <code>sort=stable</code> to sort all workspace objects by unique identifier, in ascending alphabetical order.</p>
+							<p>Indicates how the returned workspace data will be sorted. This parameter is valid only if <strong>export</strong>=<code>true</code>.
+							Specify <code>sort=stable</code> to sort all workspace objects by unique identifier, in ascending alphabetical order.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="workspace_id" class="tsd-anchor"></a>
-					<h3>workspace_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">workspace_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="workspaceid" class="tsd-anchor"></a>
+					<h3>workspace<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">workspace<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/assistant/v1.ts#L3395">assistant/v1.ts:3395</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/assistant/v1.ts#L3369">assistant/v1.ts:3369</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -209,16 +201,13 @@
 										<a href="assistantv1.getworkspaceparams.html#headers" class="tsd-kind-icon">headers</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.getworkspaceparams.html#include_audit" class="tsd-kind-icon">include_<wbr>audit</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.getworkspaceparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
+										<a href="assistantv1.getworkspaceparams.html#includeaudit" class="tsd-kind-icon">include<wbr>Audit</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.getworkspaceparams.html#sort" class="tsd-kind-icon">sort</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.getworkspaceparams.html#workspace_id" class="tsd-kind-icon">workspace_<wbr>id</a>
+										<a href="assistantv1.getworkspaceparams.html#workspaceid" class="tsd-kind-icon">workspace<wbr>Id</a>
 									</li>
 								</ul>
 							</li>
@@ -267,6 +256,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

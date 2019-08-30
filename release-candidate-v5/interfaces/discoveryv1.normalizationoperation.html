@@ -105,7 +105,7 @@
 					<div class="tsd-signature tsd-kind-icon">destination_<wbr>field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L6022">discovery/v1.ts:6022</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L6402">discovery/v1.ts:6402</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -120,13 +120,31 @@
 					<div class="tsd-signature tsd-kind-icon">operation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L6018">discovery/v1.ts:6018</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L6398">discovery/v1.ts:6398</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Identifies what type of operation to perform. <strong>copy</strong> - Copies the value of the <strong>source_field</strong> to the <strong>destination_field</strong> field. If the <strong>destination_field</strong> already exists, then the value of the <strong>source_field</strong> overwrites the original value of the <strong>destination_field</strong>. <strong>move</strong> - Renames (moves) the <strong>source_field</strong> to the <strong>destination_field</strong>. If the <strong>destination_field</strong> already exists, then the value of the <strong>source_field</strong> overwrites the original value of the <strong>destination_field</strong>. Rename is identical to copy, except that the <strong>source_field</strong> is removed after the value has been copied to the <strong>destination_field</strong> (it is the same as a <em>copy</em> followed by a <em>remove</em>). <strong>merge</strong> - Merges the value of the <strong>source_field</strong> with the value of the <strong>destination_field</strong>. The <strong>destination_field</strong> is converted into an array if it is not already an array, and the value of the <strong>source_field</strong> is appended to the array. This operation removes the <strong>source_field</strong> after the merge. If the <strong>source_field</strong> does not exist in the current document, then the <strong>destination_field</strong> is still converted into an array (if it is not an array already). This conversion ensures the type for <strong>destination_field</strong> is consistent across all documents. <strong>remove</strong> - Deletes the <strong>source_field</strong> field. The <strong>destination_field</strong> is ignored for this operation. <strong>remove_nulls</strong> - Removes all nested null (blank) field values from the ingested document. <strong>source_field</strong> and <strong>destination_field</strong> are ignored by this operation because <em>remove</em>nulls_ operates on the entire ingested document. Typically, <strong>remove_nulls</strong> is invoked as the last normalization operation (if it is invoked at all, it can be time-expensive).</p>
+							<p>Identifies what type of operation to perform.</p>
 						</div>
+						<p> <strong>copy</strong> - Copies the value of the <strong>source_field</strong> to the <strong>destination_field</strong> field. If the
+							<strong>destination_field</strong> already exists, then the value of the <strong>source_field</strong> overwrites the original value of
+						the <strong>destination_field</strong>.</p>
+						<p> <strong>move</strong> - Renames (moves) the <strong>source_field</strong> to the <strong>destination_field</strong>. If the <strong>destination_field</strong>
+							already exists, then the value of the <strong>source_field</strong> overwrites the original value of the
+							<strong>destination_field</strong>. Rename is identical to copy, except that the <strong>source_field</strong> is removed after the value
+						has been copied to the <strong>destination_field</strong> (it is the same as a <em>copy</em> followed by a <em>remove</em>).</p>
+						<p> <strong>merge</strong> - Merges the value of the <strong>source_field</strong> with the value of the <strong>destination_field</strong>. The
+							<strong>destination_field</strong> is converted into an array if it is not already an array, and the value of the
+							<strong>source_field</strong> is appended to the array. This operation removes the <strong>source_field</strong> after the merge. If the
+							<strong>source_field</strong> does not exist in the current document, then the <strong>destination_field</strong> is still converted into
+							an array (if it is not an array already). This conversion ensures the type for <strong>destination_field</strong> is
+						consistent across all documents.</p>
+						<p> <strong>remove</strong> - Deletes the <strong>source_field</strong> field. The <strong>destination_field</strong> is ignored for this operation.</p>
+						<p> <strong>remove_nulls</strong> - Removes all nested null (blank) field values from the ingested document. <strong>source_field</strong> and
+							<strong>destination_field</strong> are ignored by this operation because <em>remove</em>nulls_ operates on the entire ingested
+							document. Typically, <strong>remove_nulls</strong> is invoked as the last normalization operation (if it is invoked at all,
+						it can be time-expensive).</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -135,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">source_<wbr>field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/3fa522c/discovery/v1.ts#L6020">discovery/v1.ts:6020</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5074a52/discovery/v1.ts#L6400">discovery/v1.ts:6400</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -220,6 +238,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-is-not-exported">
 						<a href="options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>
