@@ -47,33 +47,6 @@ function isAnalyzed(corporaList: GeneratedSpeechToTextV1.Corpora): boolean {
   return corporaList.corpora.some(record => record['status'] === 'analyzed');
 }
 
-/**
- * @private
- * @param chunk
- * @return {any}
- */
-function formatChunk(chunk: string) {
-  // Convert the string into an array
-  let result = chunk;
-
-  // Check if in the stream doesn't have
-  // two results together and parse them
-  if (!result || result.indexOf('}{') === -1) {
-    return JSON.parse(result);
-  }
-
-  // Check if we can parse the response
-  try {
-    result = '[' + result.replace(/}{/g, '},{') + ']';
-    result = JSON.parse(result);
-    return result[result.length - 1];
-  } catch (e) {
-    // if it fails, then this isn't valid json (or a concatenated list of valid json) - just return the original string
-  }
-
-  return result;
-}
-
 class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   static ERR_NO_CORPORA = 'ERR_NO_CORPORA';
   static ERR_TIMEOUT = 'ERR_TIMEOUT';
