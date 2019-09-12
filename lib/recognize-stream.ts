@@ -14,62 +14,21 @@
  * limitations under the License
  */
 
-import { OutgoingHttpHeaders } from 'http';
 import { Authenticator, contentType, qs } from 'ibm-cloud-sdk-core';
 import omit = require('object.omit');
 import pick = require('object.pick');
 import { Duplex, DuplexOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
+import SpeechToTextV1 = require('../speech-to-text/v1-generated');
 import { processUserParameters } from './websocket-utils';
 
-// these options represent the superset of the base params,
-// query params, and opening message params, with the keys
-// in lowerCamelCase format so we can expose a consistent style
-// to the user. this object should be updated any time either
-// openingMessageParamsAllowed or queryParamsAllowed is changed
-interface Options extends DuplexOptions {
-  /* Base Properties */
-  authenticator: Authenticator;
-  url?: string;
-  headers?: OutgoingHttpHeaders;
-  readableObjectMode?: boolean;
-  objectMode?: boolean;
-  disableSslVerification?: boolean;
-
-  /* Query Params*/
-  accessToken: string;
-  watsonToken: string;
-  model: string;
-  languageCustomizationId: string;
-  acousticCustomizationId: string;
-  baseModelVersion: string;
-  xWatsonLearningOptOut: boolean;
-  xWatsonMetadata: string;
-
-  /* Opening Message Params */
-  contentType: string;
-  customizationWeight: number;
-  inactivityTimeout: number;
-  interimResults: boolean;
-  keywords: string[];
-  keywordsThreshold: number;
-  maxAlternatives: number;
-  wordAlternativesThreshold: number;
-  wordConfidence: boolean;
-  timestamps: boolean;
-  profanityFilter: boolean;
-  smartFormatting: boolean;
-  speakerLabels: boolean;
-  grammarName: string;
-  redaction: boolean;
-  processingMetrics: boolean;
-  processingMetricsInterval: number;
-  audioMetrics: boolean;
+interface WritableState {
+  highWaterMark: number;
 }
 
 interface RecognizeStream extends Duplex {
-  _writableState;
-  readableObjectMode;
+  _writableState: WritableState;
+  readableObjectMode: boolean;
 }
 
 /**
@@ -92,12 +51,12 @@ class RecognizeStream extends Duplex {
     return contentType.fromHeader(buffer);
   }
 
-  private options: Options;
+  private options: RecognizeStream.Options;
   private authenticator: Authenticator;
   private listening: boolean;
   private initialized: boolean;
   private finished: boolean;
-  private socket;
+  private socket: w3cWebSocket;
 
   /**
    * pipe()-able Node.js Duplex stream - accepts binary audio and emits text/objects in it's `data` events.
@@ -144,7 +103,7 @@ class RecognizeStream extends Duplex {
    * @param {boolean} [options.audioMetrics] - If true, requests detailed information about the signal characteristics of the input audio (detailed=false)
    * @constructor
    */
-  constructor(options: Options) {
+  constructor(options: RecognizeStream.Options) {
     // this stream only supports objectMode on the output side.
     // It must receive binary data input.
     if (options.objectMode) {
@@ -502,6 +461,17 @@ class RecognizeStream extends Duplex {
         this.on('error', reject);
       }
     });
+  }
+}
+
+namespace RecognizeStream {
+  export interface Options extends DuplexOptions, SpeechToTextV1.Options {
+    // these options represent the superset of the base params,
+    // query params, and opening message params, with the keys
+    // in lowerCamelCase format so we can expose a consistent style
+    // to the user.
+    authenticator: Authenticator;
+    url?: string;
   }
 }
 
