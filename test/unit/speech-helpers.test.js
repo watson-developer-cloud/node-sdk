@@ -9,7 +9,8 @@ const service = {
   url: 'http://ibm.com:80',
   version: 'v1',
   silent: true, // hide deprecation warnings for recognizeLive and friends
-  httpsAgent: 'fake agent',
+  httpsAgent: 'fake https agent',
+  httpAgent: 'fake http agent',
 };
 
 const rc_service = {
@@ -17,6 +18,7 @@ const rc_service = {
   url: 'http://ibm.com:80',
   version: 'v1',
   silent: true, // hide deprecation warnings for recognizeLive and friends
+  httpAgent: 'fake http agent',
 };
 
 const speech_to_text = new SpeechToTextV1(service);
@@ -45,6 +47,7 @@ describe('speech_to_text', () => {
       expect(stream.options.url).toBe(service.url);
       expect(stream.options.headers.authorization).toBeUndefined();
       expect(stream.options.token_manager).toBeDefined();
+      expect(stream.options.agent).toBe(rc_service.httpAgent);
     });
 
     it('should override stored header with new token on refresh', done => {
