@@ -9,6 +9,7 @@ const service = {
   url: 'http://ibm.com:80',
   version: 'v1',
   silent: true, // hide deprecation warnings for recognizeLive and friends
+  httpsAgent: 'fake agent',
 };
 
 const rc_service = {
@@ -36,6 +37,7 @@ describe('speech_to_text', () => {
         'service_name=speech_to_text;service_version=v1;operation_id=recognizeUsingWebSocket;async=true'
       );
       expect(stream.options.token_manager).toBeUndefined();
+      expect(stream.options.agent).toBe(service.httpsAgent);
     });
 
     it('should create a token manager in RecognizeStream if using IAM', () => {
