@@ -84,7 +84,6 @@
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "camelcase": "^5.3.1",
-    "dotenv": "^6.2.0",
     "extend": "~3.0.2",
     "ibm-cloud-sdk-core": "^1.0.0-rc1",
     "isstream": "~0.1.2",
