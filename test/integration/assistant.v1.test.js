@@ -1,6 +1,5 @@
 'use strict';
 
-const assign = require('object.assign'); // for node v0.12 compatibility
 const AssistantV1 = require('../../assistant/v1');
 const { IamAuthenticator } = require('../../auth');
 const authHelper = require('../resources/auth_helper.js');
@@ -135,7 +134,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2017-02-03 version', function(done) {
-      const constructorParams = assign({}, options, {
+      const constructorParams = Object.assign({}, options, {
         version: '2017-02-03',
       });
       const assistant = new AssistantV1(constructorParams);
@@ -162,7 +161,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-09-20 version', function(done) {
-      const constructorParams = assign({}, options, {
+      const constructorParams = Object.assign({}, options, {
         version: '2016-09-20',
       });
       const assistant = new AssistantV1(constructorParams);
@@ -189,7 +188,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-07-11 version', function(done) {
-      const constructorParams = assign({}, options, {
+      const constructorParams = Object.assign({}, options, {
         version: '2016-07-11',
       });
       const assistant = new AssistantV1(constructorParams);
