@@ -1,5 +1,6 @@
 import async = require('async');
 import extend = require('extend');
+import { OutgoingHttpHeaders } from 'http';
 import isStream = require('isstream');
 import { getSdkHeaders } from '../lib/common';
 import RecognizeStream = require('../lib/recognize-stream');
@@ -47,57 +48,60 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {Number} [params.times=30] - maximum number of attempts
    * @param {Function} callback
    */
-  whenCorporaAnalyzed(params, callback) {
+  whenCorporaAnalyzed(params: SpeechToTextV1.WhenCorporaAnalyzedParams, callback: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>): void {
     const self = this;
 
     async.parallel(
       [
         // validate that it has at least one corpus
-        (next) => {
+        (next: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>) => {
           self.listCorpora(params, (err, res) => {
             const result = res.result;
             if (err) {
               return next(err);
             }
             if (!result.corpora.length) {
-              err = new Error(
+              const sttError: SpeechToTextV1.SpeechToTextError = new Error(
                 'Customization has no corpa and therefore corpus cannot be analyzed'
               );
-              err.code = SpeechToTextV1.ERR_NO_CORPORA;
-              return next(err);
+              sttError.code = SpeechToTextV1.ERR_NO_CORPORA;
+              return next(sttError);
             }
-            next();
+            next(null);
           });
         },
         // check the customization status repeatedly until it's available
-        (next) => {
-          const options = extend(
+        (next: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>) => {
+          const options: SpeechToTextV1.WhenCorporaAnalyzedOptions = extend(
             {
               interval: 5000,
               times: 30
             },
-            params
+            params,
+            {
+              errorFilter: (err: SpeechToTextV1.SpeechToTextError): boolean => {
+              // if it's a timeout error, then listCorpora is called again after params.interval
+              // otherwise the error is passed back to the user
+              // if the params.times limit is reached, the error will be passed to the user regardless
+                return err.code === SpeechToTextV1.ERR_TIMEOUT;
+              }
+            }
           );
-          options.errorFilter = (err) => {
-            // if it's a timeout error, then listCorpora is called again after params.interval
-            // otherwise the error is passed back to the user
-            // if the params.times limit is reached, the error will be passed to the user regardless
-            return err.code === SpeechToTextV1.ERR_TIMEOUT;
-          };
+
           async.retry(
             options,
-            (done) => {
+            (done: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>) => {
               self.listCorpora(params, (err, res) => {
                 const corpora = res.result;
                 if (err) {
                   done(err);
                 } else if (corpora !== undefined && isProcessing(corpora)) {
                   // if the loop times out, async returns the last error, which will be this one.
-                  err = new Error(
+                  const sttError: SpeechToTextV1.SpeechToTextError = new Error(
                     'Corpora is still being processed, try increasing interval or times params'
                   );
-                  err.code = SpeechToTextV1.ERR_TIMEOUT;
-                  done(err);
+                  sttError.code = SpeechToTextV1.ERR_TIMEOUT;
+                  done(sttError);
                 } else if (corpora !== undefined && isAnalyzed(corpora)) {
                   done(null, corpora);
                 } else {
@@ -109,8 +113,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
           );
         }
       ],
-      (err, res) => {
-        const result = res.result;
+      (err: Error | SpeechToTextV1.SpeechToTextError | null, res?: [null, GeneratedSpeechToTextV1.Corpora]) => {
+        const result = res;
         if (err) {
           return callback(err);
         }
@@ -119,18 +123,18 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     );
   }
 
-  /**
-   * Use the recognize function with a single 2-way stream over websockets
-   *
-   * @param {Object} params The parameters
-   * @return {RecognizeStream}
-   */
-  recognizeUsingWebSocket(params) {
+  recognizeUsingWebSocket(params: SpeechToTextV1.RecognizeWebSocketParams): RecognizeStream {
     params = params || {};
-    params.url = this.baseOptions.url;
 
-    // pass the Authenticator to the RecognizeStream object
-    params.authenticator = this.getAuthenticator();
+    const streamParams: RecognizeStream.Options = extend(
+      params,
+      {
+        // pass the Authenticator to the RecognizeStream object
+        authenticator: this.getAuthenticator()
+      }
+    );
+
+    streamParams.url = this.baseOptions.url;
 
     // if the user configured a custom https client, use it in the websocket method
     // let httpsAgent take precedence, default to null
@@ -139,16 +143,16 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     // include analytics headers
     const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'recognizeUsingWebSocket');
 
-    params.headers = extend(
+    streamParams.headers = extend(
       true,
       sdkHeaders,
-      params.headers
+      streamParams.headers
     );
 
     // allow user to disable ssl verification when using websockets
-    params.disableSslVerification = this.baseOptions.disableSslVerification;
+    streamParams.disableSslVerification = this.baseOptions.disableSslVerification;
 
-    return new RecognizeStream(params);
+    return new RecognizeStream(streamParams);
   }
 
   recognize(params: GeneratedSpeechToTextV1.RecognizeParams, callback: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.SpeechRecognitionResults>): Promise<any> | void {
@@ -173,27 +177,29 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {Number} [params.times=30] - maximum number of attempts
    * @param {Function} callback
    */
-  whenCustomizationReady(params, callback) {
+  whenCustomizationReady(params: SpeechToTextV1.WhenCustomizationReadyParams, callback: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.LanguageModel>): void {
     const self = this;
 
     // check the customization status repeatedly until it's ready or available
 
-    const options = extend(
+    const options: SpeechToTextV1.WhenCustomizationReadyOptions = extend(
       {
         interval: 5000,
         times: 30
       },
-      params
+      params,
+      {
+        errorFilter: (err: SpeechToTextV1.SpeechToTextError) => {
+          // if it's a timeout error, then getLanguageModel is called again after params.interval
+          // otherwise the error is passed back to the user
+          // if the params.times limit is reached, the error will be passed to the user regardless
+          return err.code === SpeechToTextV1.ERR_TIMEOUT;
+        }
+      }
     );
-    options.errorFilter = (err) => {
-      // if it's a timeout error, then getLanguageModel is called again after params.interval
-      // otherwise the error is passed back to the user
-      // if the params.times limit is reached, the error will be passed to the user regardless
-      return err.code === SpeechToTextV1.ERR_TIMEOUT;
-    };
     async.retry(
       options,
-      (next) => {
+      (next: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.LanguageModel>) => {
         self.getLanguageModel(params, (err, res) => {
           const customization = err ? null : res.result;
           if (err) {
@@ -203,11 +209,11 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
             customization.status === 'training'
           ) {
             // if the loop times out, async returns the last error, which will be this one.
-            err = new Error(
-              'Customization is still pending, try increasing interval or times params'
+            const sttError: SpeechToTextV1.SpeechToTextError = new Error(
+              'Customization is still pending, try increasing interval or times params',
             );
-            err.code = SpeechToTextV1.ERR_TIMEOUT;
-            next(err);
+            sttError.code = SpeechToTextV1.ERR_TIMEOUT;
+            next(sttError);
           } else if (
             customization.status === 'ready' ||
             customization.status === 'available'
@@ -226,6 +232,68 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       },
       callback
     );
+  }
+}
+
+namespace SpeechToTextV1 {
+  export type Callback<T> = (err: Error | SpeechToTextError | null, res?: T) => void;
+
+  export interface SpeechToTextError extends Error {
+    message: string;
+    code?: string;
+  }
+
+  export interface CheckParams {
+    /** How long to wait in milliseconds between status checks, defaults to 5000 milliseconds */
+    interval?: number;
+    /** maximum number of attempts to check, defaults to 30 */
+    times?: number;
+  }
+
+  export type WhenCorporaAnalyzedParams = GeneratedSpeechToTextV1.ListCorporaParams & CheckParams;
+  export interface WhenCorporaAnalyzedOptions extends WhenCorporaAnalyzedParams {
+    errorFilter: (err: SpeechToTextError) => boolean;
+  }
+
+  export type WhenCustomizationReadyParams = GeneratedSpeechToTextV1.GetLanguageModelParams & CheckParams;
+  export interface WhenCustomizationReadyOptions extends WhenCorporaAnalyzedParams {
+    errorFilter: (err: SpeechToTextError) => boolean;
+  }
+
+  export interface RecognizeWebSocketParams {
+    headers?: OutgoingHttpHeaders;
+    readableObjectMode?: boolean;
+    objectMode?: boolean;
+
+    /* Query Params*/
+    accessToken?: string;
+    watsonToken?: string;
+    model?: string;
+    languageCustomizationId?: string;
+    acousticCustomizationId?: string;
+    baseModelVersion?: string;
+    xWatsonLearningOptOut?: boolean;
+    xWatsonMetadata?: string;
+
+    /* Opening Message Params */
+    contentType?: string;
+    customizationWeight?: number;
+    inactivityTimeout?: number;
+    interimResults?: boolean;
+    keywords?: string[];
+    keywordsThreshold?: number;
+    maxAlternatives?: number;
+    wordAlternativesThreshold?: number;
+    wordConfidence?: boolean;
+    timestamps?: boolean;
+    profanityFilter?: boolean;
+    smartFormatting?: boolean;
+    speakerLabels?: boolean;
+    grammarName?: string;
+    redaction?: boolean;
+    processingMetrics?: boolean;
+    processingMetricsInterval?: number;
+    audioMetrics?: boolean;
   }
 }
 
