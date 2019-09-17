@@ -52,6 +52,7 @@ interface SynthesizeStream extends Readable {
  */
 class SynthesizeStream extends Readable {
 
+  static WEBSOCKET_ERROR: string = 'WebSocket error';
   static WEBSOCKET_CONNECTION_ERROR: string = 'WebSocket connection error';
 
   private options;
@@ -142,7 +143,11 @@ class SynthesizeStream extends Readable {
             self.emit('words', message, json);
           }
           else if (json['error']) {
-            self.emit('error', message, json);
+            // this should have same structure as onerror emit
+            const err = new Error(json['error']);
+            err.name = SynthesizeStream.WEBSOCKET_ERROR;
+            err['event'] = message;
+            self.emit('error', err);
           }
           else if (json['warnings']) {
             self.emit('warnings', message, json);
