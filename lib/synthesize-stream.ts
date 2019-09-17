@@ -52,6 +52,7 @@ interface SynthesizeStream extends Readable {
  */
 class SynthesizeStream extends Readable {
 
+  static WEBSOCKET_ERROR: string = 'WebSocket error';
   static WEBSOCKET_CONNECTION_ERROR: string = 'WebSocket connection error';
 
   private options;
@@ -68,7 +69,7 @@ class SynthesizeStream extends Readable {
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for IAM token request management by the SDK.
    *
    * @param {Object} options
-   * @param {String} options.text - The text that us to be synthesized. Provide plain text or text that is annotated with SSML. SSML input can include the SSML <mark> element. Pass a maximum of 5 KB of text. 
+   * @param {String} options.text - The text that us to be synthesized. Provide plain text or text that is annotated with SSML. SSML input can include the SSML <mark> element. Pass a maximum of 5 KB of text.
    * @param {String} options.accept - The requested audio format (MIME type) of the audio.
    * @param {String[]} [options.timings] - An array that specifies whether the service is to return word timing information for all strings of the input text
    * @param {String} [options.voice='en-US_MichaelVoice'] - The voice that is to be used for the synthesis.
@@ -98,7 +99,7 @@ class SynthesizeStream extends Readable {
 
     const url =
       (options.url || 'wss://stream.watsonplatform.net/text-to-speech/api')
-        .replace(/^http/, 'ws') + 
+        .replace(/^http/, 'ws') +
         '/v1/synthesize?' +
         queryString;
 
@@ -126,18 +127,48 @@ class SynthesizeStream extends Readable {
 
     socket.onmessage = message => {
       const chunk = message.data;
-      // some messages are strings - emit those unencoded, but push them to
-      // the stream as binary
-      const data = typeof chunk === 'string' ? chunk : Buffer.from(chunk);
+      // some info messages are sent as strings, telling the content_type and
+      // timings. Emit them as separate events, but do not send them along the
+      // pipe.
+      if (typeof chunk === 'string') {
+        try {
+          const json = JSON.parse(chunk);
+          if (json['binary_streams']) {
+            self.emit('binary_streams', message, json);
+          }
+          else if (json['marks']) {
+            self.emit('marks', message, json);
+          }
+          else if (json['words']) {
+            self.emit('words', message, json);
+          }
+          else if (json['error']) {
+            // this should have same structure as onerror emit
+            const err = new Error(json['error']);
+            err.name = SynthesizeStream.WEBSOCKET_ERROR;
+            err['event'] = message;
+            self.emit('error', err);
+          }
+          else if (json['warnings']) {
+            self.emit('warnings', message, json);
+          }
+        }
+        finally {
+          self.emit('message', message, chunk);
+        }
+        return;
+      }
+
       /**
        * Emit any messages received over the wire, mainly used for debugging.
        *
        * @event SynthesizeStream#message
        * @param {Object} message - frame object received from service
-       * @param {Object} data - a data attribute of the frame that's either a string or a Buffer/TypedArray
+       * @param {Object} data - a data attribute of the frame that's a Buffer/TypedArray
        */
+      const data = Buffer.from(chunk);
       self.emit('message', message, data);
-      self.push(Buffer.from(chunk));
+      self.push(data);
     };
 
     socket.onerror = event => {
