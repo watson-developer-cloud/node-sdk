@@ -14,6 +14,7 @@ CONTRIBUTING.md
 RELEASE.md
 CONTRIBUTING.md
 CHANGELOG.md
+UPGRADE-4.0.md
 jsdoc/
 doc/
 auth.js.enc
@@ -23,6 +24,7 @@ transform.js
 scripts/
 # this is created in the build on travis ci when it updates the docs in the gh-pages branch
 gh-pages/
+tsconfig.json
 tslint.json
 typings.json
 typings
@@ -33,6 +35,12 @@ typings
 .eslintcache
 .eslintignore
 .gitattributes
+.prettierrc
+.releaserc
+.snyk
 *.ts
 !*.d.ts
 watson-developer-cloud-*.tgz
+*.log
+secrets.tar.enc
+docker
