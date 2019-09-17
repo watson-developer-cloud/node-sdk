@@ -133,19 +133,19 @@ class SynthesizeStream extends Readable {
         try {
           const json = JSON.parse(chunk);
           if (json['binary_streams']) {
-            self.emit('binary_streams', message, chunk);
+            self.emit('binary_streams', message, json);
           }
           else if (json['marks']) {
-            self.emit('marks', message, chunk);
+            self.emit('marks', message, json);
           }
           else if (json['words']) {
-            self.emit('words', message, chunk);
+            self.emit('words', message, json);
           }
           else if (json['error']) {
-            self.emit('error', message, chunk);
+            self.emit('error', message, json);
           }
           else if (json['warnings']) {
-            self.emit('warnings', message, chunk);
+            self.emit('warnings', message, json);
           }
         }
         finally {
@@ -159,10 +159,11 @@ class SynthesizeStream extends Readable {
        *
        * @event SynthesizeStream#message
        * @param {Object} message - frame object received from service
-       * @param {Object} data - a data attribute of the frame that's either a string or a Buffer/TypedArray
+       * @param {Object} data - a data attribute of the frame that's a Buffer/TypedArray
        */
-      self.emit('message', message, chunk);
-      self.push(Buffer.from(chunk));
+      const data = Buffer.from(chunk);
+      self.emit('message', message, data);
+      self.push(data);
     };
 
     socket.onerror = event => {
