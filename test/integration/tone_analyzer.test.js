@@ -4,7 +4,6 @@ const fs = require('fs');
 const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 const serviceErrorUtils = require('../resources/service_error_util');
@@ -12,8 +11,10 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('tone_analyzer_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  auth.tone_analyzer.version = '2019-03-27';
-  const tone_analyzer = new ToneAnalyzerV3(auth.tone_analyzer);
+  const auth = authHelper.auth.tone_analyzer;
+  auth.version = '2019-03-27';
+  auth.iam_apikey = auth.apikey;
+  const tone_analyzer = new ToneAnalyzerV3(auth);
 
   it('tone()', function(done) {
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');

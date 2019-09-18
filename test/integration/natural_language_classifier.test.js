@@ -2,7 +2,6 @@
 
 const NaturalLanguageClassifierV1 = require('../../natural-language-classifier/v1');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 const serviceErrorUtils = require('../resources/service_error_util');
@@ -10,13 +9,15 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('natural_language_classifier_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const natural_language_classifier = new NaturalLanguageClassifierV1(
-    auth.natural_language_classifier
-  );
+  const auth = authHelper.auth.natural_language_classifier;
+  auth.iam_apikey = auth.apikey;
+  const natural_language_classifier = new NaturalLanguageClassifierV1(auth);
+
+  const classifier_id = auth.classifierId;
 
   it('getClassifier', function(done) {
     const params = {
-      classifier_id: auth.natural_language_classifier.classifier_id,
+      classifier_id,
     };
     natural_language_classifier.getClassifier(
       params,
@@ -29,7 +30,7 @@ describe('natural_language_classifier_integration', function() {
 
   it('classifyCollection', function(done) {
     const params = {
-      classifier_id: auth.natural_language_classifier.classifier_id,
+      classifier_id,
       collection: [{ text: 'string' }],
     };
     natural_language_classifier.classifyCollection(

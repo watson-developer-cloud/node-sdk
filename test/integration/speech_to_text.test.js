@@ -1,7 +1,6 @@
 'use strict';
 
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const SpeechToTextV1 = require('../../speech-to-text/v1');
 const fs = require('fs');
@@ -16,7 +15,9 @@ const TWO_MINUTES = 2 * 60 * 1000;
 describe('speech_to_text_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const speech_to_text = new SpeechToTextV1(auth.speech_to_text);
+  const auth = authHelper.auth.speech_to_text;
+  auth.iam_apikey = auth.apikey;
+  const speech_to_text = new SpeechToTextV1(auth);
 
   it('recognize()', function(done) {
     const params = {
@@ -109,8 +110,8 @@ describe('speech_to_text_integration', function() {
     });
 
     it('transcribes audio over a websocket, credentials from environment', function(done) {
-      process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.speech_to_text.iam_apikey;
-      process.env.SPEECH_TO_TEXT_URL = auth.speech_to_text.url;
+      process.env.SPEECH_TO_TEXT_IAM_APIKEY = auth.apikey;
+      process.env.SPEECH_TO_TEXT_URL = auth.url;
       const speech_to_text_env = new SpeechToTextV1({});
       const recognizeStream = speech_to_text_env.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
@@ -133,8 +134,8 @@ describe('speech_to_text_integration', function() {
         speech_to_text: [
           {
             credentials: {
-              iam_apikey: auth.speech_to_text.iam_apikey,
-              url: auth.speech_to_text.url,
+              iam_apikey: auth.apikey,
+              url: auth.url,
             },
           },
         ],
@@ -211,7 +212,7 @@ describe('speech_to_text_integration', function() {
     }
 
     beforeAll(function(done) {
-      const speech_to_text = new SpeechToTextV1(auth.speech_to_text);
+      const speech_to_text = new SpeechToTextV1(auth);
       speech_to_text.listLanguageModels({}, function(err, result) {
         if (err) {
           // eslint-disable-next-line no-console
