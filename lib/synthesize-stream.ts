@@ -82,6 +82,7 @@ class SynthesizeStream extends Readable {
    * @param {String} [options.x-watson-metadata] - Associates a customer ID with data that is passed over the connection.
    * @param {IamTokenManagerV1} [options.token_manager] - Token manager for authenticating with IAM
    * @param {Boolean} [options.rejectUnauthorized] - If true, disable SSL verification for the WebSocket connection
+   * @param {String} [options.agent] - custom http(s) agent, useful for using the sdk behind a proxy (Node only)
    *
    * @constructor
    */
@@ -103,12 +104,17 @@ class SynthesizeStream extends Readable {
         '/v1/synthesize?' +
         queryString;
 
+    // add custom agent in the request options if given by user
+    // default request options to null
+    const { agent } = options;
+    const requestOptions = agent ? { agent } : null;
+
     const socket = (this.socket = new w3cWebSocket(
       url,
       null,
       null,
       options.headers,
-      null,
+      requestOptions,
       { tlsOptions: { rejectUnauthorized: options.rejectUnauthorized }}
     ));
 

@@ -86,6 +86,10 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
       params.token_manager = this.tokenManager;
     }
 
+    // if the user configured a custom https client, use it in the websocket method
+    // let httpsAgent take precedence, default to null
+    params.agent = this._options.httpsAgent || this._options.httpAgent || null;
+
     // include analytics headers
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'synthesizeUsingWebSocket');
 
