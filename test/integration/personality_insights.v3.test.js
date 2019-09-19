@@ -4,7 +4,6 @@ const fs = require('fs');
 const PersonalityInsightsV3 = require('../../personality-insights/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 const serviceErrorUtils = require('../resources/service_error_util');
@@ -13,8 +12,10 @@ describe('personality_insights_v3_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-  auth.personality_insights.version = '2019-03-27';
-  const personality_insights = new PersonalityInsightsV3(auth.personality_insights);
+  const auth = authHelper.auth.personality_insights;
+  auth.version = '2019-03-27';
+  auth.iam_apikey = auth.apikey;
+  const personality_insights = new PersonalityInsightsV3(auth);
 
   it('profile with text content', function(done) {
     const params = {

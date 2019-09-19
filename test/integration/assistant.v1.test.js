@@ -2,7 +2,6 @@
 
 const AssistantV1 = require('../../assistant/v1');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const assign = require('object.assign'); // for node v0.12 compatibility
 const serviceErrorUtils = require('../resources/service_error_util');
@@ -100,10 +99,16 @@ const test_dialog_node_update = 'updated_node';
 // changing language is forbidden starting with VERSION_DATE_2017_05_26
 const workspace1 = extend(true, {}, workspace, intents, { language: workspace.language });
 
+// extract service params from auth.js
+
 describe('assistant_integration', function() {
   jest.setTimeout(TEN_SECONDS);
-  auth.assistant.version = '2019-03-27';
-  const assistant = new AssistantV1(auth.assistant);
+  const auth = authHelper.auth.assistant;
+  const { workspaceId } = auth;
+
+  auth.version = '2019-03-27';
+  auth.iam_apikey = auth.apikey;
+  const assistant = new AssistantV1(auth);
 
   describe('message()', function() {
     it('alternate_intents with custom headers', function(done) {
@@ -112,7 +117,7 @@ describe('assistant_integration', function() {
           text: 'Turn on the lights',
         },
         alternate_intents: true,
-        workspace_id: auth.assistant.workspace_id,
+        workspace_id: workspaceId,
         headers: {
           customheader: 'custom',
         },
@@ -133,7 +138,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2017-02-03 version', function(done) {
-      const constructorParams = assign({}, auth.assistant, {
+      const constructorParams = assign({}, auth, {
         version: '2017-02-03',
       });
       const assistant = new AssistantV1(constructorParams);
@@ -142,7 +147,7 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.assistant.workspace_id,
+        workspace_id: workspaceId,
       };
 
       assistant.message(
@@ -160,7 +165,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-09-20 version', function(done) {
-      const constructorParams = assign({}, auth.assistant, {
+      const constructorParams = assign({}, auth, {
         version: '2016-09-20',
       });
       const assistant = new AssistantV1(constructorParams);
@@ -169,7 +174,7 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.assistant.workspace_id,
+        workspace_id: workspaceId,
       };
 
       assistant.message(
@@ -187,7 +192,7 @@ describe('assistant_integration', function() {
     });
 
     it('dialog_stack with 2016-07-11 version', function(done) {
-      const constructorParams = assign({}, auth.assistant, {
+      const constructorParams = assign({}, auth, {
         version: '2016-07-11',
       });
       const assistant = new AssistantV1(constructorParams);
@@ -196,7 +201,7 @@ describe('assistant_integration', function() {
         input: {
           text: 'Turn on the lights',
         },
-        workspace_id: auth.assistant.workspace_id,
+        workspace_id: workspaceId,
       };
 
       assistant.message(

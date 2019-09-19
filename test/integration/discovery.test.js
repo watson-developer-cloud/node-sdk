@@ -2,7 +2,6 @@
 
 const DiscoveryV1 = require('../../discovery/v1');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const async = require('async');
 const fs = require('fs');
@@ -14,14 +13,17 @@ const THIRTY_SECONDS = 30000;
 describe('discovery_integration', function() {
   jest.setTimeout(THIRTY_SECONDS);
 
-  const environment_id = auth.discovery.environment_id;
-  const configuration_id = auth.discovery.configuration_id;
-  const collection_id = auth.discovery.collection_id;
-  const collection_id2 = auth.discovery.collection_id_2;
-  const japanese_collection_id = auth.discovery.japanese_collection_id;
+  const auth = authHelper.auth.discovery;
+  const environment_id = auth.environmentId;
+  const configuration_id = auth.configurationId;
+  const collection_id = auth.collectionId;
+  const collection_id2 = auth.collectionId2;
+  const japanese_collection_id = auth.japaneseCollectionId;
+
+  auth.iam_apikey = auth.apikey;
 
   const discovery = new DiscoveryV1(
-    Object.assign({}, auth.discovery, {
+    Object.assign({}, auth, {
       version: '2019-03-27',
     })
   );

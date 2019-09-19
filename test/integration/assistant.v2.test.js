@@ -2,14 +2,15 @@
 
 const AssistantV2 = require('../../assistant/v2');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('assistant v2 integration', function() {
-  auth.assistant.version = '2019-03-27';
-  const assistant = new AssistantV2(auth.assistant);
-  const assistant_id = auth.assistant.assistant_id;
+  const auth = authHelper.auth.assistant;
+  auth.version = '2019-03-27';
+  auth.iam_apikey = auth.apikey;
+  const assistant = new AssistantV2(auth);
+  const assistant_id = auth.assistantId;
   let session_id;
 
   it('should createSession', function(done) {
@@ -95,7 +96,7 @@ describe('assistant v2 integration', function() {
     }
 
     const params = {
-      assistant_id: auth.assistant.assistant_id,
+      assistant_id,
       session_id,
     };
     assistant.deleteSession(

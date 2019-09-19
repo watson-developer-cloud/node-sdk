@@ -3,12 +3,13 @@
 const fs = require('fs');
 const CompareComply = require('../../compare-comply/v1');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('compare_comply_integration', () => {
-  const compare_comply = new CompareComply(auth.compare_comply);
+  const auth = authHelper.auth.compare_comply;
+  auth.iam_apikey = auth.apikey;
+  const compare_comply = new CompareComply(auth);
   describe('html conversion @slow', () => {
     test('convertToHtml', done => {
       const params = {

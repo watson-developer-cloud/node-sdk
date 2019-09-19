@@ -3,7 +3,6 @@
 const TextToSpeechV1 = require('../../text-to-speech/v1');
 const wav = require('wav');
 const authHelper = require('../resources/auth_helper.js');
-const auth = authHelper.auth;
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 const serviceErrorUtils = require('../resources/service_error_util');
@@ -11,7 +10,9 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('text_to_speech_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const text_to_speech = new TextToSpeechV1(auth.text_to_speech);
+  const auth = authHelper.auth.text_to_speech;
+  auth.iam_apikey = auth.apikey;
+  const text_to_speech = new TextToSpeechV1(auth);
 
   it('listVoices()', function(done) {
     text_to_speech.listVoices(null, serviceErrorUtils.checkErrorCode(200, done));
