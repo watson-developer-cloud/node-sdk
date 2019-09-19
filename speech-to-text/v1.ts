@@ -1,6 +1,6 @@
 import async = require('async');
 import extend = require('extend');
-import { OutgoingHttpHeaders } from 'http';
+import { Agent, OutgoingHttpHeaders } from 'http';
 import isStream = require('isstream');
 import { getSdkHeaders } from '../lib/common';
 import RecognizeStream = require('../lib/recognize-stream');
@@ -138,7 +138,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
 
     // if the user configured a custom https client, use it in the websocket method
     // let httpsAgent take precedence, default to null
-    params.agent = this._options.httpsAgent || this._options.httpAgent || null;
+    params.agent = this.baseOptions.httpsAgent || this.baseOptions.httpAgent || null;
 
     // include analytics headers
     const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'recognizeUsingWebSocket');
@@ -264,6 +264,7 @@ namespace SpeechToTextV1 {
     headers?: OutgoingHttpHeaders;
     readableObjectMode?: boolean;
     objectMode?: boolean;
+    agent?: Agent;
 
     /* Query Params*/
     accessToken?: string;

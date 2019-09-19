@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-import { OutgoingHttpHeaders } from 'http';
+import { Agent, OutgoingHttpHeaders, RequestOptions } from 'http';
 import { Authenticator, qs } from 'ibm-cloud-sdk-core';
 import pick = require('object.pick');
 import { Readable, ReadableOptions } from 'stream';
@@ -32,6 +32,7 @@ interface Options extends ReadableOptions {
   url?: string;
   headers?: OutgoingHttpHeaders;
   disableSslVerification?: boolean;
+  agent?: Agent;
 
   /* payload options */
   text: string;
@@ -84,6 +85,7 @@ class SynthesizeStream extends Readable {
    * @param {string} [options.url] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
    * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
    * @param {boolean} [options.disableSslVerification] - If true, disable SSL verification for the WebSocket connection (default=false)
+   * @param {Agent} [options.agent] - custom http(s) agent, useful for using the sdk behind a proxy (Node only)
    * @param {string} options.text - The text that us to be synthesized
    * @param {string} options.accept - The requested format (MIME type) of the audio
    * @param {string[]} [options.timings] - An array that specifies whether the service is to return word timing information for all strings of the input text
@@ -127,7 +129,7 @@ class SynthesizeStream extends Readable {
     // add custom agent in the request options if given by user
     // default request options to null
     const { agent } = options;
-    const requestOptions = agent ? { agent } : null;
+    const requestOptions: RequestOptions = agent ? { agent } : null;
 
     const socket = (this.socket = new w3cWebSocket(
       url,
