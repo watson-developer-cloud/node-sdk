@@ -1,3 +1,15 @@
+# [4.5.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.4.0...v4.5.0) (2019-09-19)
+
+
+### Bug Fixes
+
+* ignore unecessary files for npm releases ([#962](https://github.com/watson-developer-cloud/node-sdk/issues/962)) ([93eb677](https://github.com/watson-developer-cloud/node-sdk/commit/93eb677))
+
+
+### Features
+
+* separate strings out of primary SynthesizeStream pipe ([#957](https://github.com/watson-developer-cloud/node-sdk/issues/957)) ([3014478](https://github.com/watson-developer-cloud/node-sdk/commit/3014478))
+
 # [4.4.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.3.4...v4.4.0) (2019-08-20)
 
 
