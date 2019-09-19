@@ -14,6 +14,7 @@
  * limitations under the License
  */
 
+import { RequestOptions } from 'http';
 import { Authenticator, contentType, qs } from 'ibm-cloud-sdk-core';
 import omit = require('object.omit');
 import pick = require('object.pick');
@@ -75,6 +76,7 @@ class RecognizeStream extends Duplex {
    * @param {boolean} [options.readableObjectMode] - Emit `result` objects instead of string Buffers for the `data` events. Does not affect input (which must be binary)
    * @param {boolean} [options.objectMode] - Alias for readableObjectMode
    * @param {boolean} [options.disableSslVerification] - If true, disable SSL verification for the WebSocket connection (default=false)
+   * @param {Agent} [options.agent] - custom http(s) agent, useful for using the sdk behind a proxy (Node only)
    * @param {string} [options.accessToken] - Bearer token to put in query string
    * @param {string} [options.watsonToken] - Valid Watson authentication token (for Cloud Foundry)
    * @param {string} [options.model] - The identifier of the model that is to be used for all recognition requests sent over the connection
@@ -189,7 +191,7 @@ class RecognizeStream extends Duplex {
     // add custom agent in the request options if given by user
     // default request options to null
     const { agent } = options;
-    const requestOptions = agent ? { agent } : null;
+    const requestOptions: RequestOptions = agent ? { agent } : null;
 
     const socket = (this.socket = new w3cWebSocket(
       url,
