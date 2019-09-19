@@ -1,3 +1,10 @@
+## [4.5.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.5.0...v4.5.1) (2019-09-19)
+
+
+### Bug Fixes
+
+* pass user-defined http(s) agent to websocket methods ([#953](https://github.com/watson-developer-cloud/node-sdk/issues/953)) ([4f1679c](https://github.com/watson-developer-cloud/node-sdk/commit/4f1679c))
+
 # [4.5.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.4.0...v4.5.0) (2019-09-19)
 
 
