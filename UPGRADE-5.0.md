@@ -48,6 +48,12 @@ The SDK no longer supports Node versions 6 and 8, as reflected in the `engines` 
 #### RecognizeStream
 - `RecognizeStream.readableObjectMode` will always be a Boolean value - before, it could have been `undefined`. This is to align with the new convention in Node 12.
 
+#### URL parameter name changed
+The variable name for the stored, URL parameter has been changed from `url` to `serviceUrl`. Note that `url` can still be compatibility passed into the constructor as an alias for `serviceUrl`. However, if you try to access the `url` property directly in your code, this is a breaking change.
+
+#### Reading Credentials File
+The order of priority has changed to give a file in the current working directory higher priority than one in the home directory. This will only impact your code if you have different files in each location.
+
 ### Breaking changes by service
 #### Assistant v1
 - Parameter `include_count` removed from method `listEntities`
