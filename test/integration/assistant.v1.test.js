@@ -4,7 +4,6 @@ const AssistantV1 = require('../../assistant/v1');
 const { IamAuthenticator } = require('../../auth');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
-const serviceErrorUtils = require('../resources/service_error_util');
 
 const extend = require('extend');
 
@@ -101,7 +100,7 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 
 // extract service params from auth.js
 
-describe('assistant_integration', function() {
+describe('assistant_integration', () => {
   jest.setTimeout(TEN_SECONDS);
 
   const options = authHelper.auth.assistant;
@@ -109,8 +108,8 @@ describe('assistant_integration', function() {
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const assistant = new AssistantV1(options);
 
-  describe('message()', function() {
-    it('alternateIntents with custom headers', function(done) {
+  describe('message()', () => {
+    it('alternateIntents with custom headers', done => {
       const params = {
         input: {
           text: 'Turn on the lights',
@@ -122,21 +121,17 @@ describe('assistant_integration', function() {
         },
       };
 
-      assistant.message(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, res) {
-          if (err) {
-            return done(err);
-          }
-
-          expect(res.headers && res.headers != {}).toBe(true);
-          expect(res.result.intents.length > 1).toBe(true);
-          done();
-        })
-      );
+      assistant.message(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(res.headers && res.headers != {}).toBe(true);
+        expect(res.result.intents.length > 1).toBe(true);
+        done();
+      });
     });
 
-    it('dialog_stack with 2017-02-03 version', function(done) {
+    it('dialog_stack with 2017-02-03 version', done => {
       const constructorParams = Object.assign({}, options, {
         version: '2017-02-03',
       });
@@ -149,21 +144,18 @@ describe('assistant_integration', function() {
         workspaceId: options.workspaceId,
       };
 
-      assistant.message(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.context.system.dialog_stack).toEqual([
-            { dialog_node: 'node_22_1467833484410' },
-          ]);
-          done();
-        })
-      );
+      assistant.message(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.context.system.dialog_stack).toEqual([
+          { dialog_node: 'node_22_1467833484410' },
+        ]);
+        done();
+      });
     });
 
-    it('dialog_stack with 2016-09-20 version', function(done) {
+    it('dialog_stack with 2016-09-20 version', done => {
       const constructorParams = Object.assign({}, options, {
         version: '2016-09-20',
       });
@@ -176,21 +168,18 @@ describe('assistant_integration', function() {
         workspaceId: options.workspaceId,
       };
 
-      assistant.message(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.context.system.dialog_stack).toEqual([
-            { dialog_node: 'node_22_1467833484410' },
-          ]);
-          done();
-        })
-      );
+      assistant.message(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.context.system.dialog_stack).toEqual([
+          { dialog_node: 'node_22_1467833484410' },
+        ]);
+        done();
+      });
     });
 
-    it('dialog_stack with 2016-07-11 version', function(done) {
+    it('dialog_stack with 2016-07-11 version', done => {
       const constructorParams = Object.assign({}, options, {
         version: '2016-07-11',
       });
@@ -203,85 +192,72 @@ describe('assistant_integration', function() {
         workspaceId: options.workspaceId,
       };
 
-      assistant.message(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.context.system.dialog_stack).toEqual(['node_22_1467833484410']);
-          done();
-        })
-      );
+      assistant.message(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.context.system.dialog_stack).toEqual(['node_22_1467833484410']);
+        done();
+      });
     });
   });
 
-  describe('listWorkspaces()', function() {
-    it('result should contain workspaces key', function(done) {
-      assistant.listWorkspaces(
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('workspaces')).toBe(true);
-          done();
-        })
-      );
+  describe('listWorkspaces()', () => {
+    it('result should contain workspaces key', done => {
+      assistant.listWorkspaces((err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('workspaces')).toBe(true);
+        done();
+      });
     });
 
-    it('result should contain an array of workspaces', function(done) {
-      assistant.listWorkspaces(
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(Object.prototype.toString.call(result.workspaces)).toBe('[object Array]');
-          done();
-        })
-      );
+    it('result should contain an array of workspaces', done => {
+      assistant.listWorkspaces((err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(Object.prototype.toString.call(result.workspaces)).toBe('[object Array]');
+        done();
+      });
     });
 
-    it('result should return pagination information', function(done) {
+    it('result should return pagination information', done => {
       const params = {
         pageLimit: 2,
         sort: '-name',
       };
-      assistant.listWorkspaces(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listWorkspaces(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('createWorkspace()', function() {
-    it('should create a new workspace', function(done) {
+  describe('createWorkspace()', () => {
+    it('should create a new workspace', done => {
       const params = workspace;
 
-      assistant.createWorkspace(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          workspace1.workspaceId = result.workspace_id;
-          expect(result.name).toBe(params.name);
-          expect(result.language).toBe('fr');
-          expect(result.metadata).toBeDefined();
-          expect(result.description).toBe(params.description);
-          done();
-        })
-      );
+      assistant.createWorkspace(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        workspace1.workspaceId = result.workspace_id;
+        expect(result.name).toBe(params.name);
+        expect(result.language).toBe('fr');
+        expect(result.metadata).toBeDefined();
+        expect(result.description).toBe(params.description);
+        done();
+      });
     });
   });
 
-  describe('updateWorkspace()', function() {
-    it('should update the workspace with intents', function(done) {
+  describe('updateWorkspace()', () => {
+    it('should update the workspace with intents', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -289,24 +265,21 @@ describe('assistant_integration', function() {
 
       const params = workspace1;
 
-      assistant.updateWorkspace(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.name).toBe(params.name);
-          expect(result.language).toBe('fr');
-          expect(result.metadata).toBeDefined();
-          expect(result.description).toBe(params.description);
-          done();
-        })
-      );
+      assistant.updateWorkspace(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.name).toBe(params.name);
+        expect(result.language).toBe('fr');
+        expect(result.metadata).toBeDefined();
+        expect(result.description).toBe(params.description);
+        done();
+      });
     });
   });
 
-  describe('getWorkspace()', function() {
-    it('should get the workspace with the right intent', function(done) {
+  describe('getWorkspace()', () => {
+    it('should get the workspace with the right intent', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -316,21 +289,18 @@ describe('assistant_integration', function() {
         workspaceId: workspace1.workspaceId,
       };
 
-      assistant.getWorkspace(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.intents[0].intent).toBe('test');
-          done();
-        })
-      );
+      assistant.getWorkspace(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.intents[0].intent).toBe('test');
+        done();
+      });
     });
   });
 
-  describe('createIntent()', function() {
-    it('should create an intent', function(done) {
+  describe('createIntent()', () => {
+    it('should create an intent', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -343,22 +313,19 @@ describe('assistant_integration', function() {
         examples: testIntents[0].examples,
       };
 
-      assistant.createIntent(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.intent).toBe(testIntents[0].intent);
-          expect(result.description).toBe(testIntents[0].description);
-          done();
-        })
-      );
+      assistant.createIntent(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.intent).toBe(testIntents[0].intent);
+        expect(result.description).toBe(testIntents[0].description);
+        done();
+      });
     });
   });
 
-  describe('getIntents()', function() {
-    it('should get intents of the workspace', function(done) {
+  describe('getIntents()', () => {
+    it('should get intents of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -369,20 +336,17 @@ describe('assistant_integration', function() {
         _export: true,
       };
 
-      assistant.listIntents(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.intents[0].intent).toBe(testIntents[0].intent);
-          expect(result.intents[0].examples[0].text).toBe(testIntents[0].examples[0].text);
-          done();
-        })
-      );
+      assistant.listIntents(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.intents[0].intent).toBe(testIntents[0].intent);
+        expect(result.intents[0].examples[0].text).toBe(testIntents[0].examples[0].text);
+        done();
+      });
     });
 
-    it('should have pagination information', function(done) {
+    it('should have pagination information', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -395,21 +359,18 @@ describe('assistant_integration', function() {
         sort: 'intent',
       };
 
-      assistant.listIntents(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listIntents(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('getIntent()', function() {
-    it('should get an intent of the workspace', function(done) {
+  describe('getIntent()', () => {
+    it('should get an intent of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -420,22 +381,19 @@ describe('assistant_integration', function() {
         intent: testIntents[0].intent,
       };
 
-      assistant.getIntent(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.intent).toBe(testIntents[0].intent);
-          expect(result.description).toBe(testIntents[0].description);
-          done();
-        })
-      );
+      assistant.getIntent(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.intent).toBe(testIntents[0].intent);
+        expect(result.description).toBe(testIntents[0].description);
+        done();
+      });
     });
   });
 
-  describe('updateIntent()', function() {
-    it('should update an intent of the workspace', function(done) {
+  describe('updateIntent()', () => {
+    it('should update an intent of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -449,21 +407,18 @@ describe('assistant_integration', function() {
         newExamples: testIntentsUpdate.examples,
       };
 
-      assistant.updateIntent(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.intent).toBe(testIntentsUpdate.intent);
-          done();
-        })
-      );
+      assistant.updateIntent(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.intent).toBe(testIntentsUpdate.intent);
+        done();
+      });
     });
   });
 
-  describe('getExamples()', function() {
-    it('should get all examples of intent', function(done) {
+  describe('getExamples()', () => {
+    it('should get all examples of intent', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -474,19 +429,16 @@ describe('assistant_integration', function() {
         intent: testIntentsUpdate.intent,
       };
 
-      assistant.listExamples(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.examples[0].text).toBe(testIntentsUpdate.examples[0].text);
-          done();
-        })
-      );
+      assistant.listExamples(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.examples[0].text).toBe(testIntentsUpdate.examples[0].text);
+        done();
+      });
     });
 
-    it('should have pagination information', function(done) {
+    it('should have pagination information', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -499,21 +451,18 @@ describe('assistant_integration', function() {
         sort: '-text',
       };
 
-      assistant.listExamples(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listExamples(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('createExample()', function() {
-    it('should create an example in the intent', function(done) {
+  describe('createExample()', () => {
+    it('should create an example in the intent', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -525,21 +474,18 @@ describe('assistant_integration', function() {
         text: 'new_example',
       };
 
-      assistant.createExample(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.text).toBe('new_example');
-          done();
-        })
-      );
+      assistant.createExample(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.text).toBe('new_example');
+        done();
+      });
     });
   });
 
-  describe('getExample()', function() {
-    it('should get an example of intent', function(done) {
+  describe('getExample()', () => {
+    it('should get an example of intent', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -551,21 +497,18 @@ describe('assistant_integration', function() {
         text: testIntentsUpdate.examples[0].text,
       };
 
-      assistant.getExample(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.text).toBe(testIntentsUpdate.examples[0].text);
-          done();
-        })
-      );
+      assistant.getExample(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.text).toBe(testIntentsUpdate.examples[0].text);
+        done();
+      });
     });
   });
 
-  describe('updateExample()', function() {
-    it('should update an example of intent', function(done) {
+  describe('updateExample()', () => {
+    it('should update an example of intent', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -578,21 +521,18 @@ describe('assistant_integration', function() {
         newText: testExamplesNew,
       };
 
-      assistant.updateExample(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.text).toBe(testExamplesNew);
-          done();
-        })
-      );
+      assistant.updateExample(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.text).toBe(testExamplesNew);
+        done();
+      });
     });
   });
 
-  describe('deleteExample()', function() {
-    it('should delete an example of intent', function(done) {
+  describe('deleteExample()', () => {
+    it('should delete an example of intent', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -604,20 +544,17 @@ describe('assistant_integration', function() {
         text: testExamplesNew,
       };
 
-      assistant.deleteExample(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteExample(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('deleteIntent()', function() {
-    it('should delete an intent of the workspace', function(done) {
+  describe('deleteIntent()', () => {
+    it('should delete an intent of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -628,20 +565,17 @@ describe('assistant_integration', function() {
         intent: testIntentsUpdate.intent,
       };
 
-      assistant.deleteIntent(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteIntent(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('createCounterexample()', function() {
-    it('should return the newly created counterexample of the workspace', function(done) {
+  describe('createCounterexample()', () => {
+    it('should return the newly created counterexample of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -652,21 +586,18 @@ describe('assistant_integration', function() {
         text: counterexampleText,
       };
 
-      assistant.createCounterexample(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.text).toBe(counterexampleText);
-          done();
-        })
-      );
+      assistant.createCounterexample(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.text).toBe(counterexampleText);
+        done();
+      });
     });
   });
 
-  describe('getCounterexample()', function() {
-    it('should return a counterexample - using promise', function(done) {
+  describe('getCounterexample()', () => {
+    it('should return a counterexample - using promise', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -690,8 +621,8 @@ describe('assistant_integration', function() {
     });
   });
 
-  describe('listCounterexamples()', function() {
-    it('should return counterexamples of the workspace', function(done) {
+  describe('listCounterexamples()', () => {
+    it('should return counterexamples of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -701,18 +632,15 @@ describe('assistant_integration', function() {
         workspaceId: workspace1.workspaceId,
       };
 
-      assistant.listCounterexamples(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.counterexamples[0].text).toBe(counterexampleText);
-          done();
-        })
-      );
+      assistant.listCounterexamples(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.counterexamples[0].text).toBe(counterexampleText);
+        done();
+      });
     });
-    it('should return counterexamples of the workspace with pagination', function(done) {
+    it('should return counterexamples of the workspace with pagination', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -724,22 +652,19 @@ describe('assistant_integration', function() {
         sort: 'text',
       };
 
-      assistant.listCounterexamples(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.counterexamples[0].text).toBe(counterexampleText);
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listCounterexamples(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.counterexamples[0].text).toBe(counterexampleText);
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('updateCounterexample()', function() {
-    it('should return an updated counterexample', function(done) {
+  describe('updateCounterexample()', () => {
+    it('should return an updated counterexample', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -751,21 +676,18 @@ describe('assistant_integration', function() {
         newText: counterexampleTextNew,
       };
 
-      assistant.updateCounterexample(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.text).toBe(counterexampleTextNew);
-          done();
-        })
-      );
+      assistant.updateCounterexample(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.text).toBe(counterexampleTextNew);
+        done();
+      });
     });
   });
 
-  describe('deleteCounterexample()', function() {
-    it('should delete a counterexample', function(done) {
+  describe('deleteCounterexample()', () => {
+    it('should delete a counterexample', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -776,20 +698,17 @@ describe('assistant_integration', function() {
         text: counterexampleTextNew,
       };
 
-      assistant.deleteCounterexample(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteCounterexample(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('createEntity()', function() {
-    it('should create an entity', function(done) {
+  describe('createEntity()', () => {
+    it('should create an entity', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -802,23 +721,19 @@ describe('assistant_integration', function() {
         fuzzyMatch: true,
       };
 
-      assistant.createEntity(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            expect(err.code).toBe(200);
-            return done(err);
-          }
-          expect(result.entity).toBe(testEntities[0].entity);
-          expect(result.description).toBeUndefined();
-          done();
-        })
-      );
+      assistant.createEntity(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.entity).toBe(testEntities[0].entity);
+        expect(result.description).toBeUndefined();
+        done();
+      });
     });
   });
 
-  describe('listEntities()', function() {
-    it('should get entities of the workspace', function(done) {
+  describe('listEntities()', () => {
+    it('should get entities of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -829,20 +744,17 @@ describe('assistant_integration', function() {
         _export: true,
       };
 
-      assistant.listEntities(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.entities[0].entity).toBe(testEntities[0].entity);
-          expect(result.entities[0].values[0].value).toBe(testEntities[0].values[0].value);
-          done();
-        })
-      );
+      assistant.listEntities(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.entities[0].entity).toBe(testEntities[0].entity);
+        expect(result.entities[0].values[0].value).toBe(testEntities[0].values[0].value);
+        done();
+      });
     });
 
-    it('should have pagination information', function(done) {
+    it('should have pagination information', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -855,21 +767,18 @@ describe('assistant_integration', function() {
         sort: 'entity',
       };
 
-      assistant.listEntities(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listEntities(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('getEntity()', function() {
-    it('should get an entity of the workspace', function(done) {
+  describe('getEntity()', () => {
+    it('should get an entity of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -880,22 +789,19 @@ describe('assistant_integration', function() {
         entity: testEntities[0].entity,
       };
 
-      assistant.getEntity(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.entity).toBe(testEntities[0].entity);
-          expect(result.description).toBeUndefined();
-          done();
-        })
-      );
+      assistant.getEntity(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.entity).toBe(testEntities[0].entity);
+        expect(result.description).toBeUndefined();
+        done();
+      });
     });
   });
 
-  describe('updateEntity()', function() {
-    it('should update an entity of the workspace', function(done) {
+  describe('updateEntity()', () => {
+    it('should update an entity of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -909,21 +815,18 @@ describe('assistant_integration', function() {
         fuzzyMatch: false,
       };
 
-      assistant.updateEntity(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.entity).toBe(testEntitiesUpdate.entity);
-          done();
-        })
-      );
+      assistant.updateEntity(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.entity).toBe(testEntitiesUpdate.entity);
+        done();
+      });
     });
   });
 
-  describe('createValue()', function() {
-    it('should create a value', function(done) {
+  describe('createValue()', () => {
+    it('should create a value', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -936,22 +839,19 @@ describe('assistant_integration', function() {
         synonyms: testValue.synonyms,
       };
 
-      assistant.createValue(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.value).toBe(testValue.value);
-          expect(result.description).toBeUndefined();
-          done();
-        })
-      );
+      assistant.createValue(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.value).toBe(testValue.value);
+        expect(result.description).toBeUndefined();
+        done();
+      });
     });
   });
 
-  describe('listValues()', function() {
-    it('should get values of the entity', function(done) {
+  describe('listValues()', () => {
+    it('should get values of the entity', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -963,20 +863,17 @@ describe('assistant_integration', function() {
         _export: true,
       };
 
-      assistant.listValues(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.values[1].value).toBe(testValue.value);
-          expect(result.values[1].synonyms[0]).toBe(testValue.synonyms[0]);
-          done();
-        })
-      );
+      assistant.listValues(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.values[1].value).toBe(testValue.value);
+        expect(result.values[1].synonyms[0]).toBe(testValue.synonyms[0]);
+        done();
+      });
     });
 
-    it('should have pagination information', function(done) {
+    it('should have pagination information', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -990,21 +887,18 @@ describe('assistant_integration', function() {
         sort: 'value',
       };
 
-      assistant.listValues(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listValues(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('getValue()', function() {
-    it('should get a value of the entity', function(done) {
+  describe('getValue()', () => {
+    it('should get a value of the entity', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1016,22 +910,19 @@ describe('assistant_integration', function() {
         value: testValue.value,
       };
 
-      assistant.getValue(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.value).toBe(testValue.value);
-          expect(result.description).toBeUndefined();
-          done();
-        })
-      );
+      assistant.getValue(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.value).toBe(testValue.value);
+        expect(result.description).toBeUndefined();
+        done();
+      });
     });
   });
 
-  describe('updateValue()', function() {
-    it('should update a value of the entity', function(done) {
+  describe('updateValue()', () => {
+    it('should update a value of the entity', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1045,21 +936,18 @@ describe('assistant_integration', function() {
         newSynonyms: testValueUpdate.synonyms,
       };
 
-      assistant.updateValue(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.value).toBe(testValueUpdate.value);
-          done();
-        })
-      );
+      assistant.updateValue(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.value).toBe(testValueUpdate.value);
+        done();
+      });
     });
   });
 
-  describe('createSynonym()', function() {
-    it('should create a synonym', function(done) {
+  describe('createSynonym()', () => {
+    it('should create a synonym', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1072,21 +960,18 @@ describe('assistant_integration', function() {
         synonym: testSynonym,
       };
 
-      assistant.createSynonym(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.synonym).toBe(testSynonym);
-          done();
-        })
-      );
+      assistant.createSynonym(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.synonym).toBe(testSynonym);
+        done();
+      });
     });
   });
 
-  describe('listSynonyms()', function() {
-    it('should get synonyms of the value', function(done) {
+  describe('listSynonyms()', () => {
+    it('should get synonyms of the value', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1099,19 +984,16 @@ describe('assistant_integration', function() {
         _export: true,
       };
 
-      assistant.listSynonyms(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.synonyms[1].synonym).toBe(testSynonym);
-          done();
-        })
-      );
+      assistant.listSynonyms(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.synonyms[1].synonym).toBe(testSynonym);
+        done();
+      });
     });
 
-    it('should have pagination information', function(done) {
+    it('should have pagination information', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1125,21 +1007,18 @@ describe('assistant_integration', function() {
         pageLimit: 1,
       };
 
-      assistant.listSynonyms(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listSynonyms(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('getSynonym()', function() {
-    it('should get a synonym of the value', function(done) {
+  describe('getSynonym()', () => {
+    it('should get a synonym of the value', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1152,21 +1031,18 @@ describe('assistant_integration', function() {
         synonym: testSynonym,
       };
 
-      assistant.getSynonym(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.synonym).toBe(testSynonym);
-          done();
-        })
-      );
+      assistant.getSynonym(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.synonym).toBe(testSynonym);
+        done();
+      });
     });
   });
 
-  describe('updateSynonym()', function() {
-    it('should update a synonym of the value', function(done) {
+  describe('updateSynonym()', () => {
+    it('should update a synonym of the value', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1180,21 +1056,18 @@ describe('assistant_integration', function() {
         newSynonym: testSynonymUpdate,
       };
 
-      assistant.updateSynonym(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.synonym).toBe(testSynonymUpdate);
-          done();
-        })
-      );
+      assistant.updateSynonym(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.synonym).toBe(testSynonymUpdate);
+        done();
+      });
     });
   });
 
-  describe('listLogs()', function() {
-    it('should return logs', function(done) {
+  describe('listLogs()', () => {
+    it('should return logs', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1206,21 +1079,18 @@ describe('assistant_integration', function() {
         pageLimit: 1,
       };
 
-      assistant.listLogs(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('logs')).toBe(true);
-          done();
-        })
-      );
+      assistant.listLogs(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('logs')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('deleteSynonym()', function() {
-    it('should delete a synonym of the value', function(done) {
+  describe('deleteSynonym()', () => {
+    it('should delete a synonym of the value', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1233,20 +1103,17 @@ describe('assistant_integration', function() {
         synonym: testSynonymUpdate,
       };
 
-      assistant.deleteSynonym(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteSynonym(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('deleteValue()', function() {
-    it('should delete a value of the entity', function(done) {
+  describe('deleteValue()', () => {
+    it('should delete a value of the entity', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1258,20 +1125,17 @@ describe('assistant_integration', function() {
         value: testValueUpdate.value,
       };
 
-      assistant.deleteValue(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteValue(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('listMentions()', function() {
-    it('should return an EntityMentionCollection', function(done) {
+  describe('listMentions()', () => {
+    it('should return an EntityMentionCollection', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1281,22 +1145,19 @@ describe('assistant_integration', function() {
         workspaceId: workspace1.workspaceId,
         entity: testEntitiesUpdate.entity,
       };
-      assistant.listMentions(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(Array.isArray(result.examples)).toBe(true);
-          expect(result.pagination).toBeDefined();
-          done();
-        })
-      );
+      assistant.listMentions(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(Array.isArray(result.examples)).toBe(true);
+        expect(result.pagination).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('deleteEntity()', function() {
-    it('should delete an entity of the workspace', function(done) {
+  describe('deleteEntity()', () => {
+    it('should delete an entity of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1307,20 +1168,17 @@ describe('assistant_integration', function() {
         entity: testEntitiesUpdate.entity,
       };
 
-      assistant.deleteEntity(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteEntity(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('createDialogNode()', function() {
-    it('should create an dialog node', function(done) {
+  describe('createDialogNode()', () => {
+    it('should create an dialog node', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1332,23 +1190,20 @@ describe('assistant_integration', function() {
         conditions: 'true',
       };
 
-      assistant.createDialogNode(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.dialog_node).toBe(testDialogNode);
-          expect(result.conditions).toBe('true');
-          expect(result.description).toBeUndefined();
-          done();
-        })
-      );
+      assistant.createDialogNode(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.dialog_node).toBe(testDialogNode);
+        expect(result.conditions).toBe('true');
+        expect(result.description).toBeUndefined();
+        done();
+      });
     });
   });
 
-  describe('listDialogNodes()', function() {
-    it('should get dialog nodes of the workspace', function(done) {
+  describe('listDialogNodes()', () => {
+    it('should get dialog nodes of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1358,19 +1213,16 @@ describe('assistant_integration', function() {
         workspaceId: workspace1.workspaceId,
       };
 
-      assistant.listDialogNodes(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.dialog_nodes[0].dialog_node).toBe(testDialogNode);
-          done();
-        })
-      );
+      assistant.listDialogNodes(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.dialog_nodes[0].dialog_node).toBe(testDialogNode);
+        done();
+      });
     });
 
-    it('should have pagination information', function(done) {
+    it('should have pagination information', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1382,21 +1234,18 @@ describe('assistant_integration', function() {
         sort: 'dialog_node',
       };
 
-      assistant.listDialogNodes(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.hasOwnProperty('pagination')).toBe(true);
-          done();
-        })
-      );
+      assistant.listDialogNodes(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        done();
+      });
     });
   });
 
-  describe('getDialogNode()', function() {
-    it('should get a dialog node of the workspace', function(done) {
+  describe('getDialogNode()', () => {
+    it('should get a dialog node of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1407,22 +1256,19 @@ describe('assistant_integration', function() {
         dialogNode: testDialogNode,
       };
 
-      assistant.getDialogNode(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.dialog_node).toBe(testDialogNode);
-          expect(result.description).toBeUndefined();
-          done();
-        })
-      );
+      assistant.getDialogNode(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.dialog_node).toBe(testDialogNode);
+        expect(result.description).toBeUndefined();
+        done();
+      });
     });
   });
 
-  describe('updateDialogNode()', function() {
-    it('should update a dialog node of the workspace', function(done) {
+  describe('updateDialogNode()', () => {
+    it('should update a dialog node of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1435,22 +1281,19 @@ describe('assistant_integration', function() {
         newConditions: 'false',
       };
 
-      assistant.updateDialogNode(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.dialog_node).toBe(testDialogNode_update);
-          expect(result.conditions).toBe('false');
-          done();
-        })
-      );
+      assistant.updateDialogNode(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.dialog_node).toBe(testDialogNode_update);
+        expect(result.conditions).toBe('false');
+        done();
+      });
     });
   });
 
-  describe('deleteDialogNode()', function() {
-    it('should delete a dialog node of the workspace', function(done) {
+  describe('deleteDialogNode()', () => {
+    it('should delete a dialog node of the workspace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1461,20 +1304,17 @@ describe('assistant_integration', function() {
         dialogNode: testDialogNode_update,
       };
 
-      assistant.deleteDialogNode(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteDialogNode(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 
-  describe('deleteWorkspace()', function() {
-    it('should delete the workplace', function(done) {
+  describe('deleteWorkspace()', () => {
+    it('should delete the workplace', done => {
       if (!workspace1.workspaceId) {
         // We cannot run this test when workspace creation failed.
         return done();
@@ -1484,15 +1324,12 @@ describe('assistant_integration', function() {
         workspaceId: workspace1.workspaceId,
       };
 
-      assistant.deleteWorkspace(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          done();
-        })
-      );
+      assistant.deleteWorkspace(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        done();
+      });
     });
   });
 });

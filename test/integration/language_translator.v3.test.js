@@ -8,7 +8,7 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 const TWENTY_SECONDS = 20000;
 
 // todo: figure out why these started all failing with Not Authorized
-describe('language_translator_integration', function() {
+describe('language_translator_integration', () => {
   jest.setTimeout(TWENTY_SECONDS * 2);
 
   const options = authHelper.auth.language_translator;
@@ -16,7 +16,7 @@ describe('language_translator_integration', function() {
   options.version = '2019-03-27';
   const language_translator = new LanguageTranslatorV3(options);
 
-  it('listModels()', function(done) {
+  it('listModels()', done => {
     language_translator.listModels(null, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
@@ -24,7 +24,7 @@ describe('language_translator_integration', function() {
     });
   });
 
-  it('translate()', function(done) {
+  it('translate()', done => {
     const params = {
       text: 'this is a test',
       source: 'en',
@@ -37,7 +37,7 @@ describe('language_translator_integration', function() {
     });
   });
 
-  it('listIdentifiableLanguages()', function(done) {
+  it('listIdentifiableLanguages()', done => {
     language_translator.listIdentifiableLanguages((err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
@@ -45,7 +45,7 @@ describe('language_translator_integration', function() {
     });
   });
 
-  it('identify()', function(done) {
+  it('identify()', done => {
     const params = {
       text: 'this is an important test that needs to work',
     };
@@ -56,30 +56,34 @@ describe('language_translator_integration', function() {
     });
   });
 
-  describe('models', function() {
+  describe('models', () => {
     let baseModelId;
     let modelId;
-    it('should list all the models', function(done) {
-      language_translator.listModels((err, { result }) => {
+    it('should list all the models', done => {
+      language_translator.listModels((err, res) => {
+        const { result } = res || {};
+        expect(result).toBeDefined();
         baseModelId = result.models[0].model_id;
         done();
       });
     });
 
-    it('should create a model', function(done) {
+    it('should create a model', done => {
       language_translator.createModel(
         {
           baseModelId,
           forcedGlossary: fs.createReadStream('./test/resources/glossary.tmx'),
         },
-        (err, { result }) => {
+        (err, res) => {
+          const { result } = res || {};
+          expect(result).toBeDefined();
           modelId = result.model_id;
           done();
         }
       );
     });
 
-    it('should get the details of the model', function(done) {
+    it('should get the details of the model', done => {
       if (!modelId) {
         // We cannot run this test when model creation failed.
         return done();
@@ -92,7 +96,7 @@ describe('language_translator_integration', function() {
       });
     });
 
-    it('should delete the model', function(done) {
+    it('should delete the model', done => {
       if (!modelId) {
         // We cannot run this test when model creation failed.
         return done();
@@ -106,24 +110,26 @@ describe('language_translator_integration', function() {
     });
   });
 
-  describe('documentTranslation @slow', function() {
+  describe('documentTranslation @slow', () => {
     let documentId;
     // The service was down, could not test the test.
-    it('should translate document', function(done) {
+    it('should translate document', done => {
       language_translator.translateDocument(
         {
           file: fs.createReadStream('./test/resources/alchemy-text.txt'),
           filename: 'alchemy-text.txt',
           modelId: 'en-es',
         },
-        (err, { result }) => {
+        (err, res) => {
+          const { result } = res || {};
+          expect(result).toBeDefined();
           documentId = result.document_id;
           done();
         }
       );
     });
 
-    it('should list translated documents', function(done) {
+    it('should list translated documents', done => {
       language_translator.listDocuments((err, res) => {
         expect(err).toBeNull();
         expect(res).toBeDefined();
@@ -131,7 +137,7 @@ describe('language_translator_integration', function() {
       });
     });
 
-    it('should get translated document status', function(done) {
+    it('should get translated document status', done => {
       if (!documentId) {
         // We cannot run this test when document upload failed.
         return done();
@@ -144,7 +150,7 @@ describe('language_translator_integration', function() {
       });
     });
 
-    it('should get translated document', function(done) {
+    it('should get translated document', done => {
       if (!documentId) {
         // We cannot run this test when document upload failed.
         return done();
@@ -157,7 +163,7 @@ describe('language_translator_integration', function() {
       });
     });
 
-    it('should delete document', function(done) {
+    it('should delete document', done => {
       if (!documentId) {
         // We cannot run this test when document upload failed.
         return done();

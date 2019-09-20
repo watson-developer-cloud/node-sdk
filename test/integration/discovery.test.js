@@ -10,7 +10,7 @@ const path = require('path');
 
 const THIRTY_SECONDS = 30000;
 
-describe('discovery_integration', function() {
+describe('discovery_integration', () => {
   jest.setTimeout(THIRTY_SECONDS);
 
   const options = authHelper.auth.discovery;
@@ -28,9 +28,11 @@ describe('discovery_integration', function() {
     })
   );
 
-  it('should listEnvironments()', function(done) {
-    discovery.listEnvironments(null, (err, { result }) => {
+  it('should listEnvironments()', done => {
+    discovery.listEnvironments(null, (err, res) => {
       expect(err).toBeNull();
+      const { result } = res || {};
+      expect(result).toBeDefined();
       expect(Array.isArray(result.environments)).toBe(true);
       const environmentIds = result.environments.map(e => e.environment_id);
       expect(environmentIds.indexOf(environmentId) > -1).toBe(true);
@@ -38,32 +40,36 @@ describe('discovery_integration', function() {
     });
   });
 
-  it('should getEnvironment()', function(done) {
-    discovery.getEnvironment({ environmentId }, (err, { result }) => {
+  it('should getEnvironment()', done => {
+    discovery.getEnvironment({ environmentId }, (err, res) => {
       expect(err).toBeNull();
+      const { result } = res || {};
       expect(result).toBeDefined();
       expect(result.environment_id).toBe(environmentId);
       done();
     });
   });
 
-  it('should listConfigurations()', function(done) {
-    discovery.listConfigurations({ environmentId }, (err, { result }) => {
+  it('should listConfigurations()', done => {
+    discovery.listConfigurations({ environmentId }, (err, res) => {
       expect(err).toBeNull();
+      const { result } = res || {};
+      expect(result).toBeDefined();
       expect(Array.isArray(result.configurations)).toBeDefined();
       expect(result.configurations[0]).toBeDefined();
       done();
     });
   });
 
-  it('should getConfiguration()', function(done) {
+  it('should getConfiguration()', done => {
     discovery.getConfiguration(
       {
         environmentId,
         configurationId: configurationId,
       },
-      (err, { result }) => {
+      (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
         expect(result).toBeDefined();
         expect(result.configuration_id).toBe(configurationId);
         done();
@@ -72,7 +78,7 @@ describe('discovery_integration', function() {
   });
 
   // todo: delete the collection after the testing is complete
-  it.skip('should createCollection()', function(done) {
+  it.skip('should createCollection()', done => {
     discovery.createCollection(
       {
         environmentId,
@@ -84,22 +90,25 @@ describe('discovery_integration', function() {
         configurationId: configurationId,
         languageCode: 'en_us',
       },
-      function(err, { result }) {
-        expect(err).toBeNull(); // Error: This operation is invalid for read-only environments. (?)
+      (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined(); // Error: This operation is invalid for read-only environments. (?)
         // todo: extract collectionId, use it in subsequent tests, delete it
         done(err, result);
       }
     );
   });
 
-  it('listCollections()', function(done) {
+  it('listCollections()', done => {
     discovery.listCollections(
       {
         environmentId,
         configurationId: configurationId,
       },
-      (err, { result }) => {
+      (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
         expect(result).toBeDefined();
         expect(Array.isArray(result.collections)).toBeDefined();
         done(err);
@@ -107,7 +116,7 @@ describe('discovery_integration', function() {
     );
   });
 
-  it('should perform a federated query for notices', function(done) {
+  it('should perform a federated query for notices', done => {
     discovery.federatedQueryNotices(
       {
         environmentId,
@@ -118,8 +127,9 @@ describe('discovery_integration', function() {
         sort: ['+field_1', '-field_2'],
         natural_language_query: 'a question about stuff and things',
       },
-      (err, { result }) => {
+      (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
         expect(result).toBeDefined();
         expect(Array.isArray(result.results)).toBeDefined();
         done(err);
@@ -127,8 +137,8 @@ describe('discovery_integration', function() {
     );
   });
 
-  describe('add-query-delete', function() {
-    it('addDocument()', function(done) {
+  describe('add-query-delete', () => {
+    it('addDocument()', done => {
       const document_obj = {
         environmentId,
         collectionId,
@@ -136,14 +146,16 @@ describe('discovery_integration', function() {
         filename: 'sampleWord.docx',
       };
 
-      discovery.addDocument(document_obj, (err, { result }) => {
+      discovery.addDocument(document_obj, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.document_id).toBeDefined();
         done(err);
       });
     });
 
-    it('addDocument()', function(done) {
+    it('addDocument()', done => {
       const jsonFile = {
         foo: 'bar',
         from: 'node-sdk integration test',
@@ -161,22 +173,25 @@ describe('discovery_integration', function() {
         },
       };
 
-      discovery.addDocument(document_obj, (err, { result }) => {
+      discovery.addDocument(document_obj, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.document_id).toBeDefined();
         done(err);
       });
     });
 
-    it('query()', function(done) {
+    it('query()', done => {
       discovery.query(
         {
           environmentId,
           collectionId,
           query: '',
         },
-        (err, { result }) => {
+        (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
           expect(result).toBeDefined();
           expect(typeof result.matching_results).toBe('number');
           expect(Array.isArray(result.results)).toBe(true);
@@ -185,25 +200,27 @@ describe('discovery_integration', function() {
       );
     });
 
-    it('delete all documents', function(done) {
+    it('delete all documents', done => {
       discovery.query(
         {
           environmentId,
           collectionId,
           query: '',
         },
-        (err, { result }) => {
+        (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
+          expect(result).toBeDefined();
           async.eachSeries(
             result.results,
-            function(result, next) {
+            (result, next) => {
               discovery.deleteDocument(
                 {
                   environmentId,
                   collectionId,
                   documentId: result.id,
                 },
-                (err, { result }) => {
+                (err, res) => {
                   next(err);
                 }
               );
@@ -215,11 +232,11 @@ describe('discovery_integration', function() {
     });
   });
 
-  describe('credentials tests @slow', function() {
+  describe('credentials tests @slow', () => {
     let credentialId;
     const sourceType = 'sharepoint';
 
-    it('should createCredentials', function(done) {
+    it('should createCredentials', done => {
       discovery.createCredentials(
         {
           environmentId,
@@ -231,8 +248,10 @@ describe('discovery_integration', function() {
             organization_url: 'www.sharepoint-org.com/organization',
           },
         },
-        function(err, { result }) {
+        (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
+          expect(result).toBeDefined();
           expect(result.credential_id).toBeDefined();
           expect(result.source_type).toBe(sourceType);
           // save the credential id for later tests
@@ -242,20 +261,22 @@ describe('discovery_integration', function() {
       );
     });
 
-    it('should listCredentials', function(done) {
+    it('should listCredentials', done => {
       discovery.listCredentials(
         {
           environmentId,
         },
-        function(err, { result }) {
+        (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
+          expect(result).toBeDefined();
           expect(Array.isArray(result.credentials)).toBe(true);
           done();
         }
       );
     });
 
-    it('should updateCredentials', function(done) {
+    it('should updateCredentials', done => {
       discovery.updateCredentials(
         {
           environmentId,
@@ -268,8 +289,10 @@ describe('discovery_integration', function() {
             organization_url: 'www.sharepoint-org.com/organization',
           },
         },
-        function(err, { result }) {
+        (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
+          expect(result).toBeDefined();
           expect(result.credential_id).toBe(credentialId);
           expect(result.source_type).toBe(sourceType);
           done();
@@ -277,14 +300,16 @@ describe('discovery_integration', function() {
       );
     });
 
-    it('should getCredentials', function(done) {
+    it('should getCredentials', done => {
       discovery.getCredentials(
         {
           environmentId,
           credentialId,
         },
-        function(err, { result }) {
+        (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
+          expect(result).toBeDefined();
           expect(result.credential_id).toBe(credentialId);
           expect(result.source_type).toBe(sourceType);
           done();
@@ -292,14 +317,16 @@ describe('discovery_integration', function() {
       );
     });
 
-    it('should deleteCredentials', function(done) {
+    it('should deleteCredentials', done => {
       discovery.deleteCredentials(
         {
           environmentId,
           credentialId,
         },
-        function(err, { result }) {
+        (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
+          expect(result).toBeDefined();
           expect(result.credential_id).toBe(credentialId);
           expect(result.status).toBe('deleted');
           done();
@@ -308,21 +335,22 @@ describe('discovery_integration', function() {
     });
   });
 
-  describe('events tests', function() {
+  describe('events tests', () => {
     let documentId;
     let sessionToken;
 
-    beforeAll(function(done) {
+    beforeAll(done => {
       const addDocParams = {
         environmentId,
         collectionId,
         file: fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx')),
       };
 
-      discovery.addDocument(addDocParams, function(error, { result }) {
-        if (error) {
-          done(error.code);
-        }
+      discovery.addDocument(addDocParams, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+
         documentId = result.document_id;
 
         const queryParams = {
@@ -331,15 +359,17 @@ describe('discovery_integration', function() {
           naturalLanguageQuery: 'jeopardy',
         };
 
-        discovery.query(queryParams, function(err, { result }) {
-          if (err) done(err);
-          sessionToken = result.session_token;
+        discovery.query(queryParams, (error, resp) => {
+          expect(error).toBeNull();
+          const result2 = resp.result;
+          expect(result2).toBeDefined();
+          sessionToken = result2.session_token;
           done();
         });
       });
     });
 
-    it('should create event', function(done) {
+    it('should create event', done => {
       const type = 'click';
       const createEventParams = {
         type,
@@ -351,8 +381,10 @@ describe('discovery_integration', function() {
         },
       };
 
-      discovery.createEvent(createEventParams, (err, { result }) => {
+      discovery.createEvent(createEventParams, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.type).toBe(type);
         expect(result.data.environment_id).toBe(environmentId);
         expect(result.data.collection_id).toBe(collectionId);
@@ -364,22 +396,24 @@ describe('discovery_integration', function() {
       });
     });
 
-    afterAll(function(done) {
+    afterAll(done => {
       const params = {
         environmentId,
         collectionId,
         documentId,
       };
-      discovery.deleteDocument(params, function(err, { result }) {
+      discovery.deleteDocument(params, (err, res) => {
         done();
       });
     });
   });
 
-  describe('metrics tests', function() {
-    it('should get metrics event rate', function(done) {
-      discovery.getMetricsEventRate((err, { result }) => {
+  describe('metrics tests', () => {
+    it('should get metrics event rate', done => {
+      discovery.getMetricsEventRate((err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.aggregations).toBeDefined();
         expect(Array.isArray(result.aggregations)).toBe(true);
         expect(result.aggregations[0].results).toBeDefined();
@@ -388,9 +422,11 @@ describe('discovery_integration', function() {
         done();
       });
     });
-    it('should get metrics query', function(done) {
-      discovery.getMetricsQuery((err, { result }) => {
+    it('should get metrics query', done => {
+      discovery.getMetricsQuery((err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.aggregations).toBeDefined();
         expect(Array.isArray(result.aggregations)).toBe(true);
         expect(result.aggregations[0].results).toBeDefined();
@@ -399,16 +435,20 @@ describe('discovery_integration', function() {
         done();
       });
     });
-    it('should get metrics query event', function(done) {
-      discovery.getMetricsQueryEvent((err, { result }) => {
+    it('should get metrics query event', done => {
+      discovery.getMetricsQueryEvent((err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.aggregations).toBeDefined();
         done();
       });
     });
-    it('should get metrics query no results', function(done) {
-      discovery.getMetricsQueryNoResults((err, { result }) => {
+    it('should get metrics query no results', done => {
+      discovery.getMetricsQueryNoResults((err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.aggregations).toBeDefined();
         expect(Array.isArray(result.aggregations)).toBe(true);
         expect(result.aggregations[0].results).toBeDefined();
@@ -417,11 +457,13 @@ describe('discovery_integration', function() {
         done();
       });
     });
-    it('should get metrics query token event', function(done) {
+    it('should get metrics query token event', done => {
       const count = 2;
       const params = { count };
-      discovery.getMetricsQueryTokenEvent(params, (err, { result }) => {
+      discovery.getMetricsQueryTokenEvent(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.aggregations).toBeDefined();
         expect(Array.isArray(result.aggregations)).toBe(true);
         expect(result.aggregations[0].results).toBeDefined();
@@ -433,8 +475,8 @@ describe('discovery_integration', function() {
     }, 40000);
   });
 
-  describe('logs tests', function() {
-    it('should query log', function(done) {
+  describe('logs tests', () => {
+    it('should query log', done => {
       const count = 2;
       const filter = 'stuff';
       const params = {
@@ -443,8 +485,10 @@ describe('discovery_integration', function() {
         filter,
         sort: ['created_timestamp'],
       };
-      discovery.queryLog(params, (err, { result }) => {
+      discovery.queryLog(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.matching_results).toBeDefined();
         expect(result.results).toBeDefined();
         done();
@@ -452,8 +496,8 @@ describe('discovery_integration', function() {
     });
   });
 
-  describe('tokenization dictionary tests @slow', function() {
-    it('should createTokenizationDictionary', function(done) {
+  describe('tokenization dictionary tests @slow', () => {
+    it('should createTokenizationDictionary', done => {
       const params = {
         environmentId,
         collectionId: japaneseCollectionId,
@@ -467,89 +511,103 @@ describe('discovery_integration', function() {
         ],
       };
 
-      discovery.createTokenizationDictionary(params, (err, { result }) => {
+      discovery.createTokenizationDictionary(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.status).toBeDefined();
         expect(result.type).toBeDefined();
         done();
       });
     });
 
-    it('should getTokenizationDictionaryStatus', function(done) {
+    it('should getTokenizationDictionaryStatus', done => {
       const params = {
         environmentId,
         collectionId: japaneseCollectionId,
       };
 
-      discovery.getTokenizationDictionaryStatus(params, (err, { result }) => {
+      discovery.getTokenizationDictionaryStatus(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.status).toBeDefined();
         expect(result.type).toBeDefined();
         done();
       });
     });
 
-    it('should deleteTokenizationDictionary', function(done) {
+    it('should deleteTokenizationDictionary', done => {
       const params = {
         environmentId,
         collectionId: japaneseCollectionId,
       };
 
-      discovery.deleteTokenizationDictionary(params, (err, { result }) => {
+      discovery.deleteTokenizationDictionary(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result).toBe('');
         done();
       });
     });
   });
-  describe('stopwords tests @slow', function() {
-    it('should createStopwordList', function(done) {
+  describe('stopwords tests @slow', () => {
+    it('should createStopwordList', done => {
       const params = {
         environmentId,
         collectionId,
         stopwordFile: fs.createReadStream(path.join(__dirname, '../resources/stopwords.txt')),
         stopwordFilename: 'stopwords.txt',
       };
-      discovery.createStopwordList(params, (err, { result }) => {
+      discovery.createStopwordList(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.type).toBeDefined();
         expect(result.status).toBeDefined();
         done();
       });
     });
-    it('should getStopwordListStatus', function(done) {
+    it('should getStopwordListStatus', done => {
       const params = {
         environmentId,
         collectionId,
       };
-      discovery.getStopwordListStatus(params, (err, { result }) => {
+      discovery.getStopwordListStatus(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.type).toBeDefined();
         expect(result.status).toBeDefined();
         done();
       });
     });
-    it('should deleteStopwordList', function(done) {
+    it('should deleteStopwordList', done => {
       const params = {
         environmentId,
         collectionId,
       };
-      discovery.deleteStopwordList(params, (err, { result }) => {
+      discovery.deleteStopwordList(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result).toBe('');
         done();
       });
     });
   });
-  describe('gateways tests', function() {
+  describe('gateways tests', () => {
     let gatewayId;
-    it('should createGateway', function(done) {
+    it('should createGateway', done => {
       const params = {
         environmentId,
         name: 'node-sdk-test',
       };
-      discovery.createGateway(params, (err, { result }) => {
+      discovery.createGateway(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.name).toBeDefined();
         expect(result.status).toBeDefined();
         expect(result.token_id).toBeDefined();
@@ -561,7 +619,7 @@ describe('discovery_integration', function() {
         done();
       });
     });
-    it('should getGateway', function(done) {
+    it('should getGateway', done => {
       if (!gatewayId) {
         // We cannot run this test when gateway creation failed.
         return done();
@@ -571,8 +629,10 @@ describe('discovery_integration', function() {
         environmentId,
         gatewayId,
       };
-      discovery.getGateway(params, (err, { result }) => {
+      discovery.getGateway(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.name).toBeDefined();
         expect(result.status).toBeDefined();
         expect(result.token_id).toBeDefined();
@@ -581,18 +641,20 @@ describe('discovery_integration', function() {
         done();
       });
     });
-    it('should listGateways', function(done) {
+    it('should listGateways', done => {
       const params = {
         environmentId,
       };
-      discovery.listGateways(params, (err, { result }) => {
+      discovery.listGateways(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.gateways).toBeDefined();
         expect(result.gateways.length).toBeTruthy();
         done();
       });
     }, 60000);
-    it('should deleteGateway', function(done) {
+    it('should deleteGateway', done => {
       if (!gatewayId) {
         // We cannot run this test when gateway creation failed.
         return done();
@@ -601,8 +663,10 @@ describe('discovery_integration', function() {
         environmentId,
         gatewayId,
       };
-      discovery.deleteGateway(params, (err, { result }) => {
+      discovery.deleteGateway(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
         expect(result.gateway_id).toBeDefined();
         expect(result.status).toBeDefined();
         expect(result.status).toBe('deleted');
