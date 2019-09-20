@@ -15,7 +15,6 @@
  */
 
 import camelcase = require('camelcase');
-import extend = require('extend');
 
 /**
  * To adhere to our Node style guideline, we expose lowerCamelCase parameters to the user. However, the

@@ -16,7 +16,6 @@
 
 import { Agent, OutgoingHttpHeaders, RequestOptions } from 'http';
 import { Authenticator, qs } from 'ibm-cloud-sdk-core';
-import pick = require('object.pick');
 import { Readable, ReadableOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
 import { processUserParameters } from './websocket-utils';
