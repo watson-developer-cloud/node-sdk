@@ -16,8 +16,6 @@
 
 import { RequestOptions } from 'http';
 import { Authenticator, contentType, qs } from 'ibm-cloud-sdk-core';
-import omit = require('object.omit');
-import pick = require('object.pick');
 import { Duplex, DuplexOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
 import SpeechToTextV1 = require('../speech-to-text/v1');
