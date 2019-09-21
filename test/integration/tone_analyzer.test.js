@@ -7,9 +7,8 @@ const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
-const serviceErrorUtils = require('../resources/service_error_util');
 
-describe('tone_analyzer_integration', function() {
+describe('tone_analyzer_integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
   const options = authHelper.auth.tone_analyzer;
@@ -17,15 +16,17 @@ describe('tone_analyzer_integration', function() {
   options.version = '2019-03-27';
   const tone_analyzer = new ToneAnalyzerV3(options);
 
-  it('tone()', function(done) {
+  it('tone()', done => {
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
-    tone_analyzer.tone(
-      { toneInput: mobydick, contentType: 'text/plain' },
-      serviceErrorUtils.checkErrorCode(200, done)
-    );
+    tone_analyzer.tone({ toneInput: mobydick, contentType: 'text/plain' }, (err, res) => {
+      expect(err).toBeNull();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      done();
+    });
   });
 
-  it('failing tone()', function(done) {
+  it('failing tone()', done => {
     // this is a failing test
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
     tone_analyzer.tone({ toneInput: mobydick, contentType: 'invalid content type' }, (err, res) => {
@@ -37,7 +38,7 @@ describe('tone_analyzer_integration', function() {
     });
   });
 
-  it('toneChat()', function(done) {
+  it('toneChat()', done => {
     const utterances = {
       utterances: [
         { text: 'My charger isn’t working.', user: 'customer' },

@@ -15,8 +15,10 @@ describe('compare_comply_integration', () => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
       };
-      compare_comply.convertToHtml(params, (err, { result }) => {
+      compare_comply.convertToHtml(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.html).toBeTruthy();
         done();
       });
@@ -29,8 +31,10 @@ describe('compare_comply_integration', () => {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compare_comply.classifyElements(params, (err, { result }) => {
+      compare_comply.classifyElements(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.document).toBeTruthy();
         expect(result.model_id).toBeTruthy();
         expect(result.model_version).toBeTruthy();
@@ -52,8 +56,10 @@ describe('compare_comply_integration', () => {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compare_comply.extractTables(params, (err, { result }) => {
+      compare_comply.extractTables(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.document).toBeTruthy();
         expect(result.model_id).toBeTruthy();
         expect(result.model_version).toBeTruthy();
@@ -74,8 +80,10 @@ describe('compare_comply_integration', () => {
         file2Filename: 'contract_B.pdf',
         file2Label: 'test-file-2',
       };
-      compare_comply.compareDocuments(params, (err, { result }) => {
+      compare_comply.compareDocuments(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.model_version).toBeTruthy();
         expect(result.documents).toBeTruthy();
         expect(result.aligned_elements).toBeTruthy();
@@ -167,10 +175,13 @@ describe('compare_comply_integration', () => {
         },
       };
 
-      compare_comply.addFeedback(params, (err, { result }) => {
+      compare_comply.addFeedback(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+
         feedbackId = result.feedback_id;
 
-        expect(err).toBeNull();
         expect(result.feedback_id).toBeDefined();
         expect(result.user_id).toBeDefined();
         expect(result.comment).toBeDefined();
@@ -192,8 +203,10 @@ describe('compare_comply_integration', () => {
           'x-watson-metadata': 'customer_id=sdk-test-customer-id',
         },
       };
-      compare_comply.getFeedback(params, (err, { result }) => {
+      compare_comply.getFeedback(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.feedback_id).toBeDefined();
         expect(result.user_id).toBeDefined();
         expect(result.comment).toBeDefined();
@@ -204,8 +217,10 @@ describe('compare_comply_integration', () => {
     }, 10000);
 
     test('listFeedback', done => {
-      compare_comply.listFeedback((err, { result }) => {
+      compare_comply.listFeedback((err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.feedback).toBeDefined();
         expect(result.pagination).toBeDefined();
         done();
@@ -221,8 +236,10 @@ describe('compare_comply_integration', () => {
       const params = {
         feedbackId,
       };
-      compare_comply.deleteFeedback(params, (err, { result }) => {
+      compare_comply.deleteFeedback(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.status).toBe(200);
         expect(result.message).toBeDefined();
         done();
@@ -246,8 +263,10 @@ describe('compare_comply_integration', () => {
         outputBucketLocation: 'us-south',
         outputBucketName: 'compare-comply-integration-test-bucket-output',
       };
-      compare_comply.createBatch(params, (err, { result }) => {
+      compare_comply.createBatch(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.function).toBeTruthy();
         expect(result.input_bucket_name).toBeTruthy();
         expect(result.output_bucket_name).toBeTruthy();
@@ -271,8 +290,10 @@ describe('compare_comply_integration', () => {
           action: 'rescan',
         };
 
-        compare_comply.updateBatch(params, (err, { result }) => {
+        compare_comply.updateBatch(params, (err, res) => {
           expect(err).toBeNull();
+          const { result } = res || {};
+          expect(res).toBeDefined();
           expect(result.function).toBeTruthy();
           expect(result.input_bucket_name).toBeTruthy();
           expect(result.output_bucket_name).toBeTruthy();
@@ -292,8 +313,10 @@ describe('compare_comply_integration', () => {
       const params = {
         batchId,
       };
-      compare_comply.getBatch(params, (err, { result }) => {
+      compare_comply.getBatch(params, (err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.function).toBeTruthy();
         expect(result.input_bucket_name).toBeTruthy();
         expect(result.output_bucket_name).toBeTruthy();
@@ -309,8 +332,10 @@ describe('compare_comply_integration', () => {
     });
 
     test('listBatches', done => {
-      compare_comply.listBatches((err, { result }) => {
+      compare_comply.listBatches((err, res) => {
         expect(err).toBeNull();
+        const { result } = res || {};
+        expect(res).toBeDefined();
         expect(result.batches).toBeTruthy();
         done();
       });
