@@ -4,11 +4,10 @@ const { IamAuthenticator } = require('../../auth');
 const VisualRecognitionV3 = require('../../visual-recognition/v3');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
-const serviceErrorUtils = require('../resources/service_error_util');
 
 const THIRTY_SECONDS = 30000;
 
-describe('visual_recognition_integration', function() {
+describe('visual_recognition_integration', () => {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 4);
 
@@ -20,81 +19,75 @@ describe('visual_recognition_integration', function() {
     })
   );
 
-  describe('classify()', function() {
-    it('should classify an uploaded image', function(done) {
+  describe('classify()', () => {
+    it('should classify an uploaded image', done => {
       const params = {
         imagesFile: fs.createReadStream(__dirname + '/../resources/car.png'),
       };
-      visual_recognition.classify(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.images_processed).toBe(1);
-          expect(result.images[0].image).toBe('car.png');
-          expect(result.images[0].classifiers.length).toBeTruthy();
-          expect(
-            result.images[0].classifiers[0].classes.some(function(c) {
-              return c.class === 'car';
-            })
-          ).toBe(true);
+      visual_recognition.classify(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
 
-          done();
-        })
-      );
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].image).toBe('car.png');
+        expect(result.images[0].classifiers.length).toBeTruthy();
+        expect(
+          result.images[0].classifiers[0].classes.some(c => {
+            return c.class === 'car';
+          })
+        ).toBe(true);
+
+        done();
+      });
     });
 
-    it('should classify from a buffer', function(done) {
+    it('should classify from a buffer', done => {
       const params = {
         imagesFile: fs.readFileSync(__dirname + '/../resources/car.png'),
       };
-      visual_recognition.classify(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.images_processed).toBe(1);
-          expect(result.images[0].classifiers.length).toBeTruthy();
-          expect(
-            result.images[0].classifiers[0].classes.some(function(c) {
-              return c.class === 'car';
-            })
-          ).toBe(true);
+      visual_recognition.classify(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
 
-          done();
-        })
-      );
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].classifiers.length).toBeTruthy();
+        expect(
+          result.images[0].classifiers[0].classes.some(c => {
+            return c.class === 'car';
+          })
+        ).toBe(true);
+
+        done();
+      });
     });
 
-    it('should classify an image via url', function(done) {
+    it('should classify an image via url', done => {
       const params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/car.png',
       };
-      visual_recognition.classify(
-        params,
-        serviceErrorUtils.checkErrorCode(200, function(err, { result }) {
-          if (err) {
-            return done(err);
-          }
-          expect(result.images_processed).toBe(1);
-          expect(result.images[0].resolved_url).toBe(
-            'https://watson-test-resources.mybluemix.net/resources/car.png'
-          );
-          expect(result.images[0].source_url).toBe(
-            'https://watson-test-resources.mybluemix.net/resources/car.png'
-          );
-          expect(result.images[0].classifiers.length).toBeTruthy();
-          expect(
-            result.images[0].classifiers[0].classes.some(function(c) {
-              return c.class === 'car';
-            })
-          ).toBe(true);
+      visual_recognition.classify(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
 
-          done();
-        })
-      );
+        expect(result.images_processed).toBe(1);
+        expect(result.images[0].resolved_url).toBe(
+          'https://watson-test-resources.mybluemix.net/resources/car.png'
+        );
+        expect(result.images[0].source_url).toBe(
+          'https://watson-test-resources.mybluemix.net/resources/car.png'
+        );
+        expect(result.images[0].classifiers.length).toBeTruthy();
+        expect(
+          result.images[0].classifiers[0].classes.some(c => {
+            return c.class === 'car';
+          })
+        ).toBe(true);
+
+        done();
+      });
     });
   });
 }); // vr

@@ -9,12 +9,12 @@ const async = require('async');
 
 const THIRTY_SECONDS = 30000;
 
-const logit = function(string) {
+const logit = string => {
   console.log('==> ' + string); // eslint-disable-line
   return string;
 };
 
-describe.skip('visual_recognition_integration_custom_classifiers @slow', function() {
+describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 8);
 
@@ -26,9 +26,9 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
     })
   );
 
-  beforeAll(function(done) {
+  beforeAll(done => {
     // clean up any leftover temp classifiers from previous test runs
-    visual_recognition.listClassifiers({}, function(err, result) {
+    visual_recognition.listClassifiers({}, (err, result) => {
       if (err) {
         return done(err);
       }
@@ -37,7 +37,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
         // todo: consider fetching the classifier details and only delete ones older than 24 hours
         async.forEach(
           toDelete,
-          function(cls, next) {
+          (cls, next) => {
             // eslint-disable-next-line no-console
             console.log('Deleting old classifier before running tests', cls);
             visual_recognition.deleteClassifier({ classifierId: cls.classifier_id }, err => {
@@ -57,10 +57,10 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
   });
 
   // todo: add more tests, consider splitting things between a permanent and a temporary classifier
-  describe('create, list, get, delete', function() {
+  describe('create, list, get, delete', () => {
     let classifier_id;
 
-    it('createClassifier()', function(done) {
+    it('createClassifier()', done => {
       visual_recognition.createClassifier(
         {
           name: 'light_dark_test_temporary',
@@ -69,20 +69,20 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
           ),
           darkPositiveExamples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip')),
         },
-        function(err, response) {
+        (err, res) => {
           if (err) {
             return done(err);
           }
-          expect(response).toBeDefined();
-          expect(response.classifier_id).toBeDefined();
-          classifier_id = response.classifier_id;
+          expect(res).toBeDefined();
+          expect(res.classifier_id).toBeDefined();
+          classifier_id = res.classifier_id;
           done();
         }
       );
     });
 
-    it('listClassifiers()', function(done) {
-      visual_recognition.listClassifiers({}, function(err, result) {
+    it('listClassifiers()', done => {
+      visual_recognition.listClassifiers({}, (err, result) => {
         if (err) {
           return done(err);
         }
@@ -92,8 +92,8 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
       });
     });
 
-    it('getClassifier()', function(done) {
-      visual_recognition.getClassifier({ classifierId: classifier_id }, function(err, res) {
+    it('getClassifier()', done => {
+      visual_recognition.getClassifier({ classifierId: classifier_id }, (err, res) => {
         if (err) {
           return done(err);
         }
@@ -101,7 +101,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
         expect(classifier.classifier_id).toBe(classifier_id);
         expect(classifier.name).toBe('light_dark_test_temporary');
         const classes = [];
-        classifier.classes.forEach(function(element) {
+        classifier.classes.forEach(element => {
           classes.push(element.class);
         });
         classes.sort();
@@ -110,23 +110,23 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
       });
     });
 
-    describe('deletion', function() {
-      const test_training_status = function(resolve, reject) {
+    describe('deletion', () => {
+      const test_training_status = (resolve, reject) => {
         //  This evil recursive function will be used to verify that the classifier
         //  has finished training. 'resolve' and 'reject' are functions from an
         //  enclosing promise (or a follow-on callback for resolve if you prefer)
-        visual_recognition.getClassifier({ classifierId: classifier_id }, function(err, response) {
+        visual_recognition.getClassifier({ classifierId: classifier_id }, (err, res) => {
           if (err) {
             reject(err);
             return;
           }
-          if (response.status === 'failed') {
+          if (res.status === 'failed') {
             logit(`Classifier ${classifier_id} failed training, ready for deletion.`);
             resolve();
           }
-          if (response.status !== 'ready') {
-            logit(JSON.stringify(response));
-            logit(`Classifier ${classifier_id} status is ${response.status}. Waiting 10 seconds.`);
+          if (res.status !== 'ready') {
+            logit(JSON.stringify(res));
+            logit(`Classifier ${classifier_id} status is ${res.status}. Waiting 10 seconds.`);
             setTimeout(test_training_status, 10 * 1000, resolve, reject); // wait 10 seconds and try again
           } else {
             logit(`Classifier ${classifier_id} is ready.`);
@@ -135,21 +135,21 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
         });
       };
 
-      beforeEach(function() {
+      beforeEach(() => {
         return new Promise(test_training_status);
       });
 
-      it('deleteClassifier()', function(done) {
+      it('deleteClassifier()', done => {
         visual_recognition.deleteClassifier({ classifier_id: classifier_id }, done);
       });
     });
   }); // custom classifiers
 
-  describe.skip('pre-populated classifier @slow', function() {
+  describe.skip('pre-populated classifier @slow', () => {
     let classifier_id;
 
-    beforeAll(function() {
-      return new Promise(function(resolve, reject) {
+    beforeAll(() => {
+      return new Promise((resolve, reject) => {
         visual_recognition.listClassifiers({}, (err, result) => {
           if (err) {
             reject(err);
@@ -170,14 +170,14 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
                 still_positive_examples: fs.createReadStream(path.join(p, 'still.zip')),
                 water_positive_examples: fs.createReadStream(path.join(p, 'water.zip')),
               },
-              function(err, response) {
+              (err, res) => {
                 if (err) {
                   reject(err);
                   return;
                 }
-                logit('Created classifier with ID="' + response.classifier_id + '"');
-                logit(JSON.stringify(response));
-                resolve(response.classifier_id);
+                logit('Created classifier with ID="' + res.classifier_id + '"');
+                logit(JSON.stringify(res));
+                resolve(res.classifier_id);
               }
             );
           } else {
@@ -190,22 +190,22 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
       });
     });
 
-    const test_training_status = function(resolve, reject) {
+    const test_training_status = (resolve, reject) => {
       //  This evil recursive function will be used to verify that the classifier
       //  has finished training. 'resolve' and 'reject' are functions from an
       //  enclosing promise (or a follow-on callback for resolve if you prefer)
-      visual_recognition.getClassifier({ classifier_id: classifier_id }, function(err, response) {
+      visual_recognition.getClassifier({ classifier_id: classifier_id }, (err, res) => {
         if (err) {
           reject(err);
           return;
         }
-        if (response.status === 'failed') {
-          reject(new Error(response.explanation));
+        if (res.status === 'failed') {
+          reject(new Error(res.explanation));
           return;
         }
-        if (response.status !== 'ready') {
-          logit(JSON.stringify(response));
-          logit(`Classifier ${classifier_id} status is ${response.status}. Waiting 10 seconds.`);
+        if (res.status !== 'ready') {
+          logit(JSON.stringify(res));
+          logit(`Classifier ${classifier_id} status is ${res.status}. Waiting 10 seconds.`);
           setTimeout(test_training_status, 10 * 1000, resolve, reject); // wait 10 seconds and try again
         } else {
           logit(`Classifier ${classifier_id} is ready.`);
@@ -214,12 +214,12 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
       });
     };
 
-    beforeEach(function() {
+    beforeEach(() => {
       return new Promise(test_training_status);
     });
 
-    it('should classify an uploaded image ', function() {
-      return new Promise(function(resolve, reject) {
+    it('should classify an uploaded image ', () => {
+      return new Promise((resolve, reject) => {
         logit('Classifing with classifier_id = ' + classifier_id); // eslint-disable-line
         const params = {
           images_file: fs.createReadStream(
@@ -228,7 +228,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
           classifier_ids: [classifier_id],
           threshold: '0.0',
         };
-        visual_recognition.classify(params, function(err, result) {
+        visual_recognition.classify(params, (err, result) => {
           if (err) {
             reject(err);
             return;
@@ -241,7 +241,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
           expect(result.images[0].classifiers.length).toBe(1);
           expect(result.images[0].classifiers[0].classifier_id).toBe(classifier_id);
           expect(
-            result.images[0].classifiers[0].classes.every(function(cl) {
+            result.images[0].classifiers[0].classes.every(cl => {
               if (['beach', 'water', 'still', 'forest'].indexOf(cl.class) !== -1) {
                 return true;
               } else {
@@ -255,15 +255,15 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
       });
     });
 
-    it('should come back empty when nothing passes the classification threshold ', function() {
-      return new Promise(function(resolve, reject) {
+    it('should come back empty when nothing passes the classification threshold ', () => {
+      return new Promise((resolve, reject) => {
         logit('Classifing with classifier_id = ' + classifier_id); // eslint-disable-line
         const params = {
           images_file: fs.createReadStream(__dirname + '/../resources/potato.jpeg'),
           classifier_ids: [classifier_id],
           threshold: '0.9',
         };
-        visual_recognition.classify(params, function(err, result) {
+        visual_recognition.classify(params, (err, result) => {
           if (err) {
             reject(err);
             return;

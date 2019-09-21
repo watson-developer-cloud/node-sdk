@@ -8,7 +8,7 @@ const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
-describe('personality_insights_v3_integration', function() {
+describe('personality_insights_v3_integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
@@ -17,7 +17,7 @@ describe('personality_insights_v3_integration', function() {
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const personality_insights = new PersonalityInsightsV3(options);
 
-  it('profile with text content', function(done) {
+  it('profile with text content', done => {
     const params = {
       content: mobydick,
       contentType: 'text/plain',
@@ -29,7 +29,7 @@ describe('personality_insights_v3_integration', function() {
     });
   });
 
-  it('profile with text content and all params', function(done) {
+  it('profile with text content and all params', done => {
     const params = {
       content: mobydick,
       contentType: 'text/plain',
@@ -45,7 +45,7 @@ describe('personality_insights_v3_integration', function() {
     });
   });
 
-  it('profile with html content', function(done) {
+  it('profile with html content', done => {
     const params = {
       content: '<div>' + mobydick + '</div>',
       contentType: 'text/html',
@@ -57,7 +57,7 @@ describe('personality_insights_v3_integration', function() {
     });
   });
 
-  it('profile with csv response', function(done) {
+  it('profile with csv response', done => {
     const params = {
       content: mobydick,
       contentType: 'text/plain',

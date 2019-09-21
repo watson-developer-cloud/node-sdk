@@ -6,7 +6,7 @@ const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
-describe('natural_language_classifier_integration', function() {
+describe('natural_language_classifier_integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
   const options = authHelper.auth.natural_language_classifier;
@@ -14,22 +14,28 @@ describe('natural_language_classifier_integration', function() {
   const natural_language_classifier = new NaturalLanguageClassifierV1(options);
   const { classifierId } = options;
 
-  it('getClassifier', function(done) {
+  it('getClassifier', done => {
     const params = {
       classifierId,
     };
-    natural_language_classifier.getClassifier(params, (err, { result }) => {
+    natural_language_classifier.getClassifier(params, (err, res) => {
+      expect(err).toBeNull();
+      const { result } = res || {};
+      expect(result).toBeDefined();
       expect(result.classifier_id).toBe(params.classifierId);
       done();
     });
   });
 
-  it('classifyCollection', function(done) {
+  it('classifyCollection', done => {
     const params = {
       classifierId,
       collection: [{ text: 'string' }],
     };
-    natural_language_classifier.classifyCollection(params, (err, { result }) => {
+    natural_language_classifier.classifyCollection(params, (err, res) => {
+      expect(err).toBeNull();
+      const { result } = res || {};
+      expect(result).toBeDefined();
       expect(result.classifier_id).toBe(params.classifierId);
       done();
     });
