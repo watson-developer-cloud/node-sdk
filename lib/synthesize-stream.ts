@@ -18,7 +18,7 @@ import { Agent, RequestOptions } from 'http';
 import { Authenticator, qs } from 'ibm-cloud-sdk-core';
 import { Readable, ReadableOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
-import TextToSpeechV1 = require('../text-to-speech/v1');
+import { SynthesizeWebSocketParams } from '../text-to-speech/v1';
 import { processUserParameters } from './websocket-utils';
 
 
@@ -224,7 +224,7 @@ namespace SynthesizeStream {
   // in lowerCamelCase format so we can expose a consistent style
   // to the user. this object should be updated any time either
   // payloadParamsAllowed or queryParamsAllowed is changed
-  export interface Options extends ReadableOptions, TextToSpeechV1.SynthesizeWebSocketParams {
+  export interface Options extends ReadableOptions, SynthesizeWebSocketParams {
     /* base options */
     authenticator: Authenticator;
     url?: string;
