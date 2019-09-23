@@ -14,38 +14,13 @@
  * limitations under the License
  */
 
-import { Agent, OutgoingHttpHeaders, RequestOptions } from 'http';
+import { Agent, RequestOptions } from 'http';
 import { Authenticator, qs } from 'ibm-cloud-sdk-core';
 import { Readable, ReadableOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
+import TextToSpeechV1 = require('../text-to-speech/v1');
 import { processUserParameters } from './websocket-utils';
 
-// these options represent the superset of the base params,
-// query params, and opening message params, with the keys
-// in lowerCamelCase format so we can expose a consistent style
-// to the user. this object should be updated any time either
-// payloadParamsAllowed or queryParamsAllowed is changed
-interface Options extends ReadableOptions {
-  /* base options */
-  authenticator: Authenticator;
-  url?: string;
-  headers?: OutgoingHttpHeaders;
-  disableSslVerification?: boolean;
-  agent?: Agent;
-
-  /* payload options */
-  text: string;
-  accept: string;
-  timings?: string[];
-
-  /* query params */
-  accessToken?: string;
-  watsonToken?: string;
-  voice?: string;
-  customizationId?: string;
-  xWatsonLearningOptOut?: boolean;
-  xWatsonMetadata?: string;
-}
 
 interface SynthesizeStream extends Readable {
   _readableState;
@@ -65,9 +40,9 @@ class SynthesizeStream extends Readable {
   static WEBSOCKET_ERROR: string = 'WebSocket error';
   static WEBSOCKET_CONNECTION_ERROR: string = 'WebSocket connection error';
 
-  private options: Options;
+  private options: SynthesizeStream.Options;
   private authenticator: Authenticator;
-  private socket;
+  private socket: w3cWebSocket;
   private initialized: boolean;
 
 
@@ -96,7 +71,7 @@ class SynthesizeStream extends Readable {
    * @param {string} [options.xWatsonMetadata] - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
    * @constructor
    */
-  constructor(options: Options) {
+  constructor(options: SynthesizeStream.Options) {
     super(options);
     this.options = options;
     this.initialized = false;
@@ -240,6 +215,21 @@ class SynthesizeStream extends Readable {
         this.initialize();
       }
     });
+  }
+}
+
+namespace SynthesizeStream {
+  // these options represent the superset of the base params,
+  // query params, and opening message params, with the keys
+  // in lowerCamelCase format so we can expose a consistent style
+  // to the user. this object should be updated any time either
+  // payloadParamsAllowed or queryParamsAllowed is changed
+  export interface Options extends ReadableOptions, TextToSpeechV1.SynthesizeWebSocketParams {
+    /* base options */
+    authenticator: Authenticator;
+    url?: string;
+    disableSslVerification?: boolean;
+    agent?: Agent;
   }
 }
 
