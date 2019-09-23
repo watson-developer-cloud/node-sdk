@@ -1,10 +1,11 @@
 import extend = require('extend');
+import { OutgoingHttpHeaders } from 'http';
 import { getSdkHeaders } from '../lib/common';
 import SynthesizeStream = require('../lib/synthesize-stream');
 import GeneratedTextToSpeechV1 = require('./v1-generated');
 
 class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
-  constructor(options) {
+  constructor(options: GeneratedTextToSpeechV1.Options) {
     super(options);
   }
 
@@ -14,7 +15,7 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
    * @param {Buffer} wavFileData - Wave audio - will be edited in place and returned
    * @return {Buffer} wavFileData - the original Buffer, with a correct header
    */
-  repairWavHeader = (wavFileData) => {
+  repairWavHeader = (wavFileData: Buffer): Buffer => {
     const totalBytes = wavFileData.length;
 
     // bytes 4-8 in header give the total file size,
@@ -70,31 +71,51 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
    * @param {Object} params The parameters
    * @return {SynthesizeStream}
    */
-  synthesizeUsingWebSocket(params) {
-    params = params || {};
-    params.url = this.baseOptions.url;
-
-    // pass the Authenticator to the SynthesizeStream object
-    params.authenticator = this.getAuthenticator();
-
-    // if the user configured a custom https client, use it in the websocket method
-    // let httpsAgent take precedence, default to null
-    params.agent = this.baseOptions.httpsAgent || this.baseOptions.httpAgent || null;
+  synthesizeUsingWebSocket(params: TextToSpeechV1.SynthesizeWebSocketParams): SynthesizeStream {
+    const streamParams: SynthesizeStream.Options = extend(
+      params,
+      {},
+      {
+        // pass the Authenticator to the SynthesizeStream object
+        authenticator: this.getAuthenticator(),
+        url: this.baseOptions.url,
+        // if the user configured a custom https client, use it in the websocket method
+        // let httpsAgent take precedence, default to null
+        agent: this.baseOptions.httpsAgent || this.baseOptions.httpAgent || null,
+        // allow user to disable ssl verification when using websockets
+        disableSslVerification: this.baseOptions.disableSslVerification
+      }
+    );
 
     // include analytics headers
     const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'synthesizeUsingWebSocket');
 
-    params.headers = extend(
+    streamParams.headers = extend(
       true,
       sdkHeaders,
-      params.headers
+      streamParams.headers
     );
 
-    // allow user to disable ssl verification when using websockets
-    params.disableSslVerification = this.baseOptions.disableSslVerification;
+    return new SynthesizeStream(streamParams);
+  }
+}
 
-    // SynthesizeStream.main(params);
-    return new SynthesizeStream(params);
+namespace TextToSpeechV1 {
+  export interface SynthesizeWebSocketParams {
+    headers?: OutgoingHttpHeaders;
+
+    /* payload options */
+    text: string;
+    accept: string;
+    timings?: string[];
+
+    /* query params */
+    accessToken?: string;
+    watsonToken?: string;
+    voice?: string;
+    customizationId?: string;
+    xWatsonLearningOptOut?: boolean;
+    xWatsonMetadata?: string;
   }
 }
 

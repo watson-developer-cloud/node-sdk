@@ -124,21 +124,20 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   }
 
   recognizeUsingWebSocket(params: SpeechToTextV1.RecognizeWebSocketParams): RecognizeStream {
-    params = params || {};
-
     const streamParams: RecognizeStream.Options = extend(
       params,
+      {},
       {
         // pass the Authenticator to the RecognizeStream object
-        authenticator: this.getAuthenticator()
+        authenticator: this.getAuthenticator(),
+        url: this.baseOptions.url,
+        // if the user configured a custom https client, use it in the websocket method
+        // let httpsAgent take precedence, default to null
+        agent: this.baseOptions.httpsAgent || this.baseOptions.httpAgent || null,
+        // allow user to disable ssl verification when using websockets
+        disableSslVerification: this.baseOptions.disableSslVerification
       }
     );
-
-    streamParams.url = this.baseOptions.url;
-
-    // if the user configured a custom https client, use it in the websocket method
-    // let httpsAgent take precedence, default to null
-    params.agent = this.baseOptions.httpsAgent || this.baseOptions.httpAgent || null;
 
     // include analytics headers
     const sdkHeaders = getSdkHeaders('speech_to_text', 'v1', 'recognizeUsingWebSocket');
@@ -148,9 +147,6 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       sdkHeaders,
       streamParams.headers
     );
-
-    // allow user to disable ssl verification when using websockets
-    streamParams.disableSslVerification = this.baseOptions.disableSslVerification;
 
     return new RecognizeStream(streamParams);
   }
