@@ -18,7 +18,7 @@ import { RequestOptions } from 'http';
 import { Authenticator, contentType, qs } from 'ibm-cloud-sdk-core';
 import { Duplex, DuplexOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
-import SpeechToTextV1 = require('../speech-to-text/v1');
+import { RecognizeWebSocketParams } from '../speech-to-text/v1';
 import { processUserParameters } from './websocket-utils';
 
 interface WritableState {
@@ -471,7 +471,7 @@ class RecognizeStream extends Duplex {
 }
 
 namespace RecognizeStream {
-  export interface Options extends DuplexOptions, SpeechToTextV1.RecognizeWebSocketParams {
+  export interface Options extends DuplexOptions, RecognizeWebSocketParams {
     // these options represent the superset of the base params,
     // query params, and opening message params, with the keys
     // in lowerCamelCase format so we can expose a consistent style
