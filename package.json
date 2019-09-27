@@ -79,7 +79,7 @@
   "dependencies": {
     "@types/csv-stringify": "^1.4.3",
     "@types/extend": "^3.0.1",
-    "@types/is-stream": "~1.1.0",
+    "@types/isstream": "^0.1.0",
     "@types/node": "^11.9.4",
     "async": "^2.6.2",
     "axios": "^0.18.0",
