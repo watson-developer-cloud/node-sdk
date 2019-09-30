@@ -77,6 +77,7 @@
     "wav": "~1.0.2"
   },
   "dependencies": {
+    "@types/async": "^2.4.2",
     "@types/csv-stringify": "^1.4.3",
     "@types/extend": "^3.0.1",
     "@types/isstream": "^0.1.0",
