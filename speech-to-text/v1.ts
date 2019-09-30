@@ -241,9 +241,9 @@ namespace SpeechToTextV1 {
 
   export interface CheckParams {
     /** How long to wait in milliseconds between status checks, defaults to 5000 milliseconds */
-    interval?: number;
+    interval: number;
     /** maximum number of attempts to check, defaults to 30 */
-    times?: number;
+    times: number;
   }
 
   export type WhenCorporaAnalyzedParams = GeneratedSpeechToTextV1.ListCorporaParams & CheckParams;
