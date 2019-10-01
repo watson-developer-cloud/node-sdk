@@ -67,6 +67,7 @@
     "lint-staged": "~7.2.0",
     "prettier": "^1.17.1",
     "semantic-release": "^15.13.12",
+    "snyk": "^1.192.4",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
@@ -88,7 +89,6 @@
     "extend": "~3.0.2",
     "ibm-cloud-sdk-core": "^1.0.0-rc2",
     "isstream": "~0.1.2",
-    "snyk": "^1.192.4",
     "websocket": "^1.0.28"
   },
   "engines": {
