@@ -63,9 +63,14 @@ class AuthorizationV1 extends BaseService {
     // if the authenticator is managing a token, return that token
     if (authenticator instanceof TokenRequestBasedAuthenticator) {
       const options = { headers: {} };
-      return authenticator.authenticate(options, err => {
-        callback(err, parseTokenFromHeader(options.headers));
-      });
+      return authenticator.authenticate(options).then(
+        () => {
+          callback(null, parseTokenFromHeader(options.headers));
+        },
+        err => {
+          callback(err);
+        }
+      );
     }
 
     // otherwise, return a CF Watson token
@@ -80,7 +85,15 @@ class AuthorizationV1 extends BaseService {
       },
       defaultOptions: this.baseOptions
     };
-    return this.createRequest(parameters, callback);
+    return this.createRequest(parameters).then(
+      res => {
+        callback(null, res);
+        return res;
+      },
+      err => {
+        callback(err);
+      }
+    );
   }
 }
 
