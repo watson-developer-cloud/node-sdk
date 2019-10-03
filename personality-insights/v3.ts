@@ -16,7 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -56,15 +56,15 @@ class PersonalityInsightsV3 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
+   * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {PersonalityInsightsV3}
    * @throws {Error}
    */
-  constructor(options: PersonalityInsightsV3.Options) {
-    // default to reading the authenticator from the environment
+  constructor(options: UserOptions) {
+    // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
       options.authenticator = getAuthenticatorFromEnvironment('personality_insights');
     }
@@ -150,51 +150,64 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): Promise<any> | void {
+  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['content'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.profile(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = _params.content;
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const body = _params.content;
 
-    const query = {
-      'raw_scores': _params.rawScores,
-      'csv_headers': _params.csvHeaders,
-      'consumption_preferences': _params.consumptionPreferences
-    };
+      const query = {
+        'raw_scores': _params.rawScores,
+        'csv_headers': _params.csvHeaders,
+        'consumption_preferences': _params.consumptionPreferences
+      };
 
-    const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profile');
+      const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profile');
 
-    const parameters = {
-      options: {
-        url: '/v3/profile',
-        method: 'POST',
-        body,
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType,
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/profile',
+          method: 'POST',
+          body,
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -267,51 +280,64 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
+  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|Buffer>): Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['content'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.profileAsCsv(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = _params.content;
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const body = _params.content;
 
-    const query = {
-      'raw_scores': _params.rawScores,
-      'csv_headers': _params.csvHeaders,
-      'consumption_preferences': _params.consumptionPreferences
-    };
+      const query = {
+        'raw_scores': _params.rawScores,
+        'csv_headers': _params.csvHeaders,
+        'consumption_preferences': _params.consumptionPreferences
+      };
 
-    const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profileAsCsv');
+      const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profileAsCsv');
 
-    const parameters = {
-      options: {
-        url: '/v3/profile',
-        method: 'POST',
-        body,
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'text/csv',
-          'Content-Type': _params.contentType,
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/profile',
+          method: 'POST',
+          body,
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'text/csv',
+            'Content-Type': _params.contentType,
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
 }
@@ -325,17 +351,7 @@ PersonalityInsightsV3.prototype.serviceVersion = 'v3';
 
 namespace PersonalityInsightsV3 {
 
-  /** Options for the `PersonalityInsightsV3` constructor. */
-  export type Options = {
-    version: string;
-    url?: string;
-    authenticator: Authenticator;
-    disableSslVerification?: boolean;
-    headers?: OutgoingHttpHeaders;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
+  /** An operation response. **/
   export interface Response<T = any>  {
     result: T;
     status: number;

@@ -15,8 +15,7 @@
  */
 
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, TokenRequestBasedAuthenticator } from 'ibm-cloud-sdk-core';
-import { BaseServiceOptions } from 'ibm-cloud-sdk-core/lib/base_service';
+import { Authenticator, BaseService, TokenRequestBasedAuthenticator, UserOptions } from 'ibm-cloud-sdk-core';
 import url = require('url');
 
 class AuthorizationV1 extends BaseService {
@@ -35,7 +34,7 @@ class AuthorizationV1 extends BaseService {
    * @param {Object} options
    * @constructor
    */
-  constructor(options: BaseServiceOptions) {
+  constructor(options: UserOptions) {
     super(options);
     this.targetUrl = options.url;
     // replace the url to always point to /authorization/api
@@ -105,13 +104,6 @@ AuthorizationV1.prototype.serviceVersion = 'v1';
  ************************/
 
 namespace AuthorizationV1 {
-  /** Options for the AuthorizationV1 constructor */
-  export type Options = {
-    authenticator: Authenticator;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
   export interface GetTokenResponse {
     result: string;
     status?: number;

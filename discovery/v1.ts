@@ -16,7 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -43,15 +43,15 @@ class DiscoveryV1 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/discovery/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/discovery/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
+   * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {DiscoveryV1}
    * @throws {Error}
    */
-  constructor(options: DiscoveryV1.Options) {
-    // default to reading the authenticator from the environment
+  constructor(options: UserOptions) {
+    // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
       options.authenticator = getAuthenticatorFromEnvironment('discovery');
     }
@@ -84,47 +84,60 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createEnvironment(params: DiscoveryV1.CreateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<any> | void {
+  public createEnvironment(params: DiscoveryV1.CreateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['name'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createEnvironment(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'size': _params.size
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'size': _params.size
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createEnvironment');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createEnvironment');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -138,38 +151,47 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): Promise<any> | void {
+  public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListEnvironmentsResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.ListEnvironmentsResponse>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listEnvironments(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'name': _params.name
-    };
+      const query = {
+        'name': _params.name
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listEnvironments');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listEnvironments');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -181,44 +203,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getEnvironment(params: DiscoveryV1.GetEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<any> | void {
+  public getEnvironment(params: DiscoveryV1.GetEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getEnvironment(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getEnvironment');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getEnvironment');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -237,52 +272,65 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateEnvironment(params: DiscoveryV1.UpdateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<any> | void {
+  public updateEnvironment(params: DiscoveryV1.UpdateEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Environment>): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateEnvironment(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'size': _params.size
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'size': _params.size
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateEnvironment');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateEnvironment');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}',
-        method: 'PUT',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}',
+          method: 'PUT',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -294,44 +342,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteEnvironment(params: DiscoveryV1.DeleteEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>): Promise<any> | void {
+  public deleteEnvironment(params: DiscoveryV1.DeleteEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteEnvironmentResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteEnvironmentResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteEnvironment(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteEnvironment');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteEnvironment');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -346,49 +407,62 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listFields(params: DiscoveryV1.ListFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): Promise<any> | void {
+  public listFields(params: DiscoveryV1.ListFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionIds'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listFields(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'collection_ids': _params.collectionIds
-    };
+      const query = {
+        'collection_ids': _params.collectionIds
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listFields');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listFields');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/fields',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/fields',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -421,55 +495,68 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createConfiguration(params: DiscoveryV1.CreateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<any> | void {
+  public createConfiguration(params: DiscoveryV1.CreateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'name'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createConfiguration(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'conversions': _params.conversions,
-      'enrichments': _params.enrichments,
-      'normalizations': _params.normalizations,
-      'source': _params.source
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'conversions': _params.conversions,
+        'enrichments': _params.enrichments,
+        'normalizations': _params.normalizations,
+        'source': _params.source
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createConfiguration');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createConfiguration');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/configurations',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/configurations',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -484,49 +571,62 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listConfigurations(params: DiscoveryV1.ListConfigurationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>): Promise<any> | void {
+  public listConfigurations(params: DiscoveryV1.ListConfigurationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListConfigurationsResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.ListConfigurationsResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listConfigurations(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'name': _params.name
-    };
+      const query = {
+        'name': _params.name
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listConfigurations');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listConfigurations');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/configurations',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/configurations',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -539,45 +639,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getConfiguration(params: DiscoveryV1.GetConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<any> | void {
+  public getConfiguration(params: DiscoveryV1.GetConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'configurationId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getConfiguration(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'configuration_id': _params.configurationId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'configuration_id': _params.configurationId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getConfiguration');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getConfiguration');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -605,56 +718,69 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateConfiguration(params: DiscoveryV1.UpdateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<any> | void {
+  public updateConfiguration(params: DiscoveryV1.UpdateConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Configuration>): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'configurationId', 'name'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateConfiguration(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'conversions': _params.conversions,
-      'enrichments': _params.enrichments,
-      'normalizations': _params.normalizations,
-      'source': _params.source
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'conversions': _params.conversions,
+        'enrichments': _params.enrichments,
+        'normalizations': _params.normalizations,
+        'source': _params.source
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'configuration_id': _params.configurationId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'configuration_id': _params.configurationId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateConfiguration');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateConfiguration');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
-        method: 'PUT',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+          method: 'PUT',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -672,140 +798,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteConfiguration(params: DiscoveryV1.DeleteConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>): Promise<any> | void {
+  public deleteConfiguration(params: DiscoveryV1.DeleteConfigurationParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteConfigurationResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteConfigurationResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'configurationId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteConfiguration(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'configuration_id': _params.configurationId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'configuration_id': _params.configurationId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteConfiguration');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteConfiguration');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/configurations/{configuration_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
-  };
-
-  /*************************
-   * testYourConfigurationOnADocument
-   ************************/
-
-  /**
-   * Test configuration.
-   *
-   * **Deprecated** This method is no longer supported and is scheduled to be removed from service on July 31st 2019.
-   *
-   *  Runs a sample document through the default or your configuration and returns diagnostic information designed to
-   * help you understand how the document was processed. The document is not added to the index.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.environmentId - The ID of the environment.
-   * @param {string} [params.configuration] - The configuration to use to process the document. If this part is
-   * provided, then the provided configuration is used to process the document. If the **configuration_id** is also
-   * provided (both are present at the same time), then request is rejected. The maximum supported configuration size is
-   * 1 MB. Configuration parts larger than 1 MB are rejected. See the `GET /configurations/{configuration_id}` operation
-   * for an example configuration.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
-   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
-   * testing a confiruration is 1 megabyte. Files larger than the supported size are rejected.
-   * @param {string} [params.filename] - The filename for file.
-   * @param {string} [params.fileContentType] - The content type of file.
-   * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
-   * MB are rejected. Example:  ``` {
-   *   "Creator": "Johnny Appleseed",
-   *   "Subject": "Apples"
-   * } ```.
-   * @param {string} [params.step] - Specify to only run the input document through the given step instead of running
-   * the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`.
-   * @param {string} [params.configurationId] - The ID of the configuration to use to process the document. If the
-   * **configuration** form part is also provided (both are present at the same time), then the request will be
-   * rejected.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public testConfigurationInEnvironment(params: DiscoveryV1.TestConfigurationInEnvironmentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TestDocument>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['environmentId'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.testConfigurationInEnvironment(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'configuration': _params.configuration,
-      'file': {
-        data: _params.file,
-        filename: _params.filename,
-        contentType: _params.fileContentType
-      },
-      'metadata': _params.metadata
-    };
-
-    const query = {
-      'step': _params.step,
-      'configuration_id': _params.configurationId
-    };
-
-    const path = {
-      'environment_id': _params.environmentId
-    };
-
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'testConfigurationInEnvironment');
-
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/preview',
-        method: 'POST',
-        qs: query,
-        path,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -826,53 +870,66 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createCollection(params: DiscoveryV1.CreateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<any> | void {
+  public createCollection(params: DiscoveryV1.CreateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'name'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createCollection(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'configuration_id': _params.configurationId,
-      'language': _params.language
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'configuration_id': _params.configurationId,
+        'language': _params.language
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createCollection');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createCollection');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -887,49 +944,62 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listCollections(params: DiscoveryV1.ListCollectionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>): Promise<any> | void {
+  public listCollections(params: DiscoveryV1.ListCollectionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionsResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionsResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listCollections(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'name': _params.name
-    };
+      const query = {
+        'name': _params.name
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCollections');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCollections');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -942,45 +1012,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getCollection(params: DiscoveryV1.GetCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<any> | void {
+  public getCollection(params: DiscoveryV1.GetCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getCollection(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getCollection');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getCollection');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -996,53 +1079,66 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateCollection(params: DiscoveryV1.UpdateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<any> | void {
+  public updateCollection(params: DiscoveryV1.UpdateCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Collection>): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateCollection(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'configuration_id': _params.configurationId
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'configuration_id': _params.configurationId
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateCollection');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateCollection');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}',
-        method: 'PUT',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}',
+          method: 'PUT',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1055,45 +1151,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteCollection(params: DiscoveryV1.DeleteCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>): Promise<any> | void {
+  public deleteCollection(params: DiscoveryV1.DeleteCollectionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCollectionResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCollectionResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteCollection(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteCollection');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteCollection');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1108,45 +1217,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listCollectionFields(params: DiscoveryV1.ListCollectionFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): Promise<any> | void {
+  public listCollectionFields(params: DiscoveryV1.ListCollectionFieldsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.ListCollectionFieldsResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listCollectionFields(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCollectionFields');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCollectionFields');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -1166,45 +1288,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): Promise<any> | void {
+  public listExpansions(params: DiscoveryV1.ListExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listExpansions(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listExpansions');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listExpansions');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1233,51 +1368,64 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): Promise<any> | void {
+  public createExpansions(params: DiscoveryV1.CreateExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Expansions>): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'expansions'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createExpansions(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'expansions': _params.expansions
-    };
+      const body = {
+        'expansions': _params.expansions
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createExpansions');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createExpansions');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1293,44 +1441,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
+  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteExpansions(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteExpansions');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteExpansions');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1345,45 +1506,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
+  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getTokenizationDictionaryStatus(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTokenizationDictionaryStatus');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTokenizationDictionaryStatus');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1401,51 +1575,64 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
+  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createTokenizationDictionary(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'tokenization_rules': _params.tokenizationRules
-    };
+      const body = {
+        'tokenization_rules': _params.tokenizationRules
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createTokenizationDictionary');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createTokenizationDictionary');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1460,44 +1647,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
+  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteTokenizationDictionary(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTokenizationDictionary');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTokenizationDictionary');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1512,45 +1712,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
+  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getStopwordListStatus(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getStopwordListStatus');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getStopwordListStatus');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1561,60 +1774,73 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.stopwordFile - The content of the stopword list to ingest.
+   * @param {NodeJS.ReadableStream|Buffer} params.stopwordFile - The content of the stopword list to ingest.
    * @param {string} params.stopwordFilename - The filename for stopwordFile.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<any> | void {
+  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TokenDictStatusResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createStopwordList(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'stopword_file': {
-        data: _params.stopwordFile,
-        filename: _params.stopwordFilename,
-        contentType: 'application/octet-stream'
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
       }
-    };
+      const formData = {
+        'stopword_file': {
+          data: _params.stopwordFile,
+          filename: _params.stopwordFilename,
+          contentType: 'application/octet-stream'
+        }
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createStopwordList');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createStopwordList');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
-        method: 'POST',
-        path,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+          method: 'POST',
+          path,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1630,44 +1856,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
+  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteStopwordList(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteStopwordList');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteStopwordList');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -1703,9 +1942,9 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
-   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
-   * testing a confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
+   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
+   * confiruration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -1717,55 +1956,68 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public addDocument(params: DiscoveryV1.AddDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): Promise<any> | void {
+  public addDocument(params: DiscoveryV1.AddDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.addDocument(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'file': {
-        data: _params.file,
-        filename: _params.filename,
-        contentType: _params.fileContentType
-      },
-      'metadata': _params.metadata
-    };
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const formData = {
+        'file': {
+          data: _params.file,
+          filename: _params.filename,
+          contentType: _params.fileContentType
+        },
+        'metadata': _params.metadata
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'addDocument');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'addDocument');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents',
-        method: 'POST',
-        path,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/documents',
+          method: 'POST',
+          path,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1783,46 +2035,59 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getDocumentStatus(params: DiscoveryV1.GetDocumentStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>): Promise<any> | void {
+  public getDocumentStatus(params: DiscoveryV1.GetDocumentStatusParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentStatus>): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentStatus>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getDocumentStatus(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'document_id': _params.documentId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'document_id': _params.documentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getDocumentStatus');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getDocumentStatus');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1838,9 +2103,9 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.documentId - The ID of the document.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.file] - The content of the document to ingest. The maximum
-   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
-   * testing a confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
+   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
+   * confiruration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -1852,56 +2117,69 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateDocument(params: DiscoveryV1.UpdateDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): Promise<any> | void {
+  public updateDocument(params: DiscoveryV1.UpdateDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DocumentAccepted>): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateDocument(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'file': {
-        data: _params.file,
-        filename: _params.filename,
-        contentType: _params.fileContentType
-      },
-      'metadata': _params.metadata
-    };
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const formData = {
+        'file': {
+          data: _params.file,
+          filename: _params.filename,
+          contentType: _params.fileContentType
+        },
+        'metadata': _params.metadata
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'document_id': _params.documentId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'document_id': _params.documentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateDocument');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateDocument');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
-        method: 'POST',
-        path,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+          method: 'POST',
+          path,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1918,46 +2196,59 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteDocument(params: DiscoveryV1.DeleteDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>): Promise<any> | void {
+  public deleteDocument(params: DiscoveryV1.DeleteDocumentParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteDocumentResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteDocumentResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteDocument(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'document_id': _params.documentId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'document_id': _params.documentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteDocument');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteDocument');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -2005,8 +2296,6 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.deduplicateField] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
-   * @param {string} [params.collectionIds] - A comma-separated list of collection IDs to be queried against. Required
-   * when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
    * @param {string} [params.similarDocumentIds] - A comma-separated list of document IDs to find similar documents.
@@ -2020,77 +2309,95 @@ class DiscoveryV1 extends BaseService {
    * be either a **date** or **number** format. When a **date** type field is specified returned results are biased
    * towards field values closer to the current date. When a **number** type field is specified, returned results are
    * biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter.
+   * @param {boolean} [params.spellingSuggestions] - When `true` and the **natural_language_query** parameter is used,
+   * the **natural_languge_query** parameter is spell checked. The most likely correction is retunred in the
+   * **suggested_query** field of the response (if one exists).
+   *
+   * **Important:** this parameter is only valid when using the Cloud Pak version of Discovery.
    * @param {boolean} [params.xWatsonLoggingOptOut] - If `true`, queries are not stored in the Discovery **Logs**
    * endpoint.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public query(params: DiscoveryV1.QueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): Promise<any> | void {
+  public query(params: DiscoveryV1.QueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.query(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'filter': _params.filter,
-      'query': _params.query,
-      'natural_language_query': _params.naturalLanguageQuery,
-      'passages': _params.passages,
-      'aggregation': _params.aggregation,
-      'count': _params.count,
-      'return': _params._return,
-      'offset': _params.offset,
-      'sort': _params.sort,
-      'highlight': _params.highlight,
-      'passages.fields': _params.passagesFields,
-      'passages.count': _params.passagesCount,
-      'passages.characters': _params.passagesCharacters,
-      'deduplicate': _params.deduplicate,
-      'deduplicate.field': _params.deduplicateField,
-      'collection_ids': _params.collectionIds,
-      'similar': _params.similar,
-      'similar.document_ids': _params.similarDocumentIds,
-      'similar.fields': _params.similarFields,
-      'bias': _params.bias
-    };
+      const body = {
+        'filter': _params.filter,
+        'query': _params.query,
+        'natural_language_query': _params.naturalLanguageQuery,
+        'passages': _params.passages,
+        'aggregation': _params.aggregation,
+        'count': _params.count,
+        'return': _params._return,
+        'offset': _params.offset,
+        'sort': _params.sort,
+        'highlight': _params.highlight,
+        'passages.fields': _params.passagesFields,
+        'passages.count': _params.passagesCount,
+        'passages.characters': _params.passagesCharacters,
+        'deduplicate': _params.deduplicate,
+        'deduplicate.field': _params.deduplicateField,
+        'similar': _params.similar,
+        'similar.document_ids': _params.similarDocumentIds,
+        'similar.fields': _params.similarFields,
+        'bias': _params.bias,
+        'spelling_suggestions': _params.spellingSuggestions
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'query');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'query');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/query',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2146,66 +2453,79 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public queryNotices(params: DiscoveryV1.QueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): Promise<any> | void {
+  public queryNotices(params: DiscoveryV1.QueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.queryNotices(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'filter': _params.filter,
-      'query': _params.query,
-      'natural_language_query': _params.naturalLanguageQuery,
-      'passages': _params.passages,
-      'aggregation': _params.aggregation,
-      'count': _params.count,
-      'return': _params._return,
-      'offset': _params.offset,
-      'sort': _params.sort,
-      'highlight': _params.highlight,
-      'passages.fields': _params.passagesFields,
-      'passages.count': _params.passagesCount,
-      'passages.characters': _params.passagesCharacters,
-      'deduplicate.field': _params.deduplicateField,
-      'similar': _params.similar,
-      'similar.document_ids': _params.similarDocumentIds,
-      'similar.fields': _params.similarFields
-    };
+      const query = {
+        'filter': _params.filter,
+        'query': _params.query,
+        'natural_language_query': _params.naturalLanguageQuery,
+        'passages': _params.passages,
+        'aggregation': _params.aggregation,
+        'count': _params.count,
+        'return': _params._return,
+        'offset': _params.offset,
+        'sort': _params.sort,
+        'highlight': _params.highlight,
+        'passages.fields': _params.passagesFields,
+        'passages.count': _params.passagesCount,
+        'passages.characters': _params.passagesCharacters,
+        'deduplicate.field': _params.deduplicateField,
+        'similar': _params.similar,
+        'similar.document_ids': _params.similarDocumentIds,
+        'similar.fields': _params.similarFields
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryNotices');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryNotices');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/notices',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/notices',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2217,6 +2537,7 @@ class DiscoveryV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environmentId - The ID of the environment.
+   * @param {string} params.collectionIds - A comma-separated list of collection IDs to be queried against.
    * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
    * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
@@ -2249,8 +2570,6 @@ class DiscoveryV1 extends BaseService {
    * @param {string} [params.deduplicateField] - When specified, duplicate results based on the field specified are
    * removed from the returned results. Duplicate comparison is limited to the current query only, **offset** is not
    * considered. This parameter is currently Beta functionality.
-   * @param {string} [params.collectionIds] - A comma-separated list of collection IDs to be queried against. Required
-   * when querying multiple collections, invalid when performing a single collection query.
    * @param {boolean} [params.similar] - When `true`, results are returned based on their similarity to the document IDs
    * specified in the **similar.document_ids** parameter.
    * @param {string} [params.similarDocumentIds] - A comma-separated list of document IDs to find similar documents.
@@ -2270,70 +2589,83 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public federatedQuery(params: DiscoveryV1.FederatedQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): Promise<any> | void {
+  public federatedQuery(params: DiscoveryV1.FederatedQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.federatedQuery(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'filter': _params.filter,
-      'query': _params.query,
-      'natural_language_query': _params.naturalLanguageQuery,
-      'passages': _params.passages,
-      'aggregation': _params.aggregation,
-      'count': _params.count,
-      'return': _params._return,
-      'offset': _params.offset,
-      'sort': _params.sort,
-      'highlight': _params.highlight,
-      'passages.fields': _params.passagesFields,
-      'passages.count': _params.passagesCount,
-      'passages.characters': _params.passagesCharacters,
-      'deduplicate': _params.deduplicate,
-      'deduplicate.field': _params.deduplicateField,
-      'collection_ids': _params.collectionIds,
-      'similar': _params.similar,
-      'similar.document_ids': _params.similarDocumentIds,
-      'similar.fields': _params.similarFields,
-      'bias': _params.bias
-    };
+      const body = {
+        'collection_ids': _params.collectionIds,
+        'filter': _params.filter,
+        'query': _params.query,
+        'natural_language_query': _params.naturalLanguageQuery,
+        'passages': _params.passages,
+        'aggregation': _params.aggregation,
+        'count': _params.count,
+        'return': _params._return,
+        'offset': _params.offset,
+        'sort': _params.sort,
+        'highlight': _params.highlight,
+        'passages.fields': _params.passagesFields,
+        'passages.count': _params.passagesCount,
+        'passages.characters': _params.passagesCharacters,
+        'deduplicate': _params.deduplicate,
+        'deduplicate.field': _params.deduplicateField,
+        'similar': _params.similar,
+        'similar.document_ids': _params.similarDocumentIds,
+        'similar.fields': _params.similarFields,
+        'bias': _params.bias
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'federatedQuery');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'federatedQuery');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/query',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/query',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2383,211 +2715,154 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public federatedQueryNotices(params: DiscoveryV1.FederatedQueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): Promise<any> | void {
+  public federatedQueryNotices(params: DiscoveryV1.FederatedQueryNoticesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryNoticesResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionIds'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.federatedQueryNotices(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'collection_ids': _params.collectionIds,
-      'filter': _params.filter,
-      'query': _params.query,
-      'natural_language_query': _params.naturalLanguageQuery,
-      'aggregation': _params.aggregation,
-      'count': _params.count,
-      'return': _params._return,
-      'offset': _params.offset,
-      'sort': _params.sort,
-      'highlight': _params.highlight,
-      'deduplicate.field': _params.deduplicateField,
-      'similar': _params.similar,
-      'similar.document_ids': _params.similarDocumentIds,
-      'similar.fields': _params.similarFields
-    };
+      const query = {
+        'collection_ids': _params.collectionIds,
+        'filter': _params.filter,
+        'query': _params.query,
+        'natural_language_query': _params.naturalLanguageQuery,
+        'aggregation': _params.aggregation,
+        'count': _params.count,
+        'return': _params._return,
+        'offset': _params.offset,
+        'sort': _params.sort,
+        'highlight': _params.highlight,
+        'deduplicate.field': _params.deduplicateField,
+        'similar': _params.similar,
+        'similar.document_ids': _params.similarDocumentIds,
+        'similar.fields': _params.similarFields
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'federatedQueryNotices');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'federatedQueryNotices');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/notices',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/notices',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
-   * Knowledge Graph entity query.
+   * Get Autocomplete Suggestions.
    *
-   * See the [Knowledge Graph documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-kg#kg) for
-   * more details.
+   * Returns completion query suggestions for the specified prefix.  /n/n **Important:** this method is only valid when
+   * using the Cloud Pak version of Discovery.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {string} [params.feature] - The entity query feature to perform. Supported features are `disambiguate` and
-   * `similar_entities`.
-   * @param {QueryEntitiesEntity} [params.entity] - A text string that appears within the entity text field.
-   * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank
-   * based on that association. For example, if you wanted to query the city of London in England your query would look
-   * for `London` with the context of `England`.
-   * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
-   * @param {number} [params.evidenceCount] - The number of evidence items to return for each result. The default is
-   * `0`. The maximum number of evidence items per query is 10,000.
+   * @param {string} [params.field] - The field in the result documents that autocompletion suggestions are identified
+   * from.
+   * @param {string} [params.prefix] - The prefix to use for autocompletion. For example, the prefix `Ho` could
+   * autocomplete to `Hot`, `Housing`, or `How do I upgrade`. Possible completions are.
+   * @param {number} [params.count] - The number of autocompletion suggestions to return.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public queryEntities(params: DiscoveryV1.QueryEntitiesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryEntitiesResponse>): Promise<any> | void {
+  public getAutocompletion(params: DiscoveryV1.GetAutocompletionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Completions>): Promise<DiscoveryV1.Response<DiscoveryV1.Completions>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.queryEntities(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'feature': _params.feature,
-      'entity': _params.entity,
-      'context': _params.context,
-      'count': _params.count,
-      'evidence_count': _params.evidenceCount
-    };
+      const query = {
+        'field': _params.field,
+        'prefix': _params.prefix,
+        'count': _params.count
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryEntities');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getAutocompletion');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/query_entities',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/autocompletion',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
-  };
-
-  /**
-   * Knowledge Graph relationship query.
-   *
-   * See the [Knowledge Graph documentation](https://cloud.ibm.com/docs/services/discovery?topic=discovery-kg#kg) for
-   * more details.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.environmentId - The ID of the environment.
-   * @param {string} params.collectionId - The ID of the collection.
-   * @param {QueryRelationsEntity[]} [params.entities] - An array of entities to find relationships for.
-   * @param {QueryEntitiesContext} [params.context] - Entity text to provide context for the queried entity and rank
-   * based on that association. For example, if you wanted to query the city of London in England your query would look
-   * for `London` with the context of `England`.
-   * @param {string} [params.sort] - The sorting method for the relationships, can be `score` or `frequency`.
-   * `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot
-   * be used in the same query as the **bias** parameter.
-   * @param {QueryRelationsFilter} [params.filter] -
-   * @param {number} [params.count] - The number of results to return. The default is `10`. The maximum is `1000`.
-   * @param {number} [params.evidenceCount] - The number of evidence items to return for each result. The default is
-   * `0`. The maximum number of evidence items per query is 10,000.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
-   */
-  public queryRelations(params: DiscoveryV1.QueryRelationsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.QueryRelationsResponse>): Promise<any> | void {
-    const _params = extend({}, params);
-    const _callback = callback;
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.queryRelations(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-
-    const body = {
-      'entities': _params.entities,
-      'context': _params.context,
-      'sort': _params.sort,
-      'filter': _params.filter,
-      'count': _params.count,
-      'evidence_count': _params.evidenceCount
-    };
-
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
-
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryRelations');
-
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/query_relations',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -2606,45 +2881,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listTrainingData(params: DiscoveryV1.ListTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>): Promise<any> | void {
+  public listTrainingData(params: DiscoveryV1.ListTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingDataSet>): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingDataSet>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listTrainingData(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listTrainingData');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listTrainingData');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2663,53 +2951,66 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public addTrainingData(params: DiscoveryV1.AddTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): Promise<any> | void {
+  public addTrainingData(params: DiscoveryV1.AddTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.addTrainingData(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'natural_language_query': _params.naturalLanguageQuery,
-      'filter': _params.filter,
-      'examples': _params.examples
-    };
+      const body = {
+        'natural_language_query': _params.naturalLanguageQuery,
+        'filter': _params.filter,
+        'examples': _params.examples
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'addTrainingData');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'addTrainingData');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2724,44 +3025,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteAllTrainingData(params: DiscoveryV1.DeleteAllTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
+  public deleteAllTrainingData(params: DiscoveryV1.DeleteAllTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteAllTrainingData(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteAllTrainingData');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteAllTrainingData');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2777,46 +3091,59 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getTrainingData(params: DiscoveryV1.GetTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): Promise<any> | void {
+  public getTrainingData(params: DiscoveryV1.GetTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingQuery>): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getTrainingData(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'query_id': _params.queryId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'query_id': _params.queryId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTrainingData');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTrainingData');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2832,45 +3159,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteTrainingData(params: DiscoveryV1.DeleteTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
+  public deleteTrainingData(params: DiscoveryV1.DeleteTrainingDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteTrainingData(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'query_id': _params.queryId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'query_id': _params.queryId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTrainingData');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTrainingData');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2886,46 +3226,59 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listTrainingExamples(params: DiscoveryV1.ListTrainingExamplesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>): Promise<any> | void {
+  public listTrainingExamples(params: DiscoveryV1.ListTrainingExamplesParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExampleList>): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExampleList>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listTrainingExamples(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'query_id': _params.queryId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'query_id': _params.queryId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listTrainingExamples');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listTrainingExamples');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2944,54 +3297,67 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createTrainingExample(params: DiscoveryV1.CreateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<any> | void {
+  public createTrainingExample(params: DiscoveryV1.CreateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createTrainingExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'document_id': _params.documentId,
-      'cross_reference': _params.crossReference,
-      'relevance': _params.relevance
-    };
+      const body = {
+        'document_id': _params.documentId,
+        'cross_reference': _params.crossReference,
+        'relevance': _params.relevance
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'query_id': _params.queryId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'query_id': _params.queryId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createTrainingExample');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createTrainingExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3008,46 +3374,59 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteTrainingExample(params: DiscoveryV1.DeleteTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
+  public deleteTrainingExample(params: DiscoveryV1.DeleteTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteTrainingExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'query_id': _params.queryId,
-      'example_id': _params.exampleId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'query_id': _params.queryId,
+        'example_id': _params.exampleId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTrainingExample');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteTrainingExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3066,54 +3445,67 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateTrainingExample(params: DiscoveryV1.UpdateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<any> | void {
+  public updateTrainingExample(params: DiscoveryV1.UpdateTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateTrainingExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'cross_reference': _params.crossReference,
-      'relevance': _params.relevance
-    };
+      const body = {
+        'cross_reference': _params.crossReference,
+        'relevance': _params.relevance
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'query_id': _params.queryId,
-      'example_id': _params.exampleId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'query_id': _params.queryId,
+        'example_id': _params.exampleId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateTrainingExample');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateTrainingExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
-        method: 'PUT',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+          method: 'PUT',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3130,47 +3522,60 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getTrainingExample(params: DiscoveryV1.GetTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<any> | void {
+  public getTrainingExample(params: DiscoveryV1.GetTrainingExampleParams, callback?: DiscoveryV1.Callback<DiscoveryV1.TrainingExample>): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getTrainingExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId,
-      'query_id': _params.queryId,
-      'example_id': _params.exampleId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'collection_id': _params.collectionId,
+        'query_id': _params.queryId,
+        'example_id': _params.exampleId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTrainingExample');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getTrainingExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -3193,43 +3598,56 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<any> | void {
+  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Empty>): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customerId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteUserData(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'customer_id': _params.customerId
-    };
+      const query = {
+        'customer_id': _params.customerId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteUserData');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteUserData');
 
-    const parameters = {
-      options: {
-        url: '/v1/user_data',
-        method: 'DELETE',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/user_data',
+          method: 'DELETE',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -3249,46 +3667,59 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createEvent(params: DiscoveryV1.CreateEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CreateEventResponse>): Promise<any> | void {
+  public createEvent(params: DiscoveryV1.CreateEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CreateEventResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.CreateEventResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['type', 'data'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createEvent(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'type': _params.type,
-      'data': _params.data
-    };
+      const body = {
+        'type': _params.type,
+        'data': _params.data
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createEvent');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createEvent');
 
-    const parameters = {
-      options: {
-        url: '/v1/events',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/events',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3314,42 +3745,51 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): Promise<any> | void {
+  public queryLog(params?: DiscoveryV1.QueryLogParams, callback?: DiscoveryV1.Callback<DiscoveryV1.LogQueryResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.LogQueryResponse>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.queryLog(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'filter': _params.filter,
-      'query': _params.query,
-      'count': _params.count,
-      'offset': _params.offset,
-      'sort': _params.sort
-    };
+      const query = {
+        'filter': _params.filter,
+        'query': _params.query,
+        'count': _params.count,
+        'offset': _params.offset,
+        'sort': _params.sort
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryLog');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'queryLog');
 
-    const parameters = {
-      options: {
-        url: '/v1/logs',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/logs',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3367,40 +3807,49 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
+  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getMetricsQuery(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'start_time': _params.startTime,
-      'end_time': _params.endTime,
-      'result_type': _params.resultType
-    };
+      const query = {
+        'start_time': _params.startTime,
+        'end_time': _params.endTime,
+        'result_type': _params.resultType
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQuery');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQuery');
 
-    const parameters = {
-      options: {
-        url: '/v1/metrics/number_of_queries',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/metrics/number_of_queries',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3420,40 +3869,49 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
+  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getMetricsQueryEvent(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'start_time': _params.startTime,
-      'end_time': _params.endTime,
-      'result_type': _params.resultType
-    };
+      const query = {
+        'start_time': _params.startTime,
+        'end_time': _params.endTime,
+        'result_type': _params.resultType
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryEvent');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryEvent');
 
-    const parameters = {
-      options: {
-        url: '/v1/metrics/number_of_queries_with_event',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/metrics/number_of_queries_with_event',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3472,40 +3930,49 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
+  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getMetricsQueryNoResults(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'start_time': _params.startTime,
-      'end_time': _params.endTime,
-      'result_type': _params.resultType
-    };
+      const query = {
+        'start_time': _params.startTime,
+        'end_time': _params.endTime,
+        'result_type': _params.resultType
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryNoResults');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryNoResults');
 
-    const parameters = {
-      options: {
-        url: '/v1/metrics/number_of_queries_with_no_search_results',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/metrics/number_of_queries_with_no_search_results',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3525,40 +3992,49 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<any> | void {
+  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getMetricsEventRate(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'start_time': _params.startTime,
-      'end_time': _params.endTime,
-      'result_type': _params.resultType
-    };
+      const query = {
+        'start_time': _params.startTime,
+        'end_time': _params.endTime,
+        'result_type': _params.resultType
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsEventRate');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsEventRate');
 
-    const parameters = {
-      options: {
-        url: '/v1/metrics/event_rate',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/metrics/event_rate',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3575,38 +4051,47 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): Promise<any> | void {
+  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams, callback?: DiscoveryV1.Callback<DiscoveryV1.MetricTokenResponse>): Promise<DiscoveryV1.Response<DiscoveryV1.MetricTokenResponse>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getMetricsQueryTokenEvent(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'count': _params.count
-    };
+      const query = {
+        'count': _params.count
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryTokenEvent');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getMetricsQueryTokenEvent');
 
-    const parameters = {
-      options: {
-        url: '/v1/metrics/top_query_tokens_with_event_rate',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/metrics/top_query_tokens_with_event_rate',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -3626,44 +4111,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listCredentials(params: DiscoveryV1.ListCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CredentialsList>): Promise<any> | void {
+  public listCredentials(params: DiscoveryV1.ListCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.CredentialsList>): Promise<DiscoveryV1.Response<DiscoveryV1.CredentialsList>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listCredentials(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCredentials');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listCredentials');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/credentials',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/credentials',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3692,52 +4190,65 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createCredentials(params: DiscoveryV1.CreateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
+  public createCredentials(params: DiscoveryV1.CreateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createCredentials(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'source_type': _params.sourceType,
-      'credential_details': _params.credentialDetails,
-      'status': _params.status
-    };
+      const body = {
+        'source_type': _params.sourceType,
+        'credential_details': _params.credentialDetails,
+        'status': _params.status
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createCredentials');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createCredentials');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/credentials',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/credentials',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3755,45 +4266,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getCredentials(params: DiscoveryV1.GetCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
+  public getCredentials(params: DiscoveryV1.GetCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'credentialId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getCredentials(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'credential_id': _params.credentialId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'credential_id': _params.credentialId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getCredentials');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getCredentials');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/credentials/{credential_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/credentials/{credential_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3822,53 +4346,66 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateCredentials(params: DiscoveryV1.UpdateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<any> | void {
+  public updateCredentials(params: DiscoveryV1.UpdateCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Credentials>): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'credentialId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateCredentials(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'source_type': _params.sourceType,
-      'credential_details': _params.credentialDetails,
-      'status': _params.status
-    };
+      const body = {
+        'source_type': _params.sourceType,
+        'credential_details': _params.credentialDetails,
+        'status': _params.status
+      };
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'credential_id': _params.credentialId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'credential_id': _params.credentialId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateCredentials');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'updateCredentials');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/credentials/{credential_id}',
-        method: 'PUT',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/credentials/{credential_id}',
+          method: 'PUT',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3883,45 +4420,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteCredentials(params: DiscoveryV1.DeleteCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCredentials>): Promise<any> | void {
+  public deleteCredentials(params: DiscoveryV1.DeleteCredentialsParams, callback?: DiscoveryV1.Callback<DiscoveryV1.DeleteCredentials>): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCredentials>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'credentialId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteCredentials(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'credential_id': _params.credentialId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'credential_id': _params.credentialId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteCredentials');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteCredentials');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/credentials/{credential_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/credentials/{credential_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -3939,44 +4489,57 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listGateways(params: DiscoveryV1.ListGatewaysParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayList>): Promise<any> | void {
+  public listGateways(params: DiscoveryV1.ListGatewaysParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayList>): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayList>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listGateways(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listGateways');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'listGateways');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/gateways',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/gateways',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3991,50 +4554,63 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createGateway(params: DiscoveryV1.CreateGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): Promise<any> | void {
+  public createGateway(params: DiscoveryV1.CreateGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createGateway(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name
-    };
+      const body = {
+        'name': _params.name
+      };
 
-    const path = {
-      'environment_id': _params.environmentId
-    };
+      const path = {
+        'environment_id': _params.environmentId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createGateway');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'createGateway');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/gateways',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/gateways',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -4049,45 +4625,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getGateway(params: DiscoveryV1.GetGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): Promise<any> | void {
+  public getGateway(params: DiscoveryV1.GetGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Gateway>): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'gatewayId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getGateway(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'gateway_id': _params.gatewayId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'gateway_id': _params.gatewayId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getGateway');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'getGateway');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -4102,45 +4691,58 @@ class DiscoveryV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayDelete>): Promise<any> | void {
+  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams, callback?: DiscoveryV1.Callback<DiscoveryV1.GatewayDelete>): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayDelete>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['environmentId', 'gatewayId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteGateway(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'environment_id': _params.environmentId,
-      'gateway_id': _params.gatewayId
-    };
+      const path = {
+        'environment_id': _params.environmentId,
+        'gateway_id': _params.gatewayId
+      };
 
-    const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteGateway');
+      const sdkHeaders = getSdkHeaders('discovery', 'v1', 'deleteGateway');
 
-    const parameters = {
-      options: {
-        url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/environments/{environment_id}/gateways/{gateway_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
 }
@@ -4154,17 +4756,7 @@ DiscoveryV1.prototype.serviceVersion = 'v1';
 
 namespace DiscoveryV1 {
 
-  /** Options for the `DiscoveryV1` constructor. */
-  export type Options = {
-    version: string;
-    url?: string;
-    authenticator: Authenticator;
-    disableSslVerification?: boolean;
-    headers?: OutgoingHttpHeaders;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
+  /** An operation response. **/
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -4348,65 +4940,6 @@ namespace DiscoveryV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `testConfigurationInEnvironment` operation. */
-  export interface TestConfigurationInEnvironmentParams {
-    /** The ID of the environment. */
-    environmentId: string;
-    /** The configuration to use to process the document. If this part is provided, then the provided configuration
-     *  is used to process the document. If the **configuration_id** is also provided (both are present at the same
-     *  time), then request is rejected. The maximum supported configuration size is 1 MB. Configuration parts larger
-     *  than 1 MB are rejected. See the `GET /configurations/{configuration_id}` operation for an example configuration.
-     */
-    configuration?: string;
-    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the
-     *  supported size are rejected.
-     */
-    file?: NodeJS.ReadableStream|FileObject|Buffer;
-    /** The filename for file. */
-    filename?: string;
-    /** The content type of file. */
-    fileContentType?: TestConfigurationInEnvironmentConstants.FileContentType | string;
-    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:
-     *  ``` {
-     *    "Creator": "Johnny Appleseed",
-     *    "Subject": "Apples"
-     *  } ```.
-     */
-    metadata?: string;
-    /** Specify to only run the input document through the given step instead of running the input document through
-     *  the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`.
-     */
-    step?: TestConfigurationInEnvironmentConstants.Step | string;
-    /** The ID of the configuration to use to process the document. If the **configuration** form part is also
-     *  provided (both are present at the same time), then the request will be rejected.
-     */
-    configurationId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Constants for the `testConfigurationInEnvironment` operation. */
-  export namespace TestConfigurationInEnvironmentConstants {
-    /** The content type of file. */
-    export enum FileContentType {
-      APPLICATION_JSON = 'application/json',
-      APPLICATION_MSWORD = 'application/msword',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      APPLICATION_PDF = 'application/pdf',
-      TEXT_HTML = 'text/html',
-      APPLICATION_XHTML_XML = 'application/xhtml+xml',
-    }
-    /** Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are `convert`, `enrich`, and `normalize`. */
-    export enum Step {
-      HTML_INPUT = 'html_input',
-      HTML_OUTPUT = 'html_output',
-      JSON_OUTPUT = 'json_output',
-      JSON_NORMALIZATIONS_OUTPUT = 'json_normalizations_output',
-      ENRICHMENTS_OUTPUT = 'enrichments_output',
-      NORMALIZATIONS_OUTPUT = 'normalizations_output',
-    }
-  }
-
   /** Parameters for the `createCollection` operation. */
   export interface CreateCollectionParams {
     /** The ID of the environment. */
@@ -4580,7 +5113,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collectionId: string;
     /** The content of the stopword list to ingest. */
-    stopwordFile: NodeJS.ReadableStream|FileObject|Buffer;
+    stopwordFile: NodeJS.ReadableStream|Buffer;
     /** The filename for stopwordFile. */
     stopwordFilename: string;
     headers?: OutgoingHttpHeaders;
@@ -4605,7 +5138,7 @@ namespace DiscoveryV1 {
      *  50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
-    file?: NodeJS.ReadableStream|FileObject|Buffer;
+    file?: NodeJS.ReadableStream|Buffer;
     /** The filename for file. */
     filename?: string;
     /** The content type of file. */
@@ -4656,7 +5189,7 @@ namespace DiscoveryV1 {
      *  50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
-    file?: NodeJS.ReadableStream|FileObject|Buffer;
+    file?: NodeJS.ReadableStream|Buffer;
     /** The filename for file. */
     filename?: string;
     /** The content type of file. */
@@ -4757,10 +5290,6 @@ namespace DiscoveryV1 {
      *  currently Beta functionality.
      */
     deduplicateField?: string;
-    /** A comma-separated list of collection IDs to be queried against. Required when querying multiple collections,
-     *  invalid when performing a single collection query.
-     */
-    collectionIds?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the
      *  **similar.document_ids** parameter.
      */
@@ -4782,6 +5311,13 @@ namespace DiscoveryV1 {
      *  higher field values. This parameter cannot be used in the same query as the **sort** parameter.
      */
     bias?: string;
+    /** When `true` and the **natural_language_query** parameter is used, the **natural_languge_query** parameter is
+     *  spell checked. The most likely correction is retunred in the **suggested_query** field of the response (if one
+     *  exists).
+     *
+     *  **Important:** this parameter is only valid when using the Cloud Pak version of Discovery.
+     */
+    spellingSuggestions?: boolean;
     /** If `true`, queries are not stored in the Discovery **Logs** endpoint. */
     xWatsonLoggingOptOut?: boolean;
     headers?: OutgoingHttpHeaders;
@@ -4869,6 +5405,8 @@ namespace DiscoveryV1 {
   export interface FederatedQueryParams {
     /** The ID of the environment. */
     environmentId: string;
+    /** A comma-separated list of collection IDs to be queried against. */
+    collectionIds: string;
     /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better
      *  for metadata-type searches and for assessing the concepts in the data set.
      */
@@ -4925,10 +5463,6 @@ namespace DiscoveryV1 {
      *  currently Beta functionality.
      */
     deduplicateField?: string;
-    /** A comma-separated list of collection IDs to be queried against. Required when querying multiple collections,
-     *  invalid when performing a single collection query.
-     */
-    collectionIds?: string;
     /** When `true`, results are returned based on their similarity to the document IDs specified in the
      *  **similar.document_ids** parameter.
      */
@@ -5021,65 +5555,21 @@ namespace DiscoveryV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `queryEntities` operation. */
-  export interface QueryEntitiesParams {
+  /** Parameters for the `getAutocompletion` operation. */
+  export interface GetAutocompletionParams {
     /** The ID of the environment. */
     environmentId: string;
     /** The ID of the collection. */
     collectionId: string;
-    /** The entity query feature to perform. Supported features are `disambiguate` and `similar_entities`. */
-    feature?: string;
-    /** A text string that appears within the entity text field. */
-    entity?: QueryEntitiesEntity;
-    /** Entity text to provide context for the queried entity and rank based on that association. For example, if
-     *  you wanted to query the city of London in England your query would look for `London` with the context of
-     *  `England`.
+    /** The field in the result documents that autocompletion suggestions are identified from. */
+    field?: string;
+    /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `Hot`, `Housing`,
+     *  or `How do I upgrade`. Possible completions are.
      */
-    context?: QueryEntitiesContext;
-    /** The number of results to return. The default is `10`. The maximum is `1000`. */
+    prefix?: string;
+    /** The number of autocompletion suggestions to return. */
     count?: number;
-    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence
-     *  items per query is 10,000.
-     */
-    evidenceCount?: number;
     headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `queryRelations` operation. */
-  export interface QueryRelationsParams {
-    /** The ID of the environment. */
-    environmentId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    /** An array of entities to find relationships for. */
-    entities?: QueryRelationsEntity[];
-    /** Entity text to provide context for the queried entity and rank based on that association. For example, if
-     *  you wanted to query the city of London in England your query would look for `London` with the context of
-     *  `England`.
-     */
-    context?: QueryEntitiesContext;
-    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique
-     *  times each entity is identified. The default is `score`. This parameter cannot be used in the same query as the
-     *  **bias** parameter.
-     */
-    sort?: QueryRelationsConstants.Sort | string;
-    filter?: QueryRelationsFilter;
-    /** The number of results to return. The default is `10`. The maximum is `1000`. */
-    count?: number;
-    /** The number of evidence items to return for each result. The default is `0`. The maximum number of evidence
-     *  items per query is 10,000.
-     */
-    evidenceCount?: number;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Constants for the `queryRelations` operation. */
-  export namespace QueryRelationsConstants {
-    /** The sorting method for the relationships, can be `score` or `frequency`. `frequency` is the number of unique times each entity is identified. The default is `score`. This parameter cannot be used in the same query as the **bias** parameter. */
-    export enum Sort {
-      SCORE = 'score',
-      FREQUENCY = 'frequency',
-    }
   }
 
   /** Parameters for the `listTrainingData` operation. */
@@ -5493,7 +5983,7 @@ namespace DiscoveryV1 {
    * model interfaces
    ************************/
 
-  /** AggregationResult. */
+  /** Aggregation results for the specified query. */
   export interface AggregationResult {
     /** Key that matched the aggregation type. */
     key?: string;
@@ -5531,9 +6021,11 @@ namespace DiscoveryV1 {
      *  (German), and `es` (Spanish).
      */
     language?: string;
+    /** Object containing collection document count information. */
     document_counts?: DocumentCounts;
     /** Summary of the disk usage statistics for this collection. */
     disk_usage?: CollectionDiskUsage;
+    /** Training status details. */
     training_status?: TrainingStatus;
     /** Object containing information about the crawl status of this collection. */
     crawl_status?: CollectionCrawlStatus;
@@ -5559,6 +6051,12 @@ namespace DiscoveryV1 {
     available?: number;
     /** Total number of collections allowed in the environment. */
     maximum_allowed?: number;
+  }
+
+  /** An object containing an array of autocompletion suggestions. */
+  export interface Completions {
+    /** Array of autcomplete suggestion based on the provided prefix. */
+    completions?: string[];
   }
 
   /** A custom configuration for the environment. */
@@ -5739,13 +6237,13 @@ namespace DiscoveryV1 {
     status?: string;
   }
 
-  /** CredentialsList. */
+  /** Object containing array of credential definitions. */
   export interface CredentialsList {
     /** An array of credential definitions that were created for this instance. */
     credentials?: Credentials[];
   }
 
-  /** DeleteCollectionResponse. */
+  /** Response object returned when deleting a colleciton. */
   export interface DeleteCollectionResponse {
     /** The unique identifier of the collection that is being deleted. */
     collection_id: string;
@@ -5753,7 +6251,7 @@ namespace DiscoveryV1 {
     status: string;
   }
 
-  /** DeleteConfigurationResponse. */
+  /** Information returned when a configuration is deleted. */
   export interface DeleteConfigurationResponse {
     /** The unique identifier for the configuration. */
     configuration_id: string;
@@ -5771,7 +6269,7 @@ namespace DiscoveryV1 {
     status?: string;
   }
 
-  /** DeleteDocumentResponse. */
+  /** Information returned when a document is deleted. */
   export interface DeleteDocumentResponse {
     /** The unique identifier of the document. */
     document_id?: string;
@@ -5779,7 +6277,7 @@ namespace DiscoveryV1 {
     status?: string;
   }
 
-  /** DeleteEnvironmentResponse. */
+  /** Response object returned when deleting an environment. */
   export interface DeleteEnvironmentResponse {
     /** The unique identifier for the environment. */
     environment_id: string;
@@ -5795,7 +6293,7 @@ namespace DiscoveryV1 {
     maximum_allowed_bytes?: number;
   }
 
-  /** DocumentAccepted. */
+  /** Information returned after an uploaded document is accepted. */
   export interface DocumentAccepted {
     /** The unique identifier of the ingested document. */
     document_id?: string;
@@ -5807,7 +6305,7 @@ namespace DiscoveryV1 {
     notices?: Notice[];
   }
 
-  /** DocumentCounts. */
+  /** Object containing collection document count information. */
   export interface DocumentCounts {
     /** The total number of available documents in the collection. */
     available?: number;
@@ -5817,14 +6315,6 @@ namespace DiscoveryV1 {
     failed?: number;
     /** The number of documents that have been uploaded to the collection, but have not yet started processing. */
     pending?: number;
-  }
-
-  /** DocumentSnapshot. */
-  export interface DocumentSnapshot {
-    /** The step in the document conversion process that the snapshot object represents. */
-    step?: string;
-    /** Snapshot of the conversion. */
-    snapshot?: JsonObject;
   }
 
   /** Status information about a submitted document. */
@@ -5847,7 +6337,7 @@ namespace DiscoveryV1 {
     notices: Notice[];
   }
 
-  /** Enrichment. */
+  /** Enrichment step to perform on the document. Each enrichment is performed on the specified field in the order that they are listed in the configuration. */
   export interface Enrichment {
     /** Describes what the enrichment step does. */
     description?: string;
@@ -5885,6 +6375,7 @@ namespace DiscoveryV1 {
 
   /** Options which are specific to a particular enrichment. */
   export interface EnrichmentOptions {
+    /** Object containing Natural Language Understanding features to be used. */
     features?: NluEnrichmentFeatures;
     /** ISO 639-1 code indicating the language to use for the analysis. This code overrides the automatic language
      *  detection performed by the service. Valid codes are `ar` (Arabic), `en` (English), `fr` (French), `de` (German),
@@ -5990,7 +6481,7 @@ namespace DiscoveryV1 {
     expansions: Expansion[];
   }
 
-  /** Field. */
+  /** Object containing field details. */
   export interface Field {
     /** The name of the field. */
     field?: string;
@@ -6004,7 +6495,7 @@ namespace DiscoveryV1 {
     match?: string;
   }
 
-  /** FontSetting. */
+  /** Font matching configuration. */
   export interface FontSetting {
     /** The HTML heading level that any content with the matching font is converted to. */
     level?: number;
@@ -6068,7 +6559,9 @@ namespace DiscoveryV1 {
     exclude_tags_completely?: string[];
     /** Array of HTML tags which are excluded but still retain content. */
     exclude_tags_keep_content?: string[];
+    /** Object containing an array of XPaths. */
     keep_content?: XPathPatterns;
+    /** Object containing an array of XPaths. */
     exclude_content?: XPathPatterns;
     /** An array of HTML tag attributes to keep in the converted document. */
     keep_tag_attributes?: string[];
@@ -6092,19 +6585,19 @@ namespace DiscoveryV1 {
     fields?: Field[];
   }
 
-  /** ListCollectionsResponse. */
+  /** Response object containing an array of collection details. */
   export interface ListCollectionsResponse {
     /** An array containing information about each collection in the environment. */
     collections?: Collection[];
   }
 
-  /** ListConfigurationsResponse. */
+  /** Object containing an array of available configurations. */
   export interface ListConfigurationsResponse {
-    /** An array of Configurations that are available for the service instance. */
+    /** An array of configurations that are available for the service instance. */
     configurations?: Configuration[];
   }
 
-  /** ListEnvironmentsResponse. */
+  /** Response object containing an array of configured environments. */
   export interface ListEnvironmentsResponse {
     /** An array of [environments] that are available for the service instance. */
     environments?: Environment[];
@@ -6306,12 +6799,12 @@ namespace DiscoveryV1 {
      */
     sentence_locations?: boolean;
     /** The enrichement model to use with entity extraction. May be a custom model provided by Watson Knowledge
-     *  Studio, the public model for use with Knowledge Graph `en-news`, or the default public model `alchemy`.
+     *  Studio, or the default public model `alchemy`.
      */
     model?: string;
   }
 
-  /** NluEnrichmentFeatures. */
+  /** Object containing Natural Language Understanding features to be used. */
   export interface NluEnrichmentFeatures {
     /** An object specifying the Keyword enrichment and related parameters. */
     keywords?: NluEnrichmentKeywords;
@@ -6344,8 +6837,8 @@ namespace DiscoveryV1 {
   /** An object specifying the relations enrichment and related parameters. */
   export interface NluEnrichmentRelations {
     /** *For use with `natural_language_understanding` enrichments only.* The enrichement model to use with
-     *  relationship extraction. May be a custom model provided by Watson Knowledge Studio, the public model for use
-     *  with Knowledge Graph `en-news`, the default is`en-news`.
+     *  relationship extraction. May be a custom model provided by Watson Knowledge Studio, the default public model
+     *  is`en-news`.
      */
     model?: string;
   }
@@ -6368,7 +6861,7 @@ namespace DiscoveryV1 {
     targets?: string[];
   }
 
-  /** NormalizationOperation. */
+  /** Object containing normalization operations. */
   export interface NormalizationOperation {
     /** Identifies what type of operation to perform.
      *
@@ -6432,13 +6925,15 @@ namespace DiscoveryV1 {
     description?: string;
   }
 
-  /** PdfHeadingDetection. */
+  /** Object containing heading detection conversion settings for PDF documents. */
   export interface PdfHeadingDetection {
+    /** Array of font matching configurations. */
     fonts?: FontSetting[];
   }
 
   /** A list of PDF conversion settings. */
   export interface PdfSettings {
+    /** Object containing heading detection conversion settings for PDF documents. */
     heading?: PdfHeadingDetection;
   }
 
@@ -6454,74 +6949,7 @@ namespace DiscoveryV1 {
     aggregations?: QueryAggregation[];
   }
 
-  /** Entity text to provide context for the queried entity and rank based on that association. For example, if you wanted to query the city of London in England your query would look for `London` with the context of `England`. */
-  export interface QueryEntitiesContext {
-    /** Entity text to provide context for the queried entity and rank based on that association. For example, if
-     *  you wanted to query the city of London in England your query would look for `London` with the context of
-     *  `England`.
-     */
-    text?: string;
-  }
-
-  /** A text string that appears within the entity text field. */
-  export interface QueryEntitiesEntity {
-    /** Entity text content. */
-    text?: string;
-    /** The type of the specified entity. */
-    type?: string;
-  }
-
-  /** An object that contains an array of entities resulting from the query. */
-  export interface QueryEntitiesResponse {
-    /** Array of entities that results from the query. */
-    entities?: QueryEntitiesResponseItem[];
-  }
-
-  /** Object containing Entity query response information. */
-  export interface QueryEntitiesResponseItem {
-    /** Entity text content. */
-    text?: string;
-    /** The type of the result entity. */
-    type?: string;
-    /** List of different evidentiary items to support the result. */
-    evidence?: QueryEvidence[];
-  }
-
-  /** Description of evidence location supporting Knoweldge Graph query result. */
-  export interface QueryEvidence {
-    /** The docuemnt ID (as indexed in Discovery) of the evidence location. */
-    document_id?: string;
-    /** The field of the document where the supporting evidence was identified. */
-    field?: string;
-    /** The start location of the evidence in the identified field. This value is inclusive. */
-    start_offset?: number;
-    /** The end location of the evidence in the identified field. This value is inclusive. */
-    end_offset?: number;
-    /** An array of entity objects that show evidence of the result. */
-    entities?: QueryEvidenceEntity[];
-  }
-
-  /** Entity description and location within evidence field. */
-  export interface QueryEvidenceEntity {
-    /** The entity type for this entity. Possible types vary based on model used. */
-    type?: string;
-    /** The original text of this entity as found in the evidence field. */
-    text?: string;
-    /** The start location of the entity text in the identified field. This value is inclusive. */
-    start_offset?: number;
-    /** The end location of the entity text in the identified field. This value is exclusive. */
-    end_offset?: number;
-  }
-
-  /** QueryFilterType. */
-  export interface QueryFilterType {
-    /** A comma-separated list of types to exclude. */
-    exclude?: string[];
-    /** A comma-separated list of types to include. All other types are excluded. */
-    include?: string[];
-  }
-
-  /** QueryNoticesResponse. */
+  /** Object containing notice query results. */
   export interface QueryNoticesResponse {
     /** The number of matching results. */
     matching_results?: number;
@@ -6535,7 +6963,7 @@ namespace DiscoveryV1 {
     duplicates_removed?: number;
   }
 
-  /** QueryNoticesResult. */
+  /** Query result object. */
   export interface QueryNoticesResult {
     /** The unique identifier of the document. */
     id?: string;
@@ -6563,7 +6991,7 @@ namespace DiscoveryV1 {
     [propName: string]: any;
   }
 
-  /** QueryPassages. */
+  /** A passage query result. */
   export interface QueryPassages {
     /** The unique identifier of the document from which the passage has been extracted. */
     document_id?: string;
@@ -6577,48 +7005,6 @@ namespace DiscoveryV1 {
     end_offset?: number;
     /** The label of the field from which the passage has been extracted. */
     field?: string;
-  }
-
-  /** QueryRelationsArgument. */
-  export interface QueryRelationsArgument {
-    /** Array of query entities. */
-    entities?: QueryEntitiesEntity[];
-  }
-
-  /** QueryRelationsEntity. */
-  export interface QueryRelationsEntity {
-    /** Entity text content. */
-    text?: string;
-    /** The type of the specified entity. */
-    type?: string;
-    /** If false, implicit querying is performed. The default is `false`. */
-    exact?: boolean;
-  }
-
-  /** QueryRelationsFilter. */
-  export interface QueryRelationsFilter {
-    relation_types?: QueryFilterType;
-    entity_types?: QueryFilterType;
-    /** A comma-separated list of document IDs to include in the query. */
-    document_ids?: string[];
-  }
-
-  /** QueryRelationsRelationship. */
-  export interface QueryRelationsRelationship {
-    /** The identified relationship type. */
-    type?: string;
-    /** The number of times the relationship is mentioned. */
-    frequency?: number;
-    /** Information about the relationship. */
-    arguments?: QueryRelationsArgument[];
-    /** List of different evidentiary items to support the result. */
-    evidence?: QueryEvidence[];
-  }
-
-  /** QueryRelationsResponse. */
-  export interface QueryRelationsResponse {
-    /** Array of relationships for the relations query. */
-    relations?: QueryRelationsRelationship[];
   }
 
   /** A response containing the documents and aggregations for the query. */
@@ -6643,7 +7029,7 @@ namespace DiscoveryV1 {
     retrieval_details?: RetrievalDetails;
   }
 
-  /** QueryResult. */
+  /** Query result object. */
   export interface QueryResult {
     /** The unique identifier of the document. */
     id?: string;
@@ -6918,25 +7304,8 @@ namespace DiscoveryV1 {
   export interface Term {
     /** The field where the aggregation is located in the document. */
     field?: string;
+    /** The number of terms identified. */
     count?: number;
-  }
-
-  /** TestDocument. */
-  export interface TestDocument {
-    /** The unique identifier for the configuration. */
-    configuration_id?: string;
-    /** Status of the preview operation. */
-    status?: string;
-    /** The number of 10-kB chunks of field data that were enriched. This can be used to estimate the cost of
-     *  running a real ingestion.
-     */
-    enriched_field_units?: number;
-    /** Format of the test document. */
-    original_media_type?: string;
-    /** An array of objects that describe each step in the preview process. */
-    snapshots?: DocumentSnapshot[];
-    /** An array of notice messages about the preview operation. */
-    notices?: Notice[];
   }
 
   /** Timeslice. */
@@ -6982,7 +7351,7 @@ namespace DiscoveryV1 {
     hits?: TopHitsResults;
   }
 
-  /** TopHitsResults. */
+  /** Top hit information for this query. */
   export interface TopHitsResults {
     /** Number of matching results. */
     matching_results?: number;
@@ -6990,7 +7359,7 @@ namespace DiscoveryV1 {
     hits?: QueryResult[];
   }
 
-  /** TrainingDataSet. */
+  /** Training information for a specific collection. */
   export interface TrainingDataSet {
     /** The environment id associated with this training data set. */
     environment_id?: string;
@@ -7000,7 +7369,7 @@ namespace DiscoveryV1 {
     queries?: TrainingQuery[];
   }
 
-  /** TrainingExample. */
+  /** Training example details. */
   export interface TrainingExample {
     /** The document ID associated with this training example. */
     document_id?: string;
@@ -7010,13 +7379,13 @@ namespace DiscoveryV1 {
     relevance?: number;
   }
 
-  /** TrainingExampleList. */
+  /** Object containing an array of training examples. */
   export interface TrainingExampleList {
     /** Array of training examples. */
     examples?: TrainingExample[];
   }
 
-  /** TrainingQuery. */
+  /** Training query details. */
   export interface TrainingQuery {
     /** The query ID associated with the training query. */
     query_id?: string;
@@ -7028,7 +7397,7 @@ namespace DiscoveryV1 {
     examples?: TrainingExample[];
   }
 
-  /** TrainingStatus. */
+  /** Training status details. */
   export interface TrainingStatus {
     /** The total number of training examples uploaded to this collection. */
     total_examples?: number;
@@ -7050,18 +7419,21 @@ namespace DiscoveryV1 {
     data_updated?: string;
   }
 
-  /** WordHeadingDetection. */
+  /** Object containing heading detection conversion settings for Microsoft Word documents. */
   export interface WordHeadingDetection {
+    /** Array of font matching configurations. */
     fonts?: FontSetting[];
+    /** Array of Microsoft Word styles to convert. */
     styles?: WordStyle[];
   }
 
   /** A list of Word conversion settings. */
   export interface WordSettings {
+    /** Object containing heading detection conversion settings for Microsoft Word documents. */
     heading?: WordHeadingDetection;
   }
 
-  /** WordStyle. */
+  /** Microsoft Word styles to convert into a specified HTML head level. */
   export interface WordStyle {
     /** HTML head level that content matching this style is tagged with. */
     level?: number;
@@ -7069,7 +7441,7 @@ namespace DiscoveryV1 {
     names?: string[];
   }
 
-  /** XPathPatterns. */
+  /** Object containing an array of XPaths. */
   export interface XPathPatterns {
     /** An array to XPaths. */
     xpaths?: string[];

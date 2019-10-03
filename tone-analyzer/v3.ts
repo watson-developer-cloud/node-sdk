@@ -16,7 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -47,15 +47,15 @@ class ToneAnalyzerV3 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/tone-analyzer/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/tone-analyzer/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
+   * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {ToneAnalyzerV3}
    * @throws {Error}
    */
-  constructor(options: ToneAnalyzerV3.Options) {
-    // default to reading the authenticator from the environment
+  constructor(options: UserOptions) {
+    // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
       options.authenticator = getAuthenticatorFromEnvironment('tone_analyzer');
     }
@@ -118,50 +118,63 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): Promise<any> | void {
+  public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['toneInput'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.tone(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = _params.toneInput;
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const body = _params.toneInput;
 
-    const query = {
-      'sentences': _params.sentences,
-      'tones': _params.tones
-    };
+      const query = {
+        'sentences': _params.sentences,
+        'tones': _params.tones
+      };
 
-    const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'tone');
+      const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'tone');
 
-    const parameters = {
-      options: {
-        url: '/v3/tone',
-        method: 'POST',
-        body,
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType,
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/tone',
+          method: 'POST',
+          body,
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -196,47 +209,60 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): Promise<any> | void {
+  public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['utterances'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.toneChat(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'utterances': _params.utterances
-    };
+      const body = {
+        'utterances': _params.utterances
+      };
 
-    const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'toneChat');
+      const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'toneChat');
 
-    const parameters = {
-      options: {
-        url: '/v3/tone_chat',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/tone_chat',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
 }
@@ -250,17 +276,7 @@ ToneAnalyzerV3.prototype.serviceVersion = 'v3';
 
 namespace ToneAnalyzerV3 {
 
-  /** Options for the `ToneAnalyzerV3` constructor. */
-  export type Options = {
-    version: string;
-    url?: string;
-    authenticator: Authenticator;
-    disableSslVerification?: boolean;
-    headers?: OutgoingHttpHeaders;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
+  /** An operation response. **/
   export interface Response<T = any>  {
     result: T;
     status: number;
