@@ -32,8 +32,38 @@ The following services do not support CORS
  * Visual Recognition (partial support)
  * Retrieve and Rank
 
+ Ideally, only the specific services used shoud be included, for example:
+
+ ```js
+ var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+ var AssistantV1 = require('ibm-watson/assistant/v1');
+ ```
+
+ **Not Recommended**: It's possible to load the entire library, but it is not recommended due to the added file size:
+
+ ```js
+ var watson = require('ibm-watson');
+ ```
+ or
+ ```
+ const { AssistantV1, ToneAnalyzerV3 } = require('ibm-watson');
+ ```
+
+ Additionally, when importing the entire library, the `shebang-loader` package is need and must be configured
+ in webpack.config.js:
+
+ ```js
+   module: {
+     rules: [{
+         test: /JSONStream/,
+         use: 'shebang-loader'
+     }]
+   }
+ ```
 
 ## Webpack configuration
+
+The `ibm-watson` Node SDK version 5+ should work out of the box with most bundlers, including webpack.  For versions below 5.0.0, the following configurations may be required to leverage the SDK in client environments.
 
 In most cases, you will want the following in your configuration:
 
@@ -50,33 +80,4 @@ In most cases, you will want the following in your configuration:
 
 Several services use the `fs` library, which won't work in browser environments, and the `request` library loads `fs`,
 `net`, and `tls`, but shouldn't need any of them for basic usage because webpack automatically includes
-[equivalent libraries](https://www.npmjs.com/package/node-libs-browser)
-
-Ideally, only the specific services used shoud be included, for example:
-
-```js
-var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
-var AssistantV1 = require('ibm-watson/assistant/v1');
-```
-
-**Not Recommended**: It's possible to load the entire library, but it is not recommended due to the added file size:
-
-```js
-var watson = require('ibm-watson');
-```
-or
-```
-const { AssistantV1, ToneAnalyzerV3 } = require('ibm-watson');
-```
-
-Additionally, when importing the entire library, the `shebang-loader` package is need and must be configured
-in webpack.config.js:
-
-```js
-  module: {
-    rules: [{
-        test: /JSONStream/,
-        use: 'shebang-loader'
-    }]
-  }
-```
+[equivalent libraries](https://www.npmjs.com/package/node-libs-browser).
