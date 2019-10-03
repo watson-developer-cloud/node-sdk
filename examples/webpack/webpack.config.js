@@ -5,7 +5,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
   },
-  // http://webpack.github.io/docs/configuration.html#node
+  // For versions <5.0.0, http://webpack.github.io/docs/configuration.html#node
   node: {
     fs: 'empty',
     net: 'empty',
