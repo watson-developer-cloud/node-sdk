@@ -77,6 +77,8 @@ The [examples][examples] folder has basic and advanced examples. The examples wi
 
 ### Client-side usage
 
+Starting with v5.0.0, the SDK should work in the browser, out of the box, with most bundlers.
+
 See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack](http://webpack.github.io/) client-side SDK examples (with server-side generation of auth tokens.)
 
 Note: not all services currently support CORS, and therefore not all services can be used client-side.

@@ -37,7 +37,7 @@ describe('Visual Recognition v4', () => {
   describe('analysis', () => {
     test('analyze', async done => {
       const params = {
-        collectionIds: giraffesCollectionId,
+        collectionIds: [giraffesCollectionId],
         features: 'objects',
         imagesFile: [{ data: fs.createReadStream(__dirname + '/../resources/potato.jpeg') }],
       };

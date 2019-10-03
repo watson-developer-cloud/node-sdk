@@ -121,8 +121,8 @@ class VisualRecognitionV3 extends BaseService {
         },
         'url': _params.url,
         'threshold': _params.threshold,
-        'owners': _params.owners,
-        'classifier_ids': _params.classifierIds
+        'owners': Array.isArray(_params.owners) ? _params.owners.join(',') : _params.owners,
+        'classifier_ids': Array.isArray(_params.classifierIds) ? _params.classifierIds.join(',') : _params.classifierIds
       };
 
       const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'classify');
