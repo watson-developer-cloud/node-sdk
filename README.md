@@ -73,6 +73,19 @@ npm install ibm-watson
 
 ## Usage
 
+```ts
+import DiscoveryV1 from 'ibm-watson/discovery/v1';
+import { IamAuthenticator } from 'ibm-watson/auth';
+
+const discoveryClient = new DiscoveryV1({
+  authenticator: new IamAuthenticator({ apikey: '{apikey}' })
+  version: '{version}',
+})
+
+// ...
+
+```
+
 The [examples][examples] folder has basic and advanced examples. The examples within each service assume that you already have [service credentials](#getting-credentials).
 
 ### Client-side usage
@@ -91,7 +104,7 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 - In other instances, you authenticate by providing the **[username and password](#username-and-password)** for the service instance.
 - If you're using a Watson service on ICP, you'll need to authenticate in [a specific way](#icp).
 
-To specify the type of authentication to use, there is an optional parameter called `authentication_type`. Possible values are `iam`, `basic`, and `icp4d`.
+Authentication is accomplished using dedicated authenticators for each authentication scheme. Import authenticators from `ibm-watson/auth` or rely on externally-configured credentials which will be read from a credentials file or environment variables.
 
 ### Getting credentials
 
