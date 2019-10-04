@@ -9,12 +9,6 @@ export type SdkHeaders = {
 }
 
 export function getSdkHeaders(serviceName: string, serviceVersion: string, operationId: string): SdkHeaders | {} {
-  // disable analytics headers in the browser - they cause cors issues
-  const isBrowser = typeof window !== 'undefined';
-  if (isBrowser) {
-    return {};
-  }
-
   const sdkName = 'watson-apis-node-sdk';
   const sdkVersion = pkg.version;
   const osName = os.platform();

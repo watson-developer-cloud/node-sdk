@@ -118,6 +118,9 @@
     "check-packages": "installed-check -e -d",
     "snyk-protect": "snyk protect"
   },
+  "browser": {
+    "./lib/common": "./lib/common.browser"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
