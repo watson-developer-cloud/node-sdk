@@ -68,6 +68,7 @@
     "object.assign": "~4.1.0",
     "prettier": "^1.17.1",
     "semantic-release": "^15.13.12",
+    "snyk": "^1.192.4",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
@@ -89,7 +90,6 @@
     "ibm-cloud-sdk-core": "^0.3.7",
     "isstream": "~0.1.2",
     "object.pick": "~1.3.0",
-    "snyk": "^1.192.4",
     "websocket": "^1.0.28"
   },
   "engines": {
