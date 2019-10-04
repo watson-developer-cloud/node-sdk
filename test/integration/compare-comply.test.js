@@ -6,16 +6,16 @@ const CompareComply = require('../../compare-comply/v1');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
-describe('compare_comply_integration', () => {
-  const options = authHelper.auth.compare_comply;
+describe('compare comply integration', () => {
+  const options = authHelper.auth.compareComply;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
-  const compare_comply = new CompareComply(options);
+  const compareComply = new CompareComply(options);
   describe('html conversion @slow', () => {
     test('convertToHtml', done => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
       };
-      compare_comply.convertToHtml(params, (err, res) => {
+      compareComply.convertToHtml(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -31,7 +31,7 @@ describe('compare_comply_integration', () => {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compare_comply.classifyElements(params, (err, res) => {
+      compareComply.classifyElements(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -56,7 +56,7 @@ describe('compare_comply_integration', () => {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compare_comply.extractTables(params, (err, res) => {
+      compareComply.extractTables(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -80,7 +80,7 @@ describe('compare_comply_integration', () => {
         file2Filename: 'contract_B.pdf',
         file2Label: 'test-file-2',
       };
-      compare_comply.compareDocuments(params, (err, res) => {
+      compareComply.compareDocuments(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -175,7 +175,7 @@ describe('compare_comply_integration', () => {
         },
       };
 
-      compare_comply.addFeedback(params, (err, res) => {
+      compareComply.addFeedback(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -203,7 +203,7 @@ describe('compare_comply_integration', () => {
           'x-watson-metadata': 'customer_id=sdk-test-customer-id',
         },
       };
-      compare_comply.getFeedback(params, (err, res) => {
+      compareComply.getFeedback(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -217,7 +217,7 @@ describe('compare_comply_integration', () => {
     }, 10000);
 
     test('listFeedback', done => {
-      compare_comply.listFeedback((err, res) => {
+      compareComply.listFeedback((err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -236,7 +236,7 @@ describe('compare_comply_integration', () => {
       const params = {
         feedbackId,
       };
-      compare_comply.deleteFeedback(params, (err, res) => {
+      compareComply.deleteFeedback(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -263,7 +263,7 @@ describe('compare_comply_integration', () => {
         outputBucketLocation: 'us-south',
         outputBucketName: 'compare-comply-integration-test-bucket-output',
       };
-      compare_comply.createBatch(params, (err, res) => {
+      compareComply.createBatch(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -290,7 +290,7 @@ describe('compare_comply_integration', () => {
           action: 'rescan',
         };
 
-        compare_comply.updateBatch(params, (err, res) => {
+        compareComply.updateBatch(params, (err, res) => {
           expect(err).toBeNull();
           const { result } = res || {};
           expect(res).toBeDefined();
@@ -313,7 +313,7 @@ describe('compare_comply_integration', () => {
       const params = {
         batchId,
       };
-      compare_comply.getBatch(params, (err, res) => {
+      compareComply.getBatch(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();
@@ -332,7 +332,7 @@ describe('compare_comply_integration', () => {
     });
 
     test('listBatches', done => {
-      compare_comply.listBatches((err, res) => {
+      compareComply.listBatches((err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(res).toBeDefined();

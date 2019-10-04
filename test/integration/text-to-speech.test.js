@@ -7,15 +7,15 @@ const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
-describe('text_to_speech_integration', () => {
+describe('text to speech_integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const options = authHelper.auth.text_to_speech;
+  const options = authHelper.auth.textToSpeech;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
-  const text_to_speech = new TextToSpeechV1(options);
+  const textToSpeech = new TextToSpeechV1(options);
 
   it('listVoices()', done => {
-    text_to_speech.listVoices((err, res) => {
+    textToSpeech.listVoices((err, res) => {
       expect(err).toBeNull();
       const { result } = res || {};
       expect(result).toBeDefined();
@@ -33,7 +33,7 @@ describe('text_to_speech_integration', () => {
     it('synthesize using http', done => {
       // wav.Reader parses the wav header and will throw if it isn't valid
       const reader = new wav.Reader();
-      text_to_speech.synthesize(params, (err, res) => {
+      textToSpeech.synthesize(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -43,7 +43,7 @@ describe('text_to_speech_integration', () => {
     });
 
     it('synthesize using websocket', done => {
-      const synthStream = text_to_speech.synthesizeUsingWebSocket(params);
+      const synthStream = textToSpeech.synthesizeUsingWebSocket(params);
       synthStream.resume();
 
       synthStream.on('message', (message, data) => {
@@ -75,7 +75,7 @@ describe('text_to_speech_integration', () => {
       done();
     };
 
-    text_to_speech.getPronunciation({ text: 'IEEE' }, checkPronunciation);
+    textToSpeech.getPronunciation({ text: 'IEEE' }, checkPronunciation);
   });
 
   describe('customization', () => {
@@ -84,7 +84,7 @@ describe('text_to_speech_integration', () => {
     // todo: before task that cleans up any leftover customizations from previous runs
 
     it('createVoiceModel()', done => {
-      text_to_speech.createVoiceModel(
+      textToSpeech.createVoiceModel(
         {
           name: 'temporary-node-sdk-test',
           language: 'en-US',
@@ -107,7 +107,7 @@ describe('text_to_speech_integration', () => {
     });
 
     it('listVoiceModels() with language', done => {
-      text_to_speech.listVoiceModels({ language: 'en-GB' }, (err, res) => {
+      textToSpeech.listVoiceModels({ language: 'en-GB' }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -127,7 +127,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.updateVoiceModel(
+      textToSpeech.updateVoiceModel(
         {
           customizationId,
           description: 'Updated. Should be automatically deleted within 10 minutes.',
@@ -148,7 +148,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.getVoiceModel({ customizationId }, (err, res) => {
+      textToSpeech.getVoiceModel({ customizationId }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -165,7 +165,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.addWords(
+      textToSpeech.addWords(
         {
           customizationId,
           words: [{ word: 'iPhone', translation: 'I phone' }],
@@ -185,7 +185,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.addWord(
+      textToSpeech.addWord(
         {
           customizationId,
           word: 'IEEE',
@@ -206,7 +206,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.listWords({ customizationId }, (err, res) => {
+      textToSpeech.listWords({ customizationId }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -223,7 +223,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.getWord({ customizationId, word: 'NCAA' }, (err, res) => {
+      textToSpeech.getWord({ customizationId, word: 'NCAA' }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -239,7 +239,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.deleteWord(
+      textToSpeech.deleteWord(
         {
           customizationId,
           word: 'NCAA',
@@ -259,7 +259,7 @@ describe('text_to_speech_integration', () => {
         return done();
       }
 
-      text_to_speech.deleteVoiceModel({ customizationId }, (err, res) => {
+      textToSpeech.deleteVoiceModel({ customizationId }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();

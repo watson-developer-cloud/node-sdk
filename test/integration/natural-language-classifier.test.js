@@ -6,19 +6,19 @@ const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
-describe('natural_language_classifier_integration', () => {
+describe('natural language classifier integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const options = authHelper.auth.natural_language_classifier;
+  const options = authHelper.auth.naturalLanguageClassifier;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
-  const natural_language_classifier = new NaturalLanguageClassifierV1(options);
+  const naturalLanguageClassifier = new NaturalLanguageClassifierV1(options);
   const { classifierId } = options;
 
   it('getClassifier', done => {
     const params = {
       classifierId,
     };
-    natural_language_classifier.getClassifier(params, (err, res) => {
+    naturalLanguageClassifier.getClassifier(params, (err, res) => {
       expect(err).toBeNull();
       const { result } = res || {};
       expect(result).toBeDefined();
@@ -32,7 +32,7 @@ describe('natural_language_classifier_integration', () => {
       classifierId,
       collection: [{ text: 'string' }],
     };
-    natural_language_classifier.classifyCollection(params, (err, res) => {
+    naturalLanguageClassifier.classifyCollection(params, (err, res) => {
       expect(err).toBeNull();
       const { result } = res || {};
       expect(result).toBeDefined();

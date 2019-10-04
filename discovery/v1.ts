@@ -2795,10 +2795,10 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.prefix - The prefix to use for autocompletion. For example, the prefix `Ho` could
+   * autocomplete to `Hot`, `Housing`, or `How do I upgrade`. Possible completions are.
    * @param {string} [params.field] - The field in the result documents that autocompletion suggestions are identified
    * from.
-   * @param {string} [params.prefix] - The prefix to use for autocompletion. For example, the prefix `Ho` could
-   * autocomplete to `Hot`, `Housing`, or `How do I upgrade`. Possible completions are.
    * @param {number} [params.count] - The number of autocompletion suggestions to return.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
@@ -2807,7 +2807,7 @@ class DiscoveryV1 extends BaseService {
   public getAutocompletion(params: DiscoveryV1.GetAutocompletionParams, callback?: DiscoveryV1.Callback<DiscoveryV1.Completions>): Promise<DiscoveryV1.Response<DiscoveryV1.Completions>> {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['environmentId', 'collectionId'];
+    const requiredParams = ['environmentId', 'collectionId', 'prefix'];
 
     return new Promise((resolve, reject) => {
 
@@ -2821,8 +2821,8 @@ class DiscoveryV1 extends BaseService {
       }
 
       const query = {
-        'field': _params.field,
         'prefix': _params.prefix,
+        'field': _params.field,
         'count': _params.count
       };
 
@@ -5561,12 +5561,12 @@ namespace DiscoveryV1 {
     environmentId: string;
     /** The ID of the collection. */
     collectionId: string;
-    /** The field in the result documents that autocompletion suggestions are identified from. */
-    field?: string;
     /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `Hot`, `Housing`,
      *  or `How do I upgrade`. Possible completions are.
      */
-    prefix?: string;
+    prefix: string;
+    /** The field in the result documents that autocompletion suggestions are identified from. */
+    field?: string;
     /** The number of autocompletion suggestions to return. */
     count?: number;
     headers?: OutgoingHttpHeaders;
@@ -7027,6 +7027,8 @@ namespace DiscoveryV1 {
     session_token?: string;
     /** An object contain retrieval type information. */
     retrieval_details?: RetrievalDetails;
+    /** The suggestions for a misspelled natural language query. */
+    suggested_query?: string;
   }
 
   /** Query result object. */

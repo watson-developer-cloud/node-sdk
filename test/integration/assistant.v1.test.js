@@ -100,7 +100,7 @@ const workspace1 = extend(true, {}, workspace, intents, { language: workspace.la
 
 // extract service params from auth.js
 
-describe('assistant_integration', () => {
+describe('assistant v1 integration', () => {
   jest.setTimeout(TEN_SECONDS);
 
   const options = authHelper.auth.assistant;

@@ -8,21 +8,21 @@ const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
-describe('personality_insights_v3_integration', () => {
+describe('personality insights integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-  const options = authHelper.auth.personality_insights;
+  const options = authHelper.auth.personalityInsights;
   options.version = '2019-03-27';
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
-  const personality_insights = new PersonalityInsightsV3(options);
+  const personalityInsights = new PersonalityInsightsV3(options);
 
   it('profile with text content', done => {
     const params = {
       content: mobydick,
       contentType: 'text/plain',
     };
-    personality_insights.profile(params, (err, res) => {
+    personalityInsights.profile(params, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();
@@ -38,7 +38,7 @@ describe('personality_insights_v3_integration', () => {
       rawScores: true,
       consumptionPreferences: true,
     };
-    personality_insights.profile(params, (err, res) => {
+    personalityInsights.profile(params, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();
@@ -50,7 +50,7 @@ describe('personality_insights_v3_integration', () => {
       content: '<div>' + mobydick + '</div>',
       contentType: 'text/html',
     };
-    personality_insights.profile(params, (err, res) => {
+    personalityInsights.profile(params, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();
@@ -68,7 +68,7 @@ describe('personality_insights_v3_integration', () => {
         accept: 'text/csv',
       },
     };
-    personality_insights.profileAsCsv(params, (err, res) => {
+    personalityInsights.profileAsCsv(params, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();

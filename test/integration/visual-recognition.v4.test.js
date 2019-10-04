@@ -22,8 +22,8 @@ const VisualRecognitionV4 = require('../../visual-recognition/v4');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
-describe('Visual Recognition v4', () => {
-  const options = authHelper.auth.visual_recognition;
+describe('visual recognition v4 integration', () => {
+  const options = authHelper.auth.visualRecognition;
   options.version = '2019-09-27';
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const visualRecognition = new VisualRecognitionV4(options);
