@@ -147,7 +147,6 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="texttospeechv1.html#callback" class="tsd-kind-icon">Callback</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="texttospeechv1.html#options" class="tsd-kind-icon">Options</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -162,7 +161,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="texttospeechv1.html#baseoptions" class="tsd-kind-icon">base<wbr>Options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="texttospeechv1.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="texttospeechv1.html#serviceversion" class="tsd-kind-icon">service<wbr>Version</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="texttospeechv1.html#url-1" class="tsd-kind-icon">URL</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="texttospeechv1.html#url" class="tsd-kind-icon">URL</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -199,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L1173">text-to-speech/v1-generated.ts:1173</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L1330">text-to-speech/v1-generated.ts:1330</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -232,46 +231,6 @@
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="options" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Options</h3>
-					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L1156">text-to-speech/v1-generated.ts:1156</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Options for the <code>TextToSpeechV1</code> constructor.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>Allow additional request config parameters</p>
-									</div>
-								</div>
-							</li>
-							<li class="tsd-parameter">
-								<h5>authenticator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Authenticator</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> disable<wbr>Ssl<wbr>Verification<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> headers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">OutgoingHttpHeaders</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> url<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
@@ -279,14 +238,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Text<wbr>ToSpeech<wbr>V1<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="texttospeechv1.html#options" class="tsd-signature-type">Options</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="texttospeechv1.html" class="tsd-signature-type">TextToSpeechV1</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Text<wbr>ToSpeech<wbr>V1<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UserOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="texttospeechv1.html" class="tsd-signature-type">TextToSpeechV1</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L44">text-to-speech/v1-generated.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L44">text-to-speech/v1-generated.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -301,7 +260,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="texttospeechv1.html#options" class="tsd-signature-type">Options</a></h5>
+									<h5>options: <span class="tsd-signature-type">UserOptions</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>Options for the service.</p>
@@ -323,7 +282,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.baseOptions</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:36</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:42</li>
 						</ul>
 					</aside>
 				</section>
@@ -334,7 +293,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L43">text-to-speech/v1-generated.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L43">text-to-speech/v1-generated.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -345,18 +304,18 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L44">text-to-speech/v1-generated.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L44">text-to-speech/v1-generated.ts:44</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-					<a name="url-1" class="tsd-anchor"></a>
+					<a name="url" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> URL</h3>
 					<div class="tsd-signature tsd-kind-icon">URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;https://stream.watsonplatform.net/text-to-speech/api&quot;</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -367,13 +326,13 @@
 					<a name="addword" class="tsd-anchor"></a>
 					<h3>add<wbr>Word</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.addwordparams.html" class="tsd-signature-type">AddWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.addwordparams.html" class="tsd-signature-type">AddWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L914">text-to-speech/v1-generated.ts:914</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L1028">text-to-speech/v1-generated.ts:1028</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -413,10 +372,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -424,13 +380,13 @@
 					<a name="addwords" class="tsd-anchor"></a>
 					<h3>add<wbr>Words</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Words<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.addwordsparams.html" class="tsd-signature-type">AddWordsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Words<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.addwordsparams.html" class="tsd-signature-type">AddWordsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L765">text-to-speech/v1-generated.ts:765</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L853">text-to-speech/v1-generated.ts:853</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -470,10 +426,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -481,14 +434,14 @@
 					<a name="createrequest" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> create<wbr>Request</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Request<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Request<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:86</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:90</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -501,17 +454,11 @@
 								<li>
 									<h5>parameters: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>service request options passed in by user.</p>
-									</div>
-								</li>
-								<li>
-									<h5>callback: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>callback function to pass the response back to</p>
+										<p>service request options passed in by user</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -519,13 +466,13 @@
 					<a name="createvoicemodel" class="tsd-anchor"></a>
 					<h3>create<wbr>Voice<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.createvoicemodelparams.html" class="tsd-signature-type">CreateVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.createvoicemodelparams.html" class="tsd-signature-type">CreateVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L419">text-to-speech/v1-generated.ts:419</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L446">text-to-speech/v1-generated.ts:446</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,10 +498,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -562,13 +506,13 @@
 					<a name="deleteuserdata" class="tsd-anchor"></a>
 					<h3>delete<wbr>User<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L1105">text-to-speech/v1-generated.ts:1105</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L1258">text-to-speech/v1-generated.ts:1258</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -596,10 +540,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -607,13 +548,13 @@
 					<a name="deletevoicemodel" class="tsd-anchor"></a>
 					<h3>delete<wbr>Voice<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletevoicemodelparams.html" class="tsd-signature-type">DeleteVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletevoicemodelparams.html" class="tsd-signature-type">DeleteVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L681">text-to-speech/v1-generated.ts:681</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L756">text-to-speech/v1-generated.ts:756</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -638,10 +579,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -649,13 +587,13 @@
 					<a name="deleteword" class="tsd-anchor"></a>
 					<h3>delete<wbr>Word</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletewordparams.html" class="tsd-signature-type">DeleteWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletewordparams.html" class="tsd-signature-type">DeleteWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L1041">text-to-speech/v1-generated.ts:1041</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L1181">text-to-speech/v1-generated.ts:1181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -680,10 +618,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -698,7 +633,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getAuthenticator</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:57</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:62</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -714,13 +649,13 @@
 					<a name="getpronunciation" class="tsd-anchor"></a>
 					<h3>get<wbr>Pronunciation</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Pronunciation<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getpronunciationparams.html" class="tsd-signature-type">GetPronunciationParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Pronunciation<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getpronunciationparams.html" class="tsd-signature-type">GetPronunciationParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L350">text-to-speech/v1-generated.ts:350</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L364">text-to-speech/v1-generated.ts:364</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -746,10 +681,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -757,13 +689,13 @@
 					<a name="getvoice" class="tsd-anchor"></a>
 					<h3>get<wbr>Voice</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Voice<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getvoiceparams.html" class="tsd-signature-type">GetVoiceParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Voice<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getvoiceparams.html" class="tsd-signature-type">GetVoiceParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L130">text-to-speech/v1-generated.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L139">text-to-speech/v1-generated.ts:139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -788,10 +720,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -799,13 +728,13 @@
 					<a name="getvoicemodel" class="tsd-anchor"></a>
 					<h3>get<wbr>Voice<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getvoicemodelparams.html" class="tsd-signature-type">GetVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getvoicemodelparams.html" class="tsd-signature-type">GetVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L623">text-to-speech/v1-generated.ts:623</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L685">text-to-speech/v1-generated.ts:685</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -831,10 +760,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -842,13 +768,13 @@
 					<a name="getword" class="tsd-anchor"></a>
 					<h3>get<wbr>Word</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getwordparams.html" class="tsd-signature-type">GetWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getwordparams.html" class="tsd-signature-type">GetWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L981">text-to-speech/v1-generated.ts:981</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L1108">text-to-speech/v1-generated.ts:1108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -873,10 +799,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -884,13 +807,13 @@
 					<a name="listvoicemodels" class="tsd-anchor"></a>
 					<h3>list<wbr>Voice<wbr>Models</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Voice<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/texttospeechv1.listvoicemodelsparams.html" class="tsd-signature-type">ListVoiceModelsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Voice<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/texttospeechv1.listvoicemodelsparams.html" class="tsd-signature-type">ListVoiceModelsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L482">text-to-speech/v1-generated.ts:482</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L522">text-to-speech/v1-generated.ts:522</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -914,10 +837,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -925,13 +845,13 @@
 					<a name="listvoices" class="tsd-anchor"></a>
 					<h3>list<wbr>Voices</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Voices<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/texttospeechv1.listvoicesparams.html" class="tsd-signature-type">ListVoicesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Voices<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/texttospeechv1.listvoicesparams.html" class="tsd-signature-type">ListVoicesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L82">text-to-speech/v1-generated.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L82">text-to-speech/v1-generated.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -952,10 +872,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -963,13 +880,13 @@
 					<a name="listwords" class="tsd-anchor"></a>
 					<h3>list<wbr>Words</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Words<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.listwordsparams.html" class="tsd-signature-type">ListWordsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Words<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.listwordsparams.html" class="tsd-signature-type">ListWordsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L830">text-to-speech/v1-generated.ts:830</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L931">text-to-speech/v1-generated.ts:931</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -995,10 +912,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1013,7 +927,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setServiceUrl</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:63</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:68</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1035,13 +949,13 @@
 					<a name="synthesize" class="tsd-anchor"></a>
 					<h3>synthesize</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">synthesize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.synthesizeparams.html" class="tsd-signature-type">SynthesizeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">synthesize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.synthesizeparams.html" class="tsd-signature-type">SynthesizeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L271">text-to-speech/v1-generated.ts:271</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L272">text-to-speech/v1-generated.ts:272</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1062,7 +976,7 @@
 								<ul>
 									<li>Where indicated, you can optionally specify the sampling rate (<code>rate</code>) of the audio. You must specify a sampling
 										rate for the <code>audio/l16</code> and <code>audio/mulaw</code> formats. A specified sampling rate must lie in the range of 8 kHz to 192
-									kHz.</li>
+									kHz. Some formats restrict the sampling rate to certain values, as noted.</li>
 									<li>For the <code>audio/l16</code> format, you can optionally specify the endianness (<code>endianness</code>) of the audio:
 									<code>endianness=big-endian</code> or <code>endianness=little-endian</code>.</li>
 								</ul>
@@ -1070,47 +984,26 @@
 									omit an audio format altogether, the service returns the audio in Ogg format with the Opus codec
 								(<code>audio/ogg;codecs=opus</code>). The service always returns single-channel audio.</p>
 								<ul>
-									<li><p><code>audio/basic</code></p>
-										<p>The service returns audio with a sampling rate of 8000 Hz.</p>
-									</li>
-									<li><p><code>audio/flac</code></p>
-										<p>You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</p>
-									</li>
-									<li><p><code>audio/l16</code></p>
-										<p>You must specify the <code>rate</code> of the audio. You can optionally specify the <code>endianness</code> of the audio. The default
-										endianness is <code>little-endian</code>.</p>
-									</li>
-									<li><p><code>audio/mp3</code></p>
-										<p>You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</p>
-									</li>
-									<li><p><code>audio/mpeg</code></p>
-										<p>You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</p>
-									</li>
-									<li><p><code>audio/mulaw</code></p>
-										<p>You must specify the <code>rate</code> of the audio.</p>
-									</li>
-									<li><p><code>audio/ogg</code></p>
-										<p>The service returns the audio in the <code>vorbis</code> codec. You can optionally specify the <code>rate</code> of the audio. The
-										default sampling rate is 22,050 Hz.</p>
-									</li>
-									<li><p><code>audio/ogg;codecs=opus</code></p>
-										<p>You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</p>
-									</li>
-									<li><p><code>audio/ogg;codecs=vorbis</code></p>
-										<p>You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</p>
-									</li>
-									<li><p><code>audio/wav</code></p>
-										<p>You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</p>
-									</li>
-									<li><p><code>audio/webm</code></p>
-										<p>The service returns the audio in the <code>opus</code> codec. The service returns audio with a sampling rate of 48,000 Hz.</p>
-									</li>
-									<li><p><code>audio/webm;codecs=opus</code></p>
-										<p>The service returns audio with a sampling rate of 48,000 Hz.</p>
-									</li>
-									<li><p><code>audio/webm;codecs=vorbis</code></p>
-										<p>You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</p>
-									</li>
+									<li><code>audio/basic</code> - The service returns audio with a sampling rate of 8000 Hz.</li>
+									<li><code>audio/flac</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/l16</code> - You must specify the <code>rate</code> of the audio. You can optionally specify the <code>endianness</code> of the audio.
+									The default endianness is <code>little-endian</code>.</li>
+									<li><code>audio/mp3</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/mpeg</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/mulaw</code> - You must specify the <code>rate</code> of the audio.</li>
+									<li><code>audio/ogg</code> - The service returns the audio in the <code>vorbis</code> codec. You can optionally specify the <code>rate</code> of the
+									audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/ogg;codecs=opus</code> - You can optionally specify the <code>rate</code> of the audio. Only the following values are valid
+										sampling rates: <code>48000</code>, <code>24000</code>, <code>16000</code>, <code>12000</code>, or <code>8000</code>. If you specify a value other than one of these, the
+									service returns an error. The default sampling rate is 48,000 Hz.</li>
+									<li><code>audio/ogg;codecs=vorbis</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is
+									22,050 Hz.</li>
+									<li><code>audio/wav</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/webm</code> - The service returns the audio in the <code>opus</code> codec. The service returns audio with a sampling rate
+									of 48,000 Hz.</li>
+									<li><code>audio/webm;codecs=opus</code> - The service returns audio with a sampling rate of 48,000 Hz.</li>
+									<li><code>audio/webm;codecs=vorbis</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is
+									22,050 Hz.</li>
 								</ul>
 								<p>For more information about specifying an audio format, including additional details about some of the formats, see
 								<a href="https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-audioFormats#audioFormats">Audio formats</a>.</p>
@@ -1131,13 +1024,10 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">FileObject</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1145,13 +1035,13 @@
 					<a name="updatevoicemodel" class="tsd-anchor"></a>
 					<h3>update<wbr>Voice<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.updatevoicemodelparams.html" class="tsd-signature-type">UpdateVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.updatevoicemodelparams.html" class="tsd-signature-type">UpdateVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/text-to-speech/v1-generated.ts#L556">text-to-speech/v1-generated.ts:556</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/text-to-speech/v1-generated.ts#L605">text-to-speech/v1-generated.ts:605</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1192,10 +1082,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1333,9 +1220,6 @@
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="texttospeechv1.html#callback" class="tsd-kind-icon">Callback</a>
 							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="texttospeechv1.html#options" class="tsd-kind-icon">Options</a>
-							</li>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="texttospeechv1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
@@ -1349,7 +1233,7 @@
 								<a href="texttospeechv1.html#serviceversion" class="tsd-kind-icon">service<wbr>Version</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="texttospeechv1.html#url-1" class="tsd-kind-icon">URL</a>
+								<a href="texttospeechv1.html#url" class="tsd-kind-icon">URL</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="texttospeechv1.html#addword" class="tsd-kind-icon">add<wbr>Word</a>

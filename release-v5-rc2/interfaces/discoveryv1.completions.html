@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Step | ibm-watson</title>
+	<title>Completions | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,13 +57,10 @@
 					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="../modules/discoveryv1.testconfigurationinenvironmentconstants.html">TestConfigurationInEnvironmentConstants</a>
-				</li>
-				<li>
-					<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html">Step</a>
+					<a href="discoveryv1.completions.html">Completions</a>
 				</li>
 			</ul>
-			<h1>Enumeration Step</h1>
+			<h1>Interface Completions</h1>
 		</div>
 	</div>
 </header>
@@ -73,89 +70,47 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Specify to only run the input document through the given step instead of running the input document through the entire ingestion workflow. Valid values are <code>convert</code>, <code>enrich</code>, and <code>normalize</code>.</p>
+						<p>An object containing an array of autocompletion suggestions.</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">Completions</span>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#enrichments_output" class="tsd-kind-icon">ENRICHMENTS_<wbr>OUTPUT</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#html_input" class="tsd-kind-icon">HTML_<wbr>INPUT</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#html_output" class="tsd-kind-icon">HTML_<wbr>OUTPUT</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#json_normalizations_output" class="tsd-kind-icon">JSON_<wbr>NORMALIZATIONS_<wbr>OUTPUT</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#json_output" class="tsd-kind-icon">JSON_<wbr>OUTPUT</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#normalizations_output" class="tsd-kind-icon">NORMALIZATIONS_<wbr>OUTPUT</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.completions.html#completions" class="tsd-kind-icon">completions</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="enrichments_output" class="tsd-anchor"></a>
-					<h3>ENRICHMENTS_<wbr>OUTPUT</h3>
-					<div class="tsd-signature tsd-kind-icon">ENRICHMENTS_<wbr>OUTPUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;enrichments_output&quot;</span></div>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="completions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> completions</h3>
+					<div class="tsd-signature tsd-kind-icon">completions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L4405">discovery/v1.ts:4405</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/discovery/v1.ts#L6059">discovery/v1.ts:6059</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="html_input" class="tsd-anchor"></a>
-					<h3>HTML_<wbr>INPUT</h3>
-					<div class="tsd-signature tsd-kind-icon">HTML_<wbr>INPUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;html_input&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L4401">discovery/v1.ts:4401</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="html_output" class="tsd-anchor"></a>
-					<h3>HTML_<wbr>OUTPUT</h3>
-					<div class="tsd-signature tsd-kind-icon">HTML_<wbr>OUTPUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;html_output&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L4402">discovery/v1.ts:4402</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="json_normalizations_output" class="tsd-anchor"></a>
-					<h3>JSON_<wbr>NORMALIZATIONS_<wbr>OUTPUT</h3>
-					<div class="tsd-signature tsd-kind-icon">JSON_<wbr>NORMALIZATIONS_<wbr>OUTPUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;json_normalizations_output&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L4404">discovery/v1.ts:4404</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="json_output" class="tsd-anchor"></a>
-					<h3>JSON_<wbr>OUTPUT</h3>
-					<div class="tsd-signature tsd-kind-icon">JSON_<wbr>OUTPUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;json_output&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L4403">discovery/v1.ts:4403</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="normalizations_output" class="tsd-anchor"></a>
-					<h3>NORMALIZATIONS_<wbr>OUTPUT</h3>
-					<div class="tsd-signature tsd-kind-icon">NORMALIZATIONS_<wbr>OUTPUT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> =&nbsp;&quot;normalizations_output&quot;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L4406">discovery/v1.ts:4406</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of autcomplete suggestion based on the provided prefix.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -169,36 +124,68 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="discoveryv1.testconfigurationinenvironmentconstants.filecontenttype.html" class="tsd-kind-icon">File<wbr>Content<wbr>Type</a>
+					<li class=" tsd-kind-class">
+						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-enum tsd-parent-kind-module">
-						<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html" class="tsd-kind-icon">Step</a>
+					<li class="current tsd-kind-class">
+						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 						<ul>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#enrichments_output" class="tsd-kind-icon">ENRICHMENTS_<wbr>OUTPUT</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#html_input" class="tsd-kind-icon">HTML_<wbr>INPUT</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#html_output" class="tsd-kind-icon">HTML_<wbr>OUTPUT</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#json_normalizations_output" class="tsd-kind-icon">JSON_<wbr>NORMALIZATIONS_<wbr>OUTPUT</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#json_output" class="tsd-kind-icon">JSON_<wbr>OUTPUT</a>
-							</li>
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.testconfigurationinenvironmentconstants.step.html#normalizations_output" class="tsd-kind-icon">NORMALIZATIONS_<wbr>OUTPUT</a>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="discoveryv1.completions.html" class="tsd-kind-icon">Completions</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.completions.html#completions" class="tsd-kind-icon">completions</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

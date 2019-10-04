@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>QueryRelationsFilter | ibm-watson</title>
+	<title>GetAutocompletionParams | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.queryrelationsfilter.html">QueryRelationsFilter</a>
+					<a href="discoveryv1.getautocompletionparams.html">GetAutocompletionParams</a>
 				</li>
 			</ul>
-			<h1>Interface QueryRelationsFilter</h1>
+			<h1>Interface GetAutocompletionParams</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>QueryRelationsFilter.</p>
+						<p>Parameters for the <code>getAutocompletion</code> operation.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">QueryRelationsFilter</span>
+						<span class="target">GetAutocompletionParams</span>
 					</li>
 				</ul>
 			</section>
@@ -89,9 +89,12 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsfilter.html#document_ids" class="tsd-kind-icon">document_<wbr>ids</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsfilter.html#entity_types" class="tsd-kind-icon">entity_<wbr>types</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsfilter.html#relation_types" class="tsd-kind-icon">relation_<wbr>types</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getautocompletionparams.html#collectionid" class="tsd-kind-icon">collection<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getautocompletionparams.html#count" class="tsd-kind-icon">count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getautocompletionparams.html#environmentid" class="tsd-kind-icon">environment<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getautocompletionparams.html#field" class="tsd-kind-icon">field</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getautocompletionparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.getautocompletionparams.html#prefix" class="tsd-kind-icon">prefix</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,39 +103,90 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="document_ids" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> document_<wbr>ids</h3>
-					<div class="tsd-signature tsd-kind-icon">document_<wbr>ids<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="collectionid" class="tsd-anchor"></a>
+					<h3>collection<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">collection<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L6603">discovery/v1.ts:6603</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/discovery/v1.ts#L5563">discovery/v1.ts:5563</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A comma-separated list of document IDs to include in the query.</p>
+							<p>The ID of the collection.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="entity_types" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> entity_<wbr>types</h3>
-					<div class="tsd-signature tsd-kind-icon">entity_<wbr>types<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.queryfiltertype.html" class="tsd-signature-type">QueryFilterType</a></div>
+					<a name="count" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> count</h3>
+					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L6601">discovery/v1.ts:6601</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/discovery/v1.ts#L5571">discovery/v1.ts:5571</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The number of autocompletion suggestions to return.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="environmentid" class="tsd-anchor"></a>
+					<h3>environment<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">environment<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/discovery/v1.ts#L5561">discovery/v1.ts:5561</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The ID of the environment.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="field" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> field</h3>
+					<div class="tsd-signature tsd-kind-icon">field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/discovery/v1.ts#L5569">discovery/v1.ts:5569</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The field in the result documents that autocompletion suggestions are identified from.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="headers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
+					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/discovery/v1.ts#L5572">discovery/v1.ts:5572</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="relation_types" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> relation_<wbr>types</h3>
-					<div class="tsd-signature tsd-kind-icon">relation_<wbr>types<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.queryfiltertype.html" class="tsd-signature-type">QueryFilterType</a></div>
+					<a name="prefix" class="tsd-anchor"></a>
+					<h3>prefix</h3>
+					<div class="tsd-signature tsd-kind-icon">prefix<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/discovery/v1.ts#L6600">discovery/v1.ts:6600</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/discovery/v1.ts#L5567">discovery/v1.ts:5567</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The prefix to use for autocompletion. For example, the prefix <code>Ho</code> could autocomplete to <code>Hot</code>, <code>Housing</code>,
+							or <code>How do I upgrade</code>. Possible completions are.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -164,16 +218,25 @@
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.queryrelationsfilter.html" class="tsd-kind-icon">Query<wbr>Relations<wbr>Filter</a>
+								<a href="discoveryv1.getautocompletionparams.html" class="tsd-kind-icon">Get<wbr>Autocompletion<wbr>Params</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsfilter.html#document_ids" class="tsd-kind-icon">document_<wbr>ids</a>
+										<a href="discoveryv1.getautocompletionparams.html#collectionid" class="tsd-kind-icon">collection<wbr>Id</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsfilter.html#entity_types" class="tsd-kind-icon">entity_<wbr>types</a>
+										<a href="discoveryv1.getautocompletionparams.html#count" class="tsd-kind-icon">count</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsfilter.html#relation_types" class="tsd-kind-icon">relation_<wbr>types</a>
+										<a href="discoveryv1.getautocompletionparams.html#environmentid" class="tsd-kind-icon">environment<wbr>Id</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.getautocompletionparams.html#field" class="tsd-kind-icon">field</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.getautocompletionparams.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.getautocompletionparams.html#prefix" class="tsd-kind-icon">prefix</a>
 									</li>
 								</ul>
 							</li>

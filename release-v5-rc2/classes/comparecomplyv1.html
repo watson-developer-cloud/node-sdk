@@ -187,7 +187,6 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="comparecomplyv1.html#callback" class="tsd-kind-icon">Callback</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="comparecomplyv1.html#options" class="tsd-kind-icon">Options</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -202,7 +201,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="comparecomplyv1.html#baseoptions" class="tsd-kind-icon">base<wbr>Options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="comparecomplyv1.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="comparecomplyv1.html#serviceversion" class="tsd-kind-icon">service<wbr>Version</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="comparecomplyv1.html#url-1" class="tsd-kind-icon">URL</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="comparecomplyv1.html#url" class="tsd-kind-icon">URL</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -236,7 +235,7 @@
 					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L903">compare-comply/v1.ts:903</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L1041">compare-comply/v1.ts:1041</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -269,49 +268,6 @@
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-					<a name="options" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> Options</h3>
-					<div class="tsd-signature tsd-kind-icon">Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L885">compare-comply/v1.ts:885</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Options for the <code>CompareComplyV1</code> constructor.</p>
-						</div>
-					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
-								<div class="tsd-comment tsd-typography">
-									<div class="lead">
-										<p>Allow additional request config parameters</p>
-									</div>
-								</div>
-							</li>
-							<li class="tsd-parameter">
-								<h5>authenticator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Authenticator</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> disable<wbr>Ssl<wbr>Verification<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> headers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">OutgoingHttpHeaders</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> url<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-							<li class="tsd-parameter">
-								<h5>version<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-						</ul>
-					</div>
-				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
@@ -319,14 +275,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Compare<wbr>Comply<wbr>V1<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="comparecomplyv1.html#options" class="tsd-signature-type">Options</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="comparecomplyv1.html" class="tsd-signature-type">CompareComplyV1</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Compare<wbr>Comply<wbr>V1<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UserOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="comparecomplyv1.html" class="tsd-signature-type">CompareComplyV1</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L32">compare-comply/v1.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L32">compare-comply/v1.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -344,7 +300,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="comparecomplyv1.html#options" class="tsd-signature-type">Options</a></h5>
+									<h5>options: <span class="tsd-signature-type">UserOptions</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>Options for the service.</p>
@@ -366,7 +322,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from BaseService.baseOptions</p>
 						<ul>
-							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:36</li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:42</li>
 						</ul>
 					</aside>
 				</section>
@@ -377,7 +333,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.name</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L31">compare-comply/v1.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L31">compare-comply/v1.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -388,18 +344,18 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.serviceVersion</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L32">compare-comply/v1.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L32">compare-comply/v1.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-					<a name="url-1" class="tsd-anchor"></a>
+					<a name="url" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> URL</h3>
 					<div class="tsd-signature tsd-kind-icon">URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;https://gateway.watsonplatform.net/compare-comply/api&quot;</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L30">compare-comply/v1.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L30">compare-comply/v1.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -410,13 +366,13 @@
 					<a name="addfeedback" class="tsd-anchor"></a>
 					<h3>add<wbr>Feedback</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.addfeedbackparams.html" class="tsd-signature-type">AddFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackreturn.html" class="tsd-signature-type">FeedbackReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.addfeedbackparams.html" class="tsd-signature-type">AddFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackreturn.html" class="tsd-signature-type">FeedbackReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackreturn.html" class="tsd-signature-type">FeedbackReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L365">compare-comply/v1.ts:365</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L417">compare-comply/v1.ts:417</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -439,10 +395,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackreturn.html" class="tsd-signature-type">FeedbackReturn</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackreturn.html" class="tsd-signature-type">FeedbackReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -450,13 +403,13 @@
 					<a name="classifyelements" class="tsd-anchor"></a>
 					<h3>classify<wbr>Elements</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">classify<wbr>Elements<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.classifyelementsparams.html" class="tsd-signature-type">ClassifyElementsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.classifyreturn.html" class="tsd-signature-type">ClassifyReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">classify<wbr>Elements<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.classifyelementsparams.html" class="tsd-signature-type">ClassifyElementsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.classifyreturn.html" class="tsd-signature-type">ClassifyReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.classifyreturn.html" class="tsd-signature-type">ClassifyReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L152">compare-comply/v1.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L165">compare-comply/v1.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -477,10 +430,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.classifyreturn.html" class="tsd-signature-type">ClassifyReturn</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.classifyreturn.html" class="tsd-signature-type">ClassifyReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -488,13 +438,13 @@
 					<a name="comparedocuments" class="tsd-anchor"></a>
 					<h3>compare<wbr>Documents</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">compare<wbr>Documents<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.comparedocumentsparams.html" class="tsd-signature-type">CompareDocumentsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.comparereturn.html" class="tsd-signature-type">CompareReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">compare<wbr>Documents<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.comparedocumentsparams.html" class="tsd-signature-type">CompareDocumentsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.comparereturn.html" class="tsd-signature-type">CompareReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.comparereturn.html" class="tsd-signature-type">CompareReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L292">compare-comply/v1.ts:292</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L331">compare-comply/v1.ts:331</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -515,10 +465,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.comparereturn.html" class="tsd-signature-type">CompareReturn</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.comparereturn.html" class="tsd-signature-type">CompareReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -526,13 +473,13 @@
 					<a name="converttohtml" class="tsd-anchor"></a>
 					<h3>convert<wbr>ToHtml</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">convert<wbr>ToHtml<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.converttohtmlparams.html" class="tsd-signature-type">ConvertToHtmlParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.htmlreturn.html" class="tsd-signature-type">HTMLReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">convert<wbr>ToHtml<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.converttohtmlparams.html" class="tsd-signature-type">ConvertToHtmlParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.htmlreturn.html" class="tsd-signature-type">HTMLReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.htmlreturn.html" class="tsd-signature-type">HTMLReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L84">compare-comply/v1.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L84">compare-comply/v1.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -553,10 +500,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.htmlreturn.html" class="tsd-signature-type">HTMLReturn</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.htmlreturn.html" class="tsd-signature-type">HTMLReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -564,13 +508,13 @@
 					<a name="createbatch" class="tsd-anchor"></a>
 					<h3>create<wbr>Batch</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Batch<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.createbatchparams.html" class="tsd-signature-type">CreateBatchParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Batch<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.createbatchparams.html" class="tsd-signature-type">CreateBatchParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L663">compare-comply/v1.ts:663</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L763">compare-comply/v1.ts:763</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -595,10 +539,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -606,14 +547,14 @@
 					<a name="createrequest" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> create<wbr>Request</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Request<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Request<span class="tsd-signature-symbol">(</span>parameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.createRequest</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:86</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:90</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -626,17 +567,11 @@
 								<li>
 									<h5>parameters: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>service request options passed in by user.</p>
-									</div>
-								</li>
-								<li>
-									<h5>callback: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>callback function to pass the response back to</p>
+										<p>service request options passed in by user</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -644,13 +579,13 @@
 					<a name="deletefeedback" class="tsd-anchor"></a>
 					<h3>delete<wbr>Feedback</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.deletefeedbackparams.html" class="tsd-signature-type">DeleteFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackdeleted.html" class="tsd-signature-type">FeedbackDeleted</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.deletefeedbackparams.html" class="tsd-signature-type">DeleteFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackdeleted.html" class="tsd-signature-type">FeedbackDeleted</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackdeleted.html" class="tsd-signature-type">FeedbackDeleted</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L581">compare-comply/v1.ts:581</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L668">compare-comply/v1.ts:668</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -671,10 +606,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackdeleted.html" class="tsd-signature-type">FeedbackDeleted</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbackdeleted.html" class="tsd-signature-type">FeedbackDeleted</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -682,13 +614,13 @@
 					<a name="extracttables" class="tsd-anchor"></a>
 					<h3>extract<wbr>Tables</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">extract<wbr>Tables<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.extracttablesparams.html" class="tsd-signature-type">ExtractTablesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.tablereturn.html" class="tsd-signature-type">TableReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">extract<wbr>Tables<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.extracttablesparams.html" class="tsd-signature-type">ExtractTablesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.tablereturn.html" class="tsd-signature-type">TableReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.tablereturn.html" class="tsd-signature-type">TableReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L220">compare-comply/v1.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L246">compare-comply/v1.ts:246</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -709,10 +641,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.tablereturn.html" class="tsd-signature-type">TableReturn</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.tablereturn.html" class="tsd-signature-type">TableReturn</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -727,7 +656,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.getAuthenticator</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:57</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:62</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -743,13 +672,13 @@
 					<a name="getbatch" class="tsd-anchor"></a>
 					<h3>get<wbr>Batch</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Batch<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.getbatchparams.html" class="tsd-signature-type">GetBatchParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Batch<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.getbatchparams.html" class="tsd-signature-type">GetBatchParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L770">compare-comply/v1.ts:770</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L892">compare-comply/v1.ts:892</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -770,10 +699,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -781,13 +707,13 @@
 					<a name="getfeedback-1" class="tsd-anchor"></a>
 					<h3>get<wbr>Feedback</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.getfeedbackparams.html" class="tsd-signature-type">GetFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.getfeedback.html" class="tsd-signature-type">GetFeedback</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.getfeedbackparams.html" class="tsd-signature-type">GetFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.getfeedback.html" class="tsd-signature-type">GetFeedback</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.getfeedback.html" class="tsd-signature-type">GetFeedback</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L521">compare-comply/v1.ts:521</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L595">compare-comply/v1.ts:595</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -808,10 +734,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.getfeedback.html" class="tsd-signature-type">GetFeedback</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.getfeedback.html" class="tsd-signature-type">GetFeedback</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -819,13 +742,13 @@
 					<a name="listbatches" class="tsd-anchor"></a>
 					<h3>list<wbr>Batches</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Batches<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/comparecomplyv1.listbatchesparams.html" class="tsd-signature-type">ListBatchesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batches.html" class="tsd-signature-type">Batches</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Batches<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/comparecomplyv1.listbatchesparams.html" class="tsd-signature-type">ListBatchesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batches.html" class="tsd-signature-type">Batches</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batches.html" class="tsd-signature-type">Batches</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L730">compare-comply/v1.ts:730</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L843">compare-comply/v1.ts:843</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -843,10 +766,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batches.html" class="tsd-signature-type">Batches</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batches.html" class="tsd-signature-type">Batches</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -854,13 +774,13 @@
 					<a name="listfeedback" class="tsd-anchor"></a>
 					<h3>list<wbr>Feedback</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/comparecomplyv1.listfeedbackparams.html" class="tsd-signature-type">ListFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbacklist.html" class="tsd-signature-type">FeedbackList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Feedback<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/comparecomplyv1.listfeedbackparams.html" class="tsd-signature-type">ListFeedbackParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbacklist.html" class="tsd-signature-type">FeedbackList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbacklist.html" class="tsd-signature-type">FeedbackList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L457">compare-comply/v1.ts:457</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L522">compare-comply/v1.ts:522</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -878,10 +798,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbacklist.html" class="tsd-signature-type">FeedbackList</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.feedbacklist.html" class="tsd-signature-type">FeedbackList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -896,7 +813,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from BaseService.setServiceUrl</p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base_service.d.ts:63</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:68</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -918,13 +835,13 @@
 					<a name="updatebatch" class="tsd-anchor"></a>
 					<h3>update<wbr>Batch</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Batch<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.updatebatchparams.html" class="tsd-signature-type">UpdateBatchParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Batch<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/comparecomplyv1.updatebatchparams.html" class="tsd-signature-type">UpdateBatchParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a0da761/compare-comply/v1.ts#L827">compare-comply/v1.ts:827</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/abb0bb4/compare-comply/v1.ts#L962">compare-comply/v1.ts:962</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -946,10 +863,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="comparecomplyv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">void</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/comparecomplyv1.batchstatus.html" class="tsd-signature-type">BatchStatus</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1207,9 +1121,6 @@
 							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
 								<a href="comparecomplyv1.html#callback" class="tsd-kind-icon">Callback</a>
 							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
-								<a href="comparecomplyv1.html#options" class="tsd-kind-icon">Options</a>
-							</li>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="comparecomplyv1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
@@ -1223,7 +1134,7 @@
 								<a href="comparecomplyv1.html#serviceversion" class="tsd-kind-icon">service<wbr>Version</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="comparecomplyv1.html#url-1" class="tsd-kind-icon">URL</a>
+								<a href="comparecomplyv1.html#url" class="tsd-kind-icon">URL</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="comparecomplyv1.html#addfeedback" class="tsd-kind-icon">add<wbr>Feedback</a>
