@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const TextToSpeechV1 = require('../../text-to-speech/v1');
+const VisualRecognitionV4 = require('../../visual-recognition/v4');
 const utils = require('../resources/unitTestUtils');
 
 const {
@@ -29,17 +29,17 @@ const {
   missingParamsError,
   checkForEmptyObject,
   checkRequiredParamsHandling,
-  checkUserHeader,
   checkDefaultSuccessArgs,
 } = utils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://stream.watsonplatform.net/text-to-speech/api/text-to-speech/api',
+  url: 'https://gateway.watsonplatform.net/visual-recognition/api/visual-recognition/api',
+  version: '2018-10-18',
 };
 
-const textToSpeech = new TextToSpeechV1(service);
-const createRequestMock = jest.spyOn(textToSpeech, 'createRequest');
+const visualRecognition = new VisualRecognitionV4(service);
+const createRequestMock = jest.spyOn(visualRecognition, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
@@ -50,125 +50,76 @@ afterEach(() => {
   missingParamsMock.mockClear();
 });
 
-describe('TextToSpeechV1', () => {
-  describe('listVoices', () => {
+describe('VisualRecognitionV4', () => {
+  describe('analyze', () => {
     describe('positive tests', () => {
       beforeAll(() => {
         missingParamsMock.mockReturnValue(missingParamsSuccess);
       });
       test('should pass the right params to createRequest', () => {
         // parameters
-        const params = {};
+        const collectionIds = 'fake_collectionIds';
+        const features = 'fake_features';
+        const imagesFile = 'fake_imagesFile';
+        const imageUrl = 'fake_imageUrl';
+        const threshold = 'fake_threshold';
+        const params = {
+          collectionIds,
+          features,
+          imagesFile,
+          imageUrl,
+          threshold,
+        };
 
-        textToSpeech.listVoices(params);
+        visualRecognition.analyze(params);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/voices', 'GET');
+        checkUrlAndMethod(options, '/v4/analyze', 'POST');
         const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
+        const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['collection_ids']).toEqual(collectionIds);
+        expect(options.formData['features']).toEqual(features);
+        expect(options.formData['images_file']).toEqual(imagesFile);
+        expect(options.formData['image_url']).toEqual(imageUrl);
+        expect(options.formData['threshold']).toEqual(threshold);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
+        const collectionIds = 'fake_collectionIds';
+        const features = 'fake_features';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
+          collectionIds,
+          features,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        textToSpeech.listVoices(params);
+        visualRecognition.analyze(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should return a promise when no callback is given', () => {
         // parameters
-        const params = {};
-
-        // invoke method
-        const listVoicesPromise = textToSpeech.listVoices(params);
-        expectToBePromise(listVoicesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-      test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        textToSpeech.listVoices({});
-        checkDefaultSuccessArgs(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await textToSpeech.listVoices(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
-      });
-    });
-  });
-  describe('getVoice', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const voice = 'fake_voice';
-        const customizationId = 'fake_customizationId';
+        const collectionIds = 'fake_collectionIds';
+        const features = 'fake_features';
         const params = {
-          voice,
-          customizationId,
-        };
-
-        textToSpeech.getVoice(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/voices/{voice}', 'GET');
-        const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['customization_id']).toEqual(customizationId);
-        expect(options.path['voice']).toEqual(voice);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const voice = 'fake_voice';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          voice,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.getVoice(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const voice = 'fake_voice';
-        const params = {
-          voice,
+          collectionIds,
+          features,
         };
 
         // invoke method
-        const getVoicePromise = textToSpeech.getVoice(params);
-        expectToBePromise(getVoicePromise);
+        const analyzePromise = visualRecognition.analyze(params);
+        expectToBePromise(analyzePromise);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -181,7 +132,7 @@ describe('TextToSpeechV1', () => {
       });
 
       test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.getVoice(null).catch(() => {
+        visualRecognition.analyze(null).catch(() => {
           checkForEmptyObject(missingParamsMock);
           done();
         });
@@ -189,11 +140,11 @@ describe('TextToSpeechV1', () => {
 
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['voice'];
+        const requiredParams = ['collectionIds', 'features'];
 
         let err;
         try {
-          await textToSpeech.getVoice({});
+          await visualRecognition.analyze({});
         } catch (e) {
           err = e;
         }
@@ -204,81 +155,942 @@ describe('TextToSpeechV1', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['voice'];
+        const requiredParams = ['collectionIds', 'features'];
 
-        const getVoicePromise = textToSpeech.getVoice();
-        expectToBePromise(getVoicePromise);
+        const analyzePromise = visualRecognition.analyze();
+        expectToBePromise(analyzePromise);
 
-        getVoicePromise.catch(err => {
+        analyzePromise.catch(err => {
           checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
           done();
         });
       });
     });
   });
-  describe('synthesize', () => {
+  describe('createCollection', () => {
     describe('positive tests', () => {
       beforeAll(() => {
         missingParamsMock.mockReturnValue(missingParamsSuccess);
       });
       test('should pass the right params to createRequest', () => {
         // parameters
-        const text = 'fake_text';
-        const accept = 'fake_accept';
-        const voice = 'fake_voice';
-        const customizationId = 'fake_customizationId';
+        const name = 'fake_name';
+        const description = 'fake_description';
         const params = {
-          text,
-          accept,
-          voice,
-          customizationId,
+          name,
+          description,
         };
 
-        textToSpeech.synthesize(params);
+        visualRecognition.createCollection(params);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/synthesize', 'POST');
-        const expectedAccept = accept;
+        checkUrlAndMethod(options, '/v4/collections', 'POST');
+        const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        checkUserHeader(createRequestMock, 'Accept', accept);
-        expect(options.body['text']).toEqual(text);
-        expect(options.qs['voice']).toEqual(voice);
-        expect(options.qs['customization_id']).toEqual(customizationId);
+        expect(options.body['name']).toEqual(name);
+        expect(options.body['description']).toEqual(description);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.createCollection(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const params = {};
+
+        // invoke method
+        const createCollectionPromise = visualRecognition.createCollection(params);
+        expectToBePromise(createCollectionPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method
+        visualRecognition.createCollection({});
+        checkDefaultSuccessArgs(createRequestMock);
+      });
+
+      test('should use argument as callback function if only one is passed in', async () => {
+        // invoke the method
+        const callbackMock = jest.fn();
+        await visualRecognition.createCollection(callbackMock);
+        expect(callbackMock).toHaveBeenCalled();
+      });
+    });
+  });
+  describe('listCollections', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const params = {};
+
+        visualRecognition.listCollections(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.listCollections(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const params = {};
+
+        // invoke method
+        const listCollectionsPromise = visualRecognition.listCollections(params);
+        expectToBePromise(listCollectionsPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method
+        visualRecognition.listCollections({});
+        checkDefaultSuccessArgs(createRequestMock);
+      });
+
+      test('should use argument as callback function if only one is passed in', async () => {
+        // invoke the method
+        const callbackMock = jest.fn();
+        await visualRecognition.listCollections(callbackMock);
+        expect(callbackMock).toHaveBeenCalled();
+      });
+    });
+  });
+  describe('getCollection', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        visualRecognition.getCollection(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.getCollection(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        // invoke method
+        const getCollectionPromise = visualRecognition.getCollection(params);
+        expectToBePromise(getCollectionPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
+
+      test('should convert a `null` value for `params` to an empty object', done => {
+        visualRecognition.getCollection(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        let err;
+        try {
+          await visualRecognition.getCollection({});
+        } catch (e) {
+          err = e;
+        }
+
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        const getCollectionPromise = visualRecognition.getCollection();
+        expectToBePromise(getCollectionPromise);
+
+        getCollectionPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
+    });
+  });
+  describe('updateCollection', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const name = 'fake_name';
+        const description = 'fake_description';
+        const params = {
+          collectionId,
+          name,
+          description,
+        };
+
+        visualRecognition.updateCollection(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['name']).toEqual(name);
+        expect(options.body['description']).toEqual(description);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.updateCollection(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        // invoke method
+        const updateCollectionPromise = visualRecognition.updateCollection(params);
+        expectToBePromise(updateCollectionPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
+
+      test('should convert a `null` value for `params` to an empty object', done => {
+        visualRecognition.updateCollection(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        let err;
+        try {
+          await visualRecognition.updateCollection({});
+        } catch (e) {
+          err = e;
+        }
+
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        const updateCollectionPromise = visualRecognition.updateCollection();
+        expectToBePromise(updateCollectionPromise);
+
+        updateCollectionPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteCollection', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        visualRecognition.deleteCollection(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.deleteCollection(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        // invoke method
+        const deleteCollectionPromise = visualRecognition.deleteCollection(params);
+        expectToBePromise(deleteCollectionPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
+
+      test('should convert a `null` value for `params` to an empty object', done => {
+        visualRecognition.deleteCollection(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        let err;
+        try {
+          await visualRecognition.deleteCollection({});
+        } catch (e) {
+          err = e;
+        }
+
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        const deleteCollectionPromise = visualRecognition.deleteCollection();
+        expectToBePromise(deleteCollectionPromise);
+
+        deleteCollectionPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
+    });
+  });
+  describe('addImages', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imagesFile = 'fake_imagesFile';
+        const imageUrl = 'fake_imageUrl';
+        const trainingData = 'fake_trainingData';
+        const params = {
+          collectionId,
+          imagesFile,
+          imageUrl,
+          trainingData,
+        };
+
+        visualRecognition.addImages(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['images_file']).toEqual(imagesFile);
+        expect(options.formData['image_url']).toEqual(imageUrl);
+        expect(options.formData['training_data']).toEqual(trainingData);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.addImages(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        // invoke method
+        const addImagesPromise = visualRecognition.addImages(params);
+        expectToBePromise(addImagesPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
+
+      test('should convert a `null` value for `params` to an empty object', done => {
+        visualRecognition.addImages(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        let err;
+        try {
+          await visualRecognition.addImages({});
+        } catch (e) {
+          err = e;
+        }
+
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        const addImagesPromise = visualRecognition.addImages();
+        expectToBePromise(addImagesPromise);
+
+        addImagesPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
+    });
+  });
+  describe('listImages', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        visualRecognition.listImages(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.listImages(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        // invoke method
+        const listImagesPromise = visualRecognition.listImages(params);
+        expectToBePromise(listImagesPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
+
+      test('should convert a `null` value for `params` to an empty object', done => {
+        visualRecognition.listImages(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        let err;
+        try {
+          await visualRecognition.listImages({});
+        } catch (e) {
+          err = e;
+        }
+
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        const listImagesPromise = visualRecognition.listImages();
+        expectToBePromise(listImagesPromise);
+
+        listImagesPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
+    });
+  });
+  describe('getImageDetails', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const params = {
+          collectionId,
+          imageId,
+        };
+
+        visualRecognition.getImageDetails(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images/{image_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.path['image_id']).toEqual(imageId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          imageId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.getImageDetails(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const params = {
+          collectionId,
+          imageId,
+        };
+
+        // invoke method
+        const getImageDetailsPromise = visualRecognition.getImageDetails(params);
+        expectToBePromise(getImageDetailsPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
+
+      test('should convert a `null` value for `params` to an empty object', done => {
+        visualRecognition.getImageDetails(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'imageId'];
+
+        let err;
+        try {
+          await visualRecognition.getImageDetails({});
+        } catch (e) {
+          err = e;
+        }
+
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'imageId'];
+
+        const getImageDetailsPromise = visualRecognition.getImageDetails();
+        expectToBePromise(getImageDetailsPromise);
+
+        getImageDetailsPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteImage', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const params = {
+          collectionId,
+          imageId,
+        };
+
+        visualRecognition.deleteImage(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images/{image_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.path['image_id']).toEqual(imageId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          imageId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.deleteImage(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const params = {
+          collectionId,
+          imageId,
+        };
+
+        // invoke method
+        const deleteImagePromise = visualRecognition.deleteImage(params);
+        expectToBePromise(deleteImagePromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
+
+      test('should convert a `null` value for `params` to an empty object', done => {
+        visualRecognition.deleteImage(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'imageId'];
+
+        let err;
+        try {
+          await visualRecognition.deleteImage({});
+        } catch (e) {
+          err = e;
+        }
+
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'imageId'];
+
+        const deleteImagePromise = visualRecognition.deleteImage();
+        expectToBePromise(deleteImagePromise);
+
+        deleteImagePromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
+    });
+  });
+  describe('getJpegImage', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const size = 'fake_size';
+        const params = {
+          collectionId,
+          imageId,
+          size,
+        };
+
+        visualRecognition.getJpegImage(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images/{image_id}/jpeg', 'GET');
+        const expectedAccept = 'image/jpeg';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['size']).toEqual(size);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.path['image_id']).toEqual(imageId);
         expect(options.responseType).toBe('stream');
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const text = 'fake_text';
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
-          text,
+          collectionId,
+          imageId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        textToSpeech.synthesize(params);
+        visualRecognition.getJpegImage(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should return a promise when no callback is given', () => {
         // parameters
-        const text = 'fake_text';
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
         const params = {
-          text,
+          collectionId,
+          imageId,
         };
 
         // invoke method
-        const synthesizePromise = textToSpeech.synthesize(params);
-        expectToBePromise(synthesizePromise);
+        const getJpegImagePromise = visualRecognition.getJpegImage(params);
+        expectToBePromise(getJpegImagePromise);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -291,7 +1103,7 @@ describe('TextToSpeechV1', () => {
       });
 
       test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.synthesize(null).catch(() => {
+        visualRecognition.getJpegImage(null).catch(() => {
           checkForEmptyObject(missingParamsMock);
           done();
         });
@@ -299,11 +1111,11 @@ describe('TextToSpeechV1', () => {
 
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['text'];
+        const requiredParams = ['collectionId', 'imageId'];
 
         let err;
         try {
-          await textToSpeech.synthesize({});
+          await visualRecognition.getJpegImage({});
         } catch (e) {
           err = e;
         }
@@ -314,80 +1126,71 @@ describe('TextToSpeechV1', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['text'];
+        const requiredParams = ['collectionId', 'imageId'];
 
-        const synthesizePromise = textToSpeech.synthesize();
-        expectToBePromise(synthesizePromise);
+        const getJpegImagePromise = visualRecognition.getJpegImage();
+        expectToBePromise(getJpegImagePromise);
 
-        synthesizePromise.catch(err => {
+        getJpegImagePromise.catch(err => {
           checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
           done();
         });
       });
     });
   });
-  describe('getPronunciation', () => {
+  describe('train', () => {
     describe('positive tests', () => {
       beforeAll(() => {
         missingParamsMock.mockReturnValue(missingParamsSuccess);
       });
       test('should pass the right params to createRequest', () => {
         // parameters
-        const text = 'fake_text';
-        const voice = 'fake_voice';
-        const format = 'fake_format';
-        const customizationId = 'fake_customizationId';
+        const collectionId = 'fake_collectionId';
         const params = {
-          text,
-          voice,
-          format,
-          customizationId,
+          collectionId,
         };
 
-        textToSpeech.getPronunciation(params);
+        visualRecognition.train(params);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/pronunciation', 'GET');
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/train', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['text']).toEqual(text);
-        expect(options.qs['voice']).toEqual(voice);
-        expect(options.qs['format']).toEqual(format);
-        expect(options.qs['customization_id']).toEqual(customizationId);
+        expect(options.path['collection_id']).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const text = 'fake_text';
+        const collectionId = 'fake_collectionId';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
-          text,
+          collectionId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        textToSpeech.getPronunciation(params);
+        visualRecognition.train(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should return a promise when no callback is given', () => {
         // parameters
-        const text = 'fake_text';
+        const collectionId = 'fake_collectionId';
         const params = {
-          text,
+          collectionId,
         };
 
         // invoke method
-        const getPronunciationPromise = textToSpeech.getPronunciation(params);
-        expectToBePromise(getPronunciationPromise);
+        const trainPromise = visualRecognition.train(params);
+        expectToBePromise(trainPromise);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -400,7 +1203,7 @@ describe('TextToSpeechV1', () => {
       });
 
       test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.getPronunciation(null).catch(() => {
+        visualRecognition.train(null).catch(() => {
           checkForEmptyObject(missingParamsMock);
           done();
         });
@@ -408,11 +1211,11 @@ describe('TextToSpeechV1', () => {
 
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['text'];
+        const requiredParams = ['collectionId'];
 
         let err;
         try {
-          await textToSpeech.getPronunciation({});
+          await visualRecognition.train({});
         } catch (e) {
           err = e;
         }
@@ -423,77 +1226,85 @@ describe('TextToSpeechV1', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['text'];
+        const requiredParams = ['collectionId'];
 
-        const getPronunciationPromise = textToSpeech.getPronunciation();
-        expectToBePromise(getPronunciationPromise);
+        const trainPromise = visualRecognition.train();
+        expectToBePromise(trainPromise);
 
-        getPronunciationPromise.catch(err => {
+        trainPromise.catch(err => {
           checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
           done();
         });
       });
     });
   });
-  describe('createVoiceModel', () => {
+  describe('addImageTrainingData', () => {
     describe('positive tests', () => {
       beforeAll(() => {
         missingParamsMock.mockReturnValue(missingParamsSuccess);
       });
       test('should pass the right params to createRequest', () => {
         // parameters
-        const name = 'fake_name';
-        const language = 'fake_language';
-        const description = 'fake_description';
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
+        const objects = 'fake_objects';
         const params = {
-          name,
-          language,
-          description,
+          collectionId,
+          imageId,
+          objects,
         };
 
-        textToSpeech.createVoiceModel(params);
+        visualRecognition.addImageTrainingData(params);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/customizations', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v4/collections/{collection_id}/images/{image_id}/training_data',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['language']).toEqual(language);
-        expect(options.body['description']).toEqual(description);
+        expect(options.body['objects']).toEqual(objects);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.path['image_id']).toEqual(imageId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const name = 'fake_name';
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
-          name,
+          collectionId,
+          imageId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        textToSpeech.createVoiceModel(params);
+        visualRecognition.addImageTrainingData(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should return a promise when no callback is given', () => {
         // parameters
-        const name = 'fake_name';
+        const collectionId = 'fake_collectionId';
+        const imageId = 'fake_imageId';
         const params = {
-          name,
+          collectionId,
+          imageId,
         };
 
         // invoke method
-        const createVoiceModelPromise = textToSpeech.createVoiceModel(params);
-        expectToBePromise(createVoiceModelPromise);
+        const addImageTrainingDataPromise = visualRecognition.addImageTrainingData(params);
+        expectToBePromise(addImageTrainingDataPromise);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -506,7 +1317,7 @@ describe('TextToSpeechV1', () => {
       });
 
       test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.createVoiceModel(null).catch(() => {
+        visualRecognition.addImageTrainingData(null).catch(() => {
           checkForEmptyObject(missingParamsMock);
           done();
         });
@@ -514,11 +1325,11 @@ describe('TextToSpeechV1', () => {
 
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['name'];
+        const requiredParams = ['collectionId', 'imageId'];
 
         let err;
         try {
-          await textToSpeech.createVoiceModel({});
+          await visualRecognition.addImageTrainingData({});
         } catch (e) {
           err = e;
         }
@@ -529,925 +1340,12 @@ describe('TextToSpeechV1', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['name'];
+        const requiredParams = ['collectionId', 'imageId'];
 
-        const createVoiceModelPromise = textToSpeech.createVoiceModel();
-        expectToBePromise(createVoiceModelPromise);
+        const addImageTrainingDataPromise = visualRecognition.addImageTrainingData();
+        expectToBePromise(addImageTrainingDataPromise);
 
-        createVoiceModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('listVoiceModels', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const language = 'fake_language';
-        const params = {
-          language,
-        };
-
-        textToSpeech.listVoiceModels(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations', 'GET');
-        const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['language']).toEqual(language);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.listVoiceModels(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listVoiceModelsPromise = textToSpeech.listVoiceModels(params);
-        expectToBePromise(listVoiceModelsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-      test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        textToSpeech.listVoiceModels({});
-        checkDefaultSuccessArgs(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await textToSpeech.listVoiceModels(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
-      });
-    });
-  });
-  describe('updateVoiceModel', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const name = 'fake_name';
-        const description = 'fake_description';
-        const words = 'fake_words';
-        const params = {
-          customizationId,
-          name,
-          description,
-          words,
-        };
-
-        textToSpeech.updateVoiceModel(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}', 'POST');
-        const expectedAccept = 'application/json';
-        const expectedContentType = 'application/json';
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['words']).toEqual(words);
-        expect(options.path['customization_id']).toEqual(customizationId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.updateVoiceModel(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const params = {
-          customizationId,
-        };
-
-        // invoke method
-        const updateVoiceModelPromise = textToSpeech.updateVoiceModel(params);
-        expectToBePromise(updateVoiceModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.updateVoiceModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        let err;
-        try {
-          await textToSpeech.updateVoiceModel({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        const updateVoiceModelPromise = textToSpeech.updateVoiceModel();
-        expectToBePromise(updateVoiceModelPromise);
-
-        updateVoiceModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('getVoiceModel', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const params = {
-          customizationId,
-        };
-
-        textToSpeech.getVoiceModel(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}', 'GET');
-        const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['customization_id']).toEqual(customizationId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.getVoiceModel(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const params = {
-          customizationId,
-        };
-
-        // invoke method
-        const getVoiceModelPromise = textToSpeech.getVoiceModel(params);
-        expectToBePromise(getVoiceModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.getVoiceModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        let err;
-        try {
-          await textToSpeech.getVoiceModel({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        const getVoiceModelPromise = textToSpeech.getVoiceModel();
-        expectToBePromise(getVoiceModelPromise);
-
-        getVoiceModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('deleteVoiceModel', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const params = {
-          customizationId,
-        };
-
-        textToSpeech.deleteVoiceModel(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}', 'DELETE');
-        const expectedAccept = undefined;
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['customization_id']).toEqual(customizationId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.deleteVoiceModel(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const params = {
-          customizationId,
-        };
-
-        // invoke method
-        const deleteVoiceModelPromise = textToSpeech.deleteVoiceModel(params);
-        expectToBePromise(deleteVoiceModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.deleteVoiceModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        let err;
-        try {
-          await textToSpeech.deleteVoiceModel({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        const deleteVoiceModelPromise = textToSpeech.deleteVoiceModel();
-        expectToBePromise(deleteVoiceModelPromise);
-
-        deleteVoiceModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('addWords', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const words = 'fake_words';
-        const params = {
-          customizationId,
-          words,
-        };
-
-        textToSpeech.addWords(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words', 'POST');
-        const expectedAccept = 'application/json';
-        const expectedContentType = 'application/json';
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['words']).toEqual(words);
-        expect(options.path['customization_id']).toEqual(customizationId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const words = 'fake_words';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          words,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.addWords(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const words = 'fake_words';
-        const params = {
-          customizationId,
-          words,
-        };
-
-        // invoke method
-        const addWordsPromise = textToSpeech.addWords(params);
-        expectToBePromise(addWordsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.addWords(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'words'];
-
-        let err;
-        try {
-          await textToSpeech.addWords({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'words'];
-
-        const addWordsPromise = textToSpeech.addWords();
-        expectToBePromise(addWordsPromise);
-
-        addWordsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('listWords', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const params = {
-          customizationId,
-        };
-
-        textToSpeech.listWords(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words', 'GET');
-        const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['customization_id']).toEqual(customizationId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.listWords(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const params = {
-          customizationId,
-        };
-
-        // invoke method
-        const listWordsPromise = textToSpeech.listWords(params);
-        expectToBePromise(listWordsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.listWords(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        let err;
-        try {
-          await textToSpeech.listWords({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId'];
-
-        const listWordsPromise = textToSpeech.listWords();
-        expectToBePromise(listWordsPromise);
-
-        listWordsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('addWord', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const translation = 'fake_translation';
-        const partOfSpeech = 'fake_partOfSpeech';
-        const params = {
-          customizationId,
-          word,
-          translation,
-          partOfSpeech,
-        };
-
-        textToSpeech.addWord(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words/{word}', 'PUT');
-        const expectedAccept = undefined;
-        const expectedContentType = 'application/json';
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['translation']).toEqual(translation);
-        expect(options.body['part_of_speech']).toEqual(partOfSpeech);
-        expect(options.path['customization_id']).toEqual(customizationId);
-        expect(options.path['word']).toEqual(word);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const translation = 'fake_translation';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          word,
-          translation,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.addWord(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const translation = 'fake_translation';
-        const params = {
-          customizationId,
-          word,
-          translation,
-        };
-
-        // invoke method
-        const addWordPromise = textToSpeech.addWord(params);
-        expectToBePromise(addWordPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.addWord(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'word', 'translation'];
-
-        let err;
-        try {
-          await textToSpeech.addWord({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'word', 'translation'];
-
-        const addWordPromise = textToSpeech.addWord();
-        expectToBePromise(addWordPromise);
-
-        addWordPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('getWord', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const params = {
-          customizationId,
-          word,
-        };
-
-        textToSpeech.getWord(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words/{word}', 'GET');
-        const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['customization_id']).toEqual(customizationId);
-        expect(options.path['word']).toEqual(word);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          word,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.getWord(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const params = {
-          customizationId,
-          word,
-        };
-
-        // invoke method
-        const getWordPromise = textToSpeech.getWord(params);
-        expectToBePromise(getWordPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.getWord(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'word'];
-
-        let err;
-        try {
-          await textToSpeech.getWord({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'word'];
-
-        const getWordPromise = textToSpeech.getWord();
-        expectToBePromise(getWordPromise);
-
-        getWordPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-          done();
-        });
-      });
-    });
-  });
-  describe('deleteWord', () => {
-    describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const params = {
-          customizationId,
-          word,
-        };
-
-        textToSpeech.deleteWord(params);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v1/customizations/{customization_id}/words/{word}', 'DELETE');
-        const expectedAccept = undefined;
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['customization_id']).toEqual(customizationId);
-        expect(options.path['word']).toEqual(word);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          customizationId,
-          word,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        textToSpeech.deleteWord(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customizationId = 'fake_customizationId';
-        const word = 'fake_word';
-        const params = {
-          customizationId,
-          word,
-        };
-
-        // invoke method
-        const deleteWordPromise = textToSpeech.deleteWord(params);
-        expectToBePromise(deleteWordPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
-    });
-
-    describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.deleteWord(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'word'];
-
-        let err;
-        try {
-          await textToSpeech.deleteWord({});
-        } catch (e) {
-          err = e;
-        }
-
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customizationId', 'word'];
-
-        const deleteWordPromise = textToSpeech.deleteWord();
-        expectToBePromise(deleteWordPromise);
-
-        deleteWordPromise.catch(err => {
+        addImageTrainingDataPromise.catch(err => {
           checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
           done();
         });
@@ -1466,15 +1364,15 @@ describe('TextToSpeechV1', () => {
           customerId,
         };
 
-        textToSpeech.deleteUserData(params);
+        visualRecognition.deleteUserData(params);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/user_data', 'DELETE');
-        const expectedAccept = undefined;
+        checkUrlAndMethod(options, '/v4/user_data', 'DELETE');
+        const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['customer_id']).toEqual(customerId);
@@ -1493,7 +1391,7 @@ describe('TextToSpeechV1', () => {
           },
         };
 
-        textToSpeech.deleteUserData(params);
+        visualRecognition.deleteUserData(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -1505,7 +1403,7 @@ describe('TextToSpeechV1', () => {
         };
 
         // invoke method
-        const deleteUserDataPromise = textToSpeech.deleteUserData(params);
+        const deleteUserDataPromise = visualRecognition.deleteUserData(params);
         expectToBePromise(deleteUserDataPromise);
 
         // assert that create request was called
@@ -1519,7 +1417,7 @@ describe('TextToSpeechV1', () => {
       });
 
       test('should convert a `null` value for `params` to an empty object', done => {
-        textToSpeech.deleteUserData(null).catch(() => {
+        visualRecognition.deleteUserData(null).catch(() => {
           checkForEmptyObject(missingParamsMock);
           done();
         });
@@ -1531,7 +1429,7 @@ describe('TextToSpeechV1', () => {
 
         let err;
         try {
-          await textToSpeech.deleteUserData({});
+          await visualRecognition.deleteUserData({});
         } catch (e) {
           err = e;
         }
@@ -1544,7 +1442,7 @@ describe('TextToSpeechV1', () => {
         // required parameters for this method
         const requiredParams = ['customerId'];
 
-        const deleteUserDataPromise = textToSpeech.deleteUserData();
+        const deleteUserDataPromise = visualRecognition.deleteUserData();
         expectToBePromise(deleteUserDataPromise);
 
         deleteUserDataPromise.catch(err => {

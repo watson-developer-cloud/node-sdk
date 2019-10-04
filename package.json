@@ -87,7 +87,7 @@
     "axios": "^0.18.0",
     "camelcase": "^5.3.1",
     "extend": "~3.0.2",
-    "ibm-cloud-sdk-core": "^1.0.0-rc2",
+    "ibm-cloud-sdk-core": "^1.0.0",
     "isstream": "~0.1.2",
     "websocket": "^1.0.28"
   },
@@ -107,9 +107,9 @@
     "doc": "jsdoc -c scripts/jsdoc/config.json",
     "minify": "uglifyjs --compress --mangle --output dist/watson.min.js --preamble \"// Watson Developer Cloud\n// JavaScript SDK$npm_package_version\n// Generated at `date`\n// Copyright IBM ($npm_package_license)\n// $npm_package_homepage\" -- dist/watson.js",
     "prepublishOnly": "npm run build && npm run browserify && npm run minify",
-    "test-integration": "jest --silent --verbose test/integration",
-    "test-unit": "jest --silent --verbose test/unit/",
-    "test": "jest --silent --verbose test/",
+    "test-integration": "jest test/integration",
+    "test-unit": "jest test/unit/",
+    "test": "jest test/",
     "test-unit-travis": "jest --silent --runInBand test/unit/",
     "test-integration-travis": "jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' --json test/integration > test-output.log",
     "report-coverage": "codecov",
@@ -121,25 +121,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  },
-  "lint-staged": {
-    "**/*.ts": [
-      "tsc",
-      "tslint --fix -p . -c tslint.json",
-      "git add"
-    ],
-    "test/**/*.js": [
-      "eslint --fix",
-      "prettier --write",
-      "git add"
-    ],
-    "examples/*.js": [
-      "eslint --fix",
-      "git add"
-    ]
   },
   "jest": {
     "collectCoverage": true,

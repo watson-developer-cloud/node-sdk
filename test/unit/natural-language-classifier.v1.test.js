@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * (C) Copyright IBM Corp. 2019.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ const utils = require('../resources/unitTestUtils');
 const {
   getOptions,
   checkUrlAndMethod,
-  checkCallback,
   checkMediaHeaders,
   missingParamsSuccess,
   expectToBePromise,
@@ -33,13 +32,10 @@ const {
   checkDefaultSuccessArgs,
 } = utils;
 
-const noop = () => {};
-
 const service = {
   authenticator: new NoAuthAuthenticator(),
   url:
     'https://gateway.watsonplatform.net/natural-language-classifier/api/natural-language-classifier/api',
-  version: '2018-10-18',
 };
 
 const naturalLanguageClassifier = new NaturalLanguageClassifierV1(service);
@@ -47,585 +43,596 @@ const createRequestMock = jest.spyOn(naturalLanguageClassifier, 'createRequest')
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
-createRequestMock.mockImplementation(noop);
+createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
-  createRequestMock.mockReset();
+  createRequestMock.mockClear();
   missingParamsMock.mockClear();
 });
 
-describe('classify', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const text = 'fake_text';
-      const params = {
-        classifierId,
-        text,
-      };
+describe('NaturalLanguageClassifierV1', () => {
+  describe('classify', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const text = 'fake_text';
+        const params = {
+          classifierId,
+          text,
+        };
 
-      // invoke method
-      naturalLanguageClassifier.classify(params, noop);
+        naturalLanguageClassifier.classify(params);
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-      const options = getOptions(createRequestMock);
+        const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}/classify', 'POST');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['text']).toEqual(text);
-      expect(options.path['classifier_id']).toEqual(classifierId);
-    });
+        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}/classify', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['text']).toEqual(text);
+        expect(options.path['classifier_id']).toEqual(classifierId);
+      });
 
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const text = 'fake_text';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        classifierId,
-        text,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const text = 'fake_text';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          classifierId,
+          text,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
 
-      naturalLanguageClassifier.classify(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
+        naturalLanguageClassifier.classify(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
 
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const text = 'fake_text';
-      const params = {
-        classifierId,
-        text,
-      };
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const text = 'fake_text';
+        const params = {
+          classifierId,
+          text,
+        };
 
-      // invoke method
-      const classifyPromise = naturalLanguageClassifier.classify(params);
-      expectToBePromise(classifyPromise);
+        // invoke method
+        const classifyPromise = naturalLanguageClassifier.classify(params);
+        expectToBePromise(classifyPromise);
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      naturalLanguageClassifier.classify(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId', 'text'];
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      naturalLanguageClassifier.classify({}, err => {
+      test('should convert a `null` value for `params` to an empty object', done => {
+        naturalLanguageClassifier.classify(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId', 'text'];
+
+        let err;
+        try {
+          await naturalLanguageClassifier.classify({});
+        } catch (e) {
+          err = e;
+        }
+
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId', 'text'];
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId', 'text'];
 
-      const classifyPromise = naturalLanguageClassifier.classify();
-      expectToBePromise(classifyPromise);
+        const classifyPromise = naturalLanguageClassifier.classify();
+        expectToBePromise(classifyPromise);
 
-      classifyPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        classifyPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
       });
     });
   });
-});
+  describe('classifyCollection', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const collection = 'fake_collection';
+        const params = {
+          classifierId,
+          collection,
+        };
 
-describe('classifyCollection', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const collection = 'fake_collection';
-      const params = {
-        classifierId,
-        collection,
-      };
+        naturalLanguageClassifier.classifyCollection(params);
 
-      // invoke method
-      naturalLanguageClassifier.classifyCollection(params, noop);
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+        const options = getOptions(createRequestMock);
 
-      const options = getOptions(createRequestMock);
+        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}/classify_collection', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['collection']).toEqual(collection);
+        expect(options.path['classifier_id']).toEqual(classifierId);
+      });
 
-      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}/classify_collection', 'POST');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['collection']).toEqual(collection);
-      expect(options.path['classifier_id']).toEqual(classifierId);
-    });
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const collection = 'fake_collection';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          classifierId,
+          collection,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
 
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const collection = 'fake_collection';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        classifierId,
-        collection,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
+        naturalLanguageClassifier.classifyCollection(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
 
-      naturalLanguageClassifier.classifyCollection(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const collection = 'fake_collection';
+        const params = {
+          classifierId,
+          collection,
+        };
 
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const collection = 'fake_collection';
-      const params = {
-        classifierId,
-        collection,
-      };
+        // invoke method
+        const classifyCollectionPromise = naturalLanguageClassifier.classifyCollection(params);
+        expectToBePromise(classifyCollectionPromise);
 
-      // invoke method
-      const classifyCollectionPromise = naturalLanguageClassifier.classifyCollection(params);
-      expectToBePromise(classifyCollectionPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      naturalLanguageClassifier.classifyCollection(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId', 'collection'];
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      naturalLanguageClassifier.classifyCollection({}, err => {
+      test('should convert a `null` value for `params` to an empty object', done => {
+        naturalLanguageClassifier.classifyCollection(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId', 'collection'];
+
+        let err;
+        try {
+          await naturalLanguageClassifier.classifyCollection({});
+        } catch (e) {
+          err = e;
+        }
+
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId', 'collection'];
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId', 'collection'];
 
-      const classifyCollectionPromise = naturalLanguageClassifier.classifyCollection();
-      expectToBePromise(classifyCollectionPromise);
+        const classifyCollectionPromise = naturalLanguageClassifier.classifyCollection();
+        expectToBePromise(classifyCollectionPromise);
 
-      classifyCollectionPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        classifyCollectionPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
       });
     });
   });
-});
+  describe('createClassifier', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const trainingMetadata = 'fake_trainingMetadata';
+        const trainingData = 'fake_trainingData';
+        const params = {
+          trainingMetadata,
+          trainingData,
+        };
 
-describe('createClassifier', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const trainingMetadata = 'fake_trainingMetadata';
-      const trainingData = 'fake_trainingData';
-      const params = {
-        trainingMetadata,
-        trainingData,
-      };
+        naturalLanguageClassifier.createClassifier(params);
 
-      // invoke method
-      naturalLanguageClassifier.createClassifier(params, noop);
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+        const options = getOptions(createRequestMock);
 
-      const options = getOptions(createRequestMock);
+        checkUrlAndMethod(options, '/v1/classifiers', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['training_metadata'].data).toEqual(trainingMetadata);
+        expect(options.formData['training_metadata'].contentType).toEqual('application/json');
+        expect(options.formData['training_data'].data).toEqual(trainingData);
+        expect(options.formData['training_data'].contentType).toEqual('text/csv');
+      });
 
-      checkUrlAndMethod(options, '/v1/classifiers', 'POST');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'multipart/form-data';
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.formData['training_metadata'].data).toEqual(trainingMetadata);
-      expect(options.formData['training_metadata'].contentType).toEqual('application/json');
-      expect(options.formData['training_data'].data).toEqual(trainingData);
-      expect(options.formData['training_data'].contentType).toEqual('text/csv');
-    });
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const trainingMetadata = 'fake_trainingMetadata';
+        const trainingData = 'fake_trainingData';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          trainingMetadata,
+          trainingData,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
 
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const trainingMetadata = 'fake_trainingMetadata';
-      const trainingData = 'fake_trainingData';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        trainingMetadata,
-        trainingData,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
+        naturalLanguageClassifier.createClassifier(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
 
-      naturalLanguageClassifier.createClassifier(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const trainingMetadata = 'fake_trainingMetadata';
+        const trainingData = 'fake_trainingData';
+        const params = {
+          trainingMetadata,
+          trainingData,
+        };
 
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const trainingMetadata = 'fake_trainingMetadata';
-      const trainingData = 'fake_trainingData';
-      const params = {
-        trainingMetadata,
-        trainingData,
-      };
+        // invoke method
+        const createClassifierPromise = naturalLanguageClassifier.createClassifier(params);
+        expectToBePromise(createClassifierPromise);
 
-      // invoke method
-      const createClassifierPromise = naturalLanguageClassifier.createClassifier(params);
-      expectToBePromise(createClassifierPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      naturalLanguageClassifier.createClassifier(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['trainingMetadata', 'trainingData'];
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      naturalLanguageClassifier.createClassifier({}, err => {
+      test('should convert a `null` value for `params` to an empty object', done => {
+        naturalLanguageClassifier.createClassifier(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['trainingMetadata', 'trainingData'];
+
+        let err;
+        try {
+          await naturalLanguageClassifier.createClassifier({});
+        } catch (e) {
+          err = e;
+        }
+
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['trainingMetadata', 'trainingData'];
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['trainingMetadata', 'trainingData'];
 
-      const createClassifierPromise = naturalLanguageClassifier.createClassifier();
-      expectToBePromise(createClassifierPromise);
+        const createClassifierPromise = naturalLanguageClassifier.createClassifier();
+        expectToBePromise(createClassifierPromise);
 
-      createClassifierPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        createClassifierPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
       });
     });
   });
-});
-
-describe('listClassifiers', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      naturalLanguageClassifier.listClassifiers(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v1/classifiers', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
-
-      naturalLanguageClassifier.listClassifiers(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const params = {};
-
-      // invoke method
-      const listClassifiersPromise = naturalLanguageClassifier.listClassifiers(params);
-      expectToBePromise(listClassifiersPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-    test('should not have any problems when no parameters are passed in', () => {
-      // invoke the method
-      naturalLanguageClassifier.listClassifiers({}, noop);
-      checkDefaultSuccessArgs(createRequestMock);
-    });
-
-    test('should use argument as callback function if only one is passed in', () => {
-      // invoke the method
-      naturalLanguageClassifier.listClassifiers(noop);
-      checkDefaultSuccessArgs(createRequestMock);
-    });
-  });
-});
-
-describe('getClassifier', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const params = {
-        classifierId,
-      };
-
-      // invoke method
-      naturalLanguageClassifier.getClassifier(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'GET');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['classifier_id']).toEqual(classifierId);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        classifierId,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
-
-      naturalLanguageClassifier.getClassifier(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const params = {
-        classifierId,
-      };
-
-      // invoke method
-      const getClassifierPromise = naturalLanguageClassifier.getClassifier(params);
-      expectToBePromise(getClassifierPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      naturalLanguageClassifier.getClassifier(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+  describe('listClassifiers', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
       });
-    });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const params = {};
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId'];
+        naturalLanguageClassifier.listClassifiers(params);
 
-      naturalLanguageClassifier.getClassifier({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/classifiers', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId'];
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
 
-      const getClassifierPromise = naturalLanguageClassifier.getClassifier();
-      expectToBePromise(getClassifierPromise);
+        naturalLanguageClassifier.listClassifiers(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
 
-      getClassifierPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const params = {};
+
+        // invoke method
+        const listClassifiersPromise = naturalLanguageClassifier.listClassifiers(params);
+        expectToBePromise(listClassifiersPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method
+        naturalLanguageClassifier.listClassifiers({});
+        checkDefaultSuccessArgs(createRequestMock);
+      });
+
+      test('should use argument as callback function if only one is passed in', async () => {
+        // invoke the method
+        const callbackMock = jest.fn();
+        await naturalLanguageClassifier.listClassifiers(callbackMock);
+        expect(callbackMock).toHaveBeenCalled();
       });
     });
   });
-});
+  describe('getClassifier', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const params = {
+          classifierId,
+        };
 
-describe('deleteClassifier', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
+        naturalLanguageClassifier.getClassifier(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['classifier_id']).toEqual(classifierId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          classifierId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageClassifier.getClassifier(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const params = {
+          classifierId,
+        };
+
+        // invoke method
+        const getClassifierPromise = naturalLanguageClassifier.getClassifier(params);
+        expectToBePromise(getClassifierPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
     });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const params = {
-        classifierId,
-      };
 
-      // invoke method
-      naturalLanguageClassifier.deleteClassifier(params, noop);
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+      test('should convert a `null` value for `params` to an empty object', done => {
+        naturalLanguageClassifier.getClassifier(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
 
-      const options = getOptions(createRequestMock);
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId'];
 
-      checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'DELETE');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['classifier_id']).toEqual(classifierId);
-    });
+        let err;
+        try {
+          await naturalLanguageClassifier.getClassifier({});
+        } catch (e) {
+          err = e;
+        }
 
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        classifierId,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
 
-      naturalLanguageClassifier.deleteClassifier(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId'];
 
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const classifierId = 'fake_classifierId';
-      const params = {
-        classifierId,
-      };
+        const getClassifierPromise = naturalLanguageClassifier.getClassifier();
+        expectToBePromise(getClassifierPromise);
 
-      // invoke method
-      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier(params);
-      expectToBePromise(deleteClassifierPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+        getClassifierPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
     });
   });
+  describe('deleteClassifier', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const params = {
+          classifierId,
+        };
 
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
+        naturalLanguageClassifier.deleteClassifier(params);
 
-    test('should convert a `null` value for `params` to an empty object', done => {
-      naturalLanguageClassifier.deleteClassifier(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['classifier_id']).toEqual(classifierId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          classifierId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageClassifier.deleteClassifier(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const classifierId = 'fake_classifierId';
+        const params = {
+          classifierId,
+        };
+
+        // invoke method
+        const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier(params);
+        expectToBePromise(deleteClassifierPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId'];
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      naturalLanguageClassifier.deleteClassifier({}, err => {
+      test('should convert a `null` value for `params` to an empty object', done => {
+        naturalLanguageClassifier.deleteClassifier(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId'];
+
+        let err;
+        try {
+          await naturalLanguageClassifier.deleteClassifier({});
+        } catch (e) {
+          err = e;
+        }
+
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['classifierId'];
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['classifierId'];
 
-      const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier();
-      expectToBePromise(deleteClassifierPromise);
+        const deleteClassifierPromise = naturalLanguageClassifier.deleteClassifier();
+        expectToBePromise(deleteClassifierPromise);
 
-      deleteClassifierPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        deleteClassifierPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
       });
     });
   });

@@ -60,25 +60,34 @@ The order of priority has changed to give a file in the current working director
 - Parameter `include_count` removed from method `listValues`
 - Parameter `include_count` removed from method `listSynonyms`
 - Parameter `include_count` removed from method `listDialogNodes`
+- Parameter `include_count` removed from method `listWorkspaces`
+- Parameter `include_count` removed from method `listIntents`
+- Parameter `include_count` removed from method `listExamples`
+- Parameter `include_count` removed from method `listCounterexamples`
 - Parameter `value_type` renamed to `type` in method `createValue`
 - Parameter `new_value_type` renamed to `newType` in method `updateValue`
 - Parameter `node_type` renamed to `type` in method `createDialogNode`
 - Parameter `new_node_type` renamed to `newType`in method `updateDialogNode`
-- Interface `DialogRuntimeResponseGeneric` removed
+- Interface `DialogRuntimeResponseGeneric` renamed to `RuntimeResponseGeneric`
 - Interface `DialogSuggestions` removed
 - Additional properties no longer supported for interface `LogMessage`
 - Additional properties no longer supported for interface `RuntimeEntity`
 - Additional properties no longer supported for interface `RuntimeIntent`
 - Property `value_type` renamed to `type` in interface `Value`
+- Property `value_type` renamed to `type` in interface `CreateValue`
+- Property `node_type` renamed to `type` in interface `DialogNode`
+- Property `action_type` renamed to `type` in interface `DialogNodeAction`
+- Property `output` changed type from `JsonObject` to `DialogSuggestionOutput` in interface `DialogSuggestion`
 
 #### Assistant v2
 - Property `action_type` renamed to `type` in interface `DialogNodeAction`
-- Interface `DialogRuntimeResponseGeneric` removed
+- Interface `DialogRuntimeResponseGeneric` renamed to `RuntimeResponseGeneric`
 
 #### Compare Comply
 - Parameter `filename` removed from method `convertToHtml`
 
 #### Discovery
+- Parameter `collectionIds` removed from method `query`
 - Parameter `return_fields` renamed to `_return` in method `query`
 - Parameter `logging_opt_out` renamed to `xWatsonLoggingOptOut` in method `query`
 - Parameter `return_fields` renamed to `_return` in method `federatedQuery`
@@ -87,6 +96,10 @@ The order of priority has changed to give a file in the current working director
 - Parameter `return_fields` renamed to `_return` in method `federatedQueryNotices`
 - Property `field_name` renamed to `field` in interface `Field`
 - Property `field_type` renamed to `type` in interface `Field`
+- Property `enrichment_name` renamed to `enrichment` in interface `Enrichment`
+- Method `queryEntities()` removed
+- Method `queryRelations()` removed
+- Method `testConfigurationInEnvironment()` removed
 
 #### Language Translator
 - Parameter `default_models` renamed to `_default` in method `listModels`
@@ -94,6 +107,10 @@ The order of priority has changed to give a file in the current working director
 
 #### Natural Language Classifier
 - Parameter `metadata` renamed to `trainingMetadata` in method `createClassifier`
+
+##### Speech to Text
+* Property `final_results` renamed to `final` in interface `SpeakerLabelsResult`
+* Property `final_results` renamed to `final` in interface `SpeechRecognitionResult`
 
 #### Text to Speech
 - The following voices are removed:
@@ -106,4 +123,4 @@ The order of priority has changed to give a file in the current working director
 
 #### Visual Recognition
 - Property `class_name` renamed to `_class` in interface `ClassResult`
-
+- Method `detectFaces()` removed

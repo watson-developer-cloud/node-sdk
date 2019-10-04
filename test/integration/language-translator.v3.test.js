@@ -8,16 +8,16 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 const TWENTY_SECONDS = 20000;
 
 // todo: figure out why these started all failing with Not Authorized
-describe('language_translator_integration', () => {
+describe('language translator integration', () => {
   jest.setTimeout(TWENTY_SECONDS * 2);
 
-  const options = authHelper.auth.language_translator;
+  const options = authHelper.auth.languageTranslator;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   options.version = '2019-03-27';
-  const language_translator = new LanguageTranslatorV3(options);
+  const languageTranslator = new LanguageTranslatorV3(options);
 
   it('listModels()', done => {
-    language_translator.listModels(null, (err, res) => {
+    languageTranslator.listModels(null, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();
@@ -30,7 +30,7 @@ describe('language_translator_integration', () => {
       source: 'en',
       target: 'es',
     };
-    language_translator.translate(params, (err, res) => {
+    languageTranslator.translate(params, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();
@@ -38,7 +38,7 @@ describe('language_translator_integration', () => {
   });
 
   it('listIdentifiableLanguages()', done => {
-    language_translator.listIdentifiableLanguages((err, res) => {
+    languageTranslator.listIdentifiableLanguages((err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();
@@ -49,7 +49,7 @@ describe('language_translator_integration', () => {
     const params = {
       text: 'this is an important test that needs to work',
     };
-    language_translator.identify(params, (err, res) => {
+    languageTranslator.identify(params, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();
@@ -60,7 +60,7 @@ describe('language_translator_integration', () => {
     let baseModelId;
     let modelId;
     it('should list all the models', done => {
-      language_translator.listModels((err, res) => {
+      languageTranslator.listModels((err, res) => {
         const { result } = res || {};
         expect(result).toBeDefined();
         baseModelId = result.models[0].model_id;
@@ -69,7 +69,7 @@ describe('language_translator_integration', () => {
     });
 
     it('should create a model', done => {
-      language_translator.createModel(
+      languageTranslator.createModel(
         {
           baseModelId,
           forcedGlossary: fs.createReadStream('./test/resources/glossary.tmx'),
@@ -89,7 +89,7 @@ describe('language_translator_integration', () => {
         return done();
       }
 
-      language_translator.getModel({ modelId }, (err, res) => {
+      languageTranslator.getModel({ modelId }, (err, res) => {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         done();
@@ -102,7 +102,7 @@ describe('language_translator_integration', () => {
         return done();
       }
 
-      language_translator.deleteModel({ modelId }, (err, res) => {
+      languageTranslator.deleteModel({ modelId }, (err, res) => {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         done();
@@ -114,7 +114,7 @@ describe('language_translator_integration', () => {
     let documentId;
     // The service was down, could not test the test.
     it('should translate document', done => {
-      language_translator.translateDocument(
+      languageTranslator.translateDocument(
         {
           file: fs.createReadStream('./test/resources/alchemy-text.txt'),
           filename: 'alchemy-text.txt',
@@ -130,7 +130,7 @@ describe('language_translator_integration', () => {
     });
 
     it('should list translated documents', done => {
-      language_translator.listDocuments((err, res) => {
+      languageTranslator.listDocuments((err, res) => {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         done();
@@ -143,7 +143,7 @@ describe('language_translator_integration', () => {
         return done();
       }
 
-      language_translator.getDocumentStatus({ documentId }, (err, res) => {
+      languageTranslator.getDocumentStatus({ documentId }, (err, res) => {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         done();
@@ -156,7 +156,7 @@ describe('language_translator_integration', () => {
         return done();
       }
 
-      language_translator.getTranslatedDocument({ documentId }, (err, res) => {
+      languageTranslator.getTranslatedDocument({ documentId }, (err, res) => {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         done();
@@ -169,7 +169,7 @@ describe('language_translator_integration', () => {
         return done();
       }
 
-      language_translator.deleteDocument({ documentId }, (err, res) => {
+      languageTranslator.deleteDocument({ documentId }, (err, res) => {
         expect(err).toBeNull();
         expect(res).toBeDefined();
         done();

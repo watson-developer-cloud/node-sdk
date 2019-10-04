@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * (C) Copyright IBM Corp. 2019.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ const utils = require('../resources/unitTestUtils');
 const {
   getOptions,
   checkUrlAndMethod,
-  checkCallback,
   checkMediaHeaders,
   missingParamsSuccess,
   expectToBePromise,
@@ -32,8 +31,6 @@ const {
   checkRequiredParamsHandling,
   checkUserHeader,
 } = utils;
-
-const noop = () => {};
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -46,240 +43,247 @@ const createRequestMock = jest.spyOn(personalityInsights, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
-createRequestMock.mockImplementation(noop);
+createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
-  createRequestMock.mockReset();
+  createRequestMock.mockClear();
   missingParamsMock.mockClear();
 });
 
-describe('profile', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
+describe('PersonalityInsightsV3', () => {
+  describe('profile', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const content = 'fake_content';
+        const contentType = 'fake_contentType';
+        const contentLanguage = 'fake_contentLanguage';
+        const acceptLanguage = 'fake_acceptLanguage';
+        const rawScores = 'fake_rawScores';
+        const csvHeaders = 'fake_csvHeaders';
+        const consumptionPreferences = 'fake_consumptionPreferences';
+        const params = {
+          content,
+          contentType,
+          contentLanguage,
+          acceptLanguage,
+          rawScores,
+          csvHeaders,
+          consumptionPreferences,
+        };
+
+        personalityInsights.profile(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v3/profile', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = contentType;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        checkUserHeader(createRequestMock, 'Content-Type', contentType);
+        checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
+        checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
+        expect(options.body).toEqual(content);
+        expect(options.qs['raw_scores']).toEqual(rawScores);
+        expect(options.qs['csv_headers']).toEqual(csvHeaders);
+        expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const content = 'fake_content';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          content,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        personalityInsights.profile(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const content = 'fake_content';
+        const params = {
+          content,
+        };
+
+        // invoke method
+        const profilePromise = personalityInsights.profile(params);
+        expectToBePromise(profilePromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
     });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const content = 'fake_content';
-      const contentType = 'fake_contentType';
-      const contentLanguage = 'fake_contentLanguage';
-      const acceptLanguage = 'fake_acceptLanguage';
-      const rawScores = 'fake_rawScores';
-      const csvHeaders = 'fake_csvHeaders';
-      const consumptionPreferences = 'fake_consumptionPreferences';
-      const params = {
-        content,
-        contentType,
-        contentLanguage,
-        acceptLanguage,
-        rawScores,
-        csvHeaders,
-        consumptionPreferences,
-      };
 
-      // invoke method
-      personalityInsights.profile(params, noop);
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+      test('should convert a `null` value for `params` to an empty object', done => {
+        personalityInsights.profile(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
 
-      const options = getOptions(createRequestMock);
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['content'];
 
-      checkUrlAndMethod(options, '/v3/profile', 'POST');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = contentType;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Content-Type', contentType);
-      checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
-      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
-      expect(options.body).toEqual(content);
-      expect(options.qs['raw_scores']).toEqual(rawScores);
-      expect(options.qs['csv_headers']).toEqual(csvHeaders);
-      expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
-    });
+        let err;
+        try {
+          await personalityInsights.profile({});
+        } catch (e) {
+          err = e;
+        }
 
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const content = 'fake_content';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        content,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
 
-      personalityInsights.profile(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['content'];
 
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const content = 'fake_content';
-      const params = {
-        content,
-      };
+        const profilePromise = personalityInsights.profile();
+        expectToBePromise(profilePromise);
 
-      // invoke method
-      const profilePromise = personalityInsights.profile(params);
-      expectToBePromise(profilePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+        profilePromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
     });
   });
+  describe('profileAsCsv', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const content = 'fake_content';
+        const contentType = 'fake_contentType';
+        const contentLanguage = 'fake_contentLanguage';
+        const acceptLanguage = 'fake_acceptLanguage';
+        const rawScores = 'fake_rawScores';
+        const csvHeaders = 'fake_csvHeaders';
+        const consumptionPreferences = 'fake_consumptionPreferences';
+        const params = {
+          content,
+          contentType,
+          contentLanguage,
+          acceptLanguage,
+          rawScores,
+          csvHeaders,
+          consumptionPreferences,
+        };
 
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
+        personalityInsights.profileAsCsv(params);
 
-    test('should convert a `null` value for `params` to an empty object', done => {
-      personalityInsights.profile(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v3/profile', 'POST');
+        const expectedAccept = 'text/csv';
+        const expectedContentType = contentType;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        checkUserHeader(createRequestMock, 'Content-Type', contentType);
+        checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
+        checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
+        expect(options.body).toEqual(content);
+        expect(options.qs['raw_scores']).toEqual(rawScores);
+        expect(options.qs['csv_headers']).toEqual(csvHeaders);
+        expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const content = 'fake_content';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          content,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        personalityInsights.profileAsCsv(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const content = 'fake_content';
+        const params = {
+          content,
+        };
+
+        // invoke method
+        const profileAsCsvPromise = personalityInsights.profileAsCsv(params);
+        expectToBePromise(profileAsCsvPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['content'];
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      personalityInsights.profile({}, err => {
+      test('should convert a `null` value for `params` to an empty object', done => {
+        personalityInsights.profileAsCsv(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['content'];
+
+        let err;
+        try {
+          await personalityInsights.profileAsCsv({});
+        } catch (e) {
+          err = e;
+        }
+
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['content'];
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['content'];
 
-      const profilePromise = personalityInsights.profile();
-      expectToBePromise(profilePromise);
+        const profileAsCsvPromise = personalityInsights.profileAsCsv();
+        expectToBePromise(profileAsCsvPromise);
 
-      profilePromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-  });
-});
-
-describe('profileAsCsv', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const content = 'fake_content';
-      const contentType = 'fake_contentType';
-      const contentLanguage = 'fake_contentLanguage';
-      const acceptLanguage = 'fake_acceptLanguage';
-      const rawScores = 'fake_rawScores';
-      const csvHeaders = 'fake_csvHeaders';
-      const consumptionPreferences = 'fake_consumptionPreferences';
-      const params = {
-        content,
-        contentType,
-        contentLanguage,
-        acceptLanguage,
-        rawScores,
-        csvHeaders,
-        consumptionPreferences,
-      };
-
-      // invoke method
-      personalityInsights.profileAsCsv(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v3/profile', 'POST');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'text/csv';
-      const expectedContentType = contentType;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      checkUserHeader(createRequestMock, 'Content-Type', contentType);
-      checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
-      checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
-      expect(options.body).toEqual(content);
-      expect(options.qs['raw_scores']).toEqual(rawScores);
-      expect(options.qs['csv_headers']).toEqual(csvHeaders);
-      expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const content = 'fake_content';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        content,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
-
-      personalityInsights.profileAsCsv(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const content = 'fake_content';
-      const params = {
-        content,
-      };
-
-      // invoke method
-      const profileAsCsvPromise = personalityInsights.profileAsCsv(params);
-      expectToBePromise(profileAsCsvPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      personalityInsights.profileAsCsv(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['content'];
-
-      personalityInsights.profileAsCsv({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['content'];
-
-      const profileAsCsvPromise = personalityInsights.profileAsCsv();
-      expectToBePromise(profileAsCsvPromise);
-
-      profileAsCsvPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        profileAsCsvPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
       });
     });
   });

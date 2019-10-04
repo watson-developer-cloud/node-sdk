@@ -8,17 +8,17 @@ const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
-describe('tone_analyzer_integration', () => {
+describe('tone analyzer integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const options = authHelper.auth.tone_analyzer;
+  const options = authHelper.auth.toneAnalyzer;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   options.version = '2019-03-27';
-  const tone_analyzer = new ToneAnalyzerV3(options);
+  const toneAnalyzer = new ToneAnalyzerV3(options);
 
   it('tone()', done => {
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
-    tone_analyzer.tone({ toneInput: mobydick, contentType: 'text/plain' }, (err, res) => {
+    toneAnalyzer.tone({ toneInput: mobydick, contentType: 'text/plain' }, (err, res) => {
       expect(err).toBeNull();
       const { result } = res || {};
       expect(result).toBeDefined();
@@ -29,7 +29,7 @@ describe('tone_analyzer_integration', () => {
   it('failing tone()', done => {
     // this is a failing test
     const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
-    tone_analyzer.tone({ toneInput: mobydick, contentType: 'invalid content type' }, (err, res) => {
+    toneAnalyzer.tone({ toneInput: mobydick, contentType: 'invalid content type' }, (err, res) => {
       expect(err).toBeTruthy();
       expect(err.code).toBe(400);
       expect(err.headers['x-global-transaction-id']).toBeDefined();
@@ -57,7 +57,7 @@ describe('tone_analyzer_integration', () => {
         },
       ],
     };
-    tone_analyzer.toneChat(utterances, (err, res) => {
+    toneAnalyzer.toneChat(utterances, (err, res) => {
       expect(err).toBeNull();
       expect(res).toBeDefined();
       done();

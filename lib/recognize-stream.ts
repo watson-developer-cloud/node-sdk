@@ -382,46 +382,46 @@ class RecognizeStream extends Duplex {
 
 
   _write(chunk, encoding, callback): void {
-    this.authenticator.authenticate(this.options, err => {
-      if (err) {
+    this.authenticator.authenticate(this.options).then(
+      () => {
+        const self = this;
+        if (self.finished) {
+          // can't send any more data after the stop message (although this shouldn't happen normally...)
+          return;
+        }
+
+        if (!this.initialized) {
+          if (!this.options.contentType) {
+            const ct = RecognizeStream.getContentType(chunk);
+            if (ct) {
+              this.options.contentType = ct;
+            } else {
+              const error = new Error(
+                'Unable to determine content-type from file header, please specify manually.'
+              );
+              error.name = RecognizeStream.ERROR_UNRECOGNIZED_FORMAT;
+              this.emit('error', error);
+              this.push(null);
+              return;
+            }
+          }
+          this.initialize();
+
+          this.once('open', () => {
+            self.sendData(chunk);
+            self.afterSend(callback);
+          });
+        } else {
+          self.sendData(chunk);
+          this.afterSend(callback);
+        }
+      },
+      err => {
         this.emit('error', err);
         this.push(null);
-        return;
       }
-      const self = this;
-      if (self.finished) {
-        // can't send any more data after the stop message (although this shouldn't happen normally...)
-        return;
-      }
-
-      if (!this.initialized) {
-        if (!this.options.contentType) {
-          const ct = RecognizeStream.getContentType(chunk);
-          if (ct) {
-            this.options.contentType = ct;
-          } else {
-            const error = new Error(
-              'Unable to determine content-type from file header, please specify manually.'
-            );
-            error.name = RecognizeStream.ERROR_UNRECOGNIZED_FORMAT;
-            this.emit('error', error);
-            this.push(null);
-            return;
-          }
-        }
-        this.initialize();
-
-        this.once('open', () => {
-          self.sendData(chunk);
-          self.afterSend(callback);
-        });
-      } else {
-        self.sendData(chunk);
-        this.afterSend(callback);
-      }
-    })
+    );
   }
-
 
   finish(): void {
     // this is called both when the source stream finishes, and when .stop() is fired, but we only want to send the stop message once.

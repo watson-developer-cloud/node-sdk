@@ -16,7 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -46,15 +46,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
+   * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {NaturalLanguageUnderstandingV1}
    * @throws {Error}
    */
-  constructor(options: NaturalLanguageUnderstandingV1.Options) {
-    // default to reading the authenticator from the environment
+  constructor(options: UserOptions) {
+    // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
       options.authenticator = getAuthenticatorFromEnvironment('natural-language-understanding');
     }
@@ -113,54 +113,67 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): Promise<any> | void {
+  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['features'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.analyze(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'features': _params.features,
-      'text': _params.text,
-      'html': _params.html,
-      'url': _params.url,
-      'clean': _params.clean,
-      'xpath': _params.xpath,
-      'fallback_to_raw': _params.fallbackToRaw,
-      'return_analyzed_text': _params.returnAnalyzedText,
-      'language': _params.language,
-      'limit_text_characters': _params.limitTextCharacters
-    };
+      const body = {
+        'features': _params.features,
+        'text': _params.text,
+        'html': _params.html,
+        'url': _params.url,
+        'clean': _params.clean,
+        'xpath': _params.xpath,
+        'fallback_to_raw': _params.fallbackToRaw,
+        'return_analyzed_text': _params.returnAnalyzedText,
+        'language': _params.language,
+        'limit_text_characters': _params.limitTextCharacters
+      };
 
-    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'analyze');
+      const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'analyze');
 
-    const parameters = {
-      options: {
-        url: '/v1/analyze',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/analyze',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -179,33 +192,42 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): Promise<any> | void {
+  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listModels(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'listModels');
+      const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'listModels');
 
-    const parameters = {
-      options: {
-        url: '/v1/models',
-        method: 'GET',
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/models',
+          method: 'GET',
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -219,44 +241,57 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.DeleteModelResults>): Promise<any> | void {
+  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.DeleteModelResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['modelId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteModel(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'model_id': _params.modelId
-    };
+      const path = {
+        'model_id': _params.modelId
+      };
 
-    const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'deleteModel');
+      const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'deleteModel');
 
-    const parameters = {
-      options: {
-        url: '/v1/models/{model_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/models/{model_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
 }
@@ -270,17 +305,7 @@ NaturalLanguageUnderstandingV1.prototype.serviceVersion = 'v1';
 
 namespace NaturalLanguageUnderstandingV1 {
 
-  /** Options for the `NaturalLanguageUnderstandingV1` constructor. */
-  export type Options = {
-    version: string;
-    url?: string;
-    authenticator: Authenticator;
-    disableSslVerification?: boolean;
-    headers?: OutgoingHttpHeaders;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
+  /** An operation response. **/
   export interface Response<T = any>  {
     result: T;
     status: number;

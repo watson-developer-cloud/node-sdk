@@ -7,13 +7,13 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 
 const THIRTY_SECONDS = 30000;
 
-describe('visual_recognition_integration', () => {
+describe('visual recognition v3 integration', () => {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 4);
 
-  const options = authHelper.auth.visual_recognition;
+  const options = authHelper.auth.visualRecognition;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
-  const visual_recognition = new VisualRecognitionV3(
+  const visualRecognition = new VisualRecognitionV3(
     Object.assign({}, options, {
       version: '2019-03-27',
     })
@@ -24,7 +24,7 @@ describe('visual_recognition_integration', () => {
       const params = {
         imagesFile: fs.createReadStream(__dirname + '/../resources/car.png'),
       };
-      visual_recognition.classify(params, (err, res) => {
+      visualRecognition.classify(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -46,7 +46,7 @@ describe('visual_recognition_integration', () => {
       const params = {
         imagesFile: fs.readFileSync(__dirname + '/../resources/car.png'),
       };
-      visual_recognition.classify(params, (err, res) => {
+      visualRecognition.classify(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -67,7 +67,7 @@ describe('visual_recognition_integration', () => {
       const params = {
         url: 'https://watson-test-resources.mybluemix.net/resources/car.png',
       };
-      visual_recognition.classify(params, (err, res) => {
+      visualRecognition.classify(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();

@@ -18,9 +18,9 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 8);
 
-  const options = authHelper.auth.visual_recognition;
+  const options = authHelper.auth.visualRecognition;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
-  const visual_recognition = new VisualRecognitionV3(
+  const visualRecognition = new VisualRecognitionV3(
     Object.assign({}, options.v3, {
       version: '2019-03-27',
     })
@@ -28,7 +28,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
 
   beforeAll(done => {
     // clean up any leftover temp classifiers from previous test runs
-    visual_recognition.listClassifiers({}, (err, result) => {
+    visualRecognition.listClassifiers({}, (err, result) => {
       if (err) {
         return done(err);
       }
@@ -40,7 +40,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
           (cls, next) => {
             // eslint-disable-next-line no-console
             console.log('Deleting old classifier before running tests', cls);
-            visual_recognition.deleteClassifier({ classifierId: cls.classifier_id }, err => {
+            visualRecognition.deleteClassifier({ classifierId: cls.classifier_id }, err => {
               if (err) {
                 // eslint-disable-next-line no-console
                 console.error('error deleting classifier:', err, cls);
@@ -61,7 +61,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
     let classifier_id;
 
     it('createClassifier()', done => {
-      visual_recognition.createClassifier(
+      visualRecognition.createClassifier(
         {
           name: 'light_dark_test_temporary',
           lightPositiveExamples: fs.createReadStream(
@@ -82,7 +82,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
     });
 
     it('listClassifiers()', done => {
-      visual_recognition.listClassifiers({}, (err, result) => {
+      visualRecognition.listClassifiers({}, (err, result) => {
         if (err) {
           return done(err);
         }
@@ -93,7 +93,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
     });
 
     it('getClassifier()', done => {
-      visual_recognition.getClassifier({ classifierId: classifier_id }, (err, res) => {
+      visualRecognition.getClassifier({ classifierId: classifier_id }, (err, res) => {
         if (err) {
           return done(err);
         }
@@ -115,7 +115,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
         //  This evil recursive function will be used to verify that the classifier
         //  has finished training. 'resolve' and 'reject' are functions from an
         //  enclosing promise (or a follow-on callback for resolve if you prefer)
-        visual_recognition.getClassifier({ classifierId: classifier_id }, (err, res) => {
+        visualRecognition.getClassifier({ classifierId: classifier_id }, (err, res) => {
           if (err) {
             reject(err);
             return;
@@ -140,7 +140,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
       });
 
       it('deleteClassifier()', done => {
-        visual_recognition.deleteClassifier({ classifier_id: classifier_id }, done);
+        visualRecognition.deleteClassifier({ classifier_id: classifier_id }, done);
       });
     });
   }); // custom classifiers
@@ -150,21 +150,21 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
 
     beforeAll(() => {
       return new Promise((resolve, reject) => {
-        visual_recognition.listClassifiers({}, (err, result) => {
+        visualRecognition.listClassifiers({}, (err, result) => {
           if (err) {
             reject(err);
             return;
           }
 
-          const classifier_name = 'visual_recognition_test_prepop';
+          const classifier_name = 'visualRecognition_test_prepop';
           const c = result.classifiers.find(element => element && element.name === classifier_name);
 
           if (c === undefined) {
             logit('Classifier not found, creating new classifier...');
-            const p = path.join(__dirname, '../resources/visual_recognition.prepop');
-            visual_recognition.createClassifier(
+            const p = path.join(__dirname, '../resources/visualRecognition.prepop');
+            visualRecognition.createClassifier(
               {
-                name: 'visual_recognition_test_prepop',
+                name: 'visualRecognition_test_prepop',
                 beach_positive_examples: fs.createReadStream(path.join(p, 'beach.zip')),
                 forest_positive_examples: fs.createReadStream(path.join(p, 'forest.zip')),
                 still_positive_examples: fs.createReadStream(path.join(p, 'still.zip')),
@@ -194,7 +194,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
       //  This evil recursive function will be used to verify that the classifier
       //  has finished training. 'resolve' and 'reject' are functions from an
       //  enclosing promise (or a follow-on callback for resolve if you prefer)
-      visual_recognition.getClassifier({ classifier_id: classifier_id }, (err, res) => {
+      visualRecognition.getClassifier({ classifier_id: classifier_id }, (err, res) => {
         if (err) {
           reject(err);
           return;
@@ -228,7 +228,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
           classifier_ids: [classifier_id],
           threshold: '0.0',
         };
-        visual_recognition.classify(params, (err, result) => {
+        visualRecognition.classify(params, (err, result) => {
           if (err) {
             reject(err);
             return;
@@ -263,7 +263,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
           classifier_ids: [classifier_id],
           threshold: '0.9',
         };
-        visual_recognition.classify(params, (err, result) => {
+        visualRecognition.classify(params, (err, result) => {
           if (err) {
             reject(err);
             return;

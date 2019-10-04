@@ -16,7 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -41,15 +41,15 @@ class CompareComplyV1 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/compare-comply/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/compare-comply/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
+   * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {CompareComplyV1}
    * @throws {Error}
    */
-  constructor(options: CompareComplyV1.Options) {
-    // default to reading the authenticator from the environment
+  constructor(options: UserOptions) {
+    // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
       options.authenticator = getAuthenticatorFromEnvironment('compare-comply');
     }
@@ -71,7 +71,7 @@ class CompareComplyV1 extends BaseService {
    * Converts a document to HTML.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The document to convert.
+   * @param {NodeJS.ReadableStream|Buffer} params.file - The document to convert.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
@@ -81,52 +81,65 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): Promise<any> | void {
+  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.HTMLReturn>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['file'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.convertToHtml(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'file': {
-        data: _params.file,
-        contentType: _params.fileContentType
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
       }
-    };
+      const formData = {
+        'file': {
+          data: _params.file,
+          contentType: _params.fileContentType
+        }
+      };
 
-    const query = {
-      'model': _params.model
-    };
+      const query = {
+        'model': _params.model
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'convertToHtml');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'convertToHtml');
 
-    const parameters = {
-      options: {
-        url: '/v1/html_conversion',
-        method: 'POST',
-        qs: query,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/html_conversion',
+          method: 'POST',
+          qs: query,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -139,7 +152,7 @@ class CompareComplyV1 extends BaseService {
    * Analyzes the structural and semantic elements of a document.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The document to classify.
+   * @param {NodeJS.ReadableStream|Buffer} params.file - The document to classify.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
@@ -149,52 +162,65 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public classifyElements(params: CompareComplyV1.ClassifyElementsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.ClassifyReturn>): Promise<any> | void {
+  public classifyElements(params: CompareComplyV1.ClassifyElementsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.ClassifyReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.ClassifyReturn>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['file'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.classifyElements(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'file': {
-        data: _params.file,
-        contentType: _params.fileContentType
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
       }
-    };
+      const formData = {
+        'file': {
+          data: _params.file,
+          contentType: _params.fileContentType
+        }
+      };
 
-    const query = {
-      'model': _params.model
-    };
+      const query = {
+        'model': _params.model
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'classifyElements');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'classifyElements');
 
-    const parameters = {
-      options: {
-        url: '/v1/element_classification',
-        method: 'POST',
-        qs: query,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/element_classification',
+          method: 'POST',
+          qs: query,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -207,7 +233,7 @@ class CompareComplyV1 extends BaseService {
    * Analyzes the tables in a document.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The document on which to run table extraction.
+   * @param {NodeJS.ReadableStream|Buffer} params.file - The document on which to run table extraction.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
@@ -217,52 +243,65 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public extractTables(params: CompareComplyV1.ExtractTablesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.TableReturn>): Promise<any> | void {
+  public extractTables(params: CompareComplyV1.ExtractTablesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.TableReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.TableReturn>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['file'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.extractTables(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'file': {
-        data: _params.file,
-        contentType: _params.fileContentType
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
       }
-    };
+      const formData = {
+        'file': {
+          data: _params.file,
+          contentType: _params.fileContentType
+        }
+      };
 
-    const query = {
-      'model': _params.model
-    };
+      const query = {
+        'model': _params.model
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'extractTables');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'extractTables');
 
-    const parameters = {
-      options: {
-        url: '/v1/tables',
-        method: 'POST',
-        qs: query,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/tables',
+          method: 'POST',
+          qs: query,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -275,8 +314,8 @@ class CompareComplyV1 extends BaseService {
    * Compares two input documents. Documents must be in the same format.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file1 - The first document to compare.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file2 - The second document to compare.
+   * @param {NodeJS.ReadableStream|Buffer} params.file1 - The first document to compare.
+   * @param {NodeJS.ReadableStream|Buffer} params.file2 - The second document to compare.
    * @param {string} [params.file1ContentType] - The content type of file1.
    * @param {string} [params.file2ContentType] - The content type of file2.
    * @param {string} [params.file1Label] - A text label for the first document.
@@ -289,58 +328,71 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.CompareReturn>): Promise<any> | void {
+  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.CompareReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.CompareReturn>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['file1', 'file2'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.compareDocuments(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'file_1': {
-        data: _params.file1,
-        contentType: _params.file1ContentType
-      },
-      'file_2': {
-        data: _params.file2,
-        contentType: _params.file2ContentType
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
       }
-    };
+      const formData = {
+        'file_1': {
+          data: _params.file1,
+          contentType: _params.file1ContentType
+        },
+        'file_2': {
+          data: _params.file2,
+          contentType: _params.file2ContentType
+        }
+      };
 
-    const query = {
-      'file_1_label': _params.file1Label,
-      'file_2_label': _params.file2Label,
-      'model': _params.model
-    };
+      const query = {
+        'file_1_label': _params.file1Label,
+        'file_2_label': _params.file2Label,
+        'model': _params.model
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'compareDocuments');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'compareDocuments');
 
-    const parameters = {
-      options: {
-        url: '/v1/comparison',
-        method: 'POST',
-        qs: query,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/comparison',
+          method: 'POST',
+          qs: query,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -362,47 +414,60 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public addFeedback(params: CompareComplyV1.AddFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackReturn>): Promise<any> | void {
+  public addFeedback(params: CompareComplyV1.AddFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackReturn>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['feedbackData'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.addFeedback(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'feedback_data': _params.feedbackData,
-      'user_id': _params.userId,
-      'comment': _params.comment
-    };
+      const body = {
+        'feedback_data': _params.feedbackData,
+        'user_id': _params.userId,
+        'comment': _params.comment
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'addFeedback');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'addFeedback');
 
-    const parameters = {
-      options: {
-        url: '/v1/feedback',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/feedback',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -454,53 +519,62 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listFeedback(params?: CompareComplyV1.ListFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackList>): Promise<any> | void {
+  public listFeedback(params?: CompareComplyV1.ListFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackList>): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackList>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listFeedback(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'feedback_type': _params.feedbackType,
-      'before': _params.before,
-      'after': _params.after,
-      'document_title': _params.documentTitle,
-      'model_id': _params.modelId,
-      'model_version': _params.modelVersion,
-      'category_removed': _params.categoryRemoved,
-      'category_added': _params.categoryAdded,
-      'category_not_changed': _params.categoryNotChanged,
-      'type_removed': _params.typeRemoved,
-      'type_added': _params.typeAdded,
-      'type_not_changed': _params.typeNotChanged,
-      'page_limit': _params.pageLimit,
-      'cursor': _params.cursor,
-      'sort': _params.sort,
-      'include_total': _params.includeTotal
-    };
+      const query = {
+        'feedback_type': _params.feedbackType,
+        'before': _params.before,
+        'after': _params.after,
+        'document_title': _params.documentTitle,
+        'model_id': _params.modelId,
+        'model_version': _params.modelVersion,
+        'category_removed': _params.categoryRemoved,
+        'category_added': _params.categoryAdded,
+        'category_not_changed': _params.categoryNotChanged,
+        'type_removed': _params.typeRemoved,
+        'type_added': _params.typeAdded,
+        'type_not_changed': _params.typeNotChanged,
+        'page_limit': _params.pageLimit,
+        'cursor': _params.cursor,
+        'sort': _params.sort,
+        'include_total': _params.includeTotal
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listFeedback');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listFeedback');
 
-    const parameters = {
-      options: {
-        url: '/v1/feedback',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/feedback',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -518,49 +592,62 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getFeedback(params: CompareComplyV1.GetFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.GetFeedback>): Promise<any> | void {
+  public getFeedback(params: CompareComplyV1.GetFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.GetFeedback>): Promise<CompareComplyV1.Response<CompareComplyV1.GetFeedback>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['feedbackId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getFeedback(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'model': _params.model
-    };
+      const query = {
+        'model': _params.model
+      };
 
-    const path = {
-      'feedback_id': _params.feedbackId
-    };
+      const path = {
+        'feedback_id': _params.feedbackId
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getFeedback');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getFeedback');
 
-    const parameters = {
-      options: {
-        url: '/v1/feedback/{feedback_id}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/feedback/{feedback_id}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -578,49 +665,62 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackDeleted>): Promise<any> | void {
+  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackDeleted>): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackDeleted>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['feedbackId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteFeedback(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'model': _params.model
-    };
+      const query = {
+        'model': _params.model
+      };
 
-    const path = {
-      'feedback_id': _params.feedbackId
-    };
+      const path = {
+        'feedback_id': _params.feedbackId
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'deleteFeedback');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'deleteFeedback');
 
-    const parameters = {
-      options: {
-        url: '/v1/feedback/{feedback_id}',
-        method: 'DELETE',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/feedback/{feedback_id}',
+          method: 'DELETE',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -639,15 +739,15 @@ class CompareComplyV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params._function - The Compare and Comply method to run across the submitted input documents.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.inputCredentialsFile - A JSON file containing the input
-   * Cloud Object Storage credentials. At a minimum, the credentials must enable `READ` permissions on the bucket
-   * defined by the `input_bucket_name` parameter.
+   * @param {NodeJS.ReadableStream|Buffer} params.inputCredentialsFile - A JSON file containing the input Cloud Object
+   * Storage credentials. At a minimum, the credentials must enable `READ` permissions on the bucket defined by the
+   * `input_bucket_name` parameter.
    * @param {string} params.inputBucketLocation - The geographical location of the Cloud Object Storage input bucket as
    * listed on the **Endpoint** tab of your Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or `ap-geo`.
    * @param {string} params.inputBucketName - The name of the Cloud Object Storage input bucket.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.outputCredentialsFile - A JSON file that lists the Cloud
-   * Object Storage output credentials. At a minimum, the credentials must enable `READ` and `WRITE` permissions on the
-   * bucket defined by the `output_bucket_name` parameter.
+   * @param {NodeJS.ReadableStream|Buffer} params.outputCredentialsFile - A JSON file that lists the Cloud Object
+   * Storage output credentials. At a minimum, the credentials must enable `READ` and `WRITE` permissions on the bucket
+   * defined by the `output_bucket_name` parameter.
    * @param {string} params.outputBucketLocation - The geographical location of the Cloud Object Storage output bucket
    * as listed on the **Endpoint** tab of your Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or
    * `ap-geo`.
@@ -660,61 +760,74 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createBatch(params: CompareComplyV1.CreateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<any> | void {
+  public createBatch(params: CompareComplyV1.CreateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['_function', 'inputCredentialsFile', 'inputBucketLocation', 'inputBucketName', 'outputCredentialsFile', 'outputBucketLocation', 'outputBucketName'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createBatch(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'input_credentials_file': {
-        data: _params.inputCredentialsFile,
-        contentType: 'application/json'
-      },
-      'input_bucket_location': _params.inputBucketLocation,
-      'input_bucket_name': _params.inputBucketName,
-      'output_credentials_file': {
-        data: _params.outputCredentialsFile,
-        contentType: 'application/json'
-      },
-      'output_bucket_location': _params.outputBucketLocation,
-      'output_bucket_name': _params.outputBucketName
-    };
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const formData = {
+        'input_credentials_file': {
+          data: _params.inputCredentialsFile,
+          contentType: 'application/json'
+        },
+        'input_bucket_location': _params.inputBucketLocation,
+        'input_bucket_name': _params.inputBucketName,
+        'output_credentials_file': {
+          data: _params.outputCredentialsFile,
+          contentType: 'application/json'
+        },
+        'output_bucket_location': _params.outputBucketLocation,
+        'output_bucket_name': _params.outputBucketName
+      };
 
-    const query = {
-      'function': _params._function,
-      'model': _params.model
-    };
+      const query = {
+        'function': _params._function,
+        'model': _params.model
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'createBatch');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'createBatch');
 
-    const parameters = {
-      options: {
-        url: '/v1/batches',
-        method: 'POST',
-        qs: query,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/batches',
+          method: 'POST',
+          qs: query,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -727,33 +840,42 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): Promise<any> | void {
+  public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): Promise<CompareComplyV1.Response<CompareComplyV1.Batches>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listBatches(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listBatches');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'listBatches');
 
-    const parameters = {
-      options: {
-        url: '/v1/batches',
-        method: 'GET',
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/batches',
+          method: 'GET',
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -767,44 +889,57 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getBatch(params: CompareComplyV1.GetBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<any> | void {
+  public getBatch(params: CompareComplyV1.GetBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['batchId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getBatch(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'batch_id': _params.batchId
-    };
+      const path = {
+        'batch_id': _params.batchId
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getBatch');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'getBatch');
 
-    const parameters = {
-      options: {
-        url: '/v1/batches/{batch_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/batches/{batch_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -824,50 +959,63 @@ class CompareComplyV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateBatch(params: CompareComplyV1.UpdateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<any> | void {
+  public updateBatch(params: CompareComplyV1.UpdateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['batchId', 'action'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateBatch(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'action': _params.action,
-      'model': _params.model
-    };
+      const query = {
+        'action': _params.action,
+        'model': _params.model
+      };
 
-    const path = {
-      'batch_id': _params.batchId
-    };
+      const path = {
+        'batch_id': _params.batchId
+      };
 
-    const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'updateBatch');
+      const sdkHeaders = getSdkHeaders('compare-comply', 'v1', 'updateBatch');
 
-    const parameters = {
-      options: {
-        url: '/v1/batches/{batch_id}',
-        method: 'PUT',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/batches/{batch_id}',
+          method: 'PUT',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
 }
@@ -881,17 +1029,7 @@ CompareComplyV1.prototype.serviceVersion = 'v1';
 
 namespace CompareComplyV1 {
 
-  /** Options for the `CompareComplyV1` constructor. */
-  export type Options = {
-    version: string;
-    url?: string;
-    authenticator: Authenticator;
-    disableSslVerification?: boolean;
-    headers?: OutgoingHttpHeaders;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
+  /** An operation response. **/
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -917,7 +1055,7 @@ namespace CompareComplyV1 {
   /** Parameters for the `convertToHtml` operation. */
   export interface ConvertToHtmlParams {
     /** The document to convert. */
-    file: NodeJS.ReadableStream|FileObject|Buffer;
+    file: NodeJS.ReadableStream|Buffer;
     /** The content type of file. */
     fileContentType?: ConvertToHtmlConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two
@@ -952,7 +1090,7 @@ namespace CompareComplyV1 {
   /** Parameters for the `classifyElements` operation. */
   export interface ClassifyElementsParams {
     /** The document to classify. */
-    file: NodeJS.ReadableStream|FileObject|Buffer;
+    file: NodeJS.ReadableStream|Buffer;
     /** The content type of file. */
     fileContentType?: ClassifyElementsConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two
@@ -986,7 +1124,7 @@ namespace CompareComplyV1 {
   /** Parameters for the `extractTables` operation. */
   export interface ExtractTablesParams {
     /** The document on which to run table extraction. */
-    file: NodeJS.ReadableStream|FileObject|Buffer;
+    file: NodeJS.ReadableStream|Buffer;
     /** The content type of file. */
     fileContentType?: ExtractTablesConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two
@@ -1021,9 +1159,9 @@ namespace CompareComplyV1 {
   /** Parameters for the `compareDocuments` operation. */
   export interface CompareDocumentsParams {
     /** The first document to compare. */
-    file1: NodeJS.ReadableStream|FileObject|Buffer;
+    file1: NodeJS.ReadableStream|Buffer;
     /** The second document to compare. */
-    file2: NodeJS.ReadableStream|FileObject|Buffer;
+    file2: NodeJS.ReadableStream|Buffer;
     /** The content type of file1. */
     file1ContentType?: CompareDocumentsConstants.File1ContentType | string;
     /** The content type of file2. */
@@ -1199,7 +1337,7 @@ namespace CompareComplyV1 {
     /** A JSON file containing the input Cloud Object Storage credentials. At a minimum, the credentials must enable
      *  `READ` permissions on the bucket defined by the `input_bucket_name` parameter.
      */
-    inputCredentialsFile: NodeJS.ReadableStream|FileObject|Buffer;
+    inputCredentialsFile: NodeJS.ReadableStream|Buffer;
     /** The geographical location of the Cloud Object Storage input bucket as listed on the **Endpoint** tab of your
      *  Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or `ap-geo`.
      */
@@ -1209,7 +1347,7 @@ namespace CompareComplyV1 {
     /** A JSON file that lists the Cloud Object Storage output credentials. At a minimum, the credentials must
      *  enable `READ` and `WRITE` permissions on the bucket defined by the `output_bucket_name` parameter.
      */
-    outputCredentialsFile: NodeJS.ReadableStream|FileObject|Buffer;
+    outputCredentialsFile: NodeJS.ReadableStream|Buffer;
     /** The geographical location of the Cloud Object Storage output bucket as listed on the **Endpoint** tab of
      *  your Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or `ap-geo`.
      */

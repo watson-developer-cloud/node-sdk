@@ -204,17 +204,17 @@ class SynthesizeStream extends Readable {
     // even though we aren't controlling the read from websocket,
     // we can take advantage of the fact that _read is async and hack
     // this funtion to retrieve a token if the service is using IAM auth
-    this.authenticator.authenticate(this.options, err => {
-      if (err) {
+    this.authenticator.authenticate(this.options).then(
+      () => {
+        if (!this.initialized) {
+          this.initialize();
+        }
+      },
+      err => {
         this.emit('error', err);
         this.push(null);
-        return;
       }
-
-      if (!this.initialized) {
-        this.initialize();
-      }
-    });
+    );
   }
 }
 

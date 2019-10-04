@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * (C) Copyright IBM Corp. 2019.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ const utils = require('../resources/unitTestUtils');
 const {
   getOptions,
   checkUrlAndMethod,
-  checkCallback,
   checkMediaHeaders,
   missingParamsSuccess,
   expectToBePromise,
@@ -31,8 +30,6 @@ const {
   checkForEmptyObject,
   checkRequiredParamsHandling,
 } = utils;
-
-const noop = () => {};
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -45,326 +42,335 @@ const createRequestMock = jest.spyOn(assistant, 'createRequest');
 const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
-createRequestMock.mockImplementation(noop);
+createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
-  createRequestMock.mockReset();
+  createRequestMock.mockClear();
   missingParamsMock.mockClear();
 });
 
-describe('createSession', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const params = {
-        assistantId,
-      };
+describe('AssistantV2', () => {
+  describe('createSession', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const params = {
+          assistantId,
+        };
 
-      // invoke method
-      assistant.createSession(params, noop);
+        assistant.createSession(params);
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-      const options = getOptions(createRequestMock);
+        const options = getOptions(createRequestMock);
 
-      checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions', 'POST');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['assistant_id']).toEqual(assistantId);
-    });
+        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['assistant_id']).toEqual(assistantId);
+      });
 
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        assistantId,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          assistantId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
 
-      assistant.createSession(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
+        assistant.createSession(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
 
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const params = {
-        assistantId,
-      };
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const params = {
+          assistantId,
+        };
 
-      // invoke method
-      const createSessionPromise = assistant.createSession(params);
-      expectToBePromise(createSessionPromise);
+        // invoke method
+        const createSessionPromise = assistant.createSession(params);
+        expectToBePromise(createSessionPromise);
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      assistant.createSession(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['assistantId'];
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      assistant.createSession({}, err => {
+      test('should convert a `null` value for `params` to an empty object', done => {
+        assistant.createSession(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId'];
+
+        let err;
+        try {
+          await assistant.createSession({});
+        } catch (e) {
+          err = e;
+        }
+
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['assistantId'];
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId'];
 
-      const createSessionPromise = assistant.createSession();
-      expectToBePromise(createSessionPromise);
+        const createSessionPromise = assistant.createSession();
+        expectToBePromise(createSessionPromise);
 
-      createSessionPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-  });
-});
-
-describe('deleteSession', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
-    });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const sessionId = 'fake_sessionId';
-      const params = {
-        assistantId,
-        sessionId,
-      };
-
-      // invoke method
-      assistant.deleteSession(params, noop);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-      const options = getOptions(createRequestMock);
-
-      checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions/{session_id}', 'DELETE');
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = undefined;
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.path['assistant_id']).toEqual(assistantId);
-      expect(options.path['session_id']).toEqual(sessionId);
-    });
-
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const sessionId = 'fake_sessionId';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        assistantId,
-        sessionId,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
-
-      assistant.deleteSession(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
-
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const sessionId = 'fake_sessionId';
-      const params = {
-        assistantId,
-        sessionId,
-      };
-
-      // invoke method
-      const deleteSessionPromise = assistant.deleteSession(params);
-      expectToBePromise(deleteSessionPromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
-
-    test('should convert a `null` value for `params` to an empty object', done => {
-      assistant.deleteSession(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
-      });
-    });
-
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['assistantId', 'sessionId'];
-
-      assistant.deleteSession({}, err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
-      });
-    });
-
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['assistantId', 'sessionId'];
-
-      const deleteSessionPromise = assistant.deleteSession();
-      expectToBePromise(deleteSessionPromise);
-
-      deleteSessionPromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        createSessionPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
       });
     });
   });
-});
+  describe('deleteSession', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const sessionId = 'fake_sessionId';
+        const params = {
+          assistantId,
+          sessionId,
+        };
 
-describe('message', () => {
-  describe('positive tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsSuccess);
+        assistant.deleteSession(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions/{session_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['assistant_id']).toEqual(assistantId);
+        expect(options.path['session_id']).toEqual(sessionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const sessionId = 'fake_sessionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          assistantId,
+          sessionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistant.deleteSession(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const sessionId = 'fake_sessionId';
+        const params = {
+          assistantId,
+          sessionId,
+        };
+
+        // invoke method
+        const deleteSessionPromise = assistant.deleteSession(params);
+        expectToBePromise(deleteSessionPromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
     });
-    test('should pass the right params to createRequest', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const sessionId = 'fake_sessionId';
-      const input = 'fake_input';
-      const context = 'fake_context';
-      const params = {
-        assistantId,
-        sessionId,
-        input,
-        context,
-      };
 
-      // invoke method
-      assistant.message(params, noop);
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+      test('should convert a `null` value for `params` to an empty object', done => {
+        assistant.deleteSession(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
 
-      const options = getOptions(createRequestMock);
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId', 'sessionId'];
 
-      checkUrlAndMethod(
-        options,
-        '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
-        'POST'
-      );
-      checkCallback(createRequestMock);
-      const expectedAccept = 'application/json';
-      const expectedContentType = 'application/json';
-      checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-      expect(options.body['input']).toEqual(input);
-      expect(options.body['context']).toEqual(context);
-      expect(options.path['assistant_id']).toEqual(assistantId);
-      expect(options.path['session_id']).toEqual(sessionId);
-    });
+        let err;
+        try {
+          await assistant.deleteSession({});
+        } catch (e) {
+          err = e;
+        }
 
-    test('should prioritize user-given headers', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const sessionId = 'fake_sessionId';
-      const userAccept = 'fake/header';
-      const userContentType = 'fake/header';
-      const params = {
-        assistantId,
-        sessionId,
-        headers: {
-          Accept: userAccept,
-          'Content-Type': userContentType,
-        },
-      };
+        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        done();
+      });
 
-      assistant.message(params, noop);
-      checkMediaHeaders(createRequestMock, userAccept, userContentType);
-    });
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId', 'sessionId'];
 
-    test('should return a promise when no callback is given', () => {
-      // parameters
-      const assistantId = 'fake_assistantId';
-      const sessionId = 'fake_sessionId';
-      const params = {
-        assistantId,
-        sessionId,
-      };
+        const deleteSessionPromise = assistant.deleteSession();
+        expectToBePromise(deleteSessionPromise);
 
-      // invoke method
-      const messagePromise = assistant.message(params);
-      expectToBePromise(messagePromise);
-
-      // assert that create request was called
-      expect(createRequestMock).toHaveBeenCalledTimes(1);
+        deleteSessionPromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
+      });
     });
   });
+  describe('message', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const sessionId = 'fake_sessionId';
+        const input = 'fake_input';
+        const context = 'fake_context';
+        const params = {
+          assistantId,
+          sessionId,
+          input,
+          context,
+        };
 
-  describe('negative tests', () => {
-    beforeAll(() => {
-      missingParamsMock.mockReturnValue(missingParamsError);
-    });
+        assistant.message(params);
 
-    test('should convert a `null` value for `params` to an empty object', done => {
-      assistant.message(null, () => {
-        checkForEmptyObject(missingParamsMock);
-        done();
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(
+          options,
+          '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
+          'POST'
+        );
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['input']).toEqual(input);
+        expect(options.body['context']).toEqual(context);
+        expect(options.path['assistant_id']).toEqual(assistantId);
+        expect(options.path['session_id']).toEqual(sessionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const sessionId = 'fake_sessionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          assistantId,
+          sessionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistant.message(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const sessionId = 'fake_sessionId';
+        const params = {
+          assistantId,
+          sessionId,
+        };
+
+        // invoke method
+        const messagePromise = assistant.message(params);
+        expectToBePromise(messagePromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
       });
     });
 
-    test('should enforce required parameters', done => {
-      // required parameters for this method
-      const requiredParams = ['assistantId', 'sessionId'];
+    describe('negative tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsError);
+      });
 
-      assistant.message({}, err => {
+      test('should convert a `null` value for `params` to an empty object', done => {
+        assistant.message(null).catch(() => {
+          checkForEmptyObject(missingParamsMock);
+          done();
+        });
+      });
+
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId', 'sessionId'];
+
+        let err;
+        try {
+          await assistant.message({});
+        } catch (e) {
+          err = e;
+        }
+
         checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
         done();
       });
-    });
 
-    test('should reject promise when required params are not given', done => {
-      // required parameters for this method
-      const requiredParams = ['assistantId', 'sessionId'];
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId', 'sessionId'];
 
-      const messagePromise = assistant.message();
-      expectToBePromise(messagePromise);
+        const messagePromise = assistant.message();
+        expectToBePromise(messagePromise);
 
-      messagePromise.catch(err => {
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
-        done();
+        messagePromise.catch(err => {
+          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          done();
+        });
       });
     });
   });

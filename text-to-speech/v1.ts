@@ -1,11 +1,12 @@
 import extend = require('extend');
 import { OutgoingHttpHeaders } from 'http';
+import { UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 import SynthesizeStream = require('../lib/synthesize-stream');
 import GeneratedTextToSpeechV1 = require('./v1-generated');
 
 class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
-  constructor(options: GeneratedTextToSpeechV1.Options) {
+  constructor(options: UserOptions) {
     super(options);
   }
 
