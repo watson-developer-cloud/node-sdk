@@ -149,6 +149,16 @@
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> DiscoveryV1 <span class="hljs-keyword">from</span> <span class="hljs-string">'ibm-watson/discovery/v1'</span>;
+<span class="hljs-keyword">import</span> { IamAuthenticator } <span class="hljs-keyword">from</span> <span class="hljs-string">'ibm-watson/auth'</span>;
+
+<span class="hljs-keyword">const</span> discoveryClient = <span class="hljs-keyword">new</span> DiscoveryV1({
+  authenticator: <span class="hljs-keyword">new</span> IamAuthenticator({ apikey: <span class="hljs-string">'{apikey}'</span> })
+  version: <span class="hljs-string">'{version}'</span>,
+})
+
+<span class="hljs-comment">// ...</span>
+</code></pre>
 				<p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples. The examples within each service assume that you already have <a href="#getting-credentials">service credentials</a>.</p>
 				<a href="#client-side-usage" id="client-side-usage" style="color: inherit; text-decoration: none;">
 					<h3>Client-side usage</h3>
@@ -166,7 +176,7 @@
 					<li>In other instances, you authenticate by providing the <strong><a href="#username-and-password">username and password</a></strong> for the service instance.</li>
 					<li>If you&#39;re using a Watson service on ICP, you&#39;ll need to authenticate in <a href="#icp">a specific way</a>.</li>
 				</ul>
-				<p>To specify the type of authentication to use, there is an optional parameter called <code>authentication_type</code>. Possible values are <code>iam</code>, <code>basic</code>, and <code>icp4d</code>.</p>
+				<p>Authentication is accomplished using dedicated authenticators for each authentication scheme. Import authenticators from <code>ibm-watson/auth</code> or rely on externally-configured credentials which will be read from a credentials file or environment variables.</p>
 				<a href="#getting-credentials" id="getting-credentials" style="color: inherit; text-decoration: none;">
 					<h3>Getting credentials</h3>
 				</a>
