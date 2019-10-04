@@ -17,7 +17,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', functio
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 8);
 
-  const auth = authHelper.auth.visual_recognition;
+  const auth = authHelper.auth.visualRecognition;
   auth.iam_apikey = auth.apikey;
 
   const visual_recognition = new VisualRecognitionV3(

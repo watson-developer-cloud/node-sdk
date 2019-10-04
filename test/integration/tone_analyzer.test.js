@@ -11,7 +11,7 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('tone_analyzer_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const auth = authHelper.auth.tone_analyzer;
+  const auth = authHelper.auth.toneAnalyzer;
   auth.version = '2019-03-27';
   auth.iam_apikey = auth.apikey;
   const tone_analyzer = new ToneAnalyzerV3(auth);

@@ -7,7 +7,7 @@ const describe = authHelper.describe; // this runs describe.skip if there is no 
 const serviceErrorUtils = require('../resources/service_error_util');
 
 describe('compare_comply_integration', () => {
-  const auth = authHelper.auth.compare_comply;
+  const auth = authHelper.auth.compareComply;
   auth.iam_apikey = auth.apikey;
   const compare_comply = new CompareComply(auth);
   describe('html conversion @slow', () => {

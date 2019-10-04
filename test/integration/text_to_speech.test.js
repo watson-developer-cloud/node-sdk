@@ -10,7 +10,7 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('text_to_speech_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const auth = authHelper.auth.text_to_speech;
+  const auth = authHelper.auth.textToSpeech;
   auth.iam_apikey = auth.apikey;
   const text_to_speech = new TextToSpeechV1(auth);
 

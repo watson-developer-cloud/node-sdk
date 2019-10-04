@@ -12,7 +12,7 @@ describe('personality_insights_v3_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
   const mobydick = fs.readFileSync(path.join(__dirname, '../resources/mobydick.txt'), 'utf8');
-  const auth = authHelper.auth.personality_insights;
+  const auth = authHelper.auth.personalityInsights;
   auth.version = '2019-03-27';
   auth.iam_apikey = auth.apikey;
   const personality_insights = new PersonalityInsightsV3(auth);

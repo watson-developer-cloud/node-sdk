@@ -9,7 +9,7 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('natural_language_classifier_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const auth = authHelper.auth.natural_language_classifier;
+  const auth = authHelper.auth.naturalLanguageClassifier;
   auth.iam_apikey = auth.apikey;
   const natural_language_classifier = new NaturalLanguageClassifierV1(auth);
 

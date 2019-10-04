@@ -11,7 +11,7 @@ describe('visual_recognition_integration', function() {
   // ugh.
   jest.setTimeout(THIRTY_SECONDS * 4);
 
-  const auth = authHelper.auth.visual_recognition;
+  const auth = authHelper.auth.visualRecognition;
   auth.iam_apikey = auth.apikey;
   const visual_recognition = new VisualRecognitionV3(
     Object.assign({}, auth, {

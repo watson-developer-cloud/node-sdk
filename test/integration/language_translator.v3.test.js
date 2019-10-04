@@ -11,7 +11,7 @@ const serviceErrorUtils = require('../resources/service_error_util');
 describe('language_translator_integration', function() {
   jest.setTimeout(TWENTY_SECONDS * 2);
 
-  const auth = authHelper.auth.language_translator;
+  const auth = authHelper.auth.languageTranslator;
   auth.version = '2019-03-27';
   auth.iam_apikey = auth.apikey;
   const language_translator = new LanguageTranslatorV3(auth);

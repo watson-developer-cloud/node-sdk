@@ -15,7 +15,7 @@ const TWO_MINUTES = 2 * 60 * 1000;
 describe('speech_to_text_integration', function() {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const auth = authHelper.auth.speech_to_text;
+  const auth = authHelper.auth.speechToText;
   auth.iam_apikey = auth.apikey;
   const speech_to_text = new SpeechToTextV1(auth);
 
