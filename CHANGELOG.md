@@ -1,3 +1,36 @@
+# [5.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.5.1...v5.0.0) (2019-10-04)
+
+
+### Bug Fixes
+
+* make RecognizeStream.readableObjectMode always return Boolean ([#943](https://github.com/watson-developer-cloud/node-sdk/issues/943)) ([a276df4](https://github.com/watson-developer-cloud/node-sdk/commit/a276df4))
+
+
+### Build System
+
+* drop support for Node versions 6 and 8 ([3ea1fd7](https://github.com/watson-developer-cloud/node-sdk/commit/3ea1fd7))
+
+
+### Code Refactoring
+
+* change all websocket method parameters to lower camel case ([#941](https://github.com/watson-developer-cloud/node-sdk/issues/941)) ([cb6711f](https://github.com/watson-developer-cloud/node-sdk/commit/cb6711f))
+
+
+### Features
+
+* add support for new authenticators in all sdks and add new service features for major release ([#946](https://github.com/watson-developer-cloud/node-sdk/issues/946)) ([3acffc5](https://github.com/watson-developer-cloud/node-sdk/commit/3acffc5))
+
+
+### BREAKING CHANGES
+
+* Passing individual credentials to the service constructor will no longer work. An Authenticator must be initialized and passed in. For more information, see the migration guide.
+* All parameters have been converted to their lower camel case version.
+* Support for the `token` parameter has been removed
+* Support for the `customization_id` parameter has been removed
+* Method `setAuthorizationHeaderToken` has been removed from the WebSocket Stream classes
+* `RecognizeStream.readableObjectMode` will always be a Boolean value - before, it could have been `undefined`.
+* This SDK may no longer work with applications running on Node 6 or 8.
+
 ## [4.5.1](https://github.com/watson-developer-cloud/node-sdk/compare/v4.5.0...v4.5.1) (2019-09-19)
 
 
