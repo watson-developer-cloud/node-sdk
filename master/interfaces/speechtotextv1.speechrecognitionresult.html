@@ -90,7 +90,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresult.html#alternatives" class="tsd-kind-icon">alternatives</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresult.html#final_results" class="tsd-kind-icon">final_<wbr>results</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresult.html#final" class="tsd-kind-icon">final</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresult.html#keywords_result" class="tsd-kind-icon">keywords_<wbr>result</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.speechrecognitionresult.html#word_alternatives" class="tsd-kind-icon">word_<wbr>alternatives</a></li>
 							</ul>
@@ -106,27 +106,30 @@
 					<div class="tsd-signature tsd-kind-icon">alternatives<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.speechrecognitionalternative.html" class="tsd-signature-type">SpeechRecognitionAlternative</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L4617">speech-to-text/v1-generated.ts:4617</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L5915">speech-to-text/v1-generated.ts:5915</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An array of alternative transcripts. The <code>alternatives</code> array can include additional requested output such as word confidence or timestamps.</p>
+							<p>An array of alternative transcripts. The <code>alternatives</code> array can include additional requested output such
+							as word confidence or timestamps.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="final_results" class="tsd-anchor"></a>
-					<h3>final_<wbr>results</h3>
-					<div class="tsd-signature tsd-kind-icon">final_<wbr>results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="final" class="tsd-anchor"></a>
+					<h3>final</h3>
+					<div class="tsd-signature tsd-kind-icon">final<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L4615">speech-to-text/v1-generated.ts:4615</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L5911">speech-to-text/v1-generated.ts:5911</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An indication of whether the transcription results are final. If <code>true</code>, the results for this utterance are not updated further; no additional results are sent for a <code>result_index</code> once its results are indicated as final.</p>
+							<p>An indication of whether the transcription results are final. If <code>true</code>, the results for this utterance are
+								not updated further; no additional results are sent for a <code>result_index</code> once its results are indicated as
+							final.</p>
 						</div>
 					</div>
 				</section>
@@ -136,12 +139,16 @@
 					<div class="tsd-signature tsd-kind-icon">keywords_<wbr>result<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.jsonobject.html" class="tsd-signature-type">JsonObject</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L4619">speech-to-text/v1-generated.ts:4619</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L5922">speech-to-text/v1-generated.ts:5922</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A dictionary (or associative array) whose keys are the strings specified for <code>keywords</code> if both that parameter and <code>keywords_threshold</code> are specified. The value for each key is an array of matches spotted in the audio for that keyword. Each match is described by a <code>KeywordResult</code> object. A keyword for which no matches are found is omitted from the dictionary. The dictionary is omitted entirely if no matches are found for any keywords.</p>
+							<p>A dictionary (or associative array) whose keys are the strings specified for <code>keywords</code> if both that
+								parameter and <code>keywords_threshold</code> are specified. The value for each key is an array of matches spotted in the
+								audio for that keyword. Each match is described by a <code>KeywordResult</code> object. A keyword for which no matches are
+								found is omitted from the dictionary. The dictionary is omitted entirely if no matches are found for any
+							keywords.</p>
 						</div>
 					</div>
 				</section>
@@ -151,12 +158,13 @@
 					<div class="tsd-signature tsd-kind-icon">word_<wbr>alternatives<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.wordalternativeresults.html" class="tsd-signature-type">WordAlternativeResults</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L4621">speech-to-text/v1-generated.ts:4621</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L5926">speech-to-text/v1-generated.ts:5926</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An array of alternative hypotheses found for words of the input audio if a <code>word_alternatives_threshold</code> is specified.</p>
+							<p>An array of alternative hypotheses found for words of the input audio if a <code>word_alternatives_threshold</code> is
+							specified.</p>
 						</div>
 					</div>
 				</section>
@@ -214,7 +222,7 @@
 										<a href="speechtotextv1.speechrecognitionresult.html#alternatives" class="tsd-kind-icon">alternatives</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.speechrecognitionresult.html#final_results" class="tsd-kind-icon">final_<wbr>results</a>
+										<a href="speechtotextv1.speechrecognitionresult.html#final" class="tsd-kind-icon">final</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.speechrecognitionresult.html#keywords_result" class="tsd-kind-icon">keywords_<wbr>result</a>
@@ -237,14 +245,11 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#opening_message_params_allowed" class="tsd-kind-icon">OPENING_<wbr>MESSAGE_<wbr>PARAMS_<wbr>ALLOWED</a>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

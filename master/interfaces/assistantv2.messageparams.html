@@ -89,12 +89,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#assistant_id" class="tsd-kind-icon">assistant_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#assistantid" class="tsd-kind-icon">assistant<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#headers" class="tsd-kind-icon">headers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#input" class="tsd-kind-icon">input</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#session_id" class="tsd-kind-icon">session_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageparams.html#sessionid" class="tsd-kind-icon">session<wbr>Id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,18 +102,21 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="assistant_id" class="tsd-anchor"></a>
-					<h3>assistant_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">assistant_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="assistantid" class="tsd-anchor"></a>
+					<h3>assistant<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">assistant<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/assistant/v2.ts#L339">assistant/v2.ts:339</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v2.ts#L368">assistant/v2.ts:368</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open the assistant settings and click <strong>API Details</strong>. For information about creating assistants, see the <a href="https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task">documentation</a>. <strong>Note:</strong> Currently, the v2 API does not support creating assistants.</p>
+							<p>Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+								the assistant settings and click <strong>API Details</strong>. For information about creating assistants, see the
+							<a href="https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task">documentation</a>.</p>
 						</div>
+						<p> <strong>Note:</strong> Currently, the v2 API does not support creating assistants.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -123,12 +125,13 @@
 					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <a href="assistantv2.messagecontext.html" class="tsd-signature-type">MessageContext</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/assistant/v2.ts#L345">assistant/v2.ts:345</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v2.ts#L376">assistant/v2.ts:376</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>State information for the conversation. The context is stored by the assistant on a per-session basis. You can use this property to set or modify context variables, which can also be accessed by dialog nodes.</p>
+							<p>State information for the conversation. The context is stored by the assistant on a per-session basis. You
+							can use this property to set or modify context variables, which can also be accessed by dialog nodes.</p>
 						</div>
 					</div>
 				</section>
@@ -138,7 +141,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/assistant/v2.ts#L346">assistant/v2.ts:346</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v2.ts#L377">assistant/v2.ts:377</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -148,7 +151,7 @@
 					<div class="tsd-signature tsd-kind-icon">input<span class="tsd-signature-symbol">:</span> <a href="assistantv2.messageinput.html" class="tsd-signature-type">MessageInput</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/assistant/v2.ts#L343">assistant/v2.ts:343</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v2.ts#L372">assistant/v2.ts:372</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -158,22 +161,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="return_response" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
-					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="sessionid" class="tsd-anchor"></a>
+					<h3>session<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">session<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/assistant/v2.ts#L347">assistant/v2.ts:347</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="session_id" class="tsd-anchor"></a>
-					<h3>session_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">session_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/assistant/v2.ts#L341">assistant/v2.ts:341</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v2.ts#L370">assistant/v2.ts:370</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -206,7 +199,7 @@
 								<a href="assistantv2.messageparams.html" class="tsd-kind-icon">Message<wbr>Params</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv2.messageparams.html#assistant_id" class="tsd-kind-icon">assistant_<wbr>id</a>
+										<a href="assistantv2.messageparams.html#assistantid" class="tsd-kind-icon">assistant<wbr>Id</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.messageparams.html#context" class="tsd-kind-icon">context</a>
@@ -218,10 +211,7 @@
 										<a href="assistantv2.messageparams.html#input" class="tsd-kind-icon">input</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv2.messageparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv2.messageparams.html#session_id" class="tsd-kind-icon">session_<wbr>id</a>
+										<a href="assistantv2.messageparams.html#sessionid" class="tsd-kind-icon">session<wbr>Id</a>
 									</li>
 								</ul>
 							</li>
@@ -265,14 +255,11 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#opening_message_params_allowed" class="tsd-kind-icon">OPENING_<wbr>MESSAGE_<wbr>PARAMS_<wbr>ALLOWED</a>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

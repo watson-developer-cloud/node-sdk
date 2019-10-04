@@ -105,13 +105,20 @@
 					<div class="tsd-signature tsd-kind-icon">periodic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L4527">speech-to-text/v1-generated.ts:4527</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L5767">speech-to-text/v1-generated.ts:5767</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An indication of whether the metrics apply to a periodic interval or a transcription event: * <code>true</code> means that the response was triggered by a specified processing interval. The information contains processing metrics only. * <code>false</code> means that the response was triggered by a transcription event. The information contains processing metrics plus transcription results. Use the field to identify why the service generated the response and to filter different results if necessary.</p>
+							<p>An indication of whether the metrics apply to a periodic interval or a transcription event:</p>
+							<ul>
+								<li><code>true</code> means that the response was triggered by a specified processing interval. The information contains
+								processing metrics only.</li>
+								<li><code>false</code> means that the response was triggered by a transcription event. The information contains processing
+								metrics plus transcription results.</li>
+							</ul>
 						</div>
+						<p> Use the field to identify why the service generated the response and to filter different results if necessary.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -120,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">processed_<wbr>audio<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.processedaudio.html" class="tsd-signature-type">ProcessedAudio</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L4523">speech-to-text/v1-generated.ts:4523</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L5750">speech-to-text/v1-generated.ts:5750</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -135,12 +142,21 @@
 					<div class="tsd-signature tsd-kind-icon">wall_<wbr>clock_<wbr>since_<wbr>first_<wbr>byte_<wbr>received<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L4525">speech-to-text/v1-generated.ts:4525</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L5758">speech-to-text/v1-generated.ts:5758</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The amount of real time in seconds that has passed since the service received the first byte of input audio. Values in this field are generally multiples of the specified metrics interval, with two differences: * Values might not reflect exact intervals (for instance, 0.25, 0.5, and so on). Actual values might be 0.27, 0.52, and so on, depending on when the service receives and processes audio. * The service also returns values for transcription events if you set the <code>interim_results</code> parameter to <code>true</code>. The service returns both processing metrics and transcription results when such events occur.</p>
+							<p>The amount of real time in seconds that has passed since the service received the first byte of input audio.
+							Values in this field are generally multiples of the specified metrics interval, with two differences:</p>
+							<ul>
+								<li>Values might not reflect exact intervals (for instance, 0.25, 0.5, and so on). Actual values might be 0.27,</li>
+							</ul>
+							<p> 0.52, and so on, depending on when the service receives and processes audio.</p>
+							<ul>
+								<li>The service also returns values for transcription events if you set the <code>interim_results</code> parameter to <code>true</code>.
+								The service returns both processing metrics and transcription results when such events occur.</li>
+							</ul>
 						</div>
 					</div>
 				</section>
@@ -218,14 +234,11 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#opening_message_params_allowed" class="tsd-kind-icon">OPENING_<wbr>MESSAGE_<wbr>PARAMS_<wbr>ALLOWED</a>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

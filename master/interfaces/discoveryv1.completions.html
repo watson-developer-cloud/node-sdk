@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>QueryRelationsRelationship | ibm-watson</title>
+	<title>Completions | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.queryrelationsrelationship.html">QueryRelationsRelationship</a>
+					<a href="discoveryv1.completions.html">Completions</a>
 				</li>
 			</ul>
-			<h1>Interface QueryRelationsRelationship</h1>
+			<h1>Interface Completions</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>QueryRelationsRelationship.</p>
+						<p>An object containing an array of autocompletion suggestions.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">QueryRelationsRelationship</span>
+						<span class="target">Completions</span>
 					</li>
 				</ul>
 			</section>
@@ -89,10 +89,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsrelationship.html#arguments" class="tsd-kind-icon">arguments</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsrelationship.html#evidence" class="tsd-kind-icon">evidence</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsrelationship.html#frequency" class="tsd-kind-icon">frequency</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsrelationship.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.completions.html#completions" class="tsd-kind-icon">completions</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,62 +98,17 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="arguments" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> arguments</h3>
-					<div class="tsd-signature tsd-kind-icon">arguments<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.queryrelationsargument.html" class="tsd-signature-type">QueryRelationsArgument</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="completions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> completions</h3>
+					<div class="tsd-signature tsd-kind-icon">completions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/discovery/v1.ts#L6216">discovery/v1.ts:6216</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/discovery/v1.ts#L6059">discovery/v1.ts:6059</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Information about the relationship.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="evidence" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> evidence</h3>
-					<div class="tsd-signature tsd-kind-icon">evidence<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.queryevidence.html" class="tsd-signature-type">QueryEvidence</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/discovery/v1.ts#L6218">discovery/v1.ts:6218</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>List of different evidentiary items to support the result.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="frequency" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> frequency</h3>
-					<div class="tsd-signature tsd-kind-icon">frequency<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/discovery/v1.ts#L6214">discovery/v1.ts:6214</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The number of times the relationship is mentioned.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/discovery/v1.ts#L6212">discovery/v1.ts:6212</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The identified relationship type.</p>
+							<p>Array of autcomplete suggestion based on the provided prefix.</p>
 						</div>
 					</div>
 				</section>
@@ -190,19 +142,10 @@
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 						<ul>
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.queryrelationsrelationship.html" class="tsd-kind-icon">Query<wbr>Relations<wbr>Relationship</a>
+								<a href="discoveryv1.completions.html" class="tsd-kind-icon">Completions</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsrelationship.html#arguments" class="tsd-kind-icon">arguments</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsrelationship.html#evidence" class="tsd-kind-icon">evidence</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsrelationship.html#frequency" class="tsd-kind-icon">frequency</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsrelationship.html#type" class="tsd-kind-icon">type</a>
+										<a href="discoveryv1.completions.html#completions" class="tsd-kind-icon">completions</a>
 									</li>
 								</ul>
 							</li>
@@ -237,14 +180,11 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#opening_message_params_allowed" class="tsd-kind-icon">OPENING_<wbr>MESSAGE_<wbr>PARAMS_<wbr>ALLOWED</a>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>QueryRelationsEntity | ibm-watson</title>
+	<title>DialogSuggestionOutput | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
+					<a href="../classes/assistantv1.html">AssistantV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.queryrelationsentity.html">QueryRelationsEntity</a>
+					<a href="assistantv1.dialogsuggestionoutput.html">DialogSuggestionOutput</a>
 				</li>
 			</ul>
-			<h1>Interface QueryRelationsEntity</h1>
+			<h1>Interface DialogSuggestionOutput</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>QueryRelationsEntity.</p>
+						<p>The dialog output that will be returned from the Watson Assistant service if the user selects the corresponding option.</p>
 					</div>
 				</div>
 			</section>
@@ -78,9 +78,18 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">QueryRelationsEntity</span>
+						<span class="target">DialogSuggestionOutput</span>
 					</li>
 				</ul>
+			</section>
+			<section class="tsd-panel tsd-kind-interface tsd-parent-kind-class">
+				<h3 class="tsd-before-signature">Indexable</h3>
+				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>DialogSuggestionOutput accepts additional properties.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
@@ -89,9 +98,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsentity.html#exact" class="tsd-kind-icon">exact</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsentity.html#text" class="tsd-kind-icon">text</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryrelationsentity.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialogsuggestionoutput.html#generic" class="tsd-kind-icon">generic</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialogsuggestionoutput.html#nodes_visited" class="tsd-kind-icon">nodes_<wbr>visited</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialogsuggestionoutput.html#nodes_visited_details" class="tsd-kind-icon">nodes_<wbr>visited_<wbr>details</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialogsuggestionoutput.html#text" class="tsd-kind-icon">text</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,47 +110,66 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="exact" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> exact</h3>
-					<div class="tsd-signature tsd-kind-icon">exact<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="generic" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> generic</h3>
+					<div class="tsd-signature tsd-kind-icon">generic<span class="tsd-signature-symbol">:</span> <a href="assistantv1.dialogsuggestionresponsegeneric.html" class="tsd-signature-type">DialogSuggestionResponseGeneric</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/discovery/v1.ts#L6198">discovery/v1.ts:6198</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v1.ts#L5270">assistant/v1.ts:5270</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>If false, implicit querying is performed. The default is <code>false</code>.</p>
+							<p>Output intended for any channel. It is the responsibility of the client application to implement the
+							supported response types.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nodes_visited" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> nodes_<wbr>visited</h3>
+					<div class="tsd-signature tsd-kind-icon">nodes_<wbr>visited<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v1.ts#L5259">assistant/v1.ts:5259</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of the nodes that were triggered to create the response, in the order in which they were visited.
+							This information is useful for debugging and for tracing the path taken through the node tree.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nodes_visited_details" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> nodes_<wbr>visited_<wbr>details</h3>
+					<div class="tsd-signature tsd-kind-icon">nodes_<wbr>visited_<wbr>details<span class="tsd-signature-symbol">:</span> <a href="assistantv1.dialognodevisiteddetails.html" class="tsd-signature-type">DialogNodeVisitedDetails</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v1.ts#L5264">assistant/v1.ts:5264</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of objects containing detailed diagnostic information about the nodes that were triggered during
+								processing of the input message. Included only if <strong>nodes_visited_details</strong> is set to <code>true</code> in the message
+							request.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="text" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text</h3>
-					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<h3>text</h3>
+					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/discovery/v1.ts#L6194">discovery/v1.ts:6194</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/assistant/v1.ts#L5266">assistant/v1.ts:5266</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Entity text content.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/discovery/v1.ts#L6196">discovery/v1.ts:6196</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The type of the specified entity.</p>
+							<p>An array of responses to the user.</p>
 						</div>
 					</div>
 				</section>
@@ -156,9 +185,32 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
 						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
+						<ul>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="assistantv1.dialogsuggestionoutput.html" class="tsd-kind-icon">Dialog<wbr>Suggestion<wbr>Output</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialogsuggestionoutput.html#generic" class="tsd-kind-icon">generic</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialogsuggestionoutput.html#nodes_visited" class="tsd-kind-icon">nodes_<wbr>visited</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialogsuggestionoutput.html#nodes_visited_details" class="tsd-kind-icon">nodes_<wbr>visited_<wbr>details</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialogsuggestionoutput.html#text" class="tsd-kind-icon">text</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
 					</li>
@@ -168,29 +220,9 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
-						<ul>
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.queryrelationsentity.html" class="tsd-kind-icon">Query<wbr>Relations<wbr>Entity</a>
-								<ul>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsentity.html#exact" class="tsd-kind-icon">exact</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsentity.html#text" class="tsd-kind-icon">text</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.queryrelationsentity.html#type" class="tsd-kind-icon">type</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
@@ -218,14 +250,11 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#opening_message_params_allowed" class="tsd-kind-icon">OPENING_<wbr>MESSAGE_<wbr>PARAMS_<wbr>ALLOWED</a>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>

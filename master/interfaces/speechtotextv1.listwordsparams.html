@@ -89,11 +89,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.listwordsparams.html#customization_id" class="tsd-kind-icon">customization_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.listwordsparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.listwordsparams.html#headers" class="tsd-kind-icon">headers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.listwordsparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.listwordsparams.html#sort" class="tsd-kind-icon">sort</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.listwordsparams.html#word_type" class="tsd-kind-icon">word_<wbr>type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.listwordsparams.html#wordtype" class="tsd-kind-icon">word<wbr>Type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,17 +101,18 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="customization_id" class="tsd-anchor"></a>
-					<h3>customization_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">customization_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="customizationid" class="tsd-anchor"></a>
+					<h3>customization<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L3971">speech-to-text/v1-generated.ts:3971</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L4854">speech-to-text/v1-generated.ts:4854</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make the request with credentials for the instance of the service that owns the custom model.</p>
+							<p>The customization ID (GUID) of the custom language model that is to be used for the request. You must make
+							the request with credentials for the instance of the service that owns the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -122,17 +122,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L3976">speech-to-text/v1-generated.ts:3976</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="return_response" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> return_<wbr>response</h3>
-					<div class="tsd-signature tsd-kind-icon">return_<wbr>response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L3977">speech-to-text/v1-generated.ts:3977</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L4870">speech-to-text/v1-generated.ts:4870</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -142,27 +132,38 @@
 					<div class="tsd-signature tsd-kind-icon">sort<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.listwordsconstants.sort.html" class="tsd-signature-type">Sort</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L3975">speech-to-text/v1-generated.ts:3975</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L4869">speech-to-text/v1-generated.ts:4869</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Indicates the order in which the words are to be listed, <code>alphabetical</code> or by <code>count</code>. You can prepend an optional <code>+</code> or <code>-</code> to an argument to indicate whether the results are to be sorted in ascending or descending order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering, values with the same count are ordered alphabetically. With the <code>curl</code> command, URL-encode the <code>+</code> symbol as <code>%2B</code>.</p>
+							<p>Indicates the order in which the words are to be listed, <code>alphabetical</code> or by <code>count</code>. You can prepend an
+								optional <code>+</code> or <code>-</code> to an argument to indicate whether the results are to be sorted in ascending or descending
+								order. By default, words are sorted in ascending alphabetical order. For alphabetical ordering, the
+								lexicographical precedence is numeric values, uppercase letters, and lowercase letters. For count ordering,
+								values with the same count are ordered alphabetically. With the <code>curl</code> command, URL-encode the <code>+</code> symbol as
+							<code>%2B</code>.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="word_type" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> word_<wbr>type</h3>
-					<div class="tsd-signature tsd-kind-icon">word_<wbr>type<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.listwordsconstants.wordtype.html" class="tsd-signature-type">WordType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="wordtype" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> word<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">word<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.listwordsconstants.wordtype.html" class="tsd-signature-type">WordType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4f1679c/speech-to-text/v1-generated.ts#L3973">speech-to-text/v1-generated.ts:3973</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8947580/speech-to-text/v1-generated.ts#L4861">speech-to-text/v1-generated.ts:4861</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The type of words to be listed from the custom language model&#39;s words resource: * <code>all</code> (the default) shows all words. * <code>user</code> shows only custom words that were added or modified by the user directly. * <code>corpora</code> shows only OOV that were extracted from corpora. * <code>grammars</code> shows only OOV words that are recognized by grammars.</p>
+							<p>The type of words to be listed from the custom language model&#39;s words resource:</p>
+							<ul>
+								<li><code>all</code> (the default) shows all words.</li>
+								<li><code>user</code> shows only custom words that were added or modified by the user directly.</li>
+								<li><code>corpora</code> shows only OOV that were extracted from corpora.</li>
+								<li><code>grammars</code> shows only OOV words that are recognized by grammars.</li>
+							</ul>
 						</div>
 					</div>
 				</section>
@@ -217,19 +218,16 @@
 								<a href="speechtotextv1.listwordsparams.html" class="tsd-kind-icon">List<wbr>Words<wbr>Params</a>
 								<ul>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.listwordsparams.html#customization_id" class="tsd-kind-icon">customization_<wbr>id</a>
+										<a href="speechtotextv1.listwordsparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.listwordsparams.html#headers" class="tsd-kind-icon">headers</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.listwordsparams.html#return_response" class="tsd-kind-icon">return_<wbr>response</a>
-									</li>
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.listwordsparams.html#sort" class="tsd-kind-icon">sort</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.listwordsparams.html#word_type" class="tsd-kind-icon">word_<wbr>type</a>
+										<a href="speechtotextv1.listwordsparams.html#wordtype" class="tsd-kind-icon">word<wbr>Type</a>
 									</li>
 								</ul>
 							</li>
@@ -246,14 +244,11 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#opening_message_params_allowed" class="tsd-kind-icon">OPENING_<wbr>MESSAGE_<wbr>PARAMS_<wbr>ALLOWED</a>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#query_params_allowed" class="tsd-kind-icon">QUERY_<wbr>PARAMS_<wbr>ALLOWED</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#w3cwebsocket" class="tsd-kind-icon">w3c<wbr>Web<wbr>Socket</a>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
 			</nav>
