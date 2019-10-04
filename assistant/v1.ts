@@ -16,13 +16,15 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Assistant service combines machine learning, natural language understanding, and an integrated
  * dialog editor to create conversation flows between your apps and your users.
+ *
+ * The Assistant v1 API provides authoring methods your application can use to create or update a workspace.
  */
 
 class AssistantV1 extends BaseService {
@@ -41,15 +43,15 @@ class AssistantV1 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
+   * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {AssistantV1}
    * @throws {Error}
    */
-  constructor(options: AssistantV1.Options) {
-    // default to reading the authenticator from the environment
+  constructor(options: UserOptions) {
+    // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
       options.authenticator = getAuthenticatorFromEnvironment('conversation');
     }
@@ -70,8 +72,8 @@ class AssistantV1 extends BaseService {
    *
    * Send user input to a workspace and receive a response.
    *
-   * **Note:** For most applications, there are significant advantages to using the v2 runtime API instead. These
-   * advantages include ease of deployment, automatic state management, versioning, and search capabilities. For more
+   * **Important:** This method has been superseded by the new v2 runtime API. The v2 API offers significant advantages,
+   * including ease of deployment, automatic state management, versioning, and search capabilities. For more
    * information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-api-overview).
    *
    * There is no rate limit for this operation.
@@ -95,60 +97,73 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): Promise<any> | void {
+  public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): Promise<AssistantV1.Response<AssistantV1.MessageResponse>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.message(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'input': _params.input,
-      'intents': _params.intents,
-      'entities': _params.entities,
-      'alternate_intents': _params.alternateIntents,
-      'context': _params.context,
-      'output': _params.output
-    };
+      const body = {
+        'input': _params.input,
+        'intents': _params.intents,
+        'entities': _params.entities,
+        'alternate_intents': _params.alternateIntents,
+        'context': _params.context,
+        'output': _params.output
+      };
 
-    const query = {
-      'nodes_visited_details': _params.nodesVisitedDetails
-    };
+      const query = {
+        'nodes_visited_details': _params.nodesVisitedDetails
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'message');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'message');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/message',
-        method: 'POST',
-        body,
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/message',
+          method: 'POST',
+          body,
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -173,41 +188,50 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): Promise<any> | void {
+  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listWorkspaces(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listWorkspaces');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listWorkspaces');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -238,48 +262,57 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<any> | void {
+  public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createWorkspace(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'language': _params.language,
-      'metadata': _params.metadata,
-      'learning_opt_out': _params.learningOptOut,
-      'system_settings': _params.systemSettings,
-      'intents': _params.intents,
-      'entities': _params.entities,
-      'dialog_nodes': _params.dialogNodes,
-      'counterexamples': _params.counterexamples
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'language': _params.language,
+        'metadata': _params.metadata,
+        'learning_opt_out': _params.learningOptOut,
+        'system_settings': _params.systemSettings,
+        'intents': _params.intents,
+        'entities': _params.entities,
+        'dialog_nodes': _params.dialogNodes,
+        'counterexamples': _params.counterexamples
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createWorkspace');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createWorkspace');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -304,51 +337,64 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<any> | void {
+  public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getWorkspace(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'include_audit': _params.includeAudit,
-      'sort': _params.sort
-    };
+      const query = {
+        'export': _params._export,
+        'include_audit': _params.includeAudit,
+        'sort': _params.sort
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getWorkspace');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getWorkspace');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -387,64 +433,77 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<any> | void {
+  public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateWorkspace(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'name': _params.name,
-      'description': _params.description,
-      'language': _params.language,
-      'metadata': _params.metadata,
-      'learning_opt_out': _params.learningOptOut,
-      'system_settings': _params.systemSettings,
-      'intents': _params.intents,
-      'entities': _params.entities,
-      'dialog_nodes': _params.dialogNodes,
-      'counterexamples': _params.counterexamples
-    };
+      const body = {
+        'name': _params.name,
+        'description': _params.description,
+        'language': _params.language,
+        'metadata': _params.metadata,
+        'learning_opt_out': _params.learningOptOut,
+        'system_settings': _params.systemSettings,
+        'intents': _params.intents,
+        'entities': _params.entities,
+        'dialog_nodes': _params.dialogNodes,
+        'counterexamples': _params.counterexamples
+      };
 
-    const query = {
-      'append': _params.append
-    };
+      const query = {
+        'append': _params.append
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateWorkspace');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateWorkspace');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}',
-        method: 'POST',
-        body,
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}',
+          method: 'POST',
+          body,
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -460,44 +519,57 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteWorkspace(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteWorkspace');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteWorkspace');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -527,53 +599,66 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): Promise<any> | void {
+  public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): Promise<AssistantV1.Response<AssistantV1.IntentCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listIntents(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'export': _params._export,
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listIntents');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listIntents');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -598,52 +683,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
+  public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createIntent(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'intent': _params.intent,
-      'description': _params.description,
-      'examples': _params.examples
-    };
+      const body = {
+        'intent': _params.intent,
+        'description': _params.description,
+        'examples': _params.examples
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createIntent');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createIntent');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -666,51 +764,64 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
+  public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getIntent(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'export': _params._export,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getIntent');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getIntent');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -738,53 +849,66 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<any> | void {
+  public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateIntent(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'intent': _params.newIntent,
-      'description': _params.newDescription,
-      'examples': _params.newExamples
-    };
+      const body = {
+        'intent': _params.newIntent,
+        'description': _params.newDescription,
+        'examples': _params.newExamples
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateIntent');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateIntent');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -801,45 +925,58 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteIntent(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteIntent');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteIntent');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -866,53 +1003,66 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): Promise<any> | void {
+  public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): Promise<AssistantV1.Response<AssistantV1.ExampleCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listExamples(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listExamples');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listExamples');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -937,52 +1087,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
+  public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'text': _params.text,
-      'mentions': _params.mentions
-    };
+      const body = {
+        'text': _params.text,
+        'mentions': _params.mentions
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createExample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1002,51 +1165,64 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
+  public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent,
-      'text': _params.text
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent,
+        'text': _params.text
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getExample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1072,53 +1248,66 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<any> | void {
+  public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'text': _params.newText,
-      'mentions': _params.newMentions
-    };
+      const body = {
+        'text': _params.newText,
+        'mentions': _params.newMentions
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent,
-      'text': _params.text
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent,
+        'text': _params.text
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateExample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1136,46 +1325,59 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteExample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'intent': _params.intent,
-      'text': _params.text
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'intent': _params.intent,
+        'text': _params.text
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteExample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteExample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -1201,52 +1403,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): Promise<any> | void {
+  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listCounterexamples(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listCounterexamples');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listCounterexamples');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/counterexamples',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1269,50 +1484,63 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
+  public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createCounterexample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'text': _params.text
-    };
+      const body = {
+        'text': _params.text
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createCounterexample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createCounterexample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/counterexamples',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1331,50 +1559,63 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
+  public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getCounterexample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'text': _params.text
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'text': _params.text
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getCounterexample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getCounterexample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1398,51 +1639,64 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<any> | void {
+  public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateCounterexample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'text': _params.newText
-    };
+      const body = {
+        'text': _params.newText
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'text': _params.text
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'text': _params.text
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateCounterexample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateCounterexample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1459,45 +1713,58 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteCounterexample(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'text': _params.text
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'text': _params.text
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteCounterexample');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteCounterexample');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -1527,53 +1794,66 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): Promise<any> | void {
+  public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): Promise<AssistantV1.Response<AssistantV1.EntityCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listEntities(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'export': _params._export,
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listEntities');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listEntities');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1601,54 +1881,67 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
+  public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createEntity(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'entity': _params.entity,
-      'description': _params.description,
-      'metadata': _params.metadata,
-      'fuzzy_match': _params.fuzzyMatch,
-      'values': _params.values
-    };
+      const body = {
+        'entity': _params.entity,
+        'description': _params.description,
+        'metadata': _params.metadata,
+        'fuzzy_match': _params.fuzzyMatch,
+        'values': _params.values
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createEntity');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createEntity');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1671,51 +1964,64 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
+  public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getEntity(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'export': _params._export,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getEntity');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getEntity');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1745,55 +2051,68 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<any> | void {
+  public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateEntity(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'entity': _params.newEntity,
-      'description': _params.newDescription,
-      'metadata': _params.newMetadata,
-      'fuzzy_match': _params.newFuzzyMatch,
-      'values': _params.newValues
-    };
+      const body = {
+        'entity': _params.newEntity,
+        'description': _params.newDescription,
+        'metadata': _params.newMetadata,
+        'fuzzy_match': _params.newFuzzyMatch,
+        'values': _params.newValues
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateEntity');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateEntity');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -1810,45 +2129,58 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteEntity(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteEntity');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteEntity');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -1875,51 +2207,64 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): Promise<any> | void {
+  public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listMentions(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'export': _params._export,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listMentions');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listMentions');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/mentions',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/mentions',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -1949,54 +2294,67 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): Promise<any> | void {
+  public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): Promise<AssistantV1.Response<AssistantV1.ValueCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listValues(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'export': _params._export,
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listValues');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listValues');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2031,55 +2389,68 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
+  public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createValue(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'value': _params.value,
-      'metadata': _params.metadata,
-      'type': _params.type,
-      'synonyms': _params.synonyms,
-      'patterns': _params.patterns
-    };
+      const body = {
+        'value': _params.value,
+        'metadata': _params.metadata,
+        'type': _params.type,
+        'synonyms': _params.synonyms,
+        'patterns': _params.patterns
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createValue');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createValue');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2102,52 +2473,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
+  public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getValue(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'export': _params._export,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'export': _params._export,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getValue');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getValue');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2184,56 +2568,69 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<any> | void {
+  public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateValue(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'value': _params.newValue,
-      'metadata': _params.newMetadata,
-      'type': _params.newType,
-      'synonyms': _params.newSynonyms,
-      'patterns': _params.newPatterns
-    };
+      const body = {
+        'value': _params.newValue,
+        'metadata': _params.newMetadata,
+        'type': _params.newType,
+        'synonyms': _params.newSynonyms,
+        'patterns': _params.newPatterns
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateValue');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateValue');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2251,46 +2648,59 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteValue(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteValue');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteValue');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -2318,54 +2728,67 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): Promise<any> | void {
+  public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): Promise<AssistantV1.Response<AssistantV1.SynonymCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listSynonyms(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listSynonyms');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listSynonyms');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2389,52 +2812,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
+  public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createSynonym(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'synonym': _params.synonym
-    };
+      const body = {
+        'synonym': _params.synonym
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createSynonym');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createSynonym');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2455,52 +2891,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
+  public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getSynonym(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value,
-      'synonym': _params.synonym
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value,
+        'synonym': _params.synonym
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getSynonym');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getSynonym');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2526,53 +2975,66 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<any> | void {
+  public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateSynonym(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'synonym': _params.newSynonym
-    };
+      const body = {
+        'synonym': _params.newSynonym
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value,
-      'synonym': _params.synonym
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value,
+        'synonym': _params.synonym
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateSynonym');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateSynonym');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2591,47 +3053,60 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteSynonym(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'entity': _params.entity,
-      'value': _params.value,
-      'synonym': _params.synonym
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'entity': _params.entity,
+        'value': _params.value,
+        'synonym': _params.synonym
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteSynonym');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteSynonym');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -2657,52 +3132,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): Promise<any> | void {
+  public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listDialogNodes(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'page_limit': _params.pageLimit,
-      'sort': _params.sort,
-      'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'page_limit': _params.pageLimit,
+        'sort': _params.sort,
+        'cursor': _params.cursor,
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listDialogNodes');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listDialogNodes');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/dialog_nodes',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/dialog_nodes',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2750,67 +3238,80 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
+  public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'dialogNode'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createDialogNode(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'dialog_node': _params.dialogNode,
-      'description': _params.description,
-      'conditions': _params.conditions,
-      'parent': _params.parent,
-      'previous_sibling': _params.previousSibling,
-      'output': _params.output,
-      'context': _params.context,
-      'metadata': _params.metadata,
-      'next_step': _params.nextStep,
-      'title': _params.title,
-      'type': _params.type,
-      'event_name': _params.eventName,
-      'variable': _params.variable,
-      'actions': _params.actions,
-      'digress_in': _params.digressIn,
-      'digress_out': _params.digressOut,
-      'digress_out_slots': _params.digressOutSlots,
-      'user_label': _params.userLabel
-    };
+      const body = {
+        'dialog_node': _params.dialogNode,
+        'description': _params.description,
+        'conditions': _params.conditions,
+        'parent': _params.parent,
+        'previous_sibling': _params.previousSibling,
+        'output': _params.output,
+        'context': _params.context,
+        'metadata': _params.metadata,
+        'next_step': _params.nextStep,
+        'title': _params.title,
+        'type': _params.type,
+        'event_name': _params.eventName,
+        'variable': _params.variable,
+        'actions': _params.actions,
+        'digress_in': _params.digressIn,
+        'digress_out': _params.digressOut,
+        'digress_out_slots': _params.digressOutSlots,
+        'user_label': _params.userLabel
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createDialogNode');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createDialogNode');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/dialog_nodes',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/dialog_nodes',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2829,50 +3330,63 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
+  public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'dialogNode'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getDialogNode(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'include_audit': _params.includeAudit
-    };
+      const query = {
+        'include_audit': _params.includeAudit
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'dialog_node': _params.dialogNode
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'dialog_node': _params.dialogNode
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getDialogNode');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getDialogNode');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -2923,68 +3437,81 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<any> | void {
+  public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'dialogNode'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.updateDialogNode(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'dialog_node': _params.newDialogNode,
-      'description': _params.newDescription,
-      'conditions': _params.newConditions,
-      'parent': _params.newParent,
-      'previous_sibling': _params.newPreviousSibling,
-      'output': _params.newOutput,
-      'context': _params.newContext,
-      'metadata': _params.newMetadata,
-      'next_step': _params.newNextStep,
-      'title': _params.newTitle,
-      'type': _params.newType,
-      'event_name': _params.newEventName,
-      'variable': _params.newVariable,
-      'actions': _params.newActions,
-      'digress_in': _params.newDigressIn,
-      'digress_out': _params.newDigressOut,
-      'digress_out_slots': _params.newDigressOutSlots,
-      'user_label': _params.newUserLabel
-    };
+      const body = {
+        'dialog_node': _params.newDialogNode,
+        'description': _params.newDescription,
+        'conditions': _params.newConditions,
+        'parent': _params.newParent,
+        'previous_sibling': _params.newPreviousSibling,
+        'output': _params.newOutput,
+        'context': _params.newContext,
+        'metadata': _params.newMetadata,
+        'next_step': _params.newNextStep,
+        'title': _params.newTitle,
+        'type': _params.newType,
+        'event_name': _params.newEventName,
+        'variable': _params.newVariable,
+        'actions': _params.newActions,
+        'digress_in': _params.newDigressIn,
+        'digress_out': _params.newDigressOut,
+        'digress_out_slots': _params.newDigressOutSlots,
+        'user_label': _params.newUserLabel
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'dialog_node': _params.dialogNode
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'dialog_node': _params.dialogNode
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateDialogNode');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateDialogNode');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-        method: 'POST',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3001,45 +3528,58 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId', 'dialogNode'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteDialogNode(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'workspace_id': _params.workspaceId,
-      'dialog_node': _params.dialogNode
-    };
+      const path = {
+        'workspace_id': _params.workspaceId,
+        'dialog_node': _params.dialogNode
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteDialogNode');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteDialogNode');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -3067,52 +3607,65 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<any> | void {
+  public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['workspaceId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listLogs(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'sort': _params.sort,
-      'filter': _params.filter,
-      'page_limit': _params.pageLimit,
-      'cursor': _params.cursor
-    };
+      const query = {
+        'sort': _params.sort,
+        'filter': _params.filter,
+        'page_limit': _params.pageLimit,
+        'cursor': _params.cursor
+      };
 
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
+      const path = {
+        'workspace_id': _params.workspaceId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listLogs');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listLogs');
 
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/logs',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/workspaces/{workspace_id}/logs',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -3136,47 +3689,60 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<any> | void {
+  public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['filter'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listAllLogs(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'filter': _params.filter,
-      'sort': _params.sort,
-      'page_limit': _params.pageLimit,
-      'cursor': _params.cursor
-    };
+      const query = {
+        'filter': _params.filter,
+        'sort': _params.sort,
+        'page_limit': _params.pageLimit,
+        'cursor': _params.cursor
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listAllLogs');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listAllLogs');
 
-    const parameters = {
-      options: {
-        url: '/v1/logs',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/logs',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -3199,44 +3765,57 @@ class AssistantV1 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<any> | void {
+  public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['customerId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteUserData(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const query = {
-      'customer_id': _params.customerId
-    };
+      const query = {
+        'customer_id': _params.customerId
+      };
 
-    const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteUserData');
+      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteUserData');
 
-    const parameters = {
-      options: {
-        url: '/v1/user_data',
-        method: 'DELETE',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v1/user_data',
+          method: 'DELETE',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
 }
@@ -3250,17 +3829,7 @@ AssistantV1.prototype.serviceVersion = 'v1';
 
 namespace AssistantV1 {
 
-  /** Options for the `AssistantV1` constructor. */
-  export type Options = {
-    version: string;
-    url?: string;
-    authenticator: Authenticator;
-    disableSslVerification?: boolean;
-    headers?: OutgoingHttpHeaders;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
+  /** An operation response. **/
   export interface Response<T = any>  {
     result: T;
     status: number;

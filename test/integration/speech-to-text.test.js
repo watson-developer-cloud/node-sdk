@@ -12,19 +12,19 @@ const async = require('async');
 const TWENTY_SECONDS = 20000;
 const TWO_MINUTES = 2 * 60 * 1000;
 
-describe('speech_to_text_integration', () => {
+describe('speech to text integration', () => {
   jest.setTimeout(TWENTY_SECONDS);
 
-  const options = authHelper.auth.speech_to_text;
+  const options = authHelper.auth.speechToText;
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
-  const speech_to_text = new SpeechToTextV1(options);
+  const speechToText = new SpeechToTextV1(options);
 
   it('recognize()', done => {
     const params = {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       contentType: 'audio/ogg; codec=opus',
     };
-    speech_to_text.recognize(params, (err, res) => {
+    speechToText.recognize(params, (err, res) => {
       expect(err).toBeNull();
       const { result } = res || {};
       expect(result).toBeDefined();
@@ -39,7 +39,7 @@ describe('speech_to_text_integration', () => {
       keywordsThreshold: 0.6,
       contentType: 'audio/ogg; codec=opus',
     };
-    speech_to_text.recognize(params, (err, res) => {
+    speechToText.recognize(params, (err, res) => {
       expect(err).toBeNull();
       const { result } = res || {};
       expect(result).toBeDefined();
@@ -56,7 +56,7 @@ describe('speech_to_text_integration', () => {
   });
 
   it('listModels()', done => {
-    speech_to_text.listModels({}, (err, res) => {
+    speechToText.listModels({}, (err, res) => {
       expect(err).toBeNull();
       const { result } = res || {};
       expect(result).toBeDefined();
@@ -66,7 +66,7 @@ describe('speech_to_text_integration', () => {
 
   describe('recognizeUsingWebSocket()', () => {
     it('transcribes audio over a websocket @slow', done => {
-      const recognizeStream = speech_to_text.recognizeUsingWebSocket();
+      const recognizeStream = speechToText.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
         .pipe(recognizeStream)
@@ -83,7 +83,7 @@ describe('speech_to_text_integration', () => {
     });
 
     it('works when stream has no words', done => {
-      const recognizeStream = speech_to_text.recognizeUsingWebSocket({
+      const recognizeStream = speechToText.recognizeUsingWebSocket({
         contentType: 'audio/l16; rate=44100',
       });
       recognizeStream.setEncoding('utf8');
@@ -105,7 +105,7 @@ describe('speech_to_text_integration', () => {
     function waitUntilReady(test) {
       return done => {
         jest.setTimeout(TWO_MINUTES);
-        speech_to_text.whenCustomizationReady(
+        speechToText.whenCustomizationReady(
           { customizationId, interval: 250, times: 400 },
           err => {
             if (err && err.code !== SpeechToTextV1.ERR_NO_CORPORA) {
@@ -118,7 +118,7 @@ describe('speech_to_text_integration', () => {
     }
 
     beforeAll(done => {
-      speech_to_text.listLanguageModels({}, (err, res) => {
+      speechToText.listLanguageModels({}, (err, res) => {
         if (err) {
           // eslint-disable-next-line no-console
           console.warn('Error retrieving old customization models for cleanup', err);
@@ -138,7 +138,7 @@ describe('speech_to_text_integration', () => {
         async.forEach(
           toDelete,
           (cust, next) => {
-            speech_to_text.deleteLanguageModel(cust, err => {
+            speechToText.deleteLanguageModel(cust, err => {
               if (err) {
                 // eslint-disable-next-line no-console
                 console.warn('error deleting old customization model', cust, err);
@@ -152,7 +152,7 @@ describe('speech_to_text_integration', () => {
     });
 
     it('createLanguageModel()', done => {
-      speech_to_text.createLanguageModel(
+      speechToText.createLanguageModel(
         {
           name: 'js-sdk-test-temporary',
           baseModelName: 'en-US_BroadbandModel',
@@ -171,7 +171,7 @@ describe('speech_to_text_integration', () => {
     });
 
     it('listCustomizations()', done => {
-      speech_to_text.listLanguageModels({}, (err, result) => {
+      speechToText.listLanguageModels({}, (err, result) => {
         expect(err).toBeNull();
         expect(result.customizations.length).toBeDefined();
         done();
@@ -179,7 +179,7 @@ describe('speech_to_text_integration', () => {
     });
 
     it('getLanguageModel()', done => {
-      speech_to_text.getLanguageModel({ customizationId }, (err, res) => {
+      speechToText.getLanguageModel({ customizationId }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -190,12 +190,12 @@ describe('speech_to_text_integration', () => {
 
     // note: no waitUntilReady() on the first one because it'll never be ready until after the first word or corpus is added
     it('addCorpus() - stream', done => {
-      speech_to_text.addCorpus(
+      speechToText.addCorpus(
         {
           customizationId,
           corpusName: 'test_corpus_1',
           corpusFile: fs.createReadStream(
-            path.join(__dirname, '../resources/speech_to_text/corpus-short-1.txt')
+            path.join(__dirname, '../resources/speechToText/corpus-short-1.txt')
           ),
         },
         done
@@ -206,12 +206,12 @@ describe('speech_to_text_integration', () => {
       'addCorpus() - buffer',
       waitUntilReady(done => {
         // var customization_id='adfab4c0-9708-11e6-be92-bb627d4684b9';
-        speech_to_text.addCorpus(
+        speechToText.addCorpus(
           {
             customizationId,
             corpusName: 'test_corpus_2',
             corpusFile: fs.readFileSync(
-              path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt')
+              path.join(__dirname, '../resources/speechToText/corpus-short-2.txt')
             ),
           },
           done
@@ -222,12 +222,12 @@ describe('speech_to_text_integration', () => {
     it(
       'addCorpus() - string, overwrite',
       waitUntilReady(done => {
-        speech_to_text.addCorpus(
+        speechToText.addCorpus(
           {
             customizationId,
             corpusName: 'test_corpus_2',
             corpusFile: fs
-              .readFileSync(path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt'))
+              .readFileSync(path.join(__dirname, '../resources/speechToText/corpus-short-2.txt'))
               .toString(),
             allow_overwrite: true,
           },
@@ -237,13 +237,13 @@ describe('speech_to_text_integration', () => {
     );
 
     it('listCorpora()', done => {
-      speech_to_text.listCorpora({ customizationId }, done);
+      speechToText.listCorpora({ customizationId }, done);
     });
 
     it(
       'addWords()',
       waitUntilReady(done => {
-        speech_to_text.addWords(
+        speechToText.addWords(
           {
             customizationId,
             words: [
@@ -267,7 +267,7 @@ describe('speech_to_text_integration', () => {
     it(
       'addWord()',
       waitUntilReady(done => {
-        speech_to_text.addWord(
+        speechToText.addWord(
           {
             customizationId,
             wordName: 'tomato',
@@ -279,11 +279,11 @@ describe('speech_to_text_integration', () => {
     );
 
     it('listWords()', done => {
-      speech_to_text.listWords({ customizationId, sort: '+alphabetical' }, done);
+      speechToText.listWords({ customizationId, sort: '+alphabetical' }, done);
     });
 
     it('getWord()', done => {
-      speech_to_text.getWord(
+      speechToText.getWord(
         {
           customizationId,
           wordName: 'ieee',
@@ -295,7 +295,7 @@ describe('speech_to_text_integration', () => {
     it(
       'deleteWord()',
       waitUntilReady(done => {
-        speech_to_text.deleteWord(
+        speechToText.deleteWord(
           {
             customizationId,
             wordName: 'tomato',
@@ -308,7 +308,7 @@ describe('speech_to_text_integration', () => {
     it(
       'deleteWord()',
       waitUntilReady(done => {
-        speech_to_text.deleteWord(
+        speechToText.deleteWord(
           {
             customizationId,
             wordName: 'hhonors',
@@ -321,7 +321,7 @@ describe('speech_to_text_integration', () => {
     it(
       'addAudio()',
       waitUntilReady(done => {
-        speech_to_text.addAudio(
+        speechToText.addAudio(
           {
             customizationId,
             audioName: 'blank',
@@ -336,7 +336,7 @@ describe('speech_to_text_integration', () => {
     it(
       'deleteAudio()',
       waitUntilReady(done => {
-        speech_to_text.deleteAudio(
+        speechToText.deleteAudio(
           {
             customizationId,
             audioName: 'blank',
@@ -349,14 +349,14 @@ describe('speech_to_text_integration', () => {
     it(
       'deleteCorpus()',
       waitUntilReady(done => {
-        speech_to_text.deleteCorpus({ customizationId, corpusName: 'test_corpus_1' }, done);
+        speechToText.deleteCorpus({ customizationId, corpusName: 'test_corpus_1' }, done);
       })
     );
 
     it(
       'trainLanguageModel()',
       waitUntilReady(done => {
-        speech_to_text.trainLanguageModel({ customizationId }, done);
+        speechToText.trainLanguageModel({ customizationId }, done);
       })
     );
 
@@ -368,7 +368,7 @@ describe('speech_to_text_integration', () => {
           contentType: 'audio/ogg; codec=opus',
           customizationId,
         };
-        speech_to_text.recognize(params, done);
+        speechToText.recognize(params, done);
       })
     );
 
@@ -385,7 +385,7 @@ describe('speech_to_text_integration', () => {
             contentType: 'application/srgs',
             allow_overwrite: true,
           };
-          speech_to_text.addGrammar(params, (err, res) => {
+          speechToText.addGrammar(params, (err, res) => {
             expect(err).toBeNull();
             expect(res).toEqual({});
             done();
@@ -399,7 +399,7 @@ describe('speech_to_text_integration', () => {
             customizationId,
             grammarName,
           };
-          speech_to_text.getGrammar(params, (err, res) => {
+          speechToText.getGrammar(params, (err, res) => {
             expect(err).toBeNull();
             const { result } = res || {};
             expect(result).toBeDefined();
@@ -417,7 +417,7 @@ describe('speech_to_text_integration', () => {
           const params = {
             customizationId,
           };
-          speech_to_text.listGrammars(params, (err, res) => {
+          speechToText.listGrammars(params, (err, res) => {
             expect(err).toBeNull();
             const { result } = res || {};
             expect(result).toBeDefined();
@@ -435,7 +435,7 @@ describe('speech_to_text_integration', () => {
             customizationId,
             grammarName,
           };
-          speech_to_text.deleteGrammar(params, (err, res) => {
+          speechToText.deleteGrammar(params, (err, res) => {
             expect(err).toBeNull();
             expect(res).toEqual({});
             done();
@@ -446,13 +446,13 @@ describe('speech_to_text_integration', () => {
     it(
       'resetLanguageModel()',
       waitUntilReady(done => {
-        speech_to_text.resetLanguageModel({ customizationId }, done);
+        speechToText.resetLanguageModel({ customizationId }, done);
       })
     );
 
     it('deleteLanguageModel()', done => {
       // var customizationId = '7964f4c0-97ab-11e6-8ac8-6333954f158e';
-      speech_to_text.deleteLanguageModel({ customizationId }, done);
+      speechToText.deleteLanguageModel({ customizationId }, done);
       customizationId = null;
     });
   });
@@ -461,7 +461,7 @@ describe('speech_to_text_integration', () => {
     let jobId = null;
 
     const deleteAfterRecognitionCompleted = (jobId, done) => {
-      speech_to_text.checkJob({ id: jobId }, (err, res) => {
+      speechToText.checkJob({ id: jobId }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -469,7 +469,7 @@ describe('speech_to_text_integration', () => {
         if (result.status !== 'completed') {
           setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId, done), 300);
         } else {
-          speech_to_text.deleteJob({ id: result.id }, (err, resp) => {
+          speechToText.deleteJob({ id: result.id }, (err, resp) => {
             expect(err).toBeNull();
             expect(resp).toBeDefined();
             done();
@@ -479,7 +479,7 @@ describe('speech_to_text_integration', () => {
     };
 
     it('registerCallback()', done => {
-      speech_to_text.registerCallback(
+      speechToText.registerCallback(
         {
           // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
           callbackUrl:
@@ -506,7 +506,7 @@ describe('speech_to_text_integration', () => {
         events: 'recognitions.completed',
         resultsTtl: 1,
       };
-      speech_to_text.createJob(params, (err, res) => {
+      speechToText.createJob(params, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -517,7 +517,7 @@ describe('speech_to_text_integration', () => {
     });
 
     it('checkJobs() @slow', done => {
-      speech_to_text.checkJobs(done);
+      speechToText.checkJobs(done);
     });
 
     it('checkJob()', done => {
@@ -525,7 +525,7 @@ describe('speech_to_text_integration', () => {
         // We cannot run this test when job creation failed.
         return done();
       }
-      speech_to_text.checkJob({ id: jobId }, (err, res) => {
+      speechToText.checkJob({ id: jobId }, (err, res) => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
@@ -545,7 +545,7 @@ describe('speech_to_text_integration', () => {
 
   describe('createLanguageModel', () => {
     it('should create a language model', done => {
-      speech_to_text.createLanguageModel(
+      speechToText.createLanguageModel(
         {
           name: 'testName',
           baseModelName: 'en-US_BroadbandModel',

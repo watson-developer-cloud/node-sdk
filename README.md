@@ -50,6 +50,9 @@ Node.js client library to use the Watson APIs.
 </details>
 
 ## ANNOUNCEMENTS!
+### Major version 5 released
+Version v5.0.0 of the SDK has been released and includes a number of breaking changes - see what's changed in the [migration guide](MIGRATION-V5.md).
+
 ### Supporting Node versions 10+
 The SDK will no longer be tested with Node versions 6 and 8. Support will be officially dropped in v5.
 
@@ -72,20 +75,9 @@ npm install ibm-watson
 
 The [examples][examples] folder has basic and advanced examples. The examples within each service assume that you already have [service credentials](#getting-credentials).
 
-Credentials are checked for in the following order:
-
-1. Hard-coded or programatic credentials passed to the service constructor
-
-2. Environment variables:
-- `SERVICE_NAME_USERNAME` and `SERVICE_NAME_PASSWORD` environment properties
-- If using IAM: `SERVICE_NAME_IAM_APIKEY` and optionally `SERVICE_NAME_IAM_URL`, or `SERVICE_NAME_IAM_ACCESS_TOKEN`
-- Optionally, `SERVICE_NAME_URL`
-
-3. IBM-Cloud-supplied credentials (via the `VCAP_SERVICES` JSON-encoded environment property)
-
-If you run your app in IBM Cloud, the SDK gets credentials from the [`VCAP_SERVICES`][vcap_services] environment variable.
-
 ### Client-side usage
+
+Starting with v5.0.0, the SDK should work in the browser, out of the box, with most bundlers.
 
 See the `examples/` folder for [Browserify](http://browserify.org/) and [Webpack](http://webpack.github.io/) client-side SDK examples (with server-side generation of auth tokens.)
 
@@ -161,37 +153,6 @@ You supply either an IAM service **API key** or an **access token**:
 
 ##### ICP
 
-Like IAM, you can pass in credentials to let the SDK manage an access token for you or directly supply an access token to do it yourself.
-
-If you choose to let the SDK manage the token, `authentication_type` must be set to `icp4d`.
-
-```js
-const AssistantV1 = require('ibm-watson/assistant/v1');
-
-// letting the SDK manage the token
-const assistant = new AssistantV1({
-  url: '<Service ICP URL>',
-  icp4d_url: '<ICP token exchange base URL>',
-  username: '<username>',
-  password: '<password>',
-  authentication_type: 'icp4d',
-  disable_ssl_verification: true,
-});
-```
-
-```js
-const AssistantV1 = require('ibm-watson/assistant/v1');
-
-// assuming control of managing the access token
-const assistant = new AssistantV1({
-  url: '<Service ICP URL>',
-  icp4d_access_token: '<User-managed access token>',
-  disable_ssl_verification: true,
-});
-```
-
-Be sure to both disable SSL verification when authenticating and set the endpoint explicitly to the URL given in ICP.
-
 ###### Supplying the IAM API key
 
 ```js
@@ -199,7 +160,7 @@ Be sure to both disable SSL verification when authenticating and set the endpoin
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
-  iam_apikey: '<apikey>',
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   iam_url: '<iam_url>', // optional - the default value is https://cloud.ibm.com/identity/token
 });
 ```
@@ -227,23 +188,38 @@ discovery.setAccessToken('<access-token>')
 
 ### Username and password
 
-```javascript
-var DiscoveryV1 = require('ibm-watson/discovery/v1');
+```js
+const DiscoveryV1 = require('ibm-watson/discovery/v1');
 
-var discovery = new DiscoveryV1({
+const discovery = new DiscoveryV1({
     version: '{version}',
     username: '{username}',
     password: '{password}'
   });
 ```
 
-### Callbacks vs Promises
-
-All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. A Promise will be returned by default unless a Callback function is provided.
+### Setting the Service URL
+You can set or reset the base URL after constructing the client instance using the `setServiceUrl` method:
 
 ```js
-const discovery = new watson.DiscoveryV1({
-/* iam_apikey, version, url, etc... */
+const DiscoveryV1 = require('ibm-watson/discovery/v1');
+
+const discovery = DiscoveryV1({
+/* authenticator, version, url, etc... */
+});
+
+discovery.setServiceUrl('<new url>');
+```
+
+### Callbacks vs Promises
+
+All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. Note that support for Callbacks is being deprecated and will be removed in a future major release. Using Promises is recommended.
+
+```js
+const DiscoveryV1 = require('ibm-watson/discovery/v1');
+
+const discovery = new DiscoveryV1({
+/* authenticator, version, url, etc... */
 });
 
 // using Promises
@@ -277,58 +253,45 @@ Custom headers can be passed with any request. Each method has an optional param
 For example, this is how you can pass in custom headers to Watson Assistant service. In this example, the `'custom'` value for `'Accept-Language'` will override the default header for `'Accept-Language'`, and the `'Custom-Header'` while not overriding the default headers, will additionally be sent with the request.
 
 ```js
-var assistant = new watson.AssistantV1({
-/* username, password, version, url, etc... */
+const assistant = new watson.AssistantV1({
+/* authenticator, version, url, etc... */
 });
 
 assistant.message({
-  workspace_id: 'something',
+  workspaceId: 'something',
   input: {'text': 'Hello'},
   headers: {
     'Custom-Header': 'custom',
     'Accept-Language': 'custom'
 
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
-    console.log('error:', err);
+    console.log('error: ', err);
   });
 ```
 
 ### Parsing HTTP response
 
-To retrieve the HTTP response, all methods can be called with a callback function with three parameters, with the third being the response. Users for example may retrieve the response headers with this usage pattern.
-
-If using Promises, the parameter `return_response` must be added and set to `true`. Then, the result returned will be equivalent to the third argument in the callback function - the entire response.
+The SDK now returns the full HTTP response by default for each method.
 
 Here is an example of how to access the response headers for Watson Assistant:
 
 ```js
-var assistant = new watson.AssistantV1({
-/* username, password, version, url, etc... */
+const assistant = new watson.AssistantV1({
+/* authenticator, version, url, etc... */
 });
 
-assistant.message(params,  function(err, result, response) {
-  if (err)
-    console.log('error:', err);
-  else
+assistant.message(params).then(
+  response => {
     console.log(response.headers);
-});
-
-// using Promises
-
-params.return_response = true;
-
-assistant.message(params)
-  .then(response => {
-    console.log(response.headers);
-  })
-  .catch(err => {
-    console.log('error:', err);
-  });
-
+  },
+  err => {
+    console.log('error: ', err);
+  }
+);
 ```
 
 ### Data collection opt-out
@@ -336,8 +299,8 @@ assistant.message(params)
 By default, [all requests are logged](https://cloud.ibm.com/docs/services/watson/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
-var myInstance = new watson.WhateverServiceV1({
-  /* username, password, version, url, etc... */
+const myInstance = new watson.WhateverServiceV1({
+  /* authenticator, version, url, etc... */
   headers: {
     "X-Watson-Learning-Opt-Out": true
   }
@@ -350,9 +313,10 @@ To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunn
 ```js
 const tunnel = require('tunnel');
 const AssistantV1 = require('ibm-watson/assistant/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 const assistant = new AssistantV1({
-  iam_apikey: 'fakekey1234',
+  authenticator: new IamAuthenticator({ apikey: 'fakekey-1234' }),
   version: '2019-02-28',
   httpsAgent: tunnel.httpsOverHttp({
     proxy: {
@@ -368,14 +332,14 @@ const assistant = new AssistantV1({
 
 The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️
 
-To do this, set `disable_ssl_verification` to `true` in the service constructor, like below:
+To do this, set `disableSslVerification` to `true` in the service constructor, like below:
 
-```
+```js
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
-  iam_apikey: '<apikey>',
-  disable_ssl_verification: true, // this will disable SSL verification for any request made with this object
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
+  disableSslVerification: true, // this will disable SSL verification for any request made with this object
 });
 ```
 
@@ -401,27 +365,27 @@ Note that the token is supplied URL-encoded, and will not be accepted if it is d
 > _NOTE_: Authenticating with the `X-Watson-Authorization-Token` header or the `watson-token` query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/services/watson?topic=watson-iam#iam) or the README in the IBM Watson SDK you use.
 The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.
 
-```javascript
-var watson = require('ibm-watson');
+```js
+const watson = require('ibm-watson');
+const { IamAuthenticator } = require('ibm-watson/auth');
+const { BasicAuthenticator } = require('ibm-watson/auth');
 
 // to get an IAM Access Token
-var authorization = new watson.AuthorizationV1({
-  iam_apikey: '<Service API key>',
-  iam_url: '<IAM endpoint URL - OPTIONAL>',
+const authorization = new watson.AuthorizationV1({
+  authenticator: new IamAuthenticator({ apikey: 'fakekey-1234' }),
 });
 
 authorization.getToken(function (err, token) {
   if (!token) {
-    console.log('error:', err);
+    console.log('error: ', err);
   } else {
     // Use your token here
   }
 });
 
 // to get a Watson Token - NOW DEPRECATED
-var authorization = new watson.AuthorizationV1({
-  username: '<Text to Speech username>',
-  password: '<Text to Speech password>',
+const authorization = new watson.AuthorizationV1({
+  authenticator: new BasicAuthenticator({ username: 'TTS username', password: 'TTS password' }),
   url: 'https://stream.watsonplatform.net/authorization/api', // Speech tokens
 });
 
@@ -430,7 +394,7 @@ authorization.getToken({
 },
 function (err, token) {
   if (!token) {
-    console.log('error:', err);
+    console.log('error: ', err);
   } else {
     // Use your token here
   }
@@ -444,10 +408,11 @@ Use the [Assistant][assistant] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/services/conversation/index.html#about) for details.
 
 ```js
-var AssistantV2 = require('ibm-watson/assistant/v2');
+const AssistantV2 = require('ibm-watson/assistant/v2');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var assistant = new AssistantV2({
-  iam_apikey: '<apikey>',
+const assistant = new AssistantV2({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://gateway.watsonplatform.net/assistant/api/',
   version: '2018-09-19'
 });
@@ -455,11 +420,11 @@ var assistant = new AssistantV2({
 assistant.message(
   {
     input: { text: "What's the weather?" },
-    assistant_id: '<assistant id>',
-    session_id: '<session id>',
+    assistantId: '<assistant id>',
+    sessionId: '<session id>',
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
     console.log(err);
@@ -473,10 +438,11 @@ Use the [Assistant][assistant] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/services/conversation/index.html#about) for details.
 
 ```js
-var AssistantV1 = require('ibm-watson/assistant/v1');
+const AssistantV1 = require('ibm-watson/assistant/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var assistant = new AssistantV1({
-  iam_apikey: '<apikey>',
+const assistant = new AssistantV1({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://gateway.watsonplatform.net/assistant/api/',
   version: '2018-02-16'
 });
@@ -484,10 +450,10 @@ var assistant = new AssistantV1({
 assistant.message(
   {
     input: { text: "What's the weather?" },
-    workspace_id: '<workspace id>'
+    workspaceId: '<workspace id>'
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
     console.log(err);
@@ -498,27 +464,28 @@ assistant.message(
 
 Use the Compare Comply service to compare and classify documents.
 
-```javascript
+```js
 const fs = require('fs');
 const CompareComplyV1 = require('ibm-watson/compare-comply/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 const compareComply = new CompareComplyV1({
-  iam_apikey: '<apikey>',
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://gateway.watsonplatform.net/compare-comply/api',
   version: '2018-12-06'
 });
 
 compareComply.compareDocuments(
   {
-      file_1: fs.createReadStream('<path-to-file-1>'),
-      file_1_filename: '<filename-1>',
-      file_1_label: 'file-1',
-      file_2: fs.createReadStream('<path-to-file-2>'),
-      file_2_filename: '<filename-2>',
-      file_2_label: 'file-2',
+      file1: fs.createReadStream('<path-to-file-1>'),
+      file1Filename: '<filename-1>',
+      file1Label: 'file-1',
+      file2: fs.createReadStream('<path-to-file-2>'),
+      file2Filename: '<filename-2>',
+      file2Label: 'file-2',
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
     console.log(err);
@@ -529,23 +496,24 @@ compareComply.compareDocuments(
 
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
 
-```javascript
-var DiscoveryV1 = require('ibm-watson/discovery/v1');
+```js
+const DiscoveryV1 = require('ibm-watson/discovery/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var discovery = new DiscoveryV1({
-  iam_apikey: '<apikey>',
+const discovery = new DiscoveryV1({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://gateway.watsonplatform.net/discovery/api/',
   version: '2017-09-01'
 });
 
 discovery.query(
   {
-    environment_id: '<environment_id>',
-    collection_id: '<collection_id>',
+    environmentId: '<environment_id>',
+    collectionId: '<collection_id>',
     query: 'my_query'
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
     console.log(err);
@@ -556,11 +524,12 @@ discovery.query(
 
 Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
 
-```javascript
+```js
 const LanguageTranslatorV3 = require('ibm-watson/language-translator/v3');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 const languageTranslator = new LanguageTranslatorV3({
-  iam_apikey: '<apikey>',
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://gateway.watsonplatform.net/language-translator/api/',
   version: 'YYYY-MM-DD',
 });
@@ -571,11 +540,11 @@ languageTranslator.translate(
     source: 'en',
     target: 'es'
   })
-  .then(translation => {
-    console.log(JSON.stringify(translation, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
-    console.log('error:', err);
+    console.log('error: ', err);
   });
 
 languageTranslator.identify(
@@ -583,11 +552,11 @@ languageTranslator.identify(
     text:
       'The language translator service takes text input and identifies the language used.'
   })
-  .then(language => {
-    console.log(JSON.stringify(language, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
-    console.log('error:', err);
+    console.log('error: ', err);
   });
 ```
 
@@ -595,24 +564,25 @@ languageTranslator.identify(
 
 Use [Natural Language Classifier](https://cloud.ibm.com/docs/services/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
-```javascript
-var NaturalLanguageClassifierV1 = require('ibm-watson/natural-language-classifier/v1');
+```js
+const NaturalLanguageClassifierV1 = require('ibm-watson/natural-language-classifier/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var classifier = new NaturalLanguageClassifierV1({
-  iam_apikey: '<apikey>',
+const classifier = new NaturalLanguageClassifierV1({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://gateway.watsonplatform.net/natural-language-classifier/api/'
 });
 
 classifier.classify(
   {
     text: 'Is it sunny?',
-    classifier_id: '<classifier-id>'
+    classifierId: '<classifier-id>'
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
-    console.log('error:', err);
+    console.log('error: ', err);
   });
 ```
 
@@ -624,12 +594,13 @@ See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 Use Natural Language Understanding is a collection of natural language processing APIs that help you understand sentiment,
  keywords, entities, high-level concepts and more.
 
-```javascript
-var fs = require('fs');
-var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
+```js
+const fs = require('fs');
+const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var nlu = new NaturalLanguageUnderstandingV1({
-  iam_apikey: '<apikey>',
+const nlu = new NaturalLanguageUnderstandingV1({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2018-04-05',
   url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
@@ -642,11 +613,11 @@ nlu.analyze(
       keywords: {}
     }
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
-    console.log('error:', err);
+    console.log('error: ', err);
   });
 ```
 
@@ -656,11 +627,12 @@ nlu.analyze(
 Analyze text in English and get a personality profile by using the
 [Personality Insights][personality_insights] service.
 
-```javascript
-var PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
+```js
+const PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var personalityInsights = new PersonalityInsightsV3({
-  iam_apikey: '<apikey>',
+const personalityInsights = new PersonalityInsightsV3({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-10-19',
   url: 'https://gateway.watsonplatform.net/personality-insights/api/'
 });
@@ -668,14 +640,14 @@ var personalityInsights = new PersonalityInsightsV3({
 personalityInsights.profile(
   {
     content: 'Enter more than 100 unique words here...',
-    content_type: 'text/plain',
-    consumption_preferences: true
+    contentType: 'text/plain',
+    consumptionPreferences: true
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
-    console.log('error:', err);
+    console.log('error: ', err);
   });
 ```
 
@@ -684,24 +656,25 @@ personalityInsights.profile(
 
 Use the [Speech to Text][speech_to_text] service to recognize the text from a `.wav` file.
 
-```javascript
-var SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
-var fs = require('fs');
+```js
+const fs = require('fs');
+const SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var speechToText = new SpeechToTextV1({
-  iam_apikey: '<apikey>',
+const speechToText = new SpeechToTextV1({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://stream.watsonplatform.net/speech-to-text/api/'
 });
 
-var params = {
+const params = {
   // From file
   audio: fs.createReadStream('./resources/speech.wav'),
-  content_type: 'audio/l16; rate=44100'
+  contentType: 'audio/l16; rate=44100'
 };
 
 speechToText.recognize(params)
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
     console.log(err);
@@ -709,7 +682,7 @@ speechToText.recognize(params)
 
 // or streaming
 fs.createReadStream('./resources/speech.wav')
-  .pipe(speechToText.recognizeUsingWebSocket({ content_type: 'audio/l16; rate=44100' }))
+  .pipe(speechToText.recognizeUsingWebSocket({ contentType: 'audio/l16; rate=44100' }))
   .pipe(fs.createWriteStream('./transcription.txt'));
 ```
 
@@ -719,15 +692,16 @@ fs.createReadStream('./resources/speech.wav')
 Use the [Text to Speech][text_to_speech] service to synthesize text into an audio file.
 
 ```js
-var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
-var fs = require('fs');
+const fs = require('fs');
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var textToSpeech = new TextToSpeechV1({
-  iam_apikey: '<apikey>',
+const textToSpeech = new TextToSpeechV1({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   url: 'https://stream.watsonplatform.net/text-to-speech/api/'
 });
 
-var params = {
+const params = {
   text: 'Hello from IBM Watson',
   voice: 'en-US_AllisonVoice', // Optional voice
   accept: 'audio/wav'
@@ -737,7 +711,8 @@ var params = {
 // (wav header requires a file length, but this is unknown until after the header is already generated and sent)
 textToSpeech
   .synthesize(params)
-  .then(result => {
+  .then(response => {
+    const audio = response.result;
     textToSpeech.repairWavHeader(audio);
     fs.writeFileSync('audio.wav', audio);
     console.log('audio.wav written with a corrected wav header');
@@ -761,21 +736,22 @@ Use the [Tone Analyzer][tone_analyzer] service to analyze the
 emotion, writing and social tones of a text.
 
 ```js
-var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+const ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var toneAnalyzer = new ToneAnalyzerV3({
-  iam_apikey: '<apikey>',
+const toneAnalyzer = new ToneAnalyzerV3({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-05-19',
   url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
 });
 
 toneAnalyzer.tone(
   {
-    tone_input: 'Greetings from Watson Developer Cloud!',
-    content_type: 'text/plain'
+    toneInput: 'Greetings from Watson Developer Cloud!',
+    contentType: 'text/plain'
   })
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
     console.log(err);
@@ -791,22 +767,23 @@ following picture.
 <img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" />
 
 ```js
-var VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
-var fs = require('fs');
+const fs = require('fs');
+const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-var visualRecognition = new VisualRecognitionV3({
+const visualRecognition = new VisualRecognitionV3({
   url: '<service_url>',
   version: '2018-03-19',
-  iam_apikey: '<apikey>',
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
 });
 
-var params = {
-  images_file: fs.createReadStream('./resources/car.png')
+const params = {
+  imagesFile: fs.createReadStream('./resources/car.png')
 };
 
 visualRecognition.classify(params)
-  .then(result => {
-    console.log(JSON.stringify(result, null, 2));
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
   })
   .catch(err => {
     console.log(err);
@@ -820,15 +797,14 @@ visualRecognition.classify(params)
 Sample code for [integrating Tone Analyzer and Assistant][assistant_tone_analyzer_example] is provided in the [examples directory][examples].
 
 ## Unauthenticated requests
-By default, the library tries to authenticate and will ask for `iam_apikey`, `iam_access_token`, or `username` and `password` to send an `Authorization` header. You can avoid this by using:
+The SDK always expects an authenticator to be passed in. To make an unautuhenticated request, use the `NoAuthAuthenticator`.
 
-`use_unauthenticated`.
+```js
+const watson = require('ibm-watson');
+const { NoAuthAuthenticator } = require('ibm-watson/auth');
 
-```javascript
-var watson = require('ibm-watson');
-
-var assistant = new watson.AssistantV1({
-  use_unauthenticated: true
+const assistant = new watson.AssistantV1({
+  authenticator: new NoAuthAuthenticator(),
 });
 ```
 

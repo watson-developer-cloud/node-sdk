@@ -15,8 +15,7 @@
  */
 
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, TokenRequestBasedAuthenticator } from 'ibm-cloud-sdk-core';
-import { BaseServiceOptions } from 'ibm-cloud-sdk-core/lib/base_service';
+import { Authenticator, BaseService, TokenRequestBasedAuthenticator, UserOptions } from 'ibm-cloud-sdk-core';
 import url = require('url');
 
 class AuthorizationV1 extends BaseService {
@@ -35,7 +34,7 @@ class AuthorizationV1 extends BaseService {
    * @param {Object} options
    * @constructor
    */
-  constructor(options: BaseServiceOptions) {
+  constructor(options: UserOptions) {
     super(options);
     this.targetUrl = options.url;
     // replace the url to always point to /authorization/api
@@ -63,9 +62,14 @@ class AuthorizationV1 extends BaseService {
     // if the authenticator is managing a token, return that token
     if (authenticator instanceof TokenRequestBasedAuthenticator) {
       const options = { headers: {} };
-      return authenticator.authenticate(options, err => {
-        callback(err, parseTokenFromHeader(options.headers));
-      });
+      return authenticator.authenticate(options).then(
+        () => {
+          callback(null, parseTokenFromHeader(options.headers));
+        },
+        err => {
+          callback(err);
+        }
+      );
     }
 
     // otherwise, return a CF Watson token
@@ -80,7 +84,15 @@ class AuthorizationV1 extends BaseService {
       },
       defaultOptions: this.baseOptions
     };
-    return this.createRequest(parameters, callback);
+    return this.createRequest(parameters).then(
+      res => {
+        callback(null, res);
+        return res;
+      },
+      err => {
+        callback(err);
+      }
+    );
   }
 }
 
@@ -92,13 +104,6 @@ AuthorizationV1.prototype.serviceVersion = 'v1';
  ************************/
 
 namespace AuthorizationV1 {
-  /** Options for the AuthorizationV1 constructor */
-  export type Options = {
-    authenticator: Authenticator;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
   export interface GetTokenResponse {
     result: string;
     status?: number;

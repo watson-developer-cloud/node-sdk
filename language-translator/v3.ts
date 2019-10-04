@@ -16,7 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, FileObject, getMissingParams } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -43,15 +43,15 @@ class LanguageTranslatorV3 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.url] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
-   * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
+   * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {LanguageTranslatorV3}
    * @throws {Error}
    */
-  constructor(options: LanguageTranslatorV3.Options) {
-    // default to reading the authenticator from the environment
+  constructor(options: UserOptions) {
+    // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
       options.authenticator = getAuthenticatorFromEnvironment('language_translator');
     }
@@ -83,48 +83,61 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): Promise<any> | void {
+  public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.translate(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const body = {
-      'text': _params.text,
-      'model_id': _params.modelId,
-      'source': _params.source,
-      'target': _params.target
-    };
+      const body = {
+        'text': _params.text,
+        'model_id': _params.modelId,
+        'source': _params.source,
+        'target': _params.target
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translate');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translate');
 
-    const parameters = {
-      options: {
-        url: '/v3/translate',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/translate',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -142,33 +155,42 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): Promise<any> | void {
+  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiableLanguages>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listIdentifiableLanguages(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
 
-    const parameters = {
-      options: {
-        url: '/v3/identifiable_languages',
-        method: 'GET',
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/identifiable_languages',
+          method: 'GET',
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -182,42 +204,55 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): Promise<any> | void {
+  public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiedLanguages>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['text'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.identify(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const body = _params.text;
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const body = _params.text;
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'identify');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'identify');
 
-    const parameters = {
-      options: {
-        url: '/v3/identify',
-        method: 'POST',
-        body,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'text/plain',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/identify',
+          method: 'POST',
+          body,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'text/plain',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -240,40 +275,49 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): Promise<any> | void {
+  public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listModels(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const query = {
-      'source': _params.source,
-      'target': _params.target,
-      'default': _params._default
-    };
+      const query = {
+        'source': _params.source,
+        'target': _params.target,
+        'default': _params._default
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
 
-    const parameters = {
-      options: {
-        url: '/v3/models',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/models',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -297,71 +341,83 @@ class LanguageTranslatorV3 extends BaseService {
    * available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all
    * your models that have been created via parallel corpus customization, can be further customized with a forced
    * glossary.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.forcedGlossary] - A TMX file with your customizations. The
+   * @param {NodeJS.ReadableStream|Buffer} [params.forcedGlossary] - A TMX file with your customizations. The
    * customizations in the file completely overwrite the domain translaton data, including high frequency or high
    * confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A
    * forced glossary should contain single words or short phrases.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} [params.parallelCorpus] - A TMX file with parallel sentences for
-   * source and target language. You can upload multiple parallel_corpus files in one request. All uploaded
-   * parallel_corpus files combined, your parallel corpus must contain at least 5,000 parallel sentences to train
-   * successfully.
+   * @param {NodeJS.ReadableStream|Buffer} [params.parallelCorpus] - A TMX file with parallel sentences for source and
+   * target language. You can upload multiple parallel_corpus files in one request. All uploaded parallel_corpus files
+   * combined, your parallel corpus must contain at least 5,000 parallel sentences to train successfully.
    * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
    * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<any> | void {
+  public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['baseModelId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.createModel(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'forced_glossary': {
-        data: _params.forcedGlossary,
-        contentType: 'application/octet-stream'
-      },
-      'parallel_corpus': {
-        data: _params.parallelCorpus,
-        contentType: 'application/octet-stream'
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
       }
-    };
+      const formData = {
+        'forced_glossary': {
+          data: _params.forcedGlossary,
+          contentType: 'application/octet-stream'
+        },
+        'parallel_corpus': {
+          data: _params.parallelCorpus,
+          contentType: 'application/octet-stream'
+        }
+      };
 
-    const query = {
-      'base_model_id': _params.baseModelId,
-      'name': _params.name
-    };
+      const query = {
+        'base_model_id': _params.baseModelId,
+        'name': _params.name
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'createModel');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'createModel');
 
-    const parameters = {
-      options: {
-        url: '/v3/models',
-        method: 'POST',
-        qs: query,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/models',
+          method: 'POST',
+          qs: query,
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -375,44 +431,57 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): Promise<any> | void {
+  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DeleteModelResult>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['modelId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteModel(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'model_id': _params.modelId
-    };
+      const path = {
+        'model_id': _params.modelId
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteModel');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteModel');
 
-    const parameters = {
-      options: {
-        url: '/v3/models/{model_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/models/{model_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -427,44 +496,57 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<any> | void {
+  public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['modelId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getModel(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'model_id': _params.modelId
-    };
+      const path = {
+        'model_id': _params.modelId
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getModel');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getModel');
 
-    const parameters = {
-      options: {
-        url: '/v3/models/{model_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/models/{model_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /*************************
@@ -481,33 +563,42 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public listDocuments(params?: LanguageTranslatorV3.ListDocumentsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentList>): Promise<any> | void {
+  public listDocuments(params?: LanguageTranslatorV3.ListDocumentsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentList>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentList>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.listDocuments(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listDocuments');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listDocuments');
 
-    const parameters = {
-      options: {
-        url: '/v3/documents',
-        method: 'GET',
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/documents',
+          method: 'GET',
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -517,7 +608,7 @@ class LanguageTranslatorV3 extends BaseService {
    * reference a previously submitted document by document ID.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|FileObject|Buffer} params.file - The source file to translate.
+   * @param {NodeJS.ReadableStream|Buffer} params.file - The source file to translate.
    *
    * [Supported file
    * types](https://cloud.ibm.com/docs/services/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
@@ -535,52 +626,65 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public translateDocument(params: LanguageTranslatorV3.TranslateDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<any> | void {
+  public translateDocument(params: LanguageTranslatorV3.TranslateDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['file', 'filename'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.translateDocument(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
-    const formData = {
-      'file': {
-        data: _params.file,
-        filename: _params.filename,
-        contentType: _params.fileContentType
-      },
-      'model_id': _params.modelId,
-      'source': _params.source,
-      'target': _params.target,
-      'document_id': _params.documentId
-    };
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+      const formData = {
+        'file': {
+          data: _params.file,
+          filename: _params.filename,
+          contentType: _params.fileContentType
+        },
+        'model_id': _params.modelId,
+        'source': _params.source,
+        'target': _params.target,
+        'document_id': _params.documentId
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translateDocument');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translateDocument');
 
-    const parameters = {
-      options: {
-        url: '/v3/documents',
-        method: 'POST',
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/documents',
+          method: 'POST',
+          formData
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -594,44 +698,57 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getDocumentStatus(params: LanguageTranslatorV3.GetDocumentStatusParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<any> | void {
+  public getDocumentStatus(params: LanguageTranslatorV3.GetDocumentStatusParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['documentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getDocumentStatus(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'document_id': _params.documentId
-    };
+      const path = {
+        'document_id': _params.documentId
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getDocumentStatus');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getDocumentStatus');
 
-    const parameters = {
-      options: {
-        url: '/v3/documents/{document_id}',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/documents/{document_id}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -645,43 +762,56 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public deleteDocument(params: LanguageTranslatorV3.DeleteDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.Empty>): Promise<any> | void {
+  public deleteDocument(params: LanguageTranslatorV3.DeleteDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.Empty>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['documentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.deleteDocument(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'document_id': _params.documentId
-    };
+      const path = {
+        'document_id': _params.documentId
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteDocument');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteDocument');
 
-    const parameters = {
-      options: {
-        url: '/v3/documents/{document_id}',
-        method: 'DELETE',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/documents/{document_id}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
   /**
@@ -704,45 +834,58 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
    */
-  public getTranslatedDocument(params: LanguageTranslatorV3.GetTranslatedDocumentParams, callback?: LanguageTranslatorV3.Callback<NodeJS.ReadableStream|FileObject|Buffer>): Promise<any> | void {
+  public getTranslatedDocument(params: LanguageTranslatorV3.GetTranslatedDocumentParams, callback?: LanguageTranslatorV3.Callback<NodeJS.ReadableStream|Buffer>): Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
     const _callback = callback;
     const requiredParams = ['documentId'];
 
-    if (!_callback) {
-      return new Promise((resolve, reject) => {
-        this.getTranslatedDocument(params, (err, res) => {
-          err ? reject(err) : resolve(res);
-        });
-      });
-    }
+    return new Promise((resolve, reject) => {
 
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return _callback(missingParams);
-    }
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
 
-    const path = {
-      'document_id': _params.documentId
-    };
+      const path = {
+        'document_id': _params.documentId
+      };
 
-    const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getTranslatedDocument');
+      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getTranslatedDocument');
 
-    const parameters = {
-      options: {
-        url: '/v3/documents/{document_id}/translated_document',
-        method: 'GET',
-        path,
-        responseType: 'stream',
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': _params.accept
-        }, _params.headers),
-      }),
-    };
+      const parameters = {
+        options: {
+          url: '/v3/documents/{document_id}/translated_document',
+          method: 'GET',
+          path,
+          responseType: 'stream',
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': _params.accept
+          }, _params.headers),
+        }),
+      };
 
-    return this.createRequest(parameters, _callback);
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
   };
 
 }
@@ -756,17 +899,7 @@ LanguageTranslatorV3.prototype.serviceVersion = 'v3';
 
 namespace LanguageTranslatorV3 {
 
-  /** Options for the `LanguageTranslatorV3` constructor. */
-  export type Options = {
-    version: string;
-    url?: string;
-    authenticator: Authenticator;
-    disableSslVerification?: boolean;
-    headers?: OutgoingHttpHeaders;
-    /** Allow additional request config parameters */
-    [propName: string]: any;
-  }
-
+  /** An operation response. **/
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -840,12 +973,12 @@ namespace LanguageTranslatorV3 {
      *  glossary with a file size less than 10 MB per call. A forced glossary should contain single words or short
      *  phrases.
      */
-    forcedGlossary?: NodeJS.ReadableStream|FileObject|Buffer;
+    forcedGlossary?: NodeJS.ReadableStream|Buffer;
     /** A TMX file with parallel sentences for source and target language. You can upload multiple parallel_corpus
      *  files in one request. All uploaded parallel_corpus files combined, your parallel corpus must contain at least
      *  5,000 parallel sentences to train successfully.
      */
-    parallelCorpus?: NodeJS.ReadableStream|FileObject|Buffer;
+    parallelCorpus?: NodeJS.ReadableStream|Buffer;
     /** An optional model name that you can use to identify the model. Valid characters are letters, numbers,
      *  dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
      */
@@ -881,7 +1014,7 @@ namespace LanguageTranslatorV3 {
      *
      *  Maximum file size: **20 MB**.
      */
-    file: NodeJS.ReadableStream|FileObject|Buffer;
+    file: NodeJS.ReadableStream|Buffer;
     /** The filename for file. */
     filename: string;
     /** The content type of file. */

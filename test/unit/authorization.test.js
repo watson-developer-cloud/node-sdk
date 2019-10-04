@@ -20,14 +20,14 @@ describe('authorization', function() {
     }),
   };
 
+  // tokens are URL-encoded when recieved from the service
+  const mockToken = 'token';
+
   const authorization = new Authorization(service);
   const authorizationIam = new Authorization(serviceManagedToken);
 
   const createRequestMock = jest.spyOn(authorization, 'createRequest');
-  createRequestMock.mockImplementation((params, cb) => cb(null, mock_token));
-
-  // tokens are URL-encoded when recieved from the service
-  const mock_token = 'token';
+  createRequestMock.mockImplementation(params => Promise.resolve(mockToken));
 
   function missingParameter(done) {
     return function(err) {
@@ -40,7 +40,7 @@ describe('authorization', function() {
   function checkToken(done) {
     return function(err, res) {
       expect(err).toBeNull();
-      expect(res).toBe(mock_token);
+      expect(res).toBe(mockToken);
       done();
     };
   }
@@ -66,7 +66,7 @@ describe('authorization', function() {
 
       // mock the token manager request method
       const requestMock = jest.spyOn(authorizationIam.authenticator.tokenManager, 'getToken');
-      requestMock.mockImplementation(cb => cb(null, mock_token));
+      requestMock.mockImplementation(() => Promise.resolve(mockToken));
 
       authorizationIam.getToken(checkToken(done));
     });

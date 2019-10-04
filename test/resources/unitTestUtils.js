@@ -11,11 +11,6 @@ module.exports.checkUrlAndMethod = function(options, url, method) {
   expect(options.method).toEqual(method);
 };
 
-module.exports.checkCallback = function(createRequestMock) {
-  const callback = createRequestMock.mock.calls[0][1];
-  expect(callback).toBeInstanceOf(Function);
-};
-
 module.exports.checkMediaHeaders = function(createRequestMock, accept, contentType) {
   const headers = createRequestMock.mock.calls[0][0].defaultOptions.headers;
   expect(headers.Accept).toEqual(accept);
@@ -31,7 +26,6 @@ module.exports.checkDefaultSuccessArgs = function(createRequestMock) {
   // get arg to getMissingParams
   const userParams = createRequestMock.mock.calls[0];
   expect(typeof userParams[0]).toEqual('object');
-  expect(typeof userParams[1]).toEqual('function');
 };
 
 module.exports.checkForEmptyObject = function(missingParamsMock) {

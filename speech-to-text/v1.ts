@@ -1,6 +1,7 @@
 import async = require('async');
 import extend = require('extend');
 import { Agent, OutgoingHttpHeaders } from 'http';
+import { UserOptions } from 'ibm-cloud-sdk-core';
 import isStream = require('isstream');
 import { getSdkHeaders } from '../lib/common';
 import RecognizeStream = require('../lib/recognize-stream');
@@ -32,7 +33,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   static ERR_NO_CORPORA = 'ERR_NO_CORPORA';
   static ERR_TIMEOUT = 'ERR_TIMEOUT';
 
-  constructor(options: GeneratedSpeechToTextV1.Options) {
+  constructor(options: UserOptions) {
     super(options);
   }
 
@@ -151,7 +152,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return new RecognizeStream(streamParams);
   }
 
-  recognize(params: GeneratedSpeechToTextV1.RecognizeParams, callback: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.SpeechRecognitionResults>): Promise<any> | void {
+  recognize(params: GeneratedSpeechToTextV1.RecognizeParams, callback: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.SpeechRecognitionResults>): Promise<GeneratedSpeechToTextV1.Response<GeneratedSpeechToTextV1.SpeechRecognitionResults>> {
     if (params && params.audio && isStream(params.audio) && !params.contentType) {
       callback(new Error('If providing `audio` as a Stream, `contentType` is required.'));
       return;

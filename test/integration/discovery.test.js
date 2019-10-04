@@ -10,7 +10,7 @@ const path = require('path');
 
 const THIRTY_SECONDS = 30000;
 
-describe('discovery_integration', () => {
+describe('discovery integration', () => {
   jest.setTimeout(THIRTY_SECONDS);
 
   const options = authHelper.auth.discovery;
