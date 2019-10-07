@@ -1,6 +1,6 @@
 # Watson APIs Node.js SDK
 
-[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg)](http://travis-ci.org/watson-developer-cloud/node-sdk)
+[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg?branch=master)](http://travis-ci.org/watson-developer-cloud/node-sdk)
 [![codecov](https://codecov.io/gh/watson-developer-cloud/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-developer-cloud/node-sdk)
 [![Slack](https://wdc-slack-inviter.mybluemix.net/badge.svg)](https://wdc-slack-inviter.mybluemix.net)
 [![npm-version](https://img.shields.io/npm/v/ibm-watson.svg)](https://www.npmjs.com/package/ibm-watson)
@@ -17,9 +17,7 @@ Node.js client library to use the Watson APIs.
   * [Usage](#usage)
   * [Client-side usage](#client-side-usage)
   * [Authentication](#authentication)
-    * [IAM](#iam)
-    * [Username and password](#username-and-password)
-    * [API key](#api-key)
+  * [Setting the Service URL](#setting-the-service-url)
   * [Callbacks vs Promises](#callbacks-vs-promises)
   * [Sending request headers](#sending-request-headers)
   * [Parsing HTTP response](#parsing-http-response)
@@ -73,14 +71,14 @@ npm install ibm-watson
 
 ## Usage
 
-```ts
+```js
 import DiscoveryV1 from 'ibm-watson/discovery/v1';
 import { IamAuthenticator } from 'ibm-watson/auth';
 
 const discoveryClient = new DiscoveryV1({
   authenticator: new IamAuthenticator({ apikey: '{apikey}' })
   version: '{version}',
-})
+});
 
 // ...
 
@@ -104,7 +102,9 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 - In other instances, you authenticate by providing the **[username and password](#username-and-password)** for the service instance.
 - If you're using a Watson service on ICP, you'll need to authenticate in [a specific way](#icp).
 
-Authentication is accomplished using dedicated authenticators for each authentication scheme. Import authenticators from `ibm-watson/auth` or rely on externally-configured credentials which will be read from a credentials file or environment variables.
+Authentication is accomplished using dedicated Authenticators for each authentication scheme. Import authenticators from `ibm-watson/auth` or rely on externally-configured credentials which will be read from a credentials file or environment variables.
+
+To learn more about the Authenticators and how to use them with your services, see [the detailed documentation](https://github.com/IBM/node-sdk-core/blob/master/AUTHENTICATION.md).
 
 ### Getting credentials
 
@@ -121,6 +121,8 @@ In your code, you can use these values in the service constructor or with a meth
 ### Supplying credentials
 
 There are two ways to supply the credentials you found above to the SDK for authentication:
+- Allow the credentials to be automatically read from the environment
+- Instantiate an authenticator with explicit credentials and use it to create your service
 
 #### Credentials file (easier!)
 
@@ -153,65 +155,21 @@ where `<path>` is something like `/home/user/Downloads/<file_name>.env`. If you 
 
 #### Manually
 
-The SDK also supports setting credentials manually in your code. You will either use IAM credentials or Basic Authentication (username/password) credentials.
+The SDK also supports setting credentials manually in your code, using an Authenticator.
 
 ##### IAM
 
 Some services use token-based Identity and Access Management (IAM) authentication. IAM authentication uses a service API key to get an access token that is passed with the call. Access tokens are valid for approximately one hour and must be regenerated.
 
-You supply either an IAM service **API key** or an **access token**:
-
-- Use the API key to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.
-- Use the access token if you want to manage the lifecycle yourself. For details, see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/services/watson/getting-started-iam.html). If you want to switch to API key, override your stored IAM credentials with an IAM API key.
+To use IAM authentication, you must use an `IamAuthenticator` or a `BearerTokenAuthenticator`.
+- Use the `IamAuthenticator` to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.
+- Use the `BearerTokenAuthenticator` if you want to manage the lifecycle yourself. For details, see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/services/watson/getting-started-iam.html). If you want to switch your authenticator, you must override the `authenticator` property directly.
 
 ##### ICP
 
-###### Supplying the IAM API key
+To use the SDK in a Cloud Pak, use the `CloudPakForDataAuthenticator`. This will require a username, password, and URL.
 
-```js
-// in the constructor, letting the SDK manage the IAM token
-const discovery = new DiscoveryV1({
-  url: '<service_url>',
-  version: '<version-date>',
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  iam_url: '<iam_url>', // optional - the default value is https://cloud.ibm.com/identity/token
-});
-```
-
-###### Supplying the access token
-
-```js
-// in the constructor, assuming control of managing IAM token
-const discovery = new DiscoveryV1({
-  url: '<service_url>',
-  version: '<version-date>',
-  iam_access_token: '<access-token>'
-});
-```
-
-```js
-// after instantiation, assuming control of managing IAM token
-const discovery = new DiscoveryV1({
-  url: '<service_url>',
-  version: '<version-date>'
-});
-
-discovery.setAccessToken('<access-token>')
-```
-
-### Username and password
-
-```js
-const DiscoveryV1 = require('ibm-watson/discovery/v1');
-
-const discovery = new DiscoveryV1({
-    version: '{version}',
-    username: '{username}',
-    password: '{password}'
-  });
-```
-
-### Setting the Service URL
+## Setting the Service URL
 You can set or reset the base URL after constructing the client instance using the `setServiceUrl` method:
 
 ```js
@@ -224,7 +182,7 @@ const discovery = DiscoveryV1({
 discovery.setServiceUrl('<new url>');
 ```
 
-### Callbacks vs Promises
+## Callbacks vs Promises
 
 All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. Note that support for Callbacks is being deprecated and will be removed in a future major release. Using Promises is recommended.
 
@@ -259,7 +217,7 @@ discovery.listEnvironments((err, res) => {
 });
 ```
 
-### Sending request headers
+## Sending request headers
 
 Custom headers can be passed with any request. Each method has an optional parameter `headers` which can be used to pass in these custom headers, which can override headers that we use as parameters.
 
@@ -276,8 +234,8 @@ assistant.message({
   headers: {
     'Custom-Header': 'custom',
     'Accept-Language': 'custom'
-
-  })
+  }
+})
   .then(response => {
     console.log(JSON.stringify(response.result, null, 2));
   })
@@ -286,7 +244,7 @@ assistant.message({
   });
 ```
 
-### Parsing HTTP response
+## Parsing HTTP response
 
 The SDK now returns the full HTTP response by default for each method.
 
@@ -307,7 +265,7 @@ assistant.message(params).then(
 );
 ```
 
-### Data collection opt-out
+## Data collection opt-out
 
 By default, [all requests are logged](https://cloud.ibm.com/docs/services/watson/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
@@ -320,7 +278,7 @@ const myInstance = new watson.WhateverServiceV1({
 });
 ```
 
-### Using the SDK behind a corporate proxy
+## Using the SDK behind a corporate proxy
 
 To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package [`tunnel`](https://github.com/koichik/node-tunnel/) for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set `proxy` to `false` in the service constructor. See this example configuration:
 ```js
@@ -341,7 +299,7 @@ const assistant = new AssistantV1({
 });
 ```
 
-### Configuring the HTTP client
+## Configuring the HTTP client
 
 The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️
 
@@ -873,14 +831,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 [text_to_speech]: https://www.ibm.com/watson/services/text-to-speech/
 [speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
 [language_translator]: https://www.ibm.com/watson/services/language-translator/
-[ibm_cloud]: https://cloud.ibm.com
-[watson-dashboard]: https://cloud.ibm.com/dashboard/apps?category=watson
-[npm_link]: https://www.npmjs.com/package/ibm-watson
-[request_github]: https://github.com/request/request
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
-[document_conversion_integration_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/document_conversion_integration.v1.js
 [assistant_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
 [license]: http://www.apache.org/licenses/LICENSE-2.0
-[vcap_services]: https://cloud.ibm.com/docs/services/watson/getting-started-variables.html
 [ibm-cloud-onboarding]: http://cloud.ibm.com/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node
-
