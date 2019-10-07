@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.0.0...v5.1.0) (2019-10-07)
+
+
+### Features
+
+* **text-to-speech:** add method to repair wav header for a stream ([#981](https://github.com/watson-developer-cloud/node-sdk/issues/981)) ([42b0913](https://github.com/watson-developer-cloud/node-sdk/commit/42b0913))
+
 # [5.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v4.5.1...v5.0.0) (2019-10-04)
 
 
