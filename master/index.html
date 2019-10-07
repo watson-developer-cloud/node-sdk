@@ -713,11 +713,15 @@ fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
 
 <span class="hljs-comment">// Synthesize speech, correct the wav header, then save to disk</span>
 <span class="hljs-comment">// (wav header requires a file length, but this is unknown until after the header is already generated and sent)</span>
+<span class="hljs-comment">// note that `repairWavHeaderStream` will read the whole stream into memory in order to process it.</span>
+<span class="hljs-comment">// the method returns a Promise that resolves with the repaired buffer</span>
 textToSpeech
   .synthesize(params)
   .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
     <span class="hljs-keyword">const</span> audio = response.result;
-    textToSpeech.repairWavHeader(audio);
+    <span class="hljs-keyword">return</span> textToSpeech.repairWavHeaderStream(audio);
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">repairedFile</span> =&gt;</span> {
     fs.writeFileSync(<span class="hljs-string">'audio.wav'</span>, audio);
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'audio.wav written with a corrected wav header'</span>);
   })
