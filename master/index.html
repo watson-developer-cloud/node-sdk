@@ -85,7 +85,9 @@
 						<li><a href="#sending-request-headers">Sending request headers</a></li>
 						<li><a href="#parsing-http-response">Parsing HTTP response</a></li>
 						<li><a href="#data-collection-opt-out">Data collection opt-out</a></li>
-						<li><a href="#using-the-sdk-behind-a-corporate-proxy">Using the SDK behind a corporate proxy</a></li>
+						<li><a href="#configuring-the-https-agent">Configuring the HTTPS Agent</a></li>
+						<li><a href="#use-behind-a-corporate-proxy">Usw behind a corporate proxy</a></li>
+						<li><a href="#sending-custom-certificates">Sending custom certificates</a></li>
 						<li><a href="#documentation">Documentation</a></li>
 						<li><a href="#questions">Questions</a></li>
 						<li><a href="#ibm-watson-services">IBM Watson services</a><ul>
@@ -321,8 +323,12 @@ assistant.message(params).then(
     <span class="hljs-string">"X-Watson-Learning-Opt-Out"</span>: <span class="hljs-literal">true</span>
   }
 });</code></pre>
-				<a href="#using-the-sdk-behind-a-corporate-proxy" id="using-the-sdk-behind-a-corporate-proxy" style="color: inherit; text-decoration: none;">
-					<h2>Using the SDK behind a corporate proxy</h2>
+				<a href="#configuring-the-https-agent" id="configuring-the-https-agent" style="color: inherit; text-decoration: none;">
+					<h2>Configuring the HTTPS Agent</h2>
+				</a>
+				<p>The SDK provides the user with full control over the HTTPS Agent used to make requests. This is available for both the service client and the authenticators that make network requests (e.g. <code>IamAuthenticator</code>). Outlined below are a couple of different scenarios where this capability is needed. Note that this functionality is for Node environments only - these configurtions will have no effect in the browser.</p>
+				<a href="#use-behind-a-corporate-proxy" id="use-behind-a-corporate-proxy" style="color: inherit; text-decoration: none;">
+					<h3>Use behind a corporate proxy</h3>
 				</a>
 				<p>To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package <a href="https://github.com/koichik/node-tunnel/"><code>tunnel</code></a> for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set <code>proxy</code> to <code>false</code> in the service constructor. See this example configuration:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> tunnel = <span class="hljs-built_in">require</span>(<span class="hljs-string">'tunnel'</span>);
@@ -340,16 +346,40 @@ assistant.message(params).then(
   }),
   <span class="hljs-attr">proxy</span>: <span class="hljs-literal">false</span>,
 });</code></pre>
-				<a href="#configuring-the-http-client" id="configuring-the-http-client" style="color: inherit; text-decoration: none;">
-					<h2>Configuring the HTTP client</h2>
+				<a href="#sending-custom-certificates" id="sending-custom-certificates" style="color: inherit; text-decoration: none;">
+					<h3>Sending custom certificates</h3>
 				</a>
-				<p>The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️</p>
-				<p>To do this, set <code>disableSslVerification</code> to <code>true</code> in the service constructor, like below:</p>
+				<p>To send custom certificates as a security measure in your request, use the <code>cert</code>, <code>key</code>, and/or <code>ca</code> properties of the HTTPS Agent. See <a href="https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options">this documentation</a> for more information about the options. Note that the entire contents of the file must be provided - not just the file name.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> certFile = fs.readFileSync(<span class="hljs-string">'./my-cert.pem'</span>);
+<span class="hljs-keyword">const</span> keyFile = fs.readFileSync(<span class="hljs-string">'./my-key.pem'</span>);
+
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({
+    <span class="hljs-attr">apikey</span>: <span class="hljs-string">'fakekey-1234'</span>,
+    <span class="hljs-attr">httpsAgent</span>: <span class="hljs-keyword">new</span> https.Agent({
+      <span class="hljs-attr">key</span>: keyFile,
+      <span class="hljs-attr">cert</span>: certFile,
+    })
+  }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-28'</span>,
+  <span class="hljs-attr">httpsAgent</span>: <span class="hljs-keyword">new</span> https.Agent({
+    <span class="hljs-attr">key</span>: keyFile,
+    <span class="hljs-attr">cert</span>: certFile,
+  }),
+});</code></pre>
+				<a href="#disabling-ssl-verification" id="disabling-ssl-verification" style="color: inherit; text-decoration: none;">
+					<h3>Disabling SSL Verification</h3>
+				</a>
+				<p>The HTTP client can be configured to disable SSL verification. <strong>Note that this has serious security implications - only do this if you really mean to!</strong> ⚠️</p>
+				<p>To do this, set <code>disableSslVerification</code> to <code>true</code> in the service constructor and/or authenticator constructor, like below:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
   <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>,
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">disableSslVerification</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// this will disable SSL verification for any request made with this object</span>
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span>, <span class="hljs-attr">disableSslVerification</span>: <span class="hljs-literal">true</span> }), <span class="hljs-comment">// this will disable SSL verification for requests to the token endpoint</span>
+  disableSslVerification: <span class="hljs-literal">true</span>, <span class="hljs-comment">// this will disable SSL verification for any request made with this client instance</span>
 });</code></pre>
 				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
 					<h2>Documentation</h2>
