@@ -22,7 +22,9 @@ Node.js client library to use the Watson APIs.
   * [Sending request headers](#sending-request-headers)
   * [Parsing HTTP response](#parsing-http-response)
   * [Data collection opt-out](#data-collection-opt-out)
-  * [Using the SDK behind a corporate proxy](#using-the-sdk-behind-a-corporate-proxy)
+  * [Configuring the HTTPS Agent](#configuring-the-https-agent)
+  * [Usw behind a corporate proxy](#use-behind-a-corporate-proxy)
+  * [Sending custom certificates](#sending-custom-certificates)
   * [Documentation](#documentation)
   * [Questions](#questions)
   * [IBM Watson services](#ibm-watson-services)
@@ -278,8 +280,10 @@ const myInstance = new watson.WhateverServiceV1({
 });
 ```
 
-## Using the SDK behind a corporate proxy
+## Configuring the HTTPS Agent
+The SDK provides the user with full control over the HTTPS Agent used to make requests. This is available for both the service client and the authenticators that make network requests (e.g. `IamAuthenticator`). Outlined below are a couple of different scenarios where this capability is needed. Note that this functionality is for Node environments only - these configurtions will have no effect in the browser.
 
+### Use behind a corporate proxy
 To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package [`tunnel`](https://github.com/koichik/node-tunnel/) for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set `proxy` to `false` in the service constructor. See this example configuration:
 ```js
 const tunnel = require('tunnel');
@@ -299,18 +303,43 @@ const assistant = new AssistantV1({
 });
 ```
 
-## Configuring the HTTP client
+### Sending custom certificates
+To send custom certificates as a security measure in your request, use the `cert`, `key`, and/or `ca` properties of the HTTPS Agent. See [this documentation](https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options) for more information about the options. Note that the entire contents of the file must be provided - not just the file name.
+```js
+const AssistantV1 = require('ibm-watson/assistant/v1');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
-The HTTP client can be configured to disable SSL verification. Note that this has serious security implications - only do this if you really mean to! ⚠️
+const certFile = fs.readFileSync('./my-cert.pem');
+const keyFile = fs.readFileSync('./my-key.pem');
 
-To do this, set `disableSslVerification` to `true` in the service constructor, like below:
+const assistant = new AssistantV1({
+  authenticator: new IamAuthenticator({
+    apikey: 'fakekey-1234',
+    httpsAgent: new https.Agent({
+      key: keyFile,
+      cert: certFile,
+    })
+  }),
+  version: '2019-02-28',
+  httpsAgent: new https.Agent({
+    key: keyFile,
+    cert: certFile,
+  }),
+});
+```
+
+### Disabling SSL Verification
+
+The HTTP client can be configured to disable SSL verification. **Note that this has serious security implications - only do this if you really mean to!** ⚠️
+
+To do this, set `disableSslVerification` to `true` in the service constructor and/or authenticator constructor, like below:
 
 ```js
 const discovery = new DiscoveryV1({
   url: '<service_url>',
   version: '<version-date>',
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  disableSslVerification: true, // this will disable SSL verification for any request made with this object
+  authenticator: new IamAuthenticator({ apikey: '<apikey>', disableSslVerification: true }), // this will disable SSL verification for requests to the token endpoint
+  disableSslVerification: true, // this will disable SSL verification for any request made with this client instance
 });
 ```
 
