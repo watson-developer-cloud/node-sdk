@@ -299,6 +299,7 @@ class VisualRecognitionV3 extends BaseService {
       const partName = `${key}_positive_examples`
       formData[partName] = {
         data: _params.positive_examples[key],
+        filename: `${key}.zip`,
         contentType: 'application/octet-stream',
       };
     });
