@@ -11,34 +11,69 @@
 
 {{#if parameters}}
     <h4 class="tsd-parameters-title">Parameters</h4>
-    <ul class="tsd-parameters">
-        {{#each parameters}}
-            <li>
-                <h5>{{#compact}}
-                    {{#each flags}}
-                        <span class="tsd-flag ts-flag{{this}}">{{this}}</span>&nbsp;
-                    {{/each}}
-                    {{#if flags.isRest}}<span class="tsd-signature-symbol">...</span>{{/if}}
-                    {{name}}:&nbsp;
-                    {{#with type}}{{>type}}{{/with}}
-                    {{#if defaultValue}}
-                        <span class="tsd-signature-symbol">
-                        &nbsp;=&nbsp;
-                        {{defaultValue}}
-                        </span>
-                    {{/if}}
-                {{/compact}}</h5>
+    <table class="params">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Attribute</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+            {{#each parameters}}
+                <tr>
+                    <td><code>{{name}}</code></td>
+                    <td>{{#with type}}{{>type}}{{/with}}</td>
+                    <td>{{this.flags}}</td>
+                    <td>
+                        <p>{{comment.text}}</p>
+                        <p>{{comment.shortText}}</p>
+                        {{#with type.reflection.children}}
+                        {{#if this}}
+                        <h4>Properties</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Attributes</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Print out all required parameters-->
+                            {{#each this}}
+                            {{#unless this.flags}}
+                                <tr>
+                                    <td><code>{{name}}</code></td>
+                                    <td>{{#with type}}{{>type}}{{/with}}</td>
+                                    <td>{{flags}}</td>
+                                    <td>{{comment.shortText}}</td>
+                                </tr>
+                            {{/unless}}
+                            {{/each}}
 
-                {{> comment}}
-
-                {{#if type.declaration}}
-                    {{#with type.declaration}}
-                        {{> parameter}}
-                    {{/with}}
-                {{/if}}
-            </li>
-        {{/each}}
-    </ul>
+                            <!-- Print out all optional parameters-->
+                            {{#each this}}
+                            {{#if this.flags}}
+                            <tr>
+                                <td><code>{{name}}</code></td>
+                                <td>{{#with type}}{{>type}}{{/with}}</td>
+                                <td>{{flags}}</td>
+                                <td>{{comment.shortText}}</td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                            </tbody>
+                        </table>
+                        {{/if}}
+                        {{/with}}
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
 {{/if}}
 
 {{#if type}}
