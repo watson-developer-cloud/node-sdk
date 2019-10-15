@@ -718,7 +718,7 @@ textToSpeech
     return textToSpeech.repairWavHeaderStream(audio);
   })
   .then(repairedFile => {
-    fs.writeFileSync('audio.wav', audio);
+    fs.writeFileSync('audio.wav', repairedFile);
     console.log('audio.wav written with a corrected wav header');
   })
   .catch(err => {
