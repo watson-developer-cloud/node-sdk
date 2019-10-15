@@ -1,3 +1,5 @@
+<!-- Unless the url is part of the exclusion list, render them -->
+{{#unless (excludedNavUrl this.cssClasses)}}
 <li class="{{#if isInPath}}current{{/if}} {{cssClasses}}">
     <a href="{{relativeURL url}}" class="tsd-kind-icon">{{{wbr title}}}</a>
     {{#if children}}
@@ -8,3 +10,4 @@
         </ul>
     {{/if}}
 </li>
+{{/unless}}
