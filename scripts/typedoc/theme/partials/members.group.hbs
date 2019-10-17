@@ -1,3 +1,4 @@
+{{#unless (excludedIndexSection this.title)}}
 <section class="tsd-panel-group tsd-member-group {{cssClasses}}">
     <h2>{{title}}</h2>
     {{#each children}}
@@ -6,3 +7,4 @@
         {{/unless}}
     {{/each}}
 </section>
+{{/unless}}
