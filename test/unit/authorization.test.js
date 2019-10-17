@@ -1,6 +1,6 @@
 'use strict';
 
-const Authorization = require('../../authorization/v1');
+const Authorization = require('../../dist/authorization/v1');
 const { BasicAuthenticator, IamAuthenticator } = require('ibm-cloud-sdk-core');
 
 describe('authorization', function() {

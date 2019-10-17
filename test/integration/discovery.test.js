@@ -1,7 +1,7 @@
 'use strict';
 
-const { IamAuthenticator } = require('../../auth');
-const DiscoveryV1 = require('../../discovery/v1');
+const { IamAuthenticator } = require('../../dist/auth');
+const DiscoveryV1 = require('../../dist/discovery/v1');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const async = require('async');

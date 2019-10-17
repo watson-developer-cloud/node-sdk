@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
+const ToneAnalyzerV3 = require('../../dist/tone-analyzer/v3');
 const utils = require('../resources/unitTestUtils');
 
 const {

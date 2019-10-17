@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const PersonalityInsightsV3 = require('../../personality-insights/v3');
+const PersonalityInsightsV3 = require('../../dist/personality-insights/v3');
 const utils = require('../resources/unitTestUtils');
 
 const {

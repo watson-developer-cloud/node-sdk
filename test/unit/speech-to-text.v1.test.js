@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const SpeechToTextV1 = require('../../speech-to-text/v1');
+const SpeechToTextV1 = require('../../dist/speech-to-text/v1');
 const utils = require('../resources/unitTestUtils');
 
 const {

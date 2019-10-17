@@ -1,8 +1,8 @@
 'use strict';
 
 const fs = require('fs');
-const { IamAuthenticator } = require('../../auth');
-const CompareComply = require('../../compare-comply/v1');
+const { IamAuthenticator } = require('../../dist/auth');
+const CompareComply = require('../../dist/compare-comply/v1');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 

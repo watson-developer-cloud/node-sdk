@@ -1,8 +1,8 @@
 'use strict';
 
 const fs = require('fs');
-const { IamAuthenticator } = require('../../auth');
-const LanguageTranslatorV3 = require('../../language-translator/v3');
+const { IamAuthenticator } = require('../../dist/auth');
+const LanguageTranslatorV3 = require('../../dist/language-translator/v3');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;

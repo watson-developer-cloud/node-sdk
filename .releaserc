@@ -3,12 +3,14 @@
   "verifyConditions": ["@semantic-release/changelog", "@semantic-release/npm", "@semantic-release/git"],
   "prepare": ["@semantic-release/changelog", "@semantic-release/npm", "@semantic-release/git"],
   "publish": [
-    "@semantic-release/npm",
+    ["@semantic-release/npm", {
+      "pkgRoot": "dist"
+    }],
     {
       "path": "@semantic-release/github",
       "assets": [
-        {"path": "dist/watson.js"},
-        {"path": "dist/watson.min.js"}
+        {"path": "dist/dist/watson.js"},
+        {"path": "dist/dist/watson.min.js"}
       ]
     }
   ]

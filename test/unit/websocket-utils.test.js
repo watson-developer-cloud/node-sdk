@@ -16,7 +16,7 @@
 
 'use strict';
 
-const { processUserParameters } = require('../../lib/websocket-utils');
+const { processUserParameters } = require('../../dist/lib/websocket-utils');
 
 describe('websocket utility functions', () => {
   describe('processUserParameters', () => {

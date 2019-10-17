@@ -1,7 +1,7 @@
 'use strict';
 
-const { IamAuthenticator } = require('../../auth');
-const TextToSpeechV1 = require('../../text-to-speech/v1');
+const { IamAuthenticator } = require('../../dist/auth');
+const TextToSpeechV1 = require('../../dist/text-to-speech/v1');
 const wav = require('wav');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)

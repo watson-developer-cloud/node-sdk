@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const VisualRecognitionV4 = require('../../visual-recognition/v4');
+const VisualRecognitionV4 = require('../../dist/visual-recognition/v4');
 const utils = require('../resources/unitTestUtils');
 
 const {
