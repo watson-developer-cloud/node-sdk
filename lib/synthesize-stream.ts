@@ -21,11 +21,6 @@ import { w3cwebsocket as w3cWebSocket } from 'websocket';
 import { SynthesizeWebSocketParams } from '../text-to-speech/v1';
 import { processUserParameters } from './websocket-utils';
 
-
-interface SynthesizeStream extends Readable {
-  _readableState;
-}
-
 /**
  * pipe()-able Node.js Readable stream - accepts text in the constructor and emits binary audio data in its 'message' events
  *

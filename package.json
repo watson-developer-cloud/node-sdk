@@ -79,10 +79,10 @@
   },
   "dependencies": {
     "@types/async": "^2.4.2",
-    "@types/csv-stringify": "^1.4.3",
     "@types/extend": "^3.0.1",
     "@types/isstream": "^0.1.0",
     "@types/node": "^11.9.4",
+    "@types/websocket": "^1.0.0",
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "camelcase": "^5.3.1",
