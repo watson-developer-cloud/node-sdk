@@ -456,12 +456,12 @@ class RecognizeStream extends Duplex {
         this.socket._client.response.headers
       ) {
         resolve(
-          this.socket._client.response.headers['x-global-transaction-id']
+          (this.socket._client.response.headers['x-global-transaction-id'] as string)
         );
       } else {
         this.on('open', () =>
           resolve(
-            this.socket._client.response.headers['x-global-transaction-id']
+            (this.socket._client.response.headers['x-global-transaction-id'] as string)
           )
         );
         this.on('error', reject);
