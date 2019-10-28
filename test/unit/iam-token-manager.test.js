@@ -1,5 +1,5 @@
 'use strict';
-const { IamTokenManager } = require('../../auth');
+const { IamTokenManager } = require('../../dist/auth');
 
 describe('iam token manager', () => {
   it('should correctly export the token manager from the core module', () => {

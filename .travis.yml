@@ -13,9 +13,8 @@ before_install:
 - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ ! -z ${encrypted_ac3aacad7ba8_key} ]
   && cd test/resources/ && tar xvf secrets.tar
   && cd ../.. || true'
-- npm install -g typescript
 script:
-- tsc
+- npm run build
 - npm run test-unit-travis || travis_terminate 1
 - npm run test-integration-travis || node scripts/report_integration_test.js || travis_terminate 1
 - npm run check-packages

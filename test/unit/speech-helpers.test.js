@@ -3,8 +3,8 @@
 const { BasicAuthenticator } = require('ibm-cloud-sdk-core');
 const isStream = require('isstream');
 const websocket = require('websocket');
-const SpeechToTextV1 = require('../../speech-to-text/v1');
-const TextToSpeechV1 = require('../../text-to-speech/v1');
+const SpeechToTextV1 = require('../../dist/speech-to-text/v1');
+const TextToSpeechV1 = require('../../dist/text-to-speech/v1');
 
 const url = 'http://ibm.com:80';
 const version = 'v1';

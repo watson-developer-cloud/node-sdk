@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const CompareComplyV1 = require('../../compare-comply/v1');
+const CompareComplyV1 = require('../../dist/compare-comply/v1');
 const utils = require('../resources/unitTestUtils');
 
 const {

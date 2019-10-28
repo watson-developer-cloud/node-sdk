@@ -1,8 +1,8 @@
 'use strict';
 
 const fs = require('fs');
-const { IamAuthenticator } = require('../../auth');
-const ToneAnalyzerV3 = require('../../tone-analyzer/v3');
+const { IamAuthenticator } = require('../../dist/auth');
+const ToneAnalyzerV3 = require('../../dist/tone-analyzer/v3');
 const path = require('path');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)

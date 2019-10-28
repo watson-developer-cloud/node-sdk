@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const NaturalLanguageClassifierV1 = require('../../natural-language-classifier/v1');
+const NaturalLanguageClassifierV1 = require('../../dist/natural-language-classifier/v1');
 const utils = require('../resources/unitTestUtils');
 
 const {

@@ -17,7 +17,7 @@
 
 const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
 const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
-const AssistantV2 = require('../../assistant/v2');
+const AssistantV2 = require('../../dist/assistant/v2');
 const utils = require('../resources/unitTestUtils');
 
 const {

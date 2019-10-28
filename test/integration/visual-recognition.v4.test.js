@@ -17,8 +17,8 @@
 
 const fs = require('fs');
 const isStream = require('isstream');
-const { IamAuthenticator } = require('../../auth');
-const VisualRecognitionV4 = require('../../visual-recognition/v4');
+const { IamAuthenticator } = require('../../dist/auth');
+const VisualRecognitionV4 = require('../../dist/visual-recognition/v4');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 
