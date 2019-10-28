@@ -4,6 +4,8 @@
     <section class="tsd-panel tsd-index-panel">
         <div class="tsd-index-content">
             {{#each groups}}
+            <!-- Unless the section is part of the exclusion list, render them -->
+            {{#unless (excludedIndexSection this.title)}}
                 <section class="tsd-index-section {{cssClasses}}">
                     <h3>{{title}}</h3>
                     <ul class="tsd-index-list">
@@ -12,6 +14,7 @@
                         {{/each}}
                     </ul>
                 </section>
+            {{/unless}}
             {{/each}}
         </div>
     </section>
