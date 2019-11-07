@@ -1944,7 +1944,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collectionId - The ID of the collection.
    * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
    * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * configuration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -2105,7 +2105,7 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.documentId - The ID of the document.
    * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
    * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * configuration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -5135,7 +5135,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collectionId: string;
     /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the
+     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
     file?: NodeJS.ReadableStream|Buffer;
@@ -5186,7 +5186,7 @@ namespace DiscoveryV1 {
     /** The ID of the document. */
     documentId: string;
     /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the
+     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
     file?: NodeJS.ReadableStream|Buffer;
