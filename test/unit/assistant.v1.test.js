@@ -260,6 +260,7 @@ describe('AssistantV1', () => {
         const metadata = 'fake_metadata';
         const learningOptOut = 'fake_learningOptOut';
         const systemSettings = 'fake_systemSettings';
+        const webhooks = 'fake_webhooks';
         const intents = 'fake_intents';
         const entities = 'fake_entities';
         const dialogNodes = 'fake_dialogNodes';
@@ -271,6 +272,7 @@ describe('AssistantV1', () => {
           metadata,
           learningOptOut,
           systemSettings,
+          webhooks,
           intents,
           entities,
           dialogNodes,
@@ -294,6 +296,7 @@ describe('AssistantV1', () => {
         expect(options.body['metadata']).toEqual(metadata);
         expect(options.body['learning_opt_out']).toEqual(learningOptOut);
         expect(options.body['system_settings']).toEqual(systemSettings);
+        expect(options.body['webhooks']).toEqual(webhooks);
         expect(options.body['intents']).toEqual(intents);
         expect(options.body['entities']).toEqual(entities);
         expect(options.body['dialog_nodes']).toEqual(dialogNodes);
@@ -463,6 +466,7 @@ describe('AssistantV1', () => {
         const metadata = 'fake_metadata';
         const learningOptOut = 'fake_learningOptOut';
         const systemSettings = 'fake_systemSettings';
+        const webhooks = 'fake_webhooks';
         const intents = 'fake_intents';
         const entities = 'fake_entities';
         const dialogNodes = 'fake_dialogNodes';
@@ -476,6 +480,7 @@ describe('AssistantV1', () => {
           metadata,
           learningOptOut,
           systemSettings,
+          webhooks,
           intents,
           entities,
           dialogNodes,
@@ -500,6 +505,7 @@ describe('AssistantV1', () => {
         expect(options.body['metadata']).toEqual(metadata);
         expect(options.body['learning_opt_out']).toEqual(learningOptOut);
         expect(options.body['system_settings']).toEqual(systemSettings);
+        expect(options.body['webhooks']).toEqual(webhooks);
         expect(options.body['intents']).toEqual(intents);
         expect(options.body['entities']).toEqual(entities);
         expect(options.body['dialog_nodes']).toEqual(dialogNodes);

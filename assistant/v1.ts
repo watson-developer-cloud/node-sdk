@@ -253,6 +253,7 @@ class AssistantV1 extends BaseService {
    * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
    * data is not to be used.
    * @param {WorkspaceSystemSettings} [params.systemSettings] - Global settings for the workspace.
+   * @param {Webhook[]} [params.webhooks] -
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects describing the entities for the workspace.
    * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
@@ -275,6 +276,7 @@ class AssistantV1 extends BaseService {
         'metadata': _params.metadata,
         'learning_opt_out': _params.learningOptOut,
         'system_settings': _params.systemSettings,
+        'webhooks': _params.webhooks,
         'intents': _params.intents,
         'entities': _params.entities,
         'dialog_nodes': _params.dialogNodes,
@@ -417,6 +419,7 @@ class AssistantV1 extends BaseService {
    * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
    * data is not to be used.
    * @param {WorkspaceSystemSettings} [params.systemSettings] - Global settings for the workspace.
+   * @param {Webhook[]} [params.webhooks] -
    * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
    * @param {CreateEntity[]} [params.entities] - An array of objects describing the entities for the workspace.
    * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
@@ -456,6 +459,7 @@ class AssistantV1 extends BaseService {
         'metadata': _params.metadata,
         'learning_opt_out': _params.learningOptOut,
         'system_settings': _params.systemSettings,
+        'webhooks': _params.webhooks,
         'intents': _params.intents,
         'entities': _params.entities,
         'dialog_nodes': _params.dialogNodes,
@@ -3921,6 +3925,7 @@ namespace AssistantV1 {
     learningOptOut?: boolean;
     /** Global settings for the workspace. */
     systemSettings?: WorkspaceSystemSettings;
+    webhooks?: Webhook[];
     /** An array of objects defining the intents for the workspace. */
     intents?: CreateIntent[];
     /** An array of objects describing the entities for the workspace. */
@@ -3976,6 +3981,7 @@ namespace AssistantV1 {
     learningOptOut?: boolean;
     /** Global settings for the workspace. */
     systemSettings?: WorkspaceSystemSettings;
+    webhooks?: Webhook[];
     /** An array of objects defining the intents for the workspace. */
     intents?: CreateIntent[];
     /** An array of objects describing the entities for the workspace. */
@@ -5640,8 +5646,8 @@ namespace AssistantV1 {
     dialog_node?: string;
     /** An array of objects describing the possible matching dialog nodes from which the user can choose.
      *
-     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for
-     *  Premium users.
+     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for Plus
+     *  and Premium users.
      */
     suggestions?: DialogSuggestion[];
   }
@@ -5710,6 +5716,24 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
+  /** A webhook that can be used by dialog nodes to make programmatic calls to an external function. **Note:** Currently, only a single webhook named `main_webhook` is supported. */
+  export interface Webhook {
+    /** The URL for the external service or application to which you want to send HTTP POST requests. */
+    url: string;
+    /** The name of the webhook. Currently, `main_webhook` is the only supported value. */
+    name: string;
+    /** An optional array of HTTP headers to pass with the HTTP request. */
+    headers?: WebhookHeader[];
+  }
+
+  /** A key/value pair defining an HTTP header and a value. */
+  export interface WebhookHeader {
+    /** The name of an HTTP header (for example, `Authorization`). */
+    name: string;
+    /** The value of an HTTP header. */
+    value: string;
+  }
+
   /** Workspace. */
   export interface Workspace {
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -5726,6 +5750,7 @@ namespace AssistantV1 {
     learning_opt_out: boolean;
     /** Global settings for the workspace. */
     system_settings?: WorkspaceSystemSettings;
+    webhooks?: Webhook[];
     /** The workspace ID of the workspace. */
     workspace_id: string;
     /** The current status of the workspace. */
@@ -5758,14 +5783,14 @@ namespace AssistantV1 {
     tooling?: WorkspaceSystemSettingsTooling;
     /** Workspace settings related to the disambiguation feature.
      *
-     *  **Note:** This feature is available only to Premium users.
+     *  **Note:** This feature is available only to Plus and Premium users.
      */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
     human_agent_assist?: JsonObject;
   }
 
-  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
+  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Plus and Premium users. */
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;
@@ -5779,6 +5804,12 @@ namespace AssistantV1 {
      *  disambiguation feature to be triggered more often. This can be useful for testing or demonstration purposes.
      */
     sensitivity?: string;
+    /** Whether the order in which disambiguation suggestions are presented should be randomized (but still
+     *  influenced by relative confidence).
+     */
+    randomize?: boolean;
+    /** The maximum number of disambigation suggestions that can be included in a `suggestion` response. */
+    max_suggestions?: number;
   }
 
   /** Workspace settings related to the Watson Assistant user interface. */
