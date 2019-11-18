@@ -1745,7 +1745,7 @@ namespace DiscoveryV2 {
   }
 
   /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
-  export interface QueryCalculationAggregation {
+  export interface QueryCalculationAggregation extends QueryAggregation {
     /** The field to perform the calculation on. */
     field: string;
     /** The value of the calculation. */
@@ -1753,7 +1753,7 @@ namespace DiscoveryV2 {
   }
 
   /** A modifier that will narrow down the document set of the sub aggregations it precedes. */
-  export interface QueryFilterAggregation {
+  export interface QueryFilterAggregation extends QueryAggregation {
     /** The filter written in Discovery Query Language syntax applied to the documents before sub aggregations are
      *  run.
      */
@@ -1765,7 +1765,7 @@ namespace DiscoveryV2 {
   }
 
   /** Numeric interval segments to categorize documents by using field values from a single numeric field to describe the category. */
-  export interface QueryHistogramAggregation {
+  export interface QueryHistogramAggregation extends QueryAggregation {
     /** The numeric field name used to create the histogram. */
     field: string;
     /** The size of the sections the results are split into. */
@@ -1823,7 +1823,7 @@ namespace DiscoveryV2 {
   }
 
   /** A restriction that alter the document set used for sub aggregations it precedes to nested documents found in the field specified. */
-  export interface QueryNestedAggregation {
+  export interface QueryNestedAggregation extends QueryAggregation {
     /** The path to the document field to scope sub aggregations to. */
     path: string;
     /** Number of nested documents found in the specified field. */
@@ -1952,7 +1952,7 @@ namespace DiscoveryV2 {
   }
 
   /** Returns the top values for the field specified. */
-  export interface QueryTermAggregation {
+  export interface QueryTermAggregation extends QueryAggregation {
     /** The field in the document used to generate top values from. */
     field: string;
     /** The number of top values returned. */
@@ -1972,7 +1972,7 @@ namespace DiscoveryV2 {
   }
 
   /** A specialized histogram aggregation that uses dates to create interval segments. */
-  export interface QueryTimesliceAggregation {
+  export interface QueryTimesliceAggregation extends QueryAggregation {
     /** The date field name used to create the timeslice. */
     field: string;
     /** The date interval value. Valid values are seconds, minutes, hours, days, weeks, and years. */
@@ -1994,7 +1994,7 @@ namespace DiscoveryV2 {
   }
 
   /** Returns the top documents ranked by the score of the query. */
-  export interface QueryTopHitsAggregation {
+  export interface QueryTopHitsAggregation extends QueryAggregation {
     /** The number of documents to return. */
     size: number;
     hits?: QueryTopHitsAggregationResult;
