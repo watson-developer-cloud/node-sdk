@@ -264,6 +264,7 @@ describe('AssistantV1', () => {
         const entities = 'fake_entities';
         const dialogNodes = 'fake_dialogNodes';
         const counterexamples = 'fake_counterexamples';
+        const webhooks = 'fake_webhooks';
         const params = {
           name,
           description,
@@ -275,6 +276,7 @@ describe('AssistantV1', () => {
           entities,
           dialogNodes,
           counterexamples,
+          webhooks,
         };
 
         assistant.createWorkspace(params);
@@ -298,6 +300,7 @@ describe('AssistantV1', () => {
         expect(options.body['entities']).toEqual(entities);
         expect(options.body['dialog_nodes']).toEqual(dialogNodes);
         expect(options.body['counterexamples']).toEqual(counterexamples);
+        expect(options.body['webhooks']).toEqual(webhooks);
       });
 
       test('should prioritize user-given headers', () => {
@@ -467,6 +470,7 @@ describe('AssistantV1', () => {
         const entities = 'fake_entities';
         const dialogNodes = 'fake_dialogNodes';
         const counterexamples = 'fake_counterexamples';
+        const webhooks = 'fake_webhooks';
         const append = 'fake_append';
         const params = {
           workspaceId,
@@ -480,6 +484,7 @@ describe('AssistantV1', () => {
           entities,
           dialogNodes,
           counterexamples,
+          webhooks,
           append,
         };
 
@@ -504,6 +509,7 @@ describe('AssistantV1', () => {
         expect(options.body['entities']).toEqual(entities);
         expect(options.body['dialog_nodes']).toEqual(dialogNodes);
         expect(options.body['counterexamples']).toEqual(counterexamples);
+        expect(options.body['webhooks']).toEqual(webhooks);
         expect(options.qs['append']).toEqual(append);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
@@ -4497,6 +4503,7 @@ describe('AssistantV1', () => {
         const digressOut = 'fake_digressOut';
         const digressOutSlots = 'fake_digressOutSlots';
         const userLabel = 'fake_userLabel';
+        const disambiguationOptOut = 'fake_disambiguationOptOut';
         const params = {
           workspaceId,
           dialogNode,
@@ -4517,6 +4524,7 @@ describe('AssistantV1', () => {
           digressOut,
           digressOutSlots,
           userLabel,
+          disambiguationOptOut,
         };
 
         assistant.createDialogNode(params);
@@ -4548,6 +4556,7 @@ describe('AssistantV1', () => {
         expect(options.body['digress_out']).toEqual(digressOut);
         expect(options.body['digress_out_slots']).toEqual(digressOutSlots);
         expect(options.body['user_label']).toEqual(userLabel);
+        expect(options.body['disambiguation_opt_out']).toEqual(disambiguationOptOut);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
 
@@ -4770,6 +4779,7 @@ describe('AssistantV1', () => {
         const newDigressOut = 'fake_newDigressOut';
         const newDigressOutSlots = 'fake_newDigressOutSlots';
         const newUserLabel = 'fake_newUserLabel';
+        const newDisambiguationOptOut = 'fake_newDisambiguationOptOut';
         const params = {
           workspaceId,
           dialogNode,
@@ -4791,6 +4801,7 @@ describe('AssistantV1', () => {
           newDigressOut,
           newDigressOutSlots,
           newUserLabel,
+          newDisambiguationOptOut,
         };
 
         assistant.updateDialogNode(params);
@@ -4826,6 +4837,7 @@ describe('AssistantV1', () => {
         expect(options.body['digress_out']).toEqual(newDigressOut);
         expect(options.body['digress_out_slots']).toEqual(newDigressOutSlots);
         expect(options.body['user_label']).toEqual(newUserLabel);
+        expect(options.body['disambiguation_opt_out']).toEqual(newDisambiguationOptOut);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['dialog_node']).toEqual(dialogNode);
       });

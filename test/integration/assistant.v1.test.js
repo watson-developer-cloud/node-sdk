@@ -148,9 +148,7 @@ describe('assistant v1 integration', () => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
-        expect(result.context.system.dialog_stack).toEqual([
-          { dialog_node: 'node_22_1467833484410' },
-        ]);
+        expect(result.context.system.dialog_stack).toEqual([{ dialog_node: 'root' }]);
         done();
       });
     });
@@ -172,9 +170,7 @@ describe('assistant v1 integration', () => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
-        expect(result.context.system.dialog_stack).toEqual([
-          { dialog_node: 'node_22_1467833484410' },
-        ]);
+        expect(result.context.system.dialog_stack).toEqual([]);
         done();
       });
     });
@@ -196,7 +192,7 @@ describe('assistant v1 integration', () => {
         expect(err).toBeNull();
         const { result } = res || {};
         expect(result).toBeDefined();
-        expect(result.context.system.dialog_stack).toEqual(['node_22_1467833484410']);
+        expect(result.context.system.dialog_stack).toEqual([]);
         done();
       });
     });
