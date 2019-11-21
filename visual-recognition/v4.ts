@@ -24,11 +24,6 @@ import { getSdkHeaders } from '../lib/common';
 /**
  * Provide images to the IBM Watson&trade; Visual Recognition service for analysis. The service detects objects based on
  * a set of images with training data.
- *
- * **Beta:** The Visual Recognition v4 API and Object Detection model are beta features. For more information about beta
- * features, see the [Release
- * notes](https://cloud.ibm.com/docs/services/visual-recognition?topic=visual-recognition-release-notes#beta).
- * {: important}
  */
 
 class VisualRecognitionV4 extends BaseService {
@@ -778,7 +773,9 @@ class VisualRecognitionV4 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.collectionId - The identifier of the collection.
    * @param {string} params.imageId - The identifier of the image.
-   * @param {string} [params.size] - Specify the image size.
+   * @param {string} [params.size] - The image size. Specify `thumbnail` to return a version that maintains the original
+   * aspect ratio but is no larger than 200 pixels in the larger dimension. For example, an original 800 x 1000 image is
+   * resized to 160 x 200 pixels.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -971,6 +968,66 @@ class VisualRecognitionV4 extends BaseService {
           headers: extend(true, sdkHeaders, {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /**
+   * Get training usage.
+   *
+   * Information about the completed training events. You can use this information to determine how close you are to the
+   * training limits for the month.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.startTime] - The earliest day to include training events. Specify dates in YYYY-MM-DD
+   * format. If empty or not specified, the earliest training event is included.
+   * @param {string} [params.endTime] - The most recent day to include training events. Specify dates in YYYY-MM-DD
+   * format. All events for the day are included. If empty or not specified, the current day is used. Specify the same
+   * value as `start_time` to request events for a single day.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response.
+   * @returns {Promise<any>|void}
+   */
+  public getTrainingUsage(params?: VisualRecognitionV4.GetTrainingUsageParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.TrainingEvents>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingEvents>> {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    return new Promise((resolve, reject) => {
+
+      const query = {
+        'start_time': _params.startTime,
+        'end_time': _params.endTime
+      };
+
+      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'getTrainingUsage');
+
+      const parameters = {
+        options: {
+          url: '/v4/training_usage',
+          method: 'GET',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
           }, _params.headers),
         }),
       };
@@ -1240,16 +1297,20 @@ namespace VisualRecognitionV4 {
     collectionId: string;
     /** The identifier of the image. */
     imageId: string;
-    /** Specify the image size. */
+    /** The image size. Specify `thumbnail` to return a version that maintains the original aspect ratio but is no
+     *  larger than 200 pixels in the larger dimension. For example, an original 800 x 1000 image is resized to 160 x
+     *  200 pixels.
+     */
     size?: GetJpegImageConstants.Size | string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `getJpegImage` operation. */
   export namespace GetJpegImageConstants {
-    /** Specify the image size. */
+    /** The image size. Specify `thumbnail` to return a version that maintains the original aspect ratio but is no larger than 200 pixels in the larger dimension. For example, an original 800 x 1000 image is resized to 160 x 200 pixels. */
     export enum Size {
       FULL = 'full',
+      THUMBNAIL = 'thumbnail',
     }
   }
 
@@ -1268,6 +1329,20 @@ namespace VisualRecognitionV4 {
     imageId: string;
     /** Training data for specific objects. */
     objects?: TrainingDataObject[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getTrainingUsage` operation. */
+  export interface GetTrainingUsageParams {
+    /** The earliest day to include training events. Specify dates in YYYY-MM-DD format. If empty or not specified,
+     *  the earliest training event is included.
+     */
+    startTime?: string;
+    /** The most recent day to include training events. Specify dates in YYYY-MM-DD format. All events for the day
+     *  are included. If empty or not specified, the current day is used. Specify the same value as `start_time` to
+     *  request events for a single day.
+     */
+    endTime?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1358,26 +1433,25 @@ namespace VisualRecognitionV4 {
     dimensions: ImageDimensions;
     /** Container for the list of collections that have objects detected in an image. */
     objects: DetectedObjects;
-    /** Details about an error. */
-    errors?: Error;
+    /** A container for the problems in the request. */
+    errors?: Error[];
   }
 
   /** Details about an image. */
   export interface ImageDetails {
     /** The identifier of the image. */
-    image_id: string;
+    image_id?: string;
     /** Date and time in Coordinated Universal Time (UTC) that the image was most recently updated. */
-    updated: string;
+    updated?: string;
     /** Date and time in Coordinated Universal Time (UTC) that the image was created. */
-    created: string;
+    created?: string;
     /** The source type of the image. */
     source: ImageSource;
     /** Height and width of an image. */
-    dimensions: ImageDimensions;
-    /** Details about an error. */
-    errors?: Error;
+    dimensions?: ImageDimensions;
+    errors?: Error[];
     /** Training data for all objects. */
-    training_data: TrainingDataObjects;
+    training_data?: TrainingDataObjects;
   }
 
   /** List of information about the images. */
@@ -1393,9 +1467,9 @@ namespace VisualRecognitionV4 {
   /** Height and width of an image. */
   export interface ImageDimensions {
     /** Height in pixels of the image. */
-    height: number;
+    height?: number;
     /** Width in pixels of the image. */
-    width: number;
+    width?: number;
   }
 
   /** The source type of the image. */
@@ -1478,6 +1552,38 @@ namespace VisualRecognitionV4 {
   export interface TrainingDataObjects {
     /** Training data for specific objects. */
     objects?: TrainingDataObject[];
+  }
+
+  /** Details about the training event. */
+  export interface TrainingEvent {
+    /** Trained object type. Only `objects` is currently supported. */
+    type?: string;
+    /** Identifier of the trained collection. */
+    collection_id?: string;
+    /** Date and time in Coordinated Universal Time (UTC) that training on the collection finished. */
+    completion_time?: string;
+    /** Training status of the training event. */
+    status?: string;
+    /** The total number of images that were used in training for this training event. */
+    image_count?: number;
+  }
+
+  /** Details about the training events. */
+  export interface TrainingEvents {
+    /** The starting day for the returned training events in Coordinated Universal Time (UTC). If not specified in
+     *  the request, it identifies the earliest training event.
+     */
+    start_time?: string;
+    /** The ending day for the returned training events in Coordinated Universal Time (UTC). If not specified in the
+     *  request, it lists the current time.
+     */
+    end_time?: string;
+    /** The total number of training events in the response for the start and end times. */
+    completed_events?: number;
+    /** The total number of images that were used in training for the start and end times. */
+    trained_images?: number;
+    /** The completed training events for the start and end time. */
+    events?: TrainingEvent[];
   }
 
   /** Training status information for the collection. */

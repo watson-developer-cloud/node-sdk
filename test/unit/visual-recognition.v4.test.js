@@ -1352,6 +1352,75 @@ describe('VisualRecognitionV4', () => {
       });
     });
   });
+  describe('getTrainingUsage', () => {
+    describe('positive tests', () => {
+      beforeAll(() => {
+        missingParamsMock.mockReturnValue(missingParamsSuccess);
+      });
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const startTime = 'fake_startTime';
+        const endTime = 'fake_endTime';
+        const params = {
+          startTime,
+          endTime,
+        };
+
+        visualRecognition.getTrainingUsage(params);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/training_usage', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['start_time']).toEqual(startTime);
+        expect(options.qs['end_time']).toEqual(endTime);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.getTrainingUsage(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should return a promise when no callback is given', () => {
+        // parameters
+        const params = {};
+
+        // invoke method
+        const getTrainingUsagePromise = visualRecognition.getTrainingUsage(params);
+        expectToBePromise(getTrainingUsagePromise);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+      });
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method
+        visualRecognition.getTrainingUsage({});
+        checkDefaultSuccessArgs(createRequestMock);
+      });
+
+      test('should use argument as callback function if only one is passed in', async () => {
+        // invoke the method
+        const callbackMock = jest.fn();
+        await visualRecognition.getTrainingUsage(callbackMock);
+        expect(callbackMock).toHaveBeenCalled();
+      });
+    });
+  });
   describe('deleteUserData', () => {
     describe('positive tests', () => {
       beforeAll(() => {

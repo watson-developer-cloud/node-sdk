@@ -886,7 +886,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations/{configuration_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/configurations/{configuration_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1005,7 +1009,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations/{configuration_id}', 'PUT');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/configurations/{configuration_id}',
+          'PUT'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1122,7 +1130,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/configurations/{configuration_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/configurations/{configuration_id}',
+          'DELETE'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1448,7 +1460,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1561,7 +1577,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}', 'PUT');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}',
+          'PUT'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1671,7 +1691,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}',
+          'DELETE'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1778,7 +1802,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/fields', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/fields',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1885,7 +1913,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/expansions', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1994,7 +2026,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/expansions', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2106,7 +2142,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/expansions', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/expansions',
+          'DELETE'
+        );
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2213,7 +2253,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2250,7 +2294,9 @@ describe('DiscoveryV1', () => {
         };
 
         // invoke method
-        const getTokenizationDictionaryStatusPromise = discovery.getTokenizationDictionaryStatus(params);
+        const getTokenizationDictionaryStatusPromise = discovery.getTokenizationDictionaryStatus(
+          params
+        );
         expectToBePromise(getTokenizationDictionaryStatusPromise);
 
         // assert that create request was called
@@ -2322,7 +2368,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2430,7 +2480,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/tokenization_dictionary',
+          'DELETE'
+        );
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2537,7 +2591,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2648,7 +2706,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2718,7 +2780,12 @@ describe('DiscoveryV1', () => {
 
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
+        const requiredParams = [
+          'environmentId',
+          'collectionId',
+          'stopwordFile',
+          'stopwordFilename',
+        ];
 
         let err;
         try {
@@ -2733,7 +2800,12 @@ describe('DiscoveryV1', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
+        const requiredParams = [
+          'environmentId',
+          'collectionId',
+          'stopwordFile',
+          'stopwordFilename',
+        ];
 
         const createStopwordListPromise = discovery.createStopwordList();
         expectToBePromise(createStopwordListPromise);
@@ -2766,7 +2838,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/word_lists/stopwords',
+          'DELETE'
+        );
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2881,7 +2957,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -2994,7 +3074,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -3116,7 +3200,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -3234,7 +3322,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/documents/{document_id}',
+          'DELETE'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -3388,7 +3480,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/query', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/query',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -3550,7 +3646,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/notices', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/notices',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -3989,7 +4089,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/autocompletion', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/autocompletion',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4103,7 +4207,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4216,7 +4324,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4326,7 +4438,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data',
+          'DELETE'
+        );
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4435,7 +4551,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4549,7 +4669,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}',
+          'DELETE'
+        );
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4663,7 +4787,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4783,7 +4911,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -4902,7 +5034,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+          'DELETE'
+        );
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -5027,7 +5163,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}', 'PUT');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+          'PUT'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -5150,7 +5290,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/collections/{collection_id}/training_data/{query_id}/examples/{example_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -6115,7 +6259,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials/{credential_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/credentials/{credential_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -6228,7 +6376,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials/{credential_id}', 'PUT');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/credentials/{credential_id}',
+          'PUT'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -6338,7 +6490,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/credentials/{credential_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/credentials/{credential_id}',
+          'DELETE'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -6648,7 +6804,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways/{gateway_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/gateways/{gateway_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -6755,7 +6915,11 @@ describe('DiscoveryV1', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/environments/{environment_id}/gateways/{gateway_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v1/environments/{environment_id}/gateways/{gateway_id}',
+          'DELETE'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
