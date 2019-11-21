@@ -6973,8 +6973,6 @@ namespace DiscoveryV1 {
     collection_id?: string;
     /** Metadata of a query result. */
     result_metadata?: QueryResultMetadata;
-    /** Automatically extracted result title. */
-    title?: string;
     /** The internal status code returned by the ingestion subsystem indicating the overall result of ingesting the
      *  source document.
      */
@@ -7041,8 +7039,6 @@ namespace DiscoveryV1 {
     collection_id?: string;
     /** Metadata of a query result. */
     result_metadata?: QueryResultMetadata;
-    /** Automatically extracted result title. */
-    title?: string;
     /** QueryResult accepts additional properties. */
     [propName: string]: any;
   }

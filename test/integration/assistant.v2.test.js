@@ -79,10 +79,7 @@ describe('assistant v2 integration', () => {
         expect(res).toBeDefined();
         expect(result.output).toBeDefined();
         expect(Array.isArray(result.output.generic)).toBe(true);
-        expect(result.output.generic[0].response_type).toBe('text');
-        expect(result.output.generic[0].text).toBeDefined();
-        expect(Array.isArray(result.output.intents)).toBe(true);
-        expect(Array.isArray(result.output.entities)).toBe(true);
+        expect(result.output.generic[0].response_type).toBe('search');
         done();
       });
   });

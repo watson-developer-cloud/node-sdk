@@ -298,6 +298,20 @@ describe('visual recognition v4 integration', () => {
 
       done();
     });
+
+    test('getTrainingUsage', async done => {
+      let res;
+      try {
+        res = await visualRecognition.getTrainingUsage();
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      done();
+    });
   });
 
   describe('userData', () => {
