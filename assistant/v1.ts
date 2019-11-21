@@ -258,6 +258,7 @@ class AssistantV1 extends BaseService {
    * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
    * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
    * marked as irrelevant input.
+   * @param {Webhook[]} [params.webhooks] -
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -278,7 +279,8 @@ class AssistantV1 extends BaseService {
         'intents': _params.intents,
         'entities': _params.entities,
         'dialog_nodes': _params.dialogNodes,
-        'counterexamples': _params.counterexamples
+        'counterexamples': _params.counterexamples,
+        'webhooks': _params.webhooks
       };
 
       const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createWorkspace');
@@ -422,6 +424,7 @@ class AssistantV1 extends BaseService {
    * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
    * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
    * marked as irrelevant input.
+   * @param {Webhook[]} [params.webhooks] -
    * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If
    * **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
    * including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing
@@ -459,7 +462,8 @@ class AssistantV1 extends BaseService {
         'intents': _params.intents,
         'entities': _params.entities,
         'dialog_nodes': _params.dialogNodes,
-        'counterexamples': _params.counterexamples
+        'counterexamples': _params.counterexamples,
+        'webhooks': _params.webhooks
       };
 
       const query = {
@@ -3234,6 +3238,8 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.digressOutSlots] - Whether the user can digress to top-level nodes while filling out slots.
    * @param {string} [params.userLabel] - A label that can be displayed externally to describe the purpose of the node
    * to users.
+   * @param {boolean} [params.disambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
+   * suggestions.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -3272,7 +3278,8 @@ class AssistantV1 extends BaseService {
         'digress_in': _params.digressIn,
         'digress_out': _params.digressOut,
         'digress_out_slots': _params.digressOutSlots,
-        'user_label': _params.userLabel
+        'user_label': _params.userLabel,
+        'disambiguation_opt_out': _params.disambiguationOptOut
       };
 
       const path = {
@@ -3433,6 +3440,8 @@ class AssistantV1 extends BaseService {
    * slots.
    * @param {string} [params.newUserLabel] - A label that can be displayed externally to describe the purpose of the
    * node to users.
+   * @param {boolean} [params.newDisambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
+   * suggestions.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response.
    * @returns {Promise<any>|void}
@@ -3471,7 +3480,8 @@ class AssistantV1 extends BaseService {
         'digress_in': _params.newDigressIn,
         'digress_out': _params.newDigressOut,
         'digress_out_slots': _params.newDigressOutSlots,
-        'user_label': _params.newUserLabel
+        'user_label': _params.newUserLabel,
+        'disambiguation_opt_out': _params.newDisambiguationOptOut
       };
 
       const path = {
@@ -3678,8 +3688,9 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
-   * filter. You must specify a filter query that includes a value for `language`, as well as a value for `workspace_id`
-   * or `request.context.metadata.deployment`. For more information, see the
+   * filter. You must specify a filter query that includes a value for `language`, as well as a value for
+   * `request.context.system.assistant_id`, `workspace_id`, or `request.context.metadata.deployment`. For more
+   * information, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
@@ -3929,6 +3940,7 @@ namespace AssistantV1 {
     dialogNodes?: DialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
+    webhooks?: Webhook[];
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3984,6 +3996,7 @@ namespace AssistantV1 {
     dialogNodes?: DialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
+    webhooks?: Webhook[];
     /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`,
      *  elements included in the new data completely replace the corresponding existing elements, including all
      *  subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in
@@ -4676,6 +4689,8 @@ namespace AssistantV1 {
     digressOutSlots?: CreateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
     userLabel?: string;
+    /** Whether the dialog node should be excluded from disambiguation suggestions. */
+    disambiguationOptOut?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4785,6 +4800,8 @@ namespace AssistantV1 {
     newDigressOutSlots?: UpdateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
     newUserLabel?: string;
+    /** Whether the dialog node should be excluded from disambiguation suggestions. */
+    newDisambiguationOptOut?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4863,8 +4880,8 @@ namespace AssistantV1 {
   /** Parameters for the `listAllLogs` operation. */
   export interface ListAllLogsParams {
     /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a
-     *  filter query that includes a value for `language`, as well as a value for `workspace_id` or
-     *  `request.context.metadata.deployment`. For more information, see the
+     *  filter query that includes a value for `language`, as well as a value for `request.context.system.assistant_id`,
+     *  `workspace_id`, or `request.context.metadata.deployment`. For more information, see the
      *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
      */
     filter: string;
@@ -5047,6 +5064,8 @@ namespace AssistantV1 {
     digress_out_slots?: string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
     user_label?: string;
+    /** Whether the dialog node should be excluded from disambiguation suggestions. */
+    disambiguation_opt_out?: boolean;
     /** For internal use only. */
     disabled?: boolean;
     /** The timestamp for creation of the object. */
@@ -5233,8 +5252,8 @@ namespace AssistantV1 {
 
   /** DialogSuggestion. */
   export interface DialogSuggestion {
-    /** The user-facing label for the disambiguation option. This label is taken from the **user_label** property of
-     *  the corresponding dialog node.
+    /** The user-facing label for the disambiguation option. This label is taken from the **title** or
+     *  **user_label** property of the corresponding dialog node, depending on the disambiguation options.
      */
     label: string;
     /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if
@@ -5640,8 +5659,8 @@ namespace AssistantV1 {
     dialog_node?: string;
     /** An array of objects describing the possible matching dialog nodes from which the user can choose.
      *
-     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for
-     *  Premium users.
+     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for Plus
+     *  and Premium users.
      */
     suggestions?: DialogSuggestion[];
   }
@@ -5710,6 +5729,24 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
+  /** A webhook that can be used by dialog nodes to make programmatic calls to an external function. **Note:** Currently, only a single webhook named `main_webhook` is supported. */
+  export interface Webhook {
+    /** The URL for the external service or application to which you want to send HTTP POST requests. */
+    url: string;
+    /** The name of the webhook. Currently, `main_webhook` is the only supported value. */
+    name: string;
+    /** An optional array of HTTP headers to pass with the HTTP request. */
+    headers?: WebhookHeader[];
+  }
+
+  /** A key/value pair defining an HTTP header and a value. */
+  export interface WebhookHeader {
+    /** The name of an HTTP header (for example, `Authorization`). */
+    name: string;
+    /** The value of an HTTP header. */
+    value: string;
+  }
+
   /** Workspace. */
   export interface Workspace {
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -5742,6 +5779,7 @@ namespace AssistantV1 {
     dialog_nodes?: DialogNode[];
     /** An array of counterexamples. */
     counterexamples?: Counterexample[];
+    webhooks?: Webhook[];
   }
 
   /** WorkspaceCollection. */
@@ -5758,14 +5796,16 @@ namespace AssistantV1 {
     tooling?: WorkspaceSystemSettingsTooling;
     /** Workspace settings related to the disambiguation feature.
      *
-     *  **Note:** This feature is available only to Premium users.
+     *  **Note:** This feature is available only to Plus and Premium users.
      */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
     human_agent_assist?: JsonObject;
+    /** Workspace settings related to detection of irrelevant input. */
+    off_topic?: WorkspaceSystemSettingsOffTopic;
   }
 
-  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Premium users. */
+  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Plus and Premium users. */
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;
@@ -5779,6 +5819,20 @@ namespace AssistantV1 {
      *  disambiguation feature to be triggered more often. This can be useful for testing or demonstration purposes.
      */
     sensitivity?: string;
+    /** Whether the order in which disambiguation suggestions are presented should be randomized (but still
+     *  influenced by relative confidence).
+     */
+    randomize?: boolean;
+    /** The maximum number of disambigation suggestions that can be included in a `suggestion` response. */
+    max_suggestions?: number;
+    /** For internal use only. */
+    suggestion_text_policy?: string;
+  }
+
+  /** Workspace settings related to detection of irrelevant input. */
+  export interface WorkspaceSystemSettingsOffTopic {
+    /** Whether enhanced irrelevance detection is enabled for the workspace. */
+    enabled?: boolean;
   }
 
   /** Workspace settings related to the Watson Assistant user interface. */
