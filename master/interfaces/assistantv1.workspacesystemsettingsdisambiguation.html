@@ -66,11 +66,11 @@
 </header>
 <div class="container container-main">
 	<div class="row">
-		<div class="col-8 col-content">
+		<div class="col-9 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Workspace settings related to the disambiguation feature. <strong>Note:</strong> This feature is available only to Premium users.</p>
+						<p>Workspace settings related to the disambiguation feature. <strong>Note:</strong> This feature is available only to Plus and Premium users.</p>
 					</div>
 				</div>
 			</section>
@@ -86,13 +86,17 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
+						<!-- Unless the section is part of the exclusion list, render them -->
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspacesystemsettingsdisambiguation.html#enabled" class="tsd-kind-icon">enabled</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspacesystemsettingsdisambiguation.html#max_suggestions" class="tsd-kind-icon">max_<wbr>suggestions</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspacesystemsettingsdisambiguation.html#none_of_the_above_prompt" class="tsd-kind-icon">none_<wbr>of_<wbr>the_<wbr>above_<wbr>prompt</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspacesystemsettingsdisambiguation.html#prompt" class="tsd-kind-icon">prompt</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspacesystemsettingsdisambiguation.html#randomize" class="tsd-kind-icon">randomize</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspacesystemsettingsdisambiguation.html#sensitivity" class="tsd-kind-icon">sensitivity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.workspacesystemsettingsdisambiguation.html#suggestion_text_policy" class="tsd-kind-icon">suggestion_<wbr>text_<wbr>policy</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,7 +110,7 @@
 					<div class="tsd-signature tsd-kind-icon">enabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7bc6341/assistant/v1.ts#L5777">assistant/v1.ts:5777</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/c2a79ff/assistant/v1.ts#L5817">assistant/v1.ts:5817</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,12 +120,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="max_suggestions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max_<wbr>suggestions</h3>
+					<div class="tsd-signature tsd-kind-icon">max_<wbr>suggestions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/c2a79ff/assistant/v1.ts#L5827">assistant/v1.ts:5827</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The maximum number of disambigation suggestions that can be included in a <code>suggestion</code> response.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="none_of_the_above_prompt" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> none_<wbr>of_<wbr>the_<wbr>above_<wbr>prompt</h3>
 					<div class="tsd-signature tsd-kind-icon">none_<wbr>of_<wbr>the_<wbr>above_<wbr>prompt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7bc6341/assistant/v1.ts#L5775">assistant/v1.ts:5775</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/c2a79ff/assistant/v1.ts#L5815">assistant/v1.ts:5815</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -137,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">prompt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7bc6341/assistant/v1.ts#L5771">assistant/v1.ts:5771</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/c2a79ff/assistant/v1.ts#L5811">assistant/v1.ts:5811</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,12 +166,28 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="randomize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> randomize</h3>
+					<div class="tsd-signature tsd-kind-icon">randomize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/c2a79ff/assistant/v1.ts#L5825">assistant/v1.ts:5825</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether the order in which disambiguation suggestions are presented should be randomized (but still
+							influenced by relative confidence).</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="sensitivity" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> sensitivity</h3>
 					<div class="tsd-signature tsd-kind-icon">sensitivity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/7bc6341/assistant/v1.ts#L5781">assistant/v1.ts:5781</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/c2a79ff/assistant/v1.ts#L5821">assistant/v1.ts:5821</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,9 +197,24 @@
 						</div>
 					</div>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="suggestion_text_policy" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> suggestion_<wbr>text_<wbr>policy</h3>
+					<div class="tsd-signature tsd-kind-icon">suggestion_<wbr>text_<wbr>policy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/c2a79ff/assistant/v1.ts#L5829">assistant/v1.ts:5829</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>For internal use only.</p>
+						</div>
+					</div>
+				</section>
 			</section>
 		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
 					<li class="globals  ">
@@ -176,23 +226,41 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class="current tsd-kind-class">
 						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
 						<ul>
+							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="assistantv1.workspacesystemsettingsdisambiguation.html" class="tsd-kind-icon">Workspace<wbr>System<wbr>Settings<wbr>Disambiguation</a>
 								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspacesystemsettingsdisambiguation.html#enabled" class="tsd-kind-icon">enabled</a>
 									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspacesystemsettingsdisambiguation.html#max_suggestions" class="tsd-kind-icon">max_<wbr>suggestions</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspacesystemsettingsdisambiguation.html#none_of_the_above_prompt" class="tsd-kind-icon">none_<wbr>of_<wbr>the_<wbr>above_<wbr>prompt</a>
 									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspacesystemsettingsdisambiguation.html#prompt" class="tsd-kind-icon">prompt</a>
 									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspacesystemsettingsdisambiguation.html#randomize" class="tsd-kind-icon">randomize</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.workspacesystemsettingsdisambiguation.html#sensitivity" class="tsd-kind-icon">sensitivity</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.workspacesystemsettingsdisambiguation.html#suggestion_text_policy" class="tsd-kind-icon">suggestion_<wbr>text_<wbr>policy</a>
 									</li>
 								</ul>
 							</li>
@@ -200,48 +268,60 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
 					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-not-exported">
-						<a href="writablestate.html" class="tsd-kind-icon">Writable<wbr>State</a>
-					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
