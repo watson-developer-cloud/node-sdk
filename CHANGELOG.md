@@ -1,3 +1,12 @@
+# [5.2.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.1.0...v5.2.0) (2019-11-27)
+
+
+### Features
+
+* add support for discovery v2 service ([c2a79ff](https://github.com/watson-developer-cloud/node-sdk/commit/c2a79ff))
+* **assistant-v1:** `webhooks` parameter added to `createWorkspace` and `updateWorkspace` ([c61b794](https://github.com/watson-developer-cloud/node-sdk/commit/c61b794))
+* **visual-recognition-v4:** new method added - `getTrainingUsage` ([0756878](https://github.com/watson-developer-cloud/node-sdk/commit/0756878))
+
 # [5.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.0.0...v5.1.0) (2019-10-07)
 
 
