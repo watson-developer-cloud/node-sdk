@@ -151,8 +151,8 @@
 <span class="hljs-keyword">import</span> { IamAuthenticator } <span class="hljs-keyword">from</span> <span class="hljs-string">'ibm-watson/auth'</span>;
 
 <span class="hljs-keyword">const</span> discoveryClient = <span class="hljs-keyword">new</span> DiscoveryV1({
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'{apikey}'</span> })
-  version: <span class="hljs-string">'{version}'</span>,
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'{apikey}'</span> }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'{version}'</span>,
 });
 
 <span class="hljs-comment">// ...</span>
