@@ -1,3 +1,10 @@
+## [5.2.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.2.0...v5.2.1) (2019-12-09)
+
+
+### Bug Fixes
+
+* upgrade core version to 1.3.1 ([#1005](https://github.com/watson-developer-cloud/node-sdk/issues/1005)) ([239cdab](https://github.com/watson-developer-cloud/node-sdk/commit/239cdab))
+
 # [5.2.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.1.0...v5.2.0) (2019-11-27)
 
 
