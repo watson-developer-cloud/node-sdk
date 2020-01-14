@@ -101,6 +101,8 @@ class RecognizeStream extends Duplex {
    * @param {boolean} [options.processingMetrics] - If true, requests processing metrics about the service's transcription of the input audio (default=false)
    * @param {number} [options.processingMetricsInterval] - Specifies the interval in seconds at which the service is to return processing metrics
    * @param {boolean} [options.audioMetrics] - If true, requests detailed information about the signal characteristics of the input audio (detailed=false)
+   * @param {number} [options.endOfPhraseSilenceTime] - If `true`, specifies the duration of the pause interval at which the service splits a transcript into multiple final results
+   * @param {boolean} [options.splitTranscriptAtPhraseEnd] - If `true`, directs the service to split the transcript into multiple final results based on semantic features of the input
    * @constructor
    */
   constructor(options: RecognizeStream.Options) {
@@ -173,6 +175,8 @@ class RecognizeStream extends Duplex {
       'speaker_labels',
       'grammar_name',
       'redaction',
+      'end_of_phrase_silence_time',
+      'split_transcript_at_phrase_end',
     ];
     const openingMessage = processUserParameters(options, openingMessageParamsAllowed);
     openingMessage.action = 'start';
