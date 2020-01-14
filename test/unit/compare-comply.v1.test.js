@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,16 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
-const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
 const CompareComplyV1 = require('../../dist/compare-comply/v1');
-const utils = require('../resources/unitTestUtils');
 
 const {
   getOptions,
   checkUrlAndMethod,
   checkMediaHeaders,
-  missingParamsSuccess,
   expectToBePromise,
-  missingParamsError,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  checkDefaultSuccessArgs,
-} = utils;
+  checkForSuccessfulExecution,
+} = unitTestUtils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -40,22 +34,17 @@ const service = {
 
 const compareComply = new CompareComplyV1(service);
 const createRequestMock = jest.spyOn(compareComply, 'createRequest');
-const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
   createRequestMock.mockClear();
-  missingParamsMock.mockClear();
 });
 
 describe('CompareComplyV1', () => {
   describe('convertToHtml', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const file = 'fake_file';
@@ -67,7 +56,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.convertToHtml(params);
+        const convertToHtmlResult = compareComply.convertToHtml(params);
+
+        // all methods should return a Promise
+        expectToBePromise(convertToHtmlResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -99,35 +91,9 @@ describe('CompareComplyV1', () => {
         compareComply.convertToHtml(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const file = 'fake_file';
-        const params = {
-          file,
-        };
-
-        // invoke method
-        const convertToHtmlPromise = compareComply.convertToHtml(params);
-        expectToBePromise(convertToHtmlPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.convertToHtml(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['file'];
@@ -139,7 +105,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -151,7 +117,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(convertToHtmlPromise);
 
         convertToHtmlPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -159,9 +125,6 @@ describe('CompareComplyV1', () => {
   });
   describe('classifyElements', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const file = 'fake_file';
@@ -173,7 +136,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.classifyElements(params);
+        const classifyElementsResult = compareComply.classifyElements(params);
+
+        // all methods should return a Promise
+        expectToBePromise(classifyElementsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -205,35 +171,9 @@ describe('CompareComplyV1', () => {
         compareComply.classifyElements(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const file = 'fake_file';
-        const params = {
-          file,
-        };
-
-        // invoke method
-        const classifyElementsPromise = compareComply.classifyElements(params);
-        expectToBePromise(classifyElementsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.classifyElements(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['file'];
@@ -245,7 +185,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -257,7 +197,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(classifyElementsPromise);
 
         classifyElementsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -265,9 +205,6 @@ describe('CompareComplyV1', () => {
   });
   describe('extractTables', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const file = 'fake_file';
@@ -279,7 +216,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.extractTables(params);
+        const extractTablesResult = compareComply.extractTables(params);
+
+        // all methods should return a Promise
+        expectToBePromise(extractTablesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -311,35 +251,9 @@ describe('CompareComplyV1', () => {
         compareComply.extractTables(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const file = 'fake_file';
-        const params = {
-          file,
-        };
-
-        // invoke method
-        const extractTablesPromise = compareComply.extractTables(params);
-        expectToBePromise(extractTablesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.extractTables(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['file'];
@@ -351,7 +265,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -363,7 +277,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(extractTablesPromise);
 
         extractTablesPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -371,9 +285,6 @@ describe('CompareComplyV1', () => {
   });
   describe('compareDocuments', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const file1 = 'fake_file1';
@@ -393,7 +304,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.compareDocuments(params);
+        const compareDocumentsResult = compareComply.compareDocuments(params);
+
+        // all methods should return a Promise
+        expectToBePromise(compareDocumentsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -431,37 +345,9 @@ describe('CompareComplyV1', () => {
         compareComply.compareDocuments(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const file1 = 'fake_file1';
-        const file2 = 'fake_file2';
-        const params = {
-          file1,
-          file2,
-        };
-
-        // invoke method
-        const compareDocumentsPromise = compareComply.compareDocuments(params);
-        expectToBePromise(compareDocumentsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.compareDocuments(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['file1', 'file2'];
@@ -473,7 +359,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -485,7 +371,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(compareDocumentsPromise);
 
         compareDocumentsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -493,9 +379,6 @@ describe('CompareComplyV1', () => {
   });
   describe('addFeedback', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const feedbackData = 'fake_feedbackData';
@@ -507,7 +390,10 @@ describe('CompareComplyV1', () => {
           comment,
         };
 
-        compareComply.addFeedback(params);
+        const addFeedbackResult = compareComply.addFeedback(params);
+
+        // all methods should return a Promise
+        expectToBePromise(addFeedbackResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -539,35 +425,9 @@ describe('CompareComplyV1', () => {
         compareComply.addFeedback(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const feedbackData = 'fake_feedbackData';
-        const params = {
-          feedbackData,
-        };
-
-        // invoke method
-        const addFeedbackPromise = compareComply.addFeedback(params);
-        expectToBePromise(addFeedbackPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.addFeedback(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['feedbackData'];
@@ -579,7 +439,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -591,7 +451,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(addFeedbackPromise);
 
         addFeedbackPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -599,9 +459,6 @@ describe('CompareComplyV1', () => {
   });
   describe('listFeedback', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const feedbackType = 'fake_feedbackType';
@@ -639,7 +496,10 @@ describe('CompareComplyV1', () => {
           includeTotal,
         };
 
-        compareComply.listFeedback(params);
+        const listFeedbackResult = compareComply.listFeedback(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listFeedbackResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -683,21 +543,10 @@ describe('CompareComplyV1', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listFeedbackPromise = compareComply.listFeedback(params);
-        expectToBePromise(listFeedbackPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         compareComply.listFeedback({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -710,9 +559,6 @@ describe('CompareComplyV1', () => {
   });
   describe('getFeedback', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const feedbackId = 'fake_feedbackId';
@@ -722,7 +568,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.getFeedback(params);
+        const getFeedbackResult = compareComply.getFeedback(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getFeedbackResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -753,35 +602,9 @@ describe('CompareComplyV1', () => {
         compareComply.getFeedback(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const feedbackId = 'fake_feedbackId';
-        const params = {
-          feedbackId,
-        };
-
-        // invoke method
-        const getFeedbackPromise = compareComply.getFeedback(params);
-        expectToBePromise(getFeedbackPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.getFeedback(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['feedbackId'];
@@ -793,7 +616,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -805,7 +628,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(getFeedbackPromise);
 
         getFeedbackPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -813,9 +636,6 @@ describe('CompareComplyV1', () => {
   });
   describe('deleteFeedback', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const feedbackId = 'fake_feedbackId';
@@ -825,7 +645,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.deleteFeedback(params);
+        const deleteFeedbackResult = compareComply.deleteFeedback(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteFeedbackResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -856,35 +679,9 @@ describe('CompareComplyV1', () => {
         compareComply.deleteFeedback(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const feedbackId = 'fake_feedbackId';
-        const params = {
-          feedbackId,
-        };
-
-        // invoke method
-        const deleteFeedbackPromise = compareComply.deleteFeedback(params);
-        expectToBePromise(deleteFeedbackPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.deleteFeedback(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['feedbackId'];
@@ -896,7 +693,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -908,7 +705,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(deleteFeedbackPromise);
 
         deleteFeedbackPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -916,9 +713,6 @@ describe('CompareComplyV1', () => {
   });
   describe('createBatch', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const _function = 'fake__function';
@@ -940,7 +734,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.createBatch(params);
+        const createBatchResult = compareComply.createBatch(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createBatchResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -991,47 +788,9 @@ describe('CompareComplyV1', () => {
         compareComply.createBatch(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const _function = 'fake__function';
-        const inputCredentialsFile = 'fake_inputCredentialsFile';
-        const inputBucketLocation = 'fake_inputBucketLocation';
-        const inputBucketName = 'fake_inputBucketName';
-        const outputCredentialsFile = 'fake_outputCredentialsFile';
-        const outputBucketLocation = 'fake_outputBucketLocation';
-        const outputBucketName = 'fake_outputBucketName';
-        const params = {
-          _function,
-          inputCredentialsFile,
-          inputBucketLocation,
-          inputBucketName,
-          outputCredentialsFile,
-          outputBucketLocation,
-          outputBucketName,
-        };
-
-        // invoke method
-        const createBatchPromise = compareComply.createBatch(params);
-        expectToBePromise(createBatchPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.createBatch(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = [
@@ -1051,7 +810,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1071,7 +830,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(createBatchPromise);
 
         createBatchPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1079,14 +838,14 @@ describe('CompareComplyV1', () => {
   });
   describe('listBatches', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const params = {};
 
-        compareComply.listBatches(params);
+        const listBatchesResult = compareComply.listBatches(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listBatchesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1114,21 +873,10 @@ describe('CompareComplyV1', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listBatchesPromise = compareComply.listBatches(params);
-        expectToBePromise(listBatchesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         compareComply.listBatches({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -1141,9 +889,6 @@ describe('CompareComplyV1', () => {
   });
   describe('getBatch', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const batchId = 'fake_batchId';
@@ -1151,7 +896,10 @@ describe('CompareComplyV1', () => {
           batchId,
         };
 
-        compareComply.getBatch(params);
+        const getBatchResult = compareComply.getBatch(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getBatchResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1181,35 +929,9 @@ describe('CompareComplyV1', () => {
         compareComply.getBatch(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const batchId = 'fake_batchId';
-        const params = {
-          batchId,
-        };
-
-        // invoke method
-        const getBatchPromise = compareComply.getBatch(params);
-        expectToBePromise(getBatchPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.getBatch(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['batchId'];
@@ -1221,7 +943,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1233,7 +955,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(getBatchPromise);
 
         getBatchPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1241,9 +963,6 @@ describe('CompareComplyV1', () => {
   });
   describe('updateBatch', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const batchId = 'fake_batchId';
@@ -1255,7 +974,10 @@ describe('CompareComplyV1', () => {
           model,
         };
 
-        compareComply.updateBatch(params);
+        const updateBatchResult = compareComply.updateBatch(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateBatchResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1289,37 +1011,9 @@ describe('CompareComplyV1', () => {
         compareComply.updateBatch(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const batchId = 'fake_batchId';
-        const action = 'fake_action';
-        const params = {
-          batchId,
-          action,
-        };
-
-        // invoke method
-        const updateBatchPromise = compareComply.updateBatch(params);
-        expectToBePromise(updateBatchPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        compareComply.updateBatch(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['batchId', 'action'];
@@ -1331,7 +1025,7 @@ describe('CompareComplyV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1343,7 +1037,7 @@ describe('CompareComplyV1', () => {
         expectToBePromise(updateBatchPromise);
 
         updateBatchPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

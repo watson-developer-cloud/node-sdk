@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2019.
+ * (C) Copyright IBM Corp. 2017, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -28,9 +27,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class VisualRecognitionV3 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/visual-recognition/api';
-  name: string; // set by prototype to 'watson_vision_combined'
-  serviceVersion: string; // set by prototype to 'v3'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/visual-recognition/api';
+  static DEFAULT_SERVICE_NAME: string = 'watson_vision_combined';
 
   /**
    * Construct a VisualRecognitionV3 object.
@@ -44,17 +42,25 @@ class VisualRecognitionV3 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/visual-recognition/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {VisualRecognitionV3}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = VisualRecognitionV3.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('watson_vision_combined');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -105,8 +111,8 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} [params.acceptLanguage] - The desired language of parts of the response. See the response for
    * details.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>>}
    */
   public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
@@ -125,7 +131,7 @@ class VisualRecognitionV3 extends BaseService {
         'classifier_ids': Array.isArray(_params.classifierIds) ? _params.classifierIds.join(',') : _params.classifierIds
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'classify');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'classify');
 
       const parameters = {
         options: {
@@ -187,7 +193,8 @@ class VisualRecognitionV3 extends BaseService {
    * classifier. You can include more than one positive example file in a call.
    *
    * Specify the parameter name by appending `_positive_examples` to the class name. For example,
-   * `goldenretriever_positive_examples` creates the class **goldenretriever**.
+   * `goldenretriever_positive_examples` creates the class **goldenretriever**. The string cannot contain the following
+   * characters: ``$ * - { } \ | / ' " ` [ ]``.
    *
    * Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The
    * maximum number of images is 10,000 images or 100 MB per .zip file.
@@ -199,8 +206,8 @@ class VisualRecognitionV3 extends BaseService {
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.negativeExamplesFilename] - The filename for negativeExamples.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
   public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
     const _params = extend({}, params);
@@ -208,7 +215,6 @@ class VisualRecognitionV3 extends BaseService {
     const requiredParams = ['name', 'positiveExamples'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -217,6 +223,7 @@ class VisualRecognitionV3 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'name': _params.name,
         'negative_examples': {
@@ -234,7 +241,7 @@ class VisualRecognitionV3 extends BaseService {
         };
       });
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'createClassifier');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'createClassifier');
 
       const parameters = {
         options: {
@@ -275,20 +282,19 @@ class VisualRecognitionV3 extends BaseService {
    * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to
    * return a brief list of classifiers.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>>}
    */
   public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
       const query = {
         'verbose': _params.verbose
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'listClassifiers');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'listClassifiers');
 
       const parameters = {
         options: {
@@ -329,8 +335,8 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
   public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
     const _params = extend({}, params);
@@ -338,7 +344,6 @@ class VisualRecognitionV3 extends BaseService {
     const requiredParams = ['classifierId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -352,7 +357,7 @@ class VisualRecognitionV3 extends BaseService {
         'classifier_id': _params.classifierId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getClassifier');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getClassifier');
 
       const parameters = {
         options: {
@@ -413,7 +418,8 @@ class VisualRecognitionV3 extends BaseService {
    * positive example file in a call.
    *
    * Specify the parameter name by appending `_positive_examples` to the class name. For example,
-   * `goldenretriever_positive_examples` creates the class `goldenretriever`.
+   * `goldenretriever_positive_examples` creates the class `goldenretriever`. The string cannot contain the following
+   * characters: ``$ * - { } \ | / ' " ` [ ]``.
    *
    * Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The
    * maximum number of images is 10,000 images or 100 MB per .zip file.
@@ -425,8 +431,8 @@ class VisualRecognitionV3 extends BaseService {
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.negativeExamplesFilename] - The filename for negativeExamples.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
   public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
     const _params = extend({}, params);
@@ -434,7 +440,6 @@ class VisualRecognitionV3 extends BaseService {
     const requiredParams = ['classifierId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -443,6 +448,7 @@ class VisualRecognitionV3 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'negative_examples': {
           data: _params.negativeExamples,
@@ -463,7 +469,7 @@ class VisualRecognitionV3 extends BaseService {
         'classifier_id': _params.classifierId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'updateClassifier');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'updateClassifier');
 
       const parameters = {
         options: {
@@ -504,8 +510,8 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>>}
    */
   public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
     const _params = extend({}, params);
@@ -513,7 +519,6 @@ class VisualRecognitionV3 extends BaseService {
     const requiredParams = ['classifierId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -527,7 +532,7 @@ class VisualRecognitionV3 extends BaseService {
         'classifier_id': _params.classifierId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteClassifier');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteClassifier');
 
       const parameters = {
         options: {
@@ -573,8 +578,8 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream|Buffer>>}
    */
   public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|Buffer>): Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
@@ -582,7 +587,6 @@ class VisualRecognitionV3 extends BaseService {
     const requiredParams = ['classifierId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -596,7 +600,7 @@ class VisualRecognitionV3 extends BaseService {
         'classifier_id': _params.classifierId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'getCoreMlModel');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getCoreMlModel');
 
       const parameters = {
         options: {
@@ -647,8 +651,8 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>>}
    */
   public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
     const _params = extend({}, params);
@@ -656,7 +660,6 @@ class VisualRecognitionV3 extends BaseService {
     const requiredParams = ['customerId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -670,7 +673,7 @@ class VisualRecognitionV3 extends BaseService {
         'customer_id': _params.customerId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v3', 'deleteUserData');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteUserData');
 
       const parameters = {
         options: {
@@ -704,9 +707,6 @@ class VisualRecognitionV3 extends BaseService {
   };
 
 }
-
-VisualRecognitionV3.prototype.name = 'watson_vision_combined';
-VisualRecognitionV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces
@@ -811,7 +811,8 @@ namespace VisualRecognitionV3 {
      *  visual subject of a class in the new classifier. You can include more than one positive example file in a call.
      *
      *  Specify the parameter name by appending `_positive_examples` to the class name. For example,
-     *  `goldenretriever_positive_examples` creates the class **goldenretriever**.
+     *  `goldenretriever_positive_examples` creates the class **goldenretriever**. The string cannot contain the
+     *  following characters: ``$ * - { } \ | / ' " ` [ ]``.
      *
      *  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The
      *  maximum number of images is 10,000 images or 100 MB per .zip file.
@@ -855,7 +856,8 @@ namespace VisualRecognitionV3 {
      *  You can include more than one positive example file in a call.
      *
      *  Specify the parameter name by appending `_positive_examples` to the class name. For example,
-     *  `goldenretriever_positive_examples` creates the class `goldenretriever`.
+     *  `goldenretriever_positive_examples` creates the class `goldenretriever`. The string cannot contain the following
+     *  characters: ``$ * - { } \ | / ' " ` [ ]``.
      *
      *  Include at least 10 images in .jpg or .png format. The minimum recommended image resolution is 32X32 pixels. The
      *  maximum number of images is 10,000 images or 100 MB per .zip file.

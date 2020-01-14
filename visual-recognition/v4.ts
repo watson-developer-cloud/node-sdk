@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2019, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { FileWithMetadata } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -28,9 +27,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class VisualRecognitionV4 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/visual-recognition/api';
-  name: string; // set by prototype to 'watson_vision_combined'
-  serviceVersion: string; // set by prototype to 'v4'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/visual-recognition/api';
+  static DEFAULT_SERVICE_NAME: string = 'watson_vision_combined';
 
   /**
    * Construct a VisualRecognitionV4 object.
@@ -44,17 +42,25 @@ class VisualRecognitionV4 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/visual-recognition/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {VisualRecognitionV4}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = VisualRecognitionV4.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('watson_vision_combined');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -93,8 +99,8 @@ class VisualRecognitionV4 extends BaseService {
    * You can also include images with the **images_file** parameter.
    * @param {number} [params.threshold] - The minimum score a feature must have to be returned.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.AnalyzeResponse>>}
    */
   public analyze(params: VisualRecognitionV4.AnalyzeParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.AnalyzeResponse>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.AnalyzeResponse>> {
     const _params = extend({}, params);
@@ -102,7 +108,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionIds', 'features'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -111,6 +116,7 @@ class VisualRecognitionV4 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'collection_ids': Array.isArray(_params.collectionIds) ? _params.collectionIds.join(',') : _params.collectionIds,
         'features': Array.isArray(_params.features) ? _params.features.join(',') : _params.features,
@@ -119,7 +125,7 @@ class VisualRecognitionV4 extends BaseService {
         'threshold': _params.threshold
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'analyze');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'analyze');
 
       const parameters = {
         options: {
@@ -172,21 +178,20 @@ class VisualRecognitionV4 extends BaseService {
    * and dot characters. It cannot begin with the reserved prefix `sys-`.
    * @param {string} [params.description] - The description of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
   public createCollection(params?: VisualRecognitionV4.CreateCollectionParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Collection>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
       const body = {
         'name': _params.name,
         'description': _params.description
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'createCollection');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'createCollection');
 
       const parameters = {
         options: {
@@ -227,16 +232,15 @@ class VisualRecognitionV4 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.CollectionsList>>}
    */
   public listCollections(params?: VisualRecognitionV4.ListCollectionsParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.CollectionsList>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.CollectionsList>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'listCollections');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'listCollections');
 
       const parameters = {
         options: {
@@ -276,8 +280,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.collectionId - The identifier of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
   public getCollection(params: VisualRecognitionV4.GetCollectionParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Collection>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
     const _params = extend({}, params);
@@ -285,7 +289,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -299,7 +302,7 @@ class VisualRecognitionV4 extends BaseService {
         'collection_id': _params.collectionId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'getCollection');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getCollection');
 
       const parameters = {
         options: {
@@ -346,8 +349,8 @@ class VisualRecognitionV4 extends BaseService {
    * and dot characters. It cannot begin with the reserved prefix `sys-`.
    * @param {string} [params.description] - The description of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
   public updateCollection(params: VisualRecognitionV4.UpdateCollectionParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Collection>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
     const _params = extend({}, params);
@@ -355,7 +358,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -374,7 +376,7 @@ class VisualRecognitionV4 extends BaseService {
         'collection_id': _params.collectionId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'updateCollection');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'updateCollection');
 
       const parameters = {
         options: {
@@ -417,8 +419,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.collectionId - The identifier of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
    */
   public deleteCollection(params: VisualRecognitionV4.DeleteCollectionParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Empty>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
     const _params = extend({}, params);
@@ -426,7 +428,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -440,7 +441,7 @@ class VisualRecognitionV4 extends BaseService {
         'collection_id': _params.collectionId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'deleteCollection');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteCollection');
 
       const parameters = {
         options: {
@@ -506,8 +507,8 @@ class VisualRecognitionV4 extends BaseService {
    * The `object` property can contain alphanumeric, underscore, hyphen, space, and dot characters. It cannot begin with
    * the reserved prefix `sys-` and must be no longer than 32 characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetailsList>>}
    */
   public addImages(params: VisualRecognitionV4.AddImagesParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.ImageDetailsList>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetailsList>> {
     const _params = extend({}, params);
@@ -515,7 +516,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -524,6 +524,7 @@ class VisualRecognitionV4 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'images_file': _params.imagesFile,
         'image_url': _params.imageUrl,
@@ -534,7 +535,7 @@ class VisualRecognitionV4 extends BaseService {
         'collection_id': _params.collectionId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'addImages');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'addImages');
 
       const parameters = {
         options: {
@@ -577,8 +578,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.collectionId - The identifier of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageSummaryList>>}
    */
   public listImages(params: VisualRecognitionV4.ListImagesParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.ImageSummaryList>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageSummaryList>> {
     const _params = extend({}, params);
@@ -586,7 +587,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -600,7 +600,7 @@ class VisualRecognitionV4 extends BaseService {
         'collection_id': _params.collectionId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'listImages');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'listImages');
 
       const parameters = {
         options: {
@@ -642,8 +642,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {string} params.collectionId - The identifier of the collection.
    * @param {string} params.imageId - The identifier of the image.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetails>>}
    */
   public getImageDetails(params: VisualRecognitionV4.GetImageDetailsParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.ImageDetails>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetails>> {
     const _params = extend({}, params);
@@ -651,7 +651,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId', 'imageId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -666,7 +665,7 @@ class VisualRecognitionV4 extends BaseService {
         'image_id': _params.imageId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'getImageDetails');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getImageDetails');
 
       const parameters = {
         options: {
@@ -708,8 +707,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {string} params.collectionId - The identifier of the collection.
    * @param {string} params.imageId - The identifier of the image.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
    */
   public deleteImage(params: VisualRecognitionV4.DeleteImageParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Empty>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
     const _params = extend({}, params);
@@ -717,7 +716,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId', 'imageId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -732,7 +730,7 @@ class VisualRecognitionV4 extends BaseService {
         'image_id': _params.imageId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'deleteImage');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteImage');
 
       const parameters = {
         options: {
@@ -777,8 +775,8 @@ class VisualRecognitionV4 extends BaseService {
    * aspect ratio but is no larger than 200 pixels in the larger dimension. For example, an original 800 x 1000 image is
    * resized to 160 x 200 pixels.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>>}
    */
   public getJpegImage(params: VisualRecognitionV4.GetJpegImageParams, callback?: VisualRecognitionV4.Callback<NodeJS.ReadableStream|Buffer>): Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
@@ -786,7 +784,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId', 'imageId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -805,7 +802,7 @@ class VisualRecognitionV4 extends BaseService {
         'image_id': _params.imageId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'getJpegImage');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getJpegImage');
 
       const parameters = {
         options: {
@@ -854,8 +851,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.collectionId - The identifier of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
   public train(params: VisualRecognitionV4.TrainParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Collection>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
     const _params = extend({}, params);
@@ -863,7 +860,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -877,7 +873,7 @@ class VisualRecognitionV4 extends BaseService {
         'collection_id': _params.collectionId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'train');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'train');
 
       const parameters = {
         options: {
@@ -927,8 +923,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {string} params.imageId - The identifier of the image.
    * @param {TrainingDataObject[]} [params.objects] - Training data for specific objects.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingDataObjects>>}
    */
   public addImageTrainingData(params: VisualRecognitionV4.AddImageTrainingDataParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.TrainingDataObjects>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingDataObjects>> {
     const _params = extend({}, params);
@@ -936,7 +932,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['collectionId', 'imageId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -955,7 +950,7 @@ class VisualRecognitionV4 extends BaseService {
         'image_id': _params.imageId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'addImageTrainingData');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'addImageTrainingData');
 
       const parameters = {
         options: {
@@ -1003,21 +998,20 @@ class VisualRecognitionV4 extends BaseService {
    * format. All events for the day are included. If empty or not specified, the current day is used. Specify the same
    * value as `start_time` to request events for a single day.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingEvents>>}
    */
   public getTrainingUsage(params?: VisualRecognitionV4.GetTrainingUsageParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.TrainingEvents>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingEvents>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
       const query = {
         'start_time': _params.startTime,
         'end_time': _params.endTime
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'getTrainingUsage');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getTrainingUsage');
 
       const parameters = {
         options: {
@@ -1067,8 +1061,8 @@ class VisualRecognitionV4 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
    */
   public deleteUserData(params: VisualRecognitionV4.DeleteUserDataParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Empty>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
     const _params = extend({}, params);
@@ -1076,7 +1070,6 @@ class VisualRecognitionV4 extends BaseService {
     const requiredParams = ['customerId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1090,7 +1083,7 @@ class VisualRecognitionV4 extends BaseService {
         'customer_id': _params.customerId
       };
 
-      const sdkHeaders = getSdkHeaders('watson_vision_combined', 'v4', 'deleteUserData');
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteUserData');
 
       const parameters = {
         options: {
@@ -1124,9 +1117,6 @@ class VisualRecognitionV4 extends BaseService {
   };
 
 }
-
-VisualRecognitionV4.prototype.name = 'watson_vision_combined';
-VisualRecognitionV4.prototype.serviceVersion = 'v4';
 
 /*************************
  * interfaces

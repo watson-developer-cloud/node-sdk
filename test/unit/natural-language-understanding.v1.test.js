@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,16 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
-const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
 const NaturalLanguageUnderstandingV1 = require('../../dist/natural-language-understanding/v1');
-const utils = require('../resources/unitTestUtils');
 
 const {
   getOptions,
   checkUrlAndMethod,
   checkMediaHeaders,
-  missingParamsSuccess,
   expectToBePromise,
-  missingParamsError,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  checkDefaultSuccessArgs,
-} = utils;
+  checkForSuccessfulExecution,
+} = unitTestUtils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -41,22 +35,17 @@ const service = {
 
 const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1(service);
 const createRequestMock = jest.spyOn(naturalLanguageUnderstanding, 'createRequest');
-const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
   createRequestMock.mockClear();
-  missingParamsMock.mockClear();
 });
 
 describe('NaturalLanguageUnderstandingV1', () => {
   describe('analyze', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const features = 'fake_features';
@@ -82,7 +71,10 @@ describe('NaturalLanguageUnderstandingV1', () => {
           limitTextCharacters,
         };
 
-        naturalLanguageUnderstanding.analyze(params);
+        const analyzeResult = naturalLanguageUnderstanding.analyze(params);
+
+        // all methods should return a Promise
+        expectToBePromise(analyzeResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -121,35 +113,9 @@ describe('NaturalLanguageUnderstandingV1', () => {
         naturalLanguageUnderstanding.analyze(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const features = 'fake_features';
-        const params = {
-          features,
-        };
-
-        // invoke method
-        const analyzePromise = naturalLanguageUnderstanding.analyze(params);
-        expectToBePromise(analyzePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        naturalLanguageUnderstanding.analyze(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['features'];
@@ -161,7 +127,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -173,7 +139,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expectToBePromise(analyzePromise);
 
         analyzePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -181,14 +147,14 @@ describe('NaturalLanguageUnderstandingV1', () => {
   });
   describe('listModels', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const params = {};
 
-        naturalLanguageUnderstanding.listModels(params);
+        const listModelsResult = naturalLanguageUnderstanding.listModels(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listModelsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -216,21 +182,10 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listModelsPromise = naturalLanguageUnderstanding.listModels(params);
-        expectToBePromise(listModelsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         naturalLanguageUnderstanding.listModels({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -243,9 +198,6 @@ describe('NaturalLanguageUnderstandingV1', () => {
   });
   describe('deleteModel', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const modelId = 'fake_modelId';
@@ -253,7 +205,10 @@ describe('NaturalLanguageUnderstandingV1', () => {
           modelId,
         };
 
-        naturalLanguageUnderstanding.deleteModel(params);
+        const deleteModelResult = naturalLanguageUnderstanding.deleteModel(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteModelResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -283,35 +238,9 @@ describe('NaturalLanguageUnderstandingV1', () => {
         naturalLanguageUnderstanding.deleteModel(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const modelId = 'fake_modelId';
-        const params = {
-          modelId,
-        };
-
-        // invoke method
-        const deleteModelPromise = naturalLanguageUnderstanding.deleteModel(params);
-        expectToBePromise(deleteModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        naturalLanguageUnderstanding.deleteModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['modelId'];
@@ -323,7 +252,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -335,7 +264,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expectToBePromise(deleteModelPromise);
 
         deleteModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

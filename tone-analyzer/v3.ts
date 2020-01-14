@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2019.
+ * (C) Copyright IBM Corp. 2017, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -33,9 +32,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class ToneAnalyzerV3 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/tone-analyzer/api';
-  name: string; // set by prototype to 'tone_analyzer'
-  serviceVersion: string; // set by prototype to 'v3'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/tone-analyzer/api';
+  static DEFAULT_SERVICE_NAME: string = 'tone_analyzer';
 
   /**
    * Construct a ToneAnalyzerV3 object.
@@ -49,17 +47,25 @@ class ToneAnalyzerV3 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/tone-analyzer/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {ToneAnalyzerV3}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = ToneAnalyzerV3.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('tone_analyzer');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -115,8 +121,8 @@ class ToneAnalyzerV3 extends BaseService {
    * regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can use
    * different languages for **Content-Language** and **Accept-Language**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>>}
    */
   public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>> {
     const _params = extend({}, params);
@@ -124,7 +130,6 @@ class ToneAnalyzerV3 extends BaseService {
     const requiredParams = ['toneInput'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -133,14 +138,14 @@ class ToneAnalyzerV3 extends BaseService {
         }
         return reject(missingParams);
       }
-      const body = _params.toneInput;
 
+      const body = _params.toneInput;
       const query = {
         'sentences': _params.sentences,
         'tones': _params.tones
       };
 
-      const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'tone');
+      const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'tone');
 
       const parameters = {
         options: {
@@ -206,8 +211,8 @@ class ToneAnalyzerV3 extends BaseService {
    * regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can use
    * different languages for **Content-Language** and **Accept-Language**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>>}
    */
   public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>> {
     const _params = extend({}, params);
@@ -215,7 +220,6 @@ class ToneAnalyzerV3 extends BaseService {
     const requiredParams = ['utterances'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -229,7 +233,7 @@ class ToneAnalyzerV3 extends BaseService {
         'utterances': _params.utterances
       };
 
-      const sdkHeaders = getSdkHeaders('tone_analyzer', 'v3', 'toneChat');
+      const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'toneChat');
 
       const parameters = {
         options: {
@@ -266,9 +270,6 @@ class ToneAnalyzerV3 extends BaseService {
   };
 
 }
-
-ToneAnalyzerV3.prototype.name = 'tone_analyzer';
-ToneAnalyzerV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces

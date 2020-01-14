@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,16 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
-const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
 const AssistantV1 = require('../../dist/assistant/v1');
-const utils = require('../resources/unitTestUtils');
 
 const {
   getOptions,
   checkUrlAndMethod,
   checkMediaHeaders,
-  missingParamsSuccess,
   expectToBePromise,
-  missingParamsError,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
-  checkDefaultSuccessArgs,
-} = utils;
+  checkForSuccessfulExecution,
+} = unitTestUtils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -40,22 +34,17 @@ const service = {
 
 const assistant = new AssistantV1(service);
 const createRequestMock = jest.spyOn(assistant, 'createRequest');
-const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
   createRequestMock.mockClear();
-  missingParamsMock.mockClear();
 });
 
 describe('AssistantV1', () => {
   describe('message', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -77,7 +66,10 @@ describe('AssistantV1', () => {
           nodesVisitedDetails,
         };
 
-        assistant.message(params);
+        const messageResult = assistant.message(params);
+
+        // all methods should return a Promise
+        expectToBePromise(messageResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -114,35 +106,9 @@ describe('AssistantV1', () => {
         assistant.message(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const messagePromise = assistant.message(params);
-        expectToBePromise(messagePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.message(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -154,7 +120,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -166,7 +132,7 @@ describe('AssistantV1', () => {
         expectToBePromise(messagePromise);
 
         messagePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -174,9 +140,6 @@ describe('AssistantV1', () => {
   });
   describe('listWorkspaces', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const pageLimit = 'fake_pageLimit';
@@ -190,7 +153,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listWorkspaces(params);
+        const listWorkspacesResult = assistant.listWorkspaces(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listWorkspacesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -222,21 +188,10 @@ describe('AssistantV1', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listWorkspacesPromise = assistant.listWorkspaces(params);
-        expectToBePromise(listWorkspacesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         assistant.listWorkspaces({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -249,9 +204,6 @@ describe('AssistantV1', () => {
   });
   describe('createWorkspace', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const name = 'fake_name';
@@ -279,7 +231,10 @@ describe('AssistantV1', () => {
           webhooks,
         };
 
-        assistant.createWorkspace(params);
+        const createWorkspaceResult = assistant.createWorkspace(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createWorkspaceResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -318,21 +273,10 @@ describe('AssistantV1', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const createWorkspacePromise = assistant.createWorkspace(params);
-        expectToBePromise(createWorkspacePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         assistant.createWorkspace({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -345,9 +289,6 @@ describe('AssistantV1', () => {
   });
   describe('getWorkspace', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -361,7 +302,10 @@ describe('AssistantV1', () => {
           sort,
         };
 
-        assistant.getWorkspace(params);
+        const getWorkspaceResult = assistant.getWorkspace(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getWorkspaceResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -394,35 +338,9 @@ describe('AssistantV1', () => {
         assistant.getWorkspace(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const getWorkspacePromise = assistant.getWorkspace(params);
-        expectToBePromise(getWorkspacePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getWorkspace(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -434,7 +352,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -446,7 +364,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getWorkspacePromise);
 
         getWorkspacePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -454,9 +372,6 @@ describe('AssistantV1', () => {
   });
   describe('updateWorkspace', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -488,7 +403,10 @@ describe('AssistantV1', () => {
           append,
         };
 
-        assistant.updateWorkspace(params);
+        const updateWorkspaceResult = assistant.updateWorkspace(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateWorkspaceResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -530,35 +448,9 @@ describe('AssistantV1', () => {
         assistant.updateWorkspace(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const updateWorkspacePromise = assistant.updateWorkspace(params);
-        expectToBePromise(updateWorkspacePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateWorkspace(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -570,7 +462,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -582,7 +474,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateWorkspacePromise);
 
         updateWorkspacePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -590,9 +482,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteWorkspace', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -600,7 +489,10 @@ describe('AssistantV1', () => {
           workspaceId,
         };
 
-        assistant.deleteWorkspace(params);
+        const deleteWorkspaceResult = assistant.deleteWorkspace(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteWorkspaceResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -630,35 +522,9 @@ describe('AssistantV1', () => {
         assistant.deleteWorkspace(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const deleteWorkspacePromise = assistant.deleteWorkspace(params);
-        expectToBePromise(deleteWorkspacePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteWorkspace(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -670,7 +536,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -682,7 +548,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteWorkspacePromise);
 
         deleteWorkspacePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -690,9 +556,6 @@ describe('AssistantV1', () => {
   });
   describe('listIntents', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -710,7 +573,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listIntents(params);
+        const listIntentsResult = assistant.listIntents(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listIntentsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -745,35 +611,9 @@ describe('AssistantV1', () => {
         assistant.listIntents(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const listIntentsPromise = assistant.listIntents(params);
-        expectToBePromise(listIntentsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listIntents(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -785,7 +625,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -797,7 +637,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listIntentsPromise);
 
         listIntentsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -805,9 +645,6 @@ describe('AssistantV1', () => {
   });
   describe('createIntent', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -821,7 +658,10 @@ describe('AssistantV1', () => {
           examples,
         };
 
-        assistant.createIntent(params);
+        const createIntentResult = assistant.createIntent(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createIntentResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -856,37 +696,9 @@ describe('AssistantV1', () => {
         assistant.createIntent(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const params = {
-          workspaceId,
-          intent,
-        };
-
-        // invoke method
-        const createIntentPromise = assistant.createIntent(params);
-        expectToBePromise(createIntentPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.createIntent(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent'];
@@ -898,7 +710,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -910,7 +722,7 @@ describe('AssistantV1', () => {
         expectToBePromise(createIntentPromise);
 
         createIntentPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -918,9 +730,6 @@ describe('AssistantV1', () => {
   });
   describe('getIntent', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -934,7 +743,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.getIntent(params);
+        const getIntentResult = assistant.getIntent(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getIntentResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -969,37 +781,9 @@ describe('AssistantV1', () => {
         assistant.getIntent(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const params = {
-          workspaceId,
-          intent,
-        };
-
-        // invoke method
-        const getIntentPromise = assistant.getIntent(params);
-        expectToBePromise(getIntentPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getIntent(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent'];
@@ -1011,7 +795,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1023,7 +807,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getIntentPromise);
 
         getIntentPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1031,9 +815,6 @@ describe('AssistantV1', () => {
   });
   describe('updateIntent', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1049,7 +830,10 @@ describe('AssistantV1', () => {
           newExamples,
         };
 
-        assistant.updateIntent(params);
+        const updateIntentResult = assistant.updateIntent(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateIntentResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1085,37 +869,9 @@ describe('AssistantV1', () => {
         assistant.updateIntent(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const params = {
-          workspaceId,
-          intent,
-        };
-
-        // invoke method
-        const updateIntentPromise = assistant.updateIntent(params);
-        expectToBePromise(updateIntentPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateIntent(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent'];
@@ -1127,7 +883,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1139,7 +895,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateIntentPromise);
 
         updateIntentPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1147,9 +903,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteIntent', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1159,7 +912,10 @@ describe('AssistantV1', () => {
           intent,
         };
 
-        assistant.deleteIntent(params);
+        const deleteIntentResult = assistant.deleteIntent(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteIntentResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1192,37 +948,9 @@ describe('AssistantV1', () => {
         assistant.deleteIntent(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const params = {
-          workspaceId,
-          intent,
-        };
-
-        // invoke method
-        const deleteIntentPromise = assistant.deleteIntent(params);
-        expectToBePromise(deleteIntentPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteIntent(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent'];
@@ -1234,7 +962,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1246,7 +974,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteIntentPromise);
 
         deleteIntentPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1254,9 +982,6 @@ describe('AssistantV1', () => {
   });
   describe('listExamples', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1274,7 +999,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listExamples(params);
+        const listExamplesResult = assistant.listExamples(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listExamplesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1315,37 +1043,9 @@ describe('AssistantV1', () => {
         assistant.listExamples(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const params = {
-          workspaceId,
-          intent,
-        };
-
-        // invoke method
-        const listExamplesPromise = assistant.listExamples(params);
-        expectToBePromise(listExamplesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listExamples(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent'];
@@ -1357,7 +1057,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1369,7 +1069,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listExamplesPromise);
 
         listExamplesPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1377,9 +1077,6 @@ describe('AssistantV1', () => {
   });
   describe('createExample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1393,7 +1090,10 @@ describe('AssistantV1', () => {
           mentions,
         };
 
-        assistant.createExample(params);
+        const createExampleResult = assistant.createExample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createExampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1434,39 +1134,9 @@ describe('AssistantV1', () => {
         assistant.createExample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          intent,
-          text,
-        };
-
-        // invoke method
-        const createExamplePromise = assistant.createExample(params);
-        expectToBePromise(createExamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.createExample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent', 'text'];
@@ -1478,7 +1148,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1490,7 +1160,7 @@ describe('AssistantV1', () => {
         expectToBePromise(createExamplePromise);
 
         createExamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1498,9 +1168,6 @@ describe('AssistantV1', () => {
   });
   describe('getExample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1514,7 +1181,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.getExample(params);
+        const getExampleResult = assistant.getExample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getExampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1555,39 +1225,9 @@ describe('AssistantV1', () => {
         assistant.getExample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          intent,
-          text,
-        };
-
-        // invoke method
-        const getExamplePromise = assistant.getExample(params);
-        expectToBePromise(getExamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getExample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent', 'text'];
@@ -1599,7 +1239,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1611,7 +1251,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getExamplePromise);
 
         getExamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1619,9 +1259,6 @@ describe('AssistantV1', () => {
   });
   describe('updateExample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1637,7 +1274,10 @@ describe('AssistantV1', () => {
           newMentions,
         };
 
-        assistant.updateExample(params);
+        const updateExampleResult = assistant.updateExample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateExampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1679,39 +1319,9 @@ describe('AssistantV1', () => {
         assistant.updateExample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          intent,
-          text,
-        };
-
-        // invoke method
-        const updateExamplePromise = assistant.updateExample(params);
-        expectToBePromise(updateExamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateExample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent', 'text'];
@@ -1723,7 +1333,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1735,7 +1345,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateExamplePromise);
 
         updateExamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1743,9 +1353,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteExample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1757,7 +1364,10 @@ describe('AssistantV1', () => {
           text,
         };
 
-        assistant.deleteExample(params);
+        const deleteExampleResult = assistant.deleteExample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteExampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1797,39 +1407,9 @@ describe('AssistantV1', () => {
         assistant.deleteExample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const intent = 'fake_intent';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          intent,
-          text,
-        };
-
-        // invoke method
-        const deleteExamplePromise = assistant.deleteExample(params);
-        expectToBePromise(deleteExamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteExample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'intent', 'text'];
@@ -1841,7 +1421,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1853,7 +1433,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteExamplePromise);
 
         deleteExamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1861,9 +1441,6 @@ describe('AssistantV1', () => {
   });
   describe('listCounterexamples', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1879,7 +1456,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listCounterexamples(params);
+        const listCounterexamplesResult = assistant.listCounterexamples(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listCounterexamplesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1913,35 +1493,9 @@ describe('AssistantV1', () => {
         assistant.listCounterexamples(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const listCounterexamplesPromise = assistant.listCounterexamples(params);
-        expectToBePromise(listCounterexamplesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listCounterexamples(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -1953,7 +1507,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1965,7 +1519,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listCounterexamplesPromise);
 
         listCounterexamplesPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1973,9 +1527,6 @@ describe('AssistantV1', () => {
   });
   describe('createCounterexample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -1985,7 +1536,10 @@ describe('AssistantV1', () => {
           text,
         };
 
-        assistant.createCounterexample(params);
+        const createCounterexampleResult = assistant.createCounterexample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createCounterexampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2018,37 +1572,9 @@ describe('AssistantV1', () => {
         assistant.createCounterexample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          text,
-        };
-
-        // invoke method
-        const createCounterexamplePromise = assistant.createCounterexample(params);
-        expectToBePromise(createCounterexamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.createCounterexample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'text'];
@@ -2060,7 +1586,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2072,7 +1598,7 @@ describe('AssistantV1', () => {
         expectToBePromise(createCounterexamplePromise);
 
         createCounterexamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2080,9 +1606,6 @@ describe('AssistantV1', () => {
   });
   describe('getCounterexample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2094,7 +1617,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.getCounterexample(params);
+        const getCounterexampleResult = assistant.getCounterexample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getCounterexampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2128,37 +1654,9 @@ describe('AssistantV1', () => {
         assistant.getCounterexample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          text,
-        };
-
-        // invoke method
-        const getCounterexamplePromise = assistant.getCounterexample(params);
-        expectToBePromise(getCounterexamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getCounterexample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'text'];
@@ -2170,7 +1668,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2182,7 +1680,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getCounterexamplePromise);
 
         getCounterexamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2190,9 +1688,6 @@ describe('AssistantV1', () => {
   });
   describe('updateCounterexample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2204,7 +1699,10 @@ describe('AssistantV1', () => {
           newText,
         };
 
-        assistant.updateCounterexample(params);
+        const updateCounterexampleResult = assistant.updateCounterexample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateCounterexampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2238,37 +1736,9 @@ describe('AssistantV1', () => {
         assistant.updateCounterexample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          text,
-        };
-
-        // invoke method
-        const updateCounterexamplePromise = assistant.updateCounterexample(params);
-        expectToBePromise(updateCounterexamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateCounterexample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'text'];
@@ -2280,7 +1750,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2292,7 +1762,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateCounterexamplePromise);
 
         updateCounterexamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2300,9 +1770,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteCounterexample', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2312,7 +1779,10 @@ describe('AssistantV1', () => {
           text,
         };
 
-        assistant.deleteCounterexample(params);
+        const deleteCounterexampleResult = assistant.deleteCounterexample(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteCounterexampleResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2349,37 +1819,9 @@ describe('AssistantV1', () => {
         assistant.deleteCounterexample(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const text = 'fake_text';
-        const params = {
-          workspaceId,
-          text,
-        };
-
-        // invoke method
-        const deleteCounterexamplePromise = assistant.deleteCounterexample(params);
-        expectToBePromise(deleteCounterexamplePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteCounterexample(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'text'];
@@ -2391,7 +1833,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2403,7 +1845,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteCounterexamplePromise);
 
         deleteCounterexamplePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2411,9 +1853,6 @@ describe('AssistantV1', () => {
   });
   describe('listEntities', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2431,7 +1870,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listEntities(params);
+        const listEntitiesResult = assistant.listEntities(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listEntitiesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2466,35 +1908,9 @@ describe('AssistantV1', () => {
         assistant.listEntities(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const listEntitiesPromise = assistant.listEntities(params);
-        expectToBePromise(listEntitiesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listEntities(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -2506,7 +1922,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2518,7 +1934,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listEntitiesPromise);
 
         listEntitiesPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2526,9 +1942,6 @@ describe('AssistantV1', () => {
   });
   describe('createEntity', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2546,7 +1959,10 @@ describe('AssistantV1', () => {
           values,
         };
 
-        assistant.createEntity(params);
+        const createEntityResult = assistant.createEntity(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createEntityResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2583,37 +1999,9 @@ describe('AssistantV1', () => {
         assistant.createEntity(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const params = {
-          workspaceId,
-          entity,
-        };
-
-        // invoke method
-        const createEntityPromise = assistant.createEntity(params);
-        expectToBePromise(createEntityPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.createEntity(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity'];
@@ -2625,7 +2013,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2637,7 +2025,7 @@ describe('AssistantV1', () => {
         expectToBePromise(createEntityPromise);
 
         createEntityPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2645,9 +2033,6 @@ describe('AssistantV1', () => {
   });
   describe('getEntity', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2661,7 +2046,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.getEntity(params);
+        const getEntityResult = assistant.getEntity(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getEntityResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2696,37 +2084,9 @@ describe('AssistantV1', () => {
         assistant.getEntity(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const params = {
-          workspaceId,
-          entity,
-        };
-
-        // invoke method
-        const getEntityPromise = assistant.getEntity(params);
-        expectToBePromise(getEntityPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getEntity(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity'];
@@ -2738,7 +2098,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2750,7 +2110,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getEntityPromise);
 
         getEntityPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2758,9 +2118,6 @@ describe('AssistantV1', () => {
   });
   describe('updateEntity', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2780,7 +2137,10 @@ describe('AssistantV1', () => {
           newValues,
         };
 
-        assistant.updateEntity(params);
+        const updateEntityResult = assistant.updateEntity(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateEntityResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2818,37 +2178,9 @@ describe('AssistantV1', () => {
         assistant.updateEntity(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const params = {
-          workspaceId,
-          entity,
-        };
-
-        // invoke method
-        const updateEntityPromise = assistant.updateEntity(params);
-        expectToBePromise(updateEntityPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateEntity(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity'];
@@ -2860,7 +2192,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2872,7 +2204,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateEntityPromise);
 
         updateEntityPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2880,9 +2212,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteEntity', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -2892,7 +2221,10 @@ describe('AssistantV1', () => {
           entity,
         };
 
-        assistant.deleteEntity(params);
+        const deleteEntityResult = assistant.deleteEntity(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteEntityResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2925,37 +2257,9 @@ describe('AssistantV1', () => {
         assistant.deleteEntity(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const params = {
-          workspaceId,
-          entity,
-        };
-
-        // invoke method
-        const deleteEntityPromise = assistant.deleteEntity(params);
-        expectToBePromise(deleteEntityPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteEntity(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity'];
@@ -2967,7 +2271,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -2979,7 +2283,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteEntityPromise);
 
         deleteEntityPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -2987,9 +2291,6 @@ describe('AssistantV1', () => {
   });
   describe('listMentions', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3003,7 +2304,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listMentions(params);
+        const listMentionsResult = assistant.listMentions(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listMentionsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3042,37 +2346,9 @@ describe('AssistantV1', () => {
         assistant.listMentions(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const params = {
-          workspaceId,
-          entity,
-        };
-
-        // invoke method
-        const listMentionsPromise = assistant.listMentions(params);
-        expectToBePromise(listMentionsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listMentions(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity'];
@@ -3084,7 +2360,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3096,7 +2372,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listMentionsPromise);
 
         listMentionsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3104,9 +2380,6 @@ describe('AssistantV1', () => {
   });
   describe('listValues', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3126,7 +2399,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listValues(params);
+        const listValuesResult = assistant.listValues(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listValuesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3164,37 +2440,9 @@ describe('AssistantV1', () => {
         assistant.listValues(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const params = {
-          workspaceId,
-          entity,
-        };
-
-        // invoke method
-        const listValuesPromise = assistant.listValues(params);
-        expectToBePromise(listValuesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listValues(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity'];
@@ -3206,7 +2454,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3218,7 +2466,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listValuesPromise);
 
         listValuesPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3226,9 +2474,6 @@ describe('AssistantV1', () => {
   });
   describe('createValue', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3248,7 +2493,10 @@ describe('AssistantV1', () => {
           patterns,
         };
 
-        assistant.createValue(params);
+        const createValueResult = assistant.createValue(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createValueResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3292,39 +2540,9 @@ describe('AssistantV1', () => {
         assistant.createValue(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-        };
-
-        // invoke method
-        const createValuePromise = assistant.createValue(params);
-        expectToBePromise(createValuePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.createValue(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value'];
@@ -3336,7 +2554,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3348,7 +2566,7 @@ describe('AssistantV1', () => {
         expectToBePromise(createValuePromise);
 
         createValuePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3356,9 +2574,6 @@ describe('AssistantV1', () => {
   });
   describe('getValue', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3374,7 +2589,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.getValue(params);
+        const getValueResult = assistant.getValue(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getValueResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3416,39 +2634,9 @@ describe('AssistantV1', () => {
         assistant.getValue(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-        };
-
-        // invoke method
-        const getValuePromise = assistant.getValue(params);
-        expectToBePromise(getValuePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getValue(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value'];
@@ -3460,7 +2648,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3472,7 +2660,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getValuePromise);
 
         getValuePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3480,9 +2668,6 @@ describe('AssistantV1', () => {
   });
   describe('updateValue', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3504,7 +2689,10 @@ describe('AssistantV1', () => {
           newPatterns,
         };
 
-        assistant.updateValue(params);
+        const updateValueResult = assistant.updateValue(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateValueResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3549,39 +2737,9 @@ describe('AssistantV1', () => {
         assistant.updateValue(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-        };
-
-        // invoke method
-        const updateValuePromise = assistant.updateValue(params);
-        expectToBePromise(updateValuePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateValue(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value'];
@@ -3593,7 +2751,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3605,7 +2763,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateValuePromise);
 
         updateValuePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3613,9 +2771,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteValue', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3627,7 +2782,10 @@ describe('AssistantV1', () => {
           value,
         };
 
-        assistant.deleteValue(params);
+        const deleteValueResult = assistant.deleteValue(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteValueResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3667,39 +2825,9 @@ describe('AssistantV1', () => {
         assistant.deleteValue(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-        };
-
-        // invoke method
-        const deleteValuePromise = assistant.deleteValue(params);
-        expectToBePromise(deleteValuePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteValue(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value'];
@@ -3711,7 +2839,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3723,7 +2851,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteValuePromise);
 
         deleteValuePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3731,9 +2859,6 @@ describe('AssistantV1', () => {
   });
   describe('listSynonyms', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3753,7 +2878,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listSynonyms(params);
+        const listSynonymsResult = assistant.listSynonyms(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listSynonymsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3797,39 +2925,9 @@ describe('AssistantV1', () => {
         assistant.listSynonyms(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-        };
-
-        // invoke method
-        const listSynonymsPromise = assistant.listSynonyms(params);
-        expectToBePromise(listSynonymsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listSynonyms(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value'];
@@ -3841,7 +2939,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3853,7 +2951,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listSynonymsPromise);
 
         listSynonymsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3861,9 +2959,6 @@ describe('AssistantV1', () => {
   });
   describe('createSynonym', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -3877,7 +2972,10 @@ describe('AssistantV1', () => {
           synonym,
         };
 
-        assistant.createSynonym(params);
+        const createSynonymResult = assistant.createSynonym(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createSynonymResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -3920,41 +3018,9 @@ describe('AssistantV1', () => {
         assistant.createSynonym(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const synonym = 'fake_synonym';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-          synonym,
-        };
-
-        // invoke method
-        const createSynonymPromise = assistant.createSynonym(params);
-        expectToBePromise(createSynonymPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.createSynonym(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
@@ -3966,7 +3032,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -3978,7 +3044,7 @@ describe('AssistantV1', () => {
         expectToBePromise(createSynonymPromise);
 
         createSynonymPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -3986,9 +3052,6 @@ describe('AssistantV1', () => {
   });
   describe('getSynonym', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4004,7 +3067,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.getSynonym(params);
+        const getSynonymResult = assistant.getSynonym(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getSynonymResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4048,41 +3114,9 @@ describe('AssistantV1', () => {
         assistant.getSynonym(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const synonym = 'fake_synonym';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-          synonym,
-        };
-
-        // invoke method
-        const getSynonymPromise = assistant.getSynonym(params);
-        expectToBePromise(getSynonymPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getSynonym(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
@@ -4094,7 +3128,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -4106,7 +3140,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getSynonymPromise);
 
         getSynonymPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -4114,9 +3148,6 @@ describe('AssistantV1', () => {
   });
   describe('updateSynonym', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4132,7 +3163,10 @@ describe('AssistantV1', () => {
           newSynonym,
         };
 
-        assistant.updateSynonym(params);
+        const updateSynonymResult = assistant.updateSynonym(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateSynonymResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4176,41 +3210,9 @@ describe('AssistantV1', () => {
         assistant.updateSynonym(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const synonym = 'fake_synonym';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-          synonym,
-        };
-
-        // invoke method
-        const updateSynonymPromise = assistant.updateSynonym(params);
-        expectToBePromise(updateSynonymPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateSynonym(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
@@ -4222,7 +3224,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -4234,7 +3236,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateSynonymPromise);
 
         updateSynonymPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -4242,9 +3244,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteSynonym', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4258,7 +3257,10 @@ describe('AssistantV1', () => {
           synonym,
         };
 
-        assistant.deleteSynonym(params);
+        const deleteSynonymResult = assistant.deleteSynonym(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteSynonymResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4301,41 +3303,9 @@ describe('AssistantV1', () => {
         assistant.deleteSynonym(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const entity = 'fake_entity';
-        const value = 'fake_value';
-        const synonym = 'fake_synonym';
-        const params = {
-          workspaceId,
-          entity,
-          value,
-          synonym,
-        };
-
-        // invoke method
-        const deleteSynonymPromise = assistant.deleteSynonym(params);
-        expectToBePromise(deleteSynonymPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteSynonym(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
@@ -4347,7 +3317,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -4359,7 +3329,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteSynonymPromise);
 
         deleteSynonymPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -4367,9 +3337,6 @@ describe('AssistantV1', () => {
   });
   describe('listDialogNodes', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4385,7 +3352,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.listDialogNodes(params);
+        const listDialogNodesResult = assistant.listDialogNodes(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listDialogNodesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4419,35 +3389,9 @@ describe('AssistantV1', () => {
         assistant.listDialogNodes(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const listDialogNodesPromise = assistant.listDialogNodes(params);
-        expectToBePromise(listDialogNodesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listDialogNodes(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -4459,7 +3403,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -4471,7 +3415,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listDialogNodesPromise);
 
         listDialogNodesPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -4479,9 +3423,6 @@ describe('AssistantV1', () => {
   });
   describe('createDialogNode', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4527,7 +3468,10 @@ describe('AssistantV1', () => {
           disambiguationOptOut,
         };
 
-        assistant.createDialogNode(params);
+        const createDialogNodeResult = assistant.createDialogNode(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createDialogNodeResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4578,37 +3522,9 @@ describe('AssistantV1', () => {
         assistant.createDialogNode(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const dialogNode = 'fake_dialogNode';
-        const params = {
-          workspaceId,
-          dialogNode,
-        };
-
-        // invoke method
-        const createDialogNodePromise = assistant.createDialogNode(params);
-        expectToBePromise(createDialogNodePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.createDialogNode(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'dialogNode'];
@@ -4620,7 +3536,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -4632,7 +3548,7 @@ describe('AssistantV1', () => {
         expectToBePromise(createDialogNodePromise);
 
         createDialogNodePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -4640,9 +3556,6 @@ describe('AssistantV1', () => {
   });
   describe('getDialogNode', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4654,7 +3567,10 @@ describe('AssistantV1', () => {
           includeAudit,
         };
 
-        assistant.getDialogNode(params);
+        const getDialogNodeResult = assistant.getDialogNode(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getDialogNodeResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4692,37 +3608,9 @@ describe('AssistantV1', () => {
         assistant.getDialogNode(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const dialogNode = 'fake_dialogNode';
-        const params = {
-          workspaceId,
-          dialogNode,
-        };
-
-        // invoke method
-        const getDialogNodePromise = assistant.getDialogNode(params);
-        expectToBePromise(getDialogNodePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.getDialogNode(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'dialogNode'];
@@ -4734,7 +3622,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -4746,7 +3634,7 @@ describe('AssistantV1', () => {
         expectToBePromise(getDialogNodePromise);
 
         getDialogNodePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -4754,9 +3642,6 @@ describe('AssistantV1', () => {
   });
   describe('updateDialogNode', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4804,7 +3689,10 @@ describe('AssistantV1', () => {
           newDisambiguationOptOut,
         };
 
-        assistant.updateDialogNode(params);
+        const updateDialogNodeResult = assistant.updateDialogNode(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateDialogNodeResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4860,37 +3748,9 @@ describe('AssistantV1', () => {
         assistant.updateDialogNode(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const dialogNode = 'fake_dialogNode';
-        const params = {
-          workspaceId,
-          dialogNode,
-        };
-
-        // invoke method
-        const updateDialogNodePromise = assistant.updateDialogNode(params);
-        expectToBePromise(updateDialogNodePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.updateDialogNode(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'dialogNode'];
@@ -4902,7 +3762,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -4914,7 +3774,7 @@ describe('AssistantV1', () => {
         expectToBePromise(updateDialogNodePromise);
 
         updateDialogNodePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -4922,9 +3782,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteDialogNode', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -4934,7 +3791,10 @@ describe('AssistantV1', () => {
           dialogNode,
         };
 
-        assistant.deleteDialogNode(params);
+        const deleteDialogNodeResult = assistant.deleteDialogNode(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteDialogNodeResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -4971,37 +3831,9 @@ describe('AssistantV1', () => {
         assistant.deleteDialogNode(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const dialogNode = 'fake_dialogNode';
-        const params = {
-          workspaceId,
-          dialogNode,
-        };
-
-        // invoke method
-        const deleteDialogNodePromise = assistant.deleteDialogNode(params);
-        expectToBePromise(deleteDialogNodePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteDialogNode(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId', 'dialogNode'];
@@ -5013,7 +3845,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -5025,7 +3857,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteDialogNodePromise);
 
         deleteDialogNodePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -5033,9 +3865,6 @@ describe('AssistantV1', () => {
   });
   describe('listLogs', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
@@ -5051,7 +3880,10 @@ describe('AssistantV1', () => {
           cursor,
         };
 
-        assistant.listLogs(params);
+        const listLogsResult = assistant.listLogs(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listLogsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5085,35 +3917,9 @@ describe('AssistantV1', () => {
         assistant.listLogs(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const workspaceId = 'fake_workspaceId';
-        const params = {
-          workspaceId,
-        };
-
-        // invoke method
-        const listLogsPromise = assistant.listLogs(params);
-        expectToBePromise(listLogsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listLogs(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['workspaceId'];
@@ -5125,7 +3931,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -5137,7 +3943,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listLogsPromise);
 
         listLogsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -5145,9 +3951,6 @@ describe('AssistantV1', () => {
   });
   describe('listAllLogs', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const filter = 'fake_filter';
@@ -5161,7 +3964,10 @@ describe('AssistantV1', () => {
           cursor,
         };
 
-        assistant.listAllLogs(params);
+        const listAllLogsResult = assistant.listAllLogs(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listAllLogsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5194,35 +4000,9 @@ describe('AssistantV1', () => {
         assistant.listAllLogs(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const filter = 'fake_filter';
-        const params = {
-          filter,
-        };
-
-        // invoke method
-        const listAllLogsPromise = assistant.listAllLogs(params);
-        expectToBePromise(listAllLogsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.listAllLogs(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['filter'];
@@ -5234,7 +4014,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -5246,7 +4026,7 @@ describe('AssistantV1', () => {
         expectToBePromise(listAllLogsPromise);
 
         listAllLogsPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -5254,9 +4034,6 @@ describe('AssistantV1', () => {
   });
   describe('deleteUserData', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const customerId = 'fake_customerId';
@@ -5264,7 +4041,10 @@ describe('AssistantV1', () => {
           customerId,
         };
 
-        assistant.deleteUserData(params);
+        const deleteUserDataResult = assistant.deleteUserData(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteUserDataResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -5294,35 +4074,9 @@ describe('AssistantV1', () => {
         assistant.deleteUserData(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customerId = 'fake_customerId';
-        const params = {
-          customerId,
-        };
-
-        // invoke method
-        const deleteUserDataPromise = assistant.deleteUserData(params);
-        expectToBePromise(deleteUserDataPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        assistant.deleteUserData(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['customerId'];
@@ -5334,7 +4088,7 @@ describe('AssistantV1', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -5346,7 +4100,7 @@ describe('AssistantV1', () => {
         expectToBePromise(deleteUserDataPromise);
 
         deleteUserDataPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

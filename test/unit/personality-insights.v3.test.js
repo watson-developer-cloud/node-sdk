@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,16 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
-const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
 const PersonalityInsightsV3 = require('../../dist/personality-insights/v3');
-const utils = require('../resources/unitTestUtils');
 
 const {
   getOptions,
   checkUrlAndMethod,
   checkMediaHeaders,
-  missingParamsSuccess,
   expectToBePromise,
-  missingParamsError,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
   checkUserHeader,
-} = utils;
+} = unitTestUtils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -40,22 +34,17 @@ const service = {
 
 const personalityInsights = new PersonalityInsightsV3(service);
 const createRequestMock = jest.spyOn(personalityInsights, 'createRequest');
-const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
   createRequestMock.mockClear();
-  missingParamsMock.mockClear();
 });
 
 describe('PersonalityInsightsV3', () => {
   describe('profile', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const content = 'fake_content';
@@ -75,7 +64,10 @@ describe('PersonalityInsightsV3', () => {
           consumptionPreferences,
         };
 
-        personalityInsights.profile(params);
+        const profileResult = personalityInsights.profile(params);
+
+        // all methods should return a Promise
+        expectToBePromise(profileResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -111,35 +103,9 @@ describe('PersonalityInsightsV3', () => {
         personalityInsights.profile(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const content = 'fake_content';
-        const params = {
-          content,
-        };
-
-        // invoke method
-        const profilePromise = personalityInsights.profile(params);
-        expectToBePromise(profilePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        personalityInsights.profile(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['content'];
@@ -151,7 +117,7 @@ describe('PersonalityInsightsV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -163,7 +129,7 @@ describe('PersonalityInsightsV3', () => {
         expectToBePromise(profilePromise);
 
         profilePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -171,9 +137,6 @@ describe('PersonalityInsightsV3', () => {
   });
   describe('profileAsCsv', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const content = 'fake_content';
@@ -193,7 +156,10 @@ describe('PersonalityInsightsV3', () => {
           consumptionPreferences,
         };
 
-        personalityInsights.profileAsCsv(params);
+        const profileAsCsvResult = personalityInsights.profileAsCsv(params);
+
+        // all methods should return a Promise
+        expectToBePromise(profileAsCsvResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -229,35 +195,9 @@ describe('PersonalityInsightsV3', () => {
         personalityInsights.profileAsCsv(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const content = 'fake_content';
-        const params = {
-          content,
-        };
-
-        // invoke method
-        const profileAsCsvPromise = personalityInsights.profileAsCsv(params);
-        expectToBePromise(profileAsCsvPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        personalityInsights.profileAsCsv(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['content'];
@@ -269,7 +209,7 @@ describe('PersonalityInsightsV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -281,7 +221,7 @@ describe('PersonalityInsightsV3', () => {
         expectToBePromise(profileAsCsvPromise);
 
         profileAsCsvPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

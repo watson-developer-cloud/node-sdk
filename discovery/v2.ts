@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2019, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,8 +28,7 @@ import { getSdkHeaders } from '../lib/common';
 
 class DiscoveryV2 extends BaseService {
 
-  name: string; // set by prototype to 'discovery'
-  serviceVersion: string; // set by prototype to 'v2'
+  static DEFAULT_SERVICE_NAME: string = 'discovery';
 
   /**
    * Construct a DiscoveryV2 object.
@@ -44,17 +42,25 @@ class DiscoveryV2 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/discovery/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {DiscoveryV2}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = DiscoveryV2.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('discovery');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -75,8 +81,8 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>>}
    */
   public listCollections(params: DiscoveryV2.ListCollectionsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ListCollectionsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>> {
     const _params = extend({}, params);
@@ -84,7 +90,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -98,7 +103,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'listCollections');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listCollections');
 
       const parameters = {
         options: {
@@ -173,8 +178,8 @@ class DiscoveryV2 extends BaseService {
    * @param {QueryLargeSuggestedRefinements} [params.suggestedRefinements] - Configuration for suggested refinements.
    * @param {QueryLargePassages} [params.passages] - Configuration for passage retrieval.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>>}
    */
   public query(params: DiscoveryV2.QueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.QueryResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
     const _params = extend({}, params);
@@ -182,7 +187,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -213,7 +217,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'query');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'query');
 
       const parameters = {
         options: {
@@ -264,8 +268,8 @@ class DiscoveryV2 extends BaseService {
    * from.
    * @param {number} [params.count] - The number of autocompletion suggestions to return.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Completions>>}
    */
   public getAutocompletion(params: DiscoveryV2.GetAutocompletionParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Completions>): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
     const _params = extend({}, params);
@@ -273,7 +277,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId', 'prefix'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -294,7 +297,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'getAutocompletion');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getAutocompletion');
 
       const parameters = {
         options: {
@@ -349,8 +352,8 @@ class DiscoveryV2 extends BaseService {
    * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
    * **count** and **offset** values together in any one query is **10000**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
    */
   public queryNotices(params: DiscoveryV2.QueryNoticesParams, callback?: DiscoveryV2.Callback<DiscoveryV2.QueryNoticesResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
     const _params = extend({}, params);
@@ -358,7 +361,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -380,7 +382,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'queryNotices');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'queryNotices');
 
       const parameters = {
         options: {
@@ -425,8 +427,8 @@ class DiscoveryV2 extends BaseService {
    * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
    * specified, all collections in the project are used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>>}
    */
   public listFields(params: DiscoveryV2.ListFieldsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ListFieldsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
     const _params = extend({}, params);
@@ -434,7 +436,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -452,7 +453,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'listFields');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listFields');
 
       const parameters = {
         options: {
@@ -499,8 +500,8 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>>}
    */
   public getComponentSettings(params: DiscoveryV2.GetComponentSettingsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ComponentSettingsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
     const _params = extend({}, params);
@@ -508,7 +509,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -522,7 +522,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'getComponentSettings');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getComponentSettings');
 
       const parameters = {
         options: {
@@ -587,7 +587,7 @@ class DiscoveryV2 extends BaseService {
    * **_/v2/projects/{project_id}/collections/{collection_id}/documents** method.
    *
    * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
-   * modify a collection that conects to an external source such as Microsoft SharePoint.
+   * modify a collection that connects to an external source such as Microsoft SharePoint.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
@@ -595,7 +595,7 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.collectionId - The ID of the collection.
    * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
    * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * configuration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -606,8 +606,8 @@ class DiscoveryV2 extends BaseService {
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>>}
    */
   public addDocument(params: DiscoveryV2.AddDocumentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.DocumentAccepted>): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
     const _params = extend({}, params);
@@ -615,7 +615,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId', 'collectionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -624,6 +623,7 @@ class DiscoveryV2 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'file': {
           data: _params.file,
@@ -638,7 +638,7 @@ class DiscoveryV2 extends BaseService {
         'collection_id': _params.collectionId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'addDocument');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'addDocument');
 
       const parameters = {
         options: {
@@ -687,7 +687,7 @@ class DiscoveryV2 extends BaseService {
    * same **document_id** if it exists.
    *
    * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
-   * modify a collection that conects to an external source such as Microsoft SharePoint.
+   * modify a collection that connects to an external source such as Microsoft SharePoint.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
@@ -696,7 +696,7 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.documentId - The ID of the document.
    * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
    * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * confiruration is 1 megabyte. Files larger than the supported size are rejected.
+   * configuration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -707,8 +707,8 @@ class DiscoveryV2 extends BaseService {
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>>}
    */
   public updateDocument(params: DiscoveryV2.UpdateDocumentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.DocumentAccepted>): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
     const _params = extend({}, params);
@@ -716,7 +716,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId', 'collectionId', 'documentId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -725,6 +724,7 @@ class DiscoveryV2 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'file': {
           data: _params.file,
@@ -740,7 +740,7 @@ class DiscoveryV2 extends BaseService {
         'document_id': _params.documentId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'updateDocument');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateDocument');
 
       const parameters = {
         options: {
@@ -783,7 +783,7 @@ class DiscoveryV2 extends BaseService {
    * status code `200`) with the status set to 'deleted'.
    *
    * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
-   * modify a collection that conects to an external source such as Microsoft SharePoint.
+   * modify a collection that connects to an external source such as Microsoft SharePoint.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
@@ -793,8 +793,8 @@ class DiscoveryV2 extends BaseService {
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>>}
    */
   public deleteDocument(params: DiscoveryV2.DeleteDocumentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.DeleteDocumentResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>> {
     const _params = extend({}, params);
@@ -802,7 +802,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId', 'collectionId', 'documentId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -818,7 +817,7 @@ class DiscoveryV2 extends BaseService {
         'document_id': _params.documentId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'deleteDocument');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteDocument');
 
       const parameters = {
         options: {
@@ -865,8 +864,8 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>>}
    */
   public listTrainingQueries(params: DiscoveryV2.ListTrainingQueriesParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuerySet>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>> {
     const _params = extend({}, params);
@@ -874,7 +873,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -888,7 +886,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'listTrainingQueries');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listTrainingQueries');
 
       const parameters = {
         options: {
@@ -930,8 +928,8 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
   public deleteTrainingQueries(params: DiscoveryV2.DeleteTrainingQueriesParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Empty>): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
     const _params = extend({}, params);
@@ -939,7 +937,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -953,7 +950,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'deleteTrainingQueries');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteTrainingQueries');
 
       const parameters = {
         options: {
@@ -998,16 +995,15 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
    * applied.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
   public createTrainingQuery(params: DiscoveryV2.CreateTrainingQueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuery>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = extend({}, params);
     const _callback = callback;
-    const requiredParams = ['projectId'];
+    const requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1027,7 +1023,7 @@ class DiscoveryV2 extends BaseService {
         'project_id': _params.projectId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'createTrainingQuery');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createTrainingQuery');
 
       const parameters = {
         options: {
@@ -1072,8 +1068,8 @@ class DiscoveryV2 extends BaseService {
    * Discovery administrative tooling.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
   public getTrainingQuery(params: DiscoveryV2.GetTrainingQueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuery>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = extend({}, params);
@@ -1081,7 +1077,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId', 'queryId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1096,7 +1091,7 @@ class DiscoveryV2 extends BaseService {
         'query_id': _params.queryId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'getTrainingQuery');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getTrainingQuery');
 
       const parameters = {
         options: {
@@ -1143,8 +1138,8 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
    * applied.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
   public updateTrainingQuery(params: DiscoveryV2.UpdateTrainingQueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuery>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = extend({}, params);
@@ -1152,7 +1147,6 @@ class DiscoveryV2 extends BaseService {
     const requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1173,7 +1167,7 @@ class DiscoveryV2 extends BaseService {
         'query_id': _params.queryId
       };
 
-      const sdkHeaders = getSdkHeaders('discovery', 'v2', 'updateTrainingQuery');
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateTrainingQuery');
 
       const parameters = {
         options: {
@@ -1209,9 +1203,6 @@ class DiscoveryV2 extends BaseService {
   };
 
 }
-
-DiscoveryV2.prototype.name = 'discovery';
-DiscoveryV2.prototype.serviceVersion = 'v2';
 
 /*************************
  * interfaces
@@ -1391,7 +1382,7 @@ namespace DiscoveryV2 {
     /** The ID of the collection. */
     collectionId: string;
     /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the
+     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
     file?: NodeJS.ReadableStream|Buffer;
@@ -1437,7 +1428,7 @@ namespace DiscoveryV2 {
     /** The ID of the document. */
     documentId: string;
     /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a confiruration is 1 megabyte. Files larger than the
+     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
     file?: NodeJS.ReadableStream|Buffer;
@@ -1705,36 +1696,6 @@ namespace DiscoveryV2 {
     type: string;
   }
 
-  /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
-  export interface QueryCalculationAggregation extends QueryAggregation {
-    /** The field to perform the calculation on. */
-    field: string;
-    /** The value of the calculation. */
-    value?: number;
-  }
-
-  /** A modifier that will narrow down the document set of the sub aggregations it precedes. */
-  export interface QueryFilterAggregation extends QueryAggregation {
-    /** The filter written in Discovery Query Language syntax applied to the documents before sub aggregations are
-     *  run.
-     */
-    match: string;
-    /** Number of documents matching the filter. */
-    matching_results: number;
-    /** An array of sub aggregations. */
-    aggregations?: QueryAggregation[];
-  }
-
-  /** Numeric interval segments to categorize documents by using field values from a single numeric field to describe the category. */
-  export interface QueryHistogramAggregation extends QueryAggregation {
-    /** The numeric field name used to create the histogram. */
-    field: string;
-    /** The size of the sections the results are split into. */
-    interval: number;
-    /** Array of numeric intervals. */
-    results?: QueryHistogramAggregationResult[];
-  }
-
   /** Histogram numeric interval result. */
   export interface QueryHistogramAggregationResult {
     /** The value of the upper bound for the numeric segment. */
@@ -1749,7 +1710,7 @@ namespace DiscoveryV2 {
   export interface QueryLargePassages {
     /** A passages query that returns the most relevant passages from the results. */
     enabled?: boolean;
-    /** When `true`, passages will be returned whithin their respective result. */
+    /** When `true`, passages will be returned within their respective result. */
     per_document?: boolean;
     /** Maximum number of passages to return per result. */
     max_per_document?: number;
@@ -1781,16 +1742,6 @@ namespace DiscoveryV2 {
     count?: number;
   }
 
-  /** A restriction that alter the document set used for sub aggregations it precedes to nested documents found in the field specified. */
-  export interface QueryNestedAggregation extends QueryAggregation {
-    /** The path to the document field to scope sub aggregations to. */
-    path: string;
-    /** Number of nested documents found in the specified field. */
-    matching_results: number;
-    /** An array of sub aggregations. */
-    aggregations?: QueryAggregation[];
-  }
-
   /** Object containing notice query results. */
   export interface QueryNoticesResponse {
     /** The number of matching results. */
@@ -1811,7 +1762,7 @@ namespace DiscoveryV2 {
     retrieval_details?: RetrievalDetails;
     /** Suggested correction to the submitted **natural_language_query** value. */
     suggested_query?: string;
-    /** Array of suggested refinments. */
+    /** Array of suggested refinements. */
     suggested_refinements?: QuerySuggestedRefinement[];
     /** Array of table results. */
     table_results?: QueryTableResult[];
@@ -1880,16 +1831,6 @@ namespace DiscoveryV2 {
     table?: TableResultTable;
   }
 
-  /** Returns the top values for the field specified. */
-  export interface QueryTermAggregation extends QueryAggregation {
-    /** The field in the document used to generate top values from. */
-    field: string;
-    /** The number of top values returned. */
-    count?: number;
-    /** Array of top values for the field. */
-    results?: QueryTermAggregationResult[];
-  }
-
   /** Top value result for the term aggregation. */
   export interface QueryTermAggregationResult {
     /** Value of the field with a non-zero frequency in the document set. */
@@ -1900,33 +1841,16 @@ namespace DiscoveryV2 {
     aggregations?: QueryAggregation[];
   }
 
-  /** A specialized histogram aggregation that uses dates to create interval segments. */
-  export interface QueryTimesliceAggregation extends QueryAggregation {
-    /** The date field name used to create the timeslice. */
-    field: string;
-    /** The date interval value. Valid values are seconds, minutes, hours, days, weeks, and years. */
-    interval: string;
-    /** Array of aggregation results. */
-    results?: QueryTimesliceAggregationResult[];
-  }
-
   /** A timeslice interval segment. */
   export interface QueryTimesliceAggregationResult {
     /** String date value of the upper bound for the timeslice interval in ISO-8601 format. */
     key_as_string: string;
-    /** Numeric date value of the upper bound for the timeslice interval in UNIX miliseconds since epoch. */
+    /** Numeric date value of the upper bound for the timeslice interval in UNIX milliseconds since epoch. */
     key: number;
     /** Number of documents with the specified key as the upper bound. */
     matching_results: number;
     /** An array of sub aggregations. */
     aggregations?: QueryAggregation[];
-  }
-
-  /** Returns the top documents ranked by the score of the query. */
-  export interface QueryTopHitsAggregation extends QueryAggregation {
-    /** The number of documents to return. */
-    size: number;
-    hits?: QueryTopHitsAggregationResult;
   }
 
   /** A query response containing the matching documents for the preceding aggregations. */
@@ -1939,7 +1863,7 @@ namespace DiscoveryV2 {
 
   /** An object contain retrieval type information. */
   export interface RetrievalDetails {
-    /** Indentifies the document retrieval strategy used for this query. `relevancy_training` indicates that the
+    /** Identifies the document retrieval strategy used for this query. `relevancy_training` indicates that the
      *  results were returned using a relevancy trained model.
      *
      *   **Note**: In the event of trained collections being queried, but the trained model is not used to return
@@ -2202,6 +2126,73 @@ namespace DiscoveryV2 {
   export interface TrainingQuerySet {
     /** Array of training queries. */
     queries?: TrainingQuery[];
+  }
+
+  /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
+  export interface QueryCalculationAggregation extends QueryAggregation {
+    /** The field to perform the calculation on. */
+    field: string;
+    /** The value of the calculation. */
+    value?: number;
+  }
+
+  /** A modifier that will narrow down the document set of the sub aggregations it precedes. */
+  export interface QueryFilterAggregation extends QueryAggregation {
+    /** The filter written in Discovery Query Language syntax applied to the documents before sub aggregations are
+     *  run.
+     */
+    match: string;
+    /** Number of documents matching the filter. */
+    matching_results: number;
+    /** An array of sub aggregations. */
+    aggregations?: QueryAggregation[];
+  }
+
+  /** Numeric interval segments to categorize documents by using field values from a single numeric field to describe the category. */
+  export interface QueryHistogramAggregation extends QueryAggregation {
+    /** The numeric field name used to create the histogram. */
+    field: string;
+    /** The size of the sections the results are split into. */
+    interval: number;
+    /** Array of numeric intervals. */
+    results?: QueryHistogramAggregationResult[];
+  }
+
+  /** A restriction that alter the document set used for sub aggregations it precedes to nested documents found in the field specified. */
+  export interface QueryNestedAggregation extends QueryAggregation {
+    /** The path to the document field to scope sub aggregations to. */
+    path: string;
+    /** Number of nested documents found in the specified field. */
+    matching_results: number;
+    /** An array of sub aggregations. */
+    aggregations?: QueryAggregation[];
+  }
+
+  /** Returns the top values for the field specified. */
+  export interface QueryTermAggregation extends QueryAggregation {
+    /** The field in the document used to generate top values from. */
+    field: string;
+    /** The number of top values returned. */
+    count?: number;
+    /** Array of top values for the field. */
+    results?: QueryTermAggregationResult[];
+  }
+
+  /** A specialized histogram aggregation that uses dates to create interval segments. */
+  export interface QueryTimesliceAggregation extends QueryAggregation {
+    /** The date field name used to create the timeslice. */
+    field: string;
+    /** The date interval value. Valid values are seconds, minutes, hours, days, weeks, and years. */
+    interval: string;
+    /** Array of aggregation results. */
+    results?: QueryTimesliceAggregationResult[];
+  }
+
+  /** Returns the top documents ranked by the score of the query. */
+  export interface QueryTopHitsAggregation extends QueryAggregation {
+    /** The number of documents to return. */
+    size: number;
+    hits?: QueryTopHitsAggregationResult;
   }
 
 }

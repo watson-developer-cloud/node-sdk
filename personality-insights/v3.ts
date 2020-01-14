@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2019.
+ * (C) Copyright IBM Corp. 2017, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -42,9 +41,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class PersonalityInsightsV3 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
-  name: string; // set by prototype to 'personality_insights'
-  serviceVersion: string; // set by prototype to 'v3'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
+  static DEFAULT_SERVICE_NAME: string = 'personality_insights';
 
   /**
    * Construct a PersonalityInsightsV3 object.
@@ -58,17 +56,25 @@ class PersonalityInsightsV3 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {PersonalityInsightsV3}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = PersonalityInsightsV3.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('personality_insights');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -147,8 +153,8 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {boolean} [params.consumptionPreferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>>}
    */
   public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>> {
     const _params = extend({}, params);
@@ -156,7 +162,6 @@ class PersonalityInsightsV3 extends BaseService {
     const requiredParams = ['content'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -165,15 +170,15 @@ class PersonalityInsightsV3 extends BaseService {
         }
         return reject(missingParams);
       }
-      const body = _params.content;
 
+      const body = _params.content;
       const query = {
         'raw_scores': _params.rawScores,
         'csv_headers': _params.csvHeaders,
         'consumption_preferences': _params.consumptionPreferences
       };
 
-      const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profile');
+      const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profile');
 
       const parameters = {
         options: {
@@ -277,8 +282,8 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {boolean} [params.consumptionPreferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>>}
    */
   public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|Buffer>): Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
@@ -286,7 +291,6 @@ class PersonalityInsightsV3 extends BaseService {
     const requiredParams = ['content'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -295,15 +299,15 @@ class PersonalityInsightsV3 extends BaseService {
         }
         return reject(missingParams);
       }
-      const body = _params.content;
 
+      const body = _params.content;
       const query = {
         'raw_scores': _params.rawScores,
         'csv_headers': _params.csvHeaders,
         'consumption_preferences': _params.consumptionPreferences
       };
 
-      const sdkHeaders = getSdkHeaders('personality_insights', 'v3', 'profileAsCsv');
+      const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profileAsCsv');
 
       const parameters = {
         options: {
@@ -341,9 +345,6 @@ class PersonalityInsightsV3 extends BaseService {
   };
 
 }
-
-PersonalityInsightsV3.prototype.name = 'personality_insights';
-PersonalityInsightsV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces

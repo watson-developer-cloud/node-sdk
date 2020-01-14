@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2019.
+ * (C) Copyright IBM Corp. 2017, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -27,14 +26,13 @@ import { getSdkHeaders } from '../lib/common';
  *
  * You can create [custom
  * models](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing)
- * with Watson Knowledge Studio to detect custom entities, relations, and categories in Natural Language Understanding.
+ * with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
-  name: string; // set by prototype to 'natural-language-understanding'
-  serviceVersion: string; // set by prototype to 'v1'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/natural-language-understanding/api';
+  static DEFAULT_SERVICE_NAME: string = 'natural-language-understanding';
 
   /**
    * Construct a NaturalLanguageUnderstandingV1 object.
@@ -48,17 +46,25 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/natural-language-understanding/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {NaturalLanguageUnderstandingV1}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('natural-language-understanding');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -85,6 +91,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * - Sentiment
    * - Syntax (Experimental).
    *
+   * If a language for the input text is not specified with the `language` parameter, the service [automatically detects
+   * the
+   * language](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-detectable-languages).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {Features} params.features - Specific features to analyze the document for.
    * @param {string} [params.text] - The plain text to analyze. One of the `text`, `html`, or `url` parameters is
@@ -110,8 +120,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {number} [params.limitTextCharacters] - Sets the maximum number of characters that are processed by the
    * service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>>}
    */
   public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
     const _params = extend({}, params);
@@ -119,7 +129,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const requiredParams = ['features'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -142,7 +151,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         'limit_text_characters': _params.limitTextCharacters
       };
 
-      const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'analyze');
+      const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'analyze');
 
       const parameters = {
         options: {
@@ -189,16 +198,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>>}
    */
   public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
-      const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'listModels');
+      const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
 
       const parameters = {
         options: {
@@ -238,8 +246,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - Model ID of the model to delete.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
    */
   public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.DeleteModelResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = extend({}, params);
@@ -247,7 +255,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const requiredParams = ['modelId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -261,7 +268,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         'model_id': _params.modelId
       };
 
-      const sdkHeaders = getSdkHeaders('natural-language-understanding', 'v1', 'deleteModel');
+      const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteModel');
 
       const parameters = {
         options: {
@@ -295,9 +302,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   };
 
 }
-
-NaturalLanguageUnderstandingV1.prototype.name = 'natural-language-understanding';
-NaturalLanguageUnderstandingV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces
@@ -450,11 +454,6 @@ namespace NaturalLanguageUnderstandingV1 {
     explanation?: boolean;
     /** Maximum number of categories to return. */
     limit?: number;
-    /** Enter a [custom
-     *  model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing)
-     *  ID to override the standard categories model.
-     */
-    model?: string;
   }
 
   /** Relevant text that contributed to the categorization. */
