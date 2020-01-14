@@ -292,6 +292,8 @@ namespace SpeechToTextV1 {
     processingMetrics?: boolean;
     processingMetricsInterval?: number;
     audioMetrics?: boolean;
+    endOfPhraseSilenceTime?: number;
+    splitTranscriptAtPhraseEnd?: boolean;
   }
 }
 
