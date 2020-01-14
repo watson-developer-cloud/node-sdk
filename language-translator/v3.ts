@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * (C) Copyright IBM Corp. 2018, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,9 +28,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class LanguageTranslatorV3 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
-  name: string; // set by prototype to 'language_translator'
-  serviceVersion: string; // set by prototype to 'v3'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
+  static DEFAULT_SERVICE_NAME: string = 'language_translator';
 
   /**
    * Construct a LanguageTranslatorV3 object.
@@ -45,17 +43,25 @@ class LanguageTranslatorV3 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {LanguageTranslatorV3}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = LanguageTranslatorV3.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('language_translator');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -80,8 +86,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} [params.source] - Translation source language code.
    * @param {string} [params.target] - Translation target language code.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>>}
    */
   public translate(params: LanguageTranslatorV3.TranslateParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationResult>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>> {
     const _params = extend({}, params);
@@ -89,7 +95,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -106,7 +111,7 @@ class LanguageTranslatorV3 extends BaseService {
         'target': _params.target
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translate');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'translate');
 
       const parameters = {
         options: {
@@ -152,16 +157,15 @@ class LanguageTranslatorV3 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiableLanguages>>}
    */
   public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiableLanguages>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiableLanguages>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listIdentifiableLanguages');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listIdentifiableLanguages');
 
       const parameters = {
         options: {
@@ -201,8 +205,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - Input text in UTF-8 format.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiedLanguages>>}
    */
   public identify(params: LanguageTranslatorV3.IdentifyParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.IdentifiedLanguages>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiedLanguages>> {
     const _params = extend({}, params);
@@ -210,7 +214,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -219,9 +222,9 @@ class LanguageTranslatorV3 extends BaseService {
         }
         return reject(missingParams);
       }
-      const body = _params.text;
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'identify');
+      const body = _params.text;
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'identify');
 
       const parameters = {
         options: {
@@ -272,22 +275,21 @@ class LanguageTranslatorV3 extends BaseService {
    * non-default models, set this to `false`. There is exactly one default model per language pair, the IBM provided
    * base model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>>}
    */
   public listModels(params?: LanguageTranslatorV3.ListModelsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModels>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
       const query = {
         'source': _params.source,
         'target': _params.target,
         'default': _params._default
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listModels');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listModels');
 
       const parameters = {
         options: {
@@ -351,8 +353,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
    * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>>}
    */
   public createModel(params: LanguageTranslatorV3.CreateModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
     const _params = extend({}, params);
@@ -360,7 +362,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['baseModelId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -369,6 +370,7 @@ class LanguageTranslatorV3 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'forced_glossary': {
           data: _params.forcedGlossary,
@@ -385,7 +387,7 @@ class LanguageTranslatorV3 extends BaseService {
         'name': _params.name
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'createModel');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'createModel');
 
       const parameters = {
         options: {
@@ -428,8 +430,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - Model ID of the model to delete.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DeleteModelResult>>}
    */
   public deleteModel(params: LanguageTranslatorV3.DeleteModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DeleteModelResult>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DeleteModelResult>> {
     const _params = extend({}, params);
@@ -437,7 +439,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['modelId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -451,7 +452,7 @@ class LanguageTranslatorV3 extends BaseService {
         'model_id': _params.modelId
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteModel');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteModel');
 
       const parameters = {
         options: {
@@ -493,8 +494,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - Model ID of the model to get.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>>}
    */
   public getModel(params: LanguageTranslatorV3.GetModelParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.TranslationModel>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
     const _params = extend({}, params);
@@ -502,7 +503,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['modelId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -516,7 +516,7 @@ class LanguageTranslatorV3 extends BaseService {
         'model_id': _params.modelId
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getModel');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getModel');
 
       const parameters = {
         options: {
@@ -560,16 +560,15 @@ class LanguageTranslatorV3 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentList>>}
    */
   public listDocuments(params?: LanguageTranslatorV3.ListDocumentsParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentList>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentList>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'listDocuments');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listDocuments');
 
       const parameters = {
         options: {
@@ -608,7 +607,7 @@ class LanguageTranslatorV3 extends BaseService {
    * reference a previously submitted document by document ID.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.file - The source file to translate.
+   * @param {NodeJS.ReadableStream|Buffer} params.file - The contents of the source file to translate.
    *
    * [Supported file
    * types](https://cloud.ibm.com/docs/services/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
@@ -623,8 +622,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} [params.documentId] - To use a previously submitted document as the source for a new translation,
    * enter the `document_id` of the document.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>>}
    */
   public translateDocument(params: LanguageTranslatorV3.TranslateDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
     const _params = extend({}, params);
@@ -632,7 +631,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['file', 'filename'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -641,6 +639,7 @@ class LanguageTranslatorV3 extends BaseService {
         }
         return reject(missingParams);
       }
+
       const formData = {
         'file': {
           data: _params.file,
@@ -653,7 +652,7 @@ class LanguageTranslatorV3 extends BaseService {
         'document_id': _params.documentId
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'translateDocument');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'translateDocument');
 
       const parameters = {
         options: {
@@ -695,8 +694,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.documentId - The document ID of the document.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>>}
    */
   public getDocumentStatus(params: LanguageTranslatorV3.GetDocumentStatusParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.DocumentStatus>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
     const _params = extend({}, params);
@@ -704,7 +703,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['documentId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -718,7 +716,7 @@ class LanguageTranslatorV3 extends BaseService {
         'document_id': _params.documentId
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getDocumentStatus');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getDocumentStatus');
 
       const parameters = {
         options: {
@@ -759,8 +757,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.documentId - Document ID of the document to delete.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>>}
    */
   public deleteDocument(params: LanguageTranslatorV3.DeleteDocumentParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.Empty>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>> {
     const _params = extend({}, params);
@@ -768,7 +766,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['documentId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -782,7 +779,7 @@ class LanguageTranslatorV3 extends BaseService {
         'document_id': _params.documentId
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'deleteDocument');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteDocument');
 
       const parameters = {
         options: {
@@ -831,8 +828,8 @@ class LanguageTranslatorV3 extends BaseService {
    * text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For
    * example, 'text/html;charset=utf-8'.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream|Buffer>>}
    */
   public getTranslatedDocument(params: LanguageTranslatorV3.GetTranslatedDocumentParams, callback?: LanguageTranslatorV3.Callback<NodeJS.ReadableStream|Buffer>): Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
@@ -840,7 +837,6 @@ class LanguageTranslatorV3 extends BaseService {
     const requiredParams = ['documentId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -854,7 +850,7 @@ class LanguageTranslatorV3 extends BaseService {
         'document_id': _params.documentId
       };
 
-      const sdkHeaders = getSdkHeaders('language_translator', 'v3', 'getTranslatedDocument');
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getTranslatedDocument');
 
       const parameters = {
         options: {
@@ -889,9 +885,6 @@ class LanguageTranslatorV3 extends BaseService {
   };
 
 }
-
-LanguageTranslatorV3.prototype.name = 'language_translator';
-LanguageTranslatorV3.prototype.serviceVersion = 'v3';
 
 /*************************
  * interfaces
@@ -1007,7 +1000,7 @@ namespace LanguageTranslatorV3 {
 
   /** Parameters for the `translateDocument` operation. */
   export interface TranslateDocumentParams {
-    /** The source file to translate.
+    /** The contents of the source file to translate.
      *
      *  [Supported file
      *  types](https://cloud.ibm.com/docs/services/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
@@ -1162,7 +1155,7 @@ namespace LanguageTranslatorV3 {
     created: string;
     /** The time when the translation completed. */
     completed?: string;
-    /** The number of words in the source document, present only if status=available. */
+    /** An estimate of the number of words in the source document. Returned only if `status` is `available`. */
     word_count?: number;
     /** The number of characters in the source document, present only if status=available. */
     character_count?: number;
@@ -1242,7 +1235,7 @@ namespace LanguageTranslatorV3 {
 
   /** TranslationResult. */
   export interface TranslationResult {
-    /** Number of words in the input text. */
+    /** An estimate of the number of words in the input text. */
     word_count: number;
     /** Number of characters in the input text. */
     character_count: number;

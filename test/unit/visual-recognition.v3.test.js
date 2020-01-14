@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,17 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
-const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
 const VisualRecognitionV3 = require('../../dist/visual-recognition/v3');
-const utils = require('../resources/unitTestUtils');
 
 const {
   getOptions,
   checkUrlAndMethod,
   checkMediaHeaders,
-  missingParamsSuccess,
   expectToBePromise,
-  missingParamsError,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
   checkUserHeader,
-  checkDefaultSuccessArgs,
-} = utils;
+  checkForSuccessfulExecution,
+} = unitTestUtils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -41,22 +35,17 @@ const service = {
 
 const visualRecognition = new VisualRecognitionV3(service);
 const createRequestMock = jest.spyOn(visualRecognition, 'createRequest');
-const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
   createRequestMock.mockClear();
-  missingParamsMock.mockClear();
 });
 
 describe('VisualRecognitionV3', () => {
   describe('classify', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const imagesFile = 'fake_imagesFile';
@@ -78,7 +67,10 @@ describe('VisualRecognitionV3', () => {
           acceptLanguage,
         };
 
-        visualRecognition.classify(params);
+        const classifyResult = visualRecognition.classify(params);
+
+        // all methods should return a Promise
+        expectToBePromise(classifyResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -114,21 +106,10 @@ describe('VisualRecognitionV3', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const classifyPromise = visualRecognition.classify(params);
-        expectToBePromise(classifyPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         visualRecognition.classify({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -141,9 +122,6 @@ describe('VisualRecognitionV3', () => {
   });
   describe('createClassifier', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const name = 'fake_name';
@@ -157,7 +135,10 @@ describe('VisualRecognitionV3', () => {
           negativeExamplesFilename,
         };
 
-        visualRecognition.createClassifier(params);
+        const createClassifierResult = visualRecognition.createClassifier(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createClassifierResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -169,10 +150,12 @@ describe('VisualRecognitionV3', () => {
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.formData['name']).toEqual(name);
-        expect(options.formData['fake_positive_examples'].data).toEqual(positiveExamples['fake']);
-        expect(options.formData['fake_positive_examples'].contentType).toEqual(
-          'application/octet-stream'
+        expect(options.formData['${key}_positive_examples'.replace('${key}', 'fake')].data).toEqual(
+          positiveExamples['fake']
         );
+        expect(
+          options.formData['${key}_positive_examples'.replace('${key}', 'fake')].contentType
+        ).toEqual('application/octet-stream');
         expect(options.formData['negative_examples'].data).toEqual(negativeExamples);
         expect(options.formData['negative_examples'].filename).toEqual(negativeExamplesFilename);
         expect(options.formData['negative_examples'].contentType).toEqual(
@@ -198,37 +181,9 @@ describe('VisualRecognitionV3', () => {
         visualRecognition.createClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const name = 'fake_name';
-        const positiveExamples = { fake: 'fake_positiveExamples' };
-        const params = {
-          name,
-          positiveExamples,
-        };
-
-        // invoke method
-        const createClassifierPromise = visualRecognition.createClassifier(params);
-        expectToBePromise(createClassifierPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        visualRecognition.createClassifier(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['name', 'positiveExamples'];
@@ -240,7 +195,7 @@ describe('VisualRecognitionV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -252,7 +207,7 @@ describe('VisualRecognitionV3', () => {
         expectToBePromise(createClassifierPromise);
 
         createClassifierPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -260,9 +215,6 @@ describe('VisualRecognitionV3', () => {
   });
   describe('listClassifiers', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const verbose = 'fake_verbose';
@@ -270,7 +222,10 @@ describe('VisualRecognitionV3', () => {
           verbose,
         };
 
-        visualRecognition.listClassifiers(params);
+        const listClassifiersResult = visualRecognition.listClassifiers(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listClassifiersResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -299,21 +254,10 @@ describe('VisualRecognitionV3', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listClassifiersPromise = visualRecognition.listClassifiers(params);
-        expectToBePromise(listClassifiersPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         visualRecognition.listClassifiers({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -326,9 +270,6 @@ describe('VisualRecognitionV3', () => {
   });
   describe('getClassifier', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const classifierId = 'fake_classifierId';
@@ -336,7 +277,10 @@ describe('VisualRecognitionV3', () => {
           classifierId,
         };
 
-        visualRecognition.getClassifier(params);
+        const getClassifierResult = visualRecognition.getClassifier(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getClassifierResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -366,35 +310,9 @@ describe('VisualRecognitionV3', () => {
         visualRecognition.getClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
-        const params = {
-          classifierId,
-        };
-
-        // invoke method
-        const getClassifierPromise = visualRecognition.getClassifier(params);
-        expectToBePromise(getClassifierPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        visualRecognition.getClassifier(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['classifierId'];
@@ -406,7 +324,7 @@ describe('VisualRecognitionV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -418,7 +336,7 @@ describe('VisualRecognitionV3', () => {
         expectToBePromise(getClassifierPromise);
 
         getClassifierPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -426,9 +344,6 @@ describe('VisualRecognitionV3', () => {
   });
   describe('updateClassifier', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const classifierId = 'fake_classifierId';
@@ -442,7 +357,10 @@ describe('VisualRecognitionV3', () => {
           negativeExamplesFilename,
         };
 
-        visualRecognition.updateClassifier(params);
+        const updateClassifierResult = visualRecognition.updateClassifier(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateClassifierResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -453,10 +371,12 @@ describe('VisualRecognitionV3', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['fake_positive_examples'].data).toEqual(positiveExamples['fake']);
-        expect(options.formData['fake_positive_examples'].contentType).toEqual(
-          'application/octet-stream'
+        expect(options.formData['${key}_positive_examples'.replace('${key}', 'fake')].data).toEqual(
+          positiveExamples['fake']
         );
+        expect(
+          options.formData['${key}_positive_examples'.replace('${key}', 'fake')].contentType
+        ).toEqual('application/octet-stream');
         expect(options.formData['negative_examples'].data).toEqual(negativeExamples);
         expect(options.formData['negative_examples'].filename).toEqual(negativeExamplesFilename);
         expect(options.formData['negative_examples'].contentType).toEqual(
@@ -481,35 +401,9 @@ describe('VisualRecognitionV3', () => {
         visualRecognition.updateClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
-        const params = {
-          classifierId,
-        };
-
-        // invoke method
-        const updateClassifierPromise = visualRecognition.updateClassifier(params);
-        expectToBePromise(updateClassifierPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        visualRecognition.updateClassifier(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['classifierId'];
@@ -521,7 +415,7 @@ describe('VisualRecognitionV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -533,7 +427,7 @@ describe('VisualRecognitionV3', () => {
         expectToBePromise(updateClassifierPromise);
 
         updateClassifierPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -541,9 +435,6 @@ describe('VisualRecognitionV3', () => {
   });
   describe('deleteClassifier', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const classifierId = 'fake_classifierId';
@@ -551,7 +442,10 @@ describe('VisualRecognitionV3', () => {
           classifierId,
         };
 
-        visualRecognition.deleteClassifier(params);
+        const deleteClassifierResult = visualRecognition.deleteClassifier(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteClassifierResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -581,35 +475,9 @@ describe('VisualRecognitionV3', () => {
         visualRecognition.deleteClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
-        const params = {
-          classifierId,
-        };
-
-        // invoke method
-        const deleteClassifierPromise = visualRecognition.deleteClassifier(params);
-        expectToBePromise(deleteClassifierPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        visualRecognition.deleteClassifier(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['classifierId'];
@@ -621,7 +489,7 @@ describe('VisualRecognitionV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -633,7 +501,7 @@ describe('VisualRecognitionV3', () => {
         expectToBePromise(deleteClassifierPromise);
 
         deleteClassifierPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -641,9 +509,6 @@ describe('VisualRecognitionV3', () => {
   });
   describe('getCoreMlModel', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const classifierId = 'fake_classifierId';
@@ -651,7 +516,10 @@ describe('VisualRecognitionV3', () => {
           classifierId,
         };
 
-        visualRecognition.getCoreMlModel(params);
+        const getCoreMlModelResult = visualRecognition.getCoreMlModel(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getCoreMlModelResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -682,35 +550,9 @@ describe('VisualRecognitionV3', () => {
         visualRecognition.getCoreMlModel(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
-        const params = {
-          classifierId,
-        };
-
-        // invoke method
-        const getCoreMlModelPromise = visualRecognition.getCoreMlModel(params);
-        expectToBePromise(getCoreMlModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        visualRecognition.getCoreMlModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['classifierId'];
@@ -722,7 +564,7 @@ describe('VisualRecognitionV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -734,7 +576,7 @@ describe('VisualRecognitionV3', () => {
         expectToBePromise(getCoreMlModelPromise);
 
         getCoreMlModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -742,9 +584,6 @@ describe('VisualRecognitionV3', () => {
   });
   describe('deleteUserData', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const customerId = 'fake_customerId';
@@ -752,7 +591,10 @@ describe('VisualRecognitionV3', () => {
           customerId,
         };
 
-        visualRecognition.deleteUserData(params);
+        const deleteUserDataResult = visualRecognition.deleteUserData(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteUserDataResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -782,35 +624,9 @@ describe('VisualRecognitionV3', () => {
         visualRecognition.deleteUserData(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const customerId = 'fake_customerId';
-        const params = {
-          customerId,
-        };
-
-        // invoke method
-        const deleteUserDataPromise = visualRecognition.deleteUserData(params);
-        expectToBePromise(deleteUserDataPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        visualRecognition.deleteUserData(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['customerId'];
@@ -822,7 +638,7 @@ describe('VisualRecognitionV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -834,7 +650,7 @@ describe('VisualRecognitionV3', () => {
         expectToBePromise(deleteUserDataPromise);
 
         deleteUserDataPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

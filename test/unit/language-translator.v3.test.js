@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,17 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
-const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
 const LanguageTranslatorV3 = require('../../dist/language-translator/v3');
-const utils = require('../resources/unitTestUtils');
 
 const {
   getOptions,
   checkUrlAndMethod,
   checkMediaHeaders,
-  missingParamsSuccess,
   expectToBePromise,
-  missingParamsError,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
   checkUserHeader,
-  checkDefaultSuccessArgs,
-} = utils;
+  checkForSuccessfulExecution,
+} = unitTestUtils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -41,22 +35,17 @@ const service = {
 
 const languageTranslator = new LanguageTranslatorV3(service);
 const createRequestMock = jest.spyOn(languageTranslator, 'createRequest');
-const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
   createRequestMock.mockClear();
-  missingParamsMock.mockClear();
 });
 
 describe('LanguageTranslatorV3', () => {
   describe('translate', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const text = 'fake_text';
@@ -70,7 +59,10 @@ describe('LanguageTranslatorV3', () => {
           target,
         };
 
-        languageTranslator.translate(params);
+        const translateResult = languageTranslator.translate(params);
+
+        // all methods should return a Promise
+        expectToBePromise(translateResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -103,35 +95,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.translate(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const text = 'fake_text';
-        const params = {
-          text,
-        };
-
-        // invoke method
-        const translatePromise = languageTranslator.translate(params);
-        expectToBePromise(translatePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.translate(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['text'];
@@ -143,7 +109,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -155,7 +121,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(translatePromise);
 
         translatePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -163,14 +129,16 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('listIdentifiableLanguages', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const params = {};
 
-        languageTranslator.listIdentifiableLanguages(params);
+        const listIdentifiableLanguagesResult = languageTranslator.listIdentifiableLanguages(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(listIdentifiableLanguagesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -198,23 +166,10 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listIdentifiableLanguagesPromise = languageTranslator.listIdentifiableLanguages(
-          params
-        );
-        expectToBePromise(listIdentifiableLanguagesPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         languageTranslator.listIdentifiableLanguages({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -227,9 +182,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('identify', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const text = 'fake_text';
@@ -237,7 +189,10 @@ describe('LanguageTranslatorV3', () => {
           text,
         };
 
-        languageTranslator.identify(params);
+        const identifyResult = languageTranslator.identify(params);
+
+        // all methods should return a Promise
+        expectToBePromise(identifyResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -267,35 +222,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.identify(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const text = 'fake_text';
-        const params = {
-          text,
-        };
-
-        // invoke method
-        const identifyPromise = languageTranslator.identify(params);
-        expectToBePromise(identifyPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.identify(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['text'];
@@ -307,7 +236,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -319,7 +248,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(identifyPromise);
 
         identifyPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -327,9 +256,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('listModels', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const source = 'fake_source';
@@ -341,7 +267,10 @@ describe('LanguageTranslatorV3', () => {
           _default,
         };
 
-        languageTranslator.listModels(params);
+        const listModelsResult = languageTranslator.listModels(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listModelsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -372,21 +301,10 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listModelsPromise = languageTranslator.listModels(params);
-        expectToBePromise(listModelsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         languageTranslator.listModels({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -399,9 +317,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('createModel', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const baseModelId = 'fake_baseModelId';
@@ -415,7 +330,10 @@ describe('LanguageTranslatorV3', () => {
           name,
         };
 
-        languageTranslator.createModel(params);
+        const createModelResult = languageTranslator.createModel(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createModelResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -450,35 +368,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.createModel(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const baseModelId = 'fake_baseModelId';
-        const params = {
-          baseModelId,
-        };
-
-        // invoke method
-        const createModelPromise = languageTranslator.createModel(params);
-        expectToBePromise(createModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.createModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['baseModelId'];
@@ -490,7 +382,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -502,7 +394,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(createModelPromise);
 
         createModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -510,9 +402,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('deleteModel', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const modelId = 'fake_modelId';
@@ -520,7 +409,10 @@ describe('LanguageTranslatorV3', () => {
           modelId,
         };
 
-        languageTranslator.deleteModel(params);
+        const deleteModelResult = languageTranslator.deleteModel(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteModelResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -550,35 +442,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.deleteModel(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const modelId = 'fake_modelId';
-        const params = {
-          modelId,
-        };
-
-        // invoke method
-        const deleteModelPromise = languageTranslator.deleteModel(params);
-        expectToBePromise(deleteModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.deleteModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['modelId'];
@@ -590,7 +456,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -602,7 +468,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(deleteModelPromise);
 
         deleteModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -610,9 +476,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('getModel', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const modelId = 'fake_modelId';
@@ -620,7 +483,10 @@ describe('LanguageTranslatorV3', () => {
           modelId,
         };
 
-        languageTranslator.getModel(params);
+        const getModelResult = languageTranslator.getModel(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getModelResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -650,35 +516,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.getModel(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const modelId = 'fake_modelId';
-        const params = {
-          modelId,
-        };
-
-        // invoke method
-        const getModelPromise = languageTranslator.getModel(params);
-        expectToBePromise(getModelPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.getModel(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['modelId'];
@@ -690,7 +530,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -702,7 +542,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(getModelPromise);
 
         getModelPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -710,14 +550,14 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('listDocuments', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const params = {};
 
-        languageTranslator.listDocuments(params);
+        const listDocumentsResult = languageTranslator.listDocuments(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listDocumentsResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -745,21 +585,10 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const params = {};
-
-        // invoke method
-        const listDocumentsPromise = languageTranslator.listDocuments(params);
-        expectToBePromise(listDocumentsPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method
         languageTranslator.listDocuments({});
-        checkDefaultSuccessArgs(createRequestMock);
+        checkForSuccessfulExecution(createRequestMock);
       });
 
       test('should use argument as callback function if only one is passed in', async () => {
@@ -772,9 +601,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('translateDocument', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const file = 'fake_file';
@@ -794,7 +620,10 @@ describe('LanguageTranslatorV3', () => {
           documentId,
         };
 
-        languageTranslator.translateDocument(params);
+        const translateDocumentResult = languageTranslator.translateDocument(params);
+
+        // all methods should return a Promise
+        expectToBePromise(translateDocumentResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -832,37 +661,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.translateDocument(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const file = 'fake_file';
-        const filename = 'fake_filename';
-        const params = {
-          file,
-          filename,
-        };
-
-        // invoke method
-        const translateDocumentPromise = languageTranslator.translateDocument(params);
-        expectToBePromise(translateDocumentPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.translateDocument(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['file', 'filename'];
@@ -874,7 +675,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -886,7 +687,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(translateDocumentPromise);
 
         translateDocumentPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -894,9 +695,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('getDocumentStatus', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const documentId = 'fake_documentId';
@@ -904,7 +702,10 @@ describe('LanguageTranslatorV3', () => {
           documentId,
         };
 
-        languageTranslator.getDocumentStatus(params);
+        const getDocumentStatusResult = languageTranslator.getDocumentStatus(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getDocumentStatusResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -934,35 +735,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.getDocumentStatus(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const documentId = 'fake_documentId';
-        const params = {
-          documentId,
-        };
-
-        // invoke method
-        const getDocumentStatusPromise = languageTranslator.getDocumentStatus(params);
-        expectToBePromise(getDocumentStatusPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.getDocumentStatus(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['documentId'];
@@ -974,7 +749,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -986,7 +761,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(getDocumentStatusPromise);
 
         getDocumentStatusPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -994,9 +769,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('deleteDocument', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const documentId = 'fake_documentId';
@@ -1004,7 +776,10 @@ describe('LanguageTranslatorV3', () => {
           documentId,
         };
 
-        languageTranslator.deleteDocument(params);
+        const deleteDocumentResult = languageTranslator.deleteDocument(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteDocumentResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1034,35 +809,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.deleteDocument(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const documentId = 'fake_documentId';
-        const params = {
-          documentId,
-        };
-
-        // invoke method
-        const deleteDocumentPromise = languageTranslator.deleteDocument(params);
-        expectToBePromise(deleteDocumentPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.deleteDocument(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['documentId'];
@@ -1074,7 +823,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1086,7 +835,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(deleteDocumentPromise);
 
         deleteDocumentPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1094,9 +843,6 @@ describe('LanguageTranslatorV3', () => {
   });
   describe('getTranslatedDocument', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const documentId = 'fake_documentId';
@@ -1106,7 +852,10 @@ describe('LanguageTranslatorV3', () => {
           accept,
         };
 
-        languageTranslator.getTranslatedDocument(params);
+        const getTranslatedDocumentResult = languageTranslator.getTranslatedDocument(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getTranslatedDocumentResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1138,35 +887,9 @@ describe('LanguageTranslatorV3', () => {
         languageTranslator.getTranslatedDocument(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const documentId = 'fake_documentId';
-        const params = {
-          documentId,
-        };
-
-        // invoke method
-        const getTranslatedDocumentPromise = languageTranslator.getTranslatedDocument(params);
-        expectToBePromise(getTranslatedDocumentPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        languageTranslator.getTranslatedDocument(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['documentId'];
@@ -1178,7 +901,7 @@ describe('LanguageTranslatorV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -1190,7 +913,7 @@ describe('LanguageTranslatorV3', () => {
         expectToBePromise(getTranslatedDocumentPromise);
 
         getTranslatedDocumentPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,16 @@
  */
 'use strict';
 
-const helper = require('ibm-cloud-sdk-core'); // for mocking `getMissingParams`
-const { NoAuthAuthenticator } = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
 const ToneAnalyzerV3 = require('../../dist/tone-analyzer/v3');
-const utils = require('../resources/unitTestUtils');
 
 const {
   getOptions,
   checkUrlAndMethod,
   checkMediaHeaders,
-  missingParamsSuccess,
   expectToBePromise,
-  missingParamsError,
-  checkForEmptyObject,
-  checkRequiredParamsHandling,
   checkUserHeader,
-} = utils;
+} = unitTestUtils;
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
@@ -40,22 +34,17 @@ const service = {
 
 const toneAnalyzer = new ToneAnalyzerV3(service);
 const createRequestMock = jest.spyOn(toneAnalyzer, 'createRequest');
-const missingParamsMock = jest.spyOn(helper, 'getMissingParams');
 
 // dont actually create a request
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 afterEach(() => {
   createRequestMock.mockClear();
-  missingParamsMock.mockClear();
 });
 
 describe('ToneAnalyzerV3', () => {
   describe('tone', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const toneInput = 'fake_toneInput';
@@ -73,7 +62,10 @@ describe('ToneAnalyzerV3', () => {
           acceptLanguage,
         };
 
-        toneAnalyzer.tone(params);
+        const toneResult = toneAnalyzer.tone(params);
+
+        // all methods should return a Promise
+        expectToBePromise(toneResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -108,35 +100,9 @@ describe('ToneAnalyzerV3', () => {
         toneAnalyzer.tone(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const toneInput = 'fake_toneInput';
-        const params = {
-          toneInput,
-        };
-
-        // invoke method
-        const tonePromise = toneAnalyzer.tone(params);
-        expectToBePromise(tonePromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        toneAnalyzer.tone(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['toneInput'];
@@ -148,7 +114,7 @@ describe('ToneAnalyzerV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -160,7 +126,7 @@ describe('ToneAnalyzerV3', () => {
         expectToBePromise(tonePromise);
 
         tonePromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -168,9 +134,6 @@ describe('ToneAnalyzerV3', () => {
   });
   describe('toneChat', () => {
     describe('positive tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsSuccess);
-      });
       test('should pass the right params to createRequest', () => {
         // parameters
         const utterances = 'fake_utterances';
@@ -182,7 +145,10 @@ describe('ToneAnalyzerV3', () => {
           acceptLanguage,
         };
 
-        toneAnalyzer.toneChat(params);
+        const toneChatResult = toneAnalyzer.toneChat(params);
+
+        // all methods should return a Promise
+        expectToBePromise(toneChatResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -214,35 +180,9 @@ describe('ToneAnalyzerV3', () => {
         toneAnalyzer.toneChat(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
-
-      test('should return a promise when no callback is given', () => {
-        // parameters
-        const utterances = 'fake_utterances';
-        const params = {
-          utterances,
-        };
-
-        // invoke method
-        const toneChatPromise = toneAnalyzer.toneChat(params);
-        expectToBePromise(toneChatPromise);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-      });
     });
 
     describe('negative tests', () => {
-      beforeAll(() => {
-        missingParamsMock.mockReturnValue(missingParamsError);
-      });
-
-      test('should convert a `null` value for `params` to an empty object', done => {
-        toneAnalyzer.toneChat(null).catch(() => {
-          checkForEmptyObject(missingParamsMock);
-          done();
-        });
-      });
-
       test('should enforce required parameters', async done => {
         // required parameters for this method
         const requiredParams = ['utterances'];
@@ -254,7 +194,7 @@ describe('ToneAnalyzerV3', () => {
           err = e;
         }
 
-        checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+        expect(err.message).toMatch(/Missing required parameters/);
         done();
       });
 
@@ -266,7 +206,7 @@ describe('ToneAnalyzerV3', () => {
         expectToBePromise(toneChatPromise);
 
         toneChatPromise.catch(err => {
-          checkRequiredParamsHandling(requiredParams, err, missingParamsMock, createRequestMock);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * (C) Copyright IBM Corp. 2018, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -30,9 +29,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class AssistantV2 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/assistant/api';
-  name: string; // set by prototype to 'conversation'
-  serviceVersion: string; // set by prototype to 'v2'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/assistant/api';
+  static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /**
    * Construct a AssistantV2 object.
@@ -46,17 +44,25 @@ class AssistantV2 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {AssistantV2}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = AssistantV2.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('conversation');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -84,8 +90,8 @@ class AssistantV2 extends BaseService {
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV2.Response<AssistantV2.SessionResponse>>}
    */
   public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
     const _params = extend({}, params);
@@ -93,7 +99,6 @@ class AssistantV2 extends BaseService {
     const requiredParams = ['assistantId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -107,7 +112,7 @@ class AssistantV2 extends BaseService {
         'assistant_id': _params.assistantId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v2', 'createSession');
+      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createSession');
 
       const parameters = {
         options: {
@@ -155,8 +160,8 @@ class AssistantV2 extends BaseService {
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.sessionId - Unique identifier of the session.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
    */
   public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): Promise<AssistantV2.Response<AssistantV2.Empty>> {
     const _params = extend({}, params);
@@ -164,7 +169,6 @@ class AssistantV2 extends BaseService {
     const requiredParams = ['assistantId', 'sessionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -179,7 +183,7 @@ class AssistantV2 extends BaseService {
         'session_id': _params.sessionId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v2', 'deleteSession');
+      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteSession');
 
       const parameters = {
         options: {
@@ -236,8 +240,8 @@ class AssistantV2 extends BaseService {
    * assistant on a per-session basis. You can use this property to set or modify context variables, which can also be
    * accessed by dialog nodes.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponse>>}
    */
   public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): Promise<AssistantV2.Response<AssistantV2.MessageResponse>> {
     const _params = extend({}, params);
@@ -245,7 +249,6 @@ class AssistantV2 extends BaseService {
     const requiredParams = ['assistantId', 'sessionId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -265,7 +268,7 @@ class AssistantV2 extends BaseService {
         'session_id': _params.sessionId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v2', 'message');
+      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'message');
 
       const parameters = {
         options: {
@@ -301,9 +304,6 @@ class AssistantV2 extends BaseService {
   };
 
 }
-
-AssistantV2.prototype.name = 'conversation';
-AssistantV2.prototype.serviceVersion = 'v2';
 
 /*************************
  * interfaces
@@ -501,6 +501,8 @@ namespace AssistantV2 {
   export interface MessageContextSkill {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
+    /** For internal use only. */
+    system?: JsonObject;
   }
 
   /** Information specific to particular skills used by the Assistant. **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that apply to the dialog skill used by the assistant. */

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2019.
+ * (C) Copyright IBM Corp. 2017, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -39,9 +38,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class TextToSpeechV1 extends BaseService {
 
-  static URL: string = 'https://stream.watsonplatform.net/text-to-speech/api';
-  name: string; // set by prototype to 'text_to_speech'
-  serviceVersion: string; // set by prototype to 'v1'
+  static DEFAULT_SERVICE_URL: string = 'https://stream.watsonplatform.net/text-to-speech/api';
+  static DEFAULT_SERVICE_NAME: string = 'text_to_speech';
 
   /**
    * Construct a TextToSpeechV1 object.
@@ -49,16 +47,24 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/text-to-speech/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {TextToSpeechV1}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = TextToSpeechV1.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('text_to_speech');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
   }
 
   /*************************
@@ -76,16 +82,15 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Voices>>}
    */
   public listVoices(params?: TextToSpeechV1.ListVoicesParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voices>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voices>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listVoices');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listVoices');
 
       const parameters = {
         options: {
@@ -133,8 +138,8 @@ class TextToSpeechV1 extends BaseService {
    * information is to be returned. You must make the request with credentials for the instance of the service that owns
    * the custom model. Omit the parameter to see information about the specified voice with no customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Voice>>}
    */
   public getVoice(params: TextToSpeechV1.GetVoiceParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Voice>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voice>> {
     const _params = extend({}, params);
@@ -142,7 +147,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['voice'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -160,7 +164,7 @@ class TextToSpeechV1 extends BaseService {
         'voice': _params.voice
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getVoice');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getVoice');
 
       const parameters = {
         options: {
@@ -266,8 +270,8 @@ class TextToSpeechV1 extends BaseService {
    * indicated voice. You must make the request with credentials for the instance of the service that owns the custom
    * model. Omit the parameter to use the specified voice with no customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<NodeJS.ReadableStream|Buffer>>}
    */
   public synthesize(params: TextToSpeechV1.SynthesizeParams, callback?: TextToSpeechV1.Callback<NodeJS.ReadableStream|Buffer>): Promise<TextToSpeechV1.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
@@ -275,7 +279,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -294,7 +297,7 @@ class TextToSpeechV1 extends BaseService {
         'customization_id': _params.customizationId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'synthesize');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'synthesize');
 
       const parameters = {
         options: {
@@ -341,7 +344,8 @@ class TextToSpeechV1 extends BaseService {
    * You can also request the pronunciation for a specific voice to see the default translation for the language of that
    * voice or for a specific custom voice model to see the translation for that voice model.
    *
-   * **Note:** This method is currently a beta release.
+   * **Note:** This method is currently a beta release. The method does not support the Arabic, Chinese, and Dutch
+   * languages.
    *
    * **See also:** [Querying a word from a
    * language](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage).
@@ -358,8 +362,8 @@ class TextToSpeechV1 extends BaseService {
    * the custom model's language. You must make the request with credentials for the instance of the service that owns
    * the custom model. Omit the parameter to see the translation for the specified voice with no customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Pronunciation>>}
    */
   public getPronunciation(params: TextToSpeechV1.GetPronunciationParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Pronunciation>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Pronunciation>> {
     const _params = extend({}, params);
@@ -367,7 +371,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -384,7 +387,7 @@ class TextToSpeechV1 extends BaseService {
         'customization_id': _params.customizationId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getPronunciation');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getPronunciation');
 
       const parameters = {
         options: {
@@ -428,7 +431,8 @@ class TextToSpeechV1 extends BaseService {
    * specify the language and a description for the new model. The model is owned by the instance of the service whose
    * credentials are used to create it.
    *
-   * **Note:** This method is currently a beta release.
+   * **Note:** This method is currently a beta release. The service does not support voice model customization for the
+   * Arabic, Chinese, and Dutch languages.
    *
    * **See also:** [Creating a custom
    * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
@@ -440,8 +444,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.description] - A description of the new custom voice model. Specifying a description is
    * recommended.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.VoiceModel>>}
    */
   public createVoiceModel(params: TextToSpeechV1.CreateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): Promise<TextToSpeechV1.Response<TextToSpeechV1.VoiceModel>> {
     const _params = extend({}, params);
@@ -449,7 +453,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['name'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -465,7 +468,7 @@ class TextToSpeechV1 extends BaseService {
         'description': _params.description
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'createVoiceModel');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'createVoiceModel');
 
       const parameters = {
         options: {
@@ -516,20 +519,19 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.language] - The language for which custom voice models that are owned by the requesting
    * credentials are to be returned. Omit the parameter to see all custom voice models that are owned by the requester.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.VoiceModels>>}
    */
   public listVoiceModels(params?: TextToSpeechV1.ListVoiceModelsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModels>): Promise<TextToSpeechV1.Response<TextToSpeechV1.VoiceModels>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
       const query = {
         'language': _params.language
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listVoiceModels');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listVoiceModels');
 
       const parameters = {
         options: {
@@ -599,8 +601,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {Word[]} [params.words] - An array of `Word` objects that provides the words and their translations that are
    * to be added or updated for the custom voice model. Pass an empty array to make no additions or updates.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
   public updateVoiceModel(params: TextToSpeechV1.UpdateVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = extend({}, params);
@@ -608,7 +610,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -628,7 +629,7 @@ class TextToSpeechV1 extends BaseService {
         'customization_id': _params.customizationId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'updateVoiceModel');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'updateVoiceModel');
 
       const parameters = {
         options: {
@@ -679,8 +680,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
    * request with credentials for the instance of the service that owns the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.VoiceModel>>}
    */
   public getVoiceModel(params: TextToSpeechV1.GetVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.VoiceModel>): Promise<TextToSpeechV1.Response<TextToSpeechV1.VoiceModel>> {
     const _params = extend({}, params);
@@ -688,7 +689,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -702,7 +702,7 @@ class TextToSpeechV1 extends BaseService {
         'customization_id': _params.customizationId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getVoiceModel');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getVoiceModel');
 
       const parameters = {
         options: {
@@ -750,8 +750,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
    * request with credentials for the instance of the service that owns the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
   public deleteVoiceModel(params: TextToSpeechV1.DeleteVoiceModelParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = extend({}, params);
@@ -759,7 +759,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -773,7 +772,7 @@ class TextToSpeechV1 extends BaseService {
         'customization_id': _params.customizationId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteVoiceModel');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteVoiceModel');
 
       const parameters = {
         options: {
@@ -847,8 +846,8 @@ class TextToSpeechV1 extends BaseService {
    * from the custom voice model. The words are listed in alphabetical order, with uppercase letters listed before
    * lowercase letters. The array is empty if the custom model contains no words.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
   public addWords(params: TextToSpeechV1.AddWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = extend({}, params);
@@ -856,7 +855,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId', 'words'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -874,7 +872,7 @@ class TextToSpeechV1 extends BaseService {
         'customization_id': _params.customizationId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'addWords');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addWords');
 
       const parameters = {
         options: {
@@ -925,8 +923,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
    * request with credentials for the instance of the service that owns the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Words>>}
    */
   public listWords(params: TextToSpeechV1.ListWordsParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Words>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Words>> {
     const _params = extend({}, params);
@@ -934,7 +932,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -948,7 +945,7 @@ class TextToSpeechV1 extends BaseService {
         'customization_id': _params.customizationId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'listWords');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listWords');
 
       const parameters = {
         options: {
@@ -1022,8 +1019,8 @@ class TextToSpeechV1 extends BaseService {
    * For more information, see [Working with Japanese
    * entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
   public addWord(params: TextToSpeechV1.AddWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = extend({}, params);
@@ -1031,7 +1028,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId', 'word', 'translation'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1051,7 +1047,7 @@ class TextToSpeechV1 extends BaseService {
         'word': _params.word
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'addWord');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addWord');
 
       const parameters = {
         options: {
@@ -1102,8 +1098,8 @@ class TextToSpeechV1 extends BaseService {
    * request with credentials for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be queried from the custom voice model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Translation>>}
    */
   public getWord(params: TextToSpeechV1.GetWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Translation>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Translation>> {
     const _params = extend({}, params);
@@ -1111,7 +1107,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId', 'word'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1126,7 +1121,7 @@ class TextToSpeechV1 extends BaseService {
         'word': _params.word
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'getWord');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getWord');
 
       const parameters = {
         options: {
@@ -1175,8 +1170,8 @@ class TextToSpeechV1 extends BaseService {
    * request with credentials for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be deleted from the custom voice model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
   public deleteWord(params: TextToSpeechV1.DeleteWordParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = extend({}, params);
@@ -1184,7 +1179,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customizationId', 'word'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1199,7 +1193,7 @@ class TextToSpeechV1 extends BaseService {
         'word': _params.word
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteWord');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWord');
 
       const parameters = {
         options: {
@@ -1252,8 +1246,8 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
   public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams, callback?: TextToSpeechV1.Callback<TextToSpeechV1.Empty>): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = extend({}, params);
@@ -1261,7 +1255,6 @@ class TextToSpeechV1 extends BaseService {
     const requiredParams = ['customerId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1275,7 +1268,7 @@ class TextToSpeechV1 extends BaseService {
         'customer_id': _params.customerId
       };
 
-      const sdkHeaders = getSdkHeaders('text_to_speech', 'v1', 'deleteUserData');
+      const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
 
       const parameters = {
         options: {
@@ -1308,9 +1301,6 @@ class TextToSpeechV1 extends BaseService {
   };
 
 }
-
-TextToSpeechV1.prototype.name = 'text_to_speech';
-TextToSpeechV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces
@@ -1433,6 +1423,7 @@ namespace TextToSpeechV1 {
     }
     /** The voice to use for synthesis. */
     export enum Voice {
+      AR_AR_OMARVOICE = 'ar-AR_OmarVoice',
       DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
       DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
       DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
@@ -1459,8 +1450,13 @@ namespace TextToSpeechV1 {
       IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
       JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       JA_JP_EMIV3VOICE = 'ja-JP_EmiV3Voice',
+      NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
+      NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
+      ZH_CN_LINAVOICE = 'zh-CN_LiNaVoice',
+      ZH_CN_WANGWEIVOICE = 'zh-CN_WangWeiVoice',
+      ZH_CN_ZHANGJINGVOICE = 'zh-CN_ZhangJingVoice',
     }
   }
 

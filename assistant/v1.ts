@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2019.
+ * (C) Copyright IBM Corp. 2018, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { getAuthenticatorFromEnvironment } from 'ibm-cloud-sdk-core';
+import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,9 +28,8 @@ import { getSdkHeaders } from '../lib/common';
 
 class AssistantV1 extends BaseService {
 
-  static URL: string = 'https://gateway.watsonplatform.net/assistant/api';
-  name: string; // set by prototype to 'conversation'
-  serviceVersion: string; // set by prototype to 'v1'
+  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/assistant/api';
+  static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /**
    * Construct a AssistantV1 object.
@@ -45,17 +43,25 @@ class AssistantV1 extends BaseService {
    * application is ready for a later version.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
+   * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {AssistantV1}
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    if (!options.serviceName) {
+      options.serviceName = AssistantV1.DEFAULT_SERVICE_NAME;
+    }
     // If the caller didn't supply an authenticator, construct one from external configuration.
     if (!options.authenticator) {
-      options.authenticator = getAuthenticatorFromEnvironment('conversation');
+      options.authenticator = getAuthenticatorFromEnvironment(options.serviceName);
     }
     super(options);
+    this.configureService(options.serviceName);
+    if (options.serviceUrl) {
+      this.setServiceUrl(options.serviceUrl);
+    }
     // check if 'version' was provided
     if (typeof this.baseOptions.version === 'undefined') {
       throw new Error('Argument error: version was not specified');
@@ -94,8 +100,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.nodesVisitedDetails] - Whether to include additional diagnostic information about the
    * dialog nodes that were visited during processing of the message.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.MessageResponse>>}
    */
   public message(params: AssistantV1.MessageParams, callback?: AssistantV1.Callback<AssistantV1.MessageResponse>): Promise<AssistantV1.Response<AssistantV1.MessageResponse>> {
     const _params = extend({}, params);
@@ -103,7 +109,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -130,7 +135,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'message');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'message');
 
       const parameters = {
         options: {
@@ -185,15 +190,14 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>>}
    */
   public listWorkspaces(params?: AssistantV1.ListWorkspacesParams, callback?: AssistantV1.Callback<AssistantV1.WorkspaceCollection>): Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
       const query = {
         'page_limit': _params.pageLimit,
         'sort': _params.sort,
@@ -201,7 +205,7 @@ class AssistantV1 extends BaseService {
         'include_audit': _params.includeAudit
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listWorkspaces');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listWorkspaces');
 
       const parameters = {
         options: {
@@ -260,15 +264,14 @@ class AssistantV1 extends BaseService {
    * marked as irrelevant input.
    * @param {Webhook[]} [params.webhooks] -
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
    */
   public createWorkspace(params?: AssistantV1.CreateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
     const _callback = (typeof params === 'function' && !callback) ? params : callback;
 
     return new Promise((resolve, reject) => {
-
       const body = {
         'name': _params.name,
         'description': _params.description,
@@ -283,7 +286,7 @@ class AssistantV1 extends BaseService {
         'webhooks': _params.webhooks
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createWorkspace');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createWorkspace');
 
       const parameters = {
         options: {
@@ -336,8 +339,8 @@ class AssistantV1 extends BaseService {
    * only if **export**=`true`. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending
    * alphabetical order.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
    */
   public getWorkspace(params: AssistantV1.GetWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = extend({}, params);
@@ -345,7 +348,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -365,7 +367,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getWorkspace');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getWorkspace');
 
       const parameters = {
         options: {
@@ -433,8 +435,8 @@ class AssistantV1 extends BaseService {
    * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
    * data collide with existing elements, the update request fails.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
    */
   public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Workspace>): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = extend({}, params);
@@ -442,7 +444,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -474,7 +475,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateWorkspace');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateWorkspace');
 
       const parameters = {
         options: {
@@ -520,8 +521,8 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -529,7 +530,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -543,7 +543,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteWorkspace');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWorkspace');
 
       const parameters = {
         options: {
@@ -600,8 +600,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.IntentCollection>>}
    */
   public listIntents(params: AssistantV1.ListIntentsParams, callback?: AssistantV1.Callback<AssistantV1.IntentCollection>): Promise<AssistantV1.Response<AssistantV1.IntentCollection>> {
     const _params = extend({}, params);
@@ -609,7 +609,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -631,7 +630,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listIntents');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listIntents');
 
       const parameters = {
         options: {
@@ -684,8 +683,8 @@ class AssistantV1 extends BaseService {
    * newline, or tab characters.
    * @param {Example[]} [params.examples] - An array of user input examples for the intent.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
    */
   public createIntent(params: AssistantV1.CreateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = extend({}, params);
@@ -693,7 +692,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -713,7 +711,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createIntent');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createIntent');
 
       const parameters = {
         options: {
@@ -765,8 +763,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
    */
   public getIntent(params: AssistantV1.GetIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = extend({}, params);
@@ -774,7 +772,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -794,7 +791,7 @@ class AssistantV1 extends BaseService {
         'intent': _params.intent
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getIntent');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getIntent');
 
       const parameters = {
         options: {
@@ -850,8 +847,8 @@ class AssistantV1 extends BaseService {
    * return, newline, or tab characters.
    * @param {Example[]} [params.newExamples] - An array of user input examples for the intent.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
    */
   public updateIntent(params: AssistantV1.UpdateIntentParams, callback?: AssistantV1.Callback<AssistantV1.Intent>): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = extend({}, params);
@@ -859,7 +856,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -880,7 +876,7 @@ class AssistantV1 extends BaseService {
         'intent': _params.intent
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateIntent');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateIntent');
 
       const parameters = {
         options: {
@@ -926,8 +922,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteIntent(params: AssistantV1.DeleteIntentParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -935,7 +931,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -950,7 +945,7 @@ class AssistantV1 extends BaseService {
         'intent': _params.intent
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteIntent');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteIntent');
 
       const parameters = {
         options: {
@@ -1004,8 +999,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.ExampleCollection>>}
    */
   public listExamples(params: AssistantV1.ListExamplesParams, callback?: AssistantV1.Callback<AssistantV1.ExampleCollection>): Promise<AssistantV1.Response<AssistantV1.ExampleCollection>> {
     const _params = extend({}, params);
@@ -1013,7 +1008,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1035,7 +1029,7 @@ class AssistantV1 extends BaseService {
         'intent': _params.intent
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listExamples');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listExamples');
 
       const parameters = {
         options: {
@@ -1088,8 +1082,8 @@ class AssistantV1 extends BaseService {
    * - It cannot consist of only whitespace characters.
    * @param {Mention[]} [params.mentions] - An array of contextual entity mentions.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
    */
   public createExample(params: AssistantV1.CreateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = extend({}, params);
@@ -1097,7 +1091,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1117,7 +1110,7 @@ class AssistantV1 extends BaseService {
         'intent': _params.intent
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createExample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createExample');
 
       const parameters = {
         options: {
@@ -1166,8 +1159,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
    */
   public getExample(params: AssistantV1.GetExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = extend({}, params);
@@ -1175,7 +1168,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1195,7 +1187,7 @@ class AssistantV1 extends BaseService {
         'text': _params.text
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getExample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getExample');
 
       const parameters = {
         options: {
@@ -1249,8 +1241,8 @@ class AssistantV1 extends BaseService {
    * - It cannot consist of only whitespace characters.
    * @param {Mention[]} [params.newMentions] - An array of contextual entity mentions.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
    */
   public updateExample(params: AssistantV1.UpdateExampleParams, callback?: AssistantV1.Callback<AssistantV1.Example>): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = extend({}, params);
@@ -1258,7 +1250,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1279,7 +1270,7 @@ class AssistantV1 extends BaseService {
         'text': _params.text
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateExample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateExample');
 
       const parameters = {
         options: {
@@ -1326,8 +1317,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteExample(params: AssistantV1.DeleteExampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -1335,7 +1326,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1351,7 +1341,7 @@ class AssistantV1 extends BaseService {
         'text': _params.text
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteExample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteExample');
 
       const parameters = {
         options: {
@@ -1404,8 +1394,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>>}
    */
   public listCounterexamples(params: AssistantV1.ListCounterexamplesParams, callback?: AssistantV1.Callback<AssistantV1.CounterexampleCollection>): Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>> {
     const _params = extend({}, params);
@@ -1413,7 +1403,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1434,7 +1423,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listCounterexamples');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listCounterexamples');
 
       const parameters = {
         options: {
@@ -1485,8 +1474,8 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
    */
   public createCounterexample(params: AssistantV1.CreateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = extend({}, params);
@@ -1494,7 +1483,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1512,7 +1500,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createCounterexample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createCounterexample');
 
       const parameters = {
         options: {
@@ -1560,8 +1548,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
    */
   public getCounterexample(params: AssistantV1.GetCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = extend({}, params);
@@ -1569,7 +1557,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1588,7 +1575,7 @@ class AssistantV1 extends BaseService {
         'text': _params.text
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getCounterexample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getCounterexample');
 
       const parameters = {
         options: {
@@ -1640,8 +1627,8 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
    */
   public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Counterexample>): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = extend({}, params);
@@ -1649,7 +1636,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1668,7 +1654,7 @@ class AssistantV1 extends BaseService {
         'text': _params.text
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateCounterexample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCounterexample');
 
       const parameters = {
         options: {
@@ -1714,8 +1700,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -1723,7 +1709,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'text'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1738,7 +1723,7 @@ class AssistantV1 extends BaseService {
         'text': _params.text
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteCounterexample');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCounterexample');
 
       const parameters = {
         options: {
@@ -1795,8 +1780,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EntityCollection>>}
    */
   public listEntities(params: AssistantV1.ListEntitiesParams, callback?: AssistantV1.Callback<AssistantV1.EntityCollection>): Promise<AssistantV1.Response<AssistantV1.EntityCollection>> {
     const _params = extend({}, params);
@@ -1804,7 +1789,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1826,7 +1810,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listEntities');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listEntities');
 
       const parameters = {
         options: {
@@ -1882,8 +1866,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.fuzzyMatch] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
    */
   public createEntity(params: AssistantV1.CreateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = extend({}, params);
@@ -1891,7 +1875,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1913,7 +1896,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createEntity');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createEntity');
 
       const parameters = {
         options: {
@@ -1965,8 +1948,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
    */
   public getEntity(params: AssistantV1.GetEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = extend({}, params);
@@ -1974,7 +1957,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -1994,7 +1976,7 @@ class AssistantV1 extends BaseService {
         'entity': _params.entity
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getEntity');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getEntity');
 
       const parameters = {
         options: {
@@ -2052,8 +2034,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.newFuzzyMatch] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.newValues] - An array of objects describing the entity values.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
    */
   public updateEntity(params: AssistantV1.UpdateEntityParams, callback?: AssistantV1.Callback<AssistantV1.Entity>): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = extend({}, params);
@@ -2061,7 +2043,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2084,7 +2065,7 @@ class AssistantV1 extends BaseService {
         'entity': _params.entity
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateEntity');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateEntity');
 
       const parameters = {
         options: {
@@ -2130,8 +2111,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteEntity(params: AssistantV1.DeleteEntityParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -2139,7 +2120,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2154,7 +2134,7 @@ class AssistantV1 extends BaseService {
         'entity': _params.entity
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteEntity');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteEntity');
 
       const parameters = {
         options: {
@@ -2208,8 +2188,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>>}
    */
   public listMentions(params: AssistantV1.ListMentionsParams, callback?: AssistantV1.Callback<AssistantV1.EntityMentionCollection>): Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>> {
     const _params = extend({}, params);
@@ -2217,7 +2197,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2237,7 +2216,7 @@ class AssistantV1 extends BaseService {
         'entity': _params.entity
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listMentions');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listMentions');
 
       const parameters = {
         options: {
@@ -2295,8 +2274,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.ValueCollection>>}
    */
   public listValues(params: AssistantV1.ListValuesParams, callback?: AssistantV1.Callback<AssistantV1.ValueCollection>): Promise<AssistantV1.Response<AssistantV1.ValueCollection>> {
     const _params = extend({}, params);
@@ -2304,7 +2283,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2327,7 +2305,7 @@ class AssistantV1 extends BaseService {
         'entity': _params.entity
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listValues');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listValues');
 
       const parameters = {
         options: {
@@ -2390,8 +2368,8 @@ class AssistantV1 extends BaseService {
    * information about how to specify a pattern, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
    */
   public createValue(params: AssistantV1.CreateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = extend({}, params);
@@ -2399,7 +2377,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2422,7 +2399,7 @@ class AssistantV1 extends BaseService {
         'entity': _params.entity
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createValue');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createValue');
 
       const parameters = {
         options: {
@@ -2474,8 +2451,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
    */
   public getValue(params: AssistantV1.GetValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = extend({}, params);
@@ -2483,7 +2460,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2504,7 +2480,7 @@ class AssistantV1 extends BaseService {
         'value': _params.value
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getValue');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getValue');
 
       const parameters = {
         options: {
@@ -2569,8 +2545,8 @@ class AssistantV1 extends BaseService {
    * information about how to specify a pattern, see the
    * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
    */
   public updateValue(params: AssistantV1.UpdateValueParams, callback?: AssistantV1.Callback<AssistantV1.Value>): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = extend({}, params);
@@ -2578,7 +2554,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2602,7 +2577,7 @@ class AssistantV1 extends BaseService {
         'value': _params.value
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateValue');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateValue');
 
       const parameters = {
         options: {
@@ -2649,8 +2624,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteValue(params: AssistantV1.DeleteValueParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -2658,7 +2633,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2674,7 +2648,7 @@ class AssistantV1 extends BaseService {
         'value': _params.value
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteValue');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteValue');
 
       const parameters = {
         options: {
@@ -2729,8 +2703,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.SynonymCollection>>}
    */
   public listSynonyms(params: AssistantV1.ListSynonymsParams, callback?: AssistantV1.Callback<AssistantV1.SynonymCollection>): Promise<AssistantV1.Response<AssistantV1.SynonymCollection>> {
     const _params = extend({}, params);
@@ -2738,7 +2712,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2761,7 +2734,7 @@ class AssistantV1 extends BaseService {
         'value': _params.value
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listSynonyms');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listSynonyms');
 
       const parameters = {
         options: {
@@ -2813,8 +2786,8 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
    */
   public createSynonym(params: AssistantV1.CreateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = extend({}, params);
@@ -2822,7 +2795,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2842,7 +2814,7 @@ class AssistantV1 extends BaseService {
         'value': _params.value
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createSynonym');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createSynonym');
 
       const parameters = {
         options: {
@@ -2892,8 +2864,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
    */
   public getSynonym(params: AssistantV1.GetSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = extend({}, params);
@@ -2901,7 +2873,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -2922,7 +2893,7 @@ class AssistantV1 extends BaseService {
         'synonym': _params.synonym
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getSynonym');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getSynonym');
 
       const parameters = {
         options: {
@@ -2976,8 +2947,8 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
    */
   public updateSynonym(params: AssistantV1.UpdateSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Synonym>): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = extend({}, params);
@@ -2985,7 +2956,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3006,7 +2976,7 @@ class AssistantV1 extends BaseService {
         'synonym': _params.synonym
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateSynonym');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateSynonym');
 
       const parameters = {
         options: {
@@ -3054,8 +3024,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteSynonym(params: AssistantV1.DeleteSynonymParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -3063,7 +3033,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3080,7 +3049,7 @@ class AssistantV1 extends BaseService {
         'synonym': _params.synonym
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteSynonym');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteSynonym');
 
       const parameters = {
         options: {
@@ -3133,8 +3102,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>>}
    */
   public listDialogNodes(params: AssistantV1.ListDialogNodesParams, callback?: AssistantV1.Callback<AssistantV1.DialogNodeCollection>): Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>> {
     const _params = extend({}, params);
@@ -3142,7 +3111,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3163,7 +3131,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listDialogNodes');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listDialogNodes');
 
       const parameters = {
         options: {
@@ -3241,8 +3209,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.disambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
    * suggestions.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
    */
   public createDialogNode(params: AssistantV1.CreateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = extend({}, params);
@@ -3250,7 +3218,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3286,7 +3253,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'createDialogNode');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createDialogNode');
 
       const parameters = {
         options: {
@@ -3334,8 +3301,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
    */
   public getDialogNode(params: AssistantV1.GetDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = extend({}, params);
@@ -3343,7 +3310,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3362,7 +3328,7 @@ class AssistantV1 extends BaseService {
         'dialog_node': _params.dialogNode
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'getDialogNode');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getDialogNode');
 
       const parameters = {
         options: {
@@ -3443,8 +3409,8 @@ class AssistantV1 extends BaseService {
    * @param {boolean} [params.newDisambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
    * suggestions.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
    */
   public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.DialogNode>): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = extend({}, params);
@@ -3452,7 +3418,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3489,7 +3454,7 @@ class AssistantV1 extends BaseService {
         'dialog_node': _params.dialogNode
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'updateDialogNode');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateDialogNode');
 
       const parameters = {
         options: {
@@ -3535,8 +3500,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -3544,7 +3509,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3559,7 +3523,7 @@ class AssistantV1 extends BaseService {
         'dialog_node': _params.dialogNode
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteDialogNode');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteDialogNode');
 
       const parameters = {
         options: {
@@ -3614,8 +3578,8 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.LogCollection>>}
    */
   public listLogs(params: AssistantV1.ListLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = extend({}, params);
@@ -3623,7 +3587,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['workspaceId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3644,7 +3607,7 @@ class AssistantV1 extends BaseService {
         'workspace_id': _params.workspaceId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listLogs');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listLogs');
 
       const parameters = {
         options: {
@@ -3697,8 +3660,8 @@ class AssistantV1 extends BaseService {
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.LogCollection>>}
    */
   public listAllLogs(params: AssistantV1.ListAllLogsParams, callback?: AssistantV1.Callback<AssistantV1.LogCollection>): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = extend({}, params);
@@ -3706,7 +3669,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['filter'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3723,7 +3685,7 @@ class AssistantV1 extends BaseService {
         'cursor': _params.cursor
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'listAllLogs');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listAllLogs');
 
       const parameters = {
         options: {
@@ -3770,11 +3732,13 @@ class AssistantV1 extends BaseService {
    * For more information about personal data and customer IDs, see [Information
    * security](https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security).
    *
+   * This operation is limited to 4 requests per minute. For more information, see **Rate limiting**.
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response.
-   * @returns {Promise<any>|void}
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
   public deleteUserData(params: AssistantV1.DeleteUserDataParams, callback?: AssistantV1.Callback<AssistantV1.Empty>): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = extend({}, params);
@@ -3782,7 +3746,6 @@ class AssistantV1 extends BaseService {
     const requiredParams = ['customerId'];
 
     return new Promise((resolve, reject) => {
-
       const missingParams = getMissingParams(_params, requiredParams);
       if (missingParams) {
         if (_callback) {
@@ -3796,7 +3759,7 @@ class AssistantV1 extends BaseService {
         'customer_id': _params.customerId
       };
 
-      const sdkHeaders = getSdkHeaders('conversation', 'v1', 'deleteUserData');
+      const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
 
       const parameters = {
         options: {
@@ -3830,9 +3793,6 @@ class AssistantV1 extends BaseService {
   };
 
 }
-
-AssistantV1.prototype.name = 'conversation';
-AssistantV1.prototype.serviceVersion = 'v1';
 
 /*************************
  * interfaces
