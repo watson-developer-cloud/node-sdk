@@ -1,3 +1,11 @@
+# [5.3.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.2.1...v5.3.0) (2020-01-16)
+
+
+### Features
+
+* **speech-to-text:** `endOfPhraseSilenceTime` and `splitTranscriptAtPhraseEnd` params added to `recognize`, `createJob`, and `recognizeUsingWebSocket` methods ([e3ff8db](https://github.com/watson-developer-cloud/node-sdk/commit/e3ff8db807456998d22bf42bbbc72cd271595c1c))
+* add `serviceName` parameter for all services ([964e9e1](https://github.com/watson-developer-cloud/node-sdk/commit/964e9e1aff17e292f2dc3207c524c2f6669e76e2))
+
 ## [5.2.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.2.0...v5.2.1) (2019-12-09)
 
 
