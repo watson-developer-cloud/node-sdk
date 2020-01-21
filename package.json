@@ -85,7 +85,7 @@
     "@types/node": "^11.9.4",
     "@types/websocket": "^1.0.0",
     "async": "^2.6.2",
-    "axios": "^0.18.0",
+    "axios": "^0.19.1",
     "camelcase": "^5.3.1",
     "extend": "~3.0.2",
     "ibm-cloud-sdk-core": "^2.0.3",
