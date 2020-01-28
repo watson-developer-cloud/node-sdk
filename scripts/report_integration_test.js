@@ -50,9 +50,7 @@ if (process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'fals
   // Send the result to the pull request if it is a pull request.
   axios
     .post(
-      `https://api.github.com/repos/${process.env.TRAVIS_REPO_SLUG}/issues/${
-        process.env.TRAVIS_PULL_REQUEST
-      }/comments`,
+      `https://api.github.com/repos/${process.env.TRAVIS_REPO_SLUG}/issues/${process.env.TRAVIS_PULL_REQUEST}/comments`,
       {
         body: body,
       },
