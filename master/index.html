@@ -301,7 +301,7 @@ assistant.message({
 				</a>
 				<p>The SDK now returns the full HTTP response by default for each method.</p>
 				<p>Here is an example of how to access the response headers for Watson Assistant:</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> watson.AssistantV1({
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
 <span class="hljs-comment">/* authenticator, version, url, etc... */</span>
 });
 
@@ -310,8 +310,48 @@ assistant.message(params).then(
     <span class="hljs-built_in">console</span>.log(response.headers);
   },
   err =&gt; {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+    <span class="hljs-built_in">console</span>.log(err);
+    <span class="hljs-comment">/*
+      `err` is an Error object. It will always have a `message` field
+      and depending on the type of error, it may also have the following fields:
+      - body
+      - headers
+      - name
+      - code
+    */</span>
   }
+);</code></pre>
+				<a href="#global-transaction-id" id="global-transaction-id" style="color: inherit; text-decoration: none;">
+					<h3>Global Transaction ID</h3>
+				</a>
+				<p>Every SDK call returns a response with a transaction ID in the x-global-transaction-id header. This transaction ID is useful for troubleshooting and accessing relevant logs from your service instance.</p>
+				<a href="#http-example" id="http-example" style="color: inherit; text-decoration: none;">
+					<h4>HTTP Example</h4>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+
+assistant.message(params).then(
+  <span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(response.headers[<span class="hljs-string">'x-global-transaction-id'</span>]);
+  },
+  err =&gt; {
+    <span class="hljs-built_in">console</span>.log(err);
+  }
+);</code></pre>
+				<a href="#websocket-example" id="websocket-example" style="color: inherit; text-decoration: none;">
+					<h4>WebSocket Example</h4>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> speechToText = <span class="hljs-keyword">new</span> SpeechToTextV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+<span class="hljs-keyword">const</span> recognizeStream = recognizeUsingWebSocket(params);
+
+<span class="hljs-comment">// getTransactionId returns a Promise that resolves to the ID</span>
+recognizeStream.getTransactionId().then(
+  <span class="hljs-function"><span class="hljs-params">globalTransactionId</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(globalTransactionId),
+  err =&gt; <span class="hljs-built_in">console</span>.log(err),
 );</code></pre>
 				<a href="#data-collection-opt-out" id="data-collection-opt-out" style="color: inherit; text-decoration: none;">
 					<h2>Data collection opt-out</h2>
