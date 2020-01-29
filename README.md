@@ -253,7 +253,7 @@ The SDK now returns the full HTTP response by default for each method.
 Here is an example of how to access the response headers for Watson Assistant:
 
 ```js
-const assistant = new watson.AssistantV1({
+const assistant = new AssistantV1({
 /* authenticator, version, url, etc... */
 });
 
@@ -262,8 +262,49 @@ assistant.message(params).then(
     console.log(response.headers);
   },
   err => {
-    console.log('error: ', err);
+    console.log(err);
+    /*
+      `err` is an Error object. It will always have a `message` field
+      and depending on the type of error, it may also have the following fields:
+      - body
+      - headers
+      - name
+      - code
+    */
   }
+);
+```
+
+### Global Transaction ID
+Every SDK call returns a response with a transaction ID in the x-global-transaction-id header. This transaction ID is useful for troubleshooting and accessing relevant logs from your service instance.
+
+#### HTTP Example
+```js
+const assistant = new AssistantV1({
+/* authenticator, version, url, etc... */
+});
+
+assistant.message(params).then(
+  response => {
+    console.log(response.headers['x-global-transaction-id']);
+  },
+  err => {
+    console.log(err);
+  }
+);
+```
+
+#### WebSocket Example
+```js
+const speechToText = new SpeechToTextV1({
+/* authenticator, version, url, etc... */
+});
+const recognizeStream = recognizeUsingWebSocket(params);
+
+// getTransactionId returns a Promise that resolves to the ID
+recognizeStream.getTransactionId().then(
+  globalTransactionId => console.log(globalTransactionId),
+  err => console.log(err),
 );
 ```
 

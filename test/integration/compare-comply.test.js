@@ -189,7 +189,7 @@ describe('compare comply integration', () => {
         expect(result.feedback_data).toBeDefined();
         done();
       });
-    }, 15000);
+    }, 25000);
 
     test('getFeedback', done => {
       if (!feedbackId) {
@@ -214,7 +214,7 @@ describe('compare comply integration', () => {
         expect(result.feedback_data).toBeDefined();
         done();
       });
-    }, 10000);
+    }, 20000);
 
     test('listFeedback', done => {
       compareComply.listFeedback((err, res) => {

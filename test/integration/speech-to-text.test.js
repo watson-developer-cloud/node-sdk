@@ -105,15 +105,12 @@ describe('speech to text integration', () => {
     function waitUntilReady(test) {
       return done => {
         jest.setTimeout(TWO_MINUTES);
-        speechToText.whenCustomizationReady(
-          { customizationId, interval: 250, times: 400 },
-          err => {
-            if (err && err.code !== SpeechToTextV1.ERR_NO_CORPORA) {
-              return done(err);
-            }
-            test(done);
+        speechToText.whenCustomizationReady({ customizationId, interval: 250, times: 400 }, err => {
+          if (err && err.code !== SpeechToTextV1.ERR_NO_CORPORA) {
+            return done(err);
           }
-        );
+          test(done);
+        });
       };
     }
 
