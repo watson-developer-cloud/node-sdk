@@ -1,3 +1,10 @@
+## [5.3.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.3.0...v5.3.1) (2020-01-29)
+
+
+### Bug Fixes
+
+* **Natural Language Understanding v1:** Restore model field in CategoriesOptions ([93e7b69](https://github.com/watson-developer-cloud/node-sdk/commit/93e7b6946ae92bc0499097bdfb92153509b924a2))
+
 # [5.3.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.2.1...v5.3.0) (2020-01-16)
 
 
