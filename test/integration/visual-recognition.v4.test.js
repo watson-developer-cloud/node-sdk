@@ -34,6 +34,9 @@ describe('visual recognition v4 integration', () => {
   let collectionId;
   let imageId;
 
+  const object = 'node sdk test - temp';
+  const newObject = 'node sdk test - temp - updated';
+
   describe('analysis', () => {
     test('analyze', async done => {
       const params = {
@@ -142,9 +145,6 @@ describe('visual recognition v4 integration', () => {
   });
 
   describe('images', () => {
-    // const collectionId = giraffesCollectionId;
-    let imageId;
-
     test('addImages', async done => {
       if (!collectionId) {
         return done();
@@ -256,7 +256,7 @@ describe('visual recognition v4 integration', () => {
         imageId,
         objects: [
           {
-            object: 'node sdk unit test - temp',
+            object,
             location: {
               top: 8,
               left: 48,
@@ -278,6 +278,7 @@ describe('visual recognition v4 integration', () => {
       const { result } = res || {};
       expect(result).toBeDefined();
       expect(result.objects).toBeDefined();
+      expect(result.objects.length).toBeGreaterThan(0);
 
       // for some reason, train won't work in it's own test,
       // even when I run the tests serially
@@ -293,7 +294,7 @@ describe('visual recognition v4 integration', () => {
 
       expect(res2).toBeDefined();
       expect(res2.status).toBe(202);
-      const { result2 } = res2 || {};
+      const result2 = res2.result || {};
       expect(result2).toBeDefined();
 
       done();
@@ -310,6 +311,107 @@ describe('visual recognition v4 integration', () => {
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
+      done();
+    });
+  });
+
+  describe('objects', () => {
+    // need to ensure training data is added before running these tests
+    beforeAll(async done => {
+      const params = {
+        collectionId,
+        imageId,
+        objects: [
+          {
+            object,
+            location: {
+              top: 8,
+              left: 48,
+              width: 101,
+              height: 91,
+            },
+          },
+        ],
+      };
+
+      try {
+        await visualRecognition.addImageTrainingData(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      done();
+    });
+
+    test('listObjectMetadata', async done => {
+      if (!collectionId) {
+        return done();
+      }
+
+      const params = {
+        collectionId,
+      };
+
+      let res;
+      try {
+        res = await visualRecognition.listObjectMetadata(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      expect(result.object_count).toBeGreaterThan(0);
+      done();
+    });
+
+    test('getObjectMetadata', async done => {
+      if (!collectionId || !object) {
+        return done();
+      }
+
+      const params = {
+        collectionId,
+        object,
+      };
+
+      let res;
+      try {
+        res = await visualRecognition.getObjectMetadata(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      expect(result.object).toBe(object);
+      done();
+    });
+
+    test('updateObjectMetadata', async done => {
+      if (!collectionId || !object) {
+        return done();
+      }
+
+      const params = {
+        collectionId,
+        object,
+        newObject,
+      };
+
+      let res;
+      try {
+        res = await visualRecognition.updateObjectMetadata(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      expect(result.object).toBe(newObject);
       done();
     });
   });
@@ -335,6 +437,29 @@ describe('visual recognition v4 integration', () => {
   });
 
   describe('cleanup - test the delete operations', () => {
+    test('deleteObject', async done => {
+      if (!collectionId) {
+        return done();
+      }
+
+      const params = {
+        collectionId,
+        object: newObject,
+      };
+
+      let res;
+      try {
+        res = await visualRecognition.deleteObject(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      done();
+    });
+
     test('deleteImage', async done => {
       if (!collectionId || !imageId) {
         return done();
