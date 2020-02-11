@@ -325,21 +325,29 @@ const myInstance = new watson.WhateverServiceV1({
 The SDK provides the user with full control over the HTTPS Agent used to make requests. This is available for both the service client and the authenticators that make network requests (e.g. `IamAuthenticator`). Outlined below are a couple of different scenarios where this capability is needed. Note that this functionality is for Node environments only - these configurtions will have no effect in the browser.
 
 ### Use behind a corporate proxy
-To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package [`tunnel`](https://github.com/koichik/node-tunnel/) for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set `proxy` to `false` in the service constructor. See this example configuration:
+To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package [`tunnel`](https://github.com/koichik/node-tunnel/) for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set `proxy` to `false` in the service constructor. If using an Authenticator that makes network requests (IAM or CP4D), you must set these fields in the Authenticator constructor as well.
+
+See this example configuration:
 ```js
 const tunnel = require('tunnel');
 const AssistantV1 = require('ibm-watson/assistant/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
+const httpsAgent = tunnel.httpsOverHttp({
+  proxy: {
+    host: 'some.host.org',
+    port: 1234,
+  },
+});
+
 const assistant = new AssistantV1({
-  authenticator: new IamAuthenticator({ apikey: 'fakekey-1234' }),
-  version: '2019-02-28',
-  httpsAgent: tunnel.httpsOverHttp({
-    proxy: {
-      host: 'some.host.org',
-      port: 1234,
-    },
+  authenticator: new IamAuthenticator({
+    apikey: 'fakekey-1234'
+    httpsAgent, // not necessary if using Basic or BearerToken authentication
+    proxy: false,
   }),
+  version: '2020-01-28',
+  httpsAgent,
   proxy: false,
 });
 ```
