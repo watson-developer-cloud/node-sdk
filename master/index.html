@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ibm-watson - v5.3.0</title>
+	<title>ibm-watson - v5.3.1</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">ibm-watson - v5.3.0</a>
+					<a href="index.html" class="title">ibm-watson - v5.3.1</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> ibm-watson - v5.3.0</h1>
+			<h1> ibm-watson - v5.3.1</h1>
 		</div>
 	</div>
 </header>
@@ -370,20 +370,27 @@ recognizeStream.getTransactionId().then(
 				<a href="#use-behind-a-corporate-proxy" id="use-behind-a-corporate-proxy" style="color: inherit; text-decoration: none;">
 					<h3>Use behind a corporate proxy</h3>
 				</a>
-				<p>To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package <a href="https://github.com/koichik/node-tunnel/"><code>tunnel</code></a> for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set <code>proxy</code> to <code>false</code> in the service constructor. See this example configuration:</p>
+				<p>To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package <a href="https://github.com/koichik/node-tunnel/"><code>tunnel</code></a> for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set <code>proxy</code> to <code>false</code> in the service constructor. If using an Authenticator that makes network requests (IAM or CP4D), you must set these fields in the Authenticator constructor as well.</p>
+				<p>See this example configuration:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> tunnel = <span class="hljs-built_in">require</span>(<span class="hljs-string">'tunnel'</span>);
 <span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
 <span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
 
+<span class="hljs-keyword">const</span> httpsAgent = tunnel.httpsOverHttp({
+  <span class="hljs-attr">proxy</span>: {
+    <span class="hljs-attr">host</span>: <span class="hljs-string">'some.host.org'</span>,
+    <span class="hljs-attr">port</span>: <span class="hljs-number">1234</span>,
+  },
+});
+
 <span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'fakekey-1234'</span> }),
-  <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-28'</span>,
-  <span class="hljs-attr">httpsAgent</span>: tunnel.httpsOverHttp({
-    <span class="hljs-attr">proxy</span>: {
-      <span class="hljs-attr">host</span>: <span class="hljs-string">'some.host.org'</span>,
-      <span class="hljs-attr">port</span>: <span class="hljs-number">1234</span>,
-    },
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({
+    <span class="hljs-attr">apikey</span>: <span class="hljs-string">'fakekey-1234'</span>
+    httpsAgent, <span class="hljs-comment">// not necessary if using Basic or BearerToken authentication</span>
+    <span class="hljs-attr">proxy</span>: <span class="hljs-literal">false</span>,
   }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2020-01-28'</span>,
+  httpsAgent,
   <span class="hljs-attr">proxy</span>: <span class="hljs-literal">false</span>,
 });</code></pre>
 				<a href="#sending-custom-certificates" id="sending-custom-certificates" style="color: inherit; text-decoration: none;">
