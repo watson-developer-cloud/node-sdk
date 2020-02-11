@@ -838,6 +838,277 @@ class VisualRecognitionV4 extends BaseService {
   };
 
   /*************************
+   * objects
+   ************************/
+
+  /**
+   * List object metadata.
+   *
+   * Retrieves a list of object names in a collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.collectionId - The identifier of the collection.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadataList>>}
+   */
+  public listObjectMetadata(params: VisualRecognitionV4.ListObjectMetadataParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.ObjectMetadataList>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadataList>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['collectionId'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const path = {
+        'collection_id': _params.collectionId
+      };
+
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'listObjectMetadata');
+
+      const parameters = {
+        options: {
+          url: '/v4/collections/{collection_id}/objects',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /**
+   * Update an object name.
+   *
+   * Update the name of an object. A successful request updates the training data for all images that use the object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.collectionId - The identifier of the collection.
+   * @param {string} params.object - The name of the object.
+   * @param {string} params.newObject - The updated name of the object. The name can contain alphanumeric, underscore,
+   * hyphen, space, and dot characters. It cannot begin with the reserved prefix `sys-`.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.UpdateObjectMetadata>>}
+   */
+  public updateObjectMetadata(params: VisualRecognitionV4.UpdateObjectMetadataParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.UpdateObjectMetadata>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.UpdateObjectMetadata>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['collectionId', 'object', 'newObject'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const body = {
+        'object': _params.newObject
+      };
+
+      const path = {
+        'collection_id': _params.collectionId,
+        'object': _params.object
+      };
+
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'updateObjectMetadata');
+
+      const parameters = {
+        options: {
+          url: '/v4/collections/{collection_id}/objects/{object}',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /**
+   * Get object metadata.
+   *
+   * Get the number of bounding boxes for a single object in a collection.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.collectionId - The identifier of the collection.
+   * @param {string} params.object - The name of the object.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadata>>}
+   */
+  public getObjectMetadata(params: VisualRecognitionV4.GetObjectMetadataParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.ObjectMetadata>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadata>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['collectionId', 'object'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const path = {
+        'collection_id': _params.collectionId,
+        'object': _params.object
+      };
+
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getObjectMetadata');
+
+      const parameters = {
+        options: {
+          url: '/v4/collections/{collection_id}/objects/{object}',
+          method: 'GET',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /**
+   * Delete an object.
+   *
+   * Delete one object from a collection. A successful request deletes the training data from all images that use the
+   * object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.collectionId - The identifier of the collection.
+   * @param {string} params.object - The name of the object.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
+   */
+  public deleteObject(params: VisualRecognitionV4.DeleteObjectParams, callback?: VisualRecognitionV4.Callback<VisualRecognitionV4.Empty>): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['collectionId', 'object'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const path = {
+        'collection_id': _params.collectionId,
+        'object': _params.object
+      };
+
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteObject');
+
+      const parameters = {
+        options: {
+          url: '/v4/collections/{collection_id}/objects/{object}',
+          method: 'DELETE',
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /*************************
    * training
    ************************/
 
@@ -1056,7 +1327,7 @@ class VisualRecognitionV4 extends BaseService {
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://cloud.ibm.com/docs/services/visual-recognition?topic=visual-recognition-information-security).
+   * security](https://cloud.ibm.com/docs/visual-recognition?topic=visual-recognition-information-security).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
@@ -1304,6 +1575,44 @@ namespace VisualRecognitionV4 {
     }
   }
 
+  /** Parameters for the `listObjectMetadata` operation. */
+  export interface ListObjectMetadataParams {
+    /** The identifier of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateObjectMetadata` operation. */
+  export interface UpdateObjectMetadataParams {
+    /** The identifier of the collection. */
+    collectionId: string;
+    /** The name of the object. */
+    object: string;
+    /** The updated name of the object. The name can contain alphanumeric, underscore, hyphen, space, and dot
+     *  characters. It cannot begin with the reserved prefix `sys-`.
+     */
+    newObject: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getObjectMetadata` operation. */
+  export interface GetObjectMetadataParams {
+    /** The identifier of the collection. */
+    collectionId: string;
+    /** The name of the object. */
+    object: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteObject` operation. */
+  export interface DeleteObjectParams {
+    /** The identifier of the collection. */
+    collectionId: string;
+    /** The name of the object. */
+    object: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `train` operation. */
   export interface TrainParams {
     /** The identifier of the collection. */
@@ -1514,6 +1823,22 @@ namespace VisualRecognitionV4 {
     score: number;
   }
 
+  /** Basic information about an object. */
+  export interface ObjectMetadata {
+    /** The name of the object. */
+    object?: string;
+    /** Number of bounding boxes with this object name in the collection. */
+    count?: number;
+  }
+
+  /** List of objects. */
+  export interface ObjectMetadataList {
+    /** Number of unique named objects in the collection. */
+    object_count: number;
+    /** The objects in the collection. */
+    objects?: ObjectMetadata[];
+  }
+
   /** Training status for the objects in the collection. */
   export interface ObjectTrainingStatus {
     /** Whether you can analyze images in the collection with the **objects** feature. */
@@ -1580,6 +1905,16 @@ namespace VisualRecognitionV4 {
   export interface TrainingStatus {
     /** Training status for the objects in the collection. */
     objects: ObjectTrainingStatus;
+  }
+
+  /** Basic information about an updated object. */
+  export interface UpdateObjectMetadata {
+    /** The updated name of the object. The name can contain alphanumeric, underscore, hyphen, space, and dot
+     *  characters. It cannot begin with the reserved prefix `sys-`.
+     */
+    object: string;
+    /** Number of bounding boxes in the collection with the updated object name. */
+    count: number;
   }
 
   /** Details about a problem. */

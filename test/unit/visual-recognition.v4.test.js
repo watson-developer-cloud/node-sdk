@@ -866,6 +866,322 @@ describe('VisualRecognitionV4', () => {
       });
     });
   });
+  describe('listObjectMetadata', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const params = {
+          collectionId,
+        };
+
+        const listObjectMetadataResult = visualRecognition.listObjectMetadata(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listObjectMetadataResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.listObjectMetadata(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        let err;
+        try {
+          await visualRecognition.listObjectMetadata({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId'];
+
+        const listObjectMetadataPromise = visualRecognition.listObjectMetadata();
+        expectToBePromise(listObjectMetadataPromise);
+
+        listObjectMetadataPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('updateObjectMetadata', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const object = 'fake_object';
+        const newObject = 'fake_newObject';
+        const params = {
+          collectionId,
+          object,
+          newObject,
+        };
+
+        const updateObjectMetadataResult = visualRecognition.updateObjectMetadata(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateObjectMetadataResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects/{object}', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['object']).toEqual(newObject);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.path['object']).toEqual(object);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const object = 'fake_object';
+        const newObject = 'fake_newObject';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          object,
+          newObject,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.updateObjectMetadata(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'object', 'newObject'];
+
+        let err;
+        try {
+          await visualRecognition.updateObjectMetadata({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'object', 'newObject'];
+
+        const updateObjectMetadataPromise = visualRecognition.updateObjectMetadata();
+        expectToBePromise(updateObjectMetadataPromise);
+
+        updateObjectMetadataPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getObjectMetadata', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const object = 'fake_object';
+        const params = {
+          collectionId,
+          object,
+        };
+
+        const getObjectMetadataResult = visualRecognition.getObjectMetadata(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getObjectMetadataResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects/{object}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.path['object']).toEqual(object);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const object = 'fake_object';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          object,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.getObjectMetadata(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'object'];
+
+        let err;
+        try {
+          await visualRecognition.getObjectMetadata({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'object'];
+
+        const getObjectMetadataPromise = visualRecognition.getObjectMetadata();
+        expectToBePromise(getObjectMetadataPromise);
+
+        getObjectMetadataPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteObject', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const object = 'fake_object';
+        const params = {
+          collectionId,
+          object,
+        };
+
+        const deleteObjectResult = visualRecognition.deleteObject(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteObjectResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects/{object}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.path['object']).toEqual(object);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const object = 'fake_object';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          object,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.deleteObject(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'object'];
+
+        let err;
+        try {
+          await visualRecognition.deleteObject({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'object'];
+
+        const deleteObjectPromise = visualRecognition.deleteObject();
+        expectToBePromise(deleteObjectPromise);
+
+        deleteObjectPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
   describe('train', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
