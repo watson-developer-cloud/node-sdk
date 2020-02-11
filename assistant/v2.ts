@@ -80,13 +80,13 @@ class AssistantV2 extends BaseService {
    * Create a new session. A session is used to send user input to a skill and receive responses. It also maintains the
    * state of the conversation. A session persists until it is deleted, or until it times out because of inactivity.
    * (For more information, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-settings).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-settings).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
    * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
    * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -149,13 +149,13 @@ class AssistantV2 extends BaseService {
    * Delete session.
    *
    * Deletes a session explicitly before it times out. (For more information about the session inactivity timeout, see
-   * the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-settings)).
+   * the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-settings)).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
    * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
    * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.sessionId - Unique identifier of the session.
@@ -231,7 +231,7 @@ class AssistantV2 extends BaseService {
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
    * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
    * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.sessionId - Unique identifier of the session.
@@ -338,7 +338,7 @@ namespace AssistantV2 {
   export interface CreateSessionParams {
     /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
      *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
      *
      *  **Note:** Currently, the v2 API does not support creating assistants.
      */
@@ -350,7 +350,7 @@ namespace AssistantV2 {
   export interface DeleteSessionParams {
     /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
      *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
      *
      *  **Note:** Currently, the v2 API does not support creating assistants.
      */
@@ -364,7 +364,7 @@ namespace AssistantV2 {
   export interface MessageParams {
     /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
      *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
      *
      *  **Note:** Currently, the v2 API does not support creating assistants.
      */
@@ -495,6 +495,24 @@ namespace AssistantV2 {
      *  triggering the start node of a dialog).
      */
     turn_count?: number;
+    /** The language code for localization in the user input. The specified locale overrides the default for the
+     *  assistant, and is used for interpreting entity values in user input such as date values. For example,
+     *  `04/03/2018` might be interpreted either as April 3 or March 4, depending on the locale.
+     *
+     *   This property is included only if the new system entities are enabled for the skill.
+     */
+    locale?: string;
+    /** The base time for interpreting any relative time mentions in the user input. The specified time overrides
+     *  the current server time, and is used to calculate times mentioned in relative terms such as `now` or `tomorrow`.
+     *  This can be useful for simulating past or future times for testing purposes, or when analyzing documents such as
+     *  news articles.
+     *
+     *  This value must be a UTC time value formatted according to ISO 8601 (for example, `2019-06-26T12:00:00Z` for
+     *  noon on 26 June 2019.
+     *
+     *  This property is included only if the new system entities are enabled for the skill.
+     */
+    reference_time?: string;
   }
 
   /** Contains information specific to a particular skill used by the Assistant. */
@@ -613,6 +631,127 @@ namespace AssistantV2 {
     metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
+    /** An object containing detailed information about the entity recognized in the user input. This property is
+     *  included only if the new system entities are enabled for the skill.
+     *
+     *  For more information about how the new system entities are interpreted, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-beta-system-entities).
+     */
+    interpretation?: RuntimeEntityInterpretation;
+    /** An array of possible alternative values that the user might have intended instead of the value returned in
+     *  the **value** property. This property is returned only for `@sys-time` and `@sys-date` entities when the user's
+     *  input is ambiguous.
+     *
+     *  This property is included only if the new system entities are enabled for the skill.
+     */
+    alternatives?: RuntimeEntityAlternative[];
+    /** An object describing the role played by a system entity that is specifies the beginning or end of a range
+     *  recognized in the user input. This property is included only if the new system entities are enabled for the
+     *  skill.
+     */
+    role?: RuntimeEntityRole;
+  }
+
+  /** An alternative value for the recognized entity. */
+  export interface RuntimeEntityAlternative {
+    /** The entity value that was recognized in the user input. */
+    value?: string;
+    /** A decimal percentage that represents Watson's confidence in the recognized entity. */
+    confidence?: number;
+  }
+
+  /** RuntimeEntityInterpretation. */
+  export interface RuntimeEntityInterpretation {
+    /** The calendar used to represent a recognized date (for example, `Gregorian`). */
+    calendar_type?: string;
+    /** A unique identifier used to associate a recognized time and date. If the user input contains a date and time
+     *  that are mentioned together (for example, `Today at 5`, the same **datetime_link** value is returned for both
+     *  the `@sys-date` and `@sys-time` entities).
+     */
+    datetime_link?: string;
+    /** A locale-specific holiday name (such as `thanksgiving` or `christmas`). This property is included when a
+     *  `@sys-date` entity is recognized based on a holiday name in the user input.
+     */
+    festival?: string;
+    /** The precision or duration of a time range specified by a recognized `@sys-time` or `@sys-date` entity. */
+    granularity?: string;
+    /** A unique identifier used to associate multiple recognized `@sys-date`, `@sys-time`, or `@sys-number`
+     *  entities that are recognized as a range of values in the user's input (for example, `from July 4 until July 14`
+     *  or `from 20 to 25`).
+     */
+    range_link?: string;
+    /** The word in the user input that indicates that a `sys-date` or `sys-time` entity is part of an implied range
+     *  where only one date or time is specified (for example, `since` or `until`).
+     */
+    range_modifier?: string;
+    /** A recognized mention of a relative day, represented numerically as an offset from the current date (for
+     *  example, `-1` for `yesterday` or `10` for `in ten days`).
+     */
+    relative_day?: number;
+    /** A recognized mention of a relative month, represented numerically as an offset from the current month (for
+     *  example, `1` for `next month` or `-3` for `three months ago`).
+     */
+    relative_month?: number;
+    /** A recognized mention of a relative week, represented numerically as an offset from the current week (for
+     *  example, `2` for `in two weeks` or `-1` for `last week).
+     */
+    relative_week?: number;
+    /** A recognized mention of a relative date range for a weekend, represented numerically as an offset from the
+     *  current weekend (for example, `0` for `this weekend` or `-1` for `last weekend`).
+     */
+    relative_weekend?: number;
+    /** A recognized mention of a relative year, represented numerically as an offset from the current year (for
+     *  example, `1` for `next year` or `-5` for `five years ago`).
+     */
+    relative_year?: number;
+    /** A recognized mention of a specific date, represented numerically as the date within the month (for example,
+     *  `30` for `June 30`.).
+     */
+    specific_day?: number;
+    /** A recognized mention of a specific day of the week as a lowercase string (for example, `monday`). */
+    specific_day_of_week?: string;
+    /** A recognized mention of a specific month, represented numerically (for example, `7` for `July`). */
+    specific_month?: number;
+    /** A recognized mention of a specific quarter, represented numerically (for example, `3` for `the third
+     *  quarter`).
+     */
+    specific_quarter?: number;
+    /** A recognized mention of a specific year (for example, `2016`). */
+    specific_year?: number;
+    /** A recognized numeric value, represented as an integer or double. */
+    numeric_value?: number;
+    /** The type of numeric value recognized in the user input (`integer` or `rational`). */
+    subtype?: string;
+    /** A recognized term for a time that was mentioned as a part of the day in the user's input (for example,
+     *  `morning` or `afternoon`).
+     */
+    part_of_day?: string;
+    /** A recognized mention of a relative hour, represented numerically as an offset from the current hour (for
+     *  example, `3` for `in three hours` or `-1` for `an hour ago`).
+     */
+    relative_hour?: number;
+    /** A recognized mention of a relative time, represented numerically as an offset in minutes from the current
+     *  time (for example, `5` for `in five minutes` or `-15` for `fifteen minutes ago`).
+     */
+    relative_minute?: number;
+    /** A recognized mention of a relative time, represented numerically as an offset in seconds from the current
+     *  time (for example, `10` for `in ten seconds` or `-30` for `thirty seconds ago`).
+     */
+    relative_second?: number;
+    /** A recognized specific hour mentioned as part of a time value (for example, `10` for `10:15 AM`.). */
+    specific_hour?: number;
+    /** A recognized specific minute mentioned as part of a time value (for example, `15` for `10:15 AM`.). */
+    specific_minute?: number;
+    /** A recognized specific second mentioned as part of a time value (for example, `30` for `10:15:30 AM`.). */
+    specific_second?: number;
+    /** A recognized time zone mentioned as part of a time value (for example, `EST`). */
+    timezone?: string;
+  }
+
+  /** An object describing the role played by a system entity that is specifies the beginning or end of a range recognized in the user input. This property is included only if the new system entities are enabled for the skill. */
+  export interface RuntimeEntityRole {
+    /** The relationship of the entity to the range. */
+    type?: string;
   }
 
   /** An intent identified in the user input. */

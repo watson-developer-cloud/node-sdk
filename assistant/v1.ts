@@ -80,7 +80,7 @@ class AssistantV1 extends BaseService {
    *
    * **Important:** This method has been superseded by the new v2 runtime API. The v2 API offers significant advantages,
    * including ease of deployment, automatic state management, versioning, and search capabilities. For more
-   * information, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-api-overview).
+   * information, see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-api-overview).
    *
    * There is no rate limit for this operation.
    *
@@ -263,6 +263,8 @@ class AssistantV1 extends BaseService {
    * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
    * marked as irrelevant input.
    * @param {Webhook[]} [params.webhooks] -
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
@@ -286,6 +288,10 @@ class AssistantV1 extends BaseService {
         'webhooks': _params.webhooks
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createWorkspace');
 
       const parameters = {
@@ -293,6 +299,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces',
           method: 'POST',
           body,
+          qs: query,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
           headers: extend(true, sdkHeaders, {
@@ -427,13 +434,15 @@ class AssistantV1 extends BaseService {
    * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
    * marked as irrelevant input.
    * @param {Webhook[]} [params.webhooks] -
-   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the workspace. If
+   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the object. If
    * **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
-   * including all subelements. For example, if the new data includes **entities** and **append**=`false`, all existing
-   * entities in the workspace are discarded and replaced with the new entities.
+   * including all subelements. For example, if the new data for a workspace includes **entities** and
+   * **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.
    *
    * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
    * data collide with existing elements, the update request fails.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
@@ -468,7 +477,8 @@ class AssistantV1 extends BaseService {
       };
 
       const query = {
-        'append': _params.append
+        'append': _params.append,
+        'include_audit': _params.includeAudit
       };
 
       const path = {
@@ -682,6 +692,8 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.description] - The description of the intent. This string cannot contain carriage return,
    * newline, or tab characters.
    * @param {Example[]} [params.examples] - An array of user input examples for the intent.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
@@ -707,6 +719,10 @@ class AssistantV1 extends BaseService {
         'examples': _params.examples
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId
       };
@@ -718,6 +734,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/intents',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -846,6 +863,15 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.newDescription] - The description of the intent. This string cannot contain carriage
    * return, newline, or tab characters.
    * @param {Example[]} [params.newExamples] - An array of user input examples for the intent.
+   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the object. If
+   * **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
+   * including all subelements. For example, if the new data for the intent includes **examples** and
+   * **append**=`false`, all existing examples for the intent are discarded and replaced with the new examples.
+   *
+   * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
+   * data collide with existing elements, the update request fails.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
@@ -871,6 +897,11 @@ class AssistantV1 extends BaseService {
         'examples': _params.newExamples
       };
 
+      const query = {
+        'append': _params.append,
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'intent': _params.intent
@@ -883,6 +914,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/intents/{intent}',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -1081,6 +1113,8 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {Mention[]} [params.mentions] - An array of contextual entity mentions.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
@@ -1105,6 +1139,10 @@ class AssistantV1 extends BaseService {
         'mentions': _params.mentions
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'intent': _params.intent
@@ -1117,6 +1155,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -1240,6 +1279,8 @@ class AssistantV1 extends BaseService {
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
    * @param {Mention[]} [params.newMentions] - An array of contextual entity mentions.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
@@ -1264,6 +1305,10 @@ class AssistantV1 extends BaseService {
         'mentions': _params.newMentions
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'intent': _params.intent,
@@ -1277,6 +1322,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -1473,6 +1519,8 @@ class AssistantV1 extends BaseService {
    * following restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
@@ -1496,6 +1544,10 @@ class AssistantV1 extends BaseService {
         'text': _params.text
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId
       };
@@ -1507,6 +1559,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/counterexamples',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -1626,6 +1679,8 @@ class AssistantV1 extends BaseService {
    * the following restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
@@ -1649,6 +1704,10 @@ class AssistantV1 extends BaseService {
         'text': _params.newText
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'text': _params.text
@@ -1661,6 +1720,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/counterexamples/{text}',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -1865,6 +1925,8 @@ class AssistantV1 extends BaseService {
    * @param {JsonObject} [params.metadata] - Any metadata related to the entity.
    * @param {boolean} [params.fuzzyMatch] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.values] - An array of objects describing the entity values.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
@@ -1892,6 +1954,10 @@ class AssistantV1 extends BaseService {
         'values': _params.values
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId
       };
@@ -1903,6 +1969,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/entities',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -2033,6 +2100,15 @@ class AssistantV1 extends BaseService {
    * @param {JsonObject} [params.newMetadata] - Any metadata related to the entity.
    * @param {boolean} [params.newFuzzyMatch] - Whether to use fuzzy matching for the entity.
    * @param {CreateValue[]} [params.newValues] - An array of objects describing the entity values.
+   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the entity. If
+   * **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
+   * including all subelements. For example, if the new data for the entity includes **values** and **append**=`false`,
+   * all existing values for the entity are discarded and replaced with the new values.
+   *
+   * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
+   * data collide with existing elements, the update request fails.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
@@ -2060,6 +2136,11 @@ class AssistantV1 extends BaseService {
         'values': _params.newValues
       };
 
+      const query = {
+        'append': _params.append,
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'entity': _params.entity
@@ -2072,6 +2153,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/entities/{entity}',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -2366,7 +2448,9 @@ class AssistantV1 extends BaseService {
    * @param {string[]} [params.patterns] - An array of patterns for the entity value. A value can specify either
    * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more
    * information about how to specify a pattern, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#entities-create-dictionary-based).
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
@@ -2394,6 +2478,10 @@ class AssistantV1 extends BaseService {
         'patterns': _params.patterns
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'entity': _params.entity
@@ -2406,6 +2494,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/entities/{entity}/values',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -2543,7 +2632,16 @@ class AssistantV1 extends BaseService {
    * @param {string[]} [params.newPatterns] - An array of patterns for the entity value. A value can specify either
    * synonyms or patterns (depending on the value type), but not both. A pattern is a regular expression; for more
    * information about how to specify a pattern, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#entities-create-dictionary-based).
+   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the entity value.
+   * If **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
+   * including all subelements. For example, if the new data for the entity value includes **synonyms** and
+   * **append**=`false`, all existing synonyms for the entity value are discarded and replaced with the new synonyms.
+   *
+   * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
+   * data collide with existing elements, the update request fails.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
@@ -2571,6 +2669,11 @@ class AssistantV1 extends BaseService {
         'patterns': _params.newPatterns
       };
 
+      const query = {
+        'append': _params.append,
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'entity': _params.entity,
@@ -2584,6 +2687,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -2785,6 +2889,8 @@ class AssistantV1 extends BaseService {
    * @param {string} params.synonym - The text of the synonym. This string must conform to the following restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
@@ -2808,6 +2914,10 @@ class AssistantV1 extends BaseService {
         'synonym': _params.synonym
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'entity': _params.entity,
@@ -2821,6 +2931,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -2946,6 +3057,8 @@ class AssistantV1 extends BaseService {
    * restrictions:
    * - It cannot contain carriage return, newline, or tab characters.
    * - It cannot consist of only whitespace characters.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
@@ -2969,6 +3082,10 @@ class AssistantV1 extends BaseService {
         'synonym': _params.newSynonym
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'entity': _params.entity,
@@ -2983,6 +3100,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -3189,7 +3307,7 @@ class AssistantV1 extends BaseService {
    * the dialog node has no previous sibling.
    * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
    * @param {JsonObject} [params.context] - The context for the dialog node.
    * @param {JsonObject} [params.metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.nextStep] - The next step to execute following this dialog node.
@@ -3208,6 +3326,8 @@ class AssistantV1 extends BaseService {
    * to users.
    * @param {boolean} [params.disambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
    * suggestions.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
@@ -3249,6 +3369,10 @@ class AssistantV1 extends BaseService {
         'disambiguation_opt_out': _params.disambiguationOptOut
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId
       };
@@ -3260,6 +3384,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/dialog_nodes',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -3388,7 +3513,7 @@ class AssistantV1 extends BaseService {
    * if the dialog node has no previous sibling.
    * @param {DialogNodeOutput} [params.newOutput] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
    * @param {JsonObject} [params.newContext] - The context for the dialog node.
    * @param {JsonObject} [params.newMetadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.newNextStep] - The next step to execute following this dialog node.
@@ -3408,6 +3533,8 @@ class AssistantV1 extends BaseService {
    * node to users.
    * @param {boolean} [params.newDisambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
    * suggestions.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
@@ -3449,6 +3576,10 @@ class AssistantV1 extends BaseService {
         'disambiguation_opt_out': _params.newDisambiguationOptOut
       };
 
+      const query = {
+        'include_audit': _params.includeAudit
+      };
+
       const path = {
         'workspace_id': _params.workspaceId,
         'dialog_node': _params.dialogNode
@@ -3461,6 +3592,7 @@ class AssistantV1 extends BaseService {
           url: '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
           method: 'POST',
           body,
+          qs: query,
           path,
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
@@ -3574,7 +3706,7 @@ class AssistantV1 extends BaseService {
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
    * filter. For more information, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -3654,7 +3786,7 @@ class AssistantV1 extends BaseService {
    * filter. You must specify a filter query that includes a value for `language`, as well as a value for
    * `request.context.system.assistant_id`, `workspace_id`, or `request.context.metadata.deployment`. For more
    * information, see the
-   * [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
@@ -3730,7 +3862,7 @@ class AssistantV1 extends BaseService {
    *
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://cloud.ibm.com/docs/services/assistant?topic=assistant-information-security#information-security).
+   * security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security).
    *
    * This operation is limited to 4 requests per minute. For more information, see **Rate limiting**.
    *
@@ -3901,6 +4033,8 @@ namespace AssistantV1 {
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
     webhooks?: Webhook[];
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3957,15 +4091,17 @@ namespace AssistantV1 {
     /** An array of objects defining input examples that have been marked as irrelevant input. */
     counterexamples?: Counterexample[];
     webhooks?: Webhook[];
-    /** Whether the new data is to be appended to the existing data in the workspace. If **append**=`false`,
-     *  elements included in the new data completely replace the corresponding existing elements, including all
-     *  subelements. For example, if the new data includes **entities** and **append**=`false`, all existing entities in
+    /** Whether the new data is to be appended to the existing data in the object. If **append**=`false`, elements
+     *  included in the new data completely replace the corresponding existing elements, including all subelements. For
+     *  example, if the new data for a workspace includes **entities** and **append**=`false`, all existing entities in
      *  the workspace are discarded and replaced with the new entities.
      *
      *  If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the
      *  new data collide with existing elements, the update request fails.
      */
     append?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4020,6 +4156,8 @@ namespace AssistantV1 {
     description?: string;
     /** An array of user input examples for the intent. */
     examples?: Example[];
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4054,6 +4192,17 @@ namespace AssistantV1 {
     newDescription?: string;
     /** An array of user input examples for the intent. */
     newExamples?: Example[];
+    /** Whether the new data is to be appended to the existing data in the object. If **append**=`false`, elements
+     *  included in the new data completely replace the corresponding existing elements, including all subelements. For
+     *  example, if the new data for the intent includes **examples** and **append**=`false`, all existing examples for
+     *  the intent are discarded and replaced with the new examples.
+     *
+     *  If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the
+     *  new data collide with existing elements, the update request fails.
+     */
+    append?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4107,6 +4256,8 @@ namespace AssistantV1 {
     text: string;
     /** An array of contextual entity mentions. */
     mentions?: Mention[];
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4138,6 +4289,8 @@ namespace AssistantV1 {
     newText?: string;
     /** An array of contextual entity mentions. */
     newMentions?: Mention[];
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4187,6 +4340,8 @@ namespace AssistantV1 {
      *  - It cannot consist of only whitespace characters.
      */
     text: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4212,6 +4367,8 @@ namespace AssistantV1 {
      *  - It cannot consist of only whitespace characters.
      */
     newText?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4273,6 +4430,8 @@ namespace AssistantV1 {
     fuzzyMatch?: boolean;
     /** An array of objects describing the entity values. */
     values?: CreateValue[];
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4311,6 +4470,17 @@ namespace AssistantV1 {
     newFuzzyMatch?: boolean;
     /** An array of objects describing the entity values. */
     newValues?: CreateValue[];
+    /** Whether the new data is to be appended to the existing data in the entity. If **append**=`false`, elements
+     *  included in the new data completely replace the corresponding existing elements, including all subelements. For
+     *  example, if the new data for the entity includes **values** and **append**=`false`, all existing values for the
+     *  entity are discarded and replaced with the new values.
+     *
+     *  If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the
+     *  new data collide with existing elements, the update request fails.
+     */
+    append?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4396,9 +4566,11 @@ namespace AssistantV1 {
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
      *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
      *  pattern, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#entities-create-dictionary-based).
      */
     patterns?: string[];
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4455,9 +4627,20 @@ namespace AssistantV1 {
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
      *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
      *  pattern, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#entities-create-dictionary-based).
      */
     newPatterns?: string[];
+    /** Whether the new data is to be appended to the existing data in the entity value. If **append**=`false`,
+     *  elements included in the new data completely replace the corresponding existing elements, including all
+     *  subelements. For example, if the new data for the entity value includes **synonyms** and **append**=`false`, all
+     *  existing synonyms for the entity value are discarded and replaced with the new synonyms.
+     *
+     *  If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the
+     *  new data collide with existing elements, the update request fails.
+     */
+    append?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4524,6 +4707,8 @@ namespace AssistantV1 {
      *  - It cannot consist of only whitespace characters.
      */
     synonym: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4557,6 +4742,8 @@ namespace AssistantV1 {
      *  - It cannot consist of only whitespace characters.
      */
     newSynonym?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4620,7 +4807,7 @@ namespace AssistantV1 {
      */
     previousSibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
      */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
@@ -4651,6 +4838,8 @@ namespace AssistantV1 {
     userLabel?: string;
     /** Whether the dialog node should be excluded from disambiguation suggestions. */
     disambiguationOptOut?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4731,7 +4920,7 @@ namespace AssistantV1 {
      */
     newPreviousSibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
      */
     newOutput?: DialogNodeOutput;
     /** The context for the dialog node. */
@@ -4762,6 +4951,8 @@ namespace AssistantV1 {
     newUserLabel?: string;
     /** Whether the dialog node should be excluded from disambiguation suggestions. */
     newDisambiguationOptOut?: boolean;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4826,8 +5017,7 @@ namespace AssistantV1 {
      */
     sort?: string;
     /** A cacheable parameter that limits the results to those matching the specified filter. For more information,
-     *  see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
+     *  see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
      */
     filter?: string;
     /** The number of records to return in each page of results. */
@@ -4842,7 +5032,7 @@ namespace AssistantV1 {
     /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a
      *  filter query that includes a value for `language`, as well as a value for `request.context.system.assistant_id`,
      *  `workspace_id`, or `request.context.metadata.deployment`. For more information, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-filter-reference#filter-reference).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
      */
     filter: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order,
@@ -4967,7 +5157,7 @@ namespace AssistantV1 {
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
      *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
      *  pattern, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#entities-create-dictionary-based).
      */
     patterns?: string[];
     /** The timestamp for creation of the object. */
@@ -4995,7 +5185,7 @@ namespace AssistantV1 {
      */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
      */
     output?: DialogNodeOutput;
     /** The context for the dialog node. */
@@ -5085,7 +5275,7 @@ namespace AssistantV1 {
     selector?: string;
   }
 
-  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
+  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
   export interface DialogNodeOutput {
     /** An array of objects describing the output defined for the dialog node. */
     generic?: DialogNodeOutputGeneric[];
@@ -5572,6 +5762,112 @@ namespace AssistantV1 {
     metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
+    /** An object containing detailed information about the entity recognized in the user input. This property is
+     *  included only if the new system entities are enabled for the workspace.
+     *
+     *  For more information about how the new system entities are interpreted, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-beta-system-entities).
+     */
+    interpretation?: RuntimeEntityInterpretation;
+    /** An object describing the role played by a system entity that is specifies the beginning or end of a range
+     *  recognized in the user input. This property is included only if the new system entities are enabled for the
+     *  workspace.
+     */
+    role?: RuntimeEntityRole;
+  }
+
+  /** RuntimeEntityInterpretation. */
+  export interface RuntimeEntityInterpretation {
+    /** The calendar used to represent a recognized date (for example, `Gregorian`). */
+    calendar_type?: string;
+    /** A unique identifier used to associate a recognized time and date. If the user input contains a date and time
+     *  that are mentioned together (for example, `Today at 5`, the same **datetime_link** value is returned for both
+     *  the `@sys-date` and `@sys-time` entities).
+     */
+    datetime_link?: string;
+    /** A locale-specific holiday name (such as `thanksgiving` or `christmas`). This property is included when a
+     *  `@sys-date` entity is recognized based on a holiday name in the user input.
+     */
+    festival?: string;
+    /** The precision or duration of a time range specified by a recognized `@sys-time` or `@sys-date` entity. */
+    granularity?: string;
+    /** A unique identifier used to associate multiple recognized `@sys-date`, `@sys-time`, or `@sys-number`
+     *  entities that are recognized as a range of values in the user's input (for example, `from July 4 until July 14`
+     *  or `from 20 to 25`).
+     */
+    range_link?: string;
+    /** The word in the user input that indicates that a `sys-date` or `sys-time` entity is part of an implied range
+     *  where only one date or time is specified (for example, `since` or `until`).
+     */
+    range_modifier?: string;
+    /** A recognized mention of a relative day, represented numerically as an offset from the current date (for
+     *  example, `-1` for `yesterday` or `10` for `in ten days`).
+     */
+    relative_day?: number;
+    /** A recognized mention of a relative month, represented numerically as an offset from the current month (for
+     *  example, `1` for `next month` or `-3` for `three months ago`).
+     */
+    relative_month?: number;
+    /** A recognized mention of a relative week, represented numerically as an offset from the current week (for
+     *  example, `2` for `in two weeks` or `-1` for `last week).
+     */
+    relative_week?: number;
+    /** A recognized mention of a relative date range for a weekend, represented numerically as an offset from the
+     *  current weekend (for example, `0` for `this weekend` or `-1` for `last weekend`).
+     */
+    relative_weekend?: number;
+    /** A recognized mention of a relative year, represented numerically as an offset from the current year (for
+     *  example, `1` for `next year` or `-5` for `five years ago`).
+     */
+    relative_year?: number;
+    /** A recognized mention of a specific date, represented numerically as the date within the month (for example,
+     *  `30` for `June 30`.).
+     */
+    specific_day?: number;
+    /** A recognized mention of a specific day of the week as a lowercase string (for example, `monday`). */
+    specific_day_of_week?: string;
+    /** A recognized mention of a specific month, represented numerically (for example, `7` for `July`). */
+    specific_month?: number;
+    /** A recognized mention of a specific quarter, represented numerically (for example, `3` for `the third
+     *  quarter`).
+     */
+    specific_quarter?: number;
+    /** A recognized mention of a specific year (for example, `2016`). */
+    specific_year?: number;
+    /** A recognized numeric value, represented as an integer or double. */
+    numeric_value?: number;
+    /** The type of numeric value recognized in the user input (`integer` or `rational`). */
+    subtype?: string;
+    /** A recognized term for a time that was mentioned as a part of the day in the user's input (for example,
+     *  `morning` or `afternoon`).
+     */
+    part_of_day?: string;
+    /** A recognized mention of a relative hour, represented numerically as an offset from the current hour (for
+     *  example, `3` for `in three hours` or `-1` for `an hour ago`).
+     */
+    relative_hour?: number;
+    /** A recognized mention of a relative time, represented numerically as an offset in minutes from the current
+     *  time (for example, `5` for `in five minutes` or `-15` for `fifteen minutes ago`).
+     */
+    relative_minute?: number;
+    /** A recognized mention of a relative time, represented numerically as an offset in seconds from the current
+     *  time (for example, `10` for `in ten seconds` or `-30` for `thirty seconds ago`).
+     */
+    relative_second?: number;
+    /** A recognized specific hour mentioned as part of a time value (for example, `10` for `10:15 AM`.). */
+    specific_hour?: number;
+    /** A recognized specific minute mentioned as part of a time value (for example, `15` for `10:15 AM`.). */
+    specific_minute?: number;
+    /** A recognized specific second mentioned as part of a time value (for example, `30` for `10:15:30 AM`.). */
+    specific_second?: number;
+    /** A recognized time zone mentioned as part of a time value (for example, `EST`). */
+    timezone?: string;
+  }
+
+  /** An object describing the role played by a system entity that is specifies the beginning or end of a range recognized in the user input. This property is included only if the new system entities are enabled for the workspace. */
+  export interface RuntimeEntityRole {
+    /** The relationship of the entity to the range. */
+    type?: string;
   }
 
   /** An intent identified in the user input. */
@@ -5672,7 +5968,7 @@ namespace AssistantV1 {
     /** An array of patterns for the entity value. A value can specify either synonyms or patterns (depending on the
      *  value type), but not both. A pattern is a regular expression; for more information about how to specify a
      *  pattern, see the
-     *  [documentation](https://cloud.ibm.com/docs/services/assistant?topic=assistant-entities#entities-create-dictionary-based).
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-entities#entities-create-dictionary-based).
      */
     patterns?: string[];
     /** The timestamp for creation of the object. */
@@ -5761,6 +6057,8 @@ namespace AssistantV1 {
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
     human_agent_assist?: JsonObject;
+    /** Workspace settings related to the behavior of system entities. */
+    system_entities?: WorkspaceSystemSettingsSystemEntities;
     /** Workspace settings related to detection of irrelevant input. */
     off_topic?: WorkspaceSystemSettingsOffTopic;
   }
@@ -5792,6 +6090,12 @@ namespace AssistantV1 {
   /** Workspace settings related to detection of irrelevant input. */
   export interface WorkspaceSystemSettingsOffTopic {
     /** Whether enhanced irrelevance detection is enabled for the workspace. */
+    enabled?: boolean;
+  }
+
+  /** Workspace settings related to the behavior of system entities. */
+  export interface WorkspaceSystemSettingsSystemEntities {
+    /** Whether the new system entities are enabled for the workspace. */
     enabled?: boolean;
   }
 

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2019, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ afterEach(() => {
 describe('DiscoveryV2', () => {
   describe('listCollections', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -112,7 +111,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(listCollectionsPromise);
 
         listCollectionsPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -120,7 +119,6 @@ describe('DiscoveryV2', () => {
   });
   describe('query', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -229,7 +227,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(queryPromise);
 
         queryPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -237,7 +235,6 @@ describe('DiscoveryV2', () => {
   });
   describe('getAutocompletion', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -318,7 +315,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(getAutocompletionPromise);
 
         getAutocompletionPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -326,7 +323,6 @@ describe('DiscoveryV2', () => {
   });
   describe('queryNotices', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -408,7 +404,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(queryNoticesPromise);
 
         queryNoticesPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -416,7 +412,6 @@ describe('DiscoveryV2', () => {
   });
   describe('listFields', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -486,7 +481,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(listFieldsPromise);
 
         listFieldsPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -494,7 +489,6 @@ describe('DiscoveryV2', () => {
   });
   describe('getComponentSettings', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -561,7 +555,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(getComponentSettingsPromise);
 
         getComponentSettingsPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -569,7 +563,6 @@ describe('DiscoveryV2', () => {
   });
   describe('addDocument', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -599,7 +592,11 @@ describe('DiscoveryV2', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/collections/{collection_id}/documents', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/collections/{collection_id}/documents',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -656,7 +653,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(addDocumentPromise);
 
         addDocumentPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -664,7 +661,6 @@ describe('DiscoveryV2', () => {
   });
   describe('updateDocument', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -696,7 +692,11 @@ describe('DiscoveryV2', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -756,7 +756,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(updateDocumentPromise);
 
         updateDocumentPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -764,7 +764,6 @@ describe('DiscoveryV2', () => {
   });
   describe('deleteDocument', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -788,7 +787,11 @@ describe('DiscoveryV2', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}', 'DELETE');
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
+          'DELETE'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -844,7 +847,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(deleteDocumentPromise);
 
         deleteDocumentPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -852,7 +855,6 @@ describe('DiscoveryV2', () => {
   });
   describe('listTrainingQueries', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -919,7 +921,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(listTrainingQueriesPromise);
 
         listTrainingQueriesPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -927,7 +929,6 @@ describe('DiscoveryV2', () => {
   });
   describe('deleteTrainingQueries', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -994,7 +995,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(deleteTrainingQueriesPromise);
 
         deleteTrainingQueriesPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1002,7 +1003,6 @@ describe('DiscoveryV2', () => {
   });
   describe('createTrainingQuery', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -1082,7 +1082,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(createTrainingQueryPromise);
 
         createTrainingQueryPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1090,7 +1090,6 @@ describe('DiscoveryV2', () => {
   });
   describe('getTrainingQuery', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -1110,7 +1109,11 @@ describe('DiscoveryV2', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/training_data/queries/{query_id}', 'GET');
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/training_data/queries/{query_id}',
+          'GET'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1162,7 +1165,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(getTrainingQueryPromise);
 
         getTrainingQueryPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
@@ -1170,7 +1173,6 @@ describe('DiscoveryV2', () => {
   });
   describe('updateTrainingQuery', () => {
     describe('positive tests', () => {
-
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
@@ -1196,7 +1198,11 @@ describe('DiscoveryV2', () => {
 
         const options = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/training_data/queries/{query_id}', 'POST');
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/training_data/queries/{query_id}',
+          'POST'
+        );
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1255,7 +1261,7 @@ describe('DiscoveryV2', () => {
         expectToBePromise(updateTrainingQueryPromise);
 
         updateTrainingQueryPromise.catch(err => {
-            expect(err.message).toMatch(/Missing required parameters/);
+          expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });

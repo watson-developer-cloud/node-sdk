@@ -222,7 +222,7 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
    * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in CSV format. Each text value must have
    * at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data
-   * preparation](https://cloud.ibm.com/docs/services/natural-language-classifier?topic=natural-language-classifier-using-your-data).
+   * preparation](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-using-your-data).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classifier>>}
@@ -518,7 +518,7 @@ namespace NaturalLanguageClassifierV1 {
     trainingMetadata: NodeJS.ReadableStream|Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 3,000
      *  classes and 20,000 records. For details, see [Data
-     *  preparation](https://cloud.ibm.com/docs/services/natural-language-classifier?topic=natural-language-classifier-using-your-data).
+     *  preparation](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-using-your-data).
      */
     trainingData: NodeJS.ReadableStream|Buffer;
     headers?: OutgoingHttpHeaders;
