@@ -457,7 +457,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Enter a [custom
      *  model](https://cloud.ibm.com/docs/services/natural-language-understanding?topic=natural-language-understanding-customizing)
      *  ID to override the standard categories model.
-     * 
+     *
      *  The custom categories experimental feature will be retired on 19 December 2019. On that date, deployed custom
      *  categories models will no longer be accessible in Natural Language Understanding. The feature will be removed
      *  from Knowledge Studio on an earlier date. Custom categories models will no longer be accessible in Knowledge

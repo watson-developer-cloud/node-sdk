@@ -78,7 +78,7 @@ class TextToSpeechV1 extends BaseService {
    * details about the voice. To see information about a specific voice, use the **Get a voice** method.
    *
    * **See also:** [Listing all available
-   * voices](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-voices#listVoices).
+   * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -130,7 +130,7 @@ class TextToSpeechV1 extends BaseService {
    * language of the specified voice. To list information about all available voices, use the **List voices** method.
    *
    * **See also:** [Listing a specific
-   * voice](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-voices#listVoice).
+   * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned.
@@ -213,7 +213,7 @@ class TextToSpeechV1 extends BaseService {
    * array of bytes.
    *
    * **See also:** [The HTTP
-   * interface](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP).
+   * interface](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP).
    *
    * ### Audio formats (accept types)
    *
@@ -249,8 +249,7 @@ class TextToSpeechV1 extends BaseService {
    * 22,050 Hz.
    *
    * For more information about specifying an audio format, including additional details about some of the formats, see
-   * [Audio formats](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-audioFormats#audioFormats).
-   *
+   * [Audio formats](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audioFormats#audioFormats).
    *
    * ### Warning messages
    *
@@ -348,7 +347,7 @@ class TextToSpeechV1 extends BaseService {
    * languages.
    *
    * **See also:** [Querying a word from a
-   * language](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage).
+   * language](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The word for which the pronunciation is requested.
@@ -435,7 +434,7 @@ class TextToSpeechV1 extends BaseService {
    * Arabic, Chinese, and Dutch languages.
    *
    * **See also:** [Creating a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new custom voice model.
@@ -513,7 +512,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying all custom
-   * models](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll).
+   * models](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The language for which custom voice models that are owned by the requesting
@@ -587,11 +586,11 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:**
    * * [Updating a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsUpdate)
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsUpdate)
    * * [Adding words to a Japanese custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
    * * [Understanding
-   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
+   * customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -674,7 +673,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery).
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -744,7 +743,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Deleting a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customModels#cuModelsDelete).
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsDelete).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -830,11 +829,11 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:**
    * * [Adding multiple words to a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd)
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd)
    * * [Adding words to a Japanese custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
    * * [Understanding
-   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
+   * customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -917,7 +916,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying all words from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryModel).
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -1000,11 +999,11 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:**
    * * [Adding a single word to a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordAdd)
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordAdd)
    * * [Adding words to a Japanese custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd)
    * * [Understanding
-   * customization](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customIntro#customIntro).
+   * customization](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -1017,7 +1016,7 @@ class TextToSpeechV1 extends BaseService {
    * value to produce the correct intonation for the word. You can create only a single entry, with or without a single
    * part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word.
    * For more information, see [Working with Japanese
-   * entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes).
+   * entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
@@ -1091,7 +1090,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Querying a single word from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordQueryModel).
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordQueryModel).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -1163,7 +1162,7 @@ class TextToSpeechV1 extends BaseService {
    * **Note:** This method is currently a beta release.
    *
    * **See also:** [Deleting a word from a custom
-   * model](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-customWords#cuWordDelete).
+   * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordDelete).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom voice model. You must make the
@@ -1241,7 +1240,7 @@ class TextToSpeechV1 extends BaseService {
    * data.
    *
    * **See also:** [Information
-   * security](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-information-security#information-security).
+   * security](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-information-security#information-security).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
@@ -1654,7 +1653,7 @@ namespace TextToSpeechV1 {
      *  intonation for the word. You can create only a single entry, with or without a single part of speech, for any
      *  word; you cannot create multiple entries with different parts of speech for the same word. For more information,
      *  see [Working with Japanese
-     *  entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes).
+     *  entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
      */
     partOfSpeech?: AddWordConstants.PartOfSpeech | string;
     headers?: OutgoingHttpHeaders;
@@ -1662,7 +1661,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `addWord` operation. */
   export namespace AddWordConstants {
-    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes). */
+    /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes). */
     export enum PartOfSpeech {
       DOSI = 'Dosi',
       FUKU = 'Fuku',
@@ -1748,7 +1747,7 @@ namespace TextToSpeechV1 {
      *  intonation for the word. You can create only a single entry, with or without a single part of speech, for any
      *  word; you cannot create multiple entries with different parts of speech for the same word. For more information,
      *  see [Working with Japanese
-     *  entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes).
+     *  entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
      */
     part_of_speech?: string;
   }
@@ -1836,7 +1835,7 @@ namespace TextToSpeechV1 {
      *  intonation for the word. You can create only a single entry, with or without a single part of speech, for any
      *  word; you cannot create multiple entries with different parts of speech for the same word. For more information,
      *  see [Working with Japanese
-     *  entries](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-rules#jaNotes).
+     *  entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
      */
     part_of_speech?: string;
   }

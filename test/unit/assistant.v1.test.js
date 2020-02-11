@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2018, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -217,6 +217,7 @@ describe('AssistantV1', () => {
         const dialogNodes = 'fake_dialogNodes';
         const counterexamples = 'fake_counterexamples';
         const webhooks = 'fake_webhooks';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           name,
           description,
@@ -229,6 +230,7 @@ describe('AssistantV1', () => {
           dialogNodes,
           counterexamples,
           webhooks,
+          includeAudit,
         };
 
         const createWorkspaceResult = assistant.createWorkspace(params);
@@ -256,6 +258,7 @@ describe('AssistantV1', () => {
         expect(options.body['dialog_nodes']).toEqual(dialogNodes);
         expect(options.body['counterexamples']).toEqual(counterexamples);
         expect(options.body['webhooks']).toEqual(webhooks);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
       });
 
       test('should prioritize user-given headers', () => {
@@ -387,6 +390,7 @@ describe('AssistantV1', () => {
         const counterexamples = 'fake_counterexamples';
         const webhooks = 'fake_webhooks';
         const append = 'fake_append';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           name,
@@ -401,6 +405,7 @@ describe('AssistantV1', () => {
           counterexamples,
           webhooks,
           append,
+          includeAudit,
         };
 
         const updateWorkspaceResult = assistant.updateWorkspace(params);
@@ -429,6 +434,7 @@ describe('AssistantV1', () => {
         expect(options.body['counterexamples']).toEqual(counterexamples);
         expect(options.body['webhooks']).toEqual(webhooks);
         expect(options.qs['append']).toEqual(append);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
 
@@ -651,11 +657,13 @@ describe('AssistantV1', () => {
         const intent = 'fake_intent';
         const description = 'fake_description';
         const examples = 'fake_examples';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           intent,
           description,
           examples,
+          includeAudit,
         };
 
         const createIntentResult = assistant.createIntent(params);
@@ -675,6 +683,7 @@ describe('AssistantV1', () => {
         expect(options.body['intent']).toEqual(intent);
         expect(options.body['description']).toEqual(description);
         expect(options.body['examples']).toEqual(examples);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
 
@@ -822,12 +831,16 @@ describe('AssistantV1', () => {
         const newIntent = 'fake_newIntent';
         const newDescription = 'fake_newDescription';
         const newExamples = 'fake_newExamples';
+        const append = 'fake_append';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           intent,
           newIntent,
           newDescription,
           newExamples,
+          append,
+          includeAudit,
         };
 
         const updateIntentResult = assistant.updateIntent(params);
@@ -847,6 +860,8 @@ describe('AssistantV1', () => {
         expect(options.body['intent']).toEqual(newIntent);
         expect(options.body['description']).toEqual(newDescription);
         expect(options.body['examples']).toEqual(newExamples);
+        expect(options.qs['append']).toEqual(append);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['intent']).toEqual(intent);
       });
@@ -1083,11 +1098,13 @@ describe('AssistantV1', () => {
         const intent = 'fake_intent';
         const text = 'fake_text';
         const mentions = 'fake_mentions';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           intent,
           text,
           mentions,
+          includeAudit,
         };
 
         const createExampleResult = assistant.createExample(params);
@@ -1110,6 +1127,7 @@ describe('AssistantV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['text']).toEqual(text);
         expect(options.body['mentions']).toEqual(mentions);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['intent']).toEqual(intent);
       });
@@ -1266,12 +1284,14 @@ describe('AssistantV1', () => {
         const text = 'fake_text';
         const newText = 'fake_newText';
         const newMentions = 'fake_newMentions';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           intent,
           text,
           newText,
           newMentions,
+          includeAudit,
         };
 
         const updateExampleResult = assistant.updateExample(params);
@@ -1294,6 +1314,7 @@ describe('AssistantV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['text']).toEqual(newText);
         expect(options.body['mentions']).toEqual(newMentions);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['intent']).toEqual(intent);
         expect(options.path['text']).toEqual(text);
@@ -1531,9 +1552,11 @@ describe('AssistantV1', () => {
         // parameters
         const workspaceId = 'fake_workspaceId';
         const text = 'fake_text';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           text,
+          includeAudit,
         };
 
         const createCounterexampleResult = assistant.createCounterexample(params);
@@ -1551,6 +1574,7 @@ describe('AssistantV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['text']).toEqual(text);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
 
@@ -1693,10 +1717,12 @@ describe('AssistantV1', () => {
         const workspaceId = 'fake_workspaceId';
         const text = 'fake_text';
         const newText = 'fake_newText';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           text,
           newText,
+          includeAudit,
         };
 
         const updateCounterexampleResult = assistant.updateCounterexample(params);
@@ -1714,6 +1740,7 @@ describe('AssistantV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['text']).toEqual(newText);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['text']).toEqual(text);
       });
@@ -1950,6 +1977,7 @@ describe('AssistantV1', () => {
         const metadata = 'fake_metadata';
         const fuzzyMatch = 'fake_fuzzyMatch';
         const values = 'fake_values';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           entity,
@@ -1957,6 +1985,7 @@ describe('AssistantV1', () => {
           metadata,
           fuzzyMatch,
           values,
+          includeAudit,
         };
 
         const createEntityResult = assistant.createEntity(params);
@@ -1978,6 +2007,7 @@ describe('AssistantV1', () => {
         expect(options.body['metadata']).toEqual(metadata);
         expect(options.body['fuzzy_match']).toEqual(fuzzyMatch);
         expect(options.body['values']).toEqual(values);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
 
@@ -2127,6 +2157,8 @@ describe('AssistantV1', () => {
         const newMetadata = 'fake_newMetadata';
         const newFuzzyMatch = 'fake_newFuzzyMatch';
         const newValues = 'fake_newValues';
+        const append = 'fake_append';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           entity,
@@ -2135,6 +2167,8 @@ describe('AssistantV1', () => {
           newMetadata,
           newFuzzyMatch,
           newValues,
+          append,
+          includeAudit,
         };
 
         const updateEntityResult = assistant.updateEntity(params);
@@ -2156,6 +2190,8 @@ describe('AssistantV1', () => {
         expect(options.body['metadata']).toEqual(newMetadata);
         expect(options.body['fuzzy_match']).toEqual(newFuzzyMatch);
         expect(options.body['values']).toEqual(newValues);
+        expect(options.qs['append']).toEqual(append);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['entity']).toEqual(entity);
       });
@@ -2483,6 +2519,7 @@ describe('AssistantV1', () => {
         const type = 'fake_type';
         const synonyms = 'fake_synonyms';
         const patterns = 'fake_patterns';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           entity,
@@ -2491,6 +2528,7 @@ describe('AssistantV1', () => {
           type,
           synonyms,
           patterns,
+          includeAudit,
         };
 
         const createValueResult = assistant.createValue(params);
@@ -2516,6 +2554,7 @@ describe('AssistantV1', () => {
         expect(options.body['type']).toEqual(type);
         expect(options.body['synonyms']).toEqual(synonyms);
         expect(options.body['patterns']).toEqual(patterns);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['entity']).toEqual(entity);
       });
@@ -2678,6 +2717,8 @@ describe('AssistantV1', () => {
         const newType = 'fake_newType';
         const newSynonyms = 'fake_newSynonyms';
         const newPatterns = 'fake_newPatterns';
+        const append = 'fake_append';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           entity,
@@ -2687,6 +2728,8 @@ describe('AssistantV1', () => {
           newType,
           newSynonyms,
           newPatterns,
+          append,
+          includeAudit,
         };
 
         const updateValueResult = assistant.updateValue(params);
@@ -2712,6 +2755,8 @@ describe('AssistantV1', () => {
         expect(options.body['type']).toEqual(newType);
         expect(options.body['synonyms']).toEqual(newSynonyms);
         expect(options.body['patterns']).toEqual(newPatterns);
+        expect(options.qs['append']).toEqual(append);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['entity']).toEqual(entity);
         expect(options.path['value']).toEqual(value);
@@ -2965,11 +3010,13 @@ describe('AssistantV1', () => {
         const entity = 'fake_entity';
         const value = 'fake_value';
         const synonym = 'fake_synonym';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           entity,
           value,
           synonym,
+          includeAudit,
         };
 
         const createSynonymResult = assistant.createSynonym(params);
@@ -2991,6 +3038,7 @@ describe('AssistantV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['synonym']).toEqual(synonym);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['entity']).toEqual(entity);
         expect(options.path['value']).toEqual(value);
@@ -3155,12 +3203,14 @@ describe('AssistantV1', () => {
         const value = 'fake_value';
         const synonym = 'fake_synonym';
         const newSynonym = 'fake_newSynonym';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           entity,
           value,
           synonym,
           newSynonym,
+          includeAudit,
         };
 
         const updateSynonymResult = assistant.updateSynonym(params);
@@ -3182,6 +3232,7 @@ describe('AssistantV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['synonym']).toEqual(newSynonym);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['entity']).toEqual(entity);
         expect(options.path['value']).toEqual(value);
@@ -3445,6 +3496,7 @@ describe('AssistantV1', () => {
         const digressOutSlots = 'fake_digressOutSlots';
         const userLabel = 'fake_userLabel';
         const disambiguationOptOut = 'fake_disambiguationOptOut';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           dialogNode,
@@ -3466,6 +3518,7 @@ describe('AssistantV1', () => {
           digressOutSlots,
           userLabel,
           disambiguationOptOut,
+          includeAudit,
         };
 
         const createDialogNodeResult = assistant.createDialogNode(params);
@@ -3501,6 +3554,7 @@ describe('AssistantV1', () => {
         expect(options.body['digress_out_slots']).toEqual(digressOutSlots);
         expect(options.body['user_label']).toEqual(userLabel);
         expect(options.body['disambiguation_opt_out']).toEqual(disambiguationOptOut);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
 
@@ -3665,6 +3719,7 @@ describe('AssistantV1', () => {
         const newDigressOutSlots = 'fake_newDigressOutSlots';
         const newUserLabel = 'fake_newUserLabel';
         const newDisambiguationOptOut = 'fake_newDisambiguationOptOut';
+        const includeAudit = 'fake_includeAudit';
         const params = {
           workspaceId,
           dialogNode,
@@ -3687,6 +3742,7 @@ describe('AssistantV1', () => {
           newDigressOutSlots,
           newUserLabel,
           newDisambiguationOptOut,
+          includeAudit,
         };
 
         const updateDialogNodeResult = assistant.updateDialogNode(params);
@@ -3726,6 +3782,7 @@ describe('AssistantV1', () => {
         expect(options.body['digress_out_slots']).toEqual(newDigressOutSlots);
         expect(options.body['user_label']).toEqual(newUserLabel);
         expect(options.body['disambiguation_opt_out']).toEqual(newDisambiguationOptOut);
+        expect(options.qs['include_audit']).toEqual(includeAudit);
         expect(options.path['workspace_id']).toEqual(workspaceId);
         expect(options.path['dialog_node']).toEqual(dialogNode);
       });
