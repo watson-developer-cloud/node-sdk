@@ -90,6 +90,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#locale" class="tsd-kind-icon">locale</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#reference_time" class="tsd-kind-icon">reference_<wbr>time</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#timezone" class="tsd-kind-icon">timezone</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#turn_count" class="tsd-kind-icon">turn_<wbr>count</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#user_id" class="tsd-kind-icon">user_<wbr>id</a></li>
@@ -101,12 +103,51 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="locale" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> locale</h3>
+					<div class="tsd-signature tsd-kind-icon">locale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L504">assistant/v2.ts:504</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The language code for localization in the user input. The specified locale overrides the default for the
+								assistant, and is used for interpreting entity values in user input such as date values. For example,
+							<code>04/03/2018</code> might be interpreted either as April 3 or March 4, depending on the locale.</p>
+						</div>
+						<p>  This property is included only if the new system entities are enabled for the skill.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="reference_time" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> reference_<wbr>time</h3>
+					<div class="tsd-signature tsd-kind-icon">reference_<wbr>time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L515">assistant/v2.ts:515</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The base time for interpreting any relative time mentions in the user input. The specified time overrides
+								the current server time, and is used to calculate times mentioned in relative terms such as <code>now</code> or <code>tomorrow</code>.
+								This can be useful for simulating past or future times for testing purposes, or when analyzing documents such as
+							news articles.</p>
+						</div>
+						<p> This value must be a UTC time value formatted according to ISO 8601 (for example, <code>2019-06-26T12:00:00Z</code> for
+						noon on 26 June 2019.</p>
+						<p> This property is included only if the new system entities are enabled for the skill.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="timezone" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timezone</h3>
 					<div class="tsd-signature tsd-kind-icon">timezone<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L486">assistant/v2.ts:486</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L486">assistant/v2.ts:486</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">turn_<wbr>count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L497">assistant/v2.ts:497</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L497">assistant/v2.ts:497</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -138,7 +179,7 @@
 					<div class="tsd-signature tsd-kind-icon">user_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L492">assistant/v2.ts:492</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L492">assistant/v2.ts:492</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -173,23 +214,17 @@
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="assistantv2.messagecontextglobalsystem.html" class="tsd-kind-icon">Message<wbr>Context<wbr>Global<wbr>System</a>
 								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messagecontextglobalsystem.html#locale" class="tsd-kind-icon">locale</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messagecontextglobalsystem.html#reference_time" class="tsd-kind-icon">reference_<wbr>time</a>
+									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.messagecontextglobalsystem.html#timezone" class="tsd-kind-icon">timezone</a>
@@ -203,55 +238,6 @@
 										<a href="assistantv2.messagecontextglobalsystem.html#user_id" class="tsd-kind-icon">user_<wbr>id</a>
 									</li>
 								</ul>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/assistantv2.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="../classes/assistantv2.html#default_service_name" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="../classes/assistantv2.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/assistantv2.html#createsession" class="tsd-kind-icon">create<wbr>Session</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/assistantv2.html#deletesession" class="tsd-kind-icon">delete<wbr>Session</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/assistantv2.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/assistantv2.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/assistantv2.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a>
 							</li>
 						</ul>
 					</li>

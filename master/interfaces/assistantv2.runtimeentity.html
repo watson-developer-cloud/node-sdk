@@ -90,11 +90,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#alternatives" class="tsd-kind-icon">alternatives</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#confidence" class="tsd-kind-icon">confidence</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#entity" class="tsd-kind-icon">entity</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#groups" class="tsd-kind-icon">groups</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#interpretation" class="tsd-kind-icon">interpretation</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#location" class="tsd-kind-icon">location</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#metadata" class="tsd-kind-icon">metadata</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#role" class="tsd-kind-icon">role</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeentity.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
@@ -104,12 +107,30 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="alternatives" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alternatives</h3>
+					<div class="tsd-signature tsd-kind-icon">alternatives<span class="tsd-signature-symbol">:</span> <a href="assistantv2.runtimeentityalternative.html" class="tsd-signature-type">RuntimeEntityAlternative</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L647">assistant/v2.ts:647</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of possible alternative values that the user might have intended instead of the value returned in
+								the <strong>value</strong> property. This property is returned only for <code>@sys-time</code> and <code>@sys-date</code> entities when the user&#39;s
+							input is ambiguous.</p>
+						</div>
+						<p> This property is included only if the new system entities are enabled for the skill.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="confidence" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> confidence</h3>
 					<div class="tsd-signature tsd-kind-icon">confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L611">assistant/v2.ts:611</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L629">assistant/v2.ts:629</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -124,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">entity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L603">assistant/v2.ts:603</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L621">assistant/v2.ts:621</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">groups<span class="tsd-signature-symbol">:</span> <a href="assistantv2.capturegroup.html" class="tsd-signature-type">CaptureGroup</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L615">assistant/v2.ts:615</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L633">assistant/v2.ts:633</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -149,12 +170,30 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="interpretation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> interpretation</h3>
+					<div class="tsd-signature tsd-kind-icon">interpretation<span class="tsd-signature-symbol">:</span> <a href="assistantv2.runtimeentityinterpretation.html" class="tsd-signature-type">RuntimeEntityInterpretation</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L640">assistant/v2.ts:640</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An object containing detailed information about the entity recognized in the user input. This property is
+							included only if the new system entities are enabled for the skill.</p>
+						</div>
+						<p> For more information about how the new system entities are interpreted, see the
+						<a href="https://cloud.ibm.com/docs/assistant?topic=assistant-beta-system-entities">documentation</a>.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="location" class="tsd-anchor"></a>
 					<h3>location</h3>
 					<div class="tsd-signature tsd-kind-icon">location<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L607">assistant/v2.ts:607</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L625">assistant/v2.ts:625</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -170,7 +209,7 @@
 					<div class="tsd-signature tsd-kind-icon">metadata<span class="tsd-signature-symbol">:</span> <a href="assistantv2.jsonobject.html" class="tsd-signature-type">JsonObject</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L613">assistant/v2.ts:613</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L631">assistant/v2.ts:631</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -180,12 +219,29 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="role" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> role</h3>
+					<div class="tsd-signature tsd-kind-icon">role<span class="tsd-signature-symbol">:</span> <a href="assistantv2.runtimeentityrole.html" class="tsd-signature-type">RuntimeEntityRole</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L652">assistant/v2.ts:652</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An object describing the role played by a system entity that is specifies the beginning or end of a range
+								recognized in the user input. This property is included only if the new system entities are enabled for the
+							skill.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="value" class="tsd-anchor"></a>
 					<h3>value</h3>
 					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v2.ts#L609">assistant/v2.ts:609</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L627">assistant/v2.ts:627</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -217,33 +273,13 @@
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="assistantv2.runtimeentity.html" class="tsd-kind-icon">Runtime<wbr>Entity</a>
 								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.runtimeentity.html#alternatives" class="tsd-kind-icon">alternatives</a>
+									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.runtimeentity.html#confidence" class="tsd-kind-icon">confidence</a>
@@ -258,6 +294,10 @@
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.runtimeentity.html#interpretation" class="tsd-kind-icon">interpretation</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.runtimeentity.html#location" class="tsd-kind-icon">location</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
@@ -266,48 +306,13 @@
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.runtimeentity.html#role" class="tsd-kind-icon">role</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.runtimeentity.html#value" class="tsd-kind-icon">value</a>
 									</li>
 								</ul>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="../classes/assistantv2.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="../classes/assistantv2.html#default_service_name" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
-								<a href="../classes/assistantv2.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/assistantv2.html#createsession" class="tsd-kind-icon">create<wbr>Session</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/assistantv2.html#deletesession" class="tsd-kind-icon">delete<wbr>Session</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/assistantv2.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="../classes/assistantv2.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="../classes/assistantv2.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a>
 							</li>
 						</ul>
 					</li>

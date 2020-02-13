@@ -91,6 +91,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createexampleparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createexampleparams.html#includeaudit" class="tsd-kind-icon">include<wbr>Audit</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createexampleparams.html#intent" class="tsd-kind-icon">intent</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createexampleparams.html#mentions" class="tsd-kind-icon">mentions</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.createexampleparams.html#text" class="tsd-kind-icon">text</a></li>
@@ -108,9 +109,24 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v1.ts#L4110">assistant/v1.ts:4110</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v1.ts#L4261">assistant/v1.ts:4261</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="includeaudit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> include<wbr>Audit</h3>
+					<div class="tsd-signature tsd-kind-icon">include<wbr>Audit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v1.ts#L4260">assistant/v1.ts:4260</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether to include the audit properties (<code>created</code> and <code>updated</code> timestamps) in the response.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="intent" class="tsd-anchor"></a>
@@ -118,7 +134,7 @@
 					<div class="tsd-signature tsd-kind-icon">intent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v1.ts#L4102">assistant/v1.ts:4102</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v1.ts#L4251">assistant/v1.ts:4251</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -133,7 +149,7 @@
 					<div class="tsd-signature tsd-kind-icon">mentions<span class="tsd-signature-symbol">:</span> <a href="assistantv1.mention.html" class="tsd-signature-type">Mention</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v1.ts#L4109">assistant/v1.ts:4109</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v1.ts#L4258">assistant/v1.ts:4258</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -148,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v1.ts#L4107">assistant/v1.ts:4107</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v1.ts#L4256">assistant/v1.ts:4256</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -167,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">workspace<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5c95f52/assistant/v1.ts#L4100">assistant/v1.ts:4100</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v1.ts#L4249">assistant/v1.ts:4249</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -201,6 +217,10 @@
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.createexampleparams.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.createexampleparams.html#includeaudit" class="tsd-kind-icon">include<wbr>Audit</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
