@@ -1,3 +1,11 @@
+# [5.4.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.3.1...v5.4.0) (2020-02-13)
+
+
+### Features
+
+* **assistant-v1:** `includeAudit` and `append` parameters added to a number of methods ([35fb2a5](https://github.com/watson-developer-cloud/node-sdk/commit/35fb2a5c9692c6e8a67f9de969269a8d37eb2ebb))
+* **visual-recognition-v4:** new methods added: `listObjectMetadata`, `updateObjectMetadata`, `getObjectMetadata`, `deleteObject` ([85281ae](https://github.com/watson-developer-cloud/node-sdk/commit/85281aeafaf39e92d7985ad588fcabb01d410c0a))
+
 ## [5.3.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.3.0...v5.3.1) (2020-01-29)
 
 
