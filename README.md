@@ -640,8 +640,7 @@ See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 
 ### Natural Language Understanding
 
-Use Natural Language Understanding is a collection of natural language processing APIs that help you understand sentiment,
- keywords, entities, high-level concepts and more.
+[Natural Language Understanding](https://cloud.ibm.com/docs/services/natural-language-understanding/getting-started.html) is a collection of natural language processing APIs that help you understand sentiment, keywords, entities, high-level concepts and more.
 
 ```js
 const fs = require('fs');
