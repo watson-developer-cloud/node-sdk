@@ -43,11 +43,11 @@ recognizeStream.pipe(fs.createWriteStream('./transcription.txt'));
 console.log('Recording, press any key to exit');
 process.stdin.setRawMode(true);
 // process.stdin.resume();
-process.stdin.once('data', function() {
+process.stdin.once('data', function () {
   console.log('Cleaning up and exiting...');
   process.stdin.setRawMode(false);
   micInstance.stop();
-  recognizeStream.on('end', function() {
+  recognizeStream.on('end', function () {
     process.exit();
   });
 });

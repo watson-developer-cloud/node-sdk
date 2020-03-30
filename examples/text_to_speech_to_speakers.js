@@ -18,7 +18,7 @@ var textToSpeech = new TextToSpeechV1({
 var reader = new wav.Reader();
 
 // the "format" event gets emitted at the end of the WAVE header
-reader.on('format', function(format) {
+reader.on('format', function (format) {
   // the WAVE header is stripped from the output of the reader
   reader.pipe(new Speaker(format));
 });

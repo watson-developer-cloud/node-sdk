@@ -34,8 +34,8 @@ module.exports = {
  * (which contains the user's input text)
  */
 function invokeToneAsync(assistantPayload, toneAnalyzer) {
-  return new Promise(function(resolve, reject) {
-    toneAnalyzer.tone({ text: assistantPayload.input.text }, function(error, data) {
+  return new Promise(function (resolve, reject) {
+    toneAnalyzer.tone({ text: assistantPayload.input.text }, function (error, data) {
       if (error) {
         reject(error);
       } else {
@@ -101,7 +101,7 @@ function updateTone(user, tones, maintainHistory) {
   var primaryTone = null;
   var primaryToneScore = null;
 
-  tones.forEach(function(tone) {
+  tones.forEach(function (tone) {
     if (tone.score > maxScore) {
       maxScore = tone.score;
       primaryTone = tone.tone_name.toLowerCase();

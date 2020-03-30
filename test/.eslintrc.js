@@ -6,5 +6,7 @@ module.exports = {
   rules: {
     'require-jsdoc': 'off',
     'valid-jsdoc': 'off',
+    'no-unused-vars': 'off',
+    'no-prototype-builtins': 'off',
   },
 };

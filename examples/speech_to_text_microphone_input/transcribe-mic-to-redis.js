@@ -65,14 +65,14 @@ micInputStream.pipe(wavStream);
 wavStream.pipe(recognizeStream);
 
 // recognizeStream.pipe(process.stdout);
-recognizeStream.on('data', function(message) {
+recognizeStream.on('data', function (message) {
   console.log(message);
 
   try {
     var transcript = message.results[0].alternatives[0].transcript;
     console.log(transcript);
     redis.del('speech-to-text-buffer');
-    transcript.split(' ').forEach(function(word) {
+    transcript.split(' ').forEach(function (word) {
       // console.log(word);
       // redis.rpop('speech-to-text-buffer');
       redis.rpush('speech-to-text-buffer', word);

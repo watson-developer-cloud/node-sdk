@@ -20,7 +20,7 @@ var output = document.getElementById('output');
  * @return {Promise<String>} returns a promise that resolves to a string token
  */
 function getToken() {
-  return fetch('/api/token/tone_analyzer').then(function(response) {
+  return fetch('/api/token/tone_analyzer').then(function (response) {
     return response.text();
   });
 }
@@ -34,7 +34,7 @@ function analyze(token) {
     {
       text: input.value,
     },
-    function(err, result) {
+    function (err, result) {
       if (err) {
         output.innerHTML = err;
         return console.log(err);
@@ -44,6 +44,6 @@ function analyze(token) {
   );
 }
 
-btn.onclick = function() {
+btn.onclick = function () {
   getToken().then(analyze);
 };

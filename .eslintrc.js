@@ -13,7 +13,7 @@ module.exports = {
     "prettier",
   ],
   "rules": {
-    "prettier/prettier": ["error", {"singleQuote": true, "printWidth": 100}],
+    "prettier/prettier": ["error"],
     "prefer-const": "error",
     "prefer-rest-params": "off", // https://github.com/mysticatea/eslint-plugin-node/issues/63
     // The rest of these override rules that are enabled by one of the configs we extend but not compatible with current codebase

@@ -20,13 +20,13 @@ var stream = textToSpeech
       voice: 'INVALID_VOICE', // comment this line to show the example working correctly
       accept: 'audio/wav', // default is audio/ogg; codec=opus
     },
-    function(error) {
+    function (error) {
       if (error) {
         console.log(error);
       }
     }
   )
-  .on('response', function(res) {
+  .on('response', function (res) {
     if (res.statusCode === 200) {
       stream.pipe(fs.createWriteStream('output.wav'));
     }
