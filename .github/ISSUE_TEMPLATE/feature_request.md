@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Remember, an issue is not the place to ask questions. You can use [Stack Overflow](http://stackoverflow.com/questions/tagged/ibm-watson) for that, or you may want to start a discussion on the [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=watson).
+Remember, an issue is not the place to ask questions. If you have issues with the APIs or have a question about the Watson services, see [Stack Overflow](https://stackoverflow.com/questions/tagged/ibm-watson+node.js).
 
 Before you open an issue, please check if a similar issue already exists or has been closed before.
 
