@@ -400,7 +400,7 @@ There are also auto-generated JSDocs available at http://watson-developer-cloud.
 
 ## Questions
 
-If you are having difficulties using the APIs or have a question about the Watson services, please ask a question at [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-watson-cognitive).
+If you have issues with the APIs or have a question about the Watson services, see [Stack Overflow](https://stackoverflow.com/questions/tagged/ibm-watson+node.js).
 
 ## IBM Watson services
 
