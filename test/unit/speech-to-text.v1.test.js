@@ -195,6 +195,8 @@ describe('SpeechToTextV1', () => {
         const audioMetrics = 'fake_audioMetrics';
         const endOfPhraseSilenceTime = 'fake_endOfPhraseSilenceTime';
         const splitTranscriptAtPhraseEnd = 'fake_splitTranscriptAtPhraseEnd';
+        const speechDetectorSensitivity = 'fake_speechDetectorSensitivity';
+        const backgroundAudioSuppression = 'fake_backgroundAudioSuppression';
         const params = {
           audio,
           contentType,
@@ -219,6 +221,8 @@ describe('SpeechToTextV1', () => {
           audioMetrics,
           endOfPhraseSilenceTime,
           splitTranscriptAtPhraseEnd,
+          speechDetectorSensitivity,
+          backgroundAudioSuppression,
         };
 
         const recognizeResult = speechToText.recognize(params);
@@ -258,6 +262,8 @@ describe('SpeechToTextV1', () => {
         expect(options.qs['audio_metrics']).toEqual(audioMetrics);
         expect(options.qs['end_of_phrase_silence_time']).toEqual(endOfPhraseSilenceTime);
         expect(options.qs['split_transcript_at_phrase_end']).toEqual(splitTranscriptAtPhraseEnd);
+        expect(options.qs['speech_detector_sensitivity']).toEqual(speechDetectorSensitivity);
+        expect(options.qs['background_audio_suppression']).toEqual(backgroundAudioSuppression);
       });
 
       test('should prioritize user-given headers', () => {
@@ -492,6 +498,8 @@ describe('SpeechToTextV1', () => {
         const audioMetrics = 'fake_audioMetrics';
         const endOfPhraseSilenceTime = 'fake_endOfPhraseSilenceTime';
         const splitTranscriptAtPhraseEnd = 'fake_splitTranscriptAtPhraseEnd';
+        const speechDetectorSensitivity = 'fake_speechDetectorSensitivity';
+        const backgroundAudioSuppression = 'fake_backgroundAudioSuppression';
         const params = {
           audio,
           contentType,
@@ -522,6 +530,8 @@ describe('SpeechToTextV1', () => {
           audioMetrics,
           endOfPhraseSilenceTime,
           splitTranscriptAtPhraseEnd,
+          speechDetectorSensitivity,
+          backgroundAudioSuppression,
         };
 
         const createJobResult = speechToText.createJob(params);
@@ -567,6 +577,8 @@ describe('SpeechToTextV1', () => {
         expect(options.qs['audio_metrics']).toEqual(audioMetrics);
         expect(options.qs['end_of_phrase_silence_time']).toEqual(endOfPhraseSilenceTime);
         expect(options.qs['split_transcript_at_phrase_end']).toEqual(splitTranscriptAtPhraseEnd);
+        expect(options.qs['speech_detector_sensitivity']).toEqual(speechDetectorSensitivity);
+        expect(options.qs['background_audio_suppression']).toEqual(backgroundAudioSuppression);
       });
 
       test('should prioritize user-given headers', () => {

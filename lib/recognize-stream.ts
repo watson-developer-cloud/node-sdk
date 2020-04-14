@@ -177,6 +177,8 @@ class RecognizeStream extends Duplex {
       'redaction',
       'end_of_phrase_silence_time',
       'split_transcript_at_phrase_end',
+      'speech_detector_sensitivity',
+      'background_audio_suppression',
     ];
     const openingMessage = processUserParameters(options, openingMessageParamsAllowed);
     openingMessage.action = 'start';
