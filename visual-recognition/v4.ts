@@ -1914,7 +1914,7 @@ namespace VisualRecognitionV4 {
      */
     object: string;
     /** Number of bounding boxes in the collection with the updated object name. */
-    count: number;
+    count?: number;
   }
 
   /** Details about a problem. */

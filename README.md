@@ -165,7 +165,7 @@ Some services use token-based Identity and Access Management (IAM) authenticatio
 
 To use IAM authentication, you must use an `IamAuthenticator` or a `BearerTokenAuthenticator`.
 - Use the `IamAuthenticator` to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.
-- Use the `BearerTokenAuthenticator` if you want to manage the lifecycle yourself. For details, see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/services/watson/getting-started-iam.html). If you want to switch your authenticator, you must override the `authenticator` property directly.
+- Use the `BearerTokenAuthenticator` if you want to manage the lifecycle yourself. For details, see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/watson/getting-started-iam.html). If you want to switch your authenticator, you must override the `authenticator` property directly.
 
 ##### ICP
 
@@ -310,7 +310,7 @@ recognizeStream.getTransactionId().then(
 
 ## Data collection opt-out
 
-By default, [all requests are logged](https://cloud.ibm.com/docs/services/watson/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
+By default, [all requests are logged](https://cloud.ibm.com/docs/watson/getting-started-logging.html). This can be disabled of by setting the `X-Watson-Learning-Opt-Out` header when creating the service instance:
 
 ```js
 const myInstance = new watson.WhateverServiceV1({
@@ -411,7 +411,7 @@ The Authorization service can generate auth tokens for situations where providin
 Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
 Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.
 
-> _NOTE_: Authenticating with the `X-Watson-Authorization-Token` header or the `watson-token` query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/services/watson?topic=watson-iam#iam) or the README in the IBM Watson SDK you use.
+> _NOTE_: Authenticating with the `X-Watson-Authorization-Token` header or the `watson-token` query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/watson?topic=watson-iam#iam) or the README in the IBM Watson SDK you use.
 The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.
 
 ```js
@@ -454,7 +454,7 @@ function (err, token) {
 
 Use the [Assistant][assistant] service to determine the intent of a message.
 
-Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/services/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/conversation/index.html#about) for details.
 
 ```js
 const AssistantV2 = require('ibm-watson/assistant/v2');
@@ -484,7 +484,7 @@ assistant.message(
 
 Use the [Assistant][assistant] service to determine the intent of a message.
 
-Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/services/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/conversation/index.html#about) for details.
 
 ```js
 const AssistantV1 = require('ibm-watson/assistant/v1');
@@ -611,7 +611,7 @@ languageTranslator.identify(
 
 ### Natural Language Classifier
 
-Use [Natural Language Classifier](https://cloud.ibm.com/docs/services/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
+Use [Natural Language Classifier](https://cloud.ibm.com/docs/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
 
 ```js
 const NaturalLanguageClassifierV1 = require('ibm-watson/natural-language-classifier/v1');

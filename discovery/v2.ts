@@ -144,7 +144,7 @@ class DiscoveryV2 extends BaseService {
    * Query a project.
    *
    * By using this method, you can construct queries. For details, see the [Discovery
-   * documentation](https://cloud.ibm.com/docs/services/discovery-data?topic=discovery-data-query-concepts).
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-concepts).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
@@ -2154,6 +2154,8 @@ namespace DiscoveryV2 {
     field: string;
     /** The size of the sections the results are split into. */
     interval: number;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
     /** Array of numeric intervals. */
     results?: QueryHistogramAggregationResult[];
   }
@@ -2174,6 +2176,8 @@ namespace DiscoveryV2 {
     field: string;
     /** The number of top values returned. */
     count?: number;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
     /** Array of top values for the field. */
     results?: QueryTermAggregationResult[];
   }
@@ -2184,6 +2188,8 @@ namespace DiscoveryV2 {
     field: string;
     /** The date interval value. Valid values are seconds, minutes, hours, days, weeks, and years. */
     interval: string;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
     /** Array of aggregation results. */
     results?: QueryTimesliceAggregationResult[];
   }
@@ -2192,6 +2198,8 @@ namespace DiscoveryV2 {
   export interface QueryTopHitsAggregation extends QueryAggregation {
     /** The number of documents to return. */
     size: number;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
     hits?: QueryTopHitsAggregationResult;
   }
 
