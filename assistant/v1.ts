@@ -1100,7 +1100,7 @@ class AssistantV1 extends BaseService {
    *
    * Add a new user input example to an intent.
    *
-   * If you want to add multiple exaples with a single API call, consider using the **[Update intent](#update-intent)**
+   * If you want to add multiple examples with a single API call, consider using the **[Update intent](#update-intent)**
    * method instead.
    *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
@@ -3325,7 +3325,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.userLabel] - A label that can be displayed externally to describe the purpose of the node
    * to users.
    * @param {boolean} [params.disambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
-   * suggestions.
+   * suggestions. Valid only when **type**=`standard` or `frame`.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -3532,7 +3532,7 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.newUserLabel] - A label that can be displayed externally to describe the purpose of the
    * node to users.
    * @param {boolean} [params.newDisambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
-   * suggestions.
+   * suggestions. Valid only when **type**=`standard` or `frame`.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -4836,7 +4836,9 @@ namespace AssistantV1 {
     digressOutSlots?: CreateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
     userLabel?: string;
-    /** Whether the dialog node should be excluded from disambiguation suggestions. */
+    /** Whether the dialog node should be excluded from disambiguation suggestions. Valid only when
+     *  **type**=`standard` or `frame`.
+     */
     disambiguationOptOut?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
@@ -4949,7 +4951,9 @@ namespace AssistantV1 {
     newDigressOutSlots?: UpdateDialogNodeConstants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
     newUserLabel?: string;
-    /** Whether the dialog node should be excluded from disambiguation suggestions. */
+    /** Whether the dialog node should be excluded from disambiguation suggestions. Valid only when
+     *  **type**=`standard` or `frame`.
+     */
     newDisambiguationOptOut?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
@@ -5214,7 +5218,9 @@ namespace AssistantV1 {
     digress_out_slots?: string;
     /** A label that can be displayed externally to describe the purpose of the node to users. */
     user_label?: string;
-    /** Whether the dialog node should be excluded from disambiguation suggestions. */
+    /** Whether the dialog node should be excluded from disambiguation suggestions. Valid only when
+     *  **type**=`standard` or `frame`.
+     */
     disambiguation_opt_out?: boolean;
     /** For internal use only. */
     disabled?: boolean;
@@ -5330,16 +5336,15 @@ namespace AssistantV1 {
     message_to_human_agent?: string;
     /** The text of the search query. This can be either a natural-language query or a query that uses the Discovery
      *  query language syntax, depending on the value of the **query_type** property. For more information, see the
-     *  [Discovery service
-     *  documentation](https://cloud.ibm.com/docs/services/discovery/query-operators.html#query-operators). Required
-     *  when **response_type**=`search_skill`.
+     *  [Discovery service documentation](https://cloud.ibm.com/docs/discovery/query-operators.html#query-operators).
+     *  Required when **response_type**=`search_skill`.
      */
     query?: string;
     /** The type of the search query. Required when **response_type**=`search_skill`. */
     query_type?: string;
     /** An optional filter that narrows the set of documents to be searched. For more information, see the
      *  [Discovery service documentation]([Discovery service
-     *  documentation](https://cloud.ibm.com/docs/services/discovery/query-parameters.html#filter).
+     *  documentation](https://cloud.ibm.com/docs/discovery/query-parameters.html#filter).
      */
     filter?: string;
     /** The version of the Discovery service API to use for the query. */
@@ -5469,12 +5474,10 @@ namespace AssistantV1 {
     options?: DialogNodeOutputOptionsElement[];
     /** A message to be sent to the human agent who will be taking over the conversation. */
     message_to_human_agent?: string;
-    /** A label identifying the topic of the conversation, derived from the **user_label** property of the relevant
-     *  node.
-     */
+    /** A label identifying the topic of the conversation, derived from the **title** property of the relevant node. */
     topic?: string;
     /** The ID of the dialog node that the **topic** property is taken from. The **topic** property is populated
-     *  using the value of the dialog node's **user_label** property.
+     *  using the value of the dialog node's **title** property.
      */
     dialog_node?: string;
   }
@@ -5769,11 +5772,26 @@ namespace AssistantV1 {
      *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-beta-system-entities).
      */
     interpretation?: RuntimeEntityInterpretation;
+    /** An array of possible alternative values that the user might have intended instead of the value returned in
+     *  the **value** property. This property is returned only for `@sys-time` and `@sys-date` entities when the user's
+     *  input is ambiguous.
+     *
+     *  This property is included only if the new system entities are enabled for the workspace.
+     */
+    alternatives?: RuntimeEntityAlternative[];
     /** An object describing the role played by a system entity that is specifies the beginning or end of a range
      *  recognized in the user input. This property is included only if the new system entities are enabled for the
      *  workspace.
      */
     role?: RuntimeEntityRole;
+  }
+
+  /** An alternative value for the recognized entity. */
+  export interface RuntimeEntityAlternative {
+    /** The entity value that was recognized in the user input. */
+    value?: string;
+    /** A decimal percentage that represents Watson's confidence in the recognized entity. */
+    confidence?: number;
   }
 
   /** RuntimeEntityInterpretation. */
@@ -5905,12 +5923,10 @@ namespace AssistantV1 {
     options?: DialogNodeOutputOptionsElement[];
     /** A message to be sent to the human agent who will be taking over the conversation. */
     message_to_human_agent?: string;
-    /** A label identifying the topic of the conversation, derived from the **user_label** property of the relevant
-     *  node.
-     */
+    /** A label identifying the topic of the conversation, derived from the **title** property of the relevant node. */
     topic?: string;
     /** The ID of the dialog node that the **topic** property is taken from. The **topic** property is populated
-     *  using the value of the dialog node's **user_label** property.
+     *  using the value of the dialog node's **title** property.
      */
     dialog_node?: string;
     /** An array of objects describing the possible matching dialog nodes from which the user can choose.
