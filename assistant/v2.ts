@@ -519,8 +519,20 @@ namespace AssistantV2 {
   export interface MessageContextSkill {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
-    /** For internal use only. */
-    system?: JsonObject;
+    /** System context data used by the skill. */
+    system?: MessageContextSkillSystem;
+  }
+
+  /** System context data used by the skill. */
+  export interface MessageContextSkillSystem {
+    /** An encoded string representing the current conversation state. By saving this value and then sending it in
+     *  the context of a subsequent message request, you can restore the conversation to the same state. This can be
+     *  useful if you need to return to an earlier point in the conversation or resume a paused conversation after the
+     *  session has expired.
+     */
+    state?: string;
+    /** MessageContextSkillSystem accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Information specific to particular skills used by the Assistant. **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that apply to the dialog skill used by the assistant. */
@@ -551,8 +563,9 @@ namespace AssistantV2 {
 
   /** Optional properties that control how the assistant responds. */
   export interface MessageInputOptions {
-    /** Whether to return additional diagnostic information. Set to `true` to return additional information under
-     *  the `output.debug` key.
+    /** Whether to return additional diagnostic information. Set to `true` to return additional information in the
+     *  `output.debug` property. If you also specify **return_context**=`true`, the returned skill context includes the
+     *  `system.state` property.
      */
     debug?: boolean;
     /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes.
@@ -561,10 +574,17 @@ namespace AssistantV2 {
     restart?: boolean;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
-    /** Whether to return session context with the response. If you specify `true`, the response will include the
-     *  `context` property.
+    /** Whether to return session context with the response. If you specify `true`, the response includes the
+     *  `context` property. If you also specify **debug**=`true`, the returned skill context includes the `system.state`
+     *  property.
      */
     return_context?: boolean;
+    /** Whether to return session context, including full conversation state. If you specify `true`, the response
+     *  includes the `context` property, and the skill context includes the `system.state` property.
+     *
+     *  **Note:** If **export**=`true`, the context is returned regardless of the value of **return_context**.
+     */
+    _export?: boolean;
   }
 
   /** Assistant output to be rendered or processed by the client. */
@@ -607,8 +627,8 @@ namespace AssistantV2 {
   export interface MessageResponse {
     /** Assistant output to be rendered or processed by the client. */
     output: MessageOutput;
-    /** State information for the conversation. The context is stored by the assistant on a per-session basis. You
-     *  can use this property to access context variables.
+    /** Context data for the conversation. The context is stored by the assistant on a per-session basis. You can
+     *  use this property to access context variables.
      *
      *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
      */
