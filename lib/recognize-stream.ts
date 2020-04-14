@@ -103,6 +103,8 @@ class RecognizeStream extends Duplex {
    * @param {boolean} [options.audioMetrics] - If true, requests detailed information about the signal characteristics of the input audio (detailed=false)
    * @param {number} [options.endOfPhraseSilenceTime] - If `true`, specifies the duration of the pause interval at which the service splits a transcript into multiple final results
    * @param {boolean} [options.splitTranscriptAtPhraseEnd] - If `true`, directs the service to split the transcript into multiple final results based on semantic features of the input
+   * @param {number} [options.speechDetectorSensitivity] - The sensitivity of speech activity detection that the service is to perform
+   * @param {number} [options.backgroundAudioSuppression] - The level to which the service is to suppress background audio based on its volume to prevent it from being transcribed as speech
    * @constructor
    */
   constructor(options: RecognizeStream.Options) {

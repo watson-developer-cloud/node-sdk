@@ -735,9 +735,9 @@ class CompareComplyV1 extends BaseService {
    * Run Compare and Comply methods over a collection of input documents.
    *
    * **Important:** Batch processing requires the use of the [IBM Cloud Object Storage
-   * service](https://cloud.ibm.com/docs/services/cloud-object-storage?topic=cloud-object-storage-about#about-ibm-cloud-object-storage).
+   * service](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-about#about-ibm-cloud-object-storage).
    * The use of IBM Cloud Object Storage with Compare and Comply is discussed at [Using batch
-   * processing](https://cloud.ibm.com/docs/services/compare-comply?topic=compare-comply-batching#before-you-batch).
+   * processing](https://cloud.ibm.com/docs/compare-comply?topic=compare-comply-batching#before-you-batch).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params._function - The Compare and Comply method to run across the submitted input documents.

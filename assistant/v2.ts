@@ -520,19 +520,7 @@ namespace AssistantV2 {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
     /** System context data used by the skill. */
-    system?: MessageContextSkillSystem;
-  }
-
-  /** System context data used by the skill. */
-  export interface MessageContextSkillSystem {
-    /** An encoded string representing the current conversation state. By saving this value and then sending it in
-     *  the context of a subsequent message request, you can restore the conversation to the same state. This can be
-     *  useful if you need to return to an earlier point in the conversation or resume a paused conversation after the
-     *  session has expired.
-     */
-    state?: string;
-    /** MessageContextSkillSystem accepts additional properties. */
-    [propName: string]: any;
+    system?: JsonObject;
   }
 
   /** Information specific to particular skills used by the Assistant. **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that apply to the dialog skill used by the assistant. */

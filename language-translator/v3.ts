@@ -76,15 +76,18 @@ class LanguageTranslatorV3 extends BaseService {
   /**
    * Translate.
    *
-   * Translates the input text from the source language to the target language.
+   * Translates the input text from the source language to the target language. A target language or translation model
+   * ID is required. The service attempts to detect the language of the source text if it is not specified.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string[]} params.text - Input text in UTF-8 encoding. Multiple entries will result in multiple translations
    * in the response.
-   * @param {string} [params.modelId] - A globally unique string that identifies the underlying model that is used for
-   * translation.
-   * @param {string} [params.source] - Translation source language code.
-   * @param {string} [params.target] - Translation target language code.
+   * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM provided
+   * base model for English to German translation. A model ID overrides the source and target parameters and is required
+   * if you use a custom model. If no model ID is specified, you must specify a target language.
+   * @param {string} [params.source] - Language code that specifies the language of the source document.
+   * @param {string} [params.target] - Language code that specifies the target language for translation. Required if
+   * model ID is not specified.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>>}
@@ -610,15 +613,17 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {NodeJS.ReadableStream|Buffer} params.file - The contents of the source file to translate.
    *
    * [Supported file
-   * types](https://cloud.ibm.com/docs/services/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
+   * types](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
    *
    * Maximum file size: **20 MB**.
    * @param {string} params.filename - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
-   * @param {string} [params.modelId] - The model to use for translation. `model_id` or both `source` and `target` are
-   * required.
+   * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM provided
+   * base model for English to German translation. A model ID overrides the source and target parameters and is required
+   * if you use a custom model. If no model ID is specified, you must specify a target language.
    * @param {string} [params.source] - Language code that specifies the language of the source document.
-   * @param {string} [params.target] - Language code that specifies the target language for translation.
+   * @param {string} [params.target] - Language code that specifies the target language for translation. Required if
+   * model ID is not specified.
    * @param {string} [params.documentId] - To use a previously submitted document as the source for a new translation,
    * enter the `document_id` of the document.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -919,11 +924,14 @@ namespace LanguageTranslatorV3 {
   export interface TranslateParams {
     /** Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response. */
     text: string[];
-    /** A globally unique string that identifies the underlying model that is used for translation. */
+    /** The model to use for translation. For example, `en-de` selects the IBM provided base model for English to
+     *  German translation. A model ID overrides the source and target parameters and is required if you use a custom
+     *  model. If no model ID is specified, you must specify a target language.
+     */
     modelId?: string;
-    /** Translation source language code. */
+    /** Language code that specifies the language of the source document. */
     source?: string;
-    /** Translation target language code. */
+    /** Language code that specifies the target language for translation. Required if model ID is not specified. */
     target?: string;
     headers?: OutgoingHttpHeaders;
   }
@@ -1003,7 +1011,7 @@ namespace LanguageTranslatorV3 {
     /** The contents of the source file to translate.
      *
      *  [Supported file
-     *  types](https://cloud.ibm.com/docs/services/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
+     *  types](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats)
      *
      *  Maximum file size: **20 MB**.
      */
@@ -1012,11 +1020,14 @@ namespace LanguageTranslatorV3 {
     filename: string;
     /** The content type of file. */
     fileContentType?: TranslateDocumentConstants.FileContentType | string;
-    /** The model to use for translation. `model_id` or both `source` and `target` are required. */
+    /** The model to use for translation. For example, `en-de` selects the IBM provided base model for English to
+     *  German translation. A model ID overrides the source and target parameters and is required if you use a custom
+     *  model. If no model ID is specified, you must specify a target language.
+     */
     modelId?: string;
     /** Language code that specifies the language of the source document. */
     source?: string;
-    /** Language code that specifies the target language for translation. */
+    /** Language code that specifies the target language for translation. Required if model ID is not specified. */
     target?: string;
     /** To use a previously submitted document as the source for a new translation, enter the `document_id` of the
      *  document.
@@ -1149,6 +1160,10 @@ namespace LanguageTranslatorV3 {
     base_model_id?: string;
     /** Translation source language code. */
     source: string;
+    /** A score between 0 and 1 indicating the confidence of source language detection. A higher value indicates
+     *  greater confidence. This is returned only when the service automatically detects the source language.
+     */
+    detected_language_confidence?: number;
     /** Translation target language code. */
     target: string;
     /** The time when the document was submitted. */
@@ -1239,6 +1254,12 @@ namespace LanguageTranslatorV3 {
     word_count: number;
     /** Number of characters in the input text. */
     character_count: number;
+    /** The language code of the source text if the source language was automatically detected. */
+    detected_language?: string;
+    /** A score between 0 and 1 indicating the confidence of source language detection. A higher value indicates
+     *  greater confidence. This is returned only when the service automatically detects the source language.
+     */
+    detected_language_confidence?: number;
     /** List of translation output in UTF-8, corresponding to the input text entries. */
     translations: Translation[];
   }
