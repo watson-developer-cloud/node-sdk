@@ -1,0 +1,1032 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ibm-watson - v5.5.0</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">ibm-watson - v5.5.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> ibm-watson - v5.5.0</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-9 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#watson-apis-nodejs-sdk" id="watson-apis-nodejs-sdk" style="color: inherit; text-decoration: none;">
+					<h1>Watson APIs Node.js SDK</h1>
+				</a>
+				<p><a href="http://travis-ci.org/watson-developer-cloud/node-sdk"><img src="https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg?branch=master" alt="Build Status"></a>
+					<a href="https://codecov.io/gh/watson-developer-cloud/node-sdk"><img src="https://codecov.io/gh/watson-developer-cloud/node-sdk/branch/master/graph/badge.svg" alt="codecov"></a>
+					<a href="https://wdc-slack-inviter.mybluemix.net"><img src="https://wdc-slack-inviter.mybluemix.net/badge.svg" alt="Slack"></a>
+					<a href="https://www.npmjs.com/package/ibm-watson"><img src="https://img.shields.io/npm/v/ibm-watson.svg" alt="npm-version"></a>
+					<a href="https://www.npmjs.com/package/ibm-watson"><img src="https://img.shields.io/npm/dm/ibm-watson.svg" alt="npm-downloads"></a>
+				<a href="https://github.com/semantic-release/semantic-release"><img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release"></a></p>
+				<p>Node.js client library to use the Watson APIs.</p>
+				<details>
+					<summary>Table of Contents</summary>
+					<ul>
+						<li><a href="#before-you-begin">Before you begin</a></li>
+						<li><a href="#installation">Installation</a></li>
+						<li><a href="#usage">Usage</a></li>
+						<li><a href="#client-side-usage">Client-side usage</a></li>
+						<li><a href="#authentication">Authentication</a></li>
+						<li><a href="#setting-the-service-url">Setting the Service URL</a></li>
+						<li><a href="#callbacks-vs-promises">Callbacks vs Promises</a></li>
+						<li><a href="#sending-request-headers">Sending request headers</a></li>
+						<li><a href="#parsing-http-response">Parsing HTTP response</a></li>
+						<li><a href="#data-collection-opt-out">Data collection opt-out</a></li>
+						<li><a href="#configuring-the-https-agent">Configuring the HTTPS Agent</a></li>
+						<li><a href="#use-behind-a-corporate-proxy">Usw behind a corporate proxy</a></li>
+						<li><a href="#sending-custom-certificates">Sending custom certificates</a></li>
+						<li><a href="#documentation">Documentation</a></li>
+						<li><a href="#questions">Questions</a></li>
+						<li><a href="#ibm-watson-services">IBM Watson services</a><ul>
+								<li><a href="#authorization">Authorization</a></li>
+								<li><a href="#assistant-v2">Assistant v2</a></li>
+								<li><a href="#assistant-v1">Assistant v1</a></li>
+								<li><a href="#discovery">Discovery</a></li>
+								<li><a href="#language-translator">Language Translator</a></li>
+								<li><a href="#natural-language-classifier">Natural Language Classifier</a></li>
+								<li><a href="#natural-language-understanding">Natural Language Understanding</a></li>
+								<li><a href="#personality-insights">Personality Insights</a></li>
+								<li><a href="#speech-to-text">Speech to Text</a></li>
+								<li><a href="#text-to-speech">Text to Speech</a></li>
+								<li><a href="#tone-analyzer">Tone Analyzer</a></li>
+								<li><a href="#visual-recognition">Visual Recognition</a></li>
+							</ul>
+						</li>
+						<li><a href="#composing-services">Composing Services</a></li>
+						<li><a href="#debug">Debug</a></li>
+						<li><a href="#tests">Tests</a></li>
+						<li><a href="#contributing">Contributing</a></li>
+						<li><a href="#featured-projects">Featured Projects</a></li>
+						<li><a href="#license">License</a></li>
+					</ul>
+				</details>
+				<a href="#announcements" id="announcements" style="color: inherit; text-decoration: none;">
+					<h2>ANNOUNCEMENTS!</h2>
+				</a>
+				<a href="#major-version-5-released" id="major-version-5-released" style="color: inherit; text-decoration: none;">
+					<h3>Major version 5 released</h3>
+				</a>
+				<p>Version v5.0.0 of the SDK has been released and includes a number of breaking changes - see what&#39;s changed in the <a href="MIGRATION-V5.md">migration guide</a>.</p>
+				<a href="#supporting-node-versions-10" id="supporting-node-versions-10" style="color: inherit; text-decoration: none;">
+					<h3>Supporting Node versions 10+</h3>
+				</a>
+				<p>The SDK will no longer be tested with Node versions 6 and 8. Support will be officially dropped in v5.</p>
+				<a href="#package-rename" id="package-rename" style="color: inherit; text-decoration: none;">
+					<h3>Package Rename</h3>
+				</a>
+				<p>This package has been moved under the name <code>ibm-watson</code>. The package is still available at <code>watson-developer-cloud</code>, but that will no longer receive updates. Use <code>ibm-watson</code> to stay up to date.</p>
+				<a href="#before-you-begin" id="before-you-begin" style="color: inherit; text-decoration: none;">
+					<h2>Before you begin</h2>
+				</a>
+				<ul>
+					<li>You need an <a href="http://cloud.ibm.com/registration?target=/developer/watson&amp;cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node">IBM Cloud</a> account.</li>
+				</ul>
+				<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+					<h2>Prerequisites</h2>
+				</a>
+				<ul>
+					<li><strong>Node &gt;=10</strong>: This SDK is tested with Node versions 10 and up. It may work on previous versions but this is not officially supported.</li>
+				</ul>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<pre><code class="language-sh">npm install ibm-watson</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">import</span> DiscoveryV1 <span class="hljs-keyword">from</span> <span class="hljs-string">'ibm-watson/discovery/v1'</span>;
+<span class="hljs-keyword">import</span> { IamAuthenticator } <span class="hljs-keyword">from</span> <span class="hljs-string">'ibm-watson/auth'</span>;
+
+<span class="hljs-keyword">const</span> discoveryClient = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'{apikey}'</span> }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'{version}'</span>,
+});
+
+<span class="hljs-comment">// ...</span>
+</code></pre>
+				<p>The <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples</a> folder has basic and advanced examples. The examples within each service assume that you already have <a href="#getting-credentials">service credentials</a>.</p>
+				<a href="#client-side-usage" id="client-side-usage" style="color: inherit; text-decoration: none;">
+					<h3>Client-side usage</h3>
+				</a>
+				<p>Starting with v5.0.0, the SDK should work in the browser, out of the box, with most bundlers.</p>
+				<p>See the <code>examples/</code> folder for <a href="http://browserify.org/">Browserify</a> and <a href="http://webpack.github.io/">Webpack</a> client-side SDK examples (with server-side generation of auth tokens.)</p>
+				<p>Note: not all services currently support CORS, and therefore not all services can be used client-side.
+				Of those that do, most require an auth token to be generated server-side via the <a href="#authorization">Authorization Service</a>.</p>
+				<a href="#authentication" id="authentication" style="color: inherit; text-decoration: none;">
+					<h2>Authentication</h2>
+				</a>
+				<p>Watson services are migrating to token-based Identity and Access Management (IAM) authentication.</p>
+				<ul>
+					<li>With some service instances, you authenticate to the API by using <strong><a href="#iam">IAM</a></strong>.</li>
+					<li>In other instances, you authenticate by providing the <strong><a href="#username-and-password">username and password</a></strong> for the service instance.</li>
+					<li>If you&#39;re using a Watson service on ICP, you&#39;ll need to authenticate in <a href="#icp">a specific way</a>.</li>
+				</ul>
+				<p>Authentication is accomplished using dedicated Authenticators for each authentication scheme. Import authenticators from <code>ibm-watson/auth</code> or rely on externally-configured credentials which will be read from a credentials file or environment variables.</p>
+				<p>To learn more about the Authenticators and how to use them with your services, see <a href="https://github.com/IBM/node-sdk-core/blob/master/AUTHENTICATION.md">the detailed documentation</a>.</p>
+				<a href="#getting-credentials" id="getting-credentials" style="color: inherit; text-decoration: none;">
+					<h3>Getting credentials</h3>
+				</a>
+				<p>To find out which authentication to use, view the service credentials. You find the service credentials for authentication the same way for all Watson services:</p>
+				<ol>
+					<li>Go to the IBM Cloud <a href="https://cloud.ibm.com/">Dashboard</a> page.</li>
+					<li>Either click an existing Watson service instance in your <a href="https://cloud.ibm.com/resources">resource list</a> or click <a href="https://cloud.ibm.com/catalog?category=ai"><strong>Create resource &gt; AI</strong></a> and create a service instance.</li>
+					<li>Click on the <strong>Manage</strong> item in the left nav bar of your service instance.</li>
+				</ol>
+				<p>On this page, you should be able to see your credentials for accessing your service instance.</p>
+				<p>In your code, you can use these values in the service constructor or with a method call after instantiating your service.</p>
+				<a href="#supplying-credentials" id="supplying-credentials" style="color: inherit; text-decoration: none;">
+					<h3>Supplying credentials</h3>
+				</a>
+				<p>There are two ways to supply the credentials you found above to the SDK for authentication:</p>
+				<ul>
+					<li>Allow the credentials to be automatically read from the environment</li>
+					<li>Instantiate an authenticator with explicit credentials and use it to create your service</li>
+				</ul>
+				<a href="#credentials-file-easier" id="credentials-file-easier" style="color: inherit; text-decoration: none;">
+					<h4>Credentials file (easier!)</h4>
+				</a>
+				<p>With a credentials file, you just need to put the file in the right place and the SDK will do the work of parsing it and authenticating. You can get this file by clicking the <strong>Download</strong> button for the credentials in the <strong>Manage</strong> tab of your service instance.</p>
+				<p>The file downloaded will be called <code>ibm-credentials.env</code>. This is the name the SDK will search for and <strong>must</strong> be preserved unless you want to configure the file path (more on that later). The SDK will look for your <code>ibm-credentials.env</code> file in the following places (in order):</p>
+				<ul>
+					<li>Directory provided by the environment variable <code>IBM_CREDENTIALS_FILE</code></li>
+					<li>Your system&#39;s home directory</li>
+					<li>Your current working directory (the directory Node is executed from)</li>
+				</ul>
+				<p>As long as you set that up correctly, you don&#39;t have to worry about setting any authentication options in your code. So, for example, if you created and downloaded the credential file for your Discovery instance, you just need to do the following:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v1'</span>);
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({ <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-01'</span> });</code></pre>
+				<p>And that&#39;s it!</p>
+				<p>If you&#39;re using more than one service at a time in your code and get two different <code>ibm-credentials.env</code> files, just put the contents together in one <code>ibm-credentials.env</code> file and the SDK will handle assigning credentials to their appropriate services.</p>
+				<p>If you would like to configure the location/name of your credential file, you can set an environment variable called <code>IBM_CREDENTIALS_FILE</code>. <strong>This will take precedence over the locations specified above.</strong> Here&#39;s how you can do that:</p>
+				<pre><code class="language-bash"><span class="hljs-built_in">export</span> IBM_CREDENTIALS_FILE=<span class="hljs-string">"&lt;path&gt;"</span></code></pre>
+				<p>where <code>&lt;path&gt;</code> is something like <code>/home/user/Downloads/&lt;file_name&gt;.env</code>. If you just provide a path to a directory, the SDK will look for a file called <code>ibm-credentials.env</code> in that directory.</p>
+				<a href="#manually" id="manually" style="color: inherit; text-decoration: none;">
+					<h4>Manually</h4>
+				</a>
+				<p>The SDK also supports setting credentials manually in your code, using an Authenticator.</p>
+				<a href="#iam" id="iam" style="color: inherit; text-decoration: none;">
+					<h5>IAM</h5>
+				</a>
+				<p>Some services use token-based Identity and Access Management (IAM) authentication. IAM authentication uses a service API key to get an access token that is passed with the call. Access tokens are valid for approximately one hour and must be regenerated.</p>
+				<p>To use IAM authentication, you must use an <code>IamAuthenticator</code> or a <code>BearerTokenAuthenticator</code>.</p>
+				<ul>
+					<li>Use the <code>IamAuthenticator</code> to have the SDK manage the lifecycle of the access token. The SDK requests an access token, ensures that the access token is valid, and refreshes it if necessary.</li>
+					<li>Use the <code>BearerTokenAuthenticator</code> if you want to manage the lifecycle yourself. For details, see <a href="https://cloud.ibm.com/docs/watson/getting-started-iam.html">Authenticating with IAM tokens</a>. If you want to switch your authenticator, you must override the <code>authenticator</code> property directly.</li>
+				</ul>
+				<a href="#icp" id="icp" style="color: inherit; text-decoration: none;">
+					<h5>ICP</h5>
+				</a>
+				<p>To use the SDK in a Cloud Pak, use the <code>CloudPakForDataAuthenticator</code>. This will require a username, password, and URL.</p>
+				<a href="#setting-the-service-url" id="setting-the-service-url" style="color: inherit; text-decoration: none;">
+					<h2>Setting the Service URL</h2>
+				</a>
+				<p>You can set or reset the base URL after constructing the client instance using the <code>setServiceUrl</code> method:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v1'</span>);
+
+<span class="hljs-keyword">const</span> discovery = DiscoveryV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+
+discovery.setServiceUrl(<span class="hljs-string">'&lt;new url&gt;'</span>);</code></pre>
+				<a href="#callbacks-vs-promises" id="callbacks-vs-promises" style="color: inherit; text-decoration: none;">
+					<h2>Callbacks vs Promises</h2>
+				</a>
+				<p>All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. Note that support for Callbacks is being deprecated and will be removed in a future major release. Using Promises is recommended.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v1'</span>);
+
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+
+<span class="hljs-comment">// using Promises</span>
+discovery.listEnvironments()
+  .then(<span class="hljs-function"><span class="hljs-params">body</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(body, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });
+
+<span class="hljs-comment">// using Promises provides the ability to use async / await</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callDiscovery</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-comment">// note that callDiscovery also returns a Promise</span>
+  <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> discovery.listEnvironments();
+}
+
+<span class="hljs-comment">// using a Callback function</span>
+discovery.listEnvironments(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (err) {
+    <span class="hljs-built_in">console</span>.log(err);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(res, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  }
+});</code></pre>
+				<a href="#sending-request-headers" id="sending-request-headers" style="color: inherit; text-decoration: none;">
+					<h2>Sending request headers</h2>
+				</a>
+				<p>Custom headers can be passed with any request. Each method has an optional parameter <code>headers</code> which can be used to pass in these custom headers, which can override headers that we use as parameters.</p>
+				<p>For example, this is how you can pass in custom headers to Watson Assistant service. In this example, the <code>&#39;custom&#39;</code> value for <code>&#39;Accept-Language&#39;</code> will override the default header for <code>&#39;Accept-Language&#39;</code>, and the <code>&#39;Custom-Header&#39;</code> while not overriding the default headers, will additionally be sent with the request.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> watson.AssistantV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+
+assistant.message({
+  <span class="hljs-attr">workspaceId</span>: <span class="hljs-string">'something'</span>,
+  <span class="hljs-attr">input</span>: {<span class="hljs-string">'text'</span>: <span class="hljs-string">'Hello'</span>},
+  <span class="hljs-attr">headers</span>: {
+    <span class="hljs-string">'Custom-Header'</span>: <span class="hljs-string">'custom'</span>,
+    <span class="hljs-string">'Accept-Language'</span>: <span class="hljs-string">'custom'</span>
+  }
+})
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  });</code></pre>
+				<a href="#parsing-http-response" id="parsing-http-response" style="color: inherit; text-decoration: none;">
+					<h2>Parsing HTTP response</h2>
+				</a>
+				<p>The SDK now returns the full HTTP response by default for each method.</p>
+				<p>Here is an example of how to access the response headers for Watson Assistant:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+
+assistant.message(params).then(
+  <span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(response.headers);
+  },
+  err =&gt; {
+    <span class="hljs-built_in">console</span>.log(err);
+    <span class="hljs-comment">/*
+      `err` is an Error object. It will always have a `message` field
+      and depending on the type of error, it may also have the following fields:
+      - body
+      - headers
+      - name
+      - code
+    */</span>
+  }
+);</code></pre>
+				<a href="#global-transaction-id" id="global-transaction-id" style="color: inherit; text-decoration: none;">
+					<h3>Global Transaction ID</h3>
+				</a>
+				<p>Every SDK call returns a response with a transaction ID in the x-global-transaction-id header. This transaction ID is useful for troubleshooting and accessing relevant logs from your service instance.</p>
+				<a href="#http-example" id="http-example" style="color: inherit; text-decoration: none;">
+					<h4>HTTP Example</h4>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+
+assistant.message(params).then(
+  <span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(response.headers[<span class="hljs-string">'x-global-transaction-id'</span>]);
+  },
+  err =&gt; {
+    <span class="hljs-built_in">console</span>.log(err);
+  }
+);</code></pre>
+				<a href="#websocket-example" id="websocket-example" style="color: inherit; text-decoration: none;">
+					<h4>WebSocket Example</h4>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> speechToText = <span class="hljs-keyword">new</span> SpeechToTextV1({
+<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+});
+<span class="hljs-keyword">const</span> recognizeStream = recognizeUsingWebSocket(params);
+
+<span class="hljs-comment">// getTransactionId returns a Promise that resolves to the ID</span>
+recognizeStream.getTransactionId().then(
+  <span class="hljs-function"><span class="hljs-params">globalTransactionId</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(globalTransactionId),
+  err =&gt; <span class="hljs-built_in">console</span>.log(err),
+);</code></pre>
+				<a href="#data-collection-opt-out" id="data-collection-opt-out" style="color: inherit; text-decoration: none;">
+					<h2>Data collection opt-out</h2>
+				</a>
+				<p>By default, <a href="https://cloud.ibm.com/docs/watson/getting-started-logging.html">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> myInstance = <span class="hljs-keyword">new</span> watson.WhateverServiceV1({
+  <span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+  <span class="hljs-attr">headers</span>: {
+    <span class="hljs-string">"X-Watson-Learning-Opt-Out"</span>: <span class="hljs-literal">true</span>
+  }
+});</code></pre>
+				<a href="#configuring-the-https-agent" id="configuring-the-https-agent" style="color: inherit; text-decoration: none;">
+					<h2>Configuring the HTTPS Agent</h2>
+				</a>
+				<p>The SDK provides the user with full control over the HTTPS Agent used to make requests. This is available for both the service client and the authenticators that make network requests (e.g. <code>IamAuthenticator</code>). Outlined below are a couple of different scenarios where this capability is needed. Note that this functionality is for Node environments only - these configurtions will have no effect in the browser.</p>
+				<a href="#use-behind-a-corporate-proxy" id="use-behind-a-corporate-proxy" style="color: inherit; text-decoration: none;">
+					<h3>Use behind a corporate proxy</h3>
+				</a>
+				<p>To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunneling agent must be used. Use the package <a href="https://github.com/koichik/node-tunnel/"><code>tunnel</code></a> for this. Configure this agent with your proxy information, and pass it in as the HTTPS agent in the service constructor. Additionally, you must set <code>proxy</code> to <code>false</code> in the service constructor. If using an Authenticator that makes network requests (IAM or CP4D), you must set these fields in the Authenticator constructor as well.</p>
+				<p>See this example configuration:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> tunnel = <span class="hljs-built_in">require</span>(<span class="hljs-string">'tunnel'</span>);
+<span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> httpsAgent = tunnel.httpsOverHttp({
+  <span class="hljs-attr">proxy</span>: {
+    <span class="hljs-attr">host</span>: <span class="hljs-string">'some.host.org'</span>,
+    <span class="hljs-attr">port</span>: <span class="hljs-number">1234</span>,
+  },
+});
+
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({
+    <span class="hljs-attr">apikey</span>: <span class="hljs-string">'fakekey-1234'</span>
+    httpsAgent, <span class="hljs-comment">// not necessary if using Basic or BearerToken authentication</span>
+    <span class="hljs-attr">proxy</span>: <span class="hljs-literal">false</span>,
+  }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2020-01-28'</span>,
+  httpsAgent,
+  <span class="hljs-attr">proxy</span>: <span class="hljs-literal">false</span>,
+});</code></pre>
+				<a href="#sending-custom-certificates" id="sending-custom-certificates" style="color: inherit; text-decoration: none;">
+					<h3>Sending custom certificates</h3>
+				</a>
+				<p>To send custom certificates as a security measure in your request, use the <code>cert</code>, <code>key</code>, and/or <code>ca</code> properties of the HTTPS Agent. See <a href="https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options">this documentation</a> for more information about the options. Note that the entire contents of the file must be provided - not just the file name.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> certFile = fs.readFileSync(<span class="hljs-string">'./my-cert.pem'</span>);
+<span class="hljs-keyword">const</span> keyFile = fs.readFileSync(<span class="hljs-string">'./my-key.pem'</span>);
+
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({
+    <span class="hljs-attr">apikey</span>: <span class="hljs-string">'fakekey-1234'</span>,
+    <span class="hljs-attr">httpsAgent</span>: <span class="hljs-keyword">new</span> https.Agent({
+      <span class="hljs-attr">key</span>: keyFile,
+      <span class="hljs-attr">cert</span>: certFile,
+    })
+  }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-28'</span>,
+  <span class="hljs-attr">httpsAgent</span>: <span class="hljs-keyword">new</span> https.Agent({
+    <span class="hljs-attr">key</span>: keyFile,
+    <span class="hljs-attr">cert</span>: certFile,
+  }),
+});</code></pre>
+				<a href="#disabling-ssl-verification" id="disabling-ssl-verification" style="color: inherit; text-decoration: none;">
+					<h3>Disabling SSL Verification</h3>
+				</a>
+				<p>The HTTP client can be configured to disable SSL verification. <strong>Note that this has serious security implications - only do this if you really mean to!</strong> ⚠️</p>
+				<p>To do this, set <code>disableSslVerification</code> to <code>true</code> in the service constructor and/or authenticator constructor, like below:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>,
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span>, <span class="hljs-attr">disableSslVerification</span>: <span class="hljs-literal">true</span> }), <span class="hljs-comment">// this will disable SSL verification for requests to the token endpoint</span>
+  <span class="hljs-attr">disableSslVerification</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// this will disable SSL verification for any request made with this client instance</span>
+});</code></pre>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>You can find links to the documentation at <a href="https://cloud.ibm.com/developer/watson/documentation">https://cloud.ibm.com/developer/watson/documentation</a>. Find the service that you&#39;re interested in, click <strong>API reference</strong>, and then select the <strong>Node</strong> tab.</p>
+				<p>There are also auto-generated JSDocs available at <a href="http://watson-developer-cloud.github.io/node-sdk/master/">http://watson-developer-cloud.github.io/node-sdk/master/</a></p>
+				<a href="#questions" id="questions" style="color: inherit; text-decoration: none;">
+					<h2>Questions</h2>
+				</a>
+				<p>If you have issues with the APIs or have a question about the Watson services, see <a href="https://stackoverflow.com/questions/tagged/ibm-watson+node.js">Stack Overflow</a>.</p>
+				<a href="#ibm-watson-services" id="ibm-watson-services" style="color: inherit; text-decoration: none;">
+					<h2>IBM Watson services</h2>
+				</a>
+				<a href="#authorization" id="authorization" style="color: inherit; text-decoration: none;">
+					<h3>Authorization</h3>
+				</a>
+				<p>The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.</p>
+				<p>Tokens are valid for 1 hour and may be sent using the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param.
+				Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.</p>
+				<blockquote>
+					<p><em>NOTE</em>: Authenticating with the <code>X-Watson-Authorization-Token</code> header or the <code>watson-token</code> query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see <a href="https://cloud.ibm.com/docs/watson?topic=watson-iam#iam">Authenticating with IAM tokens</a> or the README in the IBM Watson SDK you use.
+					The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.</p>
+				</blockquote>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> watson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+<span class="hljs-keyword">const</span> { BasicAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-comment">// to get an IAM Access Token</span>
+<span class="hljs-keyword">const</span> authorization = <span class="hljs-keyword">new</span> watson.AuthorizationV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'fakekey-1234'</span> }),
+});
+
+authorization.getToken(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, token</span>) </span>{
+  <span class="hljs-keyword">if</span> (!token) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Use your token here</span>
+  }
+});
+
+<span class="hljs-comment">// to get a Watson Token - NOW DEPRECATED</span>
+<span class="hljs-keyword">const</span> authorization = <span class="hljs-keyword">new</span> watson.AuthorizationV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> BasicAuthenticator({ <span class="hljs-attr">username</span>: <span class="hljs-string">'TTS username'</span>, <span class="hljs-attr">password</span>: <span class="hljs-string">'TTS password'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/authorization/api'</span>, <span class="hljs-comment">// Speech tokens</span>
+});
+
+authorization.getToken({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/text-to-speech/api'</span>
+},
+<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, token</span>) </span>{
+  <span class="hljs-keyword">if</span> (!token) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// Use your token here</span>
+  }
+});</code></pre>
+				<a href="#assistant-v2" id="assistant-v2" style="color: inherit; text-decoration: none;">
+					<h3>Assistant v2</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/cloud/watson-assistant/">Assistant</a> service to determine the intent of a message.</p>
+				<p>Note: You must first create a workspace via IBM Cloud. See <a href="https://cloud.ibm.com/docs/assistant?topic=assistant-index#about">the documentation</a> for details.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> AssistantV2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v2'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV2({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-09-19'</span>
+});
+
+assistant.message(
+  {
+    <span class="hljs-attr">input</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">"What's the weather?"</span> },
+    <span class="hljs-attr">assistantId</span>: <span class="hljs-string">'&lt;assistant id&gt;'</span>,
+    <span class="hljs-attr">sessionId</span>: <span class="hljs-string">'&lt;session id&gt;'</span>,
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#assistant-v1" id="assistant-v1" style="color: inherit; text-decoration: none;">
+					<h3>Assistant v1</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/cloud/watson-assistant/">Assistant</a> service to determine the intent of a message.</p>
+				<p>Note: You must first create a workspace via IBM Cloud. See <a href="https://cloud.ibm.com/docs/assistant?topic=assistant-index#about">the documentation</a> for details.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> AssistantV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/assistant/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-02-16'</span>
+});
+
+assistant.message(
+  {
+    <span class="hljs-attr">input</span>: { <span class="hljs-attr">text</span>: <span class="hljs-string">"What's the weather?"</span> },
+    <span class="hljs-attr">workspaceId</span>: <span class="hljs-string">'&lt;workspace id&gt;'</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#compare-comply" id="compare-comply" style="color: inherit; text-decoration: none;">
+					<h3>Compare Comply</h3>
+				</a>
+				<p>Use the Compare Comply service to compare and classify documents.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> CompareComplyV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/compare-comply/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> compareComply = <span class="hljs-keyword">new</span> CompareComplyV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/compare-comply/api'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-12-06'</span>
+});
+
+compareComply.compareDocuments(
+  {
+      <span class="hljs-attr">file1</span>: fs.createReadStream(<span class="hljs-string">'&lt;path-to-file-1&gt;'</span>),
+      <span class="hljs-attr">file1Filename</span>: <span class="hljs-string">'&lt;filename-1&gt;'</span>,
+      <span class="hljs-attr">file1Label</span>: <span class="hljs-string">'file-1'</span>,
+      <span class="hljs-attr">file2</span>: fs.createReadStream(<span class="hljs-string">'&lt;path-to-file-2&gt;'</span>),
+      <span class="hljs-attr">file2Filename</span>: <span class="hljs-string">'&lt;filename-2&gt;'</span>,
+      <span class="hljs-attr">file2Label</span>: <span class="hljs-string">'file-2'</span>,
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#discovery" id="discovery" style="color: inherit; text-decoration: none;">
+					<h3>Discovery</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/discovery/api/'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2017-09-01'</span>
+});
+
+discovery.query(
+  {
+    <span class="hljs-attr">environmentId</span>: <span class="hljs-string">'&lt;environment_id&gt;'</span>,
+    <span class="hljs-attr">collectionId</span>: <span class="hljs-string">'&lt;collection_id&gt;'</span>,
+    <span class="hljs-attr">query</span>: <span class="hljs-string">'my_query'</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#language-translator" id="language-translator" style="color: inherit; text-decoration: none;">
+					<h3>Language Translator</h3>
+				</a>
+				<p>Translate text from one language to another or idenfity a language using the <a href="https://www.ibm.com/watson/services/language-translator/">Language Translator</a> service.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> LanguageTranslatorV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/language-translator/v3'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> languageTranslator = <span class="hljs-keyword">new</span> LanguageTranslatorV3({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'YYYY-MM-DD'</span>,
+});
+
+languageTranslator.translate(
+  {
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'A sentence must have a verb'</span>,
+    <span class="hljs-attr">source</span>: <span class="hljs-string">'en'</span>,
+    <span class="hljs-attr">target</span>: <span class="hljs-string">'es'</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  });
+
+languageTranslator.identify(
+  {
+    <span class="hljs-attr">text</span>:
+      <span class="hljs-string">'The language translator service takes text input and identifies the language used.'</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  });</code></pre>
+				<a href="#natural-language-classifier" id="natural-language-classifier" style="color: inherit; text-decoration: none;">
+					<h3>Natural Language Classifier</h3>
+				</a>
+				<p>Use <a href="https://cloud.ibm.com/docs/natural-language-classifier/getting-started.html">Natural Language Classifier</a> service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> NaturalLanguageClassifierV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/natural-language-classifier/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> classifier = <span class="hljs-keyword">new</span> NaturalLanguageClassifierV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-classifier/api/'</span>
+});
+
+classifier.classify(
+  {
+    <span class="hljs-attr">text</span>: <span class="hljs-string">'Is it sunny?'</span>,
+    <span class="hljs-attr">classifierId</span>: <span class="hljs-string">'&lt;classifier-id&gt;'</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  });</code></pre>
+				<p>See this <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js">example</a> to learn how to create a classifier.</p>
+				<a href="#natural-language-understanding" id="natural-language-understanding" style="color: inherit; text-decoration: none;">
+					<h3>Natural Language Understanding</h3>
+				</a>
+				<p>Use Natural Language Understanding is a collection of natural language processing APIs that help you understand sentiment,
+				keywords, entities, high-level concepts and more.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> NaturalLanguageUnderstandingV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/natural-language-understanding/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> nlu = <span class="hljs-keyword">new</span> NaturalLanguageUnderstandingV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-04-05'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-understanding/api/'</span>
+});
+
+nlu.analyze(
+  {
+    <span class="hljs-attr">html</span>: file_data, <span class="hljs-comment">// Buffer or String</span>
+    <span class="hljs-attr">features</span>: {
+      <span class="hljs-attr">concepts</span>: {},
+      <span class="hljs-attr">keywords</span>: {}
+    }
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  });</code></pre>
+				<a href="#personality-insights" id="personality-insights" style="color: inherit; text-decoration: none;">
+					<h3>Personality Insights</h3>
+				</a>
+				<p>Analyze text in English and get a personality profile by using the
+				<a href="https://www.ibm.com/watson/services/personality-insights/">Personality Insights</a> service.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> PersonalityInsightsV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/personality-insights/v3'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> personalityInsights = <span class="hljs-keyword">new</span> PersonalityInsightsV3({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2016-10-19'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/personality-insights/api/'</span>
+});
+
+personalityInsights.profile(
+  {
+    <span class="hljs-attr">content</span>: <span class="hljs-string">'Enter more than 100 unique words here...'</span>,
+    <span class="hljs-attr">contentType</span>: <span class="hljs-string">'text/plain'</span>,
+    <span class="hljs-attr">consumptionPreferences</span>: <span class="hljs-literal">true</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error: '</span>, err);
+  });</code></pre>
+				<a href="#speech-to-text" id="speech-to-text" style="color: inherit; text-decoration: none;">
+					<h3>Speech to Text</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/watson/services/speech-to-text/">Speech to Text</a> service to recognize the text from a <code>.wav</code> file.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> SpeechToTextV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/speech-to-text/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> speechToText = <span class="hljs-keyword">new</span> SpeechToTextV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/speech-to-text/api/'</span>
+});
+
+<span class="hljs-keyword">const</span> params = {
+  <span class="hljs-comment">// From file</span>
+  <span class="hljs-attr">audio</span>: fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>),
+  <span class="hljs-attr">contentType</span>: <span class="hljs-string">'audio/l16; rate=44100'</span>
+};
+
+speechToText.recognize(params)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });
+
+<span class="hljs-comment">// or streaming</span>
+fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
+  .pipe(speechToText.recognizeUsingWebSocket({ <span class="hljs-attr">contentType</span>: <span class="hljs-string">'audio/l16; rate=44100'</span> }))
+  .pipe(fs.createWriteStream(<span class="hljs-string">'./transcription.txt'</span>));</code></pre>
+				<a href="#text-to-speech" id="text-to-speech" style="color: inherit; text-decoration: none;">
+					<h3>Text to Speech</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/watson/services/text-to-speech/">Text to Speech</a> service to synthesize text into an audio file.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> TextToSpeechV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/text-to-speech/v1'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> textToSpeech = <span class="hljs-keyword">new</span> TextToSpeechV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/text-to-speech/api/'</span>
+});
+
+<span class="hljs-keyword">const</span> params = {
+  <span class="hljs-attr">text</span>: <span class="hljs-string">'Hello from IBM Watson'</span>,
+  <span class="hljs-attr">voice</span>: <span class="hljs-string">'en-US_AllisonVoice'</span>, <span class="hljs-comment">// Optional voice</span>
+  <span class="hljs-attr">accept</span>: <span class="hljs-string">'audio/wav'</span>
+};
+
+<span class="hljs-comment">// Synthesize speech, correct the wav header, then save to disk</span>
+<span class="hljs-comment">// (wav header requires a file length, but this is unknown until after the header is already generated and sent)</span>
+<span class="hljs-comment">// note that `repairWavHeaderStream` will read the whole stream into memory in order to process it.</span>
+<span class="hljs-comment">// the method returns a Promise that resolves with the repaired buffer</span>
+textToSpeech
+  .synthesize(params)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> audio = response.result;
+    <span class="hljs-keyword">return</span> textToSpeech.repairWavHeaderStream(audio);
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">repairedFile</span> =&gt;</span> {
+    fs.writeFileSync(<span class="hljs-string">'audio.wav'</span>, repairedFile);
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'audio.wav written with a corrected wav header'</span>);
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });
+
+
+<span class="hljs-comment">// or, using WebSockets</span>
+textToSpeech.synthesizeUsingWebSocket(params);
+synthStream.pipe(fs.createWriteStream(<span class="hljs-string">'./audio.ogg'</span>));
+<span class="hljs-comment">// see more information in examples/text_to_speech_websocket.js</span></code></pre>
+				<a href="#tone-analyzer" id="tone-analyzer" style="color: inherit; text-decoration: none;">
+					<h3>Tone Analyzer</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/watson/services/tone-analyzer/">Tone Analyzer</a> service to analyze the
+				emotion, writing and social tones of a text.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> ToneAnalyzerV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/tone-analyzer/v3'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> toneAnalyzer = <span class="hljs-keyword">new</span> ToneAnalyzerV3({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2016-05-19'</span>,
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/tone-analyzer/api/'</span>
+});
+
+toneAnalyzer.tone(
+  {
+    <span class="hljs-attr">toneInput</span>: <span class="hljs-string">'Greetings from Watson Developer Cloud!'</span>,
+    <span class="hljs-attr">contentType</span>: <span class="hljs-string">'text/plain'</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#visual-recognition" id="visual-recognition" style="color: inherit; text-decoration: none;">
+					<h3>Visual Recognition</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
+				following picture.</p>
+				<img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" />
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> VisualRecognitionV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/visual-recognition/v3'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
+  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-03-19'</span>,
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+});
+
+<span class="hljs-keyword">const</span> params = {
+  <span class="hljs-attr">imagesFile</span>: fs.createReadStream(<span class="hljs-string">'./resources/car.png'</span>)
+};
+
+visualRecognition.classify(params)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#composing-services" id="composing-services" style="color: inherit; text-decoration: none;">
+					<h2>Composing services</h2>
+				</a>
+				<a href="#integration-of-tone-analyzer-with-conversation" id="integration-of-tone-analyzer-with-conversation" style="color: inherit; text-decoration: none;">
+					<h3>Integration of Tone Analyzer with Conversation</h3>
+				</a>
+				<p>Sample code for <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration">integrating Tone Analyzer and Assistant</a> is provided in the <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master/examples">examples directory</a>.</p>
+				<a href="#unauthenticated-requests" id="unauthenticated-requests" style="color: inherit; text-decoration: none;">
+					<h2>Unauthenticated requests</h2>
+				</a>
+				<p>The SDK always expects an authenticator to be passed in. To make an unautuhenticated request, use the <code>NoAuthAuthenticator</code>.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> watson = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson'</span>);
+<span class="hljs-keyword">const</span> { NoAuthAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> watson.AssistantV1({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> NoAuthAuthenticator(),
+});</code></pre>
+				<a href="#debug" id="debug" style="color: inherit; text-decoration: none;">
+					<h2>Debug</h2>
+				</a>
+				<p>This library relies on the <code>axios</code> npm module written by
+					<a href="https://github.com/axios/axios">axios</a> to call the Watson Services. To debug the apps, add
+				&#39;axios&#39; to the <code>NODE_DEBUG</code> environment variable:</p>
+				<pre><code class="language-sh">$ NODE_DEBUG=<span class="hljs-string">'axios'</span> node app.js</code></pre>
+				<p>where <code>app.js</code> is your Node.js file.</p>
+				<a href="#tests" id="tests" style="color: inherit; text-decoration: none;">
+					<h2>Tests</h2>
+				</a>
+				<p>Running all the tests:</p>
+				<pre><code class="language-sh">$ npm <span class="hljs-built_in">test</span></code></pre>
+				<p>Running a specific test:</p>
+				<pre><code class="language-sh">$ jest <span class="hljs-string">'&lt;path to test&gt;'</span></code></pre>
+				<a href="#open-source--ibm" id="open-source--ibm" style="color: inherit; text-decoration: none;">
+					<h2>Open source @ IBM</h2>
+				</a>
+				<p><a href="http://ibm.github.io/">Find more open source projects on the IBM Github Page.</a></p>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p>See <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md">CONTRIBUTING</a>.</p>
+				<a href="#featured-projects" id="featured-projects" style="color: inherit; text-decoration: none;">
+					<h2>Featured Projects</h2>
+				</a>
+				<p>We love to highlight cool open-source projects that use this SDK! If you&#39;d like to get your project added to the list, feel free to make an issue linking us to it.</p>
+				<ul>
+					<li><a href="https://github.com/watson-developer-cloud/speech-to-text-nodejs">Watson Speech to Text Demo App</a></li>
+					<li><a href="https://github.com/watson-developer-cloud/assistant-demo">Watson Assistant Demo App</a></li>
+					<li><a href="https://github.com/jeancarl/node-red-contrib-virtual-tjbot">Virtual TJBot Node-RED Nodes</a></li>
+					<li><a href="https://github.com/Themandunord/IWAC">CLI tool for Watson Assistant</a></li>
+					<li><a href="https://github.com/boneskull/puddlenuts">CLI tool for Watson Visual Recognition</a></li>
+				</ul>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>This library is licensed under Apache 2.0. Full license text is available in
+				<a href="http://www.apache.org/licenses/LICENSE-2.0">COPYING</a>.</p>
+			</div>
+		</div>
+		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

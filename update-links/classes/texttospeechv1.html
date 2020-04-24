@@ -1,0 +1,2088 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>TextToSpeechV1 | ibm-watson - v5.5.0</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">ibm-watson - v5.5.0</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="texttospeechv1.html">TextToSpeechV1</a>
+				</li>
+			</ul>
+			<h1>Class TextToSpeechV1</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-9 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The IBM&reg; Text to Speech service provides APIs that use IBM&#39;s speech-synthesis capabilities to synthesize text
+							into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male
+							or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.
+						interfaces</p>
+					</div>
+					<p>For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface. It
+						also supports a WebSocket interface that provides both plain text and SSML input, including the SSML &lt;mark&gt;
+						element and word timings. SSML is an XML-based markup language that provides text annotation for speech-synthesis
+					applications.</p>
+					<p>The service also offers a customization interface. You can use the interface to define sounds-like or phonetic
+						translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the
+						word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic
+						translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic
+					Phonetic Representation (SPR). The Arabic, Chinese, Dutch, and Korean languages support only IPA.</p>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">BaseService</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">TextToSpeechV1</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="texttospeechv1.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="texttospeechv1.html#default_service_name" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="texttospeechv1.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a></li>
+							</ul>
+						</section>
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#addword" class="tsd-kind-icon">add<wbr>Word</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#addwords" class="tsd-kind-icon">add<wbr>Words</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#createvoicemodel" class="tsd-kind-icon">create<wbr>Voice<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deleteuserdata" class="tsd-kind-icon">delete<wbr>User<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deletevoicemodel" class="tsd-kind-icon">delete<wbr>Voice<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deleteword" class="tsd-kind-icon">delete<wbr>Word</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getpronunciation" class="tsd-kind-icon">get<wbr>Pronunciation</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getvoice" class="tsd-kind-icon">get<wbr>Voice</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getvoicemodel" class="tsd-kind-icon">get<wbr>Voice<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getword" class="tsd-kind-icon">get<wbr>Word</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listvoicemodels" class="tsd-kind-icon">list<wbr>Voice<wbr>Models</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listvoices" class="tsd-kind-icon">list<wbr>Voices</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listwords" class="tsd-kind-icon">list<wbr>Words</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#synthesize" class="tsd-kind-icon">synthesize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#updatevoicemodel" class="tsd-kind-icon">update<wbr>Voice<wbr>Model</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Text<wbr>ToSpeech<wbr>V1<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">UserOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="texttospeechv1.html" class="tsd-signature-type">TextToSpeechV1</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides BaseService.__constructor</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Construct a TextToSpeechV1 object.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>constructor</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>options</code></td>
+										<td><span class="tsd-signature-type">UserOptions</span></td>
+										<td></td>
+										<td>
+											<p></p>
+											<p>Options for the service.</p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <a href="texttospeechv1.html" class="tsd-signature-type">TextToSpeechV1</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
+					<a name="default_service_name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT_<wbr>SERVICE_<wbr>NAME</h3>
+					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;text_to_speech&quot;</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides BaseService.DEFAULT_SERVICE_NAME</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
+					<a name="default_service_url" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT_<wbr>SERVICE_<wbr>URL</h3>
+					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;https://stream.watsonplatform.net/text-to-speech/api&quot;</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides BaseService.DEFAULT_SERVICE_URL</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L41">text-to-speech/v1-generated.ts:41</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addword" class="tsd-anchor"></a>
+					<h3>add<wbr>Word</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.addwordparams.html" class="tsd-signature-type">AddWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L1024">text-to-speech/v1-generated.ts:1024</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add a custom word.</p>
+								</div>
+								<p>Adds a single word and its translation to the specified custom voice model. Adding a new translation for a word
+									that already exists in a custom model overwrites the word&#39;s existing translation. A custom model can contain no
+									more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add a word
+								to it.</p>
+								<p>You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
+									words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
+								representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation</p>
+								<p>  <code>&lt;phoneme alphabet="ipa" ph="t&#601;m&#712;&#593;to"&gt;&lt;/phoneme&gt;</code></p>
+								<p>  or in the proprietary IBM Symbolic Phonetic Representation (SPR)</p>
+								<p>  <code>&lt;phoneme alphabet="ibm" ph="1gAstroEntxrYFXs"&gt;&lt;/phoneme&gt;</code></p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordAdd">Adding a single word to a custom
+									model</a></li>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">Adding words to a Japanese custom
+									model</a></li>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">Understanding
+									customization</a>.</li>
+								</ul>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.addwordparams.html" class="tsd-signature-type">AddWordParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<tr>
+														<td><code>translation</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for
+															representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. The
+															Arabic, Chinese, Dutch, and Korean languages support only IPA. A sounds-like is one or more words that, when
+														combined, sound like the word.</td>
+													</tr>
+													<tr>
+														<td><code>word</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The word that is to be added or updated for the custom voice model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>partOfSpeech</code></td>
+														<td><a href="../enums/texttospeechv1.addwordconstants.partofspeech.html" class="tsd-signature-type">PartOfSpeech</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>*Japanese only.** The part of speech for the word. The service uses the value to produce the correct
+															intonation for the word. You can create only a single entry, with or without a single part of speech, for any
+															word; you cannot create multiple entries with different parts of speech for the same word. For more information,
+															see [Working with Japanese
+														entries](https://cloud.ibm.com/docs/text-to-speech?topic&#x3D;text-to-speech-rules#jaNotes).</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addwords" class="tsd-anchor"></a>
+					<h3>add<wbr>Words</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Words<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.addwordsparams.html" class="tsd-signature-type">AddWordsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L850">text-to-speech/v1-generated.ts:850</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add custom words.</p>
+								</div>
+								<p>Adds one or more words and their translations to the specified custom voice model. Adding a new translation for a
+									word that already exists in a custom model overwrites the word&#39;s existing translation. A custom model can contain
+									no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to add
+								words to it.</p>
+								<p>You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
+									words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
+								representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation</p>
+								<p>  <code>&lt;phoneme alphabet="ipa" ph="t&#601;m&#712;&#593;to"&gt;&lt;/phoneme&gt;</code></p>
+								<p>  or in the proprietary IBM Symbolic Phonetic Representation (SPR)</p>
+								<p>  <code>&lt;phoneme alphabet="ibm" ph="1gAstroEntxrYFXs"&gt;&lt;/phoneme&gt;</code></p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd">Adding multiple words to a custom
+									model</a></li>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">Adding words to a Japanese custom
+									model</a></li>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">Understanding
+									customization</a>.</li>
+								</ul>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.addwordsparams.html" class="tsd-signature-type">AddWordsParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<tr>
+														<td><code>words</code></td>
+														<td><a href="../interfaces/texttospeechv1.word.html" class="tsd-signature-type">Word</a><span class="tsd-signature-symbol">[]</span></td>
+														<td></td>
+														<td>The **Add custom words** method accepts an array of &#x60;Word&#x60; objects. Each object provides a word that is to
+														be added or updated for the custom voice model and the word&#x27;s translation.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createvoicemodel" class="tsd-anchor"></a>
+					<h3>create<wbr>Voice<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.createvoicemodelparams.html" class="tsd-signature-type">CreateVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L448">text-to-speech/v1-generated.ts:448</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a custom model.</p>
+								</div>
+								<p>Creates a new empty custom voice model. You must specify a name for the new custom model. You can optionally
+									specify the language and a description for the new model. The model is owned by the instance of the service whose
+								credentials are used to create it.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate">Creating a custom
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.createvoicemodelparams.html" class="tsd-signature-type">CreateVoiceModelParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>name</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The name of the new custom voice model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>description</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>A description of the new custom voice model. Specifying a description is recommended.</td>
+													</tr>
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>language</code></td>
+														<td><a href="../enums/texttospeechv1.createvoicemodelconstants.language.html" class="tsd-signature-type">Language</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>The language of the new custom voice model. You create a custom voice model for a specific language, not for
+															a specific voice. A custom model can be used with any voice, standard or neural, for its specified language.
+														Omit the parameter to use the the default language, &#x60;en-US&#x60;.</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deleteuserdata" class="tsd-anchor"></a>
+					<h3>delete<wbr>User<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L1251">text-to-speech/v1-generated.ts:1251</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete labeled data.</p>
+								</div>
+								<p>Deletes all data that is associated with a specified customer ID. The method deletes all data for the customer ID,
+									regardless of the method by which the information was added. The method has no effect if no data is associated with
+									the customer ID. You must issue the request with credentials for the same instance of the service that was used to
+								associate the customer ID with the data.</p>
+								<p>You associate a customer ID with data by passing the <code>X-Watson-Metadata</code> header with a request that passes the
+								data.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-information-security#information-security">Information
+								security</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customerId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customer ID for which all data is to be deleted.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deletevoicemodel" class="tsd-anchor"></a>
+					<h3>delete<wbr>Voice<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletevoicemodelparams.html" class="tsd-signature-type">DeleteVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L754">text-to-speech/v1-generated.ts:754</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete a custom model.</p>
+								</div>
+								<p>Deletes the specified custom voice model. You must use credentials for the instance of the service that owns a
+								model to delete it.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsDelete">Deleting a custom
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.deletevoicemodelparams.html" class="tsd-signature-type">DeleteVoiceModelParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deleteword" class="tsd-anchor"></a>
+					<h3>delete<wbr>Word</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletewordparams.html" class="tsd-signature-type">DeleteWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L1175">text-to-speech/v1-generated.ts:1175</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete a custom word.</p>
+								</div>
+								<p>Deletes a single word from the specified custom voice model. You must use credentials for the instance of the
+								service that owns a model to delete its words.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordDelete">Deleting a word from a custom
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.deletewordparams.html" class="tsd-signature-type">DeleteWordParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<tr>
+														<td><code>word</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The word that is to be deleted from the custom voice model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getauthenticator" class="tsd-anchor"></a>
+					<h3>get<wbr>Authenticator</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Authenticator<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from BaseService.getAuthenticator</p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:76</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the instance of the authenticator set on the service.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getpronunciation" class="tsd-anchor"></a>
+					<h3>get<wbr>Pronunciation</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Pronunciation<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getpronunciationparams.html" class="tsd-signature-type">GetPronunciationParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L366">text-to-speech/v1-generated.ts:366</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get pronunciation.</p>
+								</div>
+								<p>Gets the phonetic pronunciation for the specified word. You can request the pronunciation for a specific format.
+									You can also request the pronunciation for a specific voice to see the default translation for the language of that
+								voice or for a specific custom voice model to see the translation for that voice model.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage">Querying a word from a
+								language</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.getpronunciationparams.html" class="tsd-signature-type">GetPronunciationParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>text</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The word for which the pronunciation is requested.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>The customization ID (GUID) of a custom voice model for which the pronunciation is to be returned. The
+															language of a specified custom model must match the language of the specified voice. If the word is not defined
+															in the specified custom model, the service returns the default translation for the custom model&#x27;s language. You
+															must make the request with credentials for the instance of the service that owns the custom model. Omit the
+														parameter to see the translation for the specified voice with no customization.</td>
+													</tr>
+													<tr>
+														<td><code>format</code></td>
+														<td><a href="../enums/texttospeechv1.getpronunciationconstants.format.html" class="tsd-signature-type">Format</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, and Korean languages
+														support only IPA. Omit the parameter to obtain the pronunciation in the default format.</td>
+													</tr>
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>voice</code></td>
+														<td><a href="../enums/texttospeechv1.getpronunciationconstants.voice.html" class="tsd-signature-type">Voice</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
+														language (for example, &#x60;en-US&#x60;) return the same translation.</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.pronunciation.html" class="tsd-signature-type">Pronunciation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getvoice" class="tsd-anchor"></a>
+					<h3>get<wbr>Voice</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Voice<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getvoiceparams.html" class="tsd-signature-type">GetVoiceParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L144">text-to-speech/v1-generated.ts:144</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a voice.</p>
+								</div>
+								<p>Gets information about the specified voice. The information includes the name, language, gender, and other details
+									about the voice. Specify a customization ID to obtain information for a custom voice model that is defined for the
+								language of the specified voice. To list information about all available voices, use the <strong>List voices</strong> method.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice">Listing a specific
+								voice</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.getvoiceparams.html" class="tsd-signature-type">GetVoiceParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>voice</code></td>
+														<td><a href="../enums/texttospeechv1.getvoiceconstants.voice.html" class="tsd-signature-type">Voice</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td></td>
+														<td>The voice for which information is to be returned.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>The customization ID (GUID) of a custom voice model for which information is to be returned. You must make
+															the request with credentials for the instance of the service that owns the custom model. Omit the parameter to
+														see information about the specified voice with no customization.</td>
+													</tr>
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getvoicemodel" class="tsd-anchor"></a>
+					<h3>get<wbr>Voice<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getvoicemodelparams.html" class="tsd-signature-type">GetVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L684">text-to-speech/v1-generated.ts:684</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a custom model.</p>
+								</div>
+								<p>Gets all information about a specified custom voice model. In addition to metadata such as the name and description
+									of the voice model, the output includes the words and their translations as defined in the model. To see just the
+								metadata for a voice model, use the <strong>List custom models</strong> method.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery">Querying a custom
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.getvoicemodelparams.html" class="tsd-signature-type">GetVoiceModelParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodel.html" class="tsd-signature-type">VoiceModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getword" class="tsd-anchor"></a>
+					<h3>get<wbr>Word</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Word<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getwordparams.html" class="tsd-signature-type">GetWordParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L1103">text-to-speech/v1-generated.ts:1103</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a custom word.</p>
+								</div>
+								<p>Gets the translation for a single word from the specified custom model. The output shows the translation as it is
+								defined in the model. You must use credentials for the instance of the service that owns a model to list its words.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordQueryModel">Querying a single word from a custom
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.getwordparams.html" class="tsd-signature-type">GetWordParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<tr>
+														<td><code>word</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The word that is to be queried from the custom voice model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="listvoicemodels" class="tsd-anchor"></a>
+					<h3>list<wbr>Voice<wbr>Models</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Voice<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/texttospeechv1.listvoicemodelsparams.html" class="tsd-signature-type">ListVoiceModelsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L523">text-to-speech/v1-generated.ts:523</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>List custom models.</p>
+								</div>
+								<p>Lists metadata such as the name and description for all custom voice models that are owned by an instance of the
+									service. Specify a language to list the voice models for that language only. To see the words in addition to the
+									metadata for a specific voice model, use the <strong>List a custom model</strong> method. You must use credentials for the
+								instance of the service that owns a model to list information about it.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll">Querying all custom
+								models</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.listvoicemodelsparams.html" class="tsd-signature-type">ListVoiceModelsParams</a></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>language</code></td>
+														<td><a href="../enums/texttospeechv1.listvoicemodelsconstants.language.html" class="tsd-signature-type">Language</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>The language for which custom voice models that are owned by the requesting credentials are to be returned.
+														Omit the parameter to see all custom voice models that are owned by the requester.</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voicemodels.html" class="tsd-signature-type">VoiceModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="listvoices" class="tsd-anchor"></a>
+					<h3>list<wbr>Voices</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Voices<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/texttospeechv1.listvoicesparams.html" class="tsd-signature-type">ListVoicesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L88">text-to-speech/v1-generated.ts:88</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>List voices.</p>
+								</div>
+								<p>Lists all voices available for use with the service. The information includes the name, language, gender, and other
+								details about the voice. To see information about a specific voice, use the <strong>Get a voice</strong> method.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices">Listing all available
+								voices</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.listvoicesparams.html" class="tsd-signature-type">ListVoicesParams</a></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.voices.html" class="tsd-signature-type">Voices</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="listwords" class="tsd-anchor"></a>
+					<h3>list<wbr>Words</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Words<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.listwordsparams.html" class="tsd-signature-type">ListWordsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L927">text-to-speech/v1-generated.ts:927</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>List custom words.</p>
+								</div>
+								<p>Lists all of the words and their translations for the specified custom voice model. The output shows the
+									translations as they are defined in the model. You must use credentials for the instance of the service that owns a
+								model to list its words.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryModel">Querying all words from a custom
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.listwordsparams.html" class="tsd-signature-type">ListWordsParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.words.html" class="tsd-signature-type">Words</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setserviceurl" class="tsd-anchor"></a>
+					<h3>set<wbr>Service<wbr>Url</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Service<wbr>Url<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from BaseService.setServiceUrl</p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:82</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the service URL to send requests to.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>url</code></td>
+										<td><span class="tsd-signature-type">string</span></td>
+										<td></td>
+										<td>
+											<p>The base URL for the service.
+											</p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="synthesize" class="tsd-anchor"></a>
+					<h3>synthesize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">synthesize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.synthesizeparams.html" class="tsd-signature-type">SynthesizeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L275">text-to-speech/v1-generated.ts:275</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Synthesize audio.</p>
+								</div>
+								<p>Synthesizes text to audio that is spoken in the specified voice. The service bases its understanding of the
+								language for the input text on the specified voice. Use a voice that matches the language of the input text.</p>
+								<p>The method accepts a maximum of 5 KB of input text in the body of the request, and 8 KB for the URL and headers.
+									The 5 KB limit includes any SSML tags that you specify. The service returns the synthesized audio stream as an
+								array of bytes.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP">The HTTP
+								interface</a>.</p>
+								<a href="#audio-formats-accept-types" id="audio-formats-accept-types" style="color: inherit; text-decoration: none;">
+									<h3>Audio formats (accept types)</h3>
+								</a>
+								<p> The service can return audio in the following formats (MIME types).</p>
+								<ul>
+									<li>Where indicated, you can optionally specify the sampling rate (<code>rate</code>) of the audio. You must specify a sampling
+										rate for the <code>audio/l16</code> and <code>audio/mulaw</code> formats. A specified sampling rate must lie in the range of 8 kHz to 192
+									kHz. Some formats restrict the sampling rate to certain values, as noted.</li>
+									<li>For the <code>audio/l16</code> format, you can optionally specify the endianness (<code>endianness</code>) of the audio:
+									<code>endianness=big-endian</code> or <code>endianness=little-endian</code>.</li>
+								</ul>
+								<p>Use the <code>Accept</code> header or the <code>accept</code> parameter to specify the requested format of the response audio. If you
+									omit an audio format altogether, the service returns the audio in Ogg format with the Opus codec
+								(<code>audio/ogg;codecs=opus</code>). The service always returns single-channel audio.</p>
+								<ul>
+									<li><code>audio/basic</code> - The service returns audio with a sampling rate of 8000 Hz.</li>
+									<li><code>audio/flac</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/l16</code> - You must specify the <code>rate</code> of the audio. You can optionally specify the <code>endianness</code> of the audio.
+									The default endianness is <code>little-endian</code>.</li>
+									<li><code>audio/mp3</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/mpeg</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/mulaw</code> - You must specify the <code>rate</code> of the audio.</li>
+									<li><code>audio/ogg</code> - The service returns the audio in the <code>vorbis</code> codec. You can optionally specify the <code>rate</code> of the
+									audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/ogg;codecs=opus</code> - You can optionally specify the <code>rate</code> of the audio. Only the following values are valid
+										sampling rates: <code>48000</code>, <code>24000</code>, <code>16000</code>, <code>12000</code>, or <code>8000</code>. If you specify a value other than one of these, the
+									service returns an error. The default sampling rate is 48,000 Hz.</li>
+									<li><code>audio/ogg;codecs=vorbis</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is
+									22,050 Hz.</li>
+									<li><code>audio/wav</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
+									<li><code>audio/webm</code> - The service returns the audio in the <code>opus</code> codec. The service returns audio with a sampling rate
+									of 48,000 Hz.</li>
+									<li><code>audio/webm;codecs=opus</code> - The service returns audio with a sampling rate of 48,000 Hz.</li>
+									<li><code>audio/webm;codecs=vorbis</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is
+									22,050 Hz.</li>
+								</ul>
+								<p>For more information about specifying an audio format, including additional details about some of the formats, see
+								<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audioFormats#audioFormats">Audio formats</a>.</p>
+								<a href="#warning-messages" id="warning-messages" style="color: inherit; text-decoration: none;">
+									<h3>Warning messages</h3>
+								</a>
+								<p> If a request includes invalid query parameters, the service returns a <code>Warnings</code> response header that provides
+									messages about the invalid parameters. The warning includes a descriptive message and a list of invalid argument
+									strings. For example, a message such as <code>&quot;Unknown arguments:&quot;</code> or <code>&quot;Unknown url query arguments:&quot;</code> followed by a
+								list of the form <code>&quot;{invalid_arg_1}, {invalid_arg_2}.&quot;</code> The request succeeds despite the warnings.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.synthesizeparams.html" class="tsd-signature-type">SynthesizeParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>text</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The text to synthesize.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>accept</code></td>
+														<td><a href="../enums/texttospeechv1.synthesizeconstants.accept.html" class="tsd-signature-type">Accept</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>The requested format (MIME type) of the audio. You can use the &#x60;Accept&#x60; header or the &#x60;accept&#x60; parameter to
+															specify the audio format. For more information about specifying an audio format, see **Audio formats (accept
+														types)** in the method description.</td>
+													</tr>
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>The customization ID (GUID) of a custom voice model to use for the synthesis. If a custom voice model is
+															specified, it works only if it matches the language of the indicated voice. You must make the request with
+															credentials for the instance of the service that owns the custom model. Omit the parameter to use the specified
+														voice with no customization.</td>
+													</tr>
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>voice</code></td>
+														<td><a href="../enums/texttospeechv1.synthesizeconstants.voice.html" class="tsd-signature-type">Voice</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>The voice to use for synthesis.</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatevoicemodel" class="tsd-anchor"></a>
+					<h3>update<wbr>Voice<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Voice<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.updatevoicemodelparams.html" class="tsd-signature-type">UpdateVoiceModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/d957e54/text-to-speech/v1-generated.ts#L605">text-to-speech/v1-generated.ts:605</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update a custom model.</p>
+								</div>
+								<p>Updates information for the specified custom voice model. You can update metadata such as the name and description
+									of the voice model. You can also update the words in the model and their translations. Adding a new translation for
+									a word that already exists in a custom model overwrites the word&#39;s existing translation. A custom model can contain
+									no more than 20,000 entries. You must use credentials for the instance of the service that owns a model to update
+								it.</p>
+								<p>You can define sounds-like or phonetic translations for words. A sounds-like translation consists of one or more
+									words that, when combined, sound like the word. Phonetic translations are based on the SSML phoneme format for
+								representing a word. You can specify them in standard International Phonetic Alphabet (IPA) representation</p>
+								<p>  <code>&lt;phoneme alphabet="ipa" ph="t&#601;m&#712;&#593;to"&gt;&lt;/phoneme&gt;</code></p>
+								<p>  or in the proprietary IBM Symbolic Phonetic Representation (SPR)</p>
+								<p>  <code>&lt;phoneme alphabet="ibm" ph="1gAstroEntxrYFXs"&gt;&lt;/phoneme&gt;</code></p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsUpdate">Updating a custom
+									model</a></li>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">Adding words to a Japanese custom
+									model</a></li>
+									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">Understanding
+									customization</a>.</li>
+								</ul>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.updatevoicemodelparams.html" class="tsd-signature-type">UpdateVoiceModelParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
+														instance of the service that owns the custom model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>description</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>A new description for the custom voice model.</td>
+													</tr>
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>name</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>A new name for the custom voice model.</td>
+													</tr>
+													<tr>
+														<td><code>words</code></td>
+														<td><a href="../interfaces/texttospeechv1.word.html" class="tsd-signature-type">Word</a><span class="tsd-signature-symbol">[]</span></td>
+														<td>Optional</td>
+														<td>An array of &#x60;Word&#x60; objects that provides the words and their translations that are to be added or updated
+														for the custom voice model. Pass an empty array to make no additions or updates.</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="texttospeechv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class="current tsd-kind-class">
+						<a href="texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+						<ul>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="texttospeechv1.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
+								<a href="texttospeechv1.html#default_service_name" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
+								<a href="texttospeechv1.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#addword" class="tsd-kind-icon">add<wbr>Word</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#addwords" class="tsd-kind-icon">add<wbr>Words</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#createvoicemodel" class="tsd-kind-icon">create<wbr>Voice<wbr>Model</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#deleteuserdata" class="tsd-kind-icon">delete<wbr>User<wbr>Data</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#deletevoicemodel" class="tsd-kind-icon">delete<wbr>Voice<wbr>Model</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#deleteword" class="tsd-kind-icon">delete<wbr>Word</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="texttospeechv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#getpronunciation" class="tsd-kind-icon">get<wbr>Pronunciation</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#getvoice" class="tsd-kind-icon">get<wbr>Voice</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#getvoicemodel" class="tsd-kind-icon">get<wbr>Voice<wbr>Model</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#getword" class="tsd-kind-icon">get<wbr>Word</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#listvoicemodels" class="tsd-kind-icon">list<wbr>Voice<wbr>Models</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#listvoices" class="tsd-kind-icon">list<wbr>Voices</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#listwords" class="tsd-kind-icon">list<wbr>Words</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="texttospeechv1.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#synthesize" class="tsd-kind-icon">synthesize</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#updatevoicemodel" class="tsd-kind-icon">update<wbr>Voice<wbr>Model</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
