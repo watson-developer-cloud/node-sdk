@@ -1,3 +1,18 @@
+# [5.5.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.4.0...v5.5.0) (2020-04-24)
+
+
+### Bug Fixes
+
+* **discovery-v1:** property `indexed` corrected to `available` for model `EnvironmentDocuments` ([7bc2ccd](https://github.com/watson-developer-cloud/node-sdk/commit/7bc2ccdb303f621068e964bf147672b0c8e0db8e))
+
+
+### Features
+
+* **assistant-v1:** `RuntimeEntityAlternative` model added ([9ad75d7](https://github.com/watson-developer-cloud/node-sdk/commit/9ad75d7cbc94a6f686d72dfe71a7ef6b2188fda9))
+* **assistant-v2:** `MessageContextSkillSystem` model added ([40fd822](https://github.com/watson-developer-cloud/node-sdk/commit/40fd822b668104ab11ba9e6711c7d6c85785c39e))
+* **speech-to-text-v1:** parameters `speechDetectorSensitivity`, `backgroundAudioSuppression`, added to `recognize` ([7c91ea2](https://github.com/watson-developer-cloud/node-sdk/commit/7c91ea2263e9a4c7a1ac47bae9dffefc06082692))
+* **text-to-speech-v1:** new voices and languages added ([dad6e0e](https://github.com/watson-developer-cloud/node-sdk/commit/dad6e0edcd86aeed5815809e7cb685734cb3deb7))
+
 # [5.4.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.3.1...v5.4.0) (2020-02-13)
 
 
