@@ -454,7 +454,7 @@ function (err, token) {
 
 Use the [Assistant][assistant] service to determine the intent of a message.
 
-Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-index#about) for details.
 
 ```js
 const AssistantV2 = require('ibm-watson/assistant/v2');
@@ -484,7 +484,7 @@ assistant.message(
 
 Use the [Assistant][assistant] service to determine the intent of a message.
 
-Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/conversation/index.html#about) for details.
+Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-index#about) for details.
 
 ```js
 const AssistantV1 = require('ibm-watson/assistant/v1');
