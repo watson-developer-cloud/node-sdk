@@ -623,7 +623,7 @@
 * Visual Recognition
   * New method `getCoreMlModel` adds support for CoreML
   * Breaking: `detectFaces` no longer supports identity information in the response.
-    * `name`, `score`, `type_hierarchy` removed from response [Release notes](https://console.bluemix.net/docs/services/visual-recognition/release-notes.html#2april2018)
+    * `name`, `score`, `type_hierarchy` removed from response [Release notes](https://cloud.ibm.com/docs/visual-recognition?topic=visual-recognition-release-notes#2april2018)
 
 * Natural Language Classifier
  * New method 'classifyCollection`

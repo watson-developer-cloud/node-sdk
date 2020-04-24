@@ -5336,7 +5336,7 @@ namespace AssistantV1 {
     message_to_human_agent?: string;
     /** The text of the search query. This can be either a natural-language query or a query that uses the Discovery
      *  query language syntax, depending on the value of the **query_type** property. For more information, see the
-     *  [Discovery service documentation](https://cloud.ibm.com/docs/discovery/query-operators.html#query-operators).
+     *  [Discovery service documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-operators#query-operators).
      *  Required when **response_type**=`search_skill`.
      */
     query?: string;
@@ -5344,7 +5344,7 @@ namespace AssistantV1 {
     query_type?: string;
     /** An optional filter that narrows the set of documents to be searched. For more information, see the
      *  [Discovery service documentation]([Discovery service
-     *  documentation](https://cloud.ibm.com/docs/discovery/query-parameters.html#filter).
+     *  documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-parameters#filter).
      */
     filter?: string;
     /** The version of the Discovery service API to use for the query. */
