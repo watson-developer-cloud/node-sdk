@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TranslateParams | ibm-watson - v5.3.1</title>
+	<title>TranslateParams | ibm-watson - v5.4.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ibm-watson - v5.3.1</a>
+					<a href="../index.html" class="title">ibm-watson - v5.4.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -108,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L928">language-translator/v3.ts:928</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L936">language-translator/v3.ts:936</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -118,12 +118,14 @@
 					<div class="tsd-signature tsd-kind-icon">model<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L923">language-translator/v3.ts:923</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L931">language-translator/v3.ts:931</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A globally unique string that identifies the underlying model that is used for translation.</p>
+							<p>The model to use for translation. For example, <code>en-de</code> selects the IBM provided base model for English to
+								German translation. A model ID overrides the source and target parameters and is required if you use a custom
+							model. If no model ID is specified, you must specify a target language.</p>
 						</div>
 					</div>
 				</section>
@@ -133,12 +135,12 @@
 					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L925">language-translator/v3.ts:925</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L933">language-translator/v3.ts:933</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Translation source language code.</p>
+							<p>Language code that specifies the language of the source document.</p>
 						</div>
 					</div>
 				</section>
@@ -148,12 +150,12 @@
 					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L927">language-translator/v3.ts:927</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L935">language-translator/v3.ts:935</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Translation target language code.</p>
+							<p>Language code that specifies the target language for translation. Required if model ID is not specified.</p>
 						</div>
 					</div>
 				</section>
@@ -163,7 +165,7 @@
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L921">language-translator/v3.ts:921</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L926">language-translator/v3.ts:926</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

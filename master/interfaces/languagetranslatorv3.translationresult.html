@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TranslationResult | ibm-watson - v5.3.1</title>
+	<title>TranslationResult | ibm-watson - v5.4.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ibm-watson - v5.3.1</a>
+					<a href="../index.html" class="title">ibm-watson - v5.4.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -91,6 +91,8 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="languagetranslatorv3.translationresult.html#character_count" class="tsd-kind-icon">character_<wbr>count</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="languagetranslatorv3.translationresult.html#detected_language" class="tsd-kind-icon">detected_<wbr>language</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="languagetranslatorv3.translationresult.html#detected_language_confidence" class="tsd-kind-icon">detected_<wbr>language_<wbr>confidence</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="languagetranslatorv3.translationresult.html#translations" class="tsd-kind-icon">translations</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="languagetranslatorv3.translationresult.html#word_count" class="tsd-kind-icon">word_<wbr>count</a></li>
 							</ul>
@@ -106,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">character_<wbr>count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L1241">language-translator/v3.ts:1241</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L1256">language-translator/v3.ts:1256</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,12 +118,43 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="detected_language" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> detected_<wbr>language</h3>
+					<div class="tsd-signature tsd-kind-icon">detected_<wbr>language<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L1258">language-translator/v3.ts:1258</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The language code of the source text if the source language was automatically detected.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="detected_language_confidence" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> detected_<wbr>language_<wbr>confidence</h3>
+					<div class="tsd-signature tsd-kind-icon">detected_<wbr>language_<wbr>confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L1262">language-translator/v3.ts:1262</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A score between 0 and 1 indicating the confidence of source language detection. A higher value indicates
+							greater confidence. This is returned only when the service automatically detects the source language.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="translations" class="tsd-anchor"></a>
 					<h3>translations</h3>
 					<div class="tsd-signature tsd-kind-icon">translations<span class="tsd-signature-symbol">:</span> <a href="languagetranslatorv3.translation.html" class="tsd-signature-type">Translation</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L1243">language-translator/v3.ts:1243</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L1264">language-translator/v3.ts:1264</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,7 +169,7 @@
 					<div class="tsd-signature tsd-kind-icon">word_<wbr>count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/language-translator/v3.ts#L1239">language-translator/v3.ts:1239</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/language-translator/v3.ts#L1254">language-translator/v3.ts:1254</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -190,6 +223,14 @@
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="languagetranslatorv3.translationresult.html#character_count" class="tsd-kind-icon">character_<wbr>count</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="languagetranslatorv3.translationresult.html#detected_language" class="tsd-kind-icon">detected_<wbr>language</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="languagetranslatorv3.translationresult.html#detected_language_confidence" class="tsd-kind-icon">detected_<wbr>language_<wbr>confidence</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">

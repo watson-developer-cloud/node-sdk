@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Webhook | ibm-watson - v5.4.0</title>
+	<title>RuntimeEntityAlternative | ibm-watson - v5.4.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../classes/assistantv1.html">AssistantV1</a>
 				</li>
 				<li>
-					<a href="assistantv1.webhook.html">Webhook</a>
+					<a href="assistantv1.runtimeentityalternative.html">RuntimeEntityAlternative</a>
 				</li>
 			</ul>
-			<h1>Interface Webhook</h1>
+			<h1>Interface RuntimeEntityAlternative</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A webhook that can be used by dialog nodes to make programmatic calls to an external function. <strong>Note:</strong> Currently, only a single webhook named <code>main_webhook</code> is supported.</p>
+						<p>An alternative value for the recognized entity.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Webhook</span>
+						<span class="target">RuntimeEntityAlternative</span>
 					</li>
 				</ul>
 			</section>
@@ -90,9 +90,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.webhook.html#headers" class="tsd-kind-icon">headers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.webhook.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.webhook.html#url" class="tsd-kind-icon">url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.runtimeentityalternative.html#confidence" class="tsd-kind-icon">confidence</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.runtimeentityalternative.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,47 +100,32 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="headers" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
-					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <a href="assistantv1.webhookheader.html" class="tsd-signature-type">WebhookHeader</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="confidence" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> confidence</h3>
+					<div class="tsd-signature tsd-kind-icon">confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v1.ts#L6011">assistant/v1.ts:6011</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v1.ts#L5794">assistant/v1.ts:5794</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An optional array of HTTP headers to pass with the HTTP request.</p>
+							<p>A decimal percentage that represents Watson&#39;s confidence in the recognized entity.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="value" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v1.ts#L6009">assistant/v1.ts:6009</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v1.ts#L5792">assistant/v1.ts:5792</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the webhook. Currently, <code>main_webhook</code> is the only supported value.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="url" class="tsd-anchor"></a>
-					<h3>url</h3>
-					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v1.ts#L6007">assistant/v1.ts:6007</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The URL for the external service or application to which you want to send HTTP POST requests.</p>
+							<p>The entity value that was recognized in the user input.</p>
 						</div>
 					</div>
 				</section>
@@ -165,19 +149,15 @@
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="assistantv1.webhook.html" class="tsd-kind-icon">Webhook</a>
+								<a href="assistantv1.runtimeentityalternative.html" class="tsd-kind-icon">Runtime<wbr>Entity<wbr>Alternative</a>
 								<ul>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.webhook.html#headers" class="tsd-kind-icon">headers</a>
+										<a href="assistantv1.runtimeentityalternative.html#confidence" class="tsd-kind-icon">confidence</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.webhook.html#name" class="tsd-kind-icon">name</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="assistantv1.webhook.html#url" class="tsd-kind-icon">url</a>
+										<a href="assistantv1.runtimeentityalternative.html#value" class="tsd-kind-icon">value</a>
 									</li>
 								</ul>
 							</li>

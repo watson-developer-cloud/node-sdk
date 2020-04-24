@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TextToSpeechV1 | ibm-watson - v5.3.1</title>
+	<title>TextToSpeechV1 | ibm-watson - v5.4.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ibm-watson - v5.3.1</a>
+					<a href="../index.html" class="title">ibm-watson - v5.4.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -80,7 +80,7 @@
 						translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the
 						word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic
 						translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic
-					Phonetic Representation (SPR).</p>
+					Phonetic Representation (SPR). The Arabic, Chinese, Dutch, and Korean languages support only IPA.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -157,7 +157,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -205,7 +205,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.DEFAULT_SERVICE_NAME</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +216,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides BaseService.DEFAULT_SERVICE_URL</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L41">text-to-speech/v1-generated.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L41">text-to-speech/v1-generated.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -233,7 +233,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L1024">text-to-speech/v1-generated.ts:1024</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1024">text-to-speech/v1-generated.ts:1024</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -303,8 +303,9 @@
 														<td><span class="tsd-signature-type">string</span></td>
 														<td></td>
 														<td>The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for
-															representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A
-														sounds-like is one or more words that, when combined, sound like the word.</td>
+															representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. The
+															Arabic, Chinese, Dutch, and Korean languages support only IPA. A sounds-like is one or more words that, when
+														combined, sound like the word.</td>
 													</tr>
 													<tr>
 														<td><code>word</code></td>
@@ -361,7 +362,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L851">text-to-speech/v1-generated.ts:851</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L850">text-to-speech/v1-generated.ts:850</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -469,7 +470,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L449">text-to-speech/v1-generated.ts:449</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L448">text-to-speech/v1-generated.ts:448</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,8 +480,7 @@
 								<p>Creates a new empty custom voice model. You must specify a name for the new custom model. You can optionally
 									specify the language and a description for the new model. The model is owned by the instance of the service whose
 								credentials are used to create it.</p>
-								<p><strong>Note:</strong> This method is currently a beta release. The service does not support voice model customization for the
-								Arabic, Chinese, and Dutch languages.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate">Creating a custom
 								model</a>.</p>
 							</div>
@@ -540,7 +540,9 @@
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td>Optional</td>
-														<td>The language of the new custom voice model. Omit the parameter to use the the default language, &#x60;en-US&#x60;.</td>
+														<td>The language of the new custom voice model. You create a custom voice model for a specific language, not for
+															a specific voice. A custom model can be used with any voice, standard or neural, for its specified language.
+														Omit the parameter to use the the default language, &#x60;en-US&#x60;.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -571,7 +573,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L1251">text-to-speech/v1-generated.ts:1251</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1251">text-to-speech/v1-generated.ts:1251</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -659,7 +661,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L755">text-to-speech/v1-generated.ts:755</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L754">text-to-speech/v1-generated.ts:754</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -745,7 +747,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L1175">text-to-speech/v1-generated.ts:1175</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1175">text-to-speech/v1-generated.ts:1175</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -860,7 +862,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L367">text-to-speech/v1-generated.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L366">text-to-speech/v1-generated.ts:366</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -870,8 +872,7 @@
 								<p>Gets the phonetic pronunciation for the specified word. You can request the pronunciation for a specific format.
 									You can also request the pronunciation for a specific voice to see the default translation for the language of that
 								voice or for a specific custom voice model to see the translation for that voice model.</p>
-								<p><strong>Note:</strong> This method is currently a beta release. The method does not support the Arabic, Chinese, and Dutch
-								languages.</p>
+								<p><strong>Note:</strong> This method is currently a beta release.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage">Querying a word from a
 								language</a>.</p>
 							</div>
@@ -929,8 +930,8 @@
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td>Optional</td>
-														<td>The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in
-														the default format.</td>
+														<td>The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, and Korean languages
+														support only IPA. Omit the parameter to obtain the pronunciation in the default format.</td>
 													</tr>
 													<tr>
 														<td><code>headers</code></td>
@@ -977,7 +978,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L144">text-to-speech/v1-generated.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L144">text-to-speech/v1-generated.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1073,7 +1074,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L685">text-to-speech/v1-generated.ts:685</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L684">text-to-speech/v1-generated.ts:684</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1160,7 +1161,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L1103">text-to-speech/v1-generated.ts:1103</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1103">text-to-speech/v1-generated.ts:1103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1252,7 +1253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L524">text-to-speech/v1-generated.ts:524</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L523">text-to-speech/v1-generated.ts:523</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1343,7 +1344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L88">text-to-speech/v1-generated.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L88">text-to-speech/v1-generated.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1421,7 +1422,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L928">text-to-speech/v1-generated.ts:928</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L927">text-to-speech/v1-generated.ts:927</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1554,7 +1555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L275">text-to-speech/v1-generated.ts:275</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L275">text-to-speech/v1-generated.ts:275</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1667,9 +1668,9 @@
 														<td><span class="tsd-signature-type">string</span></td>
 														<td>Optional</td>
 														<td>The customization ID (GUID) of a custom voice model to use for the synthesis. If a custom voice model is
-															specified, it is guaranteed to work only if it matches the language of the indicated voice. You must make the
-															request with credentials for the instance of the service that owns the custom model. Omit the parameter to use
-														the specified voice with no customization.</td>
+															specified, it works only if it matches the language of the indicated voice. You must make the request with
+															credentials for the instance of the service that owns the custom model. Omit the parameter to use the specified
+														voice with no customization.</td>
 													</tr>
 													<tr>
 														<td><code>headers</code></td>
@@ -1715,7 +1716,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/text-to-speech/v1-generated.ts#L606">text-to-speech/v1-generated.ts:606</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L605">text-to-speech/v1-generated.ts:605</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

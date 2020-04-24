@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MessageInputOptions | ibm-watson - v5.3.1</title>
+	<title>MessageInputOptions | ibm-watson - v5.4.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ibm-watson - v5.3.1</a>
+					<a href="../index.html" class="title">ibm-watson - v5.4.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -90,6 +90,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageinputoptions.html#_export" class="tsd-kind-icon">_export</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageinputoptions.html#alternate_intents" class="tsd-kind-icon">alternate_<wbr>intents</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageinputoptions.html#debug" class="tsd-kind-icon">debug</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageinputoptions.html#restart" class="tsd-kind-icon">restart</a></li>
@@ -102,12 +103,29 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="_export" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> _export</h3>
+					<div class="tsd-signature tsd-kind-icon">_export<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v2.ts#L575">assistant/v2.ts:575</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether to return session context, including full conversation state. If you specify <code>true</code>, the response
+							includes the <code>context</code> property, and the skill context includes the <code>system.state</code> property.</p>
+						</div>
+						<p> <strong>Note:</strong> If <strong>export</strong>=<code>true</code>, the context is returned regardless of the value of <strong>return_context</strong>.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="alternate_intents" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> alternate_<wbr>intents</h3>
 					<div class="tsd-signature tsd-kind-icon">alternate_<wbr>intents<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L563">assistant/v2.ts:563</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v2.ts#L564">assistant/v2.ts:564</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -122,13 +140,14 @@
 					<div class="tsd-signature tsd-kind-icon">debug<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L557">assistant/v2.ts:557</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v2.ts#L558">assistant/v2.ts:558</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Whether to return additional diagnostic information. Set to <code>true</code> to return additional information under
-							the <code>output.debug</code> key.</p>
+							<p>Whether to return additional diagnostic information. Set to <code>true</code> to return additional information in the
+								<code>output.debug</code> property. If you also specify <strong>return_context</strong>=<code>true</code>, the returned skill context includes the
+							<code>system.state</code> property.</p>
 						</div>
 					</div>
 				</section>
@@ -138,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">restart<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L561">assistant/v2.ts:561</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v2.ts#L562">assistant/v2.ts:562</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,13 +173,14 @@
 					<div class="tsd-signature tsd-kind-icon">return_<wbr>context<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/35fb2a5/assistant/v2.ts#L567">assistant/v2.ts:567</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v2.ts#L569">assistant/v2.ts:569</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Whether to return session context with the response. If you specify <code>true</code>, the response will include the
-							<code>context</code> property.</p>
+							<p>Whether to return session context with the response. If you specify <code>true</code>, the response includes the
+								<code>context</code> property. If you also specify <strong>debug</strong>=<code>true</code>, the returned skill context includes the <code>system.state</code>
+							property.</p>
 						</div>
 					</div>
 				</section>
@@ -190,6 +210,10 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="assistantv2.messageinputoptions.html" class="tsd-kind-icon">Message<wbr>Input<wbr>Options</a>
 								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messageinputoptions.html#_export" class="tsd-kind-icon">_export</a>
+									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.messageinputoptions.html#alternate_intents" class="tsd-kind-icon">alternate_<wbr>intents</a>
