@@ -74,7 +74,7 @@ personalityInsights.profile(
 
 /*
  * CSV output example:
- * https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-outputCSV#outputCSV
+ * https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-outputCSV#outputCSV
  */
 personalityInsights.profileAsCsv(
   {

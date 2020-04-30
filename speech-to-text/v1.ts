@@ -294,6 +294,8 @@ namespace SpeechToTextV1 {
     audioMetrics?: boolean;
     endOfPhraseSilenceTime?: number;
     splitTranscriptAtPhraseEnd?: boolean;
+    speechDetectorSensitivity?: number;
+    backgroundAudioSuppression?: number;
   }
 }
 
