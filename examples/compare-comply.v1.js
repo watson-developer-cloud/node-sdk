@@ -8,7 +8,7 @@ const compareComply = new CompareComplyV1({
   // environment property, and then IBM Cloud's VCAP_SERVICES environment property
   iam_apikey: 'YOUR APIKEY',
   url: 'https://gateway.watsonplatform.net/compare-comply/api',
-  version: '2018-12-06'
+  version: '2018-12-06',
 });
 
 const params = {
@@ -26,4 +26,4 @@ compareComply.compareDocuments(params, (error, data) => {
   } else {
     console.log(data);
   }
-);
+});
