@@ -4,10 +4,9 @@ var PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
 var fs = require('fs');
 
 var personalityInsights = new PersonalityInsightsV3({
-  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  version: '2016-10-19',
-  url: 'https://gateway.watsonplatform.net/personality-insights/api/'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
+  version: '2020-04-30',
 });
 
 /*
@@ -18,9 +17,9 @@ personalityInsights.profile(
   {
     content: 'Enter more than 100 unique words here...',
     content_type: 'text/plain',
-    consumption_preferences: true
+    consumption_preferences: true,
   },
-  function(err, response) {
+  function (err, response) {
     if (err) {
       console.log('error:', err);
     } else {
@@ -38,9 +37,9 @@ personalityInsights.profile(
   {
     content: 'Ingrese un texto de más de 100 palabras aquí...',
     content_type: 'text/plain',
-    content_language: 'es'
+    content_language: 'es',
   },
-  function(err, response) {
+  function (err, response) {
     if (err) {
       console.log('error:', err);
     } else {
@@ -62,9 +61,9 @@ personalityInsights.profile(
     content: 'Ingrese un texto de más de 100 palabras aquí...',
     content_type: 'text/plain',
     content_language: 'es',
-    accept_language: 'es'
+    accept_language: 'es',
   },
-  function(err, response) {
+  function (err, response) {
     if (err) {
       console.log('error:', err);
     } else {
@@ -77,12 +76,11 @@ personalityInsights.profile(
  * CSV output example:
  * https://cloud.ibm.com/docs/services/personality-insights?topic=personality-insights-outputCSV#outputCSV
  */
-personalityInsights
-  .profileAsCsv(
+personalityInsights.profileAsCsv(
   {
     content: 'Enter more than 100 unique words here...',
     content_type: 'text/plain',
-    csv_headers: true
+    csv_headers: true,
   },
   (err, res) => {
     if (err) {
@@ -90,4 +88,5 @@ personalityInsights
     } else {
       fs.writeFileSync('./output.csv', res);
     }
-  });
+  }
+);

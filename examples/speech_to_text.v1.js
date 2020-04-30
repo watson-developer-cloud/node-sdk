@@ -3,9 +3,8 @@ var SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
 var fs = require('fs');
 
 var speechToText = new SpeechToTextV1({
-  username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE',
-  url: 'https://stream.watsonplatform.net/speech-to-text/api/'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
 });
 
 /*
@@ -18,7 +17,7 @@ var speechToText = new SpeechToTextV1({
 
 var params = {
   content_type: 'audio/wav',
-  objectMode: true
+  objectMode: true,
 };
 
 // create the stream
@@ -37,11 +36,17 @@ recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
 recognizeStream.setEncoding('utf8');
 */
 
-recognizeStream.on('data', function(event) { onEvent('Data:', event); });
-recognizeStream.on('error', function(event) { onEvent('Error:', event); });
-recognizeStream.on('close', function(event) { onEvent('Close:', event); });
+recognizeStream.on('data', function (event) {
+  onEvent('Data:', event);
+});
+recognizeStream.on('error', function (event) {
+  onEvent('Error:', event);
+});
+recognizeStream.on('close', function (event) {
+  onEvent('Close:', event);
+});
 
 // Displays events on the console.
 function onEvent(name, event) {
   console.log(name, JSON.stringify(event, null, 2));
-};
+}

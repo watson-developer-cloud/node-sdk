@@ -4,10 +4,8 @@ const fs = require('fs');
 const CompareComplyV1 = require('ibm-watson/compare-comply/v1');
 
 const compareComply = new CompareComplyV1({
-  // if left unspecified here, the SDK will fall back to the COMPARE_COMPLY_IAM_APIKEY
-  // environment property, and then IBM Cloud's VCAP_SERVICES environment property
-  iam_apikey: 'YOUR APIKEY',
-  url: 'https://gateway.watsonplatform.net/compare-comply/api',
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
   version: '2018-12-06',
 });
 

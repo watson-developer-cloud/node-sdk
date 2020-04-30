@@ -6,25 +6,25 @@ var AssistantV1 = require('ibm-watson/assistant/v1');
  * Instantiate the Watson Assistant Service
  */
 var assistant = new AssistantV1({
-  username: process.env.ASSISTANT_USERNAME || '<assistant_username>',
-  password: process.env.ASSISTANT_PASSWORD || '<assistant_password>',
-  version: '2018-02-16'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
+  version: '2020-04-30',
 });
 
 /**
  * Calls the assistant message api.
  * returns a promise
  */
-var message = function(text, context) {
+var message = function (text, context) {
   var payload = {
     workspace_id: process.env.WORKSPACE_ID || '<workspace_id>',
     input: {
-      text: text
+      text: text,
     },
-    context: context
+    context: context,
   };
   return new Promise((resolve, reject) =>
-    assistant.message(payload, function(err, data) {
+    assistant.message(payload, function (err, data) {
       if (err) {
         reject(err);
       } else {
@@ -49,9 +49,7 @@ message('first message', undefined)
   })
   .then(response2 => {
     console.log(JSON.stringify(response2, null, 2), '\n--------');
-    console.log(
-      'Note that the two reponses should have the same context.conversation_id'
-    );
+    console.log('Note that the two reponses should have the same context.conversation_id');
   })
   .catch(err => {
     // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR

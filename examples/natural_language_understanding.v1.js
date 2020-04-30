@@ -5,16 +5,13 @@ var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-unders
 require('dotenv').config({ silent: true }); //  optional
 
 var nlu = new NaturalLanguageUnderstandingV1({
-  // note: if unspecified here, credentials are pulled from environment properties:
-  // NATURAL_LANGUAGE_UNDERSTANDING_USERNAME &  NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD
-  // username: '<username>'.
-  // password: '<password>',
-  version: '2018-04-05',
-  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
+  version: '2020-04-30',
 });
 
 var filename = '../test/resources/natural_language_understanding/energy-policy.html';
-fs.readFile(filename, 'utf-8', function(file_error, file_data) {
+fs.readFile(filename, 'utf-8', function (file_error, file_data) {
   if (file_error) {
     console.log(file_error);
   } else {
@@ -22,10 +19,10 @@ fs.readFile(filename, 'utf-8', function(file_error, file_data) {
       html: file_data,
       features: {
         concepts: {},
-        keywords: {}
-      }
+        keywords: {},
+      },
     };
-    nlu.analyze(options, function(err, res) {
+    nlu.analyze(options, function (err, res) {
       if (err) {
         console.log(err);
         return;

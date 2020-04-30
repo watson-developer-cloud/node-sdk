@@ -4,10 +4,8 @@ const fs = require('fs');
 const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 
 const textToSpeech = new TextToSpeechV1({
-  // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
-  // environment properties, and then IBM Cloud's VCAP_SERVICES environment property
-  // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
 });
 
 // specify the text to synthesize

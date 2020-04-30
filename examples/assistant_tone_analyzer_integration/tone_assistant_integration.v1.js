@@ -8,23 +8,6 @@
  * Service credentials can be provided directly in this file, or can be saved to a .env file located in the
  * same directory.
  *
- * Requirements:
- *   1. Tone Analyzer Service instance:
- *   - https://cloud.ibm.com/catalog/services/tone-analyzer
- *   - credentials for this service to be provided below in tone_analyzer variable
- *    - replace <tone_analyzer_username> and <tone_analyzer_password>
- *   2. Assistant Service instance:
- *   - https://cloud.ibm.com/catalog/services/watson-assistant
- *   - credentials for this service to be provided below in the assistant variable
- *    - replace <assistant_username> and <assistant_password>
- *   3. Workspace id:
- *   - a workspace containing intents, entities and dialog nodes must be created using the tool
- *     available through the IBM Cloud Assistant Service. Details are available at
- *     https://github.com/watson-developer-cloud/assistant-simple#workspace
- *    - replace <workspace_id> in the payload variable
- *
- * Run the code using the command:
- *   node tone_assistant_integration.v1.js
  */
 
 'use strict';
@@ -39,18 +22,18 @@ require('dotenv').config({ silent: true });
  * Instantiate the Watson Assistant Service
  */
 var assistant = new AssistantV1({
-  username: process.env.ASSISTANT_USERNAME || '<assistant_username>',
-  password: process.env.ASSISTANT_PASSWORD || '<assistant_password>',
-  version: '2017-05-26'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
+  version: '2020-04-30',
 });
 
 /**
  * Instantiate the Watson Tone Analyzer Service
  */
 var toneAnalyzer = new ToneAnalyzerV3({
-  username: process.env.TONE_ANALYZER_USERNAME || '<tone_analyzer_username>',
-  password: process.env.TONE_ANALYZER_PASSWORD || '<tone_analyzer_password>',
-  version: '2017-09-21'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
+  version: '2017-09-21',
 });
 
 /**
@@ -66,8 +49,8 @@ var maintainToneHistoryInContext = true;
 var payload = {
   workspace_id: process.env.WORKSPACE_ID || '<workspace_id>',
   input: {
-    text: 'I am not happy today :('
-  }
+    text: 'I am not happy today :(',
+  },
 };
 
 /**
@@ -84,12 +67,8 @@ function invokeToneAssistant(payload, maintainToneHistoryInContext) {
   tone_detection
     .invokeToneAsync(payload, toneAnalyzer)
     .then(tone => {
-      tone_detection.updateUserTone(
-        payload,
-        tone,
-        maintainToneHistoryInContext
-      );
-      assistant.message(payload, function(err, data) {
+      tone_detection.updateUserTone(payload, tone, maintainToneHistoryInContext);
+      assistant.message(payload, function (err, data) {
         if (err) {
           // APPLICATION-SPECIFIC CODE TO PROCESS THE ERROR
           // FROM ASSISTANT SERVICE
@@ -101,7 +80,7 @@ function invokeToneAssistant(payload, maintainToneHistoryInContext) {
         }
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log(JSON.stringify(err, null, 2));
     });
 }

@@ -4,18 +4,12 @@ var DiscoveryV1 = require('ibm-watson/discovery/v1');
 var fs = require('fs');
 
 var discovery = new DiscoveryV1({
-  // if left unspecified here, the SDK will fall back to the DISCOVERY_USERNAME and DISCOVERY_PASSWORD
-  // environment properties, and then IBM Cloud's VCAP_SERVICES environment property
-  // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
-  // url: 'INSERT YOUR URL FOR THE SERVICE HERE'
-  username: 'YOUR USERNAME',
-  password: 'YOUR PASSWORD',
-  version: '2018-03-05',
-  url: 'https://gateway.watsonplatform.net/discovery/api/'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
+  version: '2020-04-30',
 });
 
-discovery.getEnvironments({}, function(error, data) {
+discovery.getEnvironments({}, function (error, data) {
   console.log(JSON.stringify(data, null, 2));
 });
 
@@ -26,9 +20,9 @@ discovery.addDocument(
   {
     environment_id: 'YOUR ENVIRONMENT ID',
     collection_id: 'YOUR COLLECTION ID',
-    file: file
+    file: file,
   },
-  function(error, data) {
+  function (error, data) {
     if (error) {
       console.log(error);
     } else {

@@ -4,11 +4,8 @@ var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 var fs = require('fs');
 
 var textToSpeech = new TextToSpeechV1({
-  // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
-  // environment properties, and then IBM Cloud's VCAP_SERVICES environment property
-  // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
-  url: 'https://stream.watsonplatform.net/text-to-speech/api/'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
+  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
 });
 
 // Synthesize speech, correct the wav header, then save to disk
@@ -17,9 +14,9 @@ var textToSpeech = new TextToSpeechV1({
 textToSpeech.synthesize(
   {
     text: 'Hello from IBM Watson',
-    accept: 'audio/wav'
+    accept: 'audio/wav',
   },
-  function(err, audio) {
+  function (err, audio) {
     if (err) {
       console.log(err);
       return;
@@ -38,12 +35,12 @@ textToSpeech
   .synthesize({
     text: 'Hello from IBM Watson',
     voice: 'en-US_AllisonVoice', // Optional voice
-    accept: 'audio/wav' // default is audio/ogg; codec=opus
+    accept: 'audio/wav', // default is audio/ogg; codec=opus
   })
   .pipe(fs.createWriteStream('output.wav'));
 
 // Retrieve details of all available voices
-textToSpeech.listVoices({}, function(err, res) {
+textToSpeech.listVoices({}, function (err, res) {
   if (err) {
     return console.log(err);
   }
@@ -53,9 +50,9 @@ textToSpeech.listVoices({}, function(err, res) {
 // Retrieve details of a specific voice
 textToSpeech.getVoice(
   {
-    voice: 'en-GB_KateVoice'
+    voice: 'en-GB_KateVoice',
   },
-  function(err, res) {
+  function (err, res) {
     if (err) {
       return console.log(err);
     }
@@ -68,9 +65,9 @@ textToSpeech.getPronunciation(
   {
     text: 'iPhone',
     format: 'spr', // 'ipa' (default) is only for english voices
-    voice: 'de-DE_DieterVoice' // optional, defaults to en-US_MichaelVoice
+    voice: 'de-DE_DieterVoice', // optional, defaults to en-US_MichaelVoice
   },
-  function(err, res) {
+  function (err, res) {
     if (err) {
       return console.log(err);
     }
@@ -83,9 +80,9 @@ textToSpeech.createVoiceModel(
   {
     name: 'my custom alt language pronunciation model',
     language: 'en-US', // currently, only en-US is accepted
-    description: 'Test model to try out custom pronunciations'
+    description: 'Test model to try out custom pronunciations',
   },
-  function(err, res) {
+  function (err, res) {
     if (err) {
       return console.log(err);
     }
@@ -106,10 +103,10 @@ textToSpeech.updateVoiceModel(
     description: 'new description', // optional
     words: [
       { word: 'NCAA', translation: 'N C double A' },
-      { word: 'iPhone', translation: 'I phone' }
-    ] // required - replaces existing words list
+      { word: 'iPhone', translation: 'I phone' },
+    ], // required - replaces existing words list
   },
-  function(err) {
+  function (err) {
     if (err) {
       return console.log(err);
     }
@@ -120,9 +117,9 @@ textToSpeech.updateVoiceModel(
 // get a list of custom voice models
 textToSpeech.listVoiceModels(
   {
-    language: 'en-US' // optional filter (currently only accepts en-US)
+    language: 'en-US', // optional filter (currently only accepts en-US)
   },
-  function(err, res) {
+  function (err, res) {
     if (err) {
       return console.log(err);
     }
@@ -158,9 +155,9 @@ textToSpeech.listVoiceModels(
 // get details of a custom voice model
 textToSpeech.getVoiceModel(
   {
-    customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6'
+    customization_id: '6666451d-a23e-485c-9bc5-c7ce722550d6',
   },
-  function(err, res) {
+  function (err, res) {
     if (err) {
       return console.log(err);
     }
@@ -192,9 +189,9 @@ textToSpeech.getVoiceModel(
 // delete a custom voice model
 textToSpeech.deleteVoiceModel(
   {
-    customization_id: '9d153f61-a9c4-4b73-8eaf-63951c6dd77d'
+    customization_id: '9d153f61-a9c4-4b73-8eaf-63951c6dd77d',
   },
-  function(err) {
+  function (err) {
     if (err) {
       return console.log(err);
     }
@@ -208,10 +205,10 @@ textToSpeech.addWords(
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
     words: [
       { word: 'NCAA', translation: 'N C double A' },
-      { word: 'iPhone', translation: 'I phone' }
-    ]
+      { word: 'iPhone', translation: 'I phone' },
+    ],
   },
-  function(err) {
+  function (err) {
     if (err) {
       return console.log(err);
     }
@@ -224,9 +221,9 @@ textToSpeech.updateVoiceModel(
   {
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
     word: 'NCAA',
-    translation: 'N C double A'
+    translation: 'N C double A',
   },
-  function(err) {
+  function (err) {
     if (err) {
       return console.log(err);
     }
@@ -237,9 +234,9 @@ textToSpeech.updateVoiceModel(
 // get all words in a customization
 textToSpeech.listWords(
   {
-    customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899'
+    customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
   },
-  function(err, res) {
+  function (err, res) {
     if (err) {
       return console.log(err);
     }
@@ -265,9 +262,9 @@ textToSpeech.listWords(
 textToSpeech.getWord(
   {
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
-    word: 'iPhone'
+    word: 'iPhone',
   },
-  function(err, res) {
+  function (err, res) {
     if (err) {
       return console.log(err);
     }
@@ -284,9 +281,9 @@ textToSpeech.getWord(
 textToSpeech.deleteWord(
   {
     customization_id: '7c7f8ba7-2f83-48f2-ae52-3a70825f9899',
-    word: 'iPhone'
+    word: 'iPhone',
   },
-  function(err) {
+  function (err) {
     if (err) {
       return console.log(err);
     }
