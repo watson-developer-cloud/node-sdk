@@ -118,7 +118,8 @@
     "watch": "npm run test-unit -- --watch",
     "watchify": "watchify dist/sdk.js --standalone Watson --outfile dist/dist/watson.js --debug --verbose",
     "check-packages": "installed-check -e -d",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "snyk protect",
+    "prettier": "prettier --write \"{src,test}/**/*.js\""
   },
   "husky": {
     "hooks": {
