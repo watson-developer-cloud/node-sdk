@@ -1,16 +1,23 @@
-'use strict';
-var express = require('express'); // eslint-disable-line node/no-missing-require
-var app = express();
-var dotenv = require('dotenv');
-var AuthorizationV1 = require('ibm-watson/authorization/v1');
-var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+require('dotenv').config({ silent: true });
+const express = require('express');
+const app = express();
 
-// bundle the code
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
+const { IamTokenManager } = require('ibm-watson/auth');
 
-var compiler = webpack(webpackConfig);
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
+
+const compiler = webpack(webpackConfig);
+
+if (!process.env.TONE_ANALYZER_APIKEY) {
+  console.log('This example requires the TONE_ANALYZER_APIKEY environment variable');
+  process.exit(1);
+}
+
+const toneAuthenticator = new IamTokenManager({
+  apikey: process.env.TONE_ANALYZER_APIKEY,
+});
 
 app.use(
   webpackDevMiddleware(compiler, {
@@ -20,25 +27,16 @@ app.use(
 
 app.use(express.static('public/'));
 
-// optional: load environment properties from a .env file
-dotenv.load({ silent: true });
-
-var ltAuthService = new AuthorizationV1({
-  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
-  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
+app.get('/api/token', function (req, res) {
+  return toneAuthenticator
+    .requestToken()
+    .then(({ result }) => {
+      res.json({ accessToken: result.access_token, url: process.env.TONE_ANALYZER_URL });
+    })
+    .catch(console.error);
 });
 
-app.get('/api/token/tone_analyzer', function (req, res) {
-  ltAuthService.getToken(function (err, token) {
-    if (err) {
-      console.log('Error retrieving token: ', err);
-      return res.status(500).send('Error retrieving token');
-    }
-    res.send(token);
-  });
-});
-
-var port = process.env.PORT || process.env.VCAP_APP_PORT || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('Watson browserify example server running at http://localhost:%s/', port);
 });

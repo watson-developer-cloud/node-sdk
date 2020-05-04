@@ -5,13 +5,11 @@
   "private": true,
   "license": "Apache-2.0",
   "dependencies": {
-    "async": "^2.1.4",
-    "dotenv": "^2.0.0",
     "ibm-watson": "latest",
-    "speaker": "^0.3.0",
+    "speaker": "^0.5.1",
     "wav": "^1.0.1"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   }
 }

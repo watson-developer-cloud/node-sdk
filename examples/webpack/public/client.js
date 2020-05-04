@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 'use strict';
 // notes:
 //
@@ -10,38 +11,39 @@
 //
 // * fetch() is a modern version of XMLHttpRequest. A pollyfill is available for older browsers: https://github.com/github/fetch
 
-var ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+const ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+const { BearerTokenAuthenticator } = require('ibm-watson/auth');
 
-var btn = document.getElementById('analyze-btn');
-var input = document.getElementById('input');
-var output = document.getElementById('output');
+const btn = document.getElementById('analyze-btn');
+const input = document.getElementById('input');
+const output = document.getElementById('output');
 
 /**
  * @return {Promise<String>} returns a promise that resolves to a string token
  */
 function getToken() {
-  return fetch('/api/token/tone_analyzer').then(function (response) {
-    return response.text();
-  });
+  return fetch('/api/token').then(resp => resp.json());
 }
 
-function analyze(token) {
-  var toneAnalyzer = new ToneAnalyzerV3({
-    token: token,
+function analyze(credentials) {
+  const toneAnalyzer = new ToneAnalyzerV3({
+    authenticator: new BearerTokenAuthenticator({
+      bearerToken: credentials.accessToken,
+    }),
+    url: credentials.url,
     version: '2016-05-19',
   });
-  toneAnalyzer.tone(
-    {
-      text: input.value,
-    },
-    function (err, result) {
-      if (err) {
-        output.innerHTML = err;
-        return console.log(err);
-      }
+  toneAnalyzer
+    .tone({
+      toneInput: { text: input.value },
+      contentType: 'application/json',
+    })
+    .then(({ result }) => {
       output.innerHTML = JSON.stringify(result, null, 2);
-    }
-  );
+    })
+    .catch(error => {
+      output.innerHTML = error;
+    });
 }
 
 btn.onclick = function () {

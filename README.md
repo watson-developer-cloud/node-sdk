@@ -404,52 +404,6 @@ If you have issues with the APIs or have a question about the Watson services, s
 
 ## IBM Watson services
 
-### Authorization
-
-The Authorization service can generate auth tokens for situations where providing the service username/password is undesirable.
-
-Tokens are valid for 1 hour and may be sent using the `X-Watson-Authorization-Token` header or the `watson-token` query param.
-Note that the token is supplied URL-encoded, and will not be accepted if it is double-encoded in a querystring.
-
-> _NOTE_: Authenticating with the `X-Watson-Authorization-Token` header or the `watson-token` query param is now deprecated. The token continues to work with Cloud Foundry services, but is not supported for services that use Identity and Access Management (IAM) authentication. For details see [Authenticating with IAM tokens](https://cloud.ibm.com/docs/watson?topic=watson-iam#iam) or the README in the IBM Watson SDK you use.
-The Authorization SDK now supports returning IAM Access Tokens when instantiated with an IAM API key.
-
-```js
-const watson = require('ibm-watson');
-const { IamAuthenticator } = require('ibm-watson/auth');
-const { BasicAuthenticator } = require('ibm-watson/auth');
-
-// to get an IAM Access Token
-const authorization = new watson.AuthorizationV1({
-  authenticator: new IamAuthenticator({ apikey: 'fakekey-1234' }),
-});
-
-authorization.getToken(function (err, token) {
-  if (!token) {
-    console.log('error: ', err);
-  } else {
-    // Use your token here
-  }
-});
-
-// to get a Watson Token - NOW DEPRECATED
-const authorization = new watson.AuthorizationV1({
-  authenticator: new BasicAuthenticator({ username: 'TTS username', password: 'TTS password' }),
-  url: 'https://stream.watsonplatform.net/authorization/api', // Speech tokens
-});
-
-authorization.getToken({
-  url: 'https://stream.watsonplatform.net/text-to-speech/api'
-},
-function (err, token) {
-  if (!token) {
-    console.log('error: ', err);
-  } else {
-    // Use your token here
-  }
-});
-```
-
 ### Assistant v2
 
 Use the [Assistant][assistant] service to determine the intent of a message.
@@ -842,12 +796,6 @@ visualRecognition.classify(params)
   });
 ```
 
-
-## Composing services
-
-### Integration of Tone Analyzer with Conversation
-Sample code for [integrating Tone Analyzer and Assistant][assistant_tone_analyzer_example] is provided in the [examples directory][examples].
-
 ## Unauthenticated requests
 The SDK always expects an authenticator to be passed in. To make an unautuhenticated request, use the `NoAuthAuthenticator`.
 
@@ -872,6 +820,7 @@ $ NODE_DEBUG='axios' node app.js
 where `app.js` is your Node.js file.
 
 ## Tests
+
 Running all the tests:
 ```sh
 $ npm test
@@ -909,6 +858,4 @@ This library is licensed under Apache 2.0. Full license text is available in
 [speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
 [language_translator]: https://www.ibm.com/watson/services/language-translator/
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
-[assistant_tone_analyzer_example]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/conversation_tone_analyzer_integration
-[license]: http://www.apache.org/licenses/LICENSE-2.0
 [ibm-cloud-onboarding]: http://cloud.ibm.com/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node

@@ -1,10 +1,9 @@
 'use strict';
-var SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
-var fs = require('fs');
+const SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
+const fs = require('fs');
 
-var speechToText = new SpeechToTextV1({
+const speechToText = new SpeechToTextV1({
   // See: https://github.com/watson-developer-cloud/node-sdk#authentication
-  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
 });
 
 /*
@@ -14,14 +13,13 @@ var speechToText = new SpeechToTextV1({
     To do this, remove `objectMode: true` from the `params` object.
     Then, uncomment the block of code at Line 30.
 */
-
-var params = {
-  content_type: 'audio/wav',
+const params = {
+  contentType: 'audio/wav',
   objectMode: true,
 };
 
 // create the stream
-var recognizeStream = speechToText.recognizeUsingWebSocket(params);
+const recognizeStream = speechToText.recognizeUsingWebSocket(params);
 
 // pipe in some audio
 fs.createReadStream(__dirname + '/resources/speech.wav').pipe(recognizeStream);

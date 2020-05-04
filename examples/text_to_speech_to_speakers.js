@@ -3,17 +3,15 @@
 // This example takes uncompressed wav audio from the Text to Speech service and plays it through the computer's speakers
 // Should work on windows/mac/linux, but linux may require some extra setup first: https://www.npmjs.com/package/speaker
 
-var TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
-var wav = require('wav');
-var Speaker = require('speaker');
-require('dotenv').load({ silent: true }); // imports environment properties from a .env file if present
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
+const wav = require('wav');
+const Speaker = require('speaker');
 
-var textToSpeech = new TextToSpeechV1({
+const textToSpeech = new TextToSpeechV1({
   // See: https://github.com/watson-developer-cloud/node-sdk#authentication
-  // iam_apikey: 'INSERT YOUR IAM API KEY HERE',
 });
 
-var reader = new wav.Reader();
+const reader = new wav.Reader();
 
 // the "format" event gets emitted at the end of the WAVE header
 reader.on('format', function (format) {
@@ -23,8 +21,8 @@ reader.on('format', function (format) {
 
 textToSpeech
   .synthesize({ text: 'hello from IBM Watson', accept: 'audio/wav' })
-  .then(res => {
-    res.pipe(reader);
+  .then(response => {
+    response.result.pipe(reader);
   })
   .catch(err => {
     console.log(err);
