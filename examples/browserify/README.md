@@ -14,17 +14,16 @@ and in some cases, certain methods work while others do not. Below is a partial 
 
 The following services support CORS
 
- * Tone Analyzer
- * Speech to Text*
- * Text to Speech*
- * Personality Insights
- * Visual Recognition
- * Natural Language Understanding
- * Watson Assistant
-
+- Tone Analyzer
+- Speech to Text\*
+- Text to Speech\*
+- Personality Insights
+- Visual Recognition
+- Natural Language Understanding
+- Watson Assistant
 
 \* Speech to Text and Text to Speech should be usable via the Node.js SDK, but we also have a [Speech JavaScript SDK](https://www.npmjs.com/package/watson-speech) that was specifically written for browser support.
 
 The following services do not support CORS
 
- * Language Translator
+- Language Translator
