@@ -9,15 +9,15 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "dotenv": "^2.0.0",
-    "express": "^4.14.0",
-    "shebang-loader": "0.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "ibm-watson": "latest",
-    "webpack": "^2.2.1",
-    "webpack-dev-middleware": "^1.10.0"
+    "shebang-loader": "0.0.1",
+    "webpack": "^4.43.0",
+    "webpack-dev-middleware": "^3.7.2"
   },
   "devDependencies": {},
   "engines": {
-    "node": ">=6"
+    "node": ">=12"
   }
 }

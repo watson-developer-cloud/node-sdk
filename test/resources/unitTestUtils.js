@@ -6,29 +6,29 @@ const missingParamsSuccess = 0;
 module.exports.missingParamsError = missingParamsError;
 module.exports.missingParamsSuccess = missingParamsSuccess;
 
-module.exports.checkUrlAndMethod = function(options, url, method) {
+module.exports.checkUrlAndMethod = function (options, url, method) {
   expect(options.url).toEqual(url);
   expect(options.method).toEqual(method);
 };
 
-module.exports.checkMediaHeaders = function(createRequestMock, accept, contentType) {
+module.exports.checkMediaHeaders = function (createRequestMock, accept, contentType) {
   const headers = createRequestMock.mock.calls[0][0].defaultOptions.headers;
   expect(headers.Accept).toEqual(accept);
   expect(headers['Content-Type']).toEqual(contentType);
 };
 
-module.exports.checkUserHeader = function(createRequestMock, baseName, param) {
+module.exports.checkUserHeader = function (createRequestMock, baseName, param) {
   const headers = createRequestMock.mock.calls[0][0].defaultOptions.headers;
   expect(headers[baseName]).toEqual(param);
 };
 
-module.exports.checkDefaultSuccessArgs = function(createRequestMock) {
+module.exports.checkDefaultSuccessArgs = function (createRequestMock) {
   // get arg to getMissingParams
   const userParams = createRequestMock.mock.calls[0];
   expect(typeof userParams[0]).toEqual('object');
 };
 
-module.exports.checkForEmptyObject = function(missingParamsMock) {
+module.exports.checkForEmptyObject = function (missingParamsMock) {
   // get arg to getMissingParams
   const userParams = missingParamsMock.mock.calls[0][0];
 
@@ -38,7 +38,7 @@ module.exports.checkForEmptyObject = function(missingParamsMock) {
   expect(userParams).toEqual(emptyObject);
 };
 
-module.exports.checkRequiredParamsHandling = function(required, err, mpMock, crMock) {
+module.exports.checkRequiredParamsHandling = function (required, err, mpMock, crMock) {
   // empty object should always be used as params
   const params = {};
 
@@ -58,10 +58,10 @@ module.exports.checkRequiredParamsHandling = function(required, err, mpMock, crM
   expect(crMock).toHaveBeenCalledTimes(0);
 };
 
-module.exports.getOptions = function(createRequestMock) {
+module.exports.getOptions = function (createRequestMock) {
   return createRequestMock.mock.calls[0][0].options;
 };
 
-module.exports.expectToBePromise = function(obj) {
+module.exports.expectToBePromise = function (obj) {
   expect(typeof obj.then).toBe('function');
 };

@@ -4,23 +4,20 @@ const fs = require('fs');
 const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 
 const textToSpeech = new TextToSpeechV1({
-  // if left unspecified here, the SDK will fall back to the TEXT_TO_SPEECH_USERNAME and TEXT_TO_SPEECH_PASSWORD
-  // environment properties, and then IBM Cloud's VCAP_SERVICES environment property
-  // username: 'INSERT YOUR USERNAME FOR THE SERVICE HERE',
-  // password: 'INSERT YOUR PASSWORD FOR THE SERVICE HERE'
+  // See: https://github.com/watson-developer-cloud/node-sdk#authentication
 });
 
 // specify the text to synthesize
 const params = {
   text: 'Hello, world.',
-  accept: 'audio/ogg;codecs=opus',
+  accept: 'audio/mp3',
 };
 
 // synthesizeUsingWebSocket returns a Readable Stream that can be piped or listened to
 const synthesizeStream = textToSpeech.synthesizeUsingWebSocket(params);
 
 // the output of the stream can be piped to any writable stream, like an audio file
-synthesizeStream.pipe(fs.createWriteStream('./speech.ogg'));
+synthesizeStream.pipe(fs.createWriteStream('./speech.mp3'));
 
 // !!!!! IMPORTANT !!!!!
 // if the stream is not being piped anywhere and is only being listened to, the stream needs

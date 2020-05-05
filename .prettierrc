@@ -4,5 +4,6 @@
   "tabWidth": 2,
   "singleQuote": true,
   "trailingComma": "es5",
-  "parser": "babel"
+  "parser": "babel",
+  "arrowParens": "avoid"
 }
