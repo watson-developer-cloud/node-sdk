@@ -221,9 +221,10 @@ class AssistantV2 extends BaseService {
    ************************/
 
   /**
-   * Send user input to assistant.
+   * Send user input to assistant (stateful).
    *
-   * Send user input to an assistant and receive a response.
+   * Send user input to an assistant and receive a response, with conversation state (including context data) stored by
+   * Watson Assistant for the duration of the session.
    *
    * There is no rate limit for this operation.
    *
@@ -236,9 +237,11 @@ class AssistantV2 extends BaseService {
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.sessionId - Unique identifier of the session.
    * @param {MessageInput} [params.input] - An input object that includes the input text.
-   * @param {MessageContext} [params.context] - State information for the conversation. The context is stored by the
-   * assistant on a per-session basis. You can use this property to set or modify context variables, which can also be
-   * accessed by dialog nodes.
+   * @param {MessageContext} [params.context] - Context data for the conversation. You can use this property to set or
+   * modify context variables, which can also be accessed by dialog nodes. The context is stored by the assistant on a
+   * per-session basis.
+   *
+   * **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponse>>}
@@ -273,6 +276,90 @@ class AssistantV2 extends BaseService {
       const parameters = {
         options: {
           url: '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
+          method: 'POST',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /**
+   * Send user input to assistant (stateless).
+   *
+   * Send user input to an assistant and receive a response, with conversation state (including context data) managed by
+   * your application.
+   *
+   * There is no rate limit for this operation.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   *
+   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {MessageInputStateless} [params.input] - An input object that includes the input text.
+   * @param {MessageContextStateless} [params.context] - Context data for the conversation. You can use this property to
+   * set or modify context variables, which can also be accessed by dialog nodes. The context is not stored by the
+   * assistant. To maintain session state, include the context from the previous response.
+   *
+   * **Note:** The total size of the context data for a stateless session cannot exceed 250KB.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>>}
+   */
+  public messageStateless(params: AssistantV2.MessageStatelessParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponseStateless>): Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['assistantId'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const body = {
+        'input': _params.input,
+        'context': _params.context
+      };
+
+      const path = {
+        'assistant_id': _params.assistantId
+      };
+
+      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'messageStateless');
+
+      const parameters = {
+        options: {
+          url: '/v2/assistants/{assistant_id}/message',
           method: 'POST',
           body,
           path,
@@ -373,10 +460,33 @@ namespace AssistantV2 {
     sessionId: string;
     /** An input object that includes the input text. */
     input?: MessageInput;
-    /** State information for the conversation. The context is stored by the assistant on a per-session basis. You
-     *  can use this property to set or modify context variables, which can also be accessed by dialog nodes.
+    /** Context data for the conversation. You can use this property to set or modify context variables, which can
+     *  also be accessed by dialog nodes. The context is stored by the assistant on a per-session basis.
+     *
+     *  **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
      */
     context?: MessageContext;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `messageStateless` operation. */
+  export interface MessageStatelessParams {
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+     *  the assistant settings and click **API Details**. For information about creating assistants, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *
+     *  **Note:** Currently, the v2 API does not support creating assistants.
+     */
+    assistantId: string;
+    /** An input object that includes the input text. */
+    input?: MessageInputStateless;
+    /** Context data for the conversation. You can use this property to set or modify context variables, which can
+     *  also be accessed by dialog nodes. The context is not stored by the assistant. To maintain session state, include
+     *  the context from the previous response.
+     *
+     *  **Note:** The total size of the context data for a stateless session cannot exceed 250KB.
+     */
+    context?: MessageContextStateless;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -464,20 +574,30 @@ namespace AssistantV2 {
 
   /** MessageContext. */
   export interface MessageContext {
-    /** Information that is shared by all skills used by the Assistant. */
+    /** Session context data that is shared by all skills used by the Assistant. */
     global?: MessageContextGlobal;
-    /** Information specific to particular skills used by the Assistant.
+    /** Information specific to particular skills used by the assistant.
      *
-     *  **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that
-     *  apply to the dialog skill used by the assistant.
+     *  **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog
+     *  skill used by the assistant.
      */
     skills?: MessageContextSkills;
   }
 
-  /** Information that is shared by all skills used by the Assistant. */
+  /** Session context data that is shared by all skills used by the Assistant. */
   export interface MessageContextGlobal {
     /** Built-in system properties that apply to all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
+    /** The session ID. */
+    session_id?: string;
+  }
+
+  /** Session context data that is shared by all skills used by the Assistant. */
+  export interface MessageContextGlobalStateless {
+    /** Built-in system properties that apply to all skills used by the assistant. */
+    system?: MessageContextGlobalSystem;
+    /** The unique identifier of the session. */
+    session_id?: string;
   }
 
   /** Built-in system properties that apply to all skills used by the assistant. */
@@ -515,7 +635,7 @@ namespace AssistantV2 {
     reference_time?: string;
   }
 
-  /** Contains information specific to a particular skill used by the Assistant. */
+  /** Contains information specific to a particular skill used by the Assistant. The property name must be the same as the name of the skill (for example, `main skill`). */
   export interface MessageContextSkill {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
@@ -523,10 +643,34 @@ namespace AssistantV2 {
     system?: JsonObject;
   }
 
-  /** Information specific to particular skills used by the Assistant. **Note:** Currently, only a single property named `main skill` is supported. This object contains variables that apply to the dialog skill used by the assistant. */
+  /** System context data used by the skill. */
+  export interface MessageContextSkillSystem {
+    /** An encoded string representing the current conversation state. By saving this value and then sending it in
+     *  the context of a subsequent message request, you can restore the conversation to the same state. This can be
+     *  useful if you need to return to an earlier point in the conversation. If you are using stateful sessions, you
+     *  can also use a stored state value to restore a paused conversation whose session has expired.
+     */
+    state?: string;
+    /** MessageContextSkillSystem accepts additional properties. */
+    [propName: string]: any;
+  }
+
+  /** Information specific to particular skills used by the assistant. **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog skill used by the assistant. */
   export interface MessageContextSkills {
     /** MessageContextSkills accepts additional properties. */
     [propName: string]: any;
+  }
+
+  /** MessageContextStateless. */
+  export interface MessageContextStateless {
+    /** Session context data that is shared by all skills used by the Assistant. */
+    global?: MessageContextGlobalStateless;
+    /** Information specific to particular skills used by the assistant.
+     *
+     *  **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog
+     *  skill used by the assistant.
+     */
+    skills?: MessageContextSkills;
   }
 
   /** An input object that includes the input text. */
@@ -535,8 +679,6 @@ namespace AssistantV2 {
     message_type?: string;
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
-    /** Optional properties that control how the assistant responds. */
-    options?: MessageInputOptions;
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
      *  those intents rather than trying to recognize intents in the new input.
      */
@@ -547,21 +689,27 @@ namespace AssistantV2 {
     entities?: RuntimeEntity[];
     /** For internal use only. */
     suggestion_id?: string;
+    /** Optional properties that control how the assistant responds. */
+    options?: MessageInputOptions;
   }
 
   /** Optional properties that control how the assistant responds. */
   export interface MessageInputOptions {
-    /** Whether to return additional diagnostic information. Set to `true` to return additional information in the
-     *  `output.debug` property. If you also specify **return_context**=`true`, the returned skill context includes the
-     *  `system.state` property.
-     */
-    debug?: boolean;
     /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes.
      *  **Note:** This does not affect `turn_count` or any other context variables.
      */
     restart?: boolean;
     /** Whether to return more than one intent. Set to `true` to return all matching intents. */
     alternate_intents?: boolean;
+    /** Spelling correction options for the message. Any options specified on an individual message override the
+     *  settings configured for the skill.
+     */
+    spelling?: MessageInputOptionsSpelling;
+    /** Whether to return additional diagnostic information. Set to `true` to return additional information in the
+     *  `output.debug` property. If you also specify **return_context**=`true`, the returned skill context includes the
+     *  `system.state` property.
+     */
+    debug?: boolean;
     /** Whether to return session context with the response. If you specify `true`, the response includes the
      *  `context` property. If you also specify **debug**=`true`, the returned skill context includes the `system.state`
      *  property.
@@ -573,6 +721,62 @@ namespace AssistantV2 {
      *  **Note:** If **export**=`true`, the context is returned regardless of the value of **return_context**.
      */
     _export?: boolean;
+  }
+
+  /** Spelling correction options for the message. Any options specified on an individual message override the settings configured for the skill. */
+  export interface MessageInputOptionsSpelling {
+    /** Whether to use spelling correction when processing the input. If spelling correction is used and
+     *  **auto_correct** is `true`, any spelling corrections are automatically applied to the user input. If
+     *  **auto_correct** is `false`, any suggested corrections are returned in the **output.spelling** property.
+     *
+     *  This property overrides the value of the **spelling_suggestions** property in the workspace settings for the
+     *  skill.
+     */
+    suggestions?: boolean;
+    /** Whether to use autocorrection when processing the input. If this property is `true`, any corrections are
+     *  automatically applied to the user input, and the original text is returned in the **output.spelling** property
+     *  of the message response. This property overrides the value of the **spelling_auto_correct** property in the
+     *  workspace settings for the skill.
+     */
+    auto_correct?: boolean;
+  }
+
+  /** Optional properties that control how the assistant responds. */
+  export interface MessageInputOptionsStateless {
+    /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes.
+     *  **Note:** This does not affect `turn_count` or any other context variables.
+     */
+    restart?: boolean;
+    /** Whether to return more than one intent. Set to `true` to return all matching intents. */
+    alternate_intents?: boolean;
+    /** Spelling correction options for the message. Any options specified on an individual message override the
+     *  settings configured for the skill.
+     */
+    spelling?: MessageInputOptionsSpelling;
+    /** Whether to return additional diagnostic information. Set to `true` to return additional information in the
+     *  `output.debug` property.
+     */
+    debug?: boolean;
+  }
+
+  /** An input object that includes the input text. */
+  export interface MessageInputStateless {
+    /** The type of user input. Currently, only text input is supported. */
+    message_type?: string;
+    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
+    text?: string;
+    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
+     *  those intents rather than trying to recognize intents in the new input.
+     */
+    intents?: RuntimeIntent[];
+    /** Entities to use when evaluating the message. Include entities from the previous response to continue using
+     *  those entities rather than detecting entities in the new input.
+     */
+    entities?: RuntimeEntity[];
+    /** For internal use only. */
+    suggestion_id?: string;
+    /** Optional properties that control how the assistant responds. */
+    options?: MessageInputOptionsStateless;
   }
 
   /** Assistant output to be rendered or processed by the client. */
@@ -593,6 +797,8 @@ namespace AssistantV2 {
      *  properties defined in the dialog JSON editor as part of the dialog node output.
      */
     user_defined?: JsonObject;
+    /** Properties describing any spelling corrections in the user input that was received. */
+    spelling?: MessageOutputSpelling;
   }
 
   /** Additional detailed information about a message response and how it was generated. */
@@ -611,16 +817,42 @@ namespace AssistantV2 {
     branch_exited_reason?: string;
   }
 
+  /** Properties describing any spelling corrections in the user input that was received. */
+  export interface MessageOutputSpelling {
+    /** The user input text that was used to generate the response. If spelling autocorrection is enabled, this text
+     *  reflects any spelling corrections that were applied.
+     */
+    text?: string;
+    /** The original user input text. This property is returned only if autocorrection is enabled and the user input
+     *  was corrected.
+     */
+    original_text?: string;
+    /** Any suggested corrections of the input text. This property is returned only if spelling correction is
+     *  enabled and autocorrection is disabled.
+     */
+    suggested_text?: string;
+  }
+
   /** A response from the Watson Assistant service. */
   export interface MessageResponse {
     /** Assistant output to be rendered or processed by the client. */
     output: MessageOutput;
-    /** Context data for the conversation. The context is stored by the assistant on a per-session basis. You can
-     *  use this property to access context variables.
+    /** Context data for the conversation. You can use this property to access context variables. The context is
+     *  stored by the assistant on a per-session basis.
      *
      *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
      */
     context?: MessageContext;
+  }
+
+  /** A stateless response from the Watson Assistant service. */
+  export interface MessageResponseStateless {
+    /** Assistant output to be rendered or processed by the client. */
+    output: MessageOutput;
+    /** Context data for the conversation. You can use this property to access context variables. The context is not
+     *  stored by the assistant; to maintain session state, include the context from the response in the next message.
+     */
+    context: MessageContextStateless;
   }
 
   /** The entity value that was recognized in the user input. */
@@ -836,12 +1068,12 @@ namespace AssistantV2 {
     /** The URL of the original data object in its native data source. */
     url?: string;
     /** An object containing segments of text from search results with query-matching text highlighted using HTML
-     *  <em> tags.
+     *  `<em>` tags.
      */
     highlight?: SearchResultHighlight;
   }
 
-  /** An object containing segments of text from search results with query-matching text highlighted using HTML <em> tags. */
+  /** An object containing segments of text from search results with query-matching text highlighted using HTML `<em>` tags. */
   export interface SearchResultHighlight {
     /** An array of strings containing segments taken from body text in the search results, with query-matching
      *  substrings highlighted.
