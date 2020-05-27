@@ -84,6 +84,20 @@ describe('assistant v2 integration', () => {
       });
   });
 
+  it('should messageStateless', done => {
+    const params = {
+      assistantId,
+      input: { text: 'Hello' },
+    };
+
+    assistant.messageStateless(params, (err, res) => {
+      expect(err).toBeNull();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      done();
+    });
+  });
+
   it('should deleteSession', done => {
     if (!sessionId) {
       // We cannot run this test when session creation failed.

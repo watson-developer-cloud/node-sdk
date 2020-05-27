@@ -29,7 +29,7 @@ describe('visual recognition v4 integration', () => {
   const visualRecognition = new VisualRecognitionV4(options);
 
   // testing collections
-  const { giraffesCollectionId } = options;
+  const { testCollectionId } = options;
 
   let collectionId;
   let imageId;
@@ -40,7 +40,7 @@ describe('visual recognition v4 integration', () => {
   describe('analysis', () => {
     test('analyze', async done => {
       const params = {
-        collectionIds: [giraffesCollectionId],
+        collectionIds: [testCollectionId],
         features: 'objects',
         imagesFile: [{ data: fs.createReadStream(__dirname + '/../resources/potato.jpeg') }],
       };
@@ -56,6 +56,27 @@ describe('visual recognition v4 integration', () => {
       const { result } = res || {};
       expect(result).toBeDefined();
       expect(result.images).toBeDefined();
+      done();
+    });
+
+    test('getModelFile', async done => {
+      const params = {
+        collectionId: testCollectionId,
+        feature: 'objects',
+        modelFormat: 'rscnn',
+      };
+
+      let res;
+      try {
+        res = await visualRecognition.getModelFile(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      expect(isStream(result)).toBe(true);
       done();
     });
   });

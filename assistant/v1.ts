@@ -5336,8 +5336,9 @@ namespace AssistantV1 {
     message_to_human_agent?: string;
     /** The text of the search query. This can be either a natural-language query or a query that uses the Discovery
      *  query language syntax, depending on the value of the **query_type** property. For more information, see the
-     *  [Discovery service documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-operators#query-operators).
-     *  Required when **response_type**=`search_skill`.
+     *  [Discovery service
+     *  documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-operators#query-operators). Required
+     *  when **response_type**=`search_skill`.
      */
     query?: string;
     /** The type of the search query. Required when **response_type**=`search_skill`. */
@@ -5662,6 +5663,25 @@ namespace AssistantV1 {
   export interface MessageInput {
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
+    /** Whether to use spelling correction when processing the input. This property overrides the value of the
+     *  **spelling_suggestions** property in the workspace settings.
+     */
+    spelling_suggestions?: boolean;
+    /** Whether to use autocorrection when processing the input. If spelling correction is used and this property is
+     *  `false`, any suggested corrections are returned in the **suggested_text** property of the message response. If
+     *  this property is `true`, any corrections are automatically applied to the user input, and the original text is
+     *  returned in the **original_text** property of the message response. This property overrides the value of the
+     *  **spelling_auto_correct** property in the workspace settings.
+     */
+    spelling_auto_correct?: boolean;
+    /** Any suggested corrections of the input text. This property is returned only if spelling correction is
+     *  enabled and autocorrection is disabled.
+     */
+    suggested_text?: string;
+    /** The original user input text. This property is returned only if autocorrection is enabled and the user input
+     *  was corrected.
+     */
+    original_text?: string;
     /** MessageInput accepts additional properties. */
     [propName: string]: any;
   }
@@ -6073,6 +6093,14 @@ namespace AssistantV1 {
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
     human_agent_assist?: JsonObject;
+    /** Whether spelling correction is enabled for the workspace. */
+    spelling_suggestions?: boolean;
+    /** Whether autocorrection is enabled for the workspace. If spelling correction is enabled and this property is
+     *  `false`, any suggested corrections are returned in the **suggested_text** property of the message response. If
+     *  this property is `true`, any corrections are automatically applied to the user input, and the original text is
+     *  returned in the **original_text** property of the message response.
+     */
+    spelling_auto_correct?: boolean;
     /** Workspace settings related to the behavior of system entities. */
     system_entities?: WorkspaceSystemSettingsSystemEntities;
     /** Workspace settings related to detection of irrelevant input. */

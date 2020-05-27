@@ -279,4 +279,84 @@ describe('AssistantV2', () => {
       });
     });
   });
+  describe('messageStateless', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const input = 'fake_input';
+        const context = 'fake_context';
+        const params = {
+          assistantId,
+          input,
+          context,
+        };
+
+        const messageStatelessResult = assistant.messageStateless(params);
+
+        // all methods should return a Promise
+        expectToBePromise(messageStatelessResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/message', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['input']).toEqual(input);
+        expect(options.body['context']).toEqual(context);
+        expect(options.path['assistant_id']).toEqual(assistantId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          assistantId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistant.messageStateless(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId'];
+
+        let err;
+        try {
+          await assistant.messageStateless({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId'];
+
+        const messageStatelessPromise = assistant.messageStateless();
+        expectToBePromise(messageStatelessPromise);
+
+        messageStatelessPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
 });

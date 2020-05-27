@@ -468,6 +468,91 @@ describe('VisualRecognitionV4', () => {
       });
     });
   });
+  describe('getModelFile', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const feature = 'fake_feature';
+        const modelFormat = 'fake_modelFormat';
+        const params = {
+          collectionId,
+          feature,
+          modelFormat,
+        };
+
+        const getModelFileResult = visualRecognition.getModelFile(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getModelFileResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/collections/{collection_id}/model', 'GET');
+        const expectedAccept = 'application/octet-stream';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['feature']).toEqual(feature);
+        expect(options.qs['model_format']).toEqual(modelFormat);
+        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(options.responseType).toBe('stream');
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const collectionId = 'fake_collectionId';
+        const feature = 'fake_feature';
+        const modelFormat = 'fake_modelFormat';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          collectionId,
+          feature,
+          modelFormat,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        visualRecognition.getModelFile(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'feature', 'modelFormat'];
+
+        let err;
+        try {
+          await visualRecognition.getModelFile({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['collectionId', 'feature', 'modelFormat'];
+
+        const getModelFilePromise = visualRecognition.getModelFile();
+        expectToBePromise(getModelFilePromise);
+
+        getModelFilePromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
   describe('addImages', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {

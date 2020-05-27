@@ -744,6 +744,10 @@ namespace NaturalLanguageUnderstandingV1 {
     /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
     workspace_id?: string;
     /** The model version, if it was manually provided in Watson Knowledge Studio. */
+    model_version?: string;
+    /** (Deprecated — use `model_version`) The model version, if it was manually provided in Watson Knowledge
+     *  Studio.
+     */
     version?: string;
     /** The description of the version, if it was manually provided in Watson Knowledge Studio. */
     version_description?: string;
