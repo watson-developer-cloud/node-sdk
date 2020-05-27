@@ -474,6 +474,83 @@ class VisualRecognitionV4 extends BaseService {
     });
   };
 
+  /**
+   * Get a model.
+   *
+   * Download a model that you can deploy to detect objects in images. The collection must include a generated model,
+   * which is indicated in the response for the collection details as `"rscnn_ready": true`. If the value is `false`,
+   * train or retrain the collection to generate the model.
+   *
+   * Currently, the model format is specific to Android apps. For more information about how to deploy the model to your
+   * app, see the [Watson Visual Recognition on Android](https://github.com/matt-ny/rscnn) project in GitHub.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.collectionId - The identifier of the collection.
+   * @param {string} params.feature - The feature for the model.
+   * @param {string} params.modelFormat - The format of the returned model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>>}
+   */
+  public getModelFile(params: VisualRecognitionV4.GetModelFileParams, callback?: VisualRecognitionV4.Callback<NodeJS.ReadableStream|Buffer>): Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['collectionId', 'feature', 'modelFormat'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const query = {
+        'feature': _params.feature,
+        'model_format': _params.modelFormat
+      };
+
+      const path = {
+        'collection_id': _params.collectionId
+      };
+
+      const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getModelFile');
+
+      const parameters = {
+        options: {
+          url: '/v4/collections/{collection_id}/model',
+          method: 'GET',
+          qs: query,
+          path,
+          responseType: 'stream',
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/octet-stream',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
   /*************************
    * images
    ************************/
@@ -1497,6 +1574,29 @@ namespace VisualRecognitionV4 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `getModelFile` operation. */
+  export interface GetModelFileParams {
+    /** The identifier of the collection. */
+    collectionId: string;
+    /** The feature for the model. */
+    feature: GetModelFileConstants.Feature | string;
+    /** The format of the returned model. */
+    modelFormat: GetModelFileConstants.ModelFormat | string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `getModelFile` operation. */
+  export namespace GetModelFileConstants {
+    /** The feature for the model. */
+    export enum Feature {
+      OBJECTS = 'objects',
+    }
+    /** The format of the returned model. */
+    export enum ModelFormat {
+      RSCNN = 'rscnn',
+    }
+  }
+
   /** Parameters for the `addImages` operation. */
   export interface AddImagesParams {
     /** The identifier of the collection. */
@@ -1748,6 +1848,7 @@ namespace VisualRecognitionV4 {
     source: ImageSource;
     /** Height and width of an image. */
     dimensions?: ImageDimensions;
+    /** Details about the errors. */
     errors?: Error[];
     /** Training data for all objects. */
     training_data?: TrainingDataObjects;
@@ -1849,6 +1950,8 @@ namespace VisualRecognitionV4 {
     data_changed: boolean;
     /** Whether the most recent training failed. */
     latest_failed: boolean;
+    /** Whether the model can be downloaded after the training status is `ready`. */
+    rscnn_ready: boolean;
     /** Details about the training. If training is in progress, includes information about the status. If training
      *  is not in progress, includes a success message or information about why training failed.
      */
