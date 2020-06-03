@@ -1,3 +1,16 @@
+# [5.6.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.5.0...v5.6.0) (2020-06-03)
+
+
+### Bug Fixes
+
+* update dependencies and examples ([#1036](https://github.com/watson-developer-cloud/node-sdk/issues/1036)) ([fde46cf](https://github.com/watson-developer-cloud/node-sdk/commit/fde46cf6c7dd2487b81a2fd19fb85691ba2bff5e))
+
+
+### Features
+
+* **assistant-v2:** new method: `messageStateless` ([0ccc5bf](https://github.com/watson-developer-cloud/node-sdk/commit/0ccc5bf9975c7c8637709422dadf3bf7f2f29d06))
+* **visual-recognition-v4:** new method: `getModelFile` ([55aec8c](https://github.com/watson-developer-cloud/node-sdk/commit/55aec8c77c7a24391329a68dd1be741f0fcc5fe2))
+
 # [5.5.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.4.0...v5.5.0) (2020-04-24)
 
 
