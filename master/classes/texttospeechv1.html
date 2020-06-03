@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TextToSpeechV1 | ibm-watson - v5.4.0</title>
+	<title>TextToSpeechV1 | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ibm-watson - v5.4.0</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -72,15 +72,15 @@
 							or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.
 						interfaces</p>
 					</div>
-					<p>For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface. It
-						also supports a WebSocket interface that provides both plain text and SSML input, including the SSML &lt;mark&gt;
-						element and word timings. SSML is an XML-based markup language that provides text annotation for speech-synthesis
-					applications.</p>
-					<p>The service also offers a customization interface. You can use the interface to define sounds-like or phonetic
-						translations for words. A sounds-like translation consists of one or more words that, when combined, sound like the
-						word. A phonetic translation is based on the SSML phoneme format for representing a word. You can specify a phonetic
-						translation in standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic
-					Phonetic Representation (SPR). The Arabic, Chinese, Dutch, and Korean languages support only IPA.</p>
+					<p>For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface and a
+						WebSocket interface. Both interfaces support plain text and SSML input. SSML is an XML-based markup language that
+						provides text annotation for speech-synthesis applications. The WebSocket interface also supports the SSML
+					<code>&lt;mark&gt;</code> element and word timings.</p>
+					<p>The service offers a customization interface that you can use to define sounds-like or phonetic translations for
+						words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic
+						translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in
+						standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic
+					Representation (SPR). The Arabic, Chinese, Dutch, and Korean languages support only IPA.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -101,6 +101,17 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<!-- Unless the section is part of the exclusion list, render them -->
+						<section class="tsd-index-section ">
+							<h3>Namespaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-namespace tsd-parent-kind-class"><a href="../modules/texttospeechv1.addwordconstants.html" class="tsd-kind-icon">Add<wbr>Word<wbr>Constants</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-class"><a href="../modules/texttospeechv1.createvoicemodelconstants.html" class="tsd-kind-icon">Create<wbr>Voice<wbr>Model<wbr>Constants</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-class"><a href="../modules/texttospeechv1.getpronunciationconstants.html" class="tsd-kind-icon">Get<wbr>Pronunciation<wbr>Constants</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-class"><a href="../modules/texttospeechv1.getvoiceconstants.html" class="tsd-kind-icon">Get<wbr>Voice<wbr>Constants</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-class"><a href="../modules/texttospeechv1.listvoicemodelsconstants.html" class="tsd-kind-icon">List<wbr>Voice<wbr>Models<wbr>Constants</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-class"><a href="../modules/texttospeechv1.synthesizeconstants.html" class="tsd-kind-icon">Synthesize<wbr>Constants</a></li>
+							</ul>
+						</section>
 						<!-- Unless the section is part of the exclusion list, render them -->
 						<!-- Unless the section is part of the exclusion list, render them -->
 						<!-- Unless the section is part of the exclusion list, render them -->
@@ -157,17 +168,13 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Construct a TextToSpeechV1 object.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>constructor</dt>
-									<dd></dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -201,22 +208,22 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 					<a name="default_service_name" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT_<wbr>SERVICE_<wbr>NAME</h3>
-					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;text_to_speech&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;text_to_speech&quot;</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides BaseService.DEFAULT_SERVICE_NAME</p>
+						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L42">text-to-speech/v1-generated.ts:42</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 					<a name="default_service_url" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT_<wbr>SERVICE_<wbr>URL</h3>
-					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;https://stream.watsonplatform.net/text-to-speech/api&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;https://stream.watsonplatform.net/text-to-speech/api&quot;</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides BaseService.DEFAULT_SERVICE_URL</p>
+						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L41">text-to-speech/v1-generated.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L41">text-to-speech/v1-generated.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -233,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1024">text-to-speech/v1-generated.ts:1024</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L1024">text-to-speech/v1-generated.ts:1024</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -253,12 +260,12 @@
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
 								<p><strong>See also:</strong></p>
 								<ul>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordAdd">Adding a single word to a custom
-									model</a></li>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">Adding words to a Japanese custom
-									model</a></li>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">Understanding
-									customization</a>.</li>
+									<li>[Adding a single word to a custom
+									model](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordAdd">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordAdd</a>)</li>
+									<li>[Adding words to a Japanese custom
+									model](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd</a>)</li>
+									<li>[Understanding
+									customization](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro</a>).</li>
 								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -362,7 +369,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L850">text-to-speech/v1-generated.ts:850</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L850">text-to-speech/v1-generated.ts:850</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -382,12 +389,12 @@
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
 								<p><strong>See also:</strong></p>
 								<ul>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd">Adding multiple words to a custom
-									model</a></li>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">Adding words to a Japanese custom
-									model</a></li>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">Understanding
-									customization</a>.</li>
+									<li>[Adding multiple words to a custom
+									model](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsAdd</a>)</li>
+									<li>[Adding words to a Japanese custom
+									model](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd</a>)</li>
+									<li>[Understanding
+									customization](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro</a>).</li>
 								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -470,7 +477,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L448">text-to-speech/v1-generated.ts:448</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L448">text-to-speech/v1-generated.ts:448</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -573,7 +580,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1251">text-to-speech/v1-generated.ts:1251</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L1251">text-to-speech/v1-generated.ts:1251</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -661,7 +668,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L754">text-to-speech/v1-generated.ts:754</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L754">text-to-speech/v1-generated.ts:754</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -747,7 +754,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1175">text-to-speech/v1-generated.ts:1175</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L1175">text-to-speech/v1-generated.ts:1175</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -838,9 +845,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from BaseService.getAuthenticator</p>
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#getauthenticator">getAuthenticator</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:76</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:78</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -862,7 +869,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L366">text-to-speech/v1-generated.ts:366</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L366">text-to-speech/v1-generated.ts:366</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -978,7 +985,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L144">text-to-speech/v1-generated.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L144">text-to-speech/v1-generated.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1074,7 +1081,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L684">text-to-speech/v1-generated.ts:684</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L684">text-to-speech/v1-generated.ts:684</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1161,7 +1168,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L1103">text-to-speech/v1-generated.ts:1103</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L1103">text-to-speech/v1-generated.ts:1103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1253,7 +1260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L523">text-to-speech/v1-generated.ts:523</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L523">text-to-speech/v1-generated.ts:523</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1344,7 +1351,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L88">text-to-speech/v1-generated.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L88">text-to-speech/v1-generated.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1422,7 +1429,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L927">text-to-speech/v1-generated.ts:927</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L927">text-to-speech/v1-generated.ts:927</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1508,9 +1515,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from BaseService.setServiceUrl</p>
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setserviceurl">setServiceUrl</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:82</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:84</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1555,7 +1562,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L275">text-to-speech/v1-generated.ts:275</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L275">text-to-speech/v1-generated.ts:275</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1716,7 +1723,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/text-to-speech/v1-generated.ts#L605">text-to-speech/v1-generated.ts:605</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/text-to-speech/v1-generated.ts#L605">text-to-speech/v1-generated.ts:605</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1737,12 +1744,12 @@
 								<p><strong>Note:</strong> This method is currently a beta release.</p>
 								<p><strong>See also:</strong></p>
 								<ul>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsUpdate">Updating a custom
-									model</a></li>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">Adding words to a Japanese custom
-									model</a></li>
-									<li><a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">Understanding
-									customization</a>.</li>
+									<li>[Updating a custom
+									model](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsUpdate">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsUpdate</a>)</li>
+									<li>[Adding words to a Japanese custom
+									model](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuJapaneseAdd</a>)</li>
+									<li>[Understanding
+									customization](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customIntro#customIntro</a>).</li>
 								</ul>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2011,7 +2018,11 @@
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#url" class="tsd-kind-icon">url</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-function">
 						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>

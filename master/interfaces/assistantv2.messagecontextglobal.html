@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MessageContextGlobal | ibm-watson - v5.4.0</title>
+	<title>MessageContextGlobal | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ibm-watson - v5.4.0</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Information that is shared by all skills used by the Assistant.</p>
+						<p>Session context data that is shared by all skills used by the Assistant.</p>
 					</div>
 				</div>
 			</section>
@@ -90,6 +90,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobal.html#session_id" class="tsd-kind-icon">session_<wbr>id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobal.html#system" class="tsd-kind-icon">system</a></li>
 							</ul>
 						</section>
@@ -99,12 +100,27 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="session_id" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> session_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">session_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/assistant/v2.ts#L592">assistant/v2.ts:592</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The session ID.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="system" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> system</h3>
 					<div class="tsd-signature tsd-kind-icon">system<span class="tsd-signature-symbol">:</span> <a href="assistantv2.messagecontextglobalsystem.html" class="tsd-signature-type">MessageContextGlobalSystem</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v2.ts#L480">assistant/v2.ts:480</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/assistant/v2.ts#L590">assistant/v2.ts:590</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,6 +155,10 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="assistantv2.messagecontextglobal.html" class="tsd-kind-icon">Message<wbr>Context<wbr>Global</a>
 								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messagecontextglobal.html#session_id" class="tsd-kind-icon">session_<wbr>id</a>
+									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.messagecontextglobal.html#system" class="tsd-kind-icon">system</a>
@@ -199,7 +219,11 @@
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#url" class="tsd-kind-icon">url</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-function">
 						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>

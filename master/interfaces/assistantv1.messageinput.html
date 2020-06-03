@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MessageInput | ibm-watson - v5.4.0</title>
+	<title>MessageInput | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ibm-watson - v5.4.0</a>
+					<a href="../index.html" class="title">ibm-watson</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -99,6 +99,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.messageinput.html#original_text" class="tsd-kind-icon">original_<wbr>text</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.messageinput.html#spelling_auto_correct" class="tsd-kind-icon">spelling_<wbr>auto_<wbr>correct</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.messageinput.html#spelling_suggestions" class="tsd-kind-icon">spelling_<wbr>suggestions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.messageinput.html#suggested_text" class="tsd-kind-icon">suggested_<wbr>text</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.messageinput.html#text" class="tsd-kind-icon">text</a></li>
 							</ul>
 						</section>
@@ -108,12 +112,79 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="original_text" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> original_<wbr>text</h3>
+					<div class="tsd-signature tsd-kind-icon">original_<wbr>text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/assistant/v1.ts#L5684">assistant/v1.ts:5684</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The original user input text. This property is returned only if autocorrection is enabled and the user input
+							was corrected.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="spelling_auto_correct" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> spelling_<wbr>auto_<wbr>correct</h3>
+					<div class="tsd-signature tsd-kind-icon">spelling_<wbr>auto_<wbr>correct<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/assistant/v1.ts#L5676">assistant/v1.ts:5676</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether to use autocorrection when processing the input. If spelling correction is used and this property is
+								<code>false</code>, any suggested corrections are returned in the <strong>suggested_text</strong> property of the message response. If
+								this property is <code>true</code>, any corrections are automatically applied to the user input, and the original text is
+								returned in the <strong>original_text</strong> property of the message response. This property overrides the value of the
+							<strong>spelling_auto_correct</strong> property in the workspace settings.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="spelling_suggestions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> spelling_<wbr>suggestions</h3>
+					<div class="tsd-signature tsd-kind-icon">spelling_<wbr>suggestions<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/assistant/v1.ts#L5669">assistant/v1.ts:5669</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Whether to use spelling correction when processing the input. This property overrides the value of the
+							<strong>spelling_suggestions</strong> property in the workspace settings.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="suggested_text" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> suggested_<wbr>text</h3>
+					<div class="tsd-signature tsd-kind-icon">suggested_<wbr>text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/assistant/v1.ts#L5680">assistant/v1.ts:5680</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Any suggested corrections of the input text. This property is returned only if spelling correction is
+							enabled and autocorrection is disabled.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="text" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> text</h3>
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/9103998/assistant/v1.ts#L5664">assistant/v1.ts:5664</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/89c6781/assistant/v1.ts#L5665">assistant/v1.ts:5665</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -144,6 +215,22 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="assistantv1.messageinput.html" class="tsd-kind-icon">Message<wbr>Input</a>
 								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.messageinput.html#original_text" class="tsd-kind-icon">original_<wbr>text</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.messageinput.html#spelling_auto_correct" class="tsd-kind-icon">spelling_<wbr>auto_<wbr>correct</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.messageinput.html#spelling_suggestions" class="tsd-kind-icon">spelling_<wbr>suggestions</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.messageinput.html#suggested_text" class="tsd-kind-icon">suggested_<wbr>text</a>
+									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv1.messageinput.html#text" class="tsd-kind-icon">text</a>
@@ -208,7 +295,11 @@
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#url" class="tsd-kind-icon">url</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-function">
 						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
 					</li>
 				</ul>
