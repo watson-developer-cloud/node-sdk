@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -640,7 +640,7 @@ namespace AssistantV2 {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
     /** System context data used by the skill. */
-    system?: JsonObject;
+    system?: MessageContextSkillSystem;
   }
 
   /** System context data used by the skill. */
@@ -1006,9 +1006,6 @@ namespace AssistantV2 {
   export interface RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
-     *
-     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
-     *  Premium users.
      */
     response_type: string;
     /** The text of the response. */
@@ -1033,11 +1030,7 @@ namespace AssistantV2 {
      *  node.
      */
     topic?: string;
-    /** An array of objects describing the possible matching dialog nodes from which the user can choose.
-     *
-     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for
-     *  Premium users.
-     */
+    /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
     suggestions?: DialogSuggestion[];
     /** The title or introductory text to show before the response. This text is defined in the search skill
      *  configuration.
@@ -1051,8 +1044,8 @@ namespace AssistantV2 {
   export interface SearchResult {
     /** The unique identifier of the document in the Discovery service collection.
      *
-     *  This property is included in responses from search skills, which are a beta feature available only to Plus or
-     *  Premium plan users.
+     *  This property is included in responses from search skills, which are available only to Plus or Premium plan
+     *  users.
      */
     id: string;
     /** An object containing search result metadata from the Discovery service. */

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1666,9 +1666,6 @@ class AssistantV1 extends BaseService {
    * Update counterexample.
    *
    * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * If you want to update multiple counterexamples with a single API call, consider using the **[Update
-   * workspace](#update-workspace)** method instead.
    *
    * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
@@ -5296,8 +5293,7 @@ namespace AssistantV1 {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
      *
-     *  **Note:** The **search_skill** response type is available only for Plus and Premium users, and is used only by
-     *  the v2 runtime API.
+     *  **Note:** The **search_skill** response type is used only by the v2 runtime API.
      */
     response_type: string;
     /** A list of one or more objects defining text responses. Required when **response_type**=`text`. */
@@ -5452,9 +5448,7 @@ namespace AssistantV1 {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
      *
-     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
-     *  Plus and Premium users. The **search_skill** response type is available only for Plus and Premium users, and is
-     *  used only by the v2 runtime API.
+     *  **Note:** The **search_skill** response type is is used only by the v2 runtime API.
      */
     response_type: string;
     /** The text of the response. */
@@ -5920,9 +5914,6 @@ namespace AssistantV1 {
   export interface RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
-     *
-     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
-     *  Plus and Premium users.
      */
     response_type: string;
     /** The text of the response. */
@@ -5949,11 +5940,7 @@ namespace AssistantV1 {
      *  using the value of the dialog node's **title** property.
      */
     dialog_node?: string;
-    /** An array of objects describing the possible matching dialog nodes from which the user can choose.
-     *
-     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for Plus
-     *  and Premium users.
-     */
+    /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
     suggestions?: DialogSuggestion[];
   }
 
@@ -6086,10 +6073,7 @@ namespace AssistantV1 {
   export interface WorkspaceSystemSettings {
     /** Workspace settings related to the Watson Assistant user interface. */
     tooling?: WorkspaceSystemSettingsTooling;
-    /** Workspace settings related to the disambiguation feature.
-     *
-     *  **Note:** This feature is available only to Plus and Premium users.
-     */
+    /** Workspace settings related to the disambiguation feature. */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
     human_agent_assist?: JsonObject;
@@ -6107,7 +6091,7 @@ namespace AssistantV1 {
     off_topic?: WorkspaceSystemSettingsOffTopic;
   }
 
-  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Plus and Premium users. */
+  /** Workspace settings related to the disambiguation feature. */
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;

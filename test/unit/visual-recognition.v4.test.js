@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 'use strict';
 
 const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
-const VisualRecognitionV4 = require('../../dist/visual-recognition/v4');
+const VisualRecognitionV4 = require('../../visual-recognition/v4');
 
 const {
   getOptions,

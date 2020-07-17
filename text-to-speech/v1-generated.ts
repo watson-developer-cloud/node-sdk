@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,10 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM&reg; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize text
- * into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male
- * or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.
+ * The IBM Watson&trade; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize
+ * text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one
+ * male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.
+ *
  *
  * For speech synthesis, the service supports a synchronous HTTP Representational State Transfer (REST) interface and a
  * WebSocket interface. Both interfaces support plain text and SSML input. SSML is an XML-based markup language that
@@ -75,7 +76,8 @@ class TextToSpeechV1 extends BaseService {
    * List voices.
    *
    * Lists all voices available for use with the service. The information includes the name, language, gender, and other
-   * details about the voice. To see information about a specific voice, use the **Get a voice** method.
+   * details about the voice. The ordering of the list of voices can change from call to call; do not rely on an
+   * alphabetized or static list of voices. To see information about a specific voice, use the **Get a voice** method.
    *
    * **See also:** [Listing all available
    * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices).
@@ -1357,6 +1359,8 @@ namespace TextToSpeechV1 {
       DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
+      EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
+      EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
@@ -1377,6 +1381,7 @@ namespace TextToSpeechV1 {
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
+      FR_FR_NICOLASV3VOICE = 'fr-FR_NicolasV3Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
@@ -1441,6 +1446,8 @@ namespace TextToSpeechV1 {
       DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
+      EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
+      EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
@@ -1461,6 +1468,7 @@ namespace TextToSpeechV1 {
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
+      FR_FR_NICOLASV3VOICE = 'fr-FR_NicolasV3Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
@@ -1511,6 +1519,8 @@ namespace TextToSpeechV1 {
       DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
+      EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
+      EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
@@ -1531,6 +1541,7 @@ namespace TextToSpeechV1 {
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
+      FR_FR_NICOLASV3VOICE = 'fr-FR_NicolasV3Voice',
       FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -118,8 +118,8 @@ class VisualRecognitionV4 extends BaseService {
       }
 
       const formData = {
-        'collection_ids': Array.isArray(_params.collectionIds) ? _params.collectionIds.join(',') : _params.collectionIds,
-        'features': Array.isArray(_params.features) ? _params.features.join(',') : _params.features,
+        'collection_ids': _params.collectionIds,
+        'features': _params.features,
         'images_file': _params.imagesFile,
         'image_url': _params.imageUrl,
         'threshold': _params.threshold

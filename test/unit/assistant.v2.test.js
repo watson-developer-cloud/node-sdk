@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 'use strict';
 
 const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
-const AssistantV2 = require('../../dist/assistant/v2');
+const AssistantV2 = require('../../assistant/v2');
 
 const { getOptions, checkUrlAndMethod, checkMediaHeaders, expectToBePromise } = unitTestUtils;
 
