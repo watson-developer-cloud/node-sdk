@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * IBM Watson&trade; Discovery for IBM Cloud Pak for Data is a cognitive search and content analytics engine that you
- * can add to applications to identify patterns, trends and actionable insights to drive better decision-making.
- * Securely unify structured and unstructured data with pre-enriched content, and use a simplified query language to
- * eliminate the need for manual filtering of results.
+ * IBM Watson&trade; Discovery is a cognitive search and content analytics engine that you can add to applications to
+ * identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and
+ * unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual
+ * filtering of results.
  */
 
 class DiscoveryV2 extends BaseService {
@@ -144,7 +144,11 @@ class DiscoveryV2 extends BaseService {
    * Query a project.
    *
    * By using this method, you can construct queries. For details, see the [Discovery
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-concepts).
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-concepts). The default query
+   * parameters are defined by the settings for this project, see the [Discovery
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-project-defaults) for an overview of
+   * the standard default settings, and see [the Projects API documentation](#create-project) for details about how to
+   * set custom default query settings.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
@@ -492,7 +496,7 @@ class DiscoveryV2 extends BaseService {
    ************************/
 
   /**
-   * Configuration settings for components.
+   * List component settings.
    *
    * Returns default configuration settings for components.
    *
@@ -533,6 +537,85 @@ class DiscoveryV2 extends BaseService {
         defaultOptions: extend(true, {}, this.baseOptions, {
           headers: extend(true, sdkHeaders, {
             'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /**
+   * Update component settings.
+   *
+   * Updates the default configuration settings for components.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
+   * Discovery administrative tooling.
+   * @param {ComponentSettingsFieldsShown} [params.fieldsShown] - Fields shown in the results section of the UI.
+   * @param {boolean} [params.autocomplete] - Whether or not autocomplete is enabled.
+   * @param {boolean} [params.structuredSearch] - Whether or not structured search is enabled.
+   * @param {number} [params.resultsPerPage] - Number or results shown per page.
+   * @param {ComponentSettingsAggregation[]} [params.aggregations] - a list of component setting aggregations.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>>}
+   */
+  public updateComponentSettings(params: DiscoveryV2.UpdateComponentSettingsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ComponentSettingsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['projectId'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const body = {
+        'fields_shown': _params.fieldsShown,
+        'autocomplete': _params.autocomplete,
+        'structured_search': _params.structuredSearch,
+        'results_per_page': _params.resultsPerPage,
+        'aggregations': _params.aggregations
+      };
+
+      const path = {
+        'project_id': _params.projectId
+      };
+
+      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateComponentSettings');
+
+      const parameters = {
+        options: {
+          url: '/v2/projects/{project_id}/component_settings',
+          method: 'PUT',
+          body,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
           }, _params.headers),
         }),
       };
@@ -599,7 +682,10 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
-   * MB are rejected. Example:  ``` {
+   * MB are rejected.
+   *
+   *
+   * Example:  ``` {
    *   "Creator": "Johnny Appleseed",
    *   "Subject": "Apples"
    * } ```.
@@ -703,7 +789,10 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
-   * MB are rejected. Example:  ``` {
+   * MB are rejected.
+   *
+   *
+   * Example:  ``` {
    *   "Creator": "Johnny Appleseed",
    *   "Subject": "Apples"
    * } ```.
@@ -1379,6 +1468,25 @@ namespace DiscoveryV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `updateComponentSettings` operation. */
+  export interface UpdateComponentSettingsParams {
+    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
+     *  tooling.
+     */
+    projectId: string;
+    /** Fields shown in the results section of the UI. */
+    fieldsShown?: ComponentSettingsFieldsShown;
+    /** Whether or not autocomplete is enabled. */
+    autocomplete?: boolean;
+    /** Whether or not structured search is enabled. */
+    structuredSearch?: boolean;
+    /** Number or results shown per page. */
+    resultsPerPage?: number;
+    /** a list of component setting aggregations. */
+    aggregations?: ComponentSettingsAggregation[];
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `addDocument` operation. */
   export interface AddDocumentParams {
     /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
@@ -1396,8 +1504,10 @@ namespace DiscoveryV2 {
     filename?: string;
     /** The content type of file. */
     fileContentType?: AddDocumentConstants.FileContentType | string;
-    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:
-     *  ``` {
+    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
+     *
+     *
+     *  Example:  ``` {
      *    "Creator": "Johnny Appleseed",
      *    "Subject": "Apples"
      *  } ```.
@@ -1442,8 +1552,10 @@ namespace DiscoveryV2 {
     filename?: string;
     /** The content type of file. */
     fileContentType?: UpdateDocumentConstants.FileContentType | string;
-    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected. Example:
-     *  ``` {
+    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
+     *
+     *
+     *  Example:  ``` {
      *    "Creator": "Johnny Appleseed",
      *    "Subject": "Apples"
      *  } ```.
@@ -1599,7 +1711,7 @@ namespace DiscoveryV2 {
     field?: string;
   }
 
-  /** A response containing the default component settings. */
+  /** The default component settings for this project. */
   export interface ComponentSettingsResponse {
     /** Fields shown in the results section of the UI. */
     fields_shown?: ComponentSettingsFieldsShown;
@@ -1702,6 +1814,26 @@ namespace DiscoveryV2 {
     type: string;
   }
 
+  /** Top value result for the term aggregation. */
+  export interface QueryGroupByAggregationResult {
+    /** Value of the field with a non-zero frequency in the document set. */
+    key: string;
+    /** Number of documents containing the 'key'. */
+    matching_results: number;
+    /** The relevancy for this group. */
+    relevancy?: number;
+    /** The number of documents which have the group as the value of specified field in the whole set of documents
+     *  in this collection. Returned only when the `relevancy` parameter is set to `true`.
+     */
+    total_matching_documents?: number;
+    /** The estimated number of documents which would match the query and also meet the condition. Returned only
+     *  when the `relevancy` parameter is set to `true`.
+     */
+    estimated_matching_documents?: number;
+    /** An array of sub aggregations. */
+    aggregations?: QueryAggregation[];
+  }
+
   /** Histogram numeric interval result. */
   export interface QueryHistogramAggregationResult {
     /** The value of the upper bound for the numeric segment. */
@@ -1725,7 +1857,7 @@ namespace DiscoveryV2 {
      */
     fields?: string[];
     /** The maximum number of passages to return. The search returns fewer passages if the requested total is not
-     *  found. The default is `10`. The maximum is `100`.
+     *  found. The maximum is `100`.
      */
     count?: number;
     /** The approximate number of characters that any one passage will have. */
@@ -1736,7 +1868,7 @@ namespace DiscoveryV2 {
   export interface QueryLargeSuggestedRefinements {
     /** Whether to perform suggested refinements. */
     enabled?: boolean;
-    /** Maximum number of suggested refinements texts to be returned. The default is `10`. The maximum is `100`. */
+    /** Maximum number of suggested refinements texts to be returned. The maximum is `100`. */
     count?: number;
   }
 
@@ -1843,6 +1975,16 @@ namespace DiscoveryV2 {
     key: string;
     /** Number of documents containing the 'key'. */
     matching_results: number;
+    /** The relevancy for this term. */
+    relevancy?: number;
+    /** The number of documents which have the term as the value of specified field in the whole set of documents in
+     *  this collection. Returned only when the `relevancy` parameter is set to `true`.
+     */
+    total_matching_documents?: number;
+    /** The estimated number of documents which would match the query and also meet the condition. Returned only
+     *  when the `relevancy` parameter is set to `true`.
+     */
+    estimated_matching_documents?: number;
     /** An array of sub aggregations. */
     aggregations?: QueryAggregation[];
   }
@@ -2152,6 +2294,12 @@ namespace DiscoveryV2 {
     matching_results: number;
     /** An array of sub aggregations. */
     aggregations?: QueryAggregation[];
+  }
+
+  /** Returns the top values for the field specified. */
+  export interface QueryGroupByAggregation extends QueryAggregation {
+    /** Array of top values for the field. */
+    results?: QueryGroupByAggregationResult[];
   }
 
   /** Numeric interval segments to categorize documents by using field values from a single numeric field to describe the category. */
