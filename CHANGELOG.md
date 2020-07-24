@@ -1,3 +1,10 @@
+## [5.6.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.6.0...v5.6.1) (2020-07-24)
+
+
+### Bug Fixes
+
+* update core version to 2.4.2 ([#1050](https://github.com/watson-developer-cloud/node-sdk/issues/1050)) ([24f2217](https://github.com/watson-developer-cloud/node-sdk/commit/24f22175549e373bb05dee719d7e49eadfc22bb5))
+
 # [5.6.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.5.0...v5.6.0) (2020-06-03)
 
 
