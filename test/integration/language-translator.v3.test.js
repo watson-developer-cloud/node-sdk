@@ -57,13 +57,11 @@ describe('language translator integration', () => {
   });
 
   describe('models', () => {
-    let baseModelId;
     let modelId;
     it('should list all the models', done => {
       languageTranslator.listModels((err, res) => {
         const { result } = res || {};
         expect(result).toBeDefined();
-        baseModelId = result.models[0].model_id;
         done();
       });
     });
@@ -71,7 +69,8 @@ describe('language translator integration', () => {
     it('should create a model', done => {
       languageTranslator.createModel(
         {
-          baseModelId,
+          name: 'node-test-custom-en-fr',
+          baseModelId: 'en-fr',
           forcedGlossary: fs.createReadStream('./test/resources/glossary.tmx'),
         },
         (err, res) => {

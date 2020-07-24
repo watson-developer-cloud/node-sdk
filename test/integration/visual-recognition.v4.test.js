@@ -103,19 +103,13 @@ describe('visual recognition v4 integration', () => {
       done();
     });
 
-    test('listCollections', async done => {
-      let res;
-      try {
-        res = await visualRecognition.listCollections();
-      } catch (err) {
-        return done(err);
-      }
+    test('listCollections', async () => {
+      const res = await visualRecognition.listCollections();
 
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
-    });
+    }, 15000);
 
     test('getCollection', async done => {
       if (!collectionId) {
