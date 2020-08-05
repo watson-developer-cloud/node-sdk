@@ -28,7 +28,7 @@ import { getSdkHeaders } from '../lib/common';
 
 class LanguageTranslatorV3 extends BaseService {
 
-  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/language-translator/api';
+  static DEFAULT_SERVICE_URL: string = 'https://api.us-south.language-translator.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'language_translator';
 
   /**
@@ -41,7 +41,7 @@ class LanguageTranslatorV3 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/language-translator/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -68,6 +68,58 @@ class LanguageTranslatorV3 extends BaseService {
     }
     this.baseOptions.qs.version = options.version;
   }
+
+  /*************************
+   * languages
+   ************************/
+
+  /**
+   * List supported languages.
+   *
+   * Lists all supported languages. The method returns an array of supported languages with information about each
+   * language. Languages are listed in alphabetical order by language code (for example, `af`, `ar`).
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Languages>>}
+   */
+  public listLanguages(params?: LanguageTranslatorV3.ListLanguagesParams, callback?: LanguageTranslatorV3.Callback<LanguageTranslatorV3.Languages>): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Languages>> {
+    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
+    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+
+    return new Promise((resolve, reject) => {
+      const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listLanguages');
+
+      const parameters = {
+        options: {
+          url: '/v3/languages',
+          method: 'GET',
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
 
   /*************************
    * translation
@@ -328,33 +380,89 @@ class LanguageTranslatorV3 extends BaseService {
   /**
    * Create model.
    *
-   * Uploads Translation Memory eXchange (TMX) files to customize a translation model.
+   * Uploads training files to customize a translation model. You can customize a model with a forced glossary or with a
+   * parallel corpus:
+   * * Use a *forced glossary* to force certain terms and phrases to be translated in a specific way. You can upload
+   * only a single forced glossary file for a model. The size of a forced glossary file for a custom model is limited to
+   * 10 MB.
+   * * Use a *parallel corpus* when you want your custom model to learn from general translation patterns in parallel
+   * sentences in your samples. What your model learns from a parallel corpus can improve translation results for input
+   * text that the model has not been trained on. You can upload multiple parallel corpora files with a request. To
+   * successfully train with parallel corpora, the corpora files must contain a cumulative total of at least 5000
+   * parallel sentences. The cumulative size of all uploaded corpus files for a custom model is limited to 250 MB.
    *
-   * You can either customize a model with a forced glossary or with a corpus that contains parallel sentences. To
-   * create a model that is customized with a parallel corpus <b>and</b> a forced glossary, proceed in two steps:
-   * customize with a parallel corpus first and then customize the resulting model with a glossary. Depending on the
-   * type of customization and the size of the uploaded corpora, training can range from minutes for a glossary to
-   * several hours for a large parallel corpus. You can upload a single forced glossary file and this file must be less
-   * than <b>10 MB</b>. You can upload multiple parallel corpora tmx files. The cumulative file size of all uploaded
-   * files is limited to <b>250 MB</b>. To successfully train with a parallel corpus you must have at least <b>5,000
-   * parallel sentences</b> in your corpus.
+   * Depending on the type of customization and the size of the uploaded files, training time can range from minutes for
+   * a glossary to several hours for a large parallel corpus. To create a model that is customized with a parallel
+   * corpus and a forced glossary, customize the model with a parallel corpus first and then customize the resulting
+   * model with a forced glossary.
    *
-   * You can have a <b>maximum of 10 custom models per language pair</b>.
+   * You can create a maximum of 10 custom models per language pair. For more information about customizing a
+   * translation model, including the formatting and character restrictions for data files, see [Customizing your
+   * model](https://cloud.ibm.com/docs/language-translator?topic=language-translator-customizing).
+   *
+   * #### Supported file formats
+   *
+   *  You can provide your training data for customization in the following document formats:
+   * * **TMX** (`.tmx`) - Translation Memory eXchange (TMX) is an XML specification for the exchange of translation
+   * memories.
+   * * **XLIFF** (`.xliff`) - XML Localization Interchange File Format (XLIFF) is an XML specification for the exchange
+   * of translation memories.
+   * * **CSV** (`.csv`) - Comma-separated values (CSV) file with two columns for aligned sentences and phrases. The
+   * first row contains the language code.
+   * * **TSV** (`.tsv` or `.tab`) - Tab-separated values (TSV) file with two columns for aligned sentences and phrases.
+   * The first row contains the language code.
+   * * **JSON** (`.json`) - Custom JSON format for specifying aligned sentences and phrases.
+   * * **Microsoft Excel** (`.xls` or `.xlsx`) - Excel file with the first two columns for aligned sentences and
+   * phrases. The first row contains the language code.
+   *
+   * You must encode all text data in UTF-8 format. For more information, see [Supported document formats for training
+   * data](https://cloud.ibm.com/docs/language-translator?topic=language-translator-customizing#supported-document-formats-for-training-data).
+   *
+   *
+   * #### Specifying file formats
+   *
+   *  You can indicate the format of a file by including the file extension with the file name. Use the file extensions
+   * shown in **Supported file formats**.
+   *
+   * Alternatively, you can omit the file extension and specify one of the following `content-type` specifications for
+   * the file:
+   * * **TMX** - `application/x-tmx+xml`
+   * * **XLIFF** - `application/xliff+xml`
+   * * **CSV** - `text/csv`
+   * * **TSV** - `text/tab-separated-values`
+   * * **JSON** - `application/json`
+   * * **Microsoft Excel** - `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
+   *
+   * For example, with `curl`, use the following `content-type` specification to indicate the format of a CSV file named
+   * **glossary**:
+   *
+   * `--form "forced_glossary=@glossary;type=text/csv"`.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.baseModelId - The model ID of the model to use as the base for customization. To see
-   * available models, use the `List models` method. Usually all IBM provided models are customizable. In addition, all
-   * your models that have been created via parallel corpus customization, can be further customized with a forced
-   * glossary.
-   * @param {NodeJS.ReadableStream|Buffer} [params.forcedGlossary] - A TMX file with your customizations. The
-   * customizations in the file completely overwrite the domain translaton data, including high frequency or high
-   * confidence phrase translations. You can upload only one glossary with a file size less than 10 MB per call. A
-   * forced glossary should contain single words or short phrases.
-   * @param {NodeJS.ReadableStream|Buffer} [params.parallelCorpus] - A TMX file with parallel sentences for source and
-   * target language. You can upload multiple parallel_corpus files in one request. All uploaded parallel_corpus files
-   * combined, your parallel corpus must contain at least 5,000 parallel sentences to train successfully.
+   * @param {string} params.baseModelId - The ID of the translation model to use as the base for customization. To see
+   * available models and IDs, use the `List models` method. Most models that are provided with the service are
+   * customizable. In addition, all models that you create with parallel corpora customization can be further customized
+   * with a forced glossary.
+   * @param {NodeJS.ReadableStream|Buffer} [params.forcedGlossary] - A file with forced glossary terms for the source
+   * and target languages. The customizations in the file completely overwrite the domain translation data, including
+   * high frequency or high confidence phrase translations.
+   *
+   * You can upload only one glossary file for a custom model, and the glossary can have a maximum size of 10 MB. A
+   * forced glossary must contain single words or short phrases. For more information, see **Supported file formats** in
+   * the method description.
+   *
+   * *With `curl`, use `--form forced_glossary=@{filename}`.*.
+   * @param {NodeJS.ReadableStream|Buffer} [params.parallelCorpus] - A file with parallel sentences for the source and
+   * target languages. You can upload multiple parallel corpus files in one request by repeating the parameter. All
+   * uploaded parallel corpus files combined must contain at least 5000 parallel sentences to train successfully. You
+   * can provide a maximum of 500,000 parallel sentences across all corpora.
+   *
+   * A single entry in a corpus file can contain a maximum of 80 words. All corpora files for a custom model can have a
+   * cumulative maximum size of 250 MB. For more information, see **Supported file formats** in the method description.
+   *
+   * *With `curl`, use `--form parallel_corpus=@{filename}`.*.
    * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
-   * letters, numbers, dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
+   * letters, numbers, dashes, underscores, spaces, and apostrophes. The maximum length of the name is 32 characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>>}
@@ -621,7 +729,8 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM provided
    * base model for English to German translation. A model ID overrides the source and target parameters and is required
    * if you use a custom model. If no model ID is specified, you must specify a target language.
-   * @param {string} [params.source] - Language code that specifies the language of the source document.
+   * @param {string} [params.source] - Language code that specifies the language of the source document. If omitted, the
+   * service derives the source language from the input text.
    * @param {string} [params.target] - Language code that specifies the target language for translation. Required if
    * model ID is not specified.
    * @param {string} [params.documentId] - To use a previously submitted document as the source for a new translation,
@@ -920,6 +1029,11 @@ namespace LanguageTranslatorV3 {
    * request interfaces
    ************************/
 
+  /** Parameters for the `listLanguages` operation. */
+  export interface ListLanguagesParams {
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `translate` operation. */
   export interface TranslateParams {
     /** Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response. */
@@ -964,24 +1078,36 @@ namespace LanguageTranslatorV3 {
 
   /** Parameters for the `createModel` operation. */
   export interface CreateModelParams {
-    /** The model ID of the model to use as the base for customization. To see available models, use the `List
-     *  models` method. Usually all IBM provided models are customizable. In addition, all your models that have been
-     *  created via parallel corpus customization, can be further customized with a forced glossary.
+    /** The ID of the translation model to use as the base for customization. To see available models and IDs, use
+     *  the `List models` method. Most models that are provided with the service are customizable. In addition, all
+     *  models that you create with parallel corpora customization can be further customized with a forced glossary.
      */
     baseModelId: string;
-    /** A TMX file with your customizations. The customizations in the file completely overwrite the domain
-     *  translaton data, including high frequency or high confidence phrase translations. You can upload only one
-     *  glossary with a file size less than 10 MB per call. A forced glossary should contain single words or short
-     *  phrases.
+    /** A file with forced glossary terms for the source and target languages. The customizations in the file
+     *  completely overwrite the domain translation data, including high frequency or high confidence phrase
+     *  translations.
+     *
+     *  You can upload only one glossary file for a custom model, and the glossary can have a maximum size of 10 MB. A
+     *  forced glossary must contain single words or short phrases. For more information, see **Supported file formats**
+     *  in the method description.
+     *
+     *  *With `curl`, use `--form forced_glossary=@{filename}`.*.
      */
     forcedGlossary?: NodeJS.ReadableStream|Buffer;
-    /** A TMX file with parallel sentences for source and target language. You can upload multiple parallel_corpus
-     *  files in one request. All uploaded parallel_corpus files combined, your parallel corpus must contain at least
-     *  5,000 parallel sentences to train successfully.
+    /** A file with parallel sentences for the source and target languages. You can upload multiple parallel corpus
+     *  files in one request by repeating the parameter. All uploaded parallel corpus files combined must contain at
+     *  least 5000 parallel sentences to train successfully. You can provide a maximum of 500,000 parallel sentences
+     *  across all corpora.
+     *
+     *  A single entry in a corpus file can contain a maximum of 80 words. All corpora files for a custom model can have
+     *  a cumulative maximum size of 250 MB. For more information, see **Supported file formats** in the method
+     *  description.
+     *
+     *  *With `curl`, use `--form parallel_corpus=@{filename}`.*.
      */
     parallelCorpus?: NodeJS.ReadableStream|Buffer;
     /** An optional model name that you can use to identify the model. Valid characters are letters, numbers,
-     *  dashes, underscores, spaces and apostrophes. The maximum length is 32 characters.
+     *  dashes, underscores, spaces, and apostrophes. The maximum length of the name is 32 characters.
      */
     name?: string;
     headers?: OutgoingHttpHeaders;
@@ -1025,7 +1151,9 @@ namespace LanguageTranslatorV3 {
      *  model. If no model ID is specified, you must specify a target language.
      */
     modelId?: string;
-    /** Language code that specifies the language of the source document. */
+    /** Language code that specifies the language of the source document. If omitted, the service derives the source
+     *  language from the input text.
+     */
     source?: string;
     /** Language code that specifies the target language for translation. Required if model ID is not specified. */
     target?: string;
@@ -1202,6 +1330,42 @@ namespace LanguageTranslatorV3 {
   export interface IdentifiedLanguages {
     /** A ranking of identified languages with confidence scores. */
     languages: IdentifiedLanguage[];
+  }
+
+  /** Response payload for languages. */
+  export interface Language {
+    /** The language code for the language (for example, `af`). */
+    language?: string;
+    /** The name of the language in English (for example, `Afrikaans`). */
+    language_name?: string;
+    /** The native name of the language (for example, `Afrikaans`). */
+    native_language_name?: string;
+    /** The country code for the language (for example, `ZA` for South Africa). */
+    country_code?: string;
+    /** Indicates whether words of the language are separated by whitespace: `true` if the words are separated;
+     *  `false` otherwise.
+     */
+    words_separated?: boolean;
+    /** Indicates the direction of the language: `right_to_left` or `left_to_right`. */
+    direction?: string;
+    /** Indicates whether the language can be used as the source for translation: `true` if the language can be used
+     *  as the source; `false` otherwise.
+     */
+    supported_as_source?: boolean;
+    /** Indicates whether the language can be used as the target for translation: `true` if the language can be used
+     *  as the target; `false` otherwise.
+     */
+    supported_as_target?: boolean;
+    /** Indicates whether the language supports automatic detection: `true` if the language can be detected
+     *  automatically; `false` otherwise.
+     */
+    identifiable?: boolean;
+  }
+
+  /** The response type for listing supported languages. */
+  export interface Languages {
+    /** An array of supported languages with information about each language. */
+    languages: Language[];
   }
 
   /** Translation. */
