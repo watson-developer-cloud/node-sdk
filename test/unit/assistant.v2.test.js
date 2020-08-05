@@ -22,7 +22,7 @@ const { getOptions, checkUrlAndMethod, checkMediaHeaders, expectToBePromise } = 
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/assistant/api/assistant/api',
+  url: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 
@@ -353,6 +353,166 @@ describe('AssistantV2', () => {
         expectToBePromise(messageStatelessPromise);
 
         messageStatelessPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listLogs', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const sort = 'fake_sort';
+        const filter = 'fake_filter';
+        const pageLimit = 'fake_pageLimit';
+        const cursor = 'fake_cursor';
+        const params = {
+          assistantId,
+          sort,
+          filter,
+          pageLimit,
+          cursor,
+        };
+
+        const listLogsResult = assistant.listLogs(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listLogsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/logs', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['sort']).toEqual(sort);
+        expect(options.qs['filter']).toEqual(filter);
+        expect(options.qs['page_limit']).toEqual(pageLimit);
+        expect(options.qs['cursor']).toEqual(cursor);
+        expect(options.path['assistant_id']).toEqual(assistantId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'fake_assistantId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          assistantId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistant.listLogs(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId'];
+
+        let err;
+        try {
+          await assistant.listLogs({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['assistantId'];
+
+        const listLogsPromise = assistant.listLogs();
+        expectToBePromise(listLogsPromise);
+
+        listLogsPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteUserData', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const customerId = 'fake_customerId';
+        const params = {
+          customerId,
+        };
+
+        const deleteUserDataResult = assistant.deleteUserData(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteUserDataResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/user_data', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['customer_id']).toEqual(customerId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const customerId = 'fake_customerId';
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          customerId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistant.deleteUserData(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['customerId'];
+
+        let err;
+        try {
+          await assistant.deleteUserData({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['customerId'];
+
+        const deleteUserDataPromise = assistant.deleteUserData();
+        expectToBePromise(deleteUserDataPromise);
+
+        deleteUserDataPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

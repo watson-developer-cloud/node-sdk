@@ -29,7 +29,7 @@ import { getSdkHeaders } from '../lib/common';
 
 class AssistantV2 extends BaseService {
 
-  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/assistant/api';
+  static DEFAULT_SERVICE_URL: string = 'https://api.us-south.assistant.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /**
@@ -42,7 +42,7 @@ class AssistantV2 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -226,8 +226,6 @@ class AssistantV2 extends BaseService {
    * Send user input to an assistant and receive a response, with conversation state (including context data) stored by
    * Watson Assistant for the duration of the session.
    *
-   * There is no rate limit for this operation.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
    * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
@@ -312,8 +310,6 @@ class AssistantV2 extends BaseService {
    * Send user input to an assistant and receive a response, with conversation state (including context data) managed by
    * your application.
    *
-   * There is no rate limit for this operation.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
    * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
@@ -368,6 +364,170 @@ class AssistantV2 extends BaseService {
           headers: extend(true, sdkHeaders, {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /*************************
+   * logs
+   ************************/
+
+  /**
+   * List log events for an assistant.
+   *
+   * List the events from the log of an assistant.
+   *
+   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
+   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   *
+   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
+   * reverse the sort order, prefix the parameter value with a minus sign (`-`).
+   * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
+   * filter. For more information, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV2.Response<AssistantV2.LogCollection>>}
+   */
+  public listLogs(params: AssistantV2.ListLogsParams, callback?: AssistantV2.Callback<AssistantV2.LogCollection>): Promise<AssistantV2.Response<AssistantV2.LogCollection>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['assistantId'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const query = {
+        'sort': _params.sort,
+        'filter': _params.filter,
+        'page_limit': _params.pageLimit,
+        'cursor': _params.cursor
+      };
+
+      const path = {
+        'assistant_id': _params.assistantId
+      };
+
+      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listLogs');
+
+      const parameters = {
+        options: {
+          url: '/v2/assistants/{assistant_id}/logs',
+          method: 'GET',
+          qs: query,
+          path,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
+          }, _params.headers),
+        }),
+      };
+
+      return this.createRequest(parameters).then(
+        res => {
+          if (_callback) {
+            _callback(null, res);
+          }
+          return resolve(res);
+        },
+        err => {
+          if (_callback) {
+            _callback(err)
+            return resolve();
+          }
+          return reject(err);
+        }
+      );
+    });
+  };
+
+  /*************************
+   * userData
+   ************************/
+
+  /**
+   * Delete labeled data.
+   *
+   * Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with
+   * the customer ID.
+   *
+   * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
+   * For more information about personal data and customer IDs, see [Information
+   * security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security).
+   *
+   * This operation is limited to 4 requests per minute. For more information, see **Rate limiting**.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.customerId - The customer ID for which all data is to be deleted.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @param {Function} [callback] - The callback that handles the response
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
+   */
+  public deleteUserData(params: AssistantV2.DeleteUserDataParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): Promise<AssistantV2.Response<AssistantV2.Empty>> {
+    const _params = extend({}, params);
+    const _callback = callback;
+    const requiredParams = ['customerId'];
+
+    return new Promise((resolve, reject) => {
+      const missingParams = getMissingParams(_params, requiredParams);
+      if (missingParams) {
+        if (_callback) {
+          _callback(missingParams);
+          return resolve();
+        }
+        return reject(missingParams);
+      }
+
+      const query = {
+        'customer_id': _params.customerId
+      };
+
+      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
+
+      const parameters = {
+        options: {
+          url: '/v2/user_data',
+          method: 'DELETE',
+          qs: query,
+        },
+        defaultOptions: extend(true, {}, this.baseOptions, {
+          headers: extend(true, sdkHeaders, {
+            'Accept': 'application/json',
           }, _params.headers),
         }),
       };
@@ -490,6 +650,37 @@ namespace AssistantV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `listLogs` operation. */
+  export interface ListLogsParams {
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+     *  the assistant settings and click **API Details**. For information about creating assistants, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *
+     *  **Note:** Currently, the v2 API does not support creating assistants.
+     */
+    assistantId: string;
+    /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order,
+     *  prefix the parameter value with a minus sign (`-`).
+     */
+    sort?: string;
+    /** A cacheable parameter that limits the results to those matching the specified filter. For more information,
+     *  see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
+     */
+    filter?: string;
+    /** The number of records to return in each page of results. */
+    pageLimit?: number;
+    /** A token identifying the page of results to retrieve. */
+    cursor?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteUserData` operation. */
+  export interface DeleteUserDataParams {
+    /** The customer ID for which all data is to be deleted. */
+    customerId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /*************************
    * model interfaces
    ************************/
@@ -552,8 +743,8 @@ namespace AssistantV2 {
 
   /** DialogSuggestion. */
   export interface DialogSuggestion {
-    /** The user-facing label for the disambiguation option. This label is taken from the **title** or
-     *  **user_label** property of the corresponding dialog node, depending on the disambiguation options.
+    /** The user-facing label for the suggestion. This label is taken from the **title** or **user_label** property
+     *  of the corresponding dialog node, depending on the disambiguation options.
      */
     label: string;
     /** An object defining the message input to be sent to the assistant if the user selects the corresponding
@@ -570,6 +761,50 @@ namespace AssistantV2 {
   export interface DialogSuggestionValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
+  }
+
+  /** Log. */
+  export interface Log {
+    /** A unique identifier for the logged event. */
+    log_id: string;
+    /** A stateful message request formatted for the Watson Assistant service. */
+    request: MessageRequest;
+    /** A response from the Watson Assistant service. */
+    response: MessageResponse;
+    /** Unique identifier of the assistant. */
+    assistant_id: string;
+    /** The ID of the session the message was part of. */
+    session_id: string;
+    /** The unique identifier of the skill that responded to the message. */
+    skill_id: string;
+    /** The name of the snapshot (dialog skill version) that responded to the message (for example, `draft`). */
+    snapshot: string;
+    /** The timestamp for receipt of the message. */
+    request_timestamp: string;
+    /** The timestamp for the system response to the message. */
+    response_timestamp: string;
+    /** The language of the assistant to which the message request was made. */
+    language: string;
+    /** The customer ID specified for the message, if any. */
+    customer_id?: string;
+  }
+
+  /** LogCollection. */
+  export interface LogCollection {
+    /** An array of objects describing log events. */
+    logs: Log[];
+    /** The pagination data for the returned objects. */
+    pagination: LogPagination;
+  }
+
+  /** The pagination data for the returned objects. */
+  export interface LogPagination {
+    /** The URL that will return the next page of results, if any. */
+    next_url?: string;
+    /** Reserved for future use. */
+    matched?: number;
+    /** A token identifying the next page of results. */
+    next_cursor?: string;
   }
 
   /** MessageContext. */
@@ -640,7 +875,7 @@ namespace AssistantV2 {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
     /** System context data used by the skill. */
-    system?: JsonObject;
+    system?: MessageContextSkillSystem;
   }
 
   /** System context data used by the skill. */
@@ -833,6 +1068,18 @@ namespace AssistantV2 {
     suggested_text?: string;
   }
 
+  /** A stateful message request formatted for the Watson Assistant service. */
+  export interface MessageRequest {
+    /** An input object that includes the input text. */
+    input?: MessageInput;
+    /** Context data for the conversation. You can use this property to set or modify context variables, which can
+     *  also be accessed by dialog nodes. The context is stored by the assistant on a per-session basis.
+     *
+     *  **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
+     */
+    context?: MessageContext;
+  }
+
   /** A response from the Watson Assistant service. */
   export interface MessageResponse {
     /** Assistant output to be rendered or processed by the client. */
@@ -841,6 +1088,7 @@ namespace AssistantV2 {
      *  stored by the assistant on a per-session basis.
      *
      *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
+     *  Full context is always included in logs.
      */
     context?: MessageContext;
   }
@@ -1006,9 +1254,6 @@ namespace AssistantV2 {
   export interface RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
-     *
-     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
-     *  Premium users.
      */
     response_type: string;
     /** The text of the response. */
@@ -1033,11 +1278,7 @@ namespace AssistantV2 {
      *  node.
      */
     topic?: string;
-    /** An array of objects describing the possible matching dialog nodes from which the user can choose.
-     *
-     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for
-     *  Premium users.
-     */
+    /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
     suggestions?: DialogSuggestion[];
     /** The title or introductory text to show before the response. This text is defined in the search skill
      *  configuration.
@@ -1051,8 +1292,8 @@ namespace AssistantV2 {
   export interface SearchResult {
     /** The unique identifier of the document in the Discovery service collection.
      *
-     *  This property is included in responses from search skills, which are a beta feature available only to Plus or
-     *  Premium plan users.
+     *  This property is included in responses from search skills, which are available only to Plus or Premium plan
+     *  users.
      */
     id: string;
     /** An object containing search result metadata from the Discovery service. */
