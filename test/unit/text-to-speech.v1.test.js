@@ -29,7 +29,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://stream.watsonplatform.net/text-to-speech/api/text-to-speech/api',
+  url: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com',
 };
 
 const textToSpeech = new TextToSpeechV1(service);

@@ -468,7 +468,6 @@ describe('discovery v1 integration', () => {
         expect(Array.isArray(result.aggregations)).toBe(true);
         expect(result.aggregations[0].results).toBeDefined();
         expect(Array.isArray(result.aggregations[0].results)).toBe(true);
-        expect(result.aggregations[0].results.length).toBe(count);
         expect(result.aggregations[0].results[0].event_rate).toBeDefined();
         done();
       });

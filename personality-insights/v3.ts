@@ -39,7 +39,7 @@ import { getSdkHeaders } from '../lib/common';
 
 class PersonalityInsightsV3 extends BaseService {
 
-  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/personality-insights/api';
+  static DEFAULT_SERVICE_URL: string = 'https://api.us-south.personality-insights.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'personality_insights';
 
   /**
@@ -52,7 +52,7 @@ class PersonalityInsightsV3 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/personality-insights/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set

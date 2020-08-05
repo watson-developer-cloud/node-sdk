@@ -20,7 +20,7 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM&reg; Speech to Text service provides APIs that use IBM's speech-recognition capabilities to produce
+ * The IBM Watson&trade; Speech to Text service provides APIs that use IBM's speech-recognition capabilities to produce
  * transcripts of spoken audio. The service can transcribe speech from various languages and audio formats. In addition
  * to basic transcription, the service can produce detailed information about many different aspects of the audio. For
  * most languages, the service supports two sampling rates, broadband and narrowband. It returns all JSON response
@@ -42,14 +42,14 @@ import { getSdkHeaders } from '../lib/common';
 
 class SpeechToTextV1 extends BaseService {
 
-  static DEFAULT_SERVICE_URL: string = 'https://stream.watsonplatform.net/speech-to-text/api';
+  static DEFAULT_SERVICE_URL: string = 'https://api.us-south.speech-to-text.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'speech_to_text';
 
   /**
    * Construct a SpeechToTextV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/speech-to-text/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -79,7 +79,8 @@ class SpeechToTextV1 extends BaseService {
    * List models.
    *
    * Lists all language models that are available for use with the service. The information includes the name of the
-   * model and its minimum sampling rate in Hertz, among other things.
+   * model and its minimum sampling rate in Hertz, among other things. The ordering of the list of models can change
+   * from call to call; do not rely on an alphabetized or static list of models.
    *
    * **See also:** [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
    *
@@ -524,7 +525,7 @@ class SpeechToTextV1 extends BaseService {
    * Register a callback.
    *
    * Registers a callback URL with the service for use with subsequent asynchronous recognition requests. The service
-   * attempts to register, or white-list, the callback URL if it is not already registered by sending a `GET` request to
+   * attempts to register, or allowlist, the callback URL if it is not already registered by sending a `GET` request to
    * the callback URL. The service passes a random alphanumeric challenge string via the `challenge_string` parameter of
    * the request. The request includes an `Accept` header that specifies `text/plain` as the required response type.
    *
@@ -535,8 +536,8 @@ class SpeechToTextV1 extends BaseService {
    *
    * The service sends only a single `GET` request to the callback URL. If the service does not receive a reply with a
    * response code of 200 and a body that echoes the challenge string sent by the service within five seconds, it does
-   * not white-list the URL; it instead sends status code 400 in response to the **Register a callback** request. If the
-   * requested callback URL is already white-listed, the service responds to the initial registration request with
+   * not allowlist the URL; it instead sends status code 400 in response to the **Register a callback** request. If the
+   * requested callback URL is already allowlisted, the service responds to the initial registration request with
    * response code 200.
    *
    * If you specify a user secret with the request, the service uses it as a key to calculate an HMAC-SHA1 signature of
@@ -553,7 +554,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.callbackUrl - An HTTP or HTTPS URL to which callback notifications are to be sent. To be
-   * white-listed, the URL must successfully echo the challenge string during URL verification. During verification, the
+   * allowlisted, the URL must successfully echo the challenge string during URL verification. During verification, the
    * client can also check the signature that the service sends in the `X-Callback-Signature` header to verify the
    * origin of the request.
    * @param {string} [params.userSecret] - A user-specified string that the service uses to generate the HMAC-SHA1
@@ -620,7 +621,7 @@ class SpeechToTextV1 extends BaseService {
   /**
    * Unregister a callback.
    *
-   * Unregisters a callback URL that was previously white-listed with a **Register a callback** request for use with the
+   * Unregisters a callback URL that was previously allowlisted with a **Register a callback** request for use with the
    * asynchronous interface. Once unregistered, the URL can no longer be used with asynchronous recognition requests.
    *
    * **See also:** [Unregistering a callback
@@ -772,8 +773,8 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request. See
    * [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
    * @param {string} [params.callbackUrl] - A URL to which callback notifications are to be sent. The URL must already
-   * be successfully white-listed by using the **Register a callback** method. You can include the same callback URL
-   * with any number of job creation requests. Omit the parameter to poll the service for job completion and results.
+   * be successfully allowlisted by using the **Register a callback** method. You can include the same callback URL with
+   * any number of job creation requests. Omit the parameter to poll the service for job completion and results.
    *
    * Use the `user_token` parameter to specify a unique user-specified string with each job to differentiate the
    * callback notifications for the jobs.
@@ -1378,8 +1379,9 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
-   * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
-   * models that are owned by the requesting credentials.
+   * models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned
+   * by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese)
+   * languages are not available for language model customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>>}
@@ -3130,8 +3132,9 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
-   * models are to be returned (for example, `en-US`). Omit the parameter to see all custom language or custom acoustic
-   * models that are owned by the requesting credentials.
+   * models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned
+   * by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese)
+   * languages are not available for language model customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>>}
@@ -4047,10 +4050,13 @@ class SpeechToTextV1 extends BaseService {
    * Deletes all data that is associated with a specified customer ID. The method deletes all data for the customer ID,
    * regardless of the method by which the information was added. The method has no effect if no data is associated with
    * the customer ID. You must issue the request with credentials for the same instance of the service that was used to
-   * associate the customer ID with the data.
+   * associate the customer ID with the data. You associate a customer ID with data by passing the `X-Watson-Metadata`
+   * header with a request that passes the data.
    *
-   * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes the
-   * data.
+   * **Note:** If you delete an instance of the service from the service console, all data associated with that service
+   * instance is automatically deleted. This includes all custom language models, corpora, grammars, and words; all
+   * custom acoustic models and audio resources; all registered endpoints for the asynchronous HTTP interface; and all
+   * data related to speech recognition requests.
    *
    * **See also:** [Information
    * security](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-information-security#information-security).
@@ -4468,7 +4474,7 @@ namespace SpeechToTextV1 {
 
   /** Parameters for the `registerCallback` operation. */
   export interface RegisterCallbackParams {
-    /** An HTTP or HTTPS URL to which callback notifications are to be sent. To be white-listed, the URL must
+    /** An HTTP or HTTPS URL to which callback notifications are to be sent. To be allowlisted, the URL must
      *  successfully echo the challenge string during URL verification. During verification, the client can also check
      *  the signature that the service sends in the `X-Callback-Signature` header to verify the origin of the request.
      */
@@ -4501,7 +4507,7 @@ namespace SpeechToTextV1 {
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
      */
     model?: CreateJobConstants.Model | string;
-    /** A URL to which callback notifications are to be sent. The URL must already be successfully white-listed by
+    /** A URL to which callback notifications are to be sent. The URL must already be successfully allowlisted by
      *  using the **Register a callback** method. You can include the same callback URL with any number of job creation
      *  requests. Omit the parameter to poll the service for job completion and results.
      *
@@ -4928,12 +4934,37 @@ namespace SpeechToTextV1 {
 
   /** Parameters for the `listLanguageModels` operation. */
   export interface ListLanguageModelsParams {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned (for
-     *  example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the
-     *  requesting credentials.
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit
+     *  the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials.
+     *  **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for
+     *  language model customization.
      */
-    language?: string;
+    language?: ListLanguageModelsConstants.Language | string;
     headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `listLanguageModels` operation. */
+  export namespace ListLanguageModelsConstants {
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for language model customization. */
+    export enum Language {
+      AR_AR = 'ar-AR',
+      DE_DE = 'de-DE',
+      EN_GB = 'en-GB',
+      EN_US = 'en-US',
+      ES_AR = 'es-AR',
+      ES_ES = 'es-ES',
+      ES_CL = 'es-CL',
+      ES_CO = 'es-CO',
+      ES_MX = 'es-MX',
+      ES_PE = 'es-PE',
+      FR_FR = 'fr-FR',
+      IT_IT = 'it-IT',
+      JA_JP = 'ja-JP',
+      KO_KR = 'ko-KR',
+      NL_NL = 'nl-NL',
+      PT_BR = 'pt-BR',
+      ZH_CN = 'zh-CN',
+    }
   }
 
   /** Parameters for the `getLanguageModel` operation. */
@@ -5343,12 +5374,37 @@ namespace SpeechToTextV1 {
 
   /** Parameters for the `listAcousticModels` operation. */
   export interface ListAcousticModelsParams {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned (for
-     *  example, `en-US`). Omit the parameter to see all custom language or custom acoustic models that are owned by the
-     *  requesting credentials.
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit
+     *  the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials.
+     *  **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for
+     *  language model customization.
      */
-    language?: string;
+    language?: ListAcousticModelsConstants.Language | string;
     headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `listAcousticModels` operation. */
+  export namespace ListAcousticModelsConstants {
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for language model customization. */
+    export enum Language {
+      AR_AR = 'ar-AR',
+      DE_DE = 'de-DE',
+      EN_GB = 'en-GB',
+      EN_US = 'en-US',
+      ES_AR = 'es-AR',
+      ES_ES = 'es-ES',
+      ES_CL = 'es-CL',
+      ES_CO = 'es-CO',
+      ES_MX = 'es-MX',
+      ES_PE = 'es-PE',
+      FR_FR = 'fr-FR',
+      IT_IT = 'it-IT',
+      JA_JP = 'ja-JP',
+      KO_KR = 'ko-KR',
+      NL_NL = 'nl-NL',
+      PT_BR = 'pt-BR',
+      ZH_CN = 'zh-CN',
+    }
   }
 
   /** Parameters for the `getAcousticModel` operation. */
@@ -6059,8 +6115,8 @@ namespace SpeechToTextV1 {
   /** Information about a request to register a callback for asynchronous speech recognition. */
   export interface RegisterStatus {
     /** The current status of the job:
-     *  * `created`: The service successfully white-listed the callback URL as a result of the call.
-     *  * `already created`: The URL was already white-listed.
+     *  * `created`: The service successfully allowlisted the callback URL as a result of the call.
+     *  * `already created`: The URL was already allowlisted.
      */
     status: string;
     /** The callback URL that is successfully registered. */

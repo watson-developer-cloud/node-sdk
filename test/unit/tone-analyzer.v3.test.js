@@ -28,7 +28,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/tone-analyzer/api/tone-analyzer/api',
+  url: 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 
