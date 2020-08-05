@@ -40,6 +40,10 @@
     {
       "name": "Dustin Popp",
       "email": "dustinpopp@ibm.com"
+    },
+    {
+      "name": "Angelo Paparazzi",
+      "email": "angelo.paparazzi@ibm.com"
     }
   ],
   "license": "Apache-2.0",
