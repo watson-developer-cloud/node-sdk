@@ -28,8 +28,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url:
-    'https://gateway.watsonplatform.net/natural-language-classifier/api/natural-language-classifier/api',
+  url: 'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com',
 };
 
 const naturalLanguageClassifier = new NaturalLanguageClassifierV1(service);

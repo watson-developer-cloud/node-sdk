@@ -28,8 +28,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url:
-    'https://gateway.watsonplatform.net/natural-language-understanding/api/natural-language-understanding/api',
+  url: 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 

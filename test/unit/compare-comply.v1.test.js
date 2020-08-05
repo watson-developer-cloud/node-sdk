@@ -28,7 +28,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/compare-comply/api/compare-comply/api',
+  url: 'https://api.us-south.compare-comply.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 

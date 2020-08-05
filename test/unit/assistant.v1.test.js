@@ -28,7 +28,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/assistant/api/assistant/api',
+  url: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 

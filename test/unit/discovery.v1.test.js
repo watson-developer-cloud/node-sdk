@@ -29,7 +29,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/discovery/api/discovery/api',
+  url: 'https://api.us-south.discovery.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 

@@ -127,8 +127,8 @@ class VisualRecognitionV3 extends BaseService {
         },
         'url': _params.url,
         'threshold': _params.threshold,
-        'owners': Array.isArray(_params.owners) ? _params.owners.join(',') : _params.owners,
-        'classifier_ids': Array.isArray(_params.classifierIds) ? _params.classifierIds.join(',') : _params.classifierIds
+        'owners': _params.owners,
+        'classifier_ids': _params.classifierIds
       };
 
       const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'classify');

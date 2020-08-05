@@ -28,7 +28,7 @@ import { getSdkHeaders } from '../lib/common';
 
 class AssistantV1 extends BaseService {
 
-  static DEFAULT_SERVICE_URL: string = 'https://gateway.watsonplatform.net/assistant/api';
+  static DEFAULT_SERVICE_URL: string = 'https://api.us-south.assistant.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /**
@@ -41,7 +41,7 @@ class AssistantV1 extends BaseService {
    * programmatically specify the current date at runtime, in case the API has been updated since your application's
    * release. Instead, specify a version date that is compatible with your application, and don't change it until your
    * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/assistant/api'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -81,8 +81,6 @@ class AssistantV1 extends BaseService {
    * **Important:** This method has been superseded by the new v2 runtime API. The v2 API offers significant advantages,
    * including ease of deployment, automatic state management, versioning, and search capabilities. For more
    * information, see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-api-overview).
-   *
-   * There is no rate limit for this operation.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -180,8 +178,6 @@ class AssistantV1 extends BaseService {
    *
    * List the workspaces associated with a Watson Assistant service instance.
    *
-   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.sort] - The attribute by which returned workspaces will be sorted. To reverse the sort
@@ -243,8 +239,6 @@ class AssistantV1 extends BaseService {
    *
    * Create a workspace based on component objects. You must provide workspace components defining the content of the
    * new workspace.
-   *
-   * This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
@@ -332,9 +326,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about a workspace, optionally including all workspace content.
    *
-   * With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the
-   * limit is 20 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {boolean} [params._export] - Whether to include all element content in the returned data. If
@@ -413,8 +404,6 @@ class AssistantV1 extends BaseService {
    *
    * Update an existing workspace with new or modified data. You must provide component objects defining the content of
    * the updated workspace.
-   *
-   * This operation is limited to 30 request per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -526,8 +515,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete a workspace from the service instance.
    *
-   * This operation is limited to 30 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -594,9 +581,6 @@ class AssistantV1 extends BaseService {
    * List intents.
    *
    * List the intents for a workspace.
-   *
-   * With **export**=`false`, this operation is limited to 2000 requests per 30 minutes. With **export**=`true`, the
-   * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -682,8 +666,6 @@ class AssistantV1 extends BaseService {
    * If you want to create multiple intents with a single API call, consider using the **[Update
    * workspace](#update-workspace)** method instead.
    *
-   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The name of the intent. This string must conform to the following restrictions:
@@ -768,9 +750,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about an intent, optionally including all intent content.
    *
-   * With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the
-   * limit is 400 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
@@ -850,8 +829,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to update multiple intents with a single API call, consider using the **[Update
    * workspace](#update-workspace)** method instead.
-   *
-   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -948,8 +925,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete an intent from a workspace.
    *
-   * This operation is limited to 2000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
@@ -1018,8 +993,6 @@ class AssistantV1 extends BaseService {
    * List user input examples.
    *
    * List the user input examples for an intent, optionally including contextual entity mentions.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -1102,8 +1075,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to add multiple examples with a single API call, consider using the **[Update intent](#update-intent)**
    * method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -1189,8 +1160,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about a user input example.
    *
-   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
@@ -1267,8 +1236,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to update multiple examples with a single API call, consider using the **[Update
    * intent](#update-intent)** method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -1356,8 +1323,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete a user input example from an intent.
    *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
@@ -1428,8 +1393,6 @@ class AssistantV1 extends BaseService {
    * List counterexamples.
    *
    * List the counterexamples for a workspace. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -1511,8 +1474,6 @@ class AssistantV1 extends BaseService {
    * If you want to add multiple counterexamples with a single API call, consider using the **[Update
    * workspace](#update-workspace)** method instead.
    *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input marked as irrelevant input. This string must conform to the
@@ -1593,8 +1554,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about a counterexample. Counterexamples are examples that have been marked as irrelevant input.
    *
-   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
@@ -1666,11 +1625,6 @@ class AssistantV1 extends BaseService {
    * Update counterexample.
    *
    * Update the text of a counterexample. Counterexamples are examples that have been marked as irrelevant input.
-   *
-   * If you want to update multiple counterexamples with a single API call, consider using the **[Update
-   * workspace](#update-workspace)** method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -1754,8 +1708,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete a counterexample from a workspace. Counterexamples are examples that have been marked as irrelevant input.
    *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
@@ -1824,9 +1776,6 @@ class AssistantV1 extends BaseService {
    * List entities.
    *
    * List the entities for a workspace.
-   *
-   * With **export**=`false`, this operation is limited to 1000 requests per 30 minutes. With **export**=`true`, the
-   * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -1911,8 +1860,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to create multiple entities with a single API call, consider using the **[Update
    * workspace](#update-workspace)** method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2003,9 +1950,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about an entity, optionally including all entity content.
    *
-   * With **export**=`false`, this operation is limited to 6000 requests per 5 minutes. With **export**=`true`, the
-   * limit is 200 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
@@ -2085,8 +2029,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to update multiple entities with a single API call, consider using the **[Update
    * workspace](#update-workspace)** method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2187,8 +2129,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete an entity from a workspace, or disable a system entity.
    *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
@@ -2258,8 +2198,6 @@ class AssistantV1 extends BaseService {
    *
    * List mentions for a contextual entity. An entity mention is an occurrence of a contextual entity in the context of
    * an intent user input example.
-   *
-   * This operation is limited to 200 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2340,8 +2278,6 @@ class AssistantV1 extends BaseService {
    * List entity values.
    *
    * List the values for an entity.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2428,8 +2364,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to create multiple entity values with a single API call, consider using the **[Update
    * entity](#update-entity)** method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2528,8 +2462,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about an entity value.
    *
-   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
@@ -2611,8 +2543,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to update multiple entity values with a single API call, consider using the **[Update
    * entity](#update-entity)** method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2721,8 +2651,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete a value from an entity.
    *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
@@ -2793,8 +2721,6 @@ class AssistantV1 extends BaseService {
    * List entity value synonyms.
    *
    * List the synonyms for an entity value.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2880,8 +2806,6 @@ class AssistantV1 extends BaseService {
    * If you want to create multiple synonyms with a single API call, consider using the **[Update
    * entity](#update-entity)** or **[Update entity value](#update-entity-value)** method instead.
    *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
@@ -2965,8 +2889,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about a synonym of an entity value.
    *
-   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
@@ -3045,8 +2967,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to update multiple synonyms with a single API call, consider using the **[Update
    * entity](#update-entity)** or **[Update entity value](#update-entity-value)** method instead.
-   *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -3134,8 +3054,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete a synonym from an entity value.
    *
-   * This operation is limited to 1000 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
@@ -3208,8 +3126,6 @@ class AssistantV1 extends BaseService {
    * List dialog nodes.
    *
    * List the dialog nodes for a workspace.
-   *
-   * This operation is limited to 2500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -3290,8 +3206,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to create multiple dialog nodes with a single API call, consider using the **[Update
    * workspace](#update-workspace)** method instead.
-   *
-   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -3418,8 +3332,6 @@ class AssistantV1 extends BaseService {
    *
    * Get information about a dialog node.
    *
-   * This operation is limited to 6000 requests per 5 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
@@ -3494,8 +3406,6 @@ class AssistantV1 extends BaseService {
    *
    * If you want to update multiple dialog nodes with a single API call, consider using the **[Update
    * workspace](#update-workspace)** method instead.
-   *
-   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -3626,8 +3536,6 @@ class AssistantV1 extends BaseService {
    *
    * Delete a dialog node from a workspace.
    *
-   * This operation is limited to 500 requests per 30 minutes. For more information, see **Rate limiting**.
-   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
@@ -3696,9 +3604,6 @@ class AssistantV1 extends BaseService {
    * List log events in a workspace.
    *
    * List the events from the log of a specific workspace.
-   *
-   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
-   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -3777,9 +3682,6 @@ class AssistantV1 extends BaseService {
    * List log events in all workspaces.
    *
    * List the events from the logs of all workspaces in the service instance.
-   *
-   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
-   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
@@ -3863,8 +3765,6 @@ class AssistantV1 extends BaseService {
    * You associate a customer ID with data by passing the `X-Watson-Metadata` header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
    * security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security).
-   *
-   * This operation is limited to 4 requests per minute. For more information, see **Rate limiting**.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
@@ -5296,8 +5196,7 @@ namespace AssistantV1 {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
      *
-     *  **Note:** The **search_skill** response type is available only for Plus and Premium users, and is used only by
-     *  the v2 runtime API.
+     *  **Note:** The **search_skill** response type is used only by the v2 runtime API.
      */
     response_type: string;
     /** A list of one or more objects defining text responses. Required when **response_type**=`text`. */
@@ -5452,9 +5351,7 @@ namespace AssistantV1 {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
      *
-     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
-     *  Plus and Premium users. The **search_skill** response type is available only for Plus and Premium users, and is
-     *  used only by the v2 runtime API.
+     *  **Note:** The **search_skill** response type is is used only by the v2 runtime API.
      */
     response_type: string;
     /** The text of the response. */
@@ -5920,9 +5817,6 @@ namespace AssistantV1 {
   export interface RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
-     *
-     *  **Note:** The **suggestion** response type is part of the disambiguation feature, which is only available for
-     *  Plus and Premium users.
      */
     response_type: string;
     /** The text of the response. */
@@ -5949,11 +5843,7 @@ namespace AssistantV1 {
      *  using the value of the dialog node's **title** property.
      */
     dialog_node?: string;
-    /** An array of objects describing the possible matching dialog nodes from which the user can choose.
-     *
-     *  **Note:** The **suggestions** property is part of the disambiguation feature, which is only available for Plus
-     *  and Premium users.
-     */
+    /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
     suggestions?: DialogSuggestion[];
   }
 
@@ -6086,10 +5976,7 @@ namespace AssistantV1 {
   export interface WorkspaceSystemSettings {
     /** Workspace settings related to the Watson Assistant user interface. */
     tooling?: WorkspaceSystemSettingsTooling;
-    /** Workspace settings related to the disambiguation feature.
-     *
-     *  **Note:** This feature is available only to Plus and Premium users.
-     */
+    /** Workspace settings related to the disambiguation feature. */
     disambiguation?: WorkspaceSystemSettingsDisambiguation;
     /** For internal use only. */
     human_agent_assist?: JsonObject;
@@ -6107,7 +5994,7 @@ namespace AssistantV1 {
     off_topic?: WorkspaceSystemSettingsOffTopic;
   }
 
-  /** Workspace settings related to the disambiguation feature. **Note:** This feature is available only to Plus and Premium users. */
+  /** Workspace settings related to the disambiguation feature. */
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;

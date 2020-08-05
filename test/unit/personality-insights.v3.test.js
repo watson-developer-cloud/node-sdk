@@ -28,7 +28,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/personality-insights/api/personality-insights/api',
+  url: 'https://api.us-south.personality-insights.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 
