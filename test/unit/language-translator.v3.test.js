@@ -29,7 +29,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/language-translator/api/language-translator/api',
+  url: 'https://api.us-south.language-translator.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 
@@ -44,6 +44,57 @@ afterEach(() => {
 });
 
 describe('LanguageTranslatorV3', () => {
+  describe('listLanguages', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // parameters
+        const params = {};
+
+        const listLanguagesResult = languageTranslator.listLanguages(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listLanguagesResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v3/languages', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/header';
+        const userContentType = 'fake/header';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        languageTranslator.listLanguages(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method
+        languageTranslator.listLanguages({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+
+      test('should use argument as callback function if only one is passed in', async () => {
+        // invoke the method
+        const callbackMock = jest.fn();
+        await languageTranslator.listLanguages(callbackMock);
+        expect(callbackMock).toHaveBeenCalled();
+      });
+    });
+  });
   describe('translate', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
