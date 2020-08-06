@@ -1,3 +1,10 @@
+## [5.6.2](https://github.com/watson-developer-cloud/node-sdk/compare/v5.6.1...v5.6.2) (2020-08-06)
+
+
+### Bug Fixes
+
+* support `disableSslVerification` when user provides https agent ([#1055](https://github.com/watson-developer-cloud/node-sdk/issues/1055)) ([4ab77e1](https://github.com/watson-developer-cloud/node-sdk/commit/4ab77e19fac2b900246be7e3650c9d2ed5d46aa6))
+
 ## [5.6.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.6.0...v5.6.1) (2020-07-24)
 
 
