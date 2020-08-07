@@ -37,6 +37,16 @@ describe('language translator integration', () => {
     });
   });
 
+  it('listLanguages()', done => {
+    languageTranslator.listLanguages((err, res) => {
+      expect(err).toBeNull();
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      done();
+    });
+  });
+
   it('listIdentifiableLanguages()', done => {
     languageTranslator.listIdentifiableLanguages((err, res) => {
       expect(err).toBeNull();

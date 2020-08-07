@@ -56,6 +56,25 @@ describe('discovery v2 integration @slow', () => {
       expect(result).toBeDefined();
       done();
     });
+
+    test('updateCollection', async done => {
+      const params = {
+        projectId,
+        collectionId,
+      };
+
+      let res;
+      try {
+        res = await discovery.updateCollection(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      done();
+    });
   });
 
   describe('queries', () => {
@@ -213,6 +232,30 @@ describe('discovery v2 integration @slow', () => {
       let res;
       try {
         res = await discovery.deleteDocument(params);
+      } catch (err) {
+        return done(err);
+      }
+
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      done();
+    });
+
+    test('analyzeDocument', async done => {
+      if (!documentId) {
+        return done();
+      }
+      const params = {
+        projectId,
+        collectionId,
+        file: fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx')),
+        filename: 'sampleWord.docx',
+      };
+
+      let res;
+      try {
+        res = await discovery.analyzeDocument(params);
       } catch (err) {
         return done(err);
       }
