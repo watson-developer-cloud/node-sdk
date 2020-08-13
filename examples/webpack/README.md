@@ -30,19 +30,38 @@ The following services do not support CORS
 
 ## Webpack configuration
 
-The `ibm-watson` Node SDK version 5+ should work out of the box with most bundlers, including webpack. For versions below 5.0.0, the following configurations may be required to leverage the SDK in client environments.
+The `ibm-watson` Node SDK version 5+ should work out of the box with most bundlers, including webpack.
 
-In most cases, you will want the following in your configuration:
+In most cases, you will want to add the following in your webpack.config.js file:
 
 ```js
 node: {
   // see http://webpack.github.io/docs/configuration.html#node
   // and https://webpack.js.org/configuration/node/
   fs: 'empty',
+  module: 'empty',
   net: 'empty',
-  tls: 'empty'
+  tls: 'empty',
 },
 ```
+so that it should look like this:
+```
+module.exports = {
+  mode: 'development',
+  entry: './public/client.js',
+  output: {
+    filename: 'bundle.js',
+  },
+  node: {
+    // see http://webpack.github.io/docs/configuration.html#node
+    // and https://webpack.js.org/configuration/node/
+    fs: 'empty',
+    module: 'empty',
+    net: 'empty',
+    tls: 'empty',
+  },
+};
+```
 
-Several services use the `fs` library, which won't work in browser environments, and the `request` library loads `fs`,
+Several services use the `fs` and `module` libraries, which won't work in browser environments, and the `request` library loads `fs`,
 `net`, and `tls`, but shouldn't need any of them for basic usage because webpack automatically includes [equivalent libraries](https://www.npmjs.com/package/node-libs-browser).
