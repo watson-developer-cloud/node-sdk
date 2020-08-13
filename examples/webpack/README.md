@@ -45,7 +45,7 @@ node: {
 },
 ```
 so that it should look like this:
-```
+```js
 module.exports = {
   mode: 'development',
   entry: './public/client.js',
