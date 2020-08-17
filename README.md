@@ -178,7 +178,7 @@ You can set or reset the base URL after constructing the client instance using t
 const DiscoveryV1 = require('ibm-watson/discovery/v1');
 
 const discovery = DiscoveryV1({
-/* authenticator, version, url, etc... */
+/* authenticator, version, etc... */
 });
 
 discovery.setServiceUrl('<new url>');
@@ -192,7 +192,7 @@ All SDK methods are asynchronous, as they are making network requests to Watson 
 const DiscoveryV1 = require('ibm-watson/discovery/v1');
 
 const discovery = new DiscoveryV1({
-/* authenticator, version, url, etc... */
+/* authenticator, version, serviceUrl, etc... */
 });
 
 // using Promises
@@ -227,7 +227,7 @@ For example, this is how you can pass in custom headers to Watson Assistant serv
 
 ```js
 const assistant = new watson.AssistantV1({
-/* authenticator, version, url, etc... */
+/* authenticator, version, serviceUrl, etc... */
 });
 
 assistant.message({
@@ -254,7 +254,7 @@ Here is an example of how to access the response headers for Watson Assistant:
 
 ```js
 const assistant = new AssistantV1({
-/* authenticator, version, url, etc... */
+/* authenticator, version, serviceUrl, etc... */
 });
 
 assistant.message(params).then(
@@ -281,7 +281,7 @@ Every SDK call returns a response with a transaction ID in the x-global-transact
 #### HTTP Example
 ```js
 const assistant = new AssistantV1({
-/* authenticator, version, url, etc... */
+/* authenticator, version, serviceUrl, etc... */
 });
 
 assistant.message(params).then(
@@ -297,7 +297,7 @@ assistant.message(params).then(
 #### WebSocket Example
 ```js
 const speechToText = new SpeechToTextV1({
-/* authenticator, version, url, etc... */
+/* authenticator, version, serviceUrl, etc... */
 });
 const recognizeStream = recognizeUsingWebSocket(params);
 
@@ -314,7 +314,7 @@ By default, [all requests are logged](https://cloud.ibm.com/docs/watson/getting-
 
 ```js
 const myInstance = new watson.WhateverServiceV1({
-  /* authenticator, version, url, etc... */
+  /* authenticator, version, serviceUrl, etc... */
   headers: {
     "X-Watson-Learning-Opt-Out": true
   }
@@ -385,7 +385,7 @@ To do this, set `disableSslVerification` to `true` in the service constructor an
 
 ```js
 const discovery = new DiscoveryV1({
-  url: '<service_url>',
+  serviceUrl: '<service_url>',
   version: '<version-date>',
   authenticator: new IamAuthenticator({ apikey: '<apikey>', disableSslVerification: true }), // this will disable SSL verification for requests to the token endpoint
   disableSslVerification: true, // this will disable SSL verification for any request made with this client instance
@@ -416,7 +416,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const assistant = new AssistantV2({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://gateway.watsonplatform.net/assistant/api/',
+  serviceUrl: 'https://gateway.watsonplatform.net/assistant/api/',
   version: '2018-09-19'
 });
 
@@ -446,7 +446,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const assistant = new AssistantV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://gateway.watsonplatform.net/assistant/api/',
+  serviceUrl: 'https://gateway.watsonplatform.net/assistant/api/',
   version: '2018-02-16'
 });
 
@@ -474,7 +474,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const compareComply = new CompareComplyV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://gateway.watsonplatform.net/compare-comply/api',
+  serviceUrl: 'https://gateway.watsonplatform.net/compare-comply/api',
   version: '2018-12-06'
 });
 
@@ -505,7 +505,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const discovery = new DiscoveryV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://gateway.watsonplatform.net/discovery/api/',
+  serviceUrl: 'https://gateway.watsonplatform.net/discovery/api/',
   version: '2017-09-01'
 });
 
@@ -533,7 +533,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const languageTranslator = new LanguageTranslatorV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://gateway.watsonplatform.net/language-translator/api/',
+  serviceUrl: 'https://gateway.watsonplatform.net/language-translator/api/',
   version: 'YYYY-MM-DD',
 });
 
@@ -573,7 +573,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const classifier = new NaturalLanguageClassifierV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://gateway.watsonplatform.net/natural-language-classifier/api/'
+  serviceUrl: 'https://gateway.watsonplatform.net/natural-language-classifier/api/'
 });
 
 classifier.classify(
@@ -604,7 +604,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const nlu = new NaturalLanguageUnderstandingV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2018-04-05',
-  url: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
+  serviceUrl: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
 });
 
 nlu.analyze(
@@ -636,7 +636,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const personalityInsights = new PersonalityInsightsV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-10-19',
-  url: 'https://gateway.watsonplatform.net/personality-insights/api/'
+  serviceUrl: 'https://gateway.watsonplatform.net/personality-insights/api/'
 });
 
 personalityInsights.profile(
@@ -665,7 +665,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const speechToText = new SpeechToTextV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://stream.watsonplatform.net/speech-to-text/api/'
+  serviceUrl: 'https://stream.watsonplatform.net/speech-to-text/api/'
 });
 
 const params = {
@@ -700,7 +700,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  url: 'https://stream.watsonplatform.net/text-to-speech/api/'
+  serviceUrl: 'https://stream.watsonplatform.net/text-to-speech/api/'
 });
 
 const params = {
@@ -748,7 +748,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const toneAnalyzer = new ToneAnalyzerV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-05-19',
-  url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
+  serviceUrl: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
 });
 
 toneAnalyzer.tone(
@@ -778,7 +778,7 @@ const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
 const visualRecognition = new VisualRecognitionV3({
-  url: '<service_url>',
+  serviceUrl: '<service_url>',
   version: '2018-03-19',
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
 });
