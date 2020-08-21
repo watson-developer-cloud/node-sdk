@@ -395,8 +395,7 @@ class AssistantV2 extends BaseService {
    *
    * List the events from the log of an assistant.
    *
-   * If **cursor** is not specified, this operation is limited to 40 requests per 30 minutes. If **cursor** is
-   * specified, the limit is 120 requests per minute. For more information, see **Rate limiting**.
+   * This method is available only with Premium plans.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
