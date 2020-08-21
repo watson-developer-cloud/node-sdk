@@ -28,7 +28,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://gateway.watsonplatform.net/visual-recognition/api/visual-recognition/api',
+  url: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 

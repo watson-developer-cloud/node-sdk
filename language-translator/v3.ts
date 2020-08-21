@@ -20,8 +20,8 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple IBM
- * provided translation models that you can customize based on your unique terminology and language. Use Language
+ * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple
+ * IBM-provided translation models that you can customize based on your unique terminology and language. Use Language
  * Translator to take news from across the globe and present it in your language, communicate with your customers in
  * their own language, and more.
  */
@@ -128,16 +128,20 @@ class LanguageTranslatorV3 extends BaseService {
   /**
    * Translate.
    *
-   * Translates the input text from the source language to the target language. A target language or translation model
-   * ID is required. The service attempts to detect the language of the source text if it is not specified.
+   * Translates the input text from the source language to the target language. Specify a model ID that indicates the
+   * source and target languages, or specify the source and target languages individually. You can omit the source
+   * language to have the service attempt to detect the language from the input text. If you omit the source language,
+   * the request must contain sufficient input text for the service to identify the source language.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string[]} params.text - Input text in UTF-8 encoding. Multiple entries will result in multiple translations
-   * in the response.
-   * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM provided
-   * base model for English to German translation. A model ID overrides the source and target parameters and is required
-   * if you use a custom model. If no model ID is specified, you must specify a target language.
-   * @param {string} [params.source] - Language code that specifies the language of the source document.
+   * @param {string[]} params.text - Input text in UTF-8 encoding. Multiple entries result in multiple translations in
+   * the response.
+   * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM-provided
+   * base model for English-to-German translation. A model ID overrides the `source` and `target` parameters and is
+   * required if you use a custom model. If no model ID is specified, you must specify at least a target language.
+   * @param {string} [params.source] - Language code that specifies the language of the input text. If omitted, the
+   * service derives the source language from the input text. The input must contain sufficient text for the service to
+   * identify the language reliably.
    * @param {string} [params.target] - Language code that specifies the target language for translation. Required if
    * model ID is not specified.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -325,10 +329,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.source] - Specify a language code to filter results by source language.
    * @param {string} [params.target] - Specify a language code to filter results by target language.
-   * @param {boolean} [params._default] - If the default parameter isn't specified, the service will return all models
-   * (default and non-default) for each language pair. To return only default models, set this to `true`. To return only
-   * non-default models, set this to `false`. There is exactly one default model per language pair, the IBM provided
-   * base model.
+   * @param {boolean} [params._default] - If the `default` parameter isn't specified, the service returns all models
+   * (default and non-default) for each language pair. To return only default models, set this parameter to `true`. To
+   * return only non-default models, set this parameter to `false`. There is exactly one default model, the IBM-provided
+   * base model, per language pair.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>>}
@@ -600,7 +604,7 @@ class LanguageTranslatorV3 extends BaseService {
    * Get model details.
    *
    * Gets information about a translation model, including training status for custom models. Use this API call to poll
-   * the status of your customization request. A successfully completed training will have a status of `available`.
+   * the status of your customization request. A successfully completed training has a status of `available`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - Model ID of the model to get.
@@ -726,11 +730,12 @@ class LanguageTranslatorV3 extends BaseService {
    * Maximum file size: **20 MB**.
    * @param {string} params.filename - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
-   * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM provided
-   * base model for English to German translation. A model ID overrides the source and target parameters and is required
-   * if you use a custom model. If no model ID is specified, you must specify a target language.
+   * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM-provided
+   * base model for English-to-German translation. A model ID overrides the `source` and `target` parameters and is
+   * required if you use a custom model. If no model ID is specified, you must specify at least a target language.
    * @param {string} [params.source] - Language code that specifies the language of the source document. If omitted, the
-   * service derives the source language from the input text.
+   * service derives the source language from the input text. The input must contain sufficient text for the service to
+   * identify the language reliably.
    * @param {string} [params.target] - Language code that specifies the target language for translation. Required if
    * model ID is not specified.
    * @param {string} [params.documentId] - To use a previously submitted document as the source for a new translation,
@@ -1036,14 +1041,17 @@ namespace LanguageTranslatorV3 {
 
   /** Parameters for the `translate` operation. */
   export interface TranslateParams {
-    /** Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response. */
+    /** Input text in UTF-8 encoding. Multiple entries result in multiple translations in the response. */
     text: string[];
-    /** The model to use for translation. For example, `en-de` selects the IBM provided base model for English to
-     *  German translation. A model ID overrides the source and target parameters and is required if you use a custom
-     *  model. If no model ID is specified, you must specify a target language.
+    /** The model to use for translation. For example, `en-de` selects the IBM-provided base model for
+     *  English-to-German translation. A model ID overrides the `source` and `target` parameters and is required if you
+     *  use a custom model. If no model ID is specified, you must specify at least a target language.
      */
     modelId?: string;
-    /** Language code that specifies the language of the source document. */
+    /** Language code that specifies the language of the input text. If omitted, the service derives the source
+     *  language from the input text. The input must contain sufficient text for the service to identify the language
+     *  reliably.
+     */
     source?: string;
     /** Language code that specifies the target language for translation. Required if model ID is not specified. */
     target?: string;
@@ -1068,9 +1076,10 @@ namespace LanguageTranslatorV3 {
     source?: string;
     /** Specify a language code to filter results by target language. */
     target?: string;
-    /** If the default parameter isn't specified, the service will return all models (default and non-default) for
-     *  each language pair. To return only default models, set this to `true`. To return only non-default models, set
-     *  this to `false`. There is exactly one default model per language pair, the IBM provided base model.
+    /** If the `default` parameter isn't specified, the service returns all models (default and non-default) for
+     *  each language pair. To return only default models, set this parameter to `true`. To return only non-default
+     *  models, set this parameter to `false`. There is exactly one default model, the IBM-provided base model, per
+     *  language pair.
      */
     _default?: boolean;
     headers?: OutgoingHttpHeaders;
@@ -1146,13 +1155,14 @@ namespace LanguageTranslatorV3 {
     filename: string;
     /** The content type of file. */
     fileContentType?: TranslateDocumentConstants.FileContentType | string;
-    /** The model to use for translation. For example, `en-de` selects the IBM provided base model for English to
-     *  German translation. A model ID overrides the source and target parameters and is required if you use a custom
-     *  model. If no model ID is specified, you must specify a target language.
+    /** The model to use for translation. For example, `en-de` selects the IBM-provided base model for
+     *  English-to-German translation. A model ID overrides the `source` and `target` parameters and is required if you
+     *  use a custom model. If no model ID is specified, you must specify at least a target language.
      */
     modelId?: string;
     /** Language code that specifies the language of the source document. If omitted, the service derives the source
-     *  language from the input text.
+     *  language from the input text. The input must contain sufficient text for the service to identify the language
+     *  reliably.
      */
     source?: string;
     /** Language code that specifies the target language for translation. Required if model ID is not specified. */

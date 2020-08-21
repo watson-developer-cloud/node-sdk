@@ -360,9 +360,8 @@ class SpeechToTextV1 extends BaseService {
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
    * `false` for the parameter.
    *
-   * **Note:** Applies to US English, German, Japanese, Korean, and Spanish (both broadband and narrowband models) and
-   * UK English (narrowband model) transcription only. To determine whether a language model supports speaker labels,
-   * you can also use the **Get a model** method and check that the attribute `speaker_labels` is set to `true`.
+   * **Note:** Applies to US English, Australian English, German, Japanese, Korean, and Spanish (both broadband and
+   * narrowband models) and UK English (narrowband model) transcription only.
    *
    * See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#speaker_labels).
    * @param {string} [params.customizationId] - **Deprecated.** Use the `language_customization_id` parameter to specify
@@ -881,9 +880,8 @@ class SpeechToTextV1 extends BaseService {
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
    * `false` for the parameter.
    *
-   * **Note:** Applies to US English, German, Japanese, Korean, and Spanish (both broadband and narrowband models) and
-   * UK English (narrowband model) transcription only. To determine whether a language model supports speaker labels,
-   * you can also use the **Get a model** method and check that the attribute `speaker_labels` is set to `true`.
+   * **Note:** Applies to US English, Australian English, German, Japanese, Korean, and Spanish (both broadband and
+   * narrowband models) and UK English (narrowband model) transcription only.
    *
    * See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#speaker_labels).
    * @param {string} [params.customizationId] - **Deprecated.** Use the `language_customization_id` parameter to specify
@@ -4168,6 +4166,8 @@ namespace SpeechToTextV1 {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
+      EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
+      EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
@@ -4318,10 +4318,8 @@ namespace SpeechToTextV1 {
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
      *
-     *  **Note:** Applies to US English, German, Japanese, Korean, and Spanish (both broadband and narrowband models)
-     *  and UK English (narrowband model) transcription only. To determine whether a language model supports speaker
-     *  labels, you can also use the **Get a model** method and check that the attribute `speaker_labels` is set to
-     *  `true`.
+     *  **Note:** Applies to US English, Australian English, German, Japanese, Korean, and Spanish (both broadband and
+     *  narrowband models) and UK English (narrowband model) transcription only.
      *
      *  See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#speaker_labels).
      */
@@ -4438,6 +4436,8 @@ namespace SpeechToTextV1 {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
+      EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
+      EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
@@ -4647,10 +4647,8 @@ namespace SpeechToTextV1 {
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
      *
-     *  **Note:** Applies to US English, German, Japanese, Korean, and Spanish (both broadband and narrowband models)
-     *  and UK English (narrowband model) transcription only. To determine whether a language model supports speaker
-     *  labels, you can also use the **Get a model** method and check that the attribute `speaker_labels` is set to
-     *  `true`.
+     *  **Note:** Applies to US English, Australian English, German, Japanese, Korean, and Spanish (both broadband and
+     *  narrowband models) and UK English (narrowband model) transcription only.
      *
      *  See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-output#speaker_labels).
      */
@@ -4790,6 +4788,8 @@ namespace SpeechToTextV1 {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
+      EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
+      EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
@@ -6274,7 +6274,12 @@ namespace SpeechToTextV1 {
      *  language model.
      */
     custom_language_model: boolean;
-    /** Indicates whether the `speaker_labels` parameter can be used with the language model. */
+    /** Indicates whether the `speaker_labels` parameter can be used with the language model.
+     *
+     *  **Note:** The field returns `true` for all models. However, speaker labels are supported only for US English,
+     *  Australian English, German, Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English
+     *  (narrowband model only). Speaker labels are not supported for any other models.
+     */
     speaker_labels: boolean;
   }
 

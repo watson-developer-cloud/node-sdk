@@ -89,7 +89,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * - Relations
    * - Semantic roles
    * - Sentiment
-   * - Syntax (Experimental).
+   * - Syntax.
    *
    * If a language for the input text is not specified with the `language` parameter, the service [automatically detects
    * the
