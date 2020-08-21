@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'ibm.com/123456',
+  url: 'https://api.us-south.discovery.watson.cloud.ibm.com',
   version: '2018-10-18',
 };
 
@@ -159,10 +159,12 @@ describe('DiscoveryV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const projectId = 'fake_projectId';
+        const name = 'fake_name';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
           projectId,
+          name,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -177,7 +179,7 @@ describe('DiscoveryV2', () => {
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['projectId'];
+        const requiredParams = ['projectId', 'name'];
 
         let err;
         try {
@@ -192,7 +194,7 @@ describe('DiscoveryV2', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['projectId'];
+        const requiredParams = ['projectId', 'name'];
 
         const createCollectionPromise = discovery.createCollection();
         expectToBePromise(createCollectionPromise);
@@ -291,14 +293,12 @@ describe('DiscoveryV2', () => {
         const collectionId = 'fake_collectionId';
         const name = 'fake_name';
         const description = 'fake_description';
-        const language = 'fake_language';
         const enrichments = 'fake_enrichments';
         const params = {
           projectId,
           collectionId,
           name,
           description,
-          language,
           enrichments,
         };
 
@@ -318,7 +318,6 @@ describe('DiscoveryV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['name']).toEqual(name);
         expect(options.body['description']).toEqual(description);
-        expect(options.body['language']).toEqual(language);
         expect(options.body['enrichments']).toEqual(enrichments);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['collection_id']).toEqual(collectionId);
@@ -895,95 +894,6 @@ describe('DiscoveryV2', () => {
         expectToBePromise(getComponentSettingsPromise);
 
         getComponentSettingsPromise.catch(err => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
-      });
-    });
-  });
-  describe('updateComponentSettings', () => {
-    describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const fieldsShown = 'fake_fieldsShown';
-        const autocomplete = 'fake_autocomplete';
-        const structuredSearch = 'fake_structuredSearch';
-        const resultsPerPage = 'fake_resultsPerPage';
-        const aggregations = 'fake_aggregations';
-        const params = {
-          projectId,
-          fieldsShown,
-          autocomplete,
-          structuredSearch,
-          resultsPerPage,
-          aggregations,
-        };
-
-        const updateComponentSettingsResult = discovery.updateComponentSettings(params);
-
-        // all methods should return a Promise
-        expectToBePromise(updateComponentSettingsResult);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/component_settings', 'PUT');
-        const expectedAccept = 'application/json';
-        const expectedContentType = 'application/json';
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['fields_shown']).toEqual(fieldsShown);
-        expect(options.body['autocomplete']).toEqual(autocomplete);
-        expect(options.body['structured_search']).toEqual(structuredSearch);
-        expect(options.body['results_per_page']).toEqual(resultsPerPage);
-        expect(options.body['aggregations']).toEqual(aggregations);
-        expect(options.path['project_id']).toEqual(projectId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          projectId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        discovery.updateComponentSettings(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-    });
-
-    describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        let err;
-        try {
-          await discovery.updateComponentSettings({});
-        } catch (e) {
-          err = e;
-        }
-
-        expect(err.message).toMatch(/Missing required parameters/);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const updateComponentSettingsPromise = discovery.updateComponentSettings();
-        expectToBePromise(updateComponentSettingsPromise);
-
-        updateComponentSettingsPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1696,101 +1606,6 @@ describe('DiscoveryV2', () => {
       });
     });
   });
-  describe('analyzeDocument', () => {
-    describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const file = 'fake_file';
-        const filename = 'fake_filename';
-        const fileContentType = 'fake_fileContentType';
-        const metadata = 'fake_metadata';
-        const params = {
-          projectId,
-          collectionId,
-          file,
-          filename,
-          fileContentType,
-          metadata,
-        };
-
-        const analyzeDocumentResult = discovery.analyzeDocument(params);
-
-        // all methods should return a Promise
-        expectToBePromise(analyzeDocumentResult);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/collections/{collection_id}/analyze',
-          'POST'
-        );
-        const expectedAccept = 'application/json';
-        const expectedContentType = 'multipart/form-data';
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].filename).toEqual(filename);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.formData['metadata']).toEqual(metadata);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
-        const params = {
-          projectId,
-          collectionId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        discovery.analyzeDocument(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-    });
-
-    describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
-        let err;
-        try {
-          await discovery.analyzeDocument({});
-        } catch (e) {
-          err = e;
-        }
-
-        expect(err.message).toMatch(/Missing required parameters/);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
-        const analyzeDocumentPromise = discovery.analyzeDocument();
-        expectToBePromise(analyzeDocumentPromise);
-
-        analyzeDocumentPromise.catch(err => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
-      });
-    });
-  });
   describe('listEnrichments', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
@@ -1870,12 +1685,12 @@ describe('DiscoveryV2', () => {
       test('should pass the right params to createRequest', () => {
         // parameters
         const projectId = 'fake_projectId';
-        const file = 'fake_file';
         const enrichment = 'fake_enrichment';
+        const file = 'fake_file';
         const params = {
           projectId,
-          file,
           enrichment,
+          file,
         };
 
         const createEnrichmentResult = discovery.createEnrichment(params);
@@ -1892,19 +1707,21 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['enrichment']).toEqual(enrichment);
         expect(options.formData['file'].data).toEqual(file);
         expect(options.formData['file'].contentType).toEqual('application/octet-stream');
-        expect(options.formData['enrichment']).toEqual(enrichment);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const projectId = 'fake_projectId';
+        const enrichment = 'fake_enrichment';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
           projectId,
+          enrichment,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -1919,7 +1736,7 @@ describe('DiscoveryV2', () => {
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['projectId'];
+        const requiredParams = ['projectId', 'enrichment'];
 
         let err;
         try {
@@ -1934,7 +1751,7 @@ describe('DiscoveryV2', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['projectId'];
+        const requiredParams = ['projectId', 'enrichment'];
 
         const createEnrichmentPromise = discovery.createEnrichment();
         expectToBePromise(createEnrichmentPromise);
@@ -2064,11 +1881,13 @@ describe('DiscoveryV2', () => {
         // parameters
         const projectId = 'fake_projectId';
         const enrichmentId = 'fake_enrichmentId';
+        const name = 'fake_name';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
           projectId,
           enrichmentId,
+          name,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -2083,7 +1902,7 @@ describe('DiscoveryV2', () => {
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
         // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId'];
+        const requiredParams = ['projectId', 'enrichmentId', 'name'];
 
         let err;
         try {
@@ -2098,7 +1917,7 @@ describe('DiscoveryV2', () => {
 
       test('should reject promise when required params are not given', done => {
         // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId'];
+        const requiredParams = ['projectId', 'enrichmentId', 'name'];
 
         const updateEnrichmentPromise = discovery.updateEnrichment();
         expectToBePromise(updateEnrichmentPromise);
@@ -2250,12 +2069,10 @@ describe('DiscoveryV2', () => {
         // parameters
         const name = 'fake_name';
         const type = 'fake_type';
-        const relevancyTrainingStatus = 'fake_relevancyTrainingStatus';
         const defaultQueryParameters = 'fake_defaultQueryParameters';
         const params = {
           name,
           type,
-          relevancyTrainingStatus,
           defaultQueryParameters,
         };
 
@@ -2275,15 +2092,18 @@ describe('DiscoveryV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['name']).toEqual(name);
         expect(options.body['type']).toEqual(type);
-        expect(options.body['relevancy_training_status']).toEqual(relevancyTrainingStatus);
         expect(options.body['default_query_parameters']).toEqual(defaultQueryParameters);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
+        const name = 'fake_name';
+        const type = 'fake_type';
         const userAccept = 'fake/header';
         const userContentType = 'fake/header';
         const params = {
+          name,
+          type,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -2293,18 +2113,35 @@ describe('DiscoveryV2', () => {
         discovery.createProject(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
+    });
 
-      test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        discovery.createProject({});
-        checkForSuccessfulExecution(createRequestMock);
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        // required parameters for this method
+        const requiredParams = ['name', 'type'];
+
+        let err;
+        try {
+          await discovery.createProject({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
       });
 
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await discovery.createProject(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
+      test('should reject promise when required params are not given', done => {
+        // required parameters for this method
+        const requiredParams = ['name', 'type'];
+
+        const createProjectPromise = discovery.createProject();
+        expectToBePromise(createProjectPromise);
+
+        createProjectPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
       });
     });
   });
