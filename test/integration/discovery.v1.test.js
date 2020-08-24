@@ -138,6 +138,8 @@ describe('discovery v1 integration', () => {
   });
 
   describe('add-query-delete', () => {
+    let documentId;
+
     it('addDocument()', done => {
       const document_obj = {
         environmentId,
@@ -151,6 +153,7 @@ describe('discovery v1 integration', () => {
         const { result } = res || {};
         expect(result).toBeDefined();
         expect(result.document_id).toBeDefined();
+        documentId = result.document_id;
         done(err);
       });
     });
@@ -178,6 +181,23 @@ describe('discovery v1 integration', () => {
         const { result } = res || {};
         expect(result).toBeDefined();
         expect(result.document_id).toBeDefined();
+        done(err);
+      });
+    });
+
+    it('getDocumentStatus()', done => {
+      const params = {
+        environmentId,
+        collectionId,
+        documentId,
+      };
+
+      discovery.getDocumentStatus(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.document_id).toBeDefined();
+        console.log(result);
         done(err);
       });
     });
