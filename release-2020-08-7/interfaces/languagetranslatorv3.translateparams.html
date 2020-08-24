@@ -108,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/51a4cc8/language-translator/v3.ts#L1050">language-translator/v3.ts:1050</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/95cc76e/language-translator/v3.ts#L1058">language-translator/v3.ts:1058</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -118,14 +118,14 @@
 					<div class="tsd-signature tsd-kind-icon">model<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/51a4cc8/language-translator/v3.ts#L1045">language-translator/v3.ts:1045</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/95cc76e/language-translator/v3.ts#L1050">language-translator/v3.ts:1050</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The model to use for translation. For example, <code>en-de</code> selects the IBM provided base model for English to
-								German translation. A model ID overrides the source and target parameters and is required if you use a custom
-							model. If no model ID is specified, you must specify a target language.</p>
+							<p>The model to use for translation. For example, <code>en-de</code> selects the IBM-provided base model for
+								English-to-German translation. A model ID overrides the <code>source</code> and <code>target</code> parameters and is required if you
+							use a custom model. If no model ID is specified, you must specify at least a target language.</p>
 						</div>
 					</div>
 				</section>
@@ -135,12 +135,14 @@
 					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/51a4cc8/language-translator/v3.ts#L1047">language-translator/v3.ts:1047</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/95cc76e/language-translator/v3.ts#L1055">language-translator/v3.ts:1055</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Language code that specifies the language of the source document.</p>
+							<p>Language code that specifies the language of the input text. If omitted, the service derives the source
+								language from the input text. The input must contain sufficient text for the service to identify the language
+							reliably.</p>
 						</div>
 					</div>
 				</section>
@@ -150,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/51a4cc8/language-translator/v3.ts#L1049">language-translator/v3.ts:1049</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/95cc76e/language-translator/v3.ts#L1057">language-translator/v3.ts:1057</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -165,12 +167,12 @@
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/51a4cc8/language-translator/v3.ts#L1040">language-translator/v3.ts:1040</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/95cc76e/language-translator/v3.ts#L1045">language-translator/v3.ts:1045</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response.</p>
+							<p>Input text in UTF-8 encoding. Multiple entries result in multiple translations in the response.</p>
 						</div>
 					</div>
 				</section>

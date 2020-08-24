@@ -237,7 +237,7 @@
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v1'</span>);
 
 <span class="hljs-keyword">const</span> discovery = DiscoveryV1({
-<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+<span class="hljs-comment">/* authenticator, version, etc... */</span>
 });
 
 discovery.setServiceUrl(<span class="hljs-string">'&lt;new url&gt;'</span>);</code></pre>
@@ -248,7 +248,7 @@ discovery.setServiceUrl(<span class="hljs-string">'&lt;new url&gt;'</span>);</co
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v1'</span>);
 
 <span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
-<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+<span class="hljs-comment">/* authenticator, version, serviceUrl, etc... */</span>
 });
 
 <span class="hljs-comment">// using Promises</span>
@@ -279,7 +279,7 @@ discovery.listEnvironments(<span class="hljs-function">(<span class="hljs-params
 				<p>Custom headers can be passed with any request. Each method has an optional parameter <code>headers</code> which can be used to pass in these custom headers, which can override headers that we use as parameters.</p>
 				<p>For example, this is how you can pass in custom headers to Watson Assistant service. In this example, the <code>&#39;custom&#39;</code> value for <code>&#39;Accept-Language&#39;</code> will override the default header for <code>&#39;Accept-Language&#39;</code>, and the <code>&#39;Custom-Header&#39;</code> while not overriding the default headers, will additionally be sent with the request.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> watson.AssistantV1({
-<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+<span class="hljs-comment">/* authenticator, version, serviceUrl, etc... */</span>
 });
 
 assistant.message({
@@ -302,7 +302,7 @@ assistant.message({
 				<p>The SDK now returns the full HTTP response by default for each method.</p>
 				<p>Here is an example of how to access the response headers for Watson Assistant:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
-<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+<span class="hljs-comment">/* authenticator, version, serviceUrl, etc... */</span>
 });
 
 assistant.message(params).then(
@@ -329,7 +329,7 @@ assistant.message(params).then(
 					<h4>HTTP Example</h4>
 				</a>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
-<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+<span class="hljs-comment">/* authenticator, version, serviceUrl, etc... */</span>
 });
 
 assistant.message(params).then(
@@ -344,7 +344,7 @@ assistant.message(params).then(
 					<h4>WebSocket Example</h4>
 				</a>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> speechToText = <span class="hljs-keyword">new</span> SpeechToTextV1({
-<span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+<span class="hljs-comment">/* authenticator, version, serviceUrl, etc... */</span>
 });
 <span class="hljs-keyword">const</span> recognizeStream = recognizeUsingWebSocket(params);
 
@@ -358,7 +358,7 @@ recognizeStream.getTransactionId().then(
 				</a>
 				<p>By default, <a href="https://cloud.ibm.com/docs/watson/getting-started-logging.html">all requests are logged</a>. This can be disabled of by setting the <code>X-Watson-Learning-Opt-Out</code> header when creating the service instance:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> myInstance = <span class="hljs-keyword">new</span> watson.WhateverServiceV1({
-  <span class="hljs-comment">/* authenticator, version, url, etc... */</span>
+  <span class="hljs-comment">/* authenticator, version, serviceUrl, etc... */</span>
   <span class="hljs-attr">headers</span>: {
     <span class="hljs-string">"X-Watson-Learning-Opt-Out"</span>: <span class="hljs-literal">true</span>
   }
@@ -423,7 +423,7 @@ recognizeStream.getTransactionId().then(
 				<p>The HTTP client can be configured to disable SSL verification. <strong>Note that this has serious security implications - only do this if you really mean to!</strong> ⚠️</p>
 				<p>To do this, set <code>disableSslVerification</code> to <code>true</code> in the service constructor and/or authenticator constructor, like below:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'&lt;version-date&gt;'</span>,
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span>, <span class="hljs-attr">disableSslVerification</span>: <span class="hljs-literal">true</span> }), <span class="hljs-comment">// this will disable SSL verification for requests to the token endpoint</span>
   <span class="hljs-attr">disableSslVerification</span>: <span class="hljs-literal">true</span>, <span class="hljs-comment">// this will disable SSL verification for any request made with this client instance</span>
@@ -450,7 +450,7 @@ recognizeStream.getTransactionId().then(
 
 <span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV2({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-09-19'</span>
 });
 
@@ -476,7 +476,7 @@ assistant.message(
 
 <span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-02-16'</span>
 });
 
@@ -501,7 +501,7 @@ assistant.message(
 
 <span class="hljs-keyword">const</span> compareComply = <span class="hljs-keyword">new</span> CompareComplyV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/compare-comply/api'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/compare-comply/api'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-12-06'</span>
 });
 
@@ -529,7 +529,7 @@ compareComply.compareDocuments(
 
 <span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/discovery/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/discovery/api/'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2017-09-01'</span>
 });
 
@@ -554,7 +554,7 @@ discovery.query(
 
 <span class="hljs-keyword">const</span> languageTranslator = <span class="hljs-keyword">new</span> LanguageTranslatorV3({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'YYYY-MM-DD'</span>,
 });
 
@@ -591,7 +591,7 @@ languageTranslator.identify(
 
 <span class="hljs-keyword">const</span> classifier = <span class="hljs-keyword">new</span> NaturalLanguageClassifierV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-classifier/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-classifier/api/'</span>
 });
 
 classifier.classify(
@@ -617,7 +617,7 @@ classifier.classify(
 <span class="hljs-keyword">const</span> nlu = <span class="hljs-keyword">new</span> NaturalLanguageUnderstandingV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-04-05'</span>,
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-understanding/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-understanding/api/'</span>
 });
 
 nlu.analyze(
@@ -645,7 +645,7 @@ nlu.analyze(
 <span class="hljs-keyword">const</span> personalityInsights = <span class="hljs-keyword">new</span> PersonalityInsightsV3({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2016-10-19'</span>,
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/personality-insights/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/personality-insights/api/'</span>
 });
 
 personalityInsights.profile(
@@ -670,7 +670,7 @@ personalityInsights.profile(
 
 <span class="hljs-keyword">const</span> speechToText = <span class="hljs-keyword">new</span> SpeechToTextV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/speech-to-text/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://stream.watsonplatform.net/speech-to-text/api/'</span>
 });
 
 <span class="hljs-keyword">const</span> params = {
@@ -701,7 +701,7 @@ fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
 
 <span class="hljs-keyword">const</span> textToSpeech = <span class="hljs-keyword">new</span> TextToSpeechV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://stream.watsonplatform.net/text-to-speech/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://stream.watsonplatform.net/text-to-speech/api/'</span>
 });
 
 <span class="hljs-keyword">const</span> params = {
@@ -744,7 +744,7 @@ synthStream.pipe(fs.createWriteStream(<span class="hljs-string">'./audio.ogg'</s
 <span class="hljs-keyword">const</span> toneAnalyzer = <span class="hljs-keyword">new</span> ToneAnalyzerV3({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2016-05-19'</span>,
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/tone-analyzer/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/tone-analyzer/api/'</span>
 });
 
 toneAnalyzer.tone(
@@ -769,7 +769,7 @@ toneAnalyzer.tone(
 <span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
 
 <span class="hljs-keyword">const</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
-  <span class="hljs-attr">url</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-03-19'</span>,
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
 });
