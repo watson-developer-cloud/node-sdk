@@ -117,18 +117,20 @@ describe('assistant v2 integration', () => {
     });
   });
 
-  it('should listLogs @slow', done => {
-    const params = {
-      assistantId: options.assistantId,
-    };
+  // This test tests a method that requires a premium instance of Assistant v2
 
-    assistant.listLogs(params, (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(res).toBeDefined;
-      expect(result).toBeDefined();
-      expect(result.logs).toBeDefined();
-      done();
-    });
-  });
+  // it('should listLogs @slow', done => {
+  //   const params = {
+  //     assistantId: options.assistantId,
+  //   };
+
+  //   assistant.listLogs(params, (err, res) => {
+  //     expect(err).toBeNull();
+  //     const { result } = res || {};
+  //     expect(res).toBeDefined;
+  //     expect(result).toBeDefined();
+  //     expect(result.logs).toBeDefined();
+  //     done();
+  //   });
+  // });
 });
