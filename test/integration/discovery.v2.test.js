@@ -40,78 +40,58 @@ describe('discovery v2 integration @slow', () => {
   const EXTENDED_TIMEOUT = 30000;
 
   describe('projects', () => {
+    let erasableProjectId;
+
+    test('createProject', async () => {
+      const randomString = Math.random().toString(36).slice(2);
+      const params = {
+        name: `Unique Erasable Project: ${randomString}`,
+        type: CreateProjectConstants.Type.CONTENT_MINING,
+      };
+
+      const res = await discovery.createProject(params);
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      expect(result.project_id).toBeDefined();
+
+      erasableProjectId = result.project_id;
+    });
+    test('getProject', async () => {
+      const params = {
+        projectId: erasableProjectId,
+      };
+
+      const res = await discovery.getProject(params);
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+    });
     test(
-      'projects CRUD',
-      async done => {
-        let params;
-        let erasableProjectId;
-
-        // createProject()
-        const randomString = Math.random().toString(36).slice(2);
-        params = {
-          name: `Unique Erasable Project: ${randomString}`,
-          type: CreateProjectConstants.Type.CONTENT_MINING,
-        };
-
-        try {
-          const res = await discovery.createProject(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          expect(result.project_id).toBeDefined();
-
-          erasableProjectId = result.project_id;
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // getProject()
-        params = {
+      'updateProject',
+      async () => {
+        const params = {
           projectId: erasableProjectId,
         };
 
-        try {
-          const res = await discovery.getProject(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // updateProject()
-        params = {
+        const res = await discovery.updateProject(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      },
+      EXTENDED_TIMEOUT
+    );
+    test(
+      'deleteProject',
+      async () => {
+        const params = {
           projectId: erasableProjectId,
         };
 
-        try {
-          const res = await discovery.updateProject(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // deleteProject()
-        params = {
-          projectId: erasableProjectId,
-        };
-
-        try {
-          const res = await discovery.deleteProject(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        done();
+        const res = await discovery.deleteProject(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
       },
       EXTENDED_TIMEOUT
     );
@@ -133,103 +113,84 @@ describe('discovery v2 integration @slow', () => {
   });
 
   describe('collections', () => {
+    let erasableCollectionId;
+
     test(
-      'collections CRUD',
-      async done => {
-        let params;
-        let erasableCollectionId;
-
-        // createCollection()
+      'createCollection',
+      async () => {
         const randomString = Math.random().toString(36).slice(2);
-        params = {
+        const params = {
           projectId,
-          name: `Random Erasable Collection: ${randomString}`,
+          name: `Unique Erasable Collection: ${randomString}`,
         };
 
-        try {
-          const res = await discovery.createCollection(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          expect(result.collection_id).toBeDefined();
+        const res = await discovery.createCollection(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.collection_id).toBeDefined();
 
-          erasableCollectionId = result.collection_id;
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
+        erasableCollectionId = result.collection_id;
+      },
+      EXTENDED_TIMEOUT
+    );
+    test('getCollection', async () => {
+      const params = {
+        projectId,
+        collectionId: erasableCollectionId,
+      };
 
-        // getCollection()
-        params = {
-          projectId,
-          collectionId: erasableCollectionId,
-        };
-
-        try {
-          const res = await discovery.getCollection(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // updateCollection()
-        params = {
+      const res = await discovery.getCollection(params);
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+    });
+    test(
+      'updateCollection',
+      async () => {
+        const params = {
           projectId,
           collectionId: erasableCollectionId,
         };
 
-        try {
-          const res = await discovery.updateCollection(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // deleteCollection()
-        params = {
+        const res = await discovery.updateCollection(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      },
+      EXTENDED_TIMEOUT
+    );
+    test(
+      'deleteCollection',
+      async () => {
+        const params = {
           projectId,
           collectionId: erasableCollectionId,
         };
 
-        try {
-          const res = await discovery.deleteCollection(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        done();
+        const res = await discovery.deleteCollection(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
       },
       EXTENDED_TIMEOUT
     );
 
-    test('listCollections', async done => {
-      const params = {
-        projectId,
-      };
+    test(
+      'listCollections',
+      async () => {
+        const params = {
+          projectId,
+        };
 
-      let res;
-      try {
-        res = await discovery.listCollections(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
+        const res = await discovery.listCollections(params);
 
-      expect(res).toBeDefined();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      },
+      EXTENDED_TIMEOUT
+    );
   });
 
   describe('queries', () => {
@@ -550,12 +511,11 @@ describe('discovery v2 integration @slow', () => {
   });
 
   describe('enrichments', () => {
-    test(
-      'enrichment CRUD',
-      async done => {
-        let erasableEnrichmentId;
-        let params;
+    let erasableEnrichmentId;
 
+    test(
+      'createEnrichment',
+      async () => {
         const randomString = Math.random().toString(36).slice(2);
         const enrichment = {
           name: 'Random Erasable Enrichment: ' + randomString,
@@ -567,77 +527,66 @@ describe('discovery v2 integration @slow', () => {
           },
         };
 
-        // createEnrichment()
-        params = {
+        const params = {
           projectId,
           enrichment,
           file: fs.createReadStream(path.join(__dirname, '../resources/TestEnrichments.csv')),
         };
 
-        try {
-          const res = await discovery.createEnrichment(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          expect(result.enrichment_id).toBeDefined();
+        const res = await discovery.createEnrichment(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.enrichment_id).toBeDefined();
 
-          erasableEnrichmentId = result.enrichment_id;
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // getEnrichment()
-        params = {
+        erasableEnrichmentId = result.enrichment_id;
+      },
+      EXTENDED_TIMEOUT
+    );
+    test(
+      'getEnrichment',
+      async () => {
+        const params = {
           projectId,
           enrichmentId: erasableEnrichmentId,
         };
 
-        try {
-          const res = await discovery.getEnrichment(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // updateEnrichment()
-        params = {
+        const res = await discovery.getEnrichment(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      },
+      EXTENDED_TIMEOUT
+    );
+    test(
+      'updateEnrichment',
+      async () => {
+        const params = {
           projectId,
           enrichmentId: erasableEnrichmentId,
           name: 'Erasable Enrichment',
           description: 'Uhh idk a description fit for a developer',
         };
 
-        try {
-          const res = await discovery.updateEnrichment(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        // deleteEnrichment()
-        params = {
+        const res = await discovery.updateEnrichment(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      },
+      EXTENDED_TIMEOUT
+    );
+    test(
+      'deleteEnrichment',
+      async () => {
+        const params = {
           projectId,
           enrichmentId: erasableEnrichmentId,
         };
 
-        try {
-          const res = await discovery.deleteEnrichment(params);
-          expect(res).toBeDefined();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-        } catch (err) {
-          expect(err).toBeNull();
-          return done(err);
-        }
-
-        done();
+        const res = await discovery.deleteEnrichment(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
       },
       EXTENDED_TIMEOUT
     );
@@ -649,13 +598,7 @@ describe('discovery v2 integration @slow', () => {
           projectId,
         };
 
-        let res;
-        try {
-          res = await discovery.listEnrichments(params);
-        } catch (err) {
-          expect(err).toBeNull();
-          return done();
-        }
+        const res = await discovery.listEnrichments(params);
 
         expect(res).toBeDefined();
         const { result } = res || {};
