@@ -1,3 +1,22 @@
+# [5.7.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.6.2...v5.7.0) (2020-08-27)
+
+
+### Bug Fixes
+
+* added test to `getDocumentStatus()` ([e5c81d5](https://github.com/watson-developer-cloud/node-sdk/commit/e5c81d5a7b64b28b3558040cbbdea02792fb82a2))
+* comments and necessary required params ([bef8089](https://github.com/watson-developer-cloud/node-sdk/commit/bef8089a7ebebc62917e63a151c10120e264d02c))
+* small changes ([f7a5e3c](https://github.com/watson-developer-cloud/node-sdk/commit/f7a5e3ccc371a19c1e4d179ac69ab416c86da89b))
+* visual reconition v4 ([b12f11e](https://github.com/watson-developer-cloud/node-sdk/commit/b12f11eb7e82c8418b7b377f60cbb3e17dfdf05f))
+
+
+### Features
+
+* **assistant-v2:** new method: `listLogs` ([ff6b79c](https://github.com/watson-developer-cloud/node-sdk/commit/ff6b79cd3259bd3930dd67672180a3f68f58f0f0))
+* **discovery-v2:** new methods: ([01d426c](https://github.com/watson-developer-cloud/node-sdk/commit/01d426c490891ef167529f62beebff7a1e776cce))
+* **discovery-v2-test:** added new tests for the new methods coming to ([82ea90f](https://github.com/watson-developer-cloud/node-sdk/commit/82ea90fe2f426a6179c74654559d9eab2cf59334))
+* **language-translator-v3:** new method: listLanguages ([b9a7d41](https://github.com/watson-developer-cloud/node-sdk/commit/b9a7d418aee14ea0779eaced0da2b60590e3f1b5))
+* **text-to-speech-v1:** new voices added ([be94a1a](https://github.com/watson-developer-cloud/node-sdk/commit/be94a1a4a87ffb2af7b8796b1528422bbfa115cc))
+
 ## [5.6.2](https://github.com/watson-developer-cloud/node-sdk/compare/v5.6.1...v5.6.2) (2020-08-06)
 
 
