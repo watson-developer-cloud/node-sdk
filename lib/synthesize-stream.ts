@@ -19,7 +19,7 @@ import { Authenticator, qs } from 'ibm-cloud-sdk-core';
 import { Readable, ReadableOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
 import { SynthesizeWebSocketParams } from '../text-to-speech/v1';
-import { processUserParameters } from './websocket-utils';
+import { extractTransactionId, processUserParameters } from './websocket-utils';
 
 /**
  * pipe()-able Node.js Readable stream - accepts text in the constructor and emits binary audio data in its 'message' events
@@ -210,6 +210,17 @@ class SynthesizeStream extends Readable {
         this.push(null);
       }
     );
+  }
+
+  /**
+   * Returns a Promise that resolves with Watson Transaction ID from the X-Transaction-ID header
+   *
+   * Works in Node.js but not in browsers (the W3C WebSocket API does not expose headers)
+   *
+   * @return Promise<String>
+   */
+  getTransactionId(): Promise<string> {
+    return extractTransactionId(this);
   }
 }
 

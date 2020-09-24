@@ -19,7 +19,7 @@ import { Authenticator, contentType, qs } from 'ibm-cloud-sdk-core';
 import { Duplex, DuplexOptions } from 'stream';
 import { w3cwebsocket as w3cWebSocket } from 'websocket';
 import { RecognizeWebSocketParams } from '../speech-to-text/v1';
-import { processUserParameters } from './websocket-utils';
+import { extractTransactionId, processUserParameters } from './websocket-utils';
 
 interface WritableState {
   highWaterMark: number;
@@ -456,25 +456,7 @@ class RecognizeStream extends Duplex {
    * @return Promise<String>
    */
   getTransactionId(): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      if (
-        this.socket &&
-        this.socket._client &&
-        this.socket._client.response &&
-        this.socket._client.response.headers
-      ) {
-        resolve(
-          (this.socket._client.response.headers['x-global-transaction-id'] as string)
-        );
-      } else {
-        this.on('open', () =>
-          resolve(
-            (this.socket._client.response.headers['x-global-transaction-id'] as string)
-          )
-        );
-        this.on('error', reject);
-      }
-    });
+    return extractTransactionId(this);
   }
 }
 

@@ -42,3 +42,34 @@ export function processUserParameters(options: any, allowedParams: string[]): an
 
   return processedOptions;
 }
+
+/**
+ * Pulls the transaction ID from the connection headers and returns it in a Promise.
+ * This function is used by the RecognizeStream and the SynthesizeStream - they both expose
+ * a method called `getTransactionId` that relies on this code to read the ID from the
+ * connection.
+ *
+ * @param {object} streamContext - the context (i.e. "this") of the invoking stream class
+ * @returns {Promise<string>} - Resolves with the transaction ID as a string
+ */
+export function extractTransactionId(streamContext: any) {
+  return new Promise<string>((resolve, reject) => {
+    if (
+      streamContext.socket &&
+      streamContext.socket._client &&
+      streamContext.socket._client.response &&
+      streamContext.socket._client.response.headers
+    ) {
+      resolve(
+        (streamContext.socket._client.response.headers['x-global-transaction-id'] as string)
+      );
+    } else {
+      streamContext.on('open', () =>
+        resolve(
+          (streamContext.socket._client.response.headers['x-global-transaction-id'] as string)
+        )
+      );
+      streamContext.on('error', reject);
+    }
+  });
+}
