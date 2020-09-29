@@ -113,7 +113,7 @@ class TextToSpeechV1 extends GeneratedTextToSpeechV1 {
       {
         // pass the Authenticator to the SynthesizeStream object
         authenticator: this.getAuthenticator(),
-        url: this.baseOptions.url,
+        serviceUrl: this.baseOptions.serviceUrl,
         // if the user configured a custom https client, use it in the websocket method
         // let httpsAgent take precedence, default to null
         agent: this.baseOptions.httpsAgent || this.baseOptions.httpAgent || null,

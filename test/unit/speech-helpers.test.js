@@ -6,7 +6,7 @@ const websocket = require('websocket');
 const SpeechToTextV1 = require('../../dist/speech-to-text/v1');
 const TextToSpeechV1 = require('../../dist/text-to-speech/v1');
 
-const url = 'http://ibm.com:80';
+const serviceUrl = 'http://ibm.com:80';
 const version = 'v1';
 const authenticator = new BasicAuthenticator({
   username: 'batman',
@@ -14,13 +14,13 @@ const authenticator = new BasicAuthenticator({
 });
 
 const sttService = {
-  url,
+  serviceUrl,
   version,
   authenticator,
 };
 
 const ttsService = {
-  url,
+  url: serviceUrl,
   version,
   authenticator,
 };
@@ -38,7 +38,7 @@ describe('speech to text helpers', () => {
 
     it('should pass the correct parameters into RecognizeStream', () => {
       const stream = speechToText.recognizeUsingWebSocket();
-      expect(stream.options.url).toBe(sttService.url);
+      expect(stream.options.serviceUrl).toBe(serviceUrl);
       expect(stream.options.headers['User-Agent']).toBeTruthy();
       expect(stream.options.headers['X-IBMCloud-SDK-Analytics']).toBe(
         'service_name=speech_to_text;service_version=v1;operation_id=recognizeUsingWebSocket;async=true'
@@ -87,7 +87,7 @@ describe('text to speech helpers', () => {
 
     it('should pass the correct parameters into RecognizeStream', () => {
       const stream = textToSpeech.synthesizeUsingWebSocket();
-      expect(stream.options.url).toBe(ttsService.url);
+      expect(stream.options.serviceUrl).toBe(serviceUrl);
       expect(stream.options.headers.authorization).toBeUndefined();
       expect(stream.options.headers['User-Agent']).toBeTruthy();
       expect(stream.options.headers['X-IBMCloud-SDK-Analytics']).toBe(
