@@ -1,3 +1,11 @@
+## [5.7.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.7.0...v5.7.1) (2020-09-29)
+
+
+### Bug Fixes
+
+* add `getTransactionId` method to the SynthesizeStream ([#1058](https://github.com/watson-developer-cloud/node-sdk/issues/1058)) ([21a5a7f](https://github.com/watson-developer-cloud/node-sdk/commit/21a5a7f2a1975d5ecc8ae1654f81d680585c39d9))
+* stop ignoring serviceUrl for Websocket methods ([#1060](https://github.com/watson-developer-cloud/node-sdk/issues/1060)) ([1901aae](https://github.com/watson-developer-cloud/node-sdk/commit/1901aae2f07e58c97ed26ed31906407581fb51c1))
+
 # [5.7.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.6.2...v5.7.0) (2020-08-27)
 
 
