@@ -115,7 +115,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv2.html#createsession" class="tsd-kind-icon">create<wbr>Session</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv2.html#deletesession" class="tsd-kind-icon">delete<wbr>Session</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv2.html#deleteuserdata" class="tsd-kind-icon">delete<wbr>User<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="assistantv2.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv2.html#listlogs" class="tsd-kind-icon">list<wbr>Logs</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv2.html#message" class="tsd-kind-icon">message</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv2.html#messagestateless" class="tsd-kind-icon">message<wbr>Stateless</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="assistantv2.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a></li>
@@ -137,7 +139,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/779b167/assistant/v2.ts#L33">assistant/v2.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L33">assistant/v2.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,18 +188,18 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/779b167/assistant/v2.ts#L33">assistant/v2.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L33">assistant/v2.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 					<a name="default_service_url" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT_<wbr>SERVICE_<wbr>URL</h3>
-					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;https://gateway.watsonplatform.net/assistant/api&quot;</span></div>
+					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;https://api.us-south.assistant.watson.cloud.ibm.com&quot;</span></div>
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/779b167/assistant/v2.ts#L32">assistant/v2.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L32">assistant/v2.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -214,7 +216,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/779b167/assistant/v2.ts#L96">assistant/v2.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L96">assistant/v2.ts:96</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -300,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/779b167/assistant/v2.ts#L166">assistant/v2.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L166">assistant/v2.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -380,6 +382,92 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deleteuserdata" class="tsd-anchor"></a>
+					<h3>delete<wbr>User<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv2.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv2.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L500">assistant/v2.ts:500</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete labeled data.</p>
+								</div>
+								<p>Deletes all data associated with a specified customer ID. The method has no effect if no data is associated with
+								the customer ID.</p>
+								<p>You associate a customer ID with data by passing the <code>X-Watson-Metadata</code> header with a request that passes data.
+									For more information about personal data and customer IDs, see <a href="https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security">Information
+								security</a>.</p>
+								<p>This operation is limited to 4 requests per minute. For more information, see <strong>Rate limiting</strong>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/assistantv2.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customerId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customer ID for which all data is to be deleted.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="assistantv2.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getauthenticator" class="tsd-anchor"></a>
 					<h3>get<wbr>Authenticator</h3>
@@ -404,6 +492,116 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="listlogs" class="tsd-anchor"></a>
+					<h3>list<wbr>Logs</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Logs<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv2.listlogsparams.html" class="tsd-signature-type">ListLogsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv2.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L418">assistant/v2.ts:418</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>List log events for an assistant.</p>
+								</div>
+								<p>List the events from the log of an assistant.</p>
+								<p>This method is available only with Premium plans.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/assistantv2.listlogsparams.html" class="tsd-signature-type">ListLogsParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>assistantId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+															the assistant settings and click **API Details**. For information about creating assistants, see the
+														[documentation](https://cloud.ibm.com/docs/assistant?topic&#x3D;assistant-assistant-add#assistant-add-task).</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>cursor</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>A token identifying the page of results to retrieve.</td>
+													</tr>
+													<tr>
+														<td><code>filter</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>A cacheable parameter that limits the results to those matching the specified filter. For more information,
+														see the [documentation](https://cloud.ibm.com/docs/assistant?topic&#x3D;assistant-filter-reference#filter-reference).</td>
+													</tr>
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>pageLimit</code></td>
+														<td><span class="tsd-signature-type">number</span></td>
+														<td>Optional</td>
+														<td>The number of records to return in each page of results.</td>
+													</tr>
+													<tr>
+														<td><code>sort</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td>Optional</td>
+														<td>How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order,
+														prefix the parameter value with a minus sign (&#x60;-&#x60;).</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td><code>callback</code></td>
+										<td><a href="assistantv2.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv2.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -413,7 +611,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/779b167/assistant/v2.ts#L249">assistant/v2.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L247">assistant/v2.ts:247</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -422,7 +620,6 @@
 								</div>
 								<p>Send user input to an assistant and receive a response, with conversation state (including context data) stored by
 								Watson Assistant for the duration of the session.</p>
-								<p>There is no rate limit for this operation.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -517,7 +714,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/779b167/assistant/v2.ts#L334">assistant/v2.ts:334</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1901aae/assistant/v2.ts#L330">assistant/v2.ts:330</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -526,7 +723,6 @@
 								</div>
 								<p>Send user input to an assistant and receive a response, with conversation state (including context data) managed by
 								your application.</p>
-								<p>There is no rate limit for this operation.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -719,6 +915,12 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="assistantv2.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
@@ -739,8 +941,16 @@
 								<a href="assistantv2.html#deletesession" class="tsd-kind-icon">delete<wbr>Session</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="assistantv2.html#deleteuserdata" class="tsd-kind-icon">delete<wbr>User<wbr>Data</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="assistantv2.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="assistantv2.html#listlogs" class="tsd-kind-icon">list<wbr>Logs</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
