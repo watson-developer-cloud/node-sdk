@@ -363,6 +363,32 @@ describe('assistant v1 integration', () => {
         done();
       });
     });
+
+    it('should have pagination information with matched and total counts', done => {
+      if (!workspace1.workspaceId) {
+        // We cannot run this test when workspace creation failed.
+        return done();
+      }
+
+      const params = {
+        workspaceId: workspace1.workspaceId,
+        _export: true,
+        pageLimit: 1,
+        includeCount: true,
+        sort: 'intent',
+      };
+
+      assistant.listIntents(params, (err, res) => {
+        expect(err).toBeNull();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.hasOwnProperty('pagination')).toBe(true);
+        const { pagination } = result;
+        expect(pagination.hasOwnProperty('matched').toBe(true));
+        expect(pagination.hasOwnProperty('total').toBe(true));
+        done();
+      });
+    });
   });
 
   describe('getIntent()', () => {

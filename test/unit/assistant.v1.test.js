@@ -570,6 +570,7 @@ describe('AssistantV1', () => {
         const sort = 'fake_sort';
         const cursor = 'fake_cursor';
         const includeAudit = 'fake_includeAudit';
+        const includeCount = 'fake_includeCount';
         const params = {
           workspaceId,
           _export,
@@ -577,6 +578,7 @@ describe('AssistantV1', () => {
           sort,
           cursor,
           includeAudit,
+          includeCount,
         };
 
         const listIntentsResult = assistant.listIntents(params);
@@ -598,6 +600,7 @@ describe('AssistantV1', () => {
         expect(options.qs['sort']).toEqual(sort);
         expect(options.qs['cursor']).toEqual(cursor);
         expect(options.qs['include_audit']).toEqual(includeAudit);
+        expect(options.qs['include_count']).toEqual(includeCount);
         expect(options.path['workspace_id']).toEqual(workspaceId);
       });
 

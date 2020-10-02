@@ -617,7 +617,8 @@ class AssistantV1 extends BaseService {
         'page_limit': _params.pageLimit,
         'sort': _params.sort,
         'cursor': _params.cursor,
-        'include_audit': _params.includeAudit
+        'include_audit': _params.includeAudit,
+        'include_count': _params.includeCount
       };
 
       const path = {
@@ -4031,6 +4032,8 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
+    /** Whether to include the count (matched and total numbers) in the response. */
+    includeCount?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
