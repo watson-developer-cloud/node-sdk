@@ -147,6 +147,26 @@ And that's it!
 
 If you're using more than one service at a time in your code and get two different `ibm-credentials.env` files, just put the contents together in one `ibm-credentials.env` file and the SDK will handle assigning credentials to their appropriate services.
 
+**Special Note**: Due to legacy issues in Assistant V1 and V2 as well as Visual Recognition V3 and V4, the following parameter `serviceName` must be added when creating the service object:
+```js
+const AssistantV1 = require('ibm-watson/assistant/v1');
+const assistant = new AssistantV1({
+  version: '2020-04-01',
+  serviceName: 'assistant',
+})
+```
+```js
+const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
+const assistant = new VisualRecognitionV3({
+  version: '2018-03-19',
+  serviceName: 'visual-recognition',
+})
+```
+It is worth noting that implementing this will prioritize reading the credentials file over using the `VCAP_SERVICES` variable when pushing to IBM Cloud. This will become an issue if you do not push a credentials file to the cloud as VCAP does not know how to interpret these `serviceName` parameters. Credential priority follows this order: 
+1. Programmatic (i.e. IamAuthenticator)
+2. Credentials File
+3. VCAP
+
 If you would like to configure the location/name of your credential file, you can set an environment variable called `IBM_CREDENTIALS_FILE`. **This will take precedence over the locations specified above.** Here's how you can do that:
 
 ```bash
