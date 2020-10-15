@@ -162,10 +162,7 @@ const assistant = new VisualRecognitionV3({
   serviceName: 'visual-recognition',
 })
 ```
-It is worth noting that implementing this will prioritize reading the credentials file over using the `VCAP_SERVICES` variable when pushing to IBM Cloud. This will become an issue if you do not push a credentials file to the cloud as VCAP does not know how to interpret these `serviceName` parameters. Credential priority follows this order: 
-1. Programmatic (i.e. IamAuthenticator)
-2. Credentials File
-3. VCAP
+It is worth noting that if you are planning to rely on VCAP_SERVICES for authentication then the `serviceName` parameter **MUST** be removed otherwise VCAP_SERVICES will not be able to authenticate you. See [Cloud Authentication Prioritization](#cloud-authentication-prioritization) for more details.
 
 If you would like to configure the location/name of your credential file, you can set an environment variable called `IBM_CREDENTIALS_FILE`. **This will take precedence over the locations specified above.** Here's how you can do that:
 
@@ -190,6 +187,13 @@ To use IAM authentication, you must use an `IamAuthenticator` or a `BearerTokenA
 ##### ICP
 
 To use the SDK in a Cloud Pak, use the `CloudPakForDataAuthenticator`. This will require a username, password, and URL.
+
+### Cloud Authentication Prioritization
+
+When uploading your application to IBM Cloud there is a certain priority Watson services will use when looking for proper credentials. The order is as follows:
+1. Programmatic (i.e. IamAuthenticator)
+2. Credentials File
+3. VCAP_SERVICES (an environment variable used by IBM Cloud, details found [here](https://cloud.ibm.com/docs/watson?topic=watson-vcapServices))
 
 ## Setting the Service URL
 You can set or reset the base URL after constructing the client instance using the `setServiceUrl` method:
