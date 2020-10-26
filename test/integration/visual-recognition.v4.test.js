@@ -109,7 +109,7 @@ describe('visual recognition v4 integration', () => {
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-    }, 15000);
+    }, 30000);
 
     test('getCollection', async done => {
       if (!collectionId) {
