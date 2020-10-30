@@ -300,7 +300,7 @@ assistant.message(params).then(
 ```
 
 ### Global Transaction ID
-Every SDK call returns a response with a transaction ID in the x-global-transaction-id header. This transaction ID is useful for troubleshooting and accessing relevant logs from your service instance.
+Every SDK call returns a response with a transaction ID in the `X-Global-Transaction-Id` header. Together the service instance region, this ID helps support teams troubleshoot issues from relevant logs.
 
 #### HTTP Example
 ```js
@@ -310,7 +310,7 @@ const assistant = new AssistantV1({
 
 assistant.message(params).then(
   response => {
-    console.log(response.headers['x-global-transaction-id']);
+    console.log(response.headers['X-Global-Transaction-Id']);
   },
   err => {
     console.log(err);
@@ -329,6 +329,29 @@ const recognizeStream = recognizeUsingWebSocket(params);
 recognizeStream.getTransactionId().then(
   globalTransactionId => console.log(globalTransactionId),
   err => console.log(err),
+);
+```
+
+However, the transaction ID isn't available when the API doesn't return a response for some reason. In that case, you can set your own transaction ID in the request. For example, replace <my-unique-transaction-id> in the following example with a unique transaction ID.
+
+```js
+const assistant = new AssistantV1({
+/* authenticator, version, serviceUrl, etc... */
+});
+
+assistant.message({
+  workspaceId: 'something',
+  input: {'text': 'Hello'},
+  headers: {
+    'X-Global-Transaction-Id': '<my-unique-transaction-id>'
+  }
+}).then(
+  response => {
+    console.log(response.headers['X-Global-Transaction-Id']);
+  },
+  err => {
+    console.log(err);
+  }
 );
 ```
 
