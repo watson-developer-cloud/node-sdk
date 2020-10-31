@@ -345,7 +345,7 @@ assistant.message(params).then(
 				<a href="#global-transaction-id" id="global-transaction-id" style="color: inherit; text-decoration: none;">
 					<h3>Global Transaction ID</h3>
 				</a>
-				<p>Every SDK call returns a response with a transaction ID in the x-global-transaction-id header. This transaction ID is useful for troubleshooting and accessing relevant logs from your service instance.</p>
+				<p>Every SDK call returns a response with a transaction ID in the <code>X-Global-Transaction-Id</code> header. Together the service instance region, this ID helps support teams troubleshoot issues from relevant logs.</p>
 				<a href="#http-example" id="http-example" style="color: inherit; text-decoration: none;">
 					<h4>HTTP Example</h4>
 				</a>
@@ -355,7 +355,7 @@ assistant.message(params).then(
 
 assistant.message(params).then(
   <span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(response.headers[<span class="hljs-string">'x-global-transaction-id'</span>]);
+    <span class="hljs-built_in">console</span>.log(response.headers[<span class="hljs-string">'X-Global-Transaction-Id'</span>]);
   },
   err =&gt; {
     <span class="hljs-built_in">console</span>.log(err);
@@ -373,6 +373,25 @@ assistant.message(params).then(
 recognizeStream.getTransactionId().then(
   <span class="hljs-function"><span class="hljs-params">globalTransactionId</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(globalTransactionId),
   err =&gt; <span class="hljs-built_in">console</span>.log(err),
+);</code></pre>
+				<p>However, the transaction ID isn&#39;t available when the API doesn&#39;t return a response for some reason. In that case, you can set your own transaction ID in the request. For example, replace <code>&lt;my-unique-transaction-id&gt;</code> in the following example with a unique transaction ID.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
+<span class="hljs-comment">/* authenticator, version, serviceUrl, etc... */</span>
+});
+
+assistant.message({
+  <span class="hljs-attr">workspaceId</span>: <span class="hljs-string">'something'</span>,
+  <span class="hljs-attr">input</span>: {<span class="hljs-string">'text'</span>: <span class="hljs-string">'Hello'</span>},
+  <span class="hljs-attr">headers</span>: {
+    <span class="hljs-string">'X-Global-Transaction-Id'</span>: <span class="hljs-string">'&lt;my-unique-transaction-id&gt;'</span>
+  }
+}).then(
+  <span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(response.headers[<span class="hljs-string">'X-Global-Transaction-Id'</span>]);
+  },
+  err =&gt; {
+    <span class="hljs-built_in">console</span>.log(err);
+  }
 );</code></pre>
 				<a href="#data-collection-opt-out" id="data-collection-opt-out" style="color: inherit; text-decoration: none;">
 					<h2>Data collection opt-out</h2>
