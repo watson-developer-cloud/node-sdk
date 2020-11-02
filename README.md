@@ -50,6 +50,11 @@ Node.js client library to use the Watson APIs.
 </details>
 
 ## ANNOUNCEMENTS!
+### Personality Insights Deprecation
+IBM® will begin sunsetting IBM Watson™ Personality Insights on 1 December 2020. For a period of one year from this date, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.
+
+As an alternative, we encourage you to consider migrating to IBM Watson™ [Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-understanding), a service on IBM Cloud® that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business or industry. For more information, see About Natural Language Understanding.
+
 ### Major version 5 released
 Version v5.0.0 of the SDK has been released and includes a number of breaking changes - see what's changed in the [migration guide](MIGRATION-V5.md).
 
