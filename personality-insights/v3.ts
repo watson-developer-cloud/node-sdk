@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,30 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Personality Insights service enables applications to derive insights from social media,
- * enterprise data, or other digital communications. The service uses linguistic analytics to infer individuals'
- * intrinsic personality characteristics, including Big Five, Needs, and Values, from digital communications such as
- * email, text messages, tweets, and forum posts.
+ * IBM&reg; will begin sunsetting IBM Watson&trade; Personality Insights on 1 December 2020. For a period of one year
+ * from this date, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the
+ * offering will no longer be available.<br/><br/>As an alternative, we encourage you to consider migrating to IBM
+ * Watson&trade; Natural Language Understanding, a service on IBM Cloud&reg; that uses deep learning to extract data and
+ * insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business
+ * or industry. For more information, see [About Natural Language
+ * Understanding](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-about).
+ * {: deprecated}
+ *
+ * The IBM Watson Personality Insights service enables applications to derive insights from social media, enterprise
+ * data, or other digital communications. The service uses linguistic analytics to infer individuals' intrinsic
+ * personality characteristics, including Big Five, Needs, and Values, from digital communications such as email, text
+ * messages, tweets, and forum posts.
  *
  * The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their
  * personality characteristics. The service can infer consumption preferences based on the results of its analysis and,
@@ -42,25 +56,32 @@ class PersonalityInsightsV3 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.personality-insights.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'personality_insights';
 
+  /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+   *  version is `2017-10-13`.
+   */
+  version: string;
+
   /**
    * Construct a PersonalityInsightsV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
-   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
-   * the API version for the date you specify, or the most recent version before that date. Note that you should not
-   * programmatically specify the current date at runtime, in case the API has been updated since your application's
-   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
-   * application is ready for a later version.
+   * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
+   * YYYY-MM-DD format. The current version is `2017-10-13`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {PersonalityInsightsV3}
-   * @throws {Error}
    */
   constructor(options: UserOptions) {
+    options = options || {};
+
+    const requiredParams = ['version'];
+    const missingParams = getMissingParams(options, requiredParams);
+    if (missingParams) {
+      throw missingParams;
+    }
     if (!options.serviceName) {
       options.serviceName = PersonalityInsightsV3.DEFAULT_SERVICE_NAME;
     }
@@ -73,11 +94,7 @@ class PersonalityInsightsV3 extends BaseService {
     if (options.serviceUrl) {
       this.setServiceUrl(options.serviceUrl);
     }
-    // check if 'version' was provided
-    if (typeof this.baseOptions.version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
-    this.baseOptions.qs.version = options.version;
+    this.version = options.version;
   }
 
   /*************************
@@ -150,66 +167,45 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {boolean} [params.consumptionPreferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>>}
    */
-  public profile(params: PersonalityInsightsV3.ProfileParams, callback?: PersonalityInsightsV3.Callback<PersonalityInsightsV3.Profile>): Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public profile(params: PersonalityInsightsV3.ProfileParams): Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['content'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.content;
-      const query = {
-        'raw_scores': _params.rawScores,
-        'csv_headers': _params.csvHeaders,
-        'consumption_preferences': _params.consumptionPreferences
-      };
+    const body = _params.content;
+    const query = {
+      'version': this.version,
+      'raw_scores': _params.rawScores,
+      'csv_headers': _params.csvHeaders,
+      'consumption_preferences': _params.consumptionPreferences
+    };
 
-      const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profile');
+    const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profile');
 
-      const parameters = {
-        options: {
-          url: '/v3/profile',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': _params.contentType,
-            'Content-Language': _params.contentLanguage,
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/profile',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': _params.contentType,
+          'Content-Language': _params.contentLanguage,
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -278,66 +274,45 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {boolean} [params.consumptionPreferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>>}
    */
-  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams, callback?: PersonalityInsightsV3.Callback<NodeJS.ReadableStream|Buffer>): Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams): Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['content'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.content;
-      const query = {
-        'raw_scores': _params.rawScores,
-        'csv_headers': _params.csvHeaders,
-        'consumption_preferences': _params.consumptionPreferences
-      };
+    const body = _params.content;
+    const query = {
+      'version': this.version,
+      'raw_scores': _params.rawScores,
+      'csv_headers': _params.csvHeaders,
+      'consumption_preferences': _params.consumptionPreferences
+    };
 
-      const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profileAsCsv');
+    const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profileAsCsv');
 
-      const parameters = {
-        options: {
-          url: '/v3/profile',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'text/csv',
-            'Content-Type': _params.contentType,
-            'Content-Language': _params.contentLanguage,
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/profile',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'text/csv',
+          'Content-Type': _params.contentType,
+          'Content-Language': _params.contentLanguage,
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
 }
@@ -348,7 +323,16 @@ class PersonalityInsightsV3 extends BaseService {
 
 namespace PersonalityInsightsV3 {
 
-  /** An operation response. **/
+  /** Options for the `PersonalityInsightsV3` constructor. */
+  export interface Options extends UserOptions {
+
+    /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+     *  version is `2017-10-13`.
+     */
+    version: string;
+  }
+
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -571,7 +555,7 @@ namespace PersonalityInsightsV3 {
   /** The full input content that the service is to analyze. */
   export interface Content {
     /** An array of `ContentItem` objects that provides the text that is to be analyzed. */
-    content_items: ContentItem[];
+    contentItems: ContentItem[];
   }
 
   /** An input content item that the service is to analyze. */

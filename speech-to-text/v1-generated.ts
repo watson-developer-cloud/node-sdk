@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ */
+ 
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -57,6 +62,8 @@ class SpeechToTextV1 extends BaseService {
    * @returns {SpeechToTextV1}
    */
   constructor(options: UserOptions) {
+    options = options || {};
+
     if (!options.serviceName) {
       options.serviceName = SpeechToTextV1.DEFAULT_SERVICE_NAME;
     }
@@ -86,44 +93,26 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModels>>}
    */
-  public listModels(params?: SpeechToTextV1.ListModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModels>): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModels>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listModels(params?: SpeechToTextV1.ListModelsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModels>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
 
-      const parameters = {
-        options: {
-          url: '/v1/models',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/models',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -138,59 +127,37 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.modelId - The identifier of the model in the form of its name from the output of the **Get a
    * model** method.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>>}
    */
-  public getModel(params: SpeechToTextV1.GetModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechModel>): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getModel(params: SpeechToTextV1.GetModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['modelId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'model_id': _params.modelId
-      };
+    const path = {
+      'model_id': _params.modelId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/models/{model_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/models/{model_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -436,84 +403,62 @@ class SpeechToTextV1 extends BaseService {
    * The values increase on a monotonic curve. See [Speech Activity
    * Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input#detection).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>>}
    */
-  public recognize(params: SpeechToTextV1.RecognizeParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.SpeechRecognitionResults>): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public recognize(params: SpeechToTextV1.RecognizeParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['audio'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.audio;
-      const query = {
-        'model': _params.model,
-        'language_customization_id': _params.languageCustomizationId,
-        'acoustic_customization_id': _params.acousticCustomizationId,
-        'base_model_version': _params.baseModelVersion,
-        'customization_weight': _params.customizationWeight,
-        'inactivity_timeout': _params.inactivityTimeout,
-        'keywords': _params.keywords,
-        'keywords_threshold': _params.keywordsThreshold,
-        'max_alternatives': _params.maxAlternatives,
-        'word_alternatives_threshold': _params.wordAlternativesThreshold,
-        'word_confidence': _params.wordConfidence,
-        'timestamps': _params.timestamps,
-        'profanity_filter': _params.profanityFilter,
-        'smart_formatting': _params.smartFormatting,
-        'speaker_labels': _params.speakerLabels,
-        'customization_id': _params.customizationId,
-        'grammar_name': _params.grammarName,
-        'redaction': _params.redaction,
-        'audio_metrics': _params.audioMetrics,
-        'end_of_phrase_silence_time': _params.endOfPhraseSilenceTime,
-        'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
-        'speech_detector_sensitivity': _params.speechDetectorSensitivity,
-        'background_audio_suppression': _params.backgroundAudioSuppression
-      };
+    const body = _params.audio;
+    const query = {
+      'model': _params.model,
+      'language_customization_id': _params.languageCustomizationId,
+      'acoustic_customization_id': _params.acousticCustomizationId,
+      'base_model_version': _params.baseModelVersion,
+      'customization_weight': _params.customizationWeight,
+      'inactivity_timeout': _params.inactivityTimeout,
+      'keywords': _params.keywords,
+      'keywords_threshold': _params.keywordsThreshold,
+      'max_alternatives': _params.maxAlternatives,
+      'word_alternatives_threshold': _params.wordAlternativesThreshold,
+      'word_confidence': _params.wordConfidence,
+      'timestamps': _params.timestamps,
+      'profanity_filter': _params.profanityFilter,
+      'smart_formatting': _params.smartFormatting,
+      'speaker_labels': _params.speakerLabels,
+      'customization_id': _params.customizationId,
+      'grammar_name': _params.grammarName,
+      'redaction': _params.redaction,
+      'audio_metrics': _params.audioMetrics,
+      'end_of_phrase_silence_time': _params.endOfPhraseSilenceTime,
+      'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
+      'speech_detector_sensitivity': _params.speechDetectorSensitivity,
+      'background_audio_suppression': _params.backgroundAudioSuppression
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'recognize');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'recognize');
 
-      const parameters = {
-        options: {
-          url: '/v1/recognize',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': _params.contentType
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/recognize',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': _params.contentType
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -561,60 +506,38 @@ class SpeechToTextV1 extends BaseService {
    * verification and with every notification sent to the callback URL. It calculates the signature over the payload of
    * the notification. If you omit the parameter, the service does not send the header.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RegisterStatus>>}
    */
-  public registerCallback(params: SpeechToTextV1.RegisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RegisterStatus>): Promise<SpeechToTextV1.Response<SpeechToTextV1.RegisterStatus>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public registerCallback(params: SpeechToTextV1.RegisterCallbackParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RegisterStatus>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['callbackUrl'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'callback_url': _params.callbackUrl,
-        'user_secret': _params.userSecret
-      };
+    const query = {
+      'callback_url': _params.callbackUrl,
+      'user_secret': _params.userSecret
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'registerCallback');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'registerCallback');
 
-      const parameters = {
-        options: {
-          url: '/v1/register_callback',
-          method: 'POST',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/register_callback',
+        method: 'POST',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -629,58 +552,36 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.callbackUrl - The callback URL that is to be unregistered.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public unregisterCallback(params: SpeechToTextV1.UnregisterCallbackParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public unregisterCallback(params: SpeechToTextV1.UnregisterCallbackParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['callbackUrl'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'callback_url': _params.callbackUrl
-      };
+    const query = {
+      'callback_url': _params.callbackUrl
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'unregisterCallback');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'unregisterCallback');
 
-      const parameters = {
-        options: {
-          url: '/v1/unregister_callback',
-          method: 'POST',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/unregister_callback',
+        method: 'POST',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -976,90 +877,68 @@ class SpeechToTextV1 extends BaseService {
    * The values increase on a monotonic curve. See [Speech Activity
    * Detection](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-input#detection).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>>}
    */
-  public createJob(params: SpeechToTextV1.CreateJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createJob(params: SpeechToTextV1.CreateJobParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['audio'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.audio;
-      const query = {
-        'model': _params.model,
-        'callback_url': _params.callbackUrl,
-        'events': _params.events,
-        'user_token': _params.userToken,
-        'results_ttl': _params.resultsTtl,
-        'language_customization_id': _params.languageCustomizationId,
-        'acoustic_customization_id': _params.acousticCustomizationId,
-        'base_model_version': _params.baseModelVersion,
-        'customization_weight': _params.customizationWeight,
-        'inactivity_timeout': _params.inactivityTimeout,
-        'keywords': _params.keywords,
-        'keywords_threshold': _params.keywordsThreshold,
-        'max_alternatives': _params.maxAlternatives,
-        'word_alternatives_threshold': _params.wordAlternativesThreshold,
-        'word_confidence': _params.wordConfidence,
-        'timestamps': _params.timestamps,
-        'profanity_filter': _params.profanityFilter,
-        'smart_formatting': _params.smartFormatting,
-        'speaker_labels': _params.speakerLabels,
-        'customization_id': _params.customizationId,
-        'grammar_name': _params.grammarName,
-        'redaction': _params.redaction,
-        'processing_metrics': _params.processingMetrics,
-        'processing_metrics_interval': _params.processingMetricsInterval,
-        'audio_metrics': _params.audioMetrics,
-        'end_of_phrase_silence_time': _params.endOfPhraseSilenceTime,
-        'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
-        'speech_detector_sensitivity': _params.speechDetectorSensitivity,
-        'background_audio_suppression': _params.backgroundAudioSuppression
-      };
+    const body = _params.audio;
+    const query = {
+      'model': _params.model,
+      'callback_url': _params.callbackUrl,
+      'events': _params.events,
+      'user_token': _params.userToken,
+      'results_ttl': _params.resultsTtl,
+      'language_customization_id': _params.languageCustomizationId,
+      'acoustic_customization_id': _params.acousticCustomizationId,
+      'base_model_version': _params.baseModelVersion,
+      'customization_weight': _params.customizationWeight,
+      'inactivity_timeout': _params.inactivityTimeout,
+      'keywords': _params.keywords,
+      'keywords_threshold': _params.keywordsThreshold,
+      'max_alternatives': _params.maxAlternatives,
+      'word_alternatives_threshold': _params.wordAlternativesThreshold,
+      'word_confidence': _params.wordConfidence,
+      'timestamps': _params.timestamps,
+      'profanity_filter': _params.profanityFilter,
+      'smart_formatting': _params.smartFormatting,
+      'speaker_labels': _params.speakerLabels,
+      'customization_id': _params.customizationId,
+      'grammar_name': _params.grammarName,
+      'redaction': _params.redaction,
+      'processing_metrics': _params.processingMetrics,
+      'processing_metrics_interval': _params.processingMetricsInterval,
+      'audio_metrics': _params.audioMetrics,
+      'end_of_phrase_silence_time': _params.endOfPhraseSilenceTime,
+      'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
+      'speech_detector_sensitivity': _params.speechDetectorSensitivity,
+      'background_audio_suppression': _params.backgroundAudioSuppression
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createJob');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createJob');
 
-      const parameters = {
-        options: {
-          url: '/v1/recognitions',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': _params.contentType
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/recognitions',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': _params.contentType
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1077,44 +956,26 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJobs>>}
    */
-  public checkJobs(params?: SpeechToTextV1.CheckJobsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJobs>): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJobs>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public checkJobs(params?: SpeechToTextV1.CheckJobsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJobs>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJobs');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJobs');
 
-      const parameters = {
-        options: {
-          url: '/v1/recognitions',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/recognitions',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1136,59 +997,37 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.id - The identifier of the asynchronous job that is to be used for the request. You must
    * make the request with credentials for the instance of the service that owns the job.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>>}
    */
-  public checkJob(params: SpeechToTextV1.CheckJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.RecognitionJob>): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public checkJob(params: SpeechToTextV1.CheckJobParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJob');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJob');
 
-      const parameters = {
-        options: {
-          url: '/v1/recognitions/{id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/recognitions/{id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1204,58 +1043,36 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.id - The identifier of the asynchronous job that is to be used for the request. You must
    * make the request with credentials for the instance of the service that owns the job.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteJob(params: SpeechToTextV1.DeleteJobParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteJob(params: SpeechToTextV1.DeleteJobParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteJob');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteJob');
 
-      const parameters = {
-        options: {
-          url: '/v1/recognitions/{id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/recognitions/{id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1305,63 +1122,41 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.description] - A description of the new custom language model. Use a localized description
    * that matches the language of the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>>}
    */
-  public createLanguageModel(params: SpeechToTextV1.CreateLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createLanguageModel(params: SpeechToTextV1.CreateLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'baseModelName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'base_model_name': _params.baseModelName,
-        'dialect': _params.dialect,
-        'description': _params.description
-      };
+    const body = {
+      'name': _params.name,
+      'base_model_name': _params.baseModelName,
+      'dialect': _params.dialect,
+      'description': _params.description
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createLanguageModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createLanguageModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1378,52 +1173,36 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned
-   * by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese)
-   * languages are not available for language model customization.
+   * by the requesting credentials.
+   *
+   * To determine the languages for which customization is available, see [Language support for
+   * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>>}
    */
-  public listLanguageModels(params?: SpeechToTextV1.ListLanguageModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModels>): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listLanguageModels(params?: SpeechToTextV1.ListLanguageModelsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'language': _params.language
-      };
+    const query = {
+      'language': _params.language
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listLanguageModels');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listLanguageModels');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1440,59 +1219,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>>}
    */
-  public getLanguageModel(params: SpeechToTextV1.GetLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.LanguageModel>): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getLanguageModel(params: SpeechToTextV1.GetLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getLanguageModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getLanguageModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1510,59 +1267,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteLanguageModel(params: SpeechToTextV1.DeleteLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteLanguageModel(params: SpeechToTextV1.DeleteLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteLanguageModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteLanguageModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1619,65 +1354,43 @@ class SpeechToTextV1 extends BaseService {
    * The value that you assign is used for all recognition requests that use the model. You can override it for any
    * recognition request by specifying a customization weight for that request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>>}
    */
-  public trainLanguageModel(params: SpeechToTextV1.TrainLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.TrainingResponse>): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public trainLanguageModel(params: SpeechToTextV1.TrainLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'word_type_to_add': _params.wordTypeToAdd,
-        'customization_weight': _params.customizationWeight
-      };
+    const query = {
+      'word_type_to_add': _params.wordTypeToAdd,
+      'customization_weight': _params.customizationWeight
+    };
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainLanguageModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainLanguageModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/train',
-          method: 'POST',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/train',
+        method: 'POST',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1696,59 +1409,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public resetLanguageModel(params: SpeechToTextV1.ResetLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public resetLanguageModel(params: SpeechToTextV1.ResetLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetLanguageModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetLanguageModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/reset',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/reset',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1774,59 +1465,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public upgradeLanguageModel(params: SpeechToTextV1.UpgradeLanguageModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public upgradeLanguageModel(params: SpeechToTextV1.UpgradeLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeLanguageModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeLanguageModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/upgrade_model',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/upgrade_model',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1848,59 +1517,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpora>>}
    */
-  public listCorpora(params: SpeechToTextV1.ListCorporaParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpora>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpora>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listCorpora(params: SpeechToTextV1.ListCorporaParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpora>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listCorpora');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listCorpora');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/corpora',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/corpora',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1974,74 +1621,52 @@ class SpeechToTextV1 extends BaseService {
    * same name. If `false`, the request fails if a corpus with the same name already exists. The parameter has no effect
    * if a corpus with the same name does not already exist.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addCorpus(params: SpeechToTextV1.AddCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public addCorpus(params: SpeechToTextV1.AddCorpusParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'corpusName', 'corpusFile'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'corpus_file': {
+        data: _params.corpusFile,
+        contentType: 'text/plain'
       }
+    };
 
-      const formData = {
-        'corpus_file': {
-          data: _params.corpusFile,
-          contentType: 'text/plain'
-        }
-      };
+    const query = {
+      'allow_overwrite': _params.allowOverwrite
+    };
 
-      const query = {
-        'allow_overwrite': _params.allowOverwrite
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'corpus_name': _params.corpusName
+    };
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'corpus_name': _params.corpusName
-      };
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addCorpus');
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addCorpus');
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
-          method: 'POST',
-          qs: query,
-          path,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
-
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2060,60 +1685,38 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.corpusName - The name of the corpus for the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpus>>}
    */
-  public getCorpus(params: SpeechToTextV1.GetCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Corpus>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpus>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getCorpus(params: SpeechToTextV1.GetCorpusParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpus>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'corpusName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'corpus_name': _params.corpusName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'corpus_name': _params.corpusName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getCorpus');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getCorpus');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2134,60 +1737,38 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.corpusName - The name of the corpus for the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteCorpus(params: SpeechToTextV1.DeleteCorpusParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteCorpus(params: SpeechToTextV1.DeleteCorpusParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'corpusName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'corpus_name': _params.corpusName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'corpus_name': _params.corpusName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCorpus');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCorpus');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/corpora/{corpus_name}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -2222,65 +1803,43 @@ class SpeechToTextV1 extends BaseService {
    * ordering, values with the same count are ordered alphabetically. With the `curl` command, URL-encode the `+` symbol
    * as `%2B`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Words>>}
    */
-  public listWords(params: SpeechToTextV1.ListWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Words>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Words>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listWords(params: SpeechToTextV1.ListWordsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Words>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'word_type': _params.wordType,
-        'sort': _params.sort
-      };
+    const query = {
+      'word_type': _params.wordType,
+      'sort': _params.sort
+    };
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listWords');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listWords');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/words',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2341,65 +1900,43 @@ class SpeechToTextV1 extends BaseService {
    * @param {CustomWord[]} params.words - An array of `CustomWord` objects that provides information about each custom
    * word that is to be added to or updated in the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addWords(params: SpeechToTextV1.AddWordsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public addWords(params: SpeechToTextV1.AddWordsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'words'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'words': _params.words
-      };
+    const body = {
+      'words': _params.words
+    };
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWords');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWords');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/words',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2466,68 +2003,46 @@ class SpeechToTextV1 extends BaseService {
    * Use the parameter when you want the word to have a spelling that is different from its usual representation or from
    * its spelling in corpora training data.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addWord(params: SpeechToTextV1.AddWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public addWord(params: SpeechToTextV1.AddWordParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'wordName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'word': _params.word,
-        'sounds_like': _params.soundsLike,
-        'display_as': _params.displayAs
-      };
+    const body = {
+      'word': _params.word,
+      'sounds_like': _params.soundsLike,
+      'display_as': _params.displayAs
+    };
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'word_name': _params.wordName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'word_name': _params.wordName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWord');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWord');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/words/{word_name}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words/{word_name}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2547,60 +2062,38 @@ class SpeechToTextV1 extends BaseService {
    * word if it includes non-ASCII characters. For more information, see [Character
    * encoding](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Word>>}
    */
-  public getWord(params: SpeechToTextV1.GetWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Word>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Word>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getWord(params: SpeechToTextV1.GetWordParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Word>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'wordName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'word_name': _params.wordName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'word_name': _params.wordName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getWord');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getWord');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/words/{word_name}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words/{word_name}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2623,60 +2116,38 @@ class SpeechToTextV1 extends BaseService {
    * the word if it includes non-ASCII characters. For more information, see [Character
    * encoding](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteWord(params: SpeechToTextV1.DeleteWordParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteWord(params: SpeechToTextV1.DeleteWordParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'wordName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'word_name': _params.wordName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'word_name': _params.wordName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWord');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWord');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/words/{word_name}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/words/{word_name}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -2698,59 +2169,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammars>>}
    */
-  public listGrammars(params: SpeechToTextV1.ListGrammarsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammars>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammars>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listGrammars(params: SpeechToTextV1.ListGrammarsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammars>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listGrammars');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listGrammars');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/grammars',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/grammars',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2804,10 +2253,10 @@ class SpeechToTextV1 extends BaseService {
    * * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by
    * the user.
    * * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service.
-   * @param {string} params.grammarFile - A plain text file that contains the grammar in the format specified by the
-   * `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using any other encoding can lead to
-   * issues when compiling the grammar or to unexpected results in decoding. The service ignores an encoding that is
-   * specified in the header of the grammar.
+   * @param {string|NodeJS.ReadableStream|Buffer} params.grammarFile - A plain text file that contains the grammar in
+   * the format specified by the `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using any
+   * other encoding can lead to issues when compiling the grammar or to unexpected results in decoding. The service
+   * ignores an encoding that is specified in the header of the grammar.
    *
    * With the `curl` command, use the `--data-binary` option to upload the file for the request.
    * @param {string} params.contentType - The format (MIME type) of the grammar file:
@@ -2818,68 +2267,46 @@ class SpeechToTextV1 extends BaseService {
    * same name. If `false`, the request fails if a grammar with the same name already exists. The parameter has no
    * effect if a grammar with the same name does not already exist.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addGrammar(params: SpeechToTextV1.AddGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public addGrammar(params: SpeechToTextV1.AddGrammarParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'grammarName', 'grammarFile', 'contentType'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.grammarFile;
-      const query = {
-        'allow_overwrite': _params.allowOverwrite
-      };
+    const body = _params.grammarFile;
+    const query = {
+      'allow_overwrite': _params.allowOverwrite
+    };
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'grammar_name': _params.grammarName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'grammar_name': _params.grammarName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addGrammar');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addGrammar');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
-          method: 'POST',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': _params.contentType
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': _params.contentType
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2898,60 +2325,38 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.grammarName - The name of the grammar for the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammar>>}
    */
-  public getGrammar(params: SpeechToTextV1.GetGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Grammar>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammar>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getGrammar(params: SpeechToTextV1.GetGrammarParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammar>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'grammarName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'grammar_name': _params.grammarName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'grammar_name': _params.grammarName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getGrammar');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getGrammar');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2972,60 +2377,38 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.grammarName - The name of the grammar for the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteGrammar(params: SpeechToTextV1.DeleteGrammarParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteGrammar(params: SpeechToTextV1.DeleteGrammarParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'grammarName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'grammar_name': _params.grammarName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'grammar_name': _params.grammarName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteGrammar');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteGrammar');
 
-      const parameters = {
-        options: {
-          url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/customizations/{customization_id}/grammars/{grammar_name}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -3059,62 +2442,40 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.description] - A description of the new custom acoustic model. Use a localized description
    * that matches the language of the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>>}
    */
-  public createAcousticModel(params: SpeechToTextV1.CreateAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createAcousticModel(params: SpeechToTextV1.CreateAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'baseModelName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'base_model_name': _params.baseModelName,
-        'description': _params.description
-      };
+    const body = {
+      'name': _params.name,
+      'base_model_name': _params.baseModelName,
+      'description': _params.description
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createAcousticModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createAcousticModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3131,52 +2492,36 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned
-   * by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese)
-   * languages are not available for language model customization.
+   * by the requesting credentials.
+   *
+   * To determine the languages for which customization is available, see [Language support for
+   * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>>}
    */
-  public listAcousticModels(params?: SpeechToTextV1.ListAcousticModelsParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModels>): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listAcousticModels(params?: SpeechToTextV1.ListAcousticModelsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'language': _params.language
-      };
+    const query = {
+      'language': _params.language
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAcousticModels');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAcousticModels');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3193,59 +2538,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>>}
    */
-  public getAcousticModel(params: SpeechToTextV1.GetAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AcousticModel>): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getAcousticModel(params: SpeechToTextV1.GetAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAcousticModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAcousticModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3263,59 +2586,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteAcousticModel(params: SpeechToTextV1.DeleteAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteAcousticModel(params: SpeechToTextV1.DeleteAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAcousticModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAcousticModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3326,11 +2627,12 @@ class SpeechToTextV1 extends BaseService {
    * latest audio data. The custom acoustic model does not reflect its changed data until you train it. You must use
    * credentials for the instance of the service that owns a model to train it.
    *
-   * The training method is asynchronous. It can take on the order of minutes or hours to complete depending on the
-   * total amount of audio data on which the custom acoustic model is being trained and the current load on the service.
-   * Typically, training a custom acoustic model takes approximately two to four times the length of its audio data. The
-   * actual time depends on the model being trained and the nature of the audio, such as whether the audio is clean or
-   * noisy. The method returns an HTTP 200 response code to indicate that the training process has begun.
+   * The training method is asynchronous. Training time depends on the cumulative amount of audio data that the custom
+   * acoustic model contains and the current load on the service. When you train or retrain a model, the service uses
+   * all of the model's audio data in the training. Training a custom acoustic model takes approximately as long as the
+   * length of its cumulative audio data. For example, it takes approximately 2 hours to train a model that contains a
+   * total of 2 hours of audio. The method returns an HTTP 200 response code to indicate that the training process has
+   * begun.
    *
    * You can monitor the status of the training by using the **Get a custom acoustic model** method to poll the model's
    * status. Use a loop to check the status once a minute. The method returns an `AcousticModel` object that includes
@@ -3378,64 +2680,42 @@ class SpeechToTextV1 extends BaseService {
    * acoustic model, and the custom language model must be fully trained and available. The credentials specified with
    * the request must own both custom models.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>>}
    */
-  public trainAcousticModel(params: SpeechToTextV1.TrainAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.TrainingResponse>): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public trainAcousticModel(params: SpeechToTextV1.TrainAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'custom_language_model_id': _params.customLanguageModelId
-      };
+    const query = {
+      'custom_language_model_id': _params.customLanguageModelId
+    };
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainAcousticModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainAcousticModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}/train',
-          method: 'POST',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/train',
+        method: 'POST',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3456,59 +2736,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public resetAcousticModel(params: SpeechToTextV1.ResetAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public resetAcousticModel(params: SpeechToTextV1.ResetAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetAcousticModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetAcousticModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}/reset',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/reset',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3550,65 +2808,43 @@ class SpeechToTextV1 extends BaseService {
    * input data modified since last training`. See [Upgrading a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customUpgrade#upgradeAcoustic).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public upgradeAcousticModel(params: SpeechToTextV1.UpgradeAcousticModelParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public upgradeAcousticModel(params: SpeechToTextV1.UpgradeAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'custom_language_model_id': _params.customLanguageModelId,
-        'force': _params.force
-      };
+    const query = {
+      'custom_language_model_id': _params.customLanguageModelId,
+      'force': _params.force
+    };
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeAcousticModel');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeAcousticModel');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}/upgrade_model',
-          method: 'POST',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/upgrade_model',
+        method: 'POST',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -3632,59 +2868,37 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioResources>>}
    */
-  public listAudio(params: SpeechToTextV1.ListAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioResources>): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioResources>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listAudio(params: SpeechToTextV1.ListAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioResources>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId
-      };
+    const path = {
+      'customization_id': _params.customizationId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAudio');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAudio');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}/audio',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/audio',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3813,69 +3027,47 @@ class SpeechToTextV1 extends BaseService {
    * resource with the same name. If `false`, the request fails if an audio resource with the same name already exists.
    * The parameter has no effect if an audio resource with the same name does not already exist.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addAudio(params: SpeechToTextV1.AddAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public addAudio(params: SpeechToTextV1.AddAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'audioName', 'audioResource'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.audioResource;
-      const query = {
-        'allow_overwrite': _params.allowOverwrite
-      };
+    const body = _params.audioResource;
+    const query = {
+      'allow_overwrite': _params.allowOverwrite
+    };
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'audio_name': _params.audioName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'audio_name': _params.audioName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addAudio');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addAudio');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
-          method: 'POST',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': _params.contentType,
-            'Contained-Content-Type': _params.containedContentType
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': _params.contentType,
+          'Contained-Content-Type': _params.containedContentType
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3906,60 +3098,38 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.audioName - The name of the audio resource for the custom acoustic model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioListing>>}
    */
-  public getAudio(params: SpeechToTextV1.GetAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.AudioListing>): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioListing>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getAudio(params: SpeechToTextV1.GetAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioListing>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'audioName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'audio_name': _params.audioName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'audio_name': _params.audioName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAudio');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAudio');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3982,60 +3152,38 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.audioName - The name of the audio resource for the custom acoustic model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteAudio(params: SpeechToTextV1.DeleteAudioParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteAudio(params: SpeechToTextV1.DeleteAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customizationId', 'audioName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'customization_id': _params.customizationId,
-        'audio_name': _params.audioName
-      };
+    const path = {
+      'customization_id': _params.customizationId,
+      'audio_name': _params.audioName
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAudio');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAudio');
 
-      const parameters = {
-        options: {
-          url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/acoustic_customizations/{customization_id}/audio/{audio_name}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -4062,58 +3210,36 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteUserData(params: SpeechToTextV1.DeleteUserDataParams, callback?: SpeechToTextV1.Callback<SpeechToTextV1.Empty>): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteUserData(params: SpeechToTextV1.DeleteUserDataParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customerId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'customer_id': _params.customerId
-      };
+    const query = {
+      'customer_id': _params.customerId
+    };
 
-      const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
 
-      const parameters = {
-        options: {
-          url: '/v1/user_data',
-          method: 'DELETE',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/user_data',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
 }
@@ -4124,7 +3250,7 @@ class SpeechToTextV1 extends BaseService {
 
 namespace SpeechToTextV1 {
 
-  /** An operation response. **/
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -4185,6 +3311,8 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
@@ -4455,6 +3583,8 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
@@ -4807,6 +3937,8 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
@@ -4900,6 +4032,8 @@ namespace SpeechToTextV1 {
     export enum BaseModelName {
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
+      EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
+      EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
@@ -4917,6 +4051,8 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
@@ -4936,8 +4072,10 @@ namespace SpeechToTextV1 {
   export interface ListLanguageModelsParams {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit
      *  the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials.
-     *  **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for
-     *  language model customization.
+     *
+     *
+     *  To determine the languages for which customization is available, see [Language support for
+     *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
      */
     language?: ListLanguageModelsConstants.Language | string;
     headers?: OutgoingHttpHeaders;
@@ -4945,10 +4083,11 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `listLanguageModels` operation. */
   export namespace ListLanguageModelsConstants {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for language model customization. */
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
     export enum Language {
       AR_AR = 'ar-AR',
       DE_DE = 'de-DE',
+      EN_AU = 'en-AU',
       EN_GB = 'en-GB',
       EN_US = 'en-US',
       ES_AR = 'es-AR',
@@ -4957,6 +4096,7 @@ namespace SpeechToTextV1 {
       ES_CO = 'es-CO',
       ES_MX = 'es-MX',
       ES_PE = 'es-PE',
+      FR_CA = 'fr-CA',
       FR_FR = 'fr-FR',
       IT_IT = 'it-IT',
       JA_JP = 'ja-JP',
@@ -5263,7 +4403,7 @@ namespace SpeechToTextV1 {
      *
      *  With the `curl` command, use the `--data-binary` option to upload the file for the request.
      */
-    grammarFile: string;
+    grammarFile: string|NodeJS.ReadableStream|Buffer;
     /** The format (MIME type) of the grammar file:
      *  * `application/srgs` for Augmented Backus-Naur Form (ABNF), which uses a plain-text representation that is
      *  similar to traditional BNF grammars.
@@ -5338,6 +4478,8 @@ namespace SpeechToTextV1 {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
+      EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
+      EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
@@ -5355,6 +4497,8 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
@@ -5376,8 +4520,10 @@ namespace SpeechToTextV1 {
   export interface ListAcousticModelsParams {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit
      *  the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials.
-     *  **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for
-     *  language model customization.
+     *
+     *
+     *  To determine the languages for which customization is available, see [Language support for
+     *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
      */
     language?: ListAcousticModelsConstants.Language | string;
     headers?: OutgoingHttpHeaders;
@@ -5385,10 +4531,11 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `listAcousticModels` operation. */
   export namespace ListAcousticModelsConstants {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. **Note:** The `ar-AR` (Modern Standard Arabic) and `zh-CN` (Mandarin Chinese) languages are not available for language model customization. */
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
     export enum Language {
       AR_AR = 'ar-AR',
       DE_DE = 'de-DE',
+      EN_AU = 'en-AU',
       EN_GB = 'en-GB',
       EN_US = 'en-US',
       ES_AR = 'es-AR',
@@ -5397,6 +4544,7 @@ namespace SpeechToTextV1 {
       ES_CO = 'es-CO',
       ES_MX = 'es-MX',
       ES_PE = 'es-PE',
+      FR_CA = 'fr-CA',
       FR_FR = 'fr-FR',
       IT_IT = 'it-IT',
       JA_JP = 'ja-JP',

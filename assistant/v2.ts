@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ */
+ 
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -32,25 +37,32 @@ class AssistantV2 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.assistant.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
+  /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+   *  `2020-04-01`.
+   */
+  version: string;
+
   /**
    * Construct a AssistantV2 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
-   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
-   * the API version for the date you specify, or the most recent version before that date. Note that you should not
-   * programmatically specify the current date at runtime, in case the API has been updated since your application's
-   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
-   * application is ready for a later version.
+   * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
+   * format. The current version is `2020-04-01`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {AssistantV2}
-   * @throws {Error}
    */
   constructor(options: UserOptions) {
+    options = options || {};
+
+    const requiredParams = ['version'];
+    const missingParams = getMissingParams(options, requiredParams);
+    if (missingParams) {
+      throw missingParams;
+    }
     if (!options.serviceName) {
       options.serviceName = AssistantV2.DEFAULT_SERVICE_NAME;
     }
@@ -63,11 +75,7 @@ class AssistantV2 extends BaseService {
     if (options.serviceUrl) {
       this.setServiceUrl(options.serviceUrl);
     }
-    // check if 'version' was provided
-    if (typeof this.baseOptions.version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
-    this.baseOptions.qs.version = options.version;
+    this.version = options.version;
   }
 
   /*************************
@@ -90,59 +98,42 @@ class AssistantV2 extends BaseService {
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV2.Response<AssistantV2.SessionResponse>>}
    */
-  public createSession(params: AssistantV2.CreateSessionParams, callback?: AssistantV2.Callback<AssistantV2.SessionResponse>): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createSession(params: AssistantV2.CreateSessionParams): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['assistantId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'assistant_id': _params.assistantId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createSession');
+    const path = {
+      'assistant_id': _params.assistantId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/assistants/{assistant_id}/sessions',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createSession');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/sessions',
+        method: 'POST',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -160,60 +151,43 @@ class AssistantV2 extends BaseService {
    * **Note:** Currently, the v2 API does not support creating assistants.
    * @param {string} params.sessionId - Unique identifier of the session.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
    */
-  public deleteSession(params: AssistantV2.DeleteSessionParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): Promise<AssistantV2.Response<AssistantV2.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteSession(params: AssistantV2.DeleteSessionParams): Promise<AssistantV2.Response<AssistantV2.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['assistantId', 'sessionId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'assistant_id': _params.assistantId,
-        'session_id': _params.sessionId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteSession');
+    const path = {
+      'assistant_id': _params.assistantId,
+      'session_id': _params.sessionId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/assistants/{assistant_id}/sessions/{session_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteSession');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/sessions/{session_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -241,67 +215,50 @@ class AssistantV2 extends BaseService {
    *
    * **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponse>>}
    */
-  public message(params: AssistantV2.MessageParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponse>): Promise<AssistantV2.Response<AssistantV2.MessageResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public message(params: AssistantV2.MessageParams): Promise<AssistantV2.Response<AssistantV2.MessageResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['assistantId', 'sessionId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'input': _params.input,
-        'context': _params.context
-      };
+    const body = {
+      'input': _params.input,
+      'context': _params.context
+    };
 
-      const path = {
-        'assistant_id': _params.assistantId,
-        'session_id': _params.sessionId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'message');
+    const path = {
+      'assistant_id': _params.assistantId,
+      'session_id': _params.sessionId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'message');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -324,66 +281,49 @@ class AssistantV2 extends BaseService {
    *
    * **Note:** The total size of the context data for a stateless session cannot exceed 250KB.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>>}
    */
-  public messageStateless(params: AssistantV2.MessageStatelessParams, callback?: AssistantV2.Callback<AssistantV2.MessageResponseStateless>): Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public messageStateless(params: AssistantV2.MessageStatelessParams): Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['assistantId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'input': _params.input,
-        'context': _params.context
-      };
+    const body = {
+      'input': _params.input,
+      'context': _params.context
+    };
 
-      const path = {
-        'assistant_id': _params.assistantId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'messageStateless');
+    const path = {
+      'assistant_id': _params.assistantId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/assistants/{assistant_id}/message',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'messageStateless');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/message',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -412,67 +352,46 @@ class AssistantV2 extends BaseService {
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV2.Response<AssistantV2.LogCollection>>}
    */
-  public listLogs(params: AssistantV2.ListLogsParams, callback?: AssistantV2.Callback<AssistantV2.LogCollection>): Promise<AssistantV2.Response<AssistantV2.LogCollection>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listLogs(params: AssistantV2.ListLogsParams): Promise<AssistantV2.Response<AssistantV2.LogCollection>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['assistantId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'sort': _params.sort,
-        'filter': _params.filter,
-        'page_limit': _params.pageLimit,
-        'cursor': _params.cursor
-      };
+    const query = {
+      'version': this.version,
+      'sort': _params.sort,
+      'filter': _params.filter,
+      'page_limit': _params.pageLimit,
+      'cursor': _params.cursor
+    };
 
-      const path = {
-        'assistant_id': _params.assistantId
-      };
+    const path = {
+      'assistant_id': _params.assistantId
+    };
 
-      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listLogs');
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listLogs');
 
-      const parameters = {
-        options: {
-          url: '/v2/assistants/{assistant_id}/logs',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/logs',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -494,59 +413,100 @@ class AssistantV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
    */
-  public deleteUserData(params: AssistantV2.DeleteUserDataParams, callback?: AssistantV2.Callback<AssistantV2.Empty>): Promise<AssistantV2.Response<AssistantV2.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteUserData(params: AssistantV2.DeleteUserDataParams): Promise<AssistantV2.Response<AssistantV2.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customerId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'customer_id': _params.customerId
-      };
+    const query = {
+      'version': this.version,
+      'customer_id': _params.customerId
+    };
 
-      const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
 
-      const parameters = {
-        options: {
-          url: '/v2/user_data',
-          method: 'DELETE',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/user_data',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * bulkClassify
+   ************************/
+
+  /**
+   * Identify intents and entities in multiple user utterances.
+   *
+   * Send multiple user inputs to a dialog skill in a single request and receive information about the intents and
+   * entities recognized in each input. This method is useful for testing and comparing the performance of different
+   * skills or skill versions.
+   *
+   * This method is available only with Premium plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.skillId - Unique identifier of the skill. To find the skill ID in the Watson Assistant user
+   * interface, open the skill settings and click **API Details**.
+   * @param {BulkClassifyUtterance[]} [params.input] - An array of input utterances to classify.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>>}
+   */
+  public bulkClassify(params: AssistantV2.BulkClassifyParams): Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['skillId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'input': _params.input
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'skill_id': _params.skillId
+    };
+
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'bulkClassify');
+
+    const parameters = {
+      options: {
+        url: '/v2/skills/{skill_id}/workspace/bulk_classify',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
 }
@@ -557,7 +517,16 @@ class AssistantV2 extends BaseService {
 
 namespace AssistantV2 {
 
-  /** An operation response. **/
+  /** Options for the `AssistantV2` constructor. */
+  export interface Options extends UserOptions {
+
+    /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+     *  `2020-04-01`.
+     */
+    version: string;
+  }
+
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -680,9 +649,42 @@ namespace AssistantV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `bulkClassify` operation. */
+  export interface BulkClassifyParams {
+    /** Unique identifier of the skill. To find the skill ID in the Watson Assistant user interface, open the skill
+     *  settings and click **API Details**.
+     */
+    skillId: string;
+    /** An array of input utterances to classify. */
+    input?: BulkClassifyUtterance[];
+    headers?: OutgoingHttpHeaders;
+  }
+
   /*************************
    * model interfaces
    ************************/
+
+  /** BulkClassifyOutput. */
+  export interface BulkClassifyOutput {
+    /** The user input utterance to classify. */
+    input?: BulkClassifyUtterance;
+    /** An array of entities identified in the utterance. */
+    entities?: RuntimeEntity[];
+    /** An array of intents recognized in the utterance. */
+    intents?: RuntimeIntent[];
+  }
+
+  /** BulkClassifyResponse. */
+  export interface BulkClassifyResponse {
+    /** An array of objects that contain classification information for the submitted input utterances. */
+    output?: BulkClassifyOutput[];
+  }
+
+  /** The user input utterance to classify. */
+  export interface BulkClassifyUtterance {
+    /** The text of the input utterance. */
+    text: string;
+  }
 
   /** CaptureGroup. */
   export interface CaptureGroup {
@@ -712,6 +714,11 @@ namespace AssistantV2 {
     result_variable: string;
     /** The name of the context variable that the client application will use to pass in credentials for the action. */
     credentials?: string;
+  }
+
+  /** Routing or other contextual information to be used by target service desk systems. */
+  export interface DialogNodeOutputConnectToAgentTransferInfo {
+    target?: JsonObject;
   }
 
   /** DialogNodeOutputOptionsElement. */
@@ -815,7 +822,7 @@ namespace AssistantV2 {
      *  **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog
      *  skill used by the assistant.
      */
-    skills?: MessageContextSkills;
+    skills?: JsonObject;
   }
 
   /** Session context data that is shared by all skills used by the Assistant. */
@@ -879,19 +886,13 @@ namespace AssistantV2 {
 
   /** System context data used by the skill. */
   export interface MessageContextSkillSystem {
-    /** An encoded string representing the current conversation state. By saving this value and then sending it in
-     *  the context of a subsequent message request, you can restore the conversation to the same state. This can be
-     *  useful if you need to return to an earlier point in the conversation. If you are using stateful sessions, you
-     *  can also use a stored state value to restore a paused conversation whose session has expired.
+    /** An encoded string that represents the current conversation state. By saving this value and then sending it
+     *  in the context of a subsequent message request, you can return to an earlier point in the conversation. If you
+     *  are using stateful sessions, you can also use a stored state value to restore a paused conversation whose
+     *  session is expired.
      */
     state?: string;
     /** MessageContextSkillSystem accepts additional properties. */
-    [propName: string]: any;
-  }
-
-  /** Information specific to particular skills used by the assistant. **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog skill used by the assistant. */
-  export interface MessageContextSkills {
-    /** MessageContextSkills accepts additional properties. */
     [propName: string]: any;
   }
 
@@ -904,7 +905,7 @@ namespace AssistantV2 {
      *  **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog
      *  skill used by the assistant.
      */
-    skills?: MessageContextSkills;
+    skills?: JsonObject;
   }
 
   /** An input object that includes the input text. */
@@ -954,7 +955,7 @@ namespace AssistantV2 {
      *
      *  **Note:** If **export**=`true`, the context is returned regardless of the value of **return_context**.
      */
-    _export?: boolean;
+    export?: boolean;
   }
 
   /** Spelling correction options for the message. Any options specified on an individual message override the settings configured for the skill. */
@@ -1251,40 +1252,6 @@ namespace AssistantV2 {
 
   /** RuntimeResponseGeneric. */
   export interface RuntimeResponseGeneric {
-    /** The type of response returned by the dialog node. The specified response type must be supported by the
-     *  client application or channel.
-     */
-    response_type: string;
-    /** The text of the response. */
-    text?: string;
-    /** How long to pause, in milliseconds. */
-    time?: number;
-    /** Whether to send a "user is typing" event during the pause. */
-    typing?: boolean;
-    /** The URL of the image. */
-    source?: string;
-    /** The title or introductory text to show before the response. */
-    title?: string;
-    /** The description to show with the the response. */
-    description?: string;
-    /** The preferred type of control to display. */
-    preference?: string;
-    /** An array of objects describing the options from which the user can choose. */
-    options?: DialogNodeOutputOptionsElement[];
-    /** A message to be sent to the human agent who will be taking over the conversation. */
-    message_to_human_agent?: string;
-    /** A label identifying the topic of the conversation, derived from the **user_label** property of the relevant
-     *  node.
-     */
-    topic?: string;
-    /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
-    suggestions?: DialogSuggestion[];
-    /** The title or introductory text to show before the response. This text is defined in the search skill
-     *  configuration.
-     */
-    header?: string;
-    /** An array of objects containing search results. */
-    results?: SearchResult[];
   }
 
   /** SearchResult. */
@@ -1347,6 +1314,110 @@ namespace AssistantV2 {
   export interface SessionResponse {
     /** The session ID. */
     session_id: string;
+  }
+
+  /** An object that describes a response with response type `connect_to_agent`. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeConnectToAgent extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** A message to be sent to the human agent who will be taking over the conversation. */
+    message_to_human_agent?: string;
+    /** An optional message to be displayed to the user to indicate that the conversation will be transferred to the
+     *  next available agent.
+     */
+    agent_available?: string;
+    /** An optional message to be displayed to the user to indicate that no online agent is available to take over
+     *  the conversation.
+     */
+    agent_unavailable?: string;
+    /** Routing or other contextual information to be used by target service desk systems. */
+    transfer_info?: DialogNodeOutputConnectToAgentTransferInfo;
+    /** A label identifying the topic of the conversation, derived from the **title** property of the relevant node
+     *  or the **topic** property of the dialog node response.
+     */
+    topic?: string;
+  }
+
+  /** An object that describes a response with response type `image`. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeImage extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The URL of the image. */
+    source: string;
+    /** The title to show before the response. */
+    title?: string;
+    /** The description to show with the the response. */
+    description?: string;
+  }
+
+  /** An object that describes a response with response type `option`. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeOption extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The title or introductory text to show before the response. */
+    title: string;
+    /** The description to show with the the response. */
+    description?: string;
+    /** The preferred type of control to display. */
+    preference?: string;
+    /** An array of objects describing the options from which the user can choose. */
+    options: DialogNodeOutputOptionsElement[];
+  }
+
+  /** An object that describes a response with response type `pause`. */
+  export interface RuntimeResponseGenericRuntimeResponseTypePause extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** How long to pause, in milliseconds. */
+    time: number;
+    /** Whether to send a "user is typing" event during the pause. */
+    typing?: boolean;
+  }
+
+  /** An object that describes a response with response type `search`. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeSearch extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The title or introductory text to show before the response. This text is defined in the search skill
+     *  configuration.
+     */
+    header: string;
+    /** An array of objects that contains the search results to be displayed in the initial response to the user. */
+    primary_results: SearchResult[];
+    /** An array of objects that contains additional search results that can be displayed to the user upon request. */
+    additional_results: SearchResult[];
+  }
+
+  /** An object that describes a response with response type `suggestion`. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeSuggestion extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The title or introductory text to show before the response. */
+    title: string;
+    /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
+    suggestions: DialogSuggestion[];
+  }
+
+  /** An object that describes a response with response type `text`. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeText extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The text of the response. */
+    text: string;
   }
 
 }
