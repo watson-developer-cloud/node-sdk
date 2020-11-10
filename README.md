@@ -468,7 +468,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const assistant = new AssistantV2({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/assistant/api/',
+  serviceUrl: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: '2018-09-19'
 });
 
@@ -498,7 +498,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const assistant = new AssistantV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/assistant/api/',
+  serviceUrl: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: '2018-02-16'
 });
 
@@ -526,7 +526,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const compareComply = new CompareComplyV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/compare-comply/api',
+  serviceUrl: 'https://api.us-south.compare-comply.watson.cloud.ibm.com',
   version: '2018-12-06'
 });
 
@@ -557,7 +557,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const discovery = new DiscoveryV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/discovery/api/',
+  serviceUrl: 'https://api.us-south.discovery.watson.cloud.ibm.com',
   version: '2017-09-01'
 });
 
@@ -585,7 +585,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const languageTranslator = new LanguageTranslatorV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/language-translator/api/',
+  serviceUrl: 'https://api.us-south.language-translator.watson.cloud.ibm.com',
   version: 'YYYY-MM-DD',
 });
 
@@ -625,7 +625,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const classifier = new NaturalLanguageClassifierV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/natural-language-classifier/api/'
+  serviceUrl: 'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com'
 });
 
 classifier.classify(
@@ -656,7 +656,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const nlu = new NaturalLanguageUnderstandingV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2018-04-05',
-  serviceUrl: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
+  serviceUrl: 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com'
 });
 
 nlu.analyze(
@@ -688,7 +688,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const personalityInsights = new PersonalityInsightsV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-10-19',
-  serviceUrl: 'https://gateway.watsonplatform.net/personality-insights/api/'
+  serviceUrl: 'https://api.us-south.personality-insights.watson.cloud.ibm.com'
 });
 
 personalityInsights.profile(
@@ -717,7 +717,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const speechToText = new SpeechToTextV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://stream.watsonplatform.net/speech-to-text/api/'
+  serviceUrl: 'https://api.us-south.speech-to-text.watson.cloud.ibm.com'
 });
 
 const params = {
@@ -752,7 +752,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://stream.watsonplatform.net/text-to-speech/api/'
+  serviceUrl: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com'
 });
 
 const params = {
@@ -800,7 +800,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const toneAnalyzer = new ToneAnalyzerV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-05-19',
-  serviceUrl: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
+  serviceUrl: 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com'
 });
 
 toneAnalyzer.tone(

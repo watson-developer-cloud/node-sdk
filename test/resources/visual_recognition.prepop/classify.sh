@@ -24,4 +24,4 @@ done
 echo formargs "${formargs[@]}"
 
 curl -v "${formargs[@]}" -F "name=visual_recognition_test_prepop" \
-  "https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classifiers?api_key=${api_key}&version=2016-05-20"
+  "https://api.us-south.visual-recognition.watson.cloud.ibm.com/v3/classifiers?api_key=${api_key}&version=2016-05-20"

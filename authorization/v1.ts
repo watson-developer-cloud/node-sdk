@@ -19,7 +19,7 @@ import { Authenticator, BaseService, TokenRequestBasedAuthenticator, UserOptions
 import url = require('url');
 
 class AuthorizationV1 extends BaseService {
-  static URL: string = 'https://stream.watsonplatform.net/authorization/api';
+  static URL: string = 'https://api.us-south.speech-to-text.watson.cloud.ibm.com/authorization/api';
   name: string; // set by prototype to 'authorization'
   serviceVersion: string; // set by prototype to 'v1'
   // tslint:disable-next-line:variable-name
