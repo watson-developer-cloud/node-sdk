@@ -168,7 +168,6 @@ class VisualRecognitionV4 extends BaseService {
    * @param {string} [params.name] - The name of the collection. The name can contain alphanumeric, underscore, hyphen,
    * and dot characters. It cannot begin with the reserved prefix `sys-`.
    * @param {string} [params.description] - The description of the collection.
-   * @param {TrainingStatus} [params.trainingStatus] - Training status information for the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
@@ -178,7 +177,6 @@ class VisualRecognitionV4 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'training_status': _params.trainingStatus
     };
 
     const query = {
@@ -298,7 +296,6 @@ class VisualRecognitionV4 extends BaseService {
    * @param {string} [params.name] - The name of the collection. The name can contain alphanumeric, underscore, hyphen,
    * and dot characters. It cannot begin with the reserved prefix `sys-`.
    * @param {string} [params.description] - The description of the collection.
-   * @param {TrainingStatus} [params.trainingStatus] - Training status information for the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
@@ -314,7 +311,6 @@ class VisualRecognitionV4 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'training_status': _params.trainingStatus
     };
 
     const query = {
@@ -1216,8 +1212,6 @@ namespace VisualRecognitionV4 {
     name?: string;
     /** The description of the collection. */
     description?: string;
-    /** Training status information for the collection. */
-    trainingStatus?: TrainingStatus;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1243,8 +1237,6 @@ namespace VisualRecognitionV4 {
     name?: string;
     /** The description of the collection. */
     description?: string;
-    /** Training status information for the collection. */
-    trainingStatus?: TrainingStatus;
     headers?: OutgoingHttpHeaders;
   }
 
