@@ -197,7 +197,6 @@ describe('discovery v1 integration', () => {
         const { result } = res || {};
         expect(result).toBeDefined();
         expect(result.document_id).toBeDefined();
-        console.log(result);
         done(err);
       });
     });
