@@ -3,7 +3,6 @@ import extend = require('extend');
 import { Agent, OutgoingHttpHeaders } from 'http';
 import { UserOptions } from 'ibm-cloud-sdk-core';
 import isStream = require('isstream');
-import { resolve } from 'path';
 import { getSdkHeaders } from '../lib/common';
 import RecognizeStream = require('../lib/recognize-stream');
 import GeneratedSpeechToTextV1 = require('./v1-generated');
@@ -53,7 +52,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
   async whenCorporaAnalyzed(params: SpeechToTextV1.WhenCorporaAnalyzedParams): Promise<any> {
     const self = this;
 
-    try{
+    try {
       const res = await self.listCorpora(params)
       const result = res.result;
       if (!result.corpora.length) {
@@ -61,9 +60,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
           'Customization has no corpa and therefore corpus cannot be analyzed'
         );
         sttError.code = SpeechToTextV1.ERR_NO_CORPORA;
-        return Promise.reject<any>(sttError)
+        return Promise.reject<any>(sttError);
       }
-    } catch(err){
+    } catch(err) {
       return Promise.reject<any>(err)
     }
 
@@ -86,9 +85,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return async.retry(
       options,
       async (done) => {
-        try{
-          const res = await self.listCorpora(params)
-          const corpora = res.result
+        try {
+          const res = await self.listCorpora(params);
+          const corpora = res.result;
           
           if (corpora !== undefined && isProcessing(corpora)) {
             // if the loop times out, async returns the last error, which will be this one.
@@ -96,14 +95,14 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
               'Corpora is still being processed, try increasing interval or times params'
             );
             sttError.code = SpeechToTextV1.ERR_TIMEOUT;
-            done(sttError)
+            done(sttError);
           } else if (corpora !== undefined && isAnalyzed(corpora)) {
-            done(null, corpora)
+            done(null, corpora);
           } else {
             done(new Error('Unexpected corpus analysis status'));
           }
-        } catch(err){
-          done(err)
+        } catch(err) {
+          done(err);
         }
       }
     );
@@ -139,7 +138,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
 
   recognize(params: GeneratedSpeechToTextV1.RecognizeParams): Promise<GeneratedSpeechToTextV1.Response<GeneratedSpeechToTextV1.SpeechRecognitionResults>> {
     if (params && params.audio && isStream(params.audio) && !params.contentType) {
-      return Promise.reject(new Error('If providing `audio` as a Stream, `contentType` is required.'))
+      return Promise.reject(new Error('If providing `audio` as a Stream, `contentType` is required.'));
     }
 
     return super.recognize(params);
@@ -180,8 +179,8 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return async.retry(
       options,
       async (done) => {
-        try{
-          const res = await self.getLanguageModel(params)
+        try {
+          const res = await self.getLanguageModel(params);
           const customization = res.result;
             if (
               customization.status === 'pending' ||
@@ -210,7 +209,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
                 )
               );
             }
-        } catch(err){
+        } catch(err) {
           done(err)
         }
       }
