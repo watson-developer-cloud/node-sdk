@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,10 @@
  */
 'use strict';
 
-const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
+// need to import the whole package to mock getAuthenticatorFromEnvironment
+const core = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = core;
+
 const CompareComplyV1 = require('../../dist/compare-comply/v1');
 
 const {
@@ -29,34 +32,128 @@ const {
 const service = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.compare-comply.watson.cloud.ibm.com',
-  version: '2018-10-18',
+  version: 'testString',
 };
 
-const compareComply = new CompareComplyV1(service);
-const createRequestMock = jest.spyOn(compareComply, 'createRequest');
+const compareComplyService = new CompareComplyV1(service);
 
 // dont actually create a request
+const createRequestMock = jest.spyOn(compareComplyService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
+
+// dont actually construct an authenticator
+const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 afterEach(() => {
   createRequestMock.mockClear();
+  getAuthenticatorMock.mockClear();
+});
+
+// used for the service construction tests
+let requiredGlobals;
+beforeEach(() => {
+  // these are changed when passed into the factory/constructor, so re-init
+  requiredGlobals = {
+    version: 'testString',
+  };
 });
 
 describe('CompareComplyV1', () => {
+  describe('the constructor', () => {
+    test('use user-given service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceUrl: 'custom.com',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new CompareComplyV1(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe('custom.com');
+    });
+
+    test('use default service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new CompareComplyV1(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe(CompareComplyV1.DEFAULT_SERVICE_URL);
+    });
+
+    test('use user-given service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceName: 'my-service',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new CompareComplyV1(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe('my-service');
+    });
+
+    test('use default service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new CompareComplyV1(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe(CompareComplyV1.DEFAULT_SERVICE_NAME);
+    });
+
+    test('use user-given service authenticator', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new CompareComplyV1(options);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).not.toHaveBeenCalled();
+    });
+
+    test('use environment authenticator', () => {
+      const testInstance = new CompareComplyV1(requiredGlobals);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).toHaveBeenCalled();
+    });
+  });
+  describe('service-level tests', () => {
+    describe('positive tests', () => {
+      test('construct service with global params', () => {
+        const serviceObj = new CompareComplyV1(service);
+        expect(serviceObj).not.toBeNull();
+        expect(serviceObj.version).toEqual(service.version);
+      });
+    });
+  });
   describe('convertToHtml', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const file = 'fake_file';
-        const fileContentType = 'fake_fileContentType';
-        const model = 'fake_model';
+        // Construct the params object for operation convertToHtml
+        const file = Buffer.from('This is a mock file.');
+        const fileContentType = 'application/pdf';
+        const model = 'contracts';
         const params = {
-          file,
-          fileContentType,
-          model,
+          file: file,
+          fileContentType: fileContentType,
+          model: model,
         };
 
-        const convertToHtmlResult = compareComply.convertToHtml(params);
+        const convertToHtmlResult = compareComplyService.convertToHtml(params);
 
         // all methods should return a Promise
         expectToBePromise(convertToHtmlResult);
@@ -72,14 +169,15 @@ describe('CompareComplyV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.formData['file'].data).toEqual(file);
         expect(options.formData['file'].contentType).toEqual(fileContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['model']).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const file = 'fake_file';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const file = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           file,
           headers: {
@@ -88,19 +186,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.convertToHtml(params);
+        compareComplyService.convertToHtml(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['file'];
-
         let err;
         try {
-          await compareComply.convertToHtml({});
+          await compareComplyService.convertToHtml({});
         } catch (e) {
           err = e;
         }
@@ -110,10 +205,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['file'];
-
-        const convertToHtmlPromise = compareComply.convertToHtml();
+        const convertToHtmlPromise = compareComplyService.convertToHtml();
         expectToBePromise(convertToHtmlPromise);
 
         convertToHtmlPromise.catch(err => {
@@ -126,17 +218,17 @@ describe('CompareComplyV1', () => {
   describe('classifyElements', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const file = 'fake_file';
-        const fileContentType = 'fake_fileContentType';
-        const model = 'fake_model';
+        // Construct the params object for operation classifyElements
+        const file = Buffer.from('This is a mock file.');
+        const fileContentType = 'application/pdf';
+        const model = 'contracts';
         const params = {
-          file,
-          fileContentType,
-          model,
+          file: file,
+          fileContentType: fileContentType,
+          model: model,
         };
 
-        const classifyElementsResult = compareComply.classifyElements(params);
+        const classifyElementsResult = compareComplyService.classifyElements(params);
 
         // all methods should return a Promise
         expectToBePromise(classifyElementsResult);
@@ -152,14 +244,15 @@ describe('CompareComplyV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.formData['file'].data).toEqual(file);
         expect(options.formData['file'].contentType).toEqual(fileContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['model']).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const file = 'fake_file';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const file = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           file,
           headers: {
@@ -168,19 +261,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.classifyElements(params);
+        compareComplyService.classifyElements(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['file'];
-
         let err;
         try {
-          await compareComply.classifyElements({});
+          await compareComplyService.classifyElements({});
         } catch (e) {
           err = e;
         }
@@ -190,10 +280,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['file'];
-
-        const classifyElementsPromise = compareComply.classifyElements();
+        const classifyElementsPromise = compareComplyService.classifyElements();
         expectToBePromise(classifyElementsPromise);
 
         classifyElementsPromise.catch(err => {
@@ -206,17 +293,17 @@ describe('CompareComplyV1', () => {
   describe('extractTables', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const file = 'fake_file';
-        const fileContentType = 'fake_fileContentType';
-        const model = 'fake_model';
+        // Construct the params object for operation extractTables
+        const file = Buffer.from('This is a mock file.');
+        const fileContentType = 'application/pdf';
+        const model = 'contracts';
         const params = {
-          file,
-          fileContentType,
-          model,
+          file: file,
+          fileContentType: fileContentType,
+          model: model,
         };
 
-        const extractTablesResult = compareComply.extractTables(params);
+        const extractTablesResult = compareComplyService.extractTables(params);
 
         // all methods should return a Promise
         expectToBePromise(extractTablesResult);
@@ -232,14 +319,15 @@ describe('CompareComplyV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.formData['file'].data).toEqual(file);
         expect(options.formData['file'].contentType).toEqual(fileContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['model']).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const file = 'fake_file';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const file = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           file,
           headers: {
@@ -248,19 +336,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.extractTables(params);
+        compareComplyService.extractTables(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['file'];
-
         let err;
         try {
-          await compareComply.extractTables({});
+          await compareComplyService.extractTables({});
         } catch (e) {
           err = e;
         }
@@ -270,10 +355,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['file'];
-
-        const extractTablesPromise = compareComply.extractTables();
+        const extractTablesPromise = compareComplyService.extractTables();
         expectToBePromise(extractTablesPromise);
 
         extractTablesPromise.catch(err => {
@@ -286,25 +368,25 @@ describe('CompareComplyV1', () => {
   describe('compareDocuments', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const file1 = 'fake_file1';
-        const file2 = 'fake_file2';
-        const file1ContentType = 'fake_file1ContentType';
-        const file2ContentType = 'fake_file2ContentType';
-        const file1Label = 'fake_file1Label';
-        const file2Label = 'fake_file2Label';
-        const model = 'fake_model';
+        // Construct the params object for operation compareDocuments
+        const file1 = Buffer.from('This is a mock file.');
+        const file2 = Buffer.from('This is a mock file.');
+        const file1ContentType = 'application/pdf';
+        const file2ContentType = 'application/pdf';
+        const file1Label = 'testString';
+        const file2Label = 'testString';
+        const model = 'contracts';
         const params = {
-          file1,
-          file2,
-          file1ContentType,
-          file2ContentType,
-          file1Label,
-          file2Label,
-          model,
+          file1: file1,
+          file2: file2,
+          file1ContentType: file1ContentType,
+          file2ContentType: file2ContentType,
+          file1Label: file1Label,
+          file2Label: file2Label,
+          model: model,
         };
 
-        const compareDocumentsResult = compareComply.compareDocuments(params);
+        const compareDocumentsResult = compareComplyService.compareDocuments(params);
 
         // all methods should return a Promise
         expectToBePromise(compareDocumentsResult);
@@ -322,6 +404,7 @@ describe('CompareComplyV1', () => {
         expect(options.formData['file_1'].contentType).toEqual(file1ContentType);
         expect(options.formData['file_2'].data).toEqual(file2);
         expect(options.formData['file_2'].contentType).toEqual(file2ContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['file_1_label']).toEqual(file1Label);
         expect(options.qs['file_2_label']).toEqual(file2Label);
         expect(options.qs['model']).toEqual(model);
@@ -329,10 +412,10 @@ describe('CompareComplyV1', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const file1 = 'fake_file1';
-        const file2 = 'fake_file2';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const file1 = Buffer.from('This is a mock file.');
+        const file2 = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           file1,
           file2,
@@ -342,19 +425,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.compareDocuments(params);
+        compareComplyService.compareDocuments(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['file1', 'file2'];
-
         let err;
         try {
-          await compareComply.compareDocuments({});
+          await compareComplyService.compareDocuments({});
         } catch (e) {
           err = e;
         }
@@ -364,10 +444,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['file1', 'file2'];
-
-        const compareDocumentsPromise = compareComply.compareDocuments();
+        const compareDocumentsPromise = compareComplyService.compareDocuments();
         expectToBePromise(compareDocumentsPromise);
 
         compareDocumentsPromise.catch(err => {
@@ -379,18 +456,76 @@ describe('CompareComplyV1', () => {
   });
   describe('addFeedback', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ShortDoc
+      const shortDocModel = {
+        title: 'testString',
+        hash: 'testString',
+      };
+
+      // Location
+      const locationModel = {
+        begin: 26,
+        end: 26,
+      };
+
+      // Label
+      const labelModel = {
+        nature: 'testString',
+        party: 'testString',
+      };
+
+      // TypeLabel
+      const typeLabelModel = {
+        label: labelModel,
+        provenance_ids: ['testString'],
+        modification: 'added',
+      };
+
+      // Category
+      const categoryModel = {
+        label: 'Amendments',
+        provenance_ids: ['testString'],
+        modification: 'added',
+      };
+
+      // OriginalLabelsIn
+      const originalLabelsInModel = {
+        types: [typeLabelModel],
+        categories: [categoryModel],
+      };
+
+      // UpdatedLabelsIn
+      const updatedLabelsInModel = {
+        types: [typeLabelModel],
+        categories: [categoryModel],
+      };
+
+      // FeedbackDataInput
+      const feedbackDataInputModel = {
+        feedback_type: 'testString',
+        document: shortDocModel,
+        model_id: 'testString',
+        model_version: 'testString',
+        location: locationModel,
+        text: 'testString',
+        original_labels: originalLabelsInModel,
+        updated_labels: updatedLabelsInModel,
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const feedbackData = 'fake_feedbackData';
-        const userId = 'fake_userId';
-        const comment = 'fake_comment';
+        // Construct the params object for operation addFeedback
+        const feedbackData = feedbackDataInputModel;
+        const userId = 'testString';
+        const comment = 'testString';
         const params = {
-          feedbackData,
-          userId,
-          comment,
+          feedbackData: feedbackData,
+          userId: userId,
+          comment: comment,
         };
 
-        const addFeedbackResult = compareComply.addFeedback(params);
+        const addFeedbackResult = compareComplyService.addFeedback(params);
 
         // all methods should return a Promise
         expectToBePromise(addFeedbackResult);
@@ -407,13 +542,14 @@ describe('CompareComplyV1', () => {
         expect(options.body['feedback_data']).toEqual(feedbackData);
         expect(options.body['user_id']).toEqual(userId);
         expect(options.body['comment']).toEqual(comment);
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const feedbackData = 'fake_feedbackData';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const feedbackData = feedbackDataInputModel;
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           feedbackData,
           headers: {
@@ -422,19 +558,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.addFeedback(params);
+        compareComplyService.addFeedback(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['feedbackData'];
-
         let err;
         try {
-          await compareComply.addFeedback({});
+          await compareComplyService.addFeedback({});
         } catch (e) {
           err = e;
         }
@@ -444,10 +577,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['feedbackData'];
-
-        const addFeedbackPromise = compareComply.addFeedback();
+        const addFeedbackPromise = compareComplyService.addFeedback();
         expectToBePromise(addFeedbackPromise);
 
         addFeedbackPromise.catch(err => {
@@ -460,43 +590,39 @@ describe('CompareComplyV1', () => {
   describe('listFeedback', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const feedbackType = 'fake_feedbackType';
-        const before = 'fake_before';
-        const after = 'fake_after';
-        const documentTitle = 'fake_documentTitle';
-        const modelId = 'fake_modelId';
-        const modelVersion = 'fake_modelVersion';
-        const categoryRemoved = 'fake_categoryRemoved';
-        const categoryAdded = 'fake_categoryAdded';
-        const categoryNotChanged = 'fake_categoryNotChanged';
-        const typeRemoved = 'fake_typeRemoved';
-        const typeAdded = 'fake_typeAdded';
-        const typeNotChanged = 'fake_typeNotChanged';
-        const pageLimit = 'fake_pageLimit';
-        const cursor = 'fake_cursor';
-        const sort = 'fake_sort';
-        const includeTotal = 'fake_includeTotal';
+        // Construct the params object for operation listFeedback
+        const feedbackType = 'testString';
+        const documentTitle = 'testString';
+        const modelId = 'testString';
+        const modelVersion = 'testString';
+        const categoryRemoved = 'testString';
+        const categoryAdded = 'testString';
+        const categoryNotChanged = 'testString';
+        const typeRemoved = 'testString';
+        const typeAdded = 'testString';
+        const typeNotChanged = 'testString';
+        const pageLimit = 100;
+        const cursor = 'testString';
+        const sort = 'testString';
+        const includeTotal = true;
         const params = {
-          feedbackType,
-          before,
-          after,
-          documentTitle,
-          modelId,
-          modelVersion,
-          categoryRemoved,
-          categoryAdded,
-          categoryNotChanged,
-          typeRemoved,
-          typeAdded,
-          typeNotChanged,
-          pageLimit,
-          cursor,
-          sort,
-          includeTotal,
+          feedbackType: feedbackType,
+          documentTitle: documentTitle,
+          modelId: modelId,
+          modelVersion: modelVersion,
+          categoryRemoved: categoryRemoved,
+          categoryAdded: categoryAdded,
+          categoryNotChanged: categoryNotChanged,
+          typeRemoved: typeRemoved,
+          typeAdded: typeAdded,
+          typeNotChanged: typeNotChanged,
+          pageLimit: pageLimit,
+          cursor: cursor,
+          sort: sort,
+          includeTotal: includeTotal,
         };
 
-        const listFeedbackResult = compareComply.listFeedback(params);
+        const listFeedbackResult = compareComplyService.listFeedback(params);
 
         // all methods should return a Promise
         expectToBePromise(listFeedbackResult);
@@ -510,9 +636,8 @@ describe('CompareComplyV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['feedback_type']).toEqual(feedbackType);
-        expect(options.qs['before']).toEqual(before);
-        expect(options.qs['after']).toEqual(after);
         expect(options.qs['document_title']).toEqual(documentTitle);
         expect(options.qs['model_id']).toEqual(modelId);
         expect(options.qs['model_version']).toEqual(modelVersion);
@@ -530,8 +655,8 @@ describe('CompareComplyV1', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           headers: {
             Accept: userAccept,
@@ -539,36 +664,29 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.listFeedback(params);
+        compareComplyService.listFeedback(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        compareComply.listFeedback({});
+        // invoke the method with no parameters
+        compareComplyService.listFeedback({});
         checkForSuccessfulExecution(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await compareComply.listFeedback(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
       });
     });
   });
   describe('getFeedback', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const feedbackId = 'fake_feedbackId';
-        const model = 'fake_model';
+        // Construct the params object for operation getFeedback
+        const feedbackId = 'testString';
+        const model = 'contracts';
         const params = {
-          feedbackId,
-          model,
+          feedbackId: feedbackId,
+          model: model,
         };
 
-        const getFeedbackResult = compareComply.getFeedback(params);
+        const getFeedbackResult = compareComplyService.getFeedback(params);
 
         // all methods should return a Promise
         expectToBePromise(getFeedbackResult);
@@ -582,15 +700,16 @@ describe('CompareComplyV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['model']).toEqual(model);
         expect(options.path['feedback_id']).toEqual(feedbackId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const feedbackId = 'fake_feedbackId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const feedbackId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           feedbackId,
           headers: {
@@ -599,19 +718,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.getFeedback(params);
+        compareComplyService.getFeedback(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['feedbackId'];
-
         let err;
         try {
-          await compareComply.getFeedback({});
+          await compareComplyService.getFeedback({});
         } catch (e) {
           err = e;
         }
@@ -621,10 +737,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['feedbackId'];
-
-        const getFeedbackPromise = compareComply.getFeedback();
+        const getFeedbackPromise = compareComplyService.getFeedback();
         expectToBePromise(getFeedbackPromise);
 
         getFeedbackPromise.catch(err => {
@@ -637,15 +750,15 @@ describe('CompareComplyV1', () => {
   describe('deleteFeedback', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const feedbackId = 'fake_feedbackId';
-        const model = 'fake_model';
+        // Construct the params object for operation deleteFeedback
+        const feedbackId = 'testString';
+        const model = 'contracts';
         const params = {
-          feedbackId,
-          model,
+          feedbackId: feedbackId,
+          model: model,
         };
 
-        const deleteFeedbackResult = compareComply.deleteFeedback(params);
+        const deleteFeedbackResult = compareComplyService.deleteFeedback(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteFeedbackResult);
@@ -659,15 +772,16 @@ describe('CompareComplyV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['model']).toEqual(model);
         expect(options.path['feedback_id']).toEqual(feedbackId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const feedbackId = 'fake_feedbackId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const feedbackId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           feedbackId,
           headers: {
@@ -676,19 +790,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.deleteFeedback(params);
+        compareComplyService.deleteFeedback(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['feedbackId'];
-
         let err;
         try {
-          await compareComply.deleteFeedback({});
+          await compareComplyService.deleteFeedback({});
         } catch (e) {
           err = e;
         }
@@ -698,10 +809,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['feedbackId'];
-
-        const deleteFeedbackPromise = compareComply.deleteFeedback();
+        const deleteFeedbackPromise = compareComplyService.deleteFeedback();
         expectToBePromise(deleteFeedbackPromise);
 
         deleteFeedbackPromise.catch(err => {
@@ -714,27 +822,27 @@ describe('CompareComplyV1', () => {
   describe('createBatch', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const _function = 'fake__function';
-        const inputCredentialsFile = 'fake_inputCredentialsFile';
-        const inputBucketLocation = 'fake_inputBucketLocation';
-        const inputBucketName = 'fake_inputBucketName';
-        const outputCredentialsFile = 'fake_outputCredentialsFile';
-        const outputBucketLocation = 'fake_outputBucketLocation';
-        const outputBucketName = 'fake_outputBucketName';
-        const model = 'fake_model';
+        // Construct the params object for operation createBatch
+        const _function = 'html_conversion';
+        const inputCredentialsFile = Buffer.from('This is a mock file.');
+        const inputBucketLocation = 'testString';
+        const inputBucketName = 'testString';
+        const outputCredentialsFile = Buffer.from('This is a mock file.');
+        const outputBucketLocation = 'testString';
+        const outputBucketName = 'testString';
+        const model = 'contracts';
         const params = {
-          _function,
-          inputCredentialsFile,
-          inputBucketLocation,
-          inputBucketName,
-          outputCredentialsFile,
-          outputBucketLocation,
-          outputBucketName,
-          model,
+          _function: _function,
+          inputCredentialsFile: inputCredentialsFile,
+          inputBucketLocation: inputBucketLocation,
+          inputBucketName: inputBucketName,
+          outputCredentialsFile: outputCredentialsFile,
+          outputBucketLocation: outputBucketLocation,
+          outputBucketName: outputBucketName,
+          model: model,
         };
 
-        const createBatchResult = compareComply.createBatch(params);
+        const createBatchResult = compareComplyService.createBatch(params);
 
         // all methods should return a Promise
         expectToBePromise(createBatchResult);
@@ -756,21 +864,22 @@ describe('CompareComplyV1', () => {
         expect(options.formData['output_credentials_file'].contentType).toEqual('application/json');
         expect(options.formData['output_bucket_location']).toEqual(outputBucketLocation);
         expect(options.formData['output_bucket_name']).toEqual(outputBucketName);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['function']).toEqual(_function);
         expect(options.qs['model']).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const _function = 'fake__function';
-        const inputCredentialsFile = 'fake_inputCredentialsFile';
-        const inputBucketLocation = 'fake_inputBucketLocation';
-        const inputBucketName = 'fake_inputBucketName';
-        const outputCredentialsFile = 'fake_outputCredentialsFile';
-        const outputBucketLocation = 'fake_outputBucketLocation';
-        const outputBucketName = 'fake_outputBucketName';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const _function = 'html_conversion';
+        const inputCredentialsFile = Buffer.from('This is a mock file.');
+        const inputBucketLocation = 'testString';
+        const inputBucketName = 'testString';
+        const outputCredentialsFile = Buffer.from('This is a mock file.');
+        const outputBucketLocation = 'testString';
+        const outputBucketName = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           _function,
           inputCredentialsFile,
@@ -785,27 +894,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.createBatch(params);
+        compareComplyService.createBatch(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = [
-          '_function',
-          'inputCredentialsFile',
-          'inputBucketLocation',
-          'inputBucketName',
-          'outputCredentialsFile',
-          'outputBucketLocation',
-          'outputBucketName',
-        ];
-
         let err;
         try {
-          await compareComply.createBatch({});
+          await compareComplyService.createBatch({});
         } catch (e) {
           err = e;
         }
@@ -815,18 +913,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = [
-          '_function',
-          'inputCredentialsFile',
-          'inputBucketLocation',
-          'inputBucketName',
-          'outputCredentialsFile',
-          'outputBucketLocation',
-          'outputBucketName',
-        ];
-
-        const createBatchPromise = compareComply.createBatch();
+        const createBatchPromise = compareComplyService.createBatch();
         expectToBePromise(createBatchPromise);
 
         createBatchPromise.catch(err => {
@@ -839,10 +926,10 @@ describe('CompareComplyV1', () => {
   describe('listBatches', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
+        // Construct the params object for operation listBatches
         const params = {};
 
-        const listBatchesResult = compareComply.listBatches(params);
+        const listBatchesResult = compareComplyService.listBatches(params);
 
         // all methods should return a Promise
         expectToBePromise(listBatchesResult);
@@ -856,12 +943,13 @@ describe('CompareComplyV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           headers: {
             Accept: userAccept,
@@ -869,34 +957,27 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.listBatches(params);
+        compareComplyService.listBatches(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        compareComply.listBatches({});
+        // invoke the method with no parameters
+        compareComplyService.listBatches({});
         checkForSuccessfulExecution(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await compareComply.listBatches(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
       });
     });
   });
   describe('getBatch', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const batchId = 'fake_batchId';
+        // Construct the params object for operation getBatch
+        const batchId = 'testString';
         const params = {
-          batchId,
+          batchId: batchId,
         };
 
-        const getBatchResult = compareComply.getBatch(params);
+        const getBatchResult = compareComplyService.getBatch(params);
 
         // all methods should return a Promise
         expectToBePromise(getBatchResult);
@@ -910,14 +991,15 @@ describe('CompareComplyV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['batch_id']).toEqual(batchId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const batchId = 'fake_batchId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const batchId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           batchId,
           headers: {
@@ -926,19 +1008,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.getBatch(params);
+        compareComplyService.getBatch(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['batchId'];
-
         let err;
         try {
-          await compareComply.getBatch({});
+          await compareComplyService.getBatch({});
         } catch (e) {
           err = e;
         }
@@ -948,10 +1027,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['batchId'];
-
-        const getBatchPromise = compareComply.getBatch();
+        const getBatchPromise = compareComplyService.getBatch();
         expectToBePromise(getBatchPromise);
 
         getBatchPromise.catch(err => {
@@ -964,17 +1040,17 @@ describe('CompareComplyV1', () => {
   describe('updateBatch', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const batchId = 'fake_batchId';
-        const action = 'fake_action';
-        const model = 'fake_model';
+        // Construct the params object for operation updateBatch
+        const batchId = 'testString';
+        const action = 'rescan';
+        const model = 'contracts';
         const params = {
-          batchId,
-          action,
-          model,
+          batchId: batchId,
+          action: action,
+          model: model,
         };
 
-        const updateBatchResult = compareComply.updateBatch(params);
+        const updateBatchResult = compareComplyService.updateBatch(params);
 
         // all methods should return a Promise
         expectToBePromise(updateBatchResult);
@@ -988,6 +1064,7 @@ describe('CompareComplyV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['action']).toEqual(action);
         expect(options.qs['model']).toEqual(model);
         expect(options.path['batch_id']).toEqual(batchId);
@@ -995,10 +1072,10 @@ describe('CompareComplyV1', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const batchId = 'fake_batchId';
-        const action = 'fake_action';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const batchId = 'testString';
+        const action = 'rescan';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           batchId,
           action,
@@ -1008,19 +1085,16 @@ describe('CompareComplyV1', () => {
           },
         };
 
-        compareComply.updateBatch(params);
+        compareComplyService.updateBatch(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['batchId', 'action'];
-
         let err;
         try {
-          await compareComply.updateBatch({});
+          await compareComplyService.updateBatch({});
         } catch (e) {
           err = e;
         }
@@ -1030,10 +1104,7 @@ describe('CompareComplyV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['batchId', 'action'];
-
-        const updateBatchPromise = compareComply.updateBatch();
+        const updateBatchPromise = compareComplyService.updateBatch();
         expectToBePromise(updateBatchPromise);
 
         updateBatchPromise.catch(err => {

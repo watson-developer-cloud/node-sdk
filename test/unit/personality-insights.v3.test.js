@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,10 @@
  */
 'use strict';
 
-const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
+// need to import the whole package to mock getAuthenticatorFromEnvironment
+const core = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = core;
+
 const PersonalityInsightsV3 = require('../../dist/personality-insights/v3');
 
 const {
@@ -29,42 +32,156 @@ const {
 const service = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.personality-insights.watson.cloud.ibm.com',
-  version: '2018-10-18',
+  version: 'testString',
 };
 
-const personalityInsights = new PersonalityInsightsV3(service);
-const createRequestMock = jest.spyOn(personalityInsights, 'createRequest');
+const personalityInsightsService = new PersonalityInsightsV3(service);
 
 // dont actually create a request
+const createRequestMock = jest.spyOn(personalityInsightsService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
+
+// dont actually construct an authenticator
+const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 afterEach(() => {
   createRequestMock.mockClear();
+  getAuthenticatorMock.mockClear();
+});
+
+// used for the service construction tests
+let requiredGlobals;
+beforeEach(() => {
+  // these are changed when passed into the factory/constructor, so re-init
+  requiredGlobals = {
+    version: 'testString',
+  };
 });
 
 describe('PersonalityInsightsV3', () => {
+  describe('the constructor', () => {
+    test('use user-given service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceUrl: 'custom.com',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new PersonalityInsightsV3(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe('custom.com');
+    });
+
+    test('use default service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new PersonalityInsightsV3(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe(PersonalityInsightsV3.DEFAULT_SERVICE_URL);
+    });
+
+    test('use user-given service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceName: 'my-service',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new PersonalityInsightsV3(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe('my-service');
+    });
+
+    test('use default service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new PersonalityInsightsV3(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe(PersonalityInsightsV3.DEFAULT_SERVICE_NAME);
+    });
+
+    test('use user-given service authenticator', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new PersonalityInsightsV3(options);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).not.toHaveBeenCalled();
+    });
+
+    test('use environment authenticator', () => {
+      const testInstance = new PersonalityInsightsV3(requiredGlobals);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).toHaveBeenCalled();
+    });
+  });
+  describe('service-level tests', () => {
+    describe('positive tests', () => {
+      test('construct service with global params', () => {
+        const serviceObj = new PersonalityInsightsV3(service);
+        expect(serviceObj).not.toBeNull();
+        expect(serviceObj.version).toEqual(service.version);
+      });
+    });
+  });
   describe('profile', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ContentItem
+      const contentItemModel = {
+        content: 'testString',
+        id: 'testString',
+        created: 26,
+        updated: 26,
+        contenttype: 'text/plain',
+        language: 'ar',
+        parentid: 'testString',
+        reply: true,
+        forward: true,
+      };
+
+      // Content
+      const contentModel = {
+        contentItems: [contentItemModel],
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const content = 'fake_content';
-        const contentType = 'fake_contentType';
-        const contentLanguage = 'fake_contentLanguage';
-        const acceptLanguage = 'fake_acceptLanguage';
-        const rawScores = 'fake_rawScores';
-        const csvHeaders = 'fake_csvHeaders';
-        const consumptionPreferences = 'fake_consumptionPreferences';
+        // Construct the params object for operation profile
+        const content = contentModel;
+        const contentType = 'application/json';
+        const contentLanguage = 'ar';
+        const acceptLanguage = 'ar';
+        const rawScores = true;
+        const csvHeaders = true;
+        const consumptionPreferences = true;
         const params = {
-          content,
-          contentType,
-          contentLanguage,
-          acceptLanguage,
-          rawScores,
-          csvHeaders,
-          consumptionPreferences,
+          content: content,
+          contentType: contentType,
+          contentLanguage: contentLanguage,
+          acceptLanguage: acceptLanguage,
+          rawScores: rawScores,
+          csvHeaders: csvHeaders,
+          consumptionPreferences: consumptionPreferences,
         };
 
-        const profileResult = personalityInsights.profile(params);
+        const profileResult = personalityInsightsService.profile(params);
 
         // all methods should return a Promise
         expectToBePromise(profileResult);
@@ -82,6 +199,7 @@ describe('PersonalityInsightsV3', () => {
         checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
         checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
         expect(options.body).toEqual(content);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['raw_scores']).toEqual(rawScores);
         expect(options.qs['csv_headers']).toEqual(csvHeaders);
         expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
@@ -89,9 +207,9 @@ describe('PersonalityInsightsV3', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const content = 'fake_content';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const content = contentModel;
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           content,
           headers: {
@@ -100,19 +218,16 @@ describe('PersonalityInsightsV3', () => {
           },
         };
 
-        personalityInsights.profile(params);
+        personalityInsightsService.profile(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['content'];
-
         let err;
         try {
-          await personalityInsights.profile({});
+          await personalityInsightsService.profile({});
         } catch (e) {
           err = e;
         }
@@ -122,10 +237,7 @@ describe('PersonalityInsightsV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['content'];
-
-        const profilePromise = personalityInsights.profile();
+        const profilePromise = personalityInsightsService.profile();
         expectToBePromise(profilePromise);
 
         profilePromise.catch(err => {
@@ -137,26 +249,46 @@ describe('PersonalityInsightsV3', () => {
   });
   describe('profileAsCsv', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ContentItem
+      const contentItemModel = {
+        content: 'testString',
+        id: 'testString',
+        created: 26,
+        updated: 26,
+        contenttype: 'text/plain',
+        language: 'ar',
+        parentid: 'testString',
+        reply: true,
+        forward: true,
+      };
+
+      // Content
+      const contentModel = {
+        contentItems: [contentItemModel],
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const content = 'fake_content';
-        const contentType = 'fake_contentType';
-        const contentLanguage = 'fake_contentLanguage';
-        const acceptLanguage = 'fake_acceptLanguage';
-        const rawScores = 'fake_rawScores';
-        const csvHeaders = 'fake_csvHeaders';
-        const consumptionPreferences = 'fake_consumptionPreferences';
+        // Construct the params object for operation profileAsCsv
+        const content = contentModel;
+        const contentType = 'application/json';
+        const contentLanguage = 'ar';
+        const acceptLanguage = 'ar';
+        const rawScores = true;
+        const csvHeaders = true;
+        const consumptionPreferences = true;
         const params = {
-          content,
-          contentType,
-          contentLanguage,
-          acceptLanguage,
-          rawScores,
-          csvHeaders,
-          consumptionPreferences,
+          content: content,
+          contentType: contentType,
+          contentLanguage: contentLanguage,
+          acceptLanguage: acceptLanguage,
+          rawScores: rawScores,
+          csvHeaders: csvHeaders,
+          consumptionPreferences: consumptionPreferences,
         };
 
-        const profileAsCsvResult = personalityInsights.profileAsCsv(params);
+        const profileAsCsvResult = personalityInsightsService.profileAsCsv(params);
 
         // all methods should return a Promise
         expectToBePromise(profileAsCsvResult);
@@ -174,6 +306,7 @@ describe('PersonalityInsightsV3', () => {
         checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
         checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
         expect(options.body).toEqual(content);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['raw_scores']).toEqual(rawScores);
         expect(options.qs['csv_headers']).toEqual(csvHeaders);
         expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
@@ -181,9 +314,9 @@ describe('PersonalityInsightsV3', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const content = 'fake_content';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const content = contentModel;
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           content,
           headers: {
@@ -192,19 +325,16 @@ describe('PersonalityInsightsV3', () => {
           },
         };
 
-        personalityInsights.profileAsCsv(params);
+        personalityInsightsService.profileAsCsv(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['content'];
-
         let err;
         try {
-          await personalityInsights.profileAsCsv({});
+          await personalityInsightsService.profileAsCsv({});
         } catch (e) {
           err = e;
         }
@@ -214,10 +344,7 @@ describe('PersonalityInsightsV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['content'];
-
-        const profileAsCsvPromise = personalityInsights.profileAsCsv();
+        const profileAsCsvPromise = personalityInsightsService.profileAsCsv();
         expectToBePromise(profileAsCsvPromise);
 
         profileAsCsvPromise.catch(err => {

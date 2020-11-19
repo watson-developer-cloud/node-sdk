@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,10 @@
  */
 'use strict';
 
-const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
+// need to import the whole package to mock getAuthenticatorFromEnvironment
+const core = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = core;
+
 const NaturalLanguageUnderstandingV1 = require('../../dist/natural-language-understanding/v1');
 
 const {
@@ -29,48 +32,226 @@ const {
 const service = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com',
-  version: '2018-10-18',
+  version: 'testString',
 };
 
-const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1(service);
-const createRequestMock = jest.spyOn(naturalLanguageUnderstanding, 'createRequest');
+const naturalLanguageUnderstandingService = new NaturalLanguageUnderstandingV1(service);
 
 // dont actually create a request
+const createRequestMock = jest.spyOn(naturalLanguageUnderstandingService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
+
+// dont actually construct an authenticator
+const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 afterEach(() => {
   createRequestMock.mockClear();
+  getAuthenticatorMock.mockClear();
+});
+
+// used for the service construction tests
+let requiredGlobals;
+beforeEach(() => {
+  // these are changed when passed into the factory/constructor, so re-init
+  requiredGlobals = {
+    version: 'testString',
+  };
 });
 
 describe('NaturalLanguageUnderstandingV1', () => {
+  describe('the constructor', () => {
+    test('use user-given service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceUrl: 'custom.com',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new NaturalLanguageUnderstandingV1(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe('custom.com');
+    });
+
+    test('use default service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new NaturalLanguageUnderstandingV1(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe(
+        NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_URL
+      );
+    });
+
+    test('use user-given service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceName: 'my-service',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new NaturalLanguageUnderstandingV1(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe('my-service');
+    });
+
+    test('use default service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new NaturalLanguageUnderstandingV1(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe(
+        NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME
+      );
+    });
+
+    test('use user-given service authenticator', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new NaturalLanguageUnderstandingV1(options);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).not.toHaveBeenCalled();
+    });
+
+    test('use environment authenticator', () => {
+      const testInstance = new NaturalLanguageUnderstandingV1(requiredGlobals);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).toHaveBeenCalled();
+    });
+  });
+  describe('service-level tests', () => {
+    describe('positive tests', () => {
+      test('construct service with global params', () => {
+        const serviceObj = new NaturalLanguageUnderstandingV1(service);
+        expect(serviceObj).not.toBeNull();
+        expect(serviceObj.version).toEqual(service.version);
+      });
+    });
+  });
   describe('analyze', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ConceptsOptions
+      const conceptsOptionsModel = {
+        limit: 50,
+      };
+
+      // EmotionOptions
+      const emotionOptionsModel = {
+        document: true,
+        targets: ['testString'],
+      };
+
+      // EntitiesOptions
+      const entitiesOptionsModel = {
+        limit: 250,
+        mentions: true,
+        model: 'testString',
+        sentiment: true,
+        emotion: true,
+      };
+
+      // KeywordsOptions
+      const keywordsOptionsModel = {
+        limit: 250,
+        sentiment: true,
+        emotion: true,
+      };
+
+      // RelationsOptions
+      const relationsOptionsModel = {
+        model: 'testString',
+      };
+
+      // SemanticRolesOptions
+      const semanticRolesOptionsModel = {
+        limit: 38,
+        keywords: true,
+        entities: true,
+      };
+
+      // SentimentOptions
+      const sentimentOptionsModel = {
+        document: true,
+        targets: ['testString'],
+      };
+
+      // CategoriesOptions
+      const categoriesOptionsModel = {
+        explanation: true,
+        limit: 10,
+        model: 'testString',
+      };
+
+      // SyntaxOptionsTokens
+      const syntaxOptionsTokensModel = {
+        lemma: true,
+        part_of_speech: true,
+      };
+
+      // SyntaxOptions
+      const syntaxOptionsModel = {
+        tokens: syntaxOptionsTokensModel,
+        sentences: true,
+      };
+
+      // Features
+      const featuresModel = {
+        concepts: conceptsOptionsModel,
+        emotion: emotionOptionsModel,
+        entities: entitiesOptionsModel,
+        keywords: keywordsOptionsModel,
+        metadata: { foo: 'bar' },
+        relations: relationsOptionsModel,
+        semantic_roles: semanticRolesOptionsModel,
+        sentiment: sentimentOptionsModel,
+        categories: categoriesOptionsModel,
+        syntax: syntaxOptionsModel,
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const features = 'fake_features';
-        const text = 'fake_text';
-        const html = 'fake_html';
-        const url = 'fake_url';
-        const clean = 'fake_clean';
-        const xpath = 'fake_xpath';
-        const fallbackToRaw = 'fake_fallbackToRaw';
-        const returnAnalyzedText = 'fake_returnAnalyzedText';
-        const language = 'fake_language';
-        const limitTextCharacters = 'fake_limitTextCharacters';
+        // Construct the params object for operation analyze
+        const features = featuresModel;
+        const text = 'testString';
+        const html = 'testString';
+        const url = 'testString';
+        const clean = true;
+        const xpath = 'testString';
+        const fallbackToRaw = true;
+        const returnAnalyzedText = true;
+        const language = 'testString';
+        const limitTextCharacters = 38;
         const params = {
-          features,
-          text,
-          html,
-          url,
-          clean,
-          xpath,
-          fallbackToRaw,
-          returnAnalyzedText,
-          language,
-          limitTextCharacters,
+          features: features,
+          text: text,
+          html: html,
+          url: url,
+          clean: clean,
+          xpath: xpath,
+          fallbackToRaw: fallbackToRaw,
+          returnAnalyzedText: returnAnalyzedText,
+          language: language,
+          limitTextCharacters: limitTextCharacters,
         };
 
-        const analyzeResult = naturalLanguageUnderstanding.analyze(params);
+        const analyzeResult = naturalLanguageUnderstandingService.analyze(params);
 
         // all methods should return a Promise
         expectToBePromise(analyzeResult);
@@ -94,13 +275,14 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(options.body['return_analyzed_text']).toEqual(returnAnalyzedText);
         expect(options.body['language']).toEqual(language);
         expect(options.body['limit_text_characters']).toEqual(limitTextCharacters);
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const features = 'fake_features';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const features = featuresModel;
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           features,
           headers: {
@@ -109,19 +291,16 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstanding.analyze(params);
+        naturalLanguageUnderstandingService.analyze(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['features'];
-
         let err;
         try {
-          await naturalLanguageUnderstanding.analyze({});
+          await naturalLanguageUnderstandingService.analyze({});
         } catch (e) {
           err = e;
         }
@@ -131,10 +310,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['features'];
-
-        const analyzePromise = naturalLanguageUnderstanding.analyze();
+        const analyzePromise = naturalLanguageUnderstandingService.analyze();
         expectToBePromise(analyzePromise);
 
         analyzePromise.catch(err => {
@@ -147,10 +323,10 @@ describe('NaturalLanguageUnderstandingV1', () => {
   describe('listModels', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
+        // Construct the params object for operation listModels
         const params = {};
 
-        const listModelsResult = naturalLanguageUnderstanding.listModels(params);
+        const listModelsResult = naturalLanguageUnderstandingService.listModels(params);
 
         // all methods should return a Promise
         expectToBePromise(listModelsResult);
@@ -164,12 +340,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           headers: {
             Accept: userAccept,
@@ -177,34 +354,27 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstanding.listModels(params);
+        naturalLanguageUnderstandingService.listModels(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        naturalLanguageUnderstanding.listModels({});
+        // invoke the method with no parameters
+        naturalLanguageUnderstandingService.listModels({});
         checkForSuccessfulExecution(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await naturalLanguageUnderstanding.listModels(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
       });
     });
   });
   describe('deleteModel', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const modelId = 'fake_modelId';
+        // Construct the params object for operation deleteModel
+        const modelId = 'testString';
         const params = {
-          modelId,
+          modelId: modelId,
         };
 
-        const deleteModelResult = naturalLanguageUnderstanding.deleteModel(params);
+        const deleteModelResult = naturalLanguageUnderstandingService.deleteModel(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteModelResult);
@@ -218,14 +388,15 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['model_id']).toEqual(modelId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const modelId = 'fake_modelId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const modelId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           modelId,
           headers: {
@@ -234,19 +405,16 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstanding.deleteModel(params);
+        naturalLanguageUnderstandingService.deleteModel(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['modelId'];
-
         let err;
         try {
-          await naturalLanguageUnderstanding.deleteModel({});
+          await naturalLanguageUnderstandingService.deleteModel({});
         } catch (e) {
           err = e;
         }
@@ -256,10 +424,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['modelId'];
-
-        const deleteModelPromise = naturalLanguageUnderstanding.deleteModel();
+        const deleteModelPromise = naturalLanguageUnderstandingService.deleteModel();
         expectToBePromise(deleteModelPromise);
 
         deleteModelPromise.catch(err => {
