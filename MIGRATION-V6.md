@@ -148,7 +148,5 @@ The SDK no longer supports Node version 10, as reflected in the `engines` proper
 - `addGrammar()` parameter `grammarFile` now supports `ReadableStream` and `Buffer`
 
 #### Visual Recognition v4
-- `createCollection()` parameter `trainingStatus` added: Training status information for the collection.
-- `updateCollection()` parameter `trainingStatus` added: Training status information for the collection.
 - Interface `CollectionTrainingStatus` added: Training status information for the collection.
 - Interface `ObjectDetailLocation` added: Defines the location of the bounding box around the object.

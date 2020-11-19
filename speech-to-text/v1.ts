@@ -63,7 +63,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         return Promise.reject<any>(sttError);
       }
     } catch(err) {
-      return Promise.reject<any>(err)
+      return Promise.reject<any>(err);
     }
 
     const options: SpeechToTextV1.WhenCorporaAnalyzedOptions = extend(
@@ -210,7 +210,7 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
               );
             }
         } catch(err) {
-          done(err)
+          done(err);
         }
       }
     );

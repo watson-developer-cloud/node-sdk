@@ -124,8 +124,10 @@ describe('assistant v1 integration', () => {
       const res = await assistant.message(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(res.headers && res.headers != {}).toBe(true);
-      expect(res.result.intents.length > 1).toBe(true);
+      expect(res.headers).toBeDefined();
+      expect(result.intents).toBeDefined();
+      expect(typeof result.intents.length).toBe('number');
+      expect(result.intents.length).toBeGreaterThan(1);
     });
 
     it('dialog_stack with 2017-02-03 version', async () => {
@@ -144,6 +146,8 @@ describe('assistant v1 integration', () => {
       const res = await assistant.message(params);
       const { result } = res || {};
       expect(result).toBeDefined();
+      expect(result.context).toBeDefined();
+      expect(result.context.system).toBeDefined();
       expect(result.context.system.dialog_stack).toEqual([{ dialog_node: 'root' }]);
     });
 
@@ -198,7 +202,7 @@ describe('assistant v1 integration', () => {
       const res = await assistant.listWorkspaces();
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(Object.prototype.toString.call(result.workspaces)).toBe('[object Array]');
+      expect(result.workspaces).toBeInstanceOf(Array);
     });
 
     it('result should return pagination information', async () => {
@@ -256,6 +260,8 @@ describe('assistant v1 integration', () => {
       const res = await assistant.getWorkspace(params);
       const { result } = res || {};
       expect(result).toBeDefined();
+      expect(result.intents).toBeInstanceOf(Array);
+      expect(result.intents.length).toBeGreaterThan(0);
       expect(result.intents[0].intent).toBe('test');
     });
   });
@@ -293,6 +299,8 @@ describe('assistant v1 integration', () => {
       const res = await assistant.listIntents(params);
       const { result } = res || {};
       expect(result).toBeDefined();
+      expect(result.intents).toBeInstanceOf(Array);
+      expect(result.intents.length).toBeGreaterThan(0);
       expect(result.intents[0].intent).toBe(testIntents[0].intent);
       expect(result.intents[0].examples[0].text).toBe(testIntents[0].examples[0].text);
     });
@@ -366,6 +374,8 @@ describe('assistant v1 integration', () => {
       const res = await assistant.listExamples(params);
       const { result } = res || {};
       expect(result).toBeDefined();
+      expect(result.examples).toBeInstanceOf(Array);
+      expect(result.examples.length).toBeGreaterThan(0);
       expect(result.examples[0].text).toBe(testIntentsUpdate.examples[0].text);
     });
 
@@ -520,6 +530,8 @@ describe('assistant v1 integration', () => {
       const res = await assistant.listCounterexamples(params);
       const { result } = res || {};
       expect(result).toBeDefined();
+      expect(result.counterexamples).toBeInstanceOf(Array);
+      expect(result.counterexamples.length).toBeGreaterThan(0);
       expect(result.counterexamples[0].text).toBe(counterexampleText);
     });
     it('should return counterexamples of the workspace with pagination', async () => {

@@ -50,11 +50,9 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
     it('should createClassifier()', async () => {
       const params = {
         name: 'light_dark_test_temporary',
-        lightPositiveExamples: fs.createReadStream(
-          path.join(__dirname, '../resources/light.zip')
-        ),
+        lightPositiveExamples: fs.createReadStream(path.join(__dirname, '../resources/light.zip')),
         darkPositiveExamples: fs.createReadStream(path.join(__dirname, '../resources/dark.zip')),
-      }
+      };
       const res = await visualRecognition.createClassifier(params);
       expect(res).toBeDefined();
       expect(res.classifier_id).toBeDefined();
@@ -63,14 +61,15 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
 
     it('should listClassifiers()', async () => {
       const res = await visualRecognition.listClassifiers();
+      const { result } = res || {};
       expect(result.classifiers).toBeDefined();
       expect(result.classifiers.length).toBeDefined();
     });
 
     it('should getClassifier()', async () => {
       const params = {
-        classifierId: classifier_id
-      }
+        classifierId: classifier_id,
+      };
       const res = await visualRecognition.getClassifier(params);
       const classifier = res.result;
       expect(classifier.classifier_id).toBe(classifier_id);
@@ -84,15 +83,16 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
     });
 
     describe('deletion', () => {
-      const test_training_status = (resolve, reject) => {
+      const test_training_status = async (resolve, reject) => {
         //  This evil recursive function will be used to verify that the classifier
         //  has finished training. 'resolve' and 'reject' are functions from an
         //  enclosing promise (or a follow-on callback for resolve if you prefer)
-        const res = await visualRecognition.getClassifier({ classifierId: classifier_id }, (err, res) => {
-          if (err) {
-            reject(err);
-            return;
-          }
+        const params = {
+          classifierId: classifier_id,
+        };
+        try {
+          const res = await visualRecognition.getClassifier(params);
+
           if (res.status === 'failed') {
             logit(`Classifier ${classifier_id} failed training, ready for deletion.`);
             resolve();
@@ -105,7 +105,10 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
             logit(`Classifier ${classifier_id} is ready.`);
             resolve();
           }
-        });
+        } catch (err) {
+          reject(err);
+          return;
+        }
       };
 
       beforeEach(() => {
@@ -113,7 +116,7 @@ describe.skip('visual_recognition_integration_custom_classifiers @slow', () => {
       });
 
       it('deleteClassifier()', async () => {
-        const res = await visualRecognition.deleteClassifier({ classifier_id: classifier_id }, done);
+        const res = await visualRecognition.deleteClassifier({ classifier_id: classifier_id });
       });
     });
   }); // custom classifier
