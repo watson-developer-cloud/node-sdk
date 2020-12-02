@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201201-153403
  */
  
 
@@ -25,9 +25,12 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Visual Recognition service uses deep learning algorithms to identify scenes and objects in
- * images that you upload to the service. You can create and train a custom classifier to identify subjects that suit
- * your needs.
+ * IBM Watson&trade; Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as
+ * of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.
+ * {: deprecated}
+ *
+ * The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes and objects in images that
+ * you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.
  */
 
 class VisualRecognitionV3 extends BaseService {
@@ -54,6 +57,9 @@ class VisualRecognitionV3 extends BaseService {
    * @returns {VisualRecognitionV3}
    */
   constructor(options: UserOptions) {
+    console.warn(`On 1 December 2021, Visual Recognition will no longer be available. 
+    For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#visual-recognition-deprecation`)
+
     options = options || {};
 
     const requiredParams = ['version'];

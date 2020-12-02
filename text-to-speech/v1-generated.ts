@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201201-153403
  */
  
 
@@ -1247,7 +1247,6 @@ namespace TextToSpeechV1 {
   export namespace CreateCustomModelConstants {
     /** The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice, standard or neural, for its specified language. Omit the parameter to use the the default language, `en-US`. */
     export enum Language {
-      AR_AR = 'ar-AR',
       DE_DE = 'de-DE',
       EN_GB = 'en-GB',
       EN_US = 'en-US',
@@ -1277,7 +1276,6 @@ namespace TextToSpeechV1 {
   export namespace ListCustomModelsConstants {
     /** The language for which custom models that are owned by the requesting credentials are to be returned. Omit the parameter to see all custom models that are owned by the requester. */
     export enum Language {
-      AR_AR = 'ar-AR',
       DE_DE = 'de-DE',
       EN_GB = 'en-GB',
       EN_US = 'en-US',

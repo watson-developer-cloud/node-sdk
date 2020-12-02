@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201201-153403
  */
  
 
@@ -5019,7 +5019,7 @@ namespace DiscoveryV1 {
     /** The **site_collection.path** of the source that these credentials connect to. Only valid, and required, with
      *  a **source_type** of `sharepoint`.
      */
-    site_collection_path?: string;
+    'site_collection.path'?: string;
     /** The **client_secret** of the source that these credentials connect to. Only valid, and required, with a
      *  **credential_type** of `oauth2`. This value is never returned and is only used when creating or modifying
      *  **credentials**.

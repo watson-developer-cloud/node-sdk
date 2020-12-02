@@ -16,9 +16,6 @@
 'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-jest.mock('ibm-cloud-sdk-core', () => ({
-  ...jest.requireActual('ibm-cloud-sdk-core'),
-}));
 const core = require('ibm-cloud-sdk-core');
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
@@ -45,16 +42,8 @@ const createRequestMock = jest.spyOn(assistantService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
-// console.log(core.getAuthenticatorFromEnvironment.toString());
 const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
-
-// const getAuthenticatorMock = Object.defineProperty(
-//   core,
-//   'getAuthenticatorFromEnvironment',
-//   jest.fn(() => new NoAuthAuthenticator())
-// );
-// core['getAuthenticatorFromEnvironment'] = jest.fn(() => new NoAuthAuthenticator());
 
 afterEach(() => {
   createRequestMock.mockClear();

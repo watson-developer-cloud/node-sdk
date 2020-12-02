@@ -468,7 +468,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const assistant = new AssistantV2({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/assistant/api/',
+  serviceUrl: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: '2018-09-19'
 });
 
@@ -498,7 +498,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const assistant = new AssistantV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/assistant/api/',
+  serviceUrl: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: '2018-02-16'
 });
 
@@ -526,7 +526,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const compareComply = new CompareComplyV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/compare-comply/api',
+  serviceUrl: 'https://api.us-south.compare-comply.watson.cloud.ibm.com',
   version: '2018-12-06'
 });
 
@@ -547,7 +547,34 @@ compareComply.compareDocuments(
   });
 ```
 
-### Discovery
+### Discovery v2
+
+Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
+
+```js
+const DiscoveryV2 = require('ibm-watson/discovery/v2');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const discovery = new DiscoveryV2({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
+  serviceUrl: 'https://api.us-south.discovery.watson.cloud.ibm.com',
+  version: '2019-11-22'
+});
+
+discovery.query(
+  {
+    projectId: '<project_id>',
+    collectionId: '<collection_id>',
+    query: 'my_query'
+  })
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+```
+### Discovery v1 
 
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
 
@@ -557,7 +584,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const discovery = new DiscoveryV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/discovery/api/',
+  serviceUrl: 'https://api.us-south.discovery.watson.cloud.ibm.com',
   version: '2017-09-01'
 });
 
@@ -585,7 +612,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const languageTranslator = new LanguageTranslatorV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/language-translator/api/',
+  serviceUrl: 'https://api.us-south.language-translator.watson.cloud.ibm.com',
   version: 'YYYY-MM-DD',
 });
 
@@ -625,7 +652,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const classifier = new NaturalLanguageClassifierV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://gateway.watsonplatform.net/natural-language-classifier/api/'
+  serviceUrl: 'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com'
 });
 
 classifier.classify(
@@ -656,7 +683,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const nlu = new NaturalLanguageUnderstandingV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2018-04-05',
-  serviceUrl: 'https://gateway.watsonplatform.net/natural-language-understanding/api/'
+  serviceUrl: 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com'
 });
 
 nlu.analyze(
@@ -677,6 +704,9 @@ nlu.analyze(
 
 
 ### Personality Insights
+**On 1 December 2021, Personality Insights will no longer be available. 
+    Consider migrating to Watson Natural Language Understanding. 
+    For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation**
 
 Analyze text in English and get a personality profile by using the
 [Personality Insights][personality_insights] service.
@@ -688,7 +718,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const personalityInsights = new PersonalityInsightsV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-10-19',
-  serviceUrl: 'https://gateway.watsonplatform.net/personality-insights/api/'
+  serviceUrl: 'https://api.us-south.personality-insights.watson.cloud.ibm.com'
 });
 
 personalityInsights.profile(
@@ -717,7 +747,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const speechToText = new SpeechToTextV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://stream.watsonplatform.net/speech-to-text/api/'
+  serviceUrl: 'https://api.us-south.speech-to-text.watson.cloud.ibm.com'
 });
 
 const params = {
@@ -752,7 +782,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 const textToSpeech = new TextToSpeechV1({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://stream.watsonplatform.net/text-to-speech/api/'
+  serviceUrl: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com'
 });
 
 const params = {
@@ -800,7 +830,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 const toneAnalyzer = new ToneAnalyzerV3({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   version: '2016-05-19',
-  serviceUrl: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
+  serviceUrl: 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com'
 });
 
 toneAnalyzer.tone(
@@ -816,13 +846,40 @@ toneAnalyzer.tone(
   });
 ```
 
-
-### Visual Recognition
+### Visual Recognition v4
 
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
 
-<img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" />
+```js
+const VisualRecognitionV4 = require('ibm-watson/visual-recognition/v4');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const visualRecognition = new VisualRecognitionV4({
+  serviceUrl: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
+  version: '2019-02-11',
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
+});
+
+const params = {
+  collectionIds: ['<collectionId1','collectionId2','collectionId3'],
+  features: 'objects'
+};
+
+visualRecognition.classify(params)
+  .then(response => {
+    const image = response.result.images[0]
+    const detectedObjects = image.objects.collections[0].objects
+    console.log(detectedObjects)
+  })
+  .catch(err => {
+    console.log(err);
+  });
+```
+### Visual Recognition v3
+
+Use the [Visual Recognition][visual_recognition] service to recognize the
+following picture.
 
 ```js
 const fs = require('fs');
@@ -830,7 +887,7 @@ const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
 const visualRecognition = new VisualRecognitionV3({
-  serviceUrl: '<service_url>',
+  serviceUrl: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
   version: '2018-03-19',
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
 });
