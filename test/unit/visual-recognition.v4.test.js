@@ -227,30 +227,13 @@ describe('VisualRecognitionV4', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // ObjectTrainingStatus
-      const objectTrainingStatusModel = {
-        ready: true,
-        in_progress: true,
-        data_changed: true,
-        latest_failed: true,
-        rscnn_ready: true,
-        description: 'testString',
-      };
-
-      // TrainingStatus
-      const trainingStatusModel = {
-        objects: objectTrainingStatusModel,
-      };
-
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createCollection
         const name = 'testString';
         const description = 'testString';
-        const trainingStatus = trainingStatusModel;
         const params = {
           name: name,
           description: description,
-          trainingStatus: trainingStatus,
         };
 
         const createCollectionResult = visualRecognitionService.createCollection(params);
@@ -269,7 +252,6 @@ describe('VisualRecognitionV4', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['name']).toEqual(name);
         expect(options.body['description']).toEqual(description);
-        expect(options.body['training_status']).toEqual(trainingStatus);
         expect(options.qs['version']).toEqual(service.version);
       });
 
@@ -413,32 +395,15 @@ describe('VisualRecognitionV4', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // ObjectTrainingStatus
-      const objectTrainingStatusModel = {
-        ready: true,
-        in_progress: true,
-        data_changed: true,
-        latest_failed: true,
-        rscnn_ready: true,
-        description: 'testString',
-      };
-
-      // TrainingStatus
-      const trainingStatusModel = {
-        objects: objectTrainingStatusModel,
-      };
-
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateCollection
         const collectionId = 'testString';
         const name = 'testString';
         const description = 'testString';
-        const trainingStatus = trainingStatusModel;
         const params = {
           collectionId: collectionId,
           name: name,
           description: description,
-          trainingStatus: trainingStatus,
         };
 
         const updateCollectionResult = visualRecognitionService.updateCollection(params);
@@ -457,7 +422,6 @@ describe('VisualRecognitionV4', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['name']).toEqual(name);
         expect(options.body['description']).toEqual(description);
-        expect(options.body['training_status']).toEqual(trainingStatus);
         expect(options.qs['version']).toEqual(service.version);
         expect(options.path['collection_id']).toEqual(collectionId);
       });
