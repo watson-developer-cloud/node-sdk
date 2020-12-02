@@ -51,7 +51,7 @@ class SynthesizeStream extends Readable {
    *
    * @param {Options} options
    * @param {Authenticator} options.authenticator - Authenticator to add Authorization header
-   * @param {string} [options.serviceUrl] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
+   * @param {string} [options.serviceUrl] - Base url for service (default='wss://api.us-south.speech-to-text.watson.cloud.ibm.com')
    * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
    * @param {boolean} [options.disableSslVerification] - If true, disable SSL verification for the WebSocket connection (default=false)
    * @param {Agent} [options.agent] - custom http(s) agent, useful for using the sdk behind a proxy (Node only)
@@ -90,7 +90,7 @@ class SynthesizeStream extends Readable {
 
     // synthesize the url
     const url =
-      (options.serviceUrl || 'wss://stream.watsonplatform.net/text-to-speech/api')
+      (options.serviceUrl || 'wss://api.us-south.text-to-speech.watson.cloud.ibm.com')
         .replace(/^http/, 'ws') +
         '/v1/synthesize?' +
         queryString;

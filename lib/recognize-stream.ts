@@ -69,7 +69,7 @@ class RecognizeStream extends Duplex {
    *
    * @param {Options} options
    * @param {Authenticator} options.authenticator - Authenticator to add Authorization header
-   * @param {string} [options.serviceUrl] - Base url for service (default='wss://stream.watsonplatform.net/speech-to-text/api')
+   * @param {string} [options.serviceUrl] - Base url for service (default='wss://api.us-south.speech-to-text.watson.cloud.ibm.com')
    * @param {OutgoingHttpHeaders} [options.headers] - Only works in Node.js, not in browsers. Allows for custom headers to be set, including an Authorization header (preventing the need for auth tokens)
    * @param {boolean} [options.readableObjectMode] - Emit `result` objects instead of string Buffers for the `data` events. Does not affect input (which must be binary)
    * @param {boolean} [options.objectMode] - Alias for readableObjectMode
@@ -152,7 +152,7 @@ class RecognizeStream extends Duplex {
 
     // synthesize the url
     const url =
-      (options.serviceUrl || 'wss://stream.watsonplatform.net/speech-to-text/api'
+      (options.serviceUrl || 'wss://api.us-south.speech-to-text.watson.cloud.ibm.com'
       ).replace(/^http/, 'ws') +
       '/v1/recognize?' +
       queryString;
