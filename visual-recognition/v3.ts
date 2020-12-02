@@ -49,6 +49,9 @@ class VisualRecognitionV3 extends BaseService {
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    console.warn(`On 1 December 2021, Visual Recognition will no longer be available. 
+    For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#visual-recognition-deprecation`)
+    
     if (!options.serviceName) {
       options.serviceName = VisualRecognitionV3.DEFAULT_SERVICE_NAME;
     }
