@@ -184,8 +184,9 @@ describe('VisualRecognitionV3', () => {
         expect(options.formData['images_file'].contentType).toEqual(imagesFileContentType);
         expect(options.formData['url']).toEqual(url);
         expect(options.formData['threshold']).toEqual(threshold);
-        expect(options.formData['owners']).toEqual(owners);
-        expect(options.formData['classifier_ids']).toEqual(classifierIds);
+        // Break in pattern due to owners and classifier_ids converting arrays into csv strings
+        expect(options.formData['owners']).toEqual('testString');
+        expect(options.formData['classifier_ids']).toEqual('testString');
         expect(options.qs['version']).toEqual(service.version);
       });
 
