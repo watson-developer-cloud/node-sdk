@@ -382,31 +382,28 @@ describe('discovery v2 integration @slow', () => {
       expect(result).toBeDefined();
     });
 
-    // For later use
-    // test('analyzeDocument', async () => {
-    //   if (!documentId) {
-    //     return done();
-    //   }
-    //   const params = {
-    //     projectId,
-    //     collectionId,
-    //     file: fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx')),
-    //     filename: 'sampleWord.docx',
-    //   };
+    test(
+      'analyzeDocument',
+      async () => {
+        const params = {
+          projectId,
+          collectionId,
+          file: fs.createReadStream(path.join(__dirname, '../resources/analyzeDocument.json')),
+        };
 
-    //   let res;
-    //   try {
-    //     res = await discovery.analyzeDocument(params);
-    //   } catch (err) {
-    //     expect(err).toBeNull();
-    //     return done();
-    //   }
+        let res;
+        try {
+          res = await discovery.analyzeDocument(params);
+        } catch (err) {
+          expect(err).toBeNull();
+        }
 
-    //   expect(res).toBeDefined();
-    //   const { result } = res || {};
-    //   expect(result).toBeDefined();
-    //   done();
-    // });
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      },
+      EXTENDED_TIMEOUT
+    );
   });
 
   describe('enrichments', () => {
