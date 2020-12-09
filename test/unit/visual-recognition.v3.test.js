@@ -15,7 +15,10 @@
  */
 'use strict';
 
-const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
+// need to import the whole package to mock getAuthenticatorFromEnvironment
+const core = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = core;
+
 const VisualRecognitionV3 = require('../../dist/visual-recognition/v3');
 
 const {
@@ -30,44 +33,138 @@ const {
 const service = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
-  version: '2018-10-18',
+  version: 'testString',
 };
 
-const visualRecognition = new VisualRecognitionV3(service);
-const createRequestMock = jest.spyOn(visualRecognition, 'createRequest');
+const visualRecognitionService = new VisualRecognitionV3(service);
 
 // dont actually create a request
+const createRequestMock = jest.spyOn(visualRecognitionService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
+
+// dont actually construct an authenticator
+const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 afterEach(() => {
   createRequestMock.mockClear();
+  getAuthenticatorMock.mockClear();
+});
+
+// used for the service construction tests
+let requiredGlobals;
+beforeEach(() => {
+  // these are changed when passed into the factory/constructor, so re-init
+  requiredGlobals = {
+    version: 'testString',
+  };
 });
 
 describe('VisualRecognitionV3', () => {
+  describe('the constructor', () => {
+    test('use user-given service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceUrl: 'custom.com',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new VisualRecognitionV3(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe('custom.com');
+    });
+
+    test('use default service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new VisualRecognitionV3(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe(VisualRecognitionV3.DEFAULT_SERVICE_URL);
+    });
+
+    test('use user-given service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceName: 'my-service',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new VisualRecognitionV3(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe('my-service');
+    });
+
+    test('use default service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new VisualRecognitionV3(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe(VisualRecognitionV3.DEFAULT_SERVICE_NAME);
+    });
+
+    test('use user-given service authenticator', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new VisualRecognitionV3(options);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).not.toHaveBeenCalled();
+    });
+
+    test('use environment authenticator', () => {
+      const testInstance = new VisualRecognitionV3(requiredGlobals);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).toHaveBeenCalled();
+    });
+  });
+  describe('service-level tests', () => {
+    describe('positive tests', () => {
+      test('construct service with global params', () => {
+        const serviceObj = new VisualRecognitionV3(service);
+        expect(serviceObj).not.toBeNull();
+        expect(serviceObj.version).toEqual(service.version);
+      });
+    });
+  });
   describe('classify', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const imagesFile = 'fake_imagesFile';
-        const imagesFilename = 'fake_imagesFilename';
-        const imagesFileContentType = 'fake_imagesFileContentType';
-        const url = 'fake_url';
-        const threshold = 'fake_threshold';
-        const owners = 'fake_owners';
-        const classifierIds = 'fake_classifierIds';
-        const acceptLanguage = 'fake_acceptLanguage';
+        // Construct the params object for operation classify
+        const imagesFile = Buffer.from('This is a mock file.');
+        const imagesFilename = 'testString';
+        const imagesFileContentType = 'testString';
+        const url = 'testString';
+        const threshold = 36.0;
+        const owners = ['testString'];
+        const classifierIds = ['testString'];
+        const acceptLanguage = 'en';
         const params = {
-          imagesFile,
-          imagesFilename,
-          imagesFileContentType,
-          url,
-          threshold,
-          owners,
-          classifierIds,
-          acceptLanguage,
+          imagesFile: imagesFile,
+          imagesFilename: imagesFilename,
+          imagesFileContentType: imagesFileContentType,
+          url: url,
+          threshold: threshold,
+          owners: owners,
+          classifierIds: classifierIds,
+          acceptLanguage: acceptLanguage,
         };
 
-        const classifyResult = visualRecognition.classify(params);
+        const classifyResult = visualRecognitionService.classify(params);
 
         // all methods should return a Promise
         expectToBePromise(classifyResult);
@@ -87,14 +184,16 @@ describe('VisualRecognitionV3', () => {
         expect(options.formData['images_file'].contentType).toEqual(imagesFileContentType);
         expect(options.formData['url']).toEqual(url);
         expect(options.formData['threshold']).toEqual(threshold);
-        expect(options.formData['owners']).toEqual(owners);
-        expect(options.formData['classifier_ids']).toEqual(classifierIds);
+        // Break in pattern due to owners and classifier_ids converting arrays into csv strings
+        expect(options.formData['owners']).toEqual('testString');
+        expect(options.formData['classifier_ids']).toEqual('testString');
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           headers: {
             Accept: userAccept,
@@ -102,40 +201,33 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.classify(params);
+        visualRecognitionService.classify(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        visualRecognition.classify({});
+        // invoke the method with no parameters
+        visualRecognitionService.classify({});
         checkForSuccessfulExecution(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await visualRecognition.classify(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
       });
     });
   });
   describe('createClassifier', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const name = 'fake_name';
-        const positiveExamples = { fake: 'fake_positiveExamples' };
-        const negativeExamples = 'fake_negativeExamples';
-        const negativeExamplesFilename = 'fake_negativeExamplesFilename';
+        // Construct the params object for operation createClassifier
+        const name = 'testString';
+        const positiveExamples = { key1: Buffer.from('This is a mock file.') };
+        const negativeExamples = Buffer.from('This is a mock file.');
+        const negativeExamplesFilename = 'testString';
         const params = {
-          name,
-          positiveExamples,
-          negativeExamples,
-          negativeExamplesFilename,
+          name: name,
+          positiveExamples: positiveExamples,
+          negativeExamples: negativeExamples,
+          negativeExamplesFilename: negativeExamplesFilename,
         };
 
-        const createClassifierResult = visualRecognition.createClassifier(params);
+        const createClassifierResult = visualRecognitionService.createClassifier(params);
 
         // all methods should return a Promise
         expectToBePromise(createClassifierResult);
@@ -150,25 +242,26 @@ describe('VisualRecognitionV3', () => {
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.formData['name']).toEqual(name);
-        expect(options.formData['${key}_positive_examples'.replace('${key}', 'fake')].data).toEqual(
-          positiveExamples['fake']
+        expect(options.formData['${key}_positive_examples'.replace('${key}', 'key1')].data).toEqual(
+          positiveExamples['key1']
         );
         expect(
-          options.formData['${key}_positive_examples'.replace('${key}', 'fake')].contentType
+          options.formData['${key}_positive_examples'.replace('${key}', 'key1')].contentType
         ).toEqual('application/octet-stream');
         expect(options.formData['negative_examples'].data).toEqual(negativeExamples);
         expect(options.formData['negative_examples'].filename).toEqual(negativeExamplesFilename);
         expect(options.formData['negative_examples'].contentType).toEqual(
           'application/octet-stream'
         );
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const name = 'fake_name';
-        const positiveExamples = { fake: 'fake_positiveExamples' };
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const name = 'testString';
+        const positiveExamples = { key1: Buffer.from('This is a mock file.') };
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           name,
           positiveExamples,
@@ -178,19 +271,16 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.createClassifier(params);
+        visualRecognitionService.createClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['name', 'positiveExamples'];
-
         let err;
         try {
-          await visualRecognition.createClassifier({});
+          await visualRecognitionService.createClassifier({});
         } catch (e) {
           err = e;
         }
@@ -200,10 +290,7 @@ describe('VisualRecognitionV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['name', 'positiveExamples'];
-
-        const createClassifierPromise = visualRecognition.createClassifier();
+        const createClassifierPromise = visualRecognitionService.createClassifier();
         expectToBePromise(createClassifierPromise);
 
         createClassifierPromise.catch(err => {
@@ -216,13 +303,13 @@ describe('VisualRecognitionV3', () => {
   describe('listClassifiers', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const verbose = 'fake_verbose';
+        // Construct the params object for operation listClassifiers
+        const verbose = true;
         const params = {
-          verbose,
+          verbose: verbose,
         };
 
-        const listClassifiersResult = visualRecognition.listClassifiers(params);
+        const listClassifiersResult = visualRecognitionService.listClassifiers(params);
 
         // all methods should return a Promise
         expectToBePromise(listClassifiersResult);
@@ -236,13 +323,14 @@ describe('VisualRecognitionV3', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['verbose']).toEqual(verbose);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           headers: {
             Accept: userAccept,
@@ -250,34 +338,27 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.listClassifiers(params);
+        visualRecognitionService.listClassifiers(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        visualRecognition.listClassifiers({});
+        // invoke the method with no parameters
+        visualRecognitionService.listClassifiers({});
         checkForSuccessfulExecution(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await visualRecognition.listClassifiers(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
       });
     });
   });
   describe('getClassifier', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
+        // Construct the params object for operation getClassifier
+        const classifierId = 'testString';
         const params = {
-          classifierId,
+          classifierId: classifierId,
         };
 
-        const getClassifierResult = visualRecognition.getClassifier(params);
+        const getClassifierResult = visualRecognitionService.getClassifier(params);
 
         // all methods should return a Promise
         expectToBePromise(getClassifierResult);
@@ -291,14 +372,15 @@ describe('VisualRecognitionV3', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['classifier_id']).toEqual(classifierId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const classifierId = 'fake_classifierId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const classifierId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           classifierId,
           headers: {
@@ -307,19 +389,16 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.getClassifier(params);
+        visualRecognitionService.getClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
         let err;
         try {
-          await visualRecognition.getClassifier({});
+          await visualRecognitionService.getClassifier({});
         } catch (e) {
           err = e;
         }
@@ -329,10 +408,7 @@ describe('VisualRecognitionV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
-        const getClassifierPromise = visualRecognition.getClassifier();
+        const getClassifierPromise = visualRecognitionService.getClassifier();
         expectToBePromise(getClassifierPromise);
 
         getClassifierPromise.catch(err => {
@@ -345,19 +421,19 @@ describe('VisualRecognitionV3', () => {
   describe('updateClassifier', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
-        const positiveExamples = { fake: 'fake_positiveExamples' };
-        const negativeExamples = 'fake_negativeExamples';
-        const negativeExamplesFilename = 'fake_negativeExamplesFilename';
+        // Construct the params object for operation updateClassifier
+        const classifierId = 'testString';
+        const positiveExamples = { key1: Buffer.from('This is a mock file.') };
+        const negativeExamples = Buffer.from('This is a mock file.');
+        const negativeExamplesFilename = 'testString';
         const params = {
-          classifierId,
-          positiveExamples,
-          negativeExamples,
-          negativeExamplesFilename,
+          classifierId: classifierId,
+          positiveExamples: positiveExamples,
+          negativeExamples: negativeExamples,
+          negativeExamplesFilename: negativeExamplesFilename,
         };
 
-        const updateClassifierResult = visualRecognition.updateClassifier(params);
+        const updateClassifierResult = visualRecognitionService.updateClassifier(params);
 
         // all methods should return a Promise
         expectToBePromise(updateClassifierResult);
@@ -371,25 +447,26 @@ describe('VisualRecognitionV3', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['${key}_positive_examples'.replace('${key}', 'fake')].data).toEqual(
-          positiveExamples['fake']
+        expect(options.formData['${key}_positive_examples'.replace('${key}', 'key1')].data).toEqual(
+          positiveExamples['key1']
         );
         expect(
-          options.formData['${key}_positive_examples'.replace('${key}', 'fake')].contentType
+          options.formData['${key}_positive_examples'.replace('${key}', 'key1')].contentType
         ).toEqual('application/octet-stream');
         expect(options.formData['negative_examples'].data).toEqual(negativeExamples);
         expect(options.formData['negative_examples'].filename).toEqual(negativeExamplesFilename);
         expect(options.formData['negative_examples'].contentType).toEqual(
           'application/octet-stream'
         );
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['classifier_id']).toEqual(classifierId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const classifierId = 'fake_classifierId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const classifierId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           classifierId,
           headers: {
@@ -398,19 +475,16 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.updateClassifier(params);
+        visualRecognitionService.updateClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
         let err;
         try {
-          await visualRecognition.updateClassifier({});
+          await visualRecognitionService.updateClassifier({});
         } catch (e) {
           err = e;
         }
@@ -420,10 +494,7 @@ describe('VisualRecognitionV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
-        const updateClassifierPromise = visualRecognition.updateClassifier();
+        const updateClassifierPromise = visualRecognitionService.updateClassifier();
         expectToBePromise(updateClassifierPromise);
 
         updateClassifierPromise.catch(err => {
@@ -436,13 +507,13 @@ describe('VisualRecognitionV3', () => {
   describe('deleteClassifier', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
+        // Construct the params object for operation deleteClassifier
+        const classifierId = 'testString';
         const params = {
-          classifierId,
+          classifierId: classifierId,
         };
 
-        const deleteClassifierResult = visualRecognition.deleteClassifier(params);
+        const deleteClassifierResult = visualRecognitionService.deleteClassifier(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteClassifierResult);
@@ -456,14 +527,15 @@ describe('VisualRecognitionV3', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['classifier_id']).toEqual(classifierId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const classifierId = 'fake_classifierId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const classifierId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           classifierId,
           headers: {
@@ -472,19 +544,16 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.deleteClassifier(params);
+        visualRecognitionService.deleteClassifier(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
         let err;
         try {
-          await visualRecognition.deleteClassifier({});
+          await visualRecognitionService.deleteClassifier({});
         } catch (e) {
           err = e;
         }
@@ -494,10 +563,7 @@ describe('VisualRecognitionV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
-        const deleteClassifierPromise = visualRecognition.deleteClassifier();
+        const deleteClassifierPromise = visualRecognitionService.deleteClassifier();
         expectToBePromise(deleteClassifierPromise);
 
         deleteClassifierPromise.catch(err => {
@@ -510,13 +576,13 @@ describe('VisualRecognitionV3', () => {
   describe('getCoreMlModel', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const classifierId = 'fake_classifierId';
+        // Construct the params object for operation getCoreMlModel
+        const classifierId = 'testString';
         const params = {
-          classifierId,
+          classifierId: classifierId,
         };
 
-        const getCoreMlModelResult = visualRecognition.getCoreMlModel(params);
+        const getCoreMlModelResult = visualRecognitionService.getCoreMlModel(params);
 
         // all methods should return a Promise
         expectToBePromise(getCoreMlModelResult);
@@ -530,15 +596,16 @@ describe('VisualRecognitionV3', () => {
         const expectedAccept = 'application/octet-stream';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['classifier_id']).toEqual(classifierId);
         expect(options.responseType).toBe('stream');
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const classifierId = 'fake_classifierId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const classifierId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           classifierId,
           headers: {
@@ -547,19 +614,16 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.getCoreMlModel(params);
+        visualRecognitionService.getCoreMlModel(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
         let err;
         try {
-          await visualRecognition.getCoreMlModel({});
+          await visualRecognitionService.getCoreMlModel({});
         } catch (e) {
           err = e;
         }
@@ -569,10 +633,7 @@ describe('VisualRecognitionV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['classifierId'];
-
-        const getCoreMlModelPromise = visualRecognition.getCoreMlModel();
+        const getCoreMlModelPromise = visualRecognitionService.getCoreMlModel();
         expectToBePromise(getCoreMlModelPromise);
 
         getCoreMlModelPromise.catch(err => {
@@ -585,13 +646,13 @@ describe('VisualRecognitionV3', () => {
   describe('deleteUserData', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const customerId = 'fake_customerId';
+        // Construct the params object for operation deleteUserData
+        const customerId = 'testString';
         const params = {
-          customerId,
+          customerId: customerId,
         };
 
-        const deleteUserDataResult = visualRecognition.deleteUserData(params);
+        const deleteUserDataResult = visualRecognitionService.deleteUserData(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteUserDataResult);
@@ -605,14 +666,15 @@ describe('VisualRecognitionV3', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['customer_id']).toEqual(customerId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const customerId = 'fake_customerId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const customerId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           customerId,
           headers: {
@@ -621,19 +683,16 @@ describe('VisualRecognitionV3', () => {
           },
         };
 
-        visualRecognition.deleteUserData(params);
+        visualRecognitionService.deleteUserData(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customerId'];
-
         let err;
         try {
-          await visualRecognition.deleteUserData({});
+          await visualRecognitionService.deleteUserData({});
         } catch (e) {
           err = e;
         }
@@ -643,10 +702,7 @@ describe('VisualRecognitionV3', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customerId'];
-
-        const deleteUserDataPromise = visualRecognition.deleteUserData();
+        const deleteUserDataPromise = visualRecognitionService.deleteUserData();
         expectToBePromise(deleteUserDataPromise);
 
         deleteUserDataPromise.catch(err => {

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -35,25 +40,32 @@ class ToneAnalyzerV3 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'tone_analyzer';
 
+  /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+   *  version is `2017-09-21`.
+   */
+  version: string;
+
   /**
    * Construct a ToneAnalyzerV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
-   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
-   * the API version for the date you specify, or the most recent version before that date. Note that you should not
-   * programmatically specify the current date at runtime, in case the API has been updated since your application's
-   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
-   * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
+   * YYYY-MM-DD format. The current version is `2017-09-21`.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {ToneAnalyzerV3}
-   * @throws {Error}
    */
   constructor(options: UserOptions) {
+    options = options || {};
+
+    const requiredParams = ['version'];
+    const missingParams = getMissingParams(options, requiredParams);
+    if (missingParams) {
+      throw missingParams;
+    }
     if (!options.serviceName) {
       options.serviceName = ToneAnalyzerV3.DEFAULT_SERVICE_NAME;
     }
@@ -66,11 +78,7 @@ class ToneAnalyzerV3 extends BaseService {
     if (options.serviceUrl) {
       this.setServiceUrl(options.serviceUrl);
     }
-    // check if 'version' was provided
-    if (typeof this.baseOptions.version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
-    this.baseOptions.qs.version = options.version;
+    this.version = options.version;
   }
 
   /*************************
@@ -121,65 +129,44 @@ class ToneAnalyzerV3 extends BaseService {
    * regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can use
    * different languages for **Content-Language** and **Accept-Language**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>>}
    */
-  public tone(params: ToneAnalyzerV3.ToneParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.ToneAnalysis>): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public tone(params: ToneAnalyzerV3.ToneParams): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['toneInput'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.toneInput;
-      const query = {
-        'sentences': _params.sentences,
-        'tones': _params.tones
-      };
+    const body = _params.toneInput;
+    const query = {
+      'version': this.version,
+      'sentences': _params.sentences,
+      'tones': _params.tones
+    };
 
-      const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'tone');
+    const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'tone');
 
-      const parameters = {
-        options: {
-          url: '/v3/tone',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': _params.contentType,
-            'Content-Language': _params.contentLanguage,
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/tone',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': _params.contentType,
+          'Content-Language': _params.contentLanguage,
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -211,62 +198,45 @@ class ToneAnalyzerV3 extends BaseService {
    * regional variants are treated as their parent language; for example, `en-US` is interpreted as `en`. You can use
    * different languages for **Content-Language** and **Accept-Language**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>>}
    */
-  public toneChat(params: ToneAnalyzerV3.ToneChatParams, callback?: ToneAnalyzerV3.Callback<ToneAnalyzerV3.UtteranceAnalyses>): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public toneChat(params: ToneAnalyzerV3.ToneChatParams): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['utterances'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'utterances': _params.utterances
-      };
+    const body = {
+      'utterances': _params.utterances
+    };
 
-      const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'toneChat');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v3/tone_chat',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Content-Language': _params.contentLanguage,
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'toneChat');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v3/tone_chat',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Language': _params.contentLanguage,
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
 }
@@ -277,7 +247,16 @@ class ToneAnalyzerV3 extends BaseService {
 
 namespace ToneAnalyzerV3 {
 
-  /** An operation response. **/
+  /** Options for the `ToneAnalyzerV3` constructor. */
+  export interface Options extends UserOptions {
+
+    /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+     *  version is `2017-09-21`.
+     */
+    version: string;
+  }
+
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;

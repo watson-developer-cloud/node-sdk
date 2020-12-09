@@ -15,7 +15,10 @@
  */
 'use strict';
 
-const { NoAuthAuthenticator, unitTestUtils } = require('ibm-cloud-sdk-core');
+// need to import the whole package to mock getAuthenticatorFromEnvironment
+const core = require('ibm-cloud-sdk-core');
+const { NoAuthAuthenticator, unitTestUtils } = core;
+
 const DiscoveryV2 = require('../../dist/discovery/v2');
 
 const {
@@ -30,30 +33,124 @@ const {
 const service = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.discovery.watson.cloud.ibm.com',
-  version: '2018-10-18',
+  version: 'testString',
 };
 
-const discovery = new DiscoveryV2(service);
-const createRequestMock = jest.spyOn(discovery, 'createRequest');
+const discoveryService = new DiscoveryV2(service);
 
 // dont actually create a request
+const createRequestMock = jest.spyOn(discoveryService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
+
+// dont actually construct an authenticator
+const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 afterEach(() => {
   createRequestMock.mockClear();
+  getAuthenticatorMock.mockClear();
+});
+
+// used for the service construction tests
+let requiredGlobals;
+beforeEach(() => {
+  // these are changed when passed into the factory/constructor, so re-init
+  requiredGlobals = {
+    version: 'testString',
+  };
 });
 
 describe('DiscoveryV2', () => {
+  describe('the constructor', () => {
+    test('use user-given service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceUrl: 'custom.com',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new DiscoveryV2(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe('custom.com');
+    });
+
+    test('use default service url', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new DiscoveryV2(options);
+
+      expect(testInstance.baseOptions.serviceUrl).toBe(DiscoveryV2.DEFAULT_SERVICE_URL);
+    });
+
+    test('use user-given service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+        serviceName: 'my-service',
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new DiscoveryV2(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe('my-service');
+    });
+
+    test('use default service name', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new DiscoveryV2(options);
+
+      expect(testInstance.baseOptions.serviceName).toBe(DiscoveryV2.DEFAULT_SERVICE_NAME);
+    });
+
+    test('use user-given service authenticator', () => {
+      let options = {
+        authenticator: new NoAuthAuthenticator(),
+      };
+
+      options = Object.assign(options, requiredGlobals);
+
+      const testInstance = new DiscoveryV2(options);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).not.toHaveBeenCalled();
+    });
+
+    test('use environment authenticator', () => {
+      const testInstance = new DiscoveryV2(requiredGlobals);
+
+      expect(testInstance.baseOptions.authenticator).toBeInstanceOf(NoAuthAuthenticator);
+      expect(getAuthenticatorMock).toHaveBeenCalled();
+    });
+  });
+  describe('service-level tests', () => {
+    describe('positive tests', () => {
+      test('construct service with global params', () => {
+        const serviceObj = new DiscoveryV2(service);
+        expect(serviceObj).not.toBeNull();
+        expect(serviceObj.version).toEqual(service.version);
+      });
+    });
+  });
   describe('listCollections', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
+        // Construct the params object for operation listCollections
+        const projectId = 'testString';
         const params = {
-          projectId,
+          projectId: projectId,
         };
 
-        const listCollectionsResult = discovery.listCollections(params);
+        const listCollectionsResult = discoveryService.listCollections(params);
 
         // all methods should return a Promise
         expectToBePromise(listCollectionsResult);
@@ -67,14 +164,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -83,19 +181,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.listCollections(params);
+        discoveryService.listCollections(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.listCollections({});
+          await discoveryService.listCollections({});
         } catch (e) {
           err = e;
         }
@@ -105,10 +200,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const listCollectionsPromise = discovery.listCollections();
+        const listCollectionsPromise = discoveryService.listCollections();
         expectToBePromise(listCollectionsPromise);
 
         listCollectionsPromise.catch(err => {
@@ -120,22 +212,30 @@ describe('DiscoveryV2', () => {
   });
   describe('createCollection', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // CollectionEnrichment
+      const collectionEnrichmentModel = {
+        enrichment_id: 'testString',
+        fields: ['testString'],
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const name = 'fake_name';
-        const description = 'fake_description';
-        const language = 'fake_language';
-        const enrichments = 'fake_enrichments';
+        // Construct the params object for operation createCollection
+        const projectId = 'testString';
+        const name = 'testString';
+        const description = 'testString';
+        const language = 'testString';
+        const enrichments = [collectionEnrichmentModel];
         const params = {
-          projectId,
-          name,
-          description,
-          language,
-          enrichments,
+          projectId: projectId,
+          name: name,
+          description: description,
+          language: language,
+          enrichments: enrichments,
         };
 
-        const createCollectionResult = discovery.createCollection(params);
+        const createCollectionResult = discoveryService.createCollection(params);
 
         // all methods should return a Promise
         expectToBePromise(createCollectionResult);
@@ -153,15 +253,16 @@ describe('DiscoveryV2', () => {
         expect(options.body['description']).toEqual(description);
         expect(options.body['language']).toEqual(language);
         expect(options.body['enrichments']).toEqual(enrichments);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const name = 'fake_name';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const name = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           name,
@@ -171,19 +272,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.createCollection(params);
+        discoveryService.createCollection(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'name'];
-
         let err;
         try {
-          await discovery.createCollection({});
+          await discoveryService.createCollection({});
         } catch (e) {
           err = e;
         }
@@ -193,10 +291,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'name'];
-
-        const createCollectionPromise = discovery.createCollection();
+        const createCollectionPromise = discoveryService.createCollection();
         expectToBePromise(createCollectionPromise);
 
         createCollectionPromise.catch(err => {
@@ -209,15 +304,15 @@ describe('DiscoveryV2', () => {
   describe('getCollection', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
+        // Construct the params object for operation getCollection
+        const projectId = 'testString';
+        const collectionId = 'testString';
         const params = {
-          projectId,
-          collectionId,
+          projectId: projectId,
+          collectionId: collectionId,
         };
 
-        const getCollectionResult = discovery.getCollection(params);
+        const getCollectionResult = discoveryService.getCollection(params);
 
         // all methods should return a Promise
         expectToBePromise(getCollectionResult);
@@ -231,16 +326,17 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['collection_id']).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           collectionId,
@@ -250,19 +346,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.getCollection(params);
+        discoveryService.getCollection(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
         let err;
         try {
-          await discovery.getCollection({});
+          await discoveryService.getCollection({});
         } catch (e) {
           err = e;
         }
@@ -272,10 +365,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
-        const getCollectionPromise = discovery.getCollection();
+        const getCollectionPromise = discoveryService.getCollection();
         expectToBePromise(getCollectionPromise);
 
         getCollectionPromise.catch(err => {
@@ -287,22 +377,30 @@ describe('DiscoveryV2', () => {
   });
   describe('updateCollection', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // CollectionEnrichment
+      const collectionEnrichmentModel = {
+        enrichment_id: 'testString',
+        fields: ['testString'],
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const name = 'fake_name';
-        const description = 'fake_description';
-        const enrichments = 'fake_enrichments';
+        // Construct the params object for operation updateCollection
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const name = 'testString';
+        const description = 'testString';
+        const enrichments = [collectionEnrichmentModel];
         const params = {
-          projectId,
-          collectionId,
-          name,
-          description,
-          enrichments,
+          projectId: projectId,
+          collectionId: collectionId,
+          name: name,
+          description: description,
+          enrichments: enrichments,
         };
 
-        const updateCollectionResult = discovery.updateCollection(params);
+        const updateCollectionResult = discoveryService.updateCollection(params);
 
         // all methods should return a Promise
         expectToBePromise(updateCollectionResult);
@@ -319,16 +417,17 @@ describe('DiscoveryV2', () => {
         expect(options.body['name']).toEqual(name);
         expect(options.body['description']).toEqual(description);
         expect(options.body['enrichments']).toEqual(enrichments);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['collection_id']).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           collectionId,
@@ -338,19 +437,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.updateCollection(params);
+        discoveryService.updateCollection(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
         let err;
         try {
-          await discovery.updateCollection({});
+          await discoveryService.updateCollection({});
         } catch (e) {
           err = e;
         }
@@ -360,10 +456,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
-        const updateCollectionPromise = discovery.updateCollection();
+        const updateCollectionPromise = discoveryService.updateCollection();
         expectToBePromise(updateCollectionPromise);
 
         updateCollectionPromise.catch(err => {
@@ -376,15 +469,15 @@ describe('DiscoveryV2', () => {
   describe('deleteCollection', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
+        // Construct the params object for operation deleteCollection
+        const projectId = 'testString';
+        const collectionId = 'testString';
         const params = {
-          projectId,
-          collectionId,
+          projectId: projectId,
+          collectionId: collectionId,
         };
 
-        const deleteCollectionResult = discovery.deleteCollection(params);
+        const deleteCollectionResult = discoveryService.deleteCollection(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteCollectionResult);
@@ -402,16 +495,17 @@ describe('DiscoveryV2', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['collection_id']).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           collectionId,
@@ -421,19 +515,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.deleteCollection(params);
+        discoveryService.deleteCollection(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
         let err;
         try {
-          await discovery.deleteCollection({});
+          await discoveryService.deleteCollection({});
         } catch (e) {
           err = e;
         }
@@ -443,10 +534,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
-        const deleteCollectionPromise = discovery.deleteCollection();
+        const deleteCollectionPromise = discoveryService.deleteCollection();
         expectToBePromise(deleteCollectionPromise);
 
         deleteCollectionPromise.catch(err => {
@@ -458,42 +546,66 @@ describe('DiscoveryV2', () => {
   });
   describe('query', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // QueryLargeTableResults
+      const queryLargeTableResultsModel = {
+        enabled: true,
+        count: 38,
+      };
+
+      // QueryLargeSuggestedRefinements
+      const queryLargeSuggestedRefinementsModel = {
+        enabled: true,
+        count: 1,
+      };
+
+      // QueryLargePassages
+      const queryLargePassagesModel = {
+        enabled: true,
+        per_document: true,
+        max_per_document: 38,
+        fields: ['testString'],
+        count: 100,
+        characters: 50,
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionIds = 'fake_collectionIds';
-        const filter = 'fake_filter';
-        const query = 'fake_query';
-        const naturalLanguageQuery = 'fake_naturalLanguageQuery';
-        const aggregation = 'fake_aggregation';
-        const count = 'fake_count';
-        const _return = 'fake__return';
-        const offset = 'fake_offset';
-        const sort = 'fake_sort';
-        const highlight = 'fake_highlight';
-        const spellingSuggestions = 'fake_spellingSuggestions';
-        const tableResults = 'fake_tableResults';
-        const suggestedRefinements = 'fake_suggestedRefinements';
-        const passages = 'fake_passages';
+        // Construct the params object for operation query
+        const projectId = 'testString';
+        const collectionIds = ['testString'];
+        const filter = 'testString';
+        const query = 'testString';
+        const naturalLanguageQuery = 'testString';
+        const aggregation = 'testString';
+        const count = 38;
+        const _return = ['testString'];
+        const offset = 38;
+        const sort = 'testString';
+        const highlight = true;
+        const spellingSuggestions = true;
+        const tableResults = queryLargeTableResultsModel;
+        const suggestedRefinements = queryLargeSuggestedRefinementsModel;
+        const passages = queryLargePassagesModel;
         const params = {
-          projectId,
-          collectionIds,
-          filter,
-          query,
-          naturalLanguageQuery,
-          aggregation,
-          count,
-          _return,
-          offset,
-          sort,
-          highlight,
-          spellingSuggestions,
-          tableResults,
-          suggestedRefinements,
-          passages,
+          projectId: projectId,
+          collectionIds: collectionIds,
+          filter: filter,
+          query: query,
+          naturalLanguageQuery: naturalLanguageQuery,
+          aggregation: aggregation,
+          count: count,
+          _return: _return,
+          offset: offset,
+          sort: sort,
+          highlight: highlight,
+          spellingSuggestions: spellingSuggestions,
+          tableResults: tableResults,
+          suggestedRefinements: suggestedRefinements,
+          passages: passages,
         };
 
-        const queryResult = discovery.query(params);
+        const queryResult = discoveryService.query(params);
 
         // all methods should return a Promise
         expectToBePromise(queryResult);
@@ -521,14 +633,15 @@ describe('DiscoveryV2', () => {
         expect(options.body['table_results']).toEqual(tableResults);
         expect(options.body['suggested_refinements']).toEqual(suggestedRefinements);
         expect(options.body['passages']).toEqual(passages);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -537,19 +650,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.query(params);
+        discoveryService.query(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.query({});
+          await discoveryService.query({});
         } catch (e) {
           err = e;
         }
@@ -559,10 +669,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const queryPromise = discovery.query();
+        const queryPromise = discoveryService.query();
         expectToBePromise(queryPromise);
 
         queryPromise.catch(err => {
@@ -575,21 +682,21 @@ describe('DiscoveryV2', () => {
   describe('getAutocompletion', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const prefix = 'fake_prefix';
-        const collectionIds = 'fake_collectionIds';
-        const field = 'fake_field';
-        const count = 'fake_count';
+        // Construct the params object for operation getAutocompletion
+        const projectId = 'testString';
+        const prefix = 'testString';
+        const collectionIds = ['testString'];
+        const field = 'testString';
+        const count = 38;
         const params = {
-          projectId,
-          prefix,
-          collectionIds,
-          field,
-          count,
+          projectId: projectId,
+          prefix: prefix,
+          collectionIds: collectionIds,
+          field: field,
+          count: count,
         };
 
-        const getAutocompletionResult = discovery.getAutocompletion(params);
+        const getAutocompletionResult = discoveryService.getAutocompletion(params);
 
         // all methods should return a Promise
         expectToBePromise(getAutocompletionResult);
@@ -603,6 +710,7 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['prefix']).toEqual(prefix);
         expect(options.qs['collection_ids']).toEqual(collectionIds);
         expect(options.qs['field']).toEqual(field);
@@ -612,10 +720,10 @@ describe('DiscoveryV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const prefix = 'fake_prefix';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const prefix = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           prefix,
@@ -625,19 +733,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.getAutocompletion(params);
+        discoveryService.getAutocompletion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'prefix'];
-
         let err;
         try {
-          await discovery.getAutocompletion({});
+          await discoveryService.getAutocompletion({});
         } catch (e) {
           err = e;
         }
@@ -647,10 +752,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'prefix'];
-
-        const getAutocompletionPromise = discovery.getAutocompletion();
+        const getAutocompletionPromise = discoveryService.getAutocompletion();
         expectToBePromise(getAutocompletionPromise);
 
         getAutocompletionPromise.catch(err => {
@@ -663,23 +765,23 @@ describe('DiscoveryV2', () => {
   describe('queryNotices', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const filter = 'fake_filter';
-        const query = 'fake_query';
-        const naturalLanguageQuery = 'fake_naturalLanguageQuery';
-        const count = 'fake_count';
-        const offset = 'fake_offset';
+        // Construct the params object for operation queryNotices
+        const projectId = 'testString';
+        const filter = 'testString';
+        const query = 'testString';
+        const naturalLanguageQuery = 'testString';
+        const count = 38;
+        const offset = 38;
         const params = {
-          projectId,
-          filter,
-          query,
-          naturalLanguageQuery,
-          count,
-          offset,
+          projectId: projectId,
+          filter: filter,
+          query: query,
+          naturalLanguageQuery: naturalLanguageQuery,
+          count: count,
+          offset: offset,
         };
 
-        const queryNoticesResult = discovery.queryNotices(params);
+        const queryNoticesResult = discoveryService.queryNotices(params);
 
         // all methods should return a Promise
         expectToBePromise(queryNoticesResult);
@@ -693,6 +795,7 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['filter']).toEqual(filter);
         expect(options.qs['query']).toEqual(query);
         expect(options.qs['natural_language_query']).toEqual(naturalLanguageQuery);
@@ -703,9 +806,9 @@ describe('DiscoveryV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -714,19 +817,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.queryNotices(params);
+        discoveryService.queryNotices(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.queryNotices({});
+          await discoveryService.queryNotices({});
         } catch (e) {
           err = e;
         }
@@ -736,10 +836,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const queryNoticesPromise = discovery.queryNotices();
+        const queryNoticesPromise = discoveryService.queryNotices();
         expectToBePromise(queryNoticesPromise);
 
         queryNoticesPromise.catch(err => {
@@ -752,15 +849,15 @@ describe('DiscoveryV2', () => {
   describe('listFields', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionIds = 'fake_collectionIds';
+        // Construct the params object for operation listFields
+        const projectId = 'testString';
+        const collectionIds = ['testString'];
         const params = {
-          projectId,
-          collectionIds,
+          projectId: projectId,
+          collectionIds: collectionIds,
         };
 
-        const listFieldsResult = discovery.listFields(params);
+        const listFieldsResult = discoveryService.listFields(params);
 
         // all methods should return a Promise
         expectToBePromise(listFieldsResult);
@@ -774,15 +871,16 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['collection_ids']).toEqual(collectionIds);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -791,19 +889,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.listFields(params);
+        discoveryService.listFields(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.listFields({});
+          await discoveryService.listFields({});
         } catch (e) {
           err = e;
         }
@@ -813,10 +908,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const listFieldsPromise = discovery.listFields();
+        const listFieldsPromise = discoveryService.listFields();
         expectToBePromise(listFieldsPromise);
 
         listFieldsPromise.catch(err => {
@@ -829,13 +921,13 @@ describe('DiscoveryV2', () => {
   describe('getComponentSettings', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
+        // Construct the params object for operation getComponentSettings
+        const projectId = 'testString';
         const params = {
-          projectId,
+          projectId: projectId,
         };
 
-        const getComponentSettingsResult = discovery.getComponentSettings(params);
+        const getComponentSettingsResult = discoveryService.getComponentSettings(params);
 
         // all methods should return a Promise
         expectToBePromise(getComponentSettingsResult);
@@ -849,14 +941,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -865,19 +958,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.getComponentSettings(params);
+        discoveryService.getComponentSettings(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.getComponentSettings({});
+          await discoveryService.getComponentSettings({});
         } catch (e) {
           err = e;
         }
@@ -887,10 +977,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const getComponentSettingsPromise = discovery.getComponentSettings();
+        const getComponentSettingsPromise = discoveryService.getComponentSettings();
         expectToBePromise(getComponentSettingsPromise);
 
         getComponentSettingsPromise.catch(err => {
@@ -903,25 +990,25 @@ describe('DiscoveryV2', () => {
   describe('addDocument', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const file = 'fake_file';
-        const filename = 'fake_filename';
-        const fileContentType = 'fake_fileContentType';
-        const metadata = 'fake_metadata';
-        const xWatsonDiscoveryForce = 'fake_xWatsonDiscoveryForce';
+        // Construct the params object for operation addDocument
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const file = Buffer.from('This is a mock file.');
+        const filename = 'testString';
+        const fileContentType = 'application/json';
+        const metadata = 'testString';
+        const xWatsonDiscoveryForce = true;
         const params = {
-          projectId,
-          collectionId,
-          file,
-          filename,
-          fileContentType,
-          metadata,
-          xWatsonDiscoveryForce,
+          projectId: projectId,
+          collectionId: collectionId,
+          file: file,
+          filename: filename,
+          fileContentType: fileContentType,
+          metadata: metadata,
+          xWatsonDiscoveryForce: xWatsonDiscoveryForce,
         };
 
-        const addDocumentResult = discovery.addDocument(params);
+        const addDocumentResult = discoveryService.addDocument(params);
 
         // all methods should return a Promise
         expectToBePromise(addDocumentResult);
@@ -944,16 +1031,17 @@ describe('DiscoveryV2', () => {
         expect(options.formData['file'].filename).toEqual(filename);
         expect(options.formData['file'].contentType).toEqual(fileContentType);
         expect(options.formData['metadata']).toEqual(metadata);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['collection_id']).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           collectionId,
@@ -963,19 +1051,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.addDocument(params);
+        discoveryService.addDocument(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
         let err;
         try {
-          await discovery.addDocument({});
+          await discoveryService.addDocument({});
         } catch (e) {
           err = e;
         }
@@ -985,10 +1070,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId'];
-
-        const addDocumentPromise = discovery.addDocument();
+        const addDocumentPromise = discoveryService.addDocument();
         expectToBePromise(addDocumentPromise);
 
         addDocumentPromise.catch(err => {
@@ -1001,27 +1083,27 @@ describe('DiscoveryV2', () => {
   describe('updateDocument', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const documentId = 'fake_documentId';
-        const file = 'fake_file';
-        const filename = 'fake_filename';
-        const fileContentType = 'fake_fileContentType';
-        const metadata = 'fake_metadata';
-        const xWatsonDiscoveryForce = 'fake_xWatsonDiscoveryForce';
+        // Construct the params object for operation updateDocument
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const documentId = 'testString';
+        const file = Buffer.from('This is a mock file.');
+        const filename = 'testString';
+        const fileContentType = 'application/json';
+        const metadata = 'testString';
+        const xWatsonDiscoveryForce = true;
         const params = {
-          projectId,
-          collectionId,
-          documentId,
-          file,
-          filename,
-          fileContentType,
-          metadata,
-          xWatsonDiscoveryForce,
+          projectId: projectId,
+          collectionId: collectionId,
+          documentId: documentId,
+          file: file,
+          filename: filename,
+          fileContentType: fileContentType,
+          metadata: metadata,
+          xWatsonDiscoveryForce: xWatsonDiscoveryForce,
         };
 
-        const updateDocumentResult = discovery.updateDocument(params);
+        const updateDocumentResult = discoveryService.updateDocument(params);
 
         // all methods should return a Promise
         expectToBePromise(updateDocumentResult);
@@ -1044,6 +1126,7 @@ describe('DiscoveryV2', () => {
         expect(options.formData['file'].filename).toEqual(filename);
         expect(options.formData['file'].contentType).toEqual(fileContentType);
         expect(options.formData['metadata']).toEqual(metadata);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['collection_id']).toEqual(collectionId);
         expect(options.path['document_id']).toEqual(documentId);
@@ -1051,11 +1134,11 @@ describe('DiscoveryV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const documentId = 'fake_documentId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const documentId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           collectionId,
@@ -1066,19 +1149,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.updateDocument(params);
+        discoveryService.updateDocument(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId', 'documentId'];
-
         let err;
         try {
-          await discovery.updateDocument({});
+          await discoveryService.updateDocument({});
         } catch (e) {
           err = e;
         }
@@ -1088,10 +1168,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId', 'documentId'];
-
-        const updateDocumentPromise = discovery.updateDocument();
+        const updateDocumentPromise = discoveryService.updateDocument();
         expectToBePromise(updateDocumentPromise);
 
         updateDocumentPromise.catch(err => {
@@ -1104,19 +1181,19 @@ describe('DiscoveryV2', () => {
   describe('deleteDocument', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const documentId = 'fake_documentId';
-        const xWatsonDiscoveryForce = 'fake_xWatsonDiscoveryForce';
+        // Construct the params object for operation deleteDocument
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const documentId = 'testString';
+        const xWatsonDiscoveryForce = true;
         const params = {
-          projectId,
-          collectionId,
-          documentId,
-          xWatsonDiscoveryForce,
+          projectId: projectId,
+          collectionId: collectionId,
+          documentId: documentId,
+          xWatsonDiscoveryForce: xWatsonDiscoveryForce,
         };
 
-        const deleteDocumentResult = discovery.deleteDocument(params);
+        const deleteDocumentResult = discoveryService.deleteDocument(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteDocumentResult);
@@ -1135,6 +1212,7 @@ describe('DiscoveryV2', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'X-Watson-Discovery-Force', xWatsonDiscoveryForce);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['collection_id']).toEqual(collectionId);
         expect(options.path['document_id']).toEqual(documentId);
@@ -1142,11 +1220,11 @@ describe('DiscoveryV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const collectionId = 'fake_collectionId';
-        const documentId = 'fake_documentId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const documentId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           collectionId,
@@ -1157,19 +1235,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.deleteDocument(params);
+        discoveryService.deleteDocument(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId', 'documentId'];
-
         let err;
         try {
-          await discovery.deleteDocument({});
+          await discoveryService.deleteDocument({});
         } catch (e) {
           err = e;
         }
@@ -1179,10 +1254,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'collectionId', 'documentId'];
-
-        const deleteDocumentPromise = discovery.deleteDocument();
+        const deleteDocumentPromise = discoveryService.deleteDocument();
         expectToBePromise(deleteDocumentPromise);
 
         deleteDocumentPromise.catch(err => {
@@ -1195,13 +1267,13 @@ describe('DiscoveryV2', () => {
   describe('listTrainingQueries', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
+        // Construct the params object for operation listTrainingQueries
+        const projectId = 'testString';
         const params = {
-          projectId,
+          projectId: projectId,
         };
 
-        const listTrainingQueriesResult = discovery.listTrainingQueries(params);
+        const listTrainingQueriesResult = discoveryService.listTrainingQueries(params);
 
         // all methods should return a Promise
         expectToBePromise(listTrainingQueriesResult);
@@ -1215,14 +1287,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -1231,19 +1304,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.listTrainingQueries(params);
+        discoveryService.listTrainingQueries(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.listTrainingQueries({});
+          await discoveryService.listTrainingQueries({});
         } catch (e) {
           err = e;
         }
@@ -1253,10 +1323,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const listTrainingQueriesPromise = discovery.listTrainingQueries();
+        const listTrainingQueriesPromise = discoveryService.listTrainingQueries();
         expectToBePromise(listTrainingQueriesPromise);
 
         listTrainingQueriesPromise.catch(err => {
@@ -1269,13 +1336,13 @@ describe('DiscoveryV2', () => {
   describe('deleteTrainingQueries', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
+        // Construct the params object for operation deleteTrainingQueries
+        const projectId = 'testString';
         const params = {
-          projectId,
+          projectId: projectId,
         };
 
-        const deleteTrainingQueriesResult = discovery.deleteTrainingQueries(params);
+        const deleteTrainingQueriesResult = discoveryService.deleteTrainingQueries(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteTrainingQueriesResult);
@@ -1289,14 +1356,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -1305,19 +1373,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.deleteTrainingQueries(params);
+        discoveryService.deleteTrainingQueries(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.deleteTrainingQueries({});
+          await discoveryService.deleteTrainingQueries({});
         } catch (e) {
           err = e;
         }
@@ -1327,10 +1392,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const deleteTrainingQueriesPromise = discovery.deleteTrainingQueries();
+        const deleteTrainingQueriesPromise = discoveryService.deleteTrainingQueries();
         expectToBePromise(deleteTrainingQueriesPromise);
 
         deleteTrainingQueriesPromise.catch(err => {
@@ -1342,20 +1404,29 @@ describe('DiscoveryV2', () => {
   });
   describe('createTrainingQuery', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // TrainingExample
+      const trainingExampleModel = {
+        document_id: 'testString',
+        collection_id: 'testString',
+        relevance: 38,
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const naturalLanguageQuery = 'fake_naturalLanguageQuery';
-        const examples = 'fake_examples';
-        const filter = 'fake_filter';
+        // Construct the params object for operation createTrainingQuery
+        const projectId = 'testString';
+        const naturalLanguageQuery = 'testString';
+        const examples = [trainingExampleModel];
+        const filter = 'testString';
         const params = {
-          projectId,
-          naturalLanguageQuery,
-          examples,
-          filter,
+          projectId: projectId,
+          naturalLanguageQuery: naturalLanguageQuery,
+          examples: examples,
+          filter: filter,
         };
 
-        const createTrainingQueryResult = discovery.createTrainingQuery(params);
+        const createTrainingQueryResult = discoveryService.createTrainingQuery(params);
 
         // all methods should return a Promise
         expectToBePromise(createTrainingQueryResult);
@@ -1372,16 +1443,17 @@ describe('DiscoveryV2', () => {
         expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
         expect(options.body['examples']).toEqual(examples);
         expect(options.body['filter']).toEqual(filter);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const naturalLanguageQuery = 'fake_naturalLanguageQuery';
-        const examples = 'fake_examples';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const naturalLanguageQuery = 'testString';
+        const examples = [trainingExampleModel];
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           naturalLanguageQuery,
@@ -1392,19 +1464,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.createTrainingQuery(params);
+        discoveryService.createTrainingQuery(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
-
         let err;
         try {
-          await discovery.createTrainingQuery({});
+          await discoveryService.createTrainingQuery({});
         } catch (e) {
           err = e;
         }
@@ -1414,10 +1483,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
-
-        const createTrainingQueryPromise = discovery.createTrainingQuery();
+        const createTrainingQueryPromise = discoveryService.createTrainingQuery();
         expectToBePromise(createTrainingQueryPromise);
 
         createTrainingQueryPromise.catch(err => {
@@ -1430,15 +1496,15 @@ describe('DiscoveryV2', () => {
   describe('getTrainingQuery', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const queryId = 'fake_queryId';
+        // Construct the params object for operation getTrainingQuery
+        const projectId = 'testString';
+        const queryId = 'testString';
         const params = {
-          projectId,
-          queryId,
+          projectId: projectId,
+          queryId: queryId,
         };
 
-        const getTrainingQueryResult = discovery.getTrainingQuery(params);
+        const getTrainingQueryResult = discoveryService.getTrainingQuery(params);
 
         // all methods should return a Promise
         expectToBePromise(getTrainingQueryResult);
@@ -1456,16 +1522,17 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['query_id']).toEqual(queryId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const queryId = 'fake_queryId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const queryId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           queryId,
@@ -1475,19 +1542,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.getTrainingQuery(params);
+        discoveryService.getTrainingQuery(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'queryId'];
-
         let err;
         try {
-          await discovery.getTrainingQuery({});
+          await discoveryService.getTrainingQuery({});
         } catch (e) {
           err = e;
         }
@@ -1497,10 +1561,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'queryId'];
-
-        const getTrainingQueryPromise = discovery.getTrainingQuery();
+        const getTrainingQueryPromise = discoveryService.getTrainingQuery();
         expectToBePromise(getTrainingQueryPromise);
 
         getTrainingQueryPromise.catch(err => {
@@ -1512,22 +1573,31 @@ describe('DiscoveryV2', () => {
   });
   describe('updateTrainingQuery', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // TrainingExample
+      const trainingExampleModel = {
+        document_id: 'testString',
+        collection_id: 'testString',
+        relevance: 38,
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const queryId = 'fake_queryId';
-        const naturalLanguageQuery = 'fake_naturalLanguageQuery';
-        const examples = 'fake_examples';
-        const filter = 'fake_filter';
+        // Construct the params object for operation updateTrainingQuery
+        const projectId = 'testString';
+        const queryId = 'testString';
+        const naturalLanguageQuery = 'testString';
+        const examples = [trainingExampleModel];
+        const filter = 'testString';
         const params = {
-          projectId,
-          queryId,
-          naturalLanguageQuery,
-          examples,
-          filter,
+          projectId: projectId,
+          queryId: queryId,
+          naturalLanguageQuery: naturalLanguageQuery,
+          examples: examples,
+          filter: filter,
         };
 
-        const updateTrainingQueryResult = discovery.updateTrainingQuery(params);
+        const updateTrainingQueryResult = discoveryService.updateTrainingQuery(params);
 
         // all methods should return a Promise
         expectToBePromise(updateTrainingQueryResult);
@@ -1548,18 +1618,19 @@ describe('DiscoveryV2', () => {
         expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
         expect(options.body['examples']).toEqual(examples);
         expect(options.body['filter']).toEqual(filter);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['query_id']).toEqual(queryId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const queryId = 'fake_queryId';
-        const naturalLanguageQuery = 'fake_naturalLanguageQuery';
-        const examples = 'fake_examples';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const queryId = 'testString';
+        const naturalLanguageQuery = 'testString';
+        const examples = [trainingExampleModel];
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           queryId,
@@ -1571,19 +1642,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.updateTrainingQuery(params);
+        discoveryService.updateTrainingQuery(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
-
         let err;
         try {
-          await discovery.updateTrainingQuery({});
+          await discoveryService.updateTrainingQuery({});
         } catch (e) {
           err = e;
         }
@@ -1593,10 +1661,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
-
-        const updateTrainingQueryPromise = discovery.updateTrainingQuery();
+        const updateTrainingQueryPromise = discoveryService.updateTrainingQuery();
         expectToBePromise(updateTrainingQueryPromise);
 
         updateTrainingQueryPromise.catch(err => {
@@ -1606,16 +1671,106 @@ describe('DiscoveryV2', () => {
       });
     });
   });
+  describe('analyzeDocument', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation analyzeDocument
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const file = Buffer.from('This is a mock file.');
+        const filename = 'testString';
+        const fileContentType = 'application/json';
+        const metadata = 'testString';
+        const params = {
+          projectId: projectId,
+          collectionId: collectionId,
+          file: file,
+          filename: filename,
+          fileContentType: fileContentType,
+          metadata: metadata,
+        };
+
+        const analyzeDocumentResult = discoveryService.analyzeDocument(params);
+
+        // all methods should return a Promise
+        expectToBePromise(analyzeDocumentResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/collections/{collection_id}/analyze',
+          'POST'
+        );
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['file'].data).toEqual(file);
+        expect(options.formData['file'].filename).toEqual(filename);
+        expect(options.formData['file'].contentType).toEqual(fileContentType);
+        expect(options.formData['metadata']).toEqual(metadata);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['project_id']).toEqual(projectId);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          projectId,
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        discoveryService.analyzeDocument(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await discoveryService.analyzeDocument({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const analyzeDocumentPromise = discoveryService.analyzeDocument();
+        expectToBePromise(analyzeDocumentPromise);
+
+        analyzeDocumentPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
   describe('listEnrichments', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
+        // Construct the params object for operation listEnrichments
+        const projectId = 'testString';
         const params = {
-          projectId,
+          projectId: projectId,
         };
 
-        const listEnrichmentsResult = discovery.listEnrichments(params);
+        const listEnrichmentsResult = discoveryService.listEnrichments(params);
 
         // all methods should return a Promise
         expectToBePromise(listEnrichmentsResult);
@@ -1629,14 +1784,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -1645,19 +1801,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.listEnrichments(params);
+        discoveryService.listEnrichments(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.listEnrichments({});
+          await discoveryService.listEnrichments({});
         } catch (e) {
           err = e;
         }
@@ -1667,10 +1820,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const listEnrichmentsPromise = discovery.listEnrichments();
+        const listEnrichmentsPromise = discoveryService.listEnrichments();
         expectToBePromise(listEnrichmentsPromise);
 
         listEnrichmentsPromise.catch(err => {
@@ -1682,18 +1832,36 @@ describe('DiscoveryV2', () => {
   });
   describe('createEnrichment', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // EnrichmentOptions
+      const enrichmentOptionsModel = {
+        languages: ['testString'],
+        entity_type: 'testString',
+        regular_expression: 'testString',
+        result_field: 'testString',
+      };
+
+      // CreateEnrichment
+      const createEnrichmentModel = {
+        name: 'testString',
+        description: 'testString',
+        type: 'dictionary',
+        options: enrichmentOptionsModel,
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const enrichment = 'fake_enrichment';
-        const file = 'fake_file';
+        // Construct the params object for operation createEnrichment
+        const projectId = 'testString';
+        const enrichment = createEnrichmentModel;
+        const file = Buffer.from('This is a mock file.');
         const params = {
-          projectId,
-          enrichment,
-          file,
+          projectId: projectId,
+          enrichment: enrichment,
+          file: file,
         };
 
-        const createEnrichmentResult = discovery.createEnrichment(params);
+        const createEnrichmentResult = discoveryService.createEnrichment(params);
 
         // all methods should return a Promise
         expectToBePromise(createEnrichmentResult);
@@ -1710,15 +1878,16 @@ describe('DiscoveryV2', () => {
         expect(options.formData['enrichment']).toEqual(enrichment);
         expect(options.formData['file'].data).toEqual(file);
         expect(options.formData['file'].contentType).toEqual('application/octet-stream');
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const enrichment = 'fake_enrichment';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const enrichment = createEnrichmentModel;
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           enrichment,
@@ -1728,19 +1897,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.createEnrichment(params);
+        discoveryService.createEnrichment(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichment'];
-
         let err;
         try {
-          await discovery.createEnrichment({});
+          await discoveryService.createEnrichment({});
         } catch (e) {
           err = e;
         }
@@ -1750,10 +1916,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichment'];
-
-        const createEnrichmentPromise = discovery.createEnrichment();
+        const createEnrichmentPromise = discoveryService.createEnrichment();
         expectToBePromise(createEnrichmentPromise);
 
         createEnrichmentPromise.catch(err => {
@@ -1766,15 +1929,15 @@ describe('DiscoveryV2', () => {
   describe('getEnrichment', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const enrichmentId = 'fake_enrichmentId';
+        // Construct the params object for operation getEnrichment
+        const projectId = 'testString';
+        const enrichmentId = 'testString';
         const params = {
-          projectId,
-          enrichmentId,
+          projectId: projectId,
+          enrichmentId: enrichmentId,
         };
 
-        const getEnrichmentResult = discovery.getEnrichment(params);
+        const getEnrichmentResult = discoveryService.getEnrichment(params);
 
         // all methods should return a Promise
         expectToBePromise(getEnrichmentResult);
@@ -1788,16 +1951,17 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['enrichment_id']).toEqual(enrichmentId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const enrichmentId = 'fake_enrichmentId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const enrichmentId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           enrichmentId,
@@ -1807,19 +1971,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.getEnrichment(params);
+        discoveryService.getEnrichment(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId'];
-
         let err;
         try {
-          await discovery.getEnrichment({});
+          await discoveryService.getEnrichment({});
         } catch (e) {
           err = e;
         }
@@ -1829,10 +1990,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId'];
-
-        const getEnrichmentPromise = discovery.getEnrichment();
+        const getEnrichmentPromise = discoveryService.getEnrichment();
         expectToBePromise(getEnrichmentPromise);
 
         getEnrichmentPromise.catch(err => {
@@ -1845,19 +2003,19 @@ describe('DiscoveryV2', () => {
   describe('updateEnrichment', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const enrichmentId = 'fake_enrichmentId';
-        const name = 'fake_name';
-        const description = 'fake_description';
+        // Construct the params object for operation updateEnrichment
+        const projectId = 'testString';
+        const enrichmentId = 'testString';
+        const name = 'testString';
+        const description = 'testString';
         const params = {
-          projectId,
-          enrichmentId,
-          name,
-          description,
+          projectId: projectId,
+          enrichmentId: enrichmentId,
+          name: name,
+          description: description,
         };
 
-        const updateEnrichmentResult = discovery.updateEnrichment(params);
+        const updateEnrichmentResult = discoveryService.updateEnrichment(params);
 
         // all methods should return a Promise
         expectToBePromise(updateEnrichmentResult);
@@ -1873,17 +2031,18 @@ describe('DiscoveryV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['name']).toEqual(name);
         expect(options.body['description']).toEqual(description);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['enrichment_id']).toEqual(enrichmentId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const enrichmentId = 'fake_enrichmentId';
-        const name = 'fake_name';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const enrichmentId = 'testString';
+        const name = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           enrichmentId,
@@ -1894,19 +2053,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.updateEnrichment(params);
+        discoveryService.updateEnrichment(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId', 'name'];
-
         let err;
         try {
-          await discovery.updateEnrichment({});
+          await discoveryService.updateEnrichment({});
         } catch (e) {
           err = e;
         }
@@ -1916,10 +2072,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId', 'name'];
-
-        const updateEnrichmentPromise = discovery.updateEnrichment();
+        const updateEnrichmentPromise = discoveryService.updateEnrichment();
         expectToBePromise(updateEnrichmentPromise);
 
         updateEnrichmentPromise.catch(err => {
@@ -1932,15 +2085,15 @@ describe('DiscoveryV2', () => {
   describe('deleteEnrichment', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const enrichmentId = 'fake_enrichmentId';
+        // Construct the params object for operation deleteEnrichment
+        const projectId = 'testString';
+        const enrichmentId = 'testString';
         const params = {
-          projectId,
-          enrichmentId,
+          projectId: projectId,
+          enrichmentId: enrichmentId,
         };
 
-        const deleteEnrichmentResult = discovery.deleteEnrichment(params);
+        const deleteEnrichmentResult = discoveryService.deleteEnrichment(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteEnrichmentResult);
@@ -1958,16 +2111,17 @@ describe('DiscoveryV2', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
         expect(options.path['enrichment_id']).toEqual(enrichmentId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const enrichmentId = 'fake_enrichmentId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const enrichmentId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           enrichmentId,
@@ -1977,19 +2131,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.deleteEnrichment(params);
+        discoveryService.deleteEnrichment(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId'];
-
         let err;
         try {
-          await discovery.deleteEnrichment({});
+          await discoveryService.deleteEnrichment({});
         } catch (e) {
           err = e;
         }
@@ -1999,10 +2150,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId', 'enrichmentId'];
-
-        const deleteEnrichmentPromise = discovery.deleteEnrichment();
+        const deleteEnrichmentPromise = discoveryService.deleteEnrichment();
         expectToBePromise(deleteEnrichmentPromise);
 
         deleteEnrichmentPromise.catch(err => {
@@ -2015,10 +2163,10 @@ describe('DiscoveryV2', () => {
   describe('listProjects', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
+        // Construct the params object for operation listProjects
         const params = {};
 
-        const listProjectsResult = discovery.listProjects(params);
+        const listProjectsResult = discoveryService.listProjects(params);
 
         // all methods should return a Promise
         expectToBePromise(listProjectsResult);
@@ -2032,12 +2180,13 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           headers: {
             Accept: userAccept,
@@ -2045,38 +2194,70 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.listProjects(params);
+        discoveryService.listProjects(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method
-        discovery.listProjects({});
+        // invoke the method with no parameters
+        discoveryService.listProjects({});
         checkForSuccessfulExecution(createRequestMock);
-      });
-
-      test('should use argument as callback function if only one is passed in', async () => {
-        // invoke the method
-        const callbackMock = jest.fn();
-        await discovery.listProjects(callbackMock);
-        expect(callbackMock).toHaveBeenCalled();
       });
     });
   });
   describe('createProject', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // DefaultQueryParamsPassages
+      const defaultQueryParamsPassagesModel = {
+        enabled: true,
+        count: 38,
+        fields: ['testString'],
+        characters: 38,
+        per_document: true,
+        max_per_document: 38,
+      };
+
+      // DefaultQueryParamsTableResults
+      const defaultQueryParamsTableResultsModel = {
+        enabled: true,
+        count: 38,
+        per_document: 38,
+      };
+
+      // DefaultQueryParamsSuggestedRefinements
+      const defaultQueryParamsSuggestedRefinementsModel = {
+        enabled: true,
+        count: 38,
+      };
+
+      // DefaultQueryParams
+      const defaultQueryParamsModel = {
+        collection_ids: ['testString'],
+        passages: defaultQueryParamsPassagesModel,
+        table_results: defaultQueryParamsTableResultsModel,
+        aggregation: 'testString',
+        suggested_refinements: defaultQueryParamsSuggestedRefinementsModel,
+        spelling_suggestions: true,
+        highlight: true,
+        count: 38,
+        sort: 'testString',
+        return: ['testString'],
+      };
+
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const name = 'fake_name';
-        const type = 'fake_type';
-        const defaultQueryParameters = 'fake_defaultQueryParameters';
+        // Construct the params object for operation createProject
+        const name = 'testString';
+        const type = 'document_retrieval';
+        const defaultQueryParameters = defaultQueryParamsModel;
         const params = {
-          name,
-          type,
-          defaultQueryParameters,
+          name: name,
+          type: type,
+          defaultQueryParameters: defaultQueryParameters,
         };
 
-        const createProjectResult = discovery.createProject(params);
+        const createProjectResult = discoveryService.createProject(params);
 
         // all methods should return a Promise
         expectToBePromise(createProjectResult);
@@ -2093,14 +2274,15 @@ describe('DiscoveryV2', () => {
         expect(options.body['name']).toEqual(name);
         expect(options.body['type']).toEqual(type);
         expect(options.body['default_query_parameters']).toEqual(defaultQueryParameters);
+        expect(options.qs['version']).toEqual(service.version);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const name = 'fake_name';
-        const type = 'fake_type';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const name = 'testString';
+        const type = 'document_retrieval';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           name,
           type,
@@ -2110,19 +2292,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.createProject(params);
+        discoveryService.createProject(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['name', 'type'];
-
         let err;
         try {
-          await discovery.createProject({});
+          await discoveryService.createProject({});
         } catch (e) {
           err = e;
         }
@@ -2132,10 +2311,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['name', 'type'];
-
-        const createProjectPromise = discovery.createProject();
+        const createProjectPromise = discoveryService.createProject();
         expectToBePromise(createProjectPromise);
 
         createProjectPromise.catch(err => {
@@ -2148,13 +2324,13 @@ describe('DiscoveryV2', () => {
   describe('getProject', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
+        // Construct the params object for operation getProject
+        const projectId = 'testString';
         const params = {
-          projectId,
+          projectId: projectId,
         };
 
-        const getProjectResult = discovery.getProject(params);
+        const getProjectResult = discoveryService.getProject(params);
 
         // all methods should return a Promise
         expectToBePromise(getProjectResult);
@@ -2168,14 +2344,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -2184,19 +2361,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.getProject(params);
+        discoveryService.getProject(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.getProject({});
+          await discoveryService.getProject({});
         } catch (e) {
           err = e;
         }
@@ -2206,10 +2380,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const getProjectPromise = discovery.getProject();
+        const getProjectPromise = discoveryService.getProject();
         expectToBePromise(getProjectPromise);
 
         getProjectPromise.catch(err => {
@@ -2222,15 +2393,15 @@ describe('DiscoveryV2', () => {
   describe('updateProject', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
-        const name = 'fake_name';
+        // Construct the params object for operation updateProject
+        const projectId = 'testString';
+        const name = 'testString';
         const params = {
-          projectId,
-          name,
+          projectId: projectId,
+          name: name,
         };
 
-        const updateProjectResult = discovery.updateProject(params);
+        const updateProjectResult = discoveryService.updateProject(params);
 
         // all methods should return a Promise
         expectToBePromise(updateProjectResult);
@@ -2245,14 +2416,15 @@ describe('DiscoveryV2', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['name']).toEqual(name);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -2261,19 +2433,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.updateProject(params);
+        discoveryService.updateProject(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.updateProject({});
+          await discoveryService.updateProject({});
         } catch (e) {
           err = e;
         }
@@ -2283,10 +2452,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const updateProjectPromise = discovery.updateProject();
+        const updateProjectPromise = discoveryService.updateProject();
         expectToBePromise(updateProjectPromise);
 
         updateProjectPromise.catch(err => {
@@ -2299,13 +2465,13 @@ describe('DiscoveryV2', () => {
   describe('deleteProject', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const projectId = 'fake_projectId';
+        // Construct the params object for operation deleteProject
+        const projectId = 'testString';
         const params = {
-          projectId,
+          projectId: projectId,
         };
 
-        const deleteProjectResult = discovery.deleteProject(params);
+        const deleteProjectResult = discoveryService.deleteProject(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteProjectResult);
@@ -2319,14 +2485,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.path['project_id']).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const projectId = 'fake_projectId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const projectId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           projectId,
           headers: {
@@ -2335,19 +2502,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.deleteProject(params);
+        discoveryService.deleteProject(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
         let err;
         try {
-          await discovery.deleteProject({});
+          await discoveryService.deleteProject({});
         } catch (e) {
           err = e;
         }
@@ -2357,10 +2521,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['projectId'];
-
-        const deleteProjectPromise = discovery.deleteProject();
+        const deleteProjectPromise = discoveryService.deleteProject();
         expectToBePromise(deleteProjectPromise);
 
         deleteProjectPromise.catch(err => {
@@ -2373,13 +2534,13 @@ describe('DiscoveryV2', () => {
   describe('deleteUserData', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // parameters
-        const customerId = 'fake_customerId';
+        // Construct the params object for operation deleteUserData
+        const customerId = 'testString';
         const params = {
-          customerId,
+          customerId: customerId,
         };
 
-        const deleteUserDataResult = discovery.deleteUserData(params);
+        const deleteUserDataResult = discoveryService.deleteUserData(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteUserDataResult);
@@ -2393,14 +2554,15 @@ describe('DiscoveryV2', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['customer_id']).toEqual(customerId);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const customerId = 'fake_customerId';
-        const userAccept = 'fake/header';
-        const userContentType = 'fake/header';
+        const customerId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
         const params = {
           customerId,
           headers: {
@@ -2409,19 +2571,16 @@ describe('DiscoveryV2', () => {
           },
         };
 
-        discovery.deleteUserData(params);
+        discoveryService.deleteUserData(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
       test('should enforce required parameters', async done => {
-        // required parameters for this method
-        const requiredParams = ['customerId'];
-
         let err;
         try {
-          await discovery.deleteUserData({});
+          await discoveryService.deleteUserData({});
         } catch (e) {
           err = e;
         }
@@ -2431,10 +2590,7 @@ describe('DiscoveryV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        // required parameters for this method
-        const requiredParams = ['customerId'];
-
-        const deleteUserDataPromise = discovery.deleteUserData();
+        const deleteUserDataPromise = discoveryService.deleteUserData();
         expectToBePromise(deleteUserDataPromise);
 
         deleteUserDataPromise.catch(err => {

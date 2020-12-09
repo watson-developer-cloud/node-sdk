@@ -16,30 +16,34 @@ describe('tone analyzer integration', () => {
   options.version = '2019-03-27';
   const toneAnalyzer = new ToneAnalyzerV3(options);
 
-  it('tone()', done => {
-    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
-    toneAnalyzer.tone({ toneInput: mobydick, contentType: 'text/plain' }, (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
+  it('tone()', async () => {
+    const params = {
+      toneInput: fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8'),
+      contentType: 'text/plain',
+    };
+    const res = await toneAnalyzer.tone(params);
+    const { result } = res || {};
+    expect(result).toBeDefined();
   });
 
-  it('failing tone()', done => {
+  it('failing tone()', async () => {
     // this is a failing test
-    const mobydick = fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8');
-    toneAnalyzer.tone({ toneInput: mobydick, contentType: 'invalid content type' }, (err, res) => {
+    const params = {
+      toneInput: fs.readFileSync(path.join(__dirname, '../resources/tweet.txt'), 'utf8'),
+      contentType: 'invalid content type',
+    };
+    try {
+      const res = await toneAnalyzer.tone(params);
+    } catch (err) {
       expect(err).toBeTruthy();
       expect(err.code).toBe(400);
       expect(err.headers['x-global-transaction-id']).toBeDefined();
       expect(typeof err.headers['x-global-transaction-id']).toBe('string');
-      done();
-    });
+    }
   });
 
-  it('toneChat()', done => {
-    const utterances = {
+  it('toneChat()', async () => {
+    const params = {
       utterances: [
         { text: 'My charger isn’t working.', user: 'customer' },
         {
@@ -57,10 +61,7 @@ describe('tone analyzer integration', () => {
         },
       ],
     };
-    toneAnalyzer.toneChat(utterances, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+    const res = await toneAnalyzer.toneChat(params);
+    expect(res).toBeDefined();
   });
 });

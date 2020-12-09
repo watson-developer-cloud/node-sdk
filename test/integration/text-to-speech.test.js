@@ -14,13 +14,10 @@ describe('text to speech_integration', () => {
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const textToSpeech = new TextToSpeechV1(options);
 
-  it('listVoices()', done => {
-    textToSpeech.listVoices((err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
+  it('should listVoices()', async () => {
+    const res = await textToSpeech.listVoices();
+    const { result } = res || {};
+    expect(result).toBeDefined();
   });
 
   describe('synthesize', () => {
@@ -30,19 +27,17 @@ describe('text to speech_integration', () => {
       voice: 'en-US_LisaVoice',
     };
 
-    it('synthesize using http', done => {
+    it('should synthesize using http', async () => {
       // wav.Reader parses the wav header and will throw if it isn't valid
       const reader = new wav.Reader();
-      textToSpeech.synthesize(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
+      const res = await textToSpeech.synthesize(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-        result.pipe(reader).on('format', done.bind(null, null));
-      });
+      result.pipe(reader);
     });
 
-    it('synthesize using websocket', done => {
+    it('should synthesize using websocket', done => {
       const synthStream = textToSpeech.synthesizeUsingWebSocket(params);
       synthStream.resume();
 
@@ -61,21 +56,20 @@ describe('text to speech_integration', () => {
     });
   });
 
-  it('getPronunciation()', done => {
-    const checkPronunciation = (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-
-      expect(JSON.stringify(result)).toBe(
-        JSON.stringify({
-          pronunciation: '.ˈaɪ .ˈi .ˈi .ˈi',
-        })
-      );
-      done();
+  it('should getPronunciation()', async () => {
+    const params = {
+      text: 'IEEE',
     };
 
-    textToSpeech.getPronunciation({ text: 'IEEE' }, checkPronunciation);
+    const res = await textToSpeech.getPronunciation(params);
+    const { result } = res || {};
+    expect(result).toBeDefined();
+
+    expect(JSON.stringify(result)).toBe(
+      JSON.stringify({
+        pronunciation: '.ˈaɪ .ˈi .ˈi .ˈi',
+      })
+    );
   });
 
   describe('customization', () => {
@@ -83,188 +77,147 @@ describe('text to speech_integration', () => {
 
     // todo: before task that cleans up any leftover customizations from previous runs
 
-    it('createVoiceModel()', done => {
-      textToSpeech.createVoiceModel(
-        {
-          name: 'temporary-node-sdk-test',
-          language: 'en-US',
-          description:
-            'Created by Node.js SDK integration tests on ' +
-            new Date() +
-            '. Should be automatically deleted within 10 minutes.',
-        },
-        (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          done();
+    it('should createCustomModel()', async () => {
+      const params = {
+        name: 'temporary-node-sdk-test',
+        language: 'en-US',
+        description:
+          'Created by Node.js SDK integration tests on ' +
+          new Date() +
+          '. Should be automatically deleted within 10 minutes.',
+      };
+      const res = await textToSpeech.createCustomModel(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-          expect(result.customization_id).toBeDefined();
-          customizationId = result.customization_id;
-          done();
-        }
-      );
+      expect(result.customization_id).toBeDefined();
+      customizationId = result.customization_id;
     });
 
-    it('listVoiceModels() with language', done => {
-      textToSpeech.listVoiceModels({ language: 'en-GB' }, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
+    it('should listCustomModels() with language', async () => {
+      const params = {
+        language: 'en-GB',
+      };
+      const res = await textToSpeech.listCustomModels(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-        expect(Array.isArray(result.customizations)).toBe(true);
-        const hasOtherLanguages = result.customizations.some(c => {
-          return c.language !== 'en-GB';
-        });
-        expect(hasOtherLanguages).toBe(false);
-        done();
+      expect(Array.isArray(result.customizations)).toBe(true);
+      const hasOtherLanguages = result.customizations.some(c => {
+        return c.language !== 'en-GB';
       });
+      expect(hasOtherLanguages).toBe(false);
     });
 
-    it('updateVoiceModel()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should updateCustomModel()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+        description: 'Updated. Should be automatically deleted within 10 minutes.',
+        words: [{ word: 'NCAA', translation: 'N C double A' }],
+      };
 
-      textToSpeech.updateVoiceModel(
-        {
-          customizationId,
-          description: 'Updated. Should be automatically deleted within 10 minutes.',
-          words: [{ word: 'NCAA', translation: 'N C double A' }],
-        },
-        (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          done();
-        }
-      );
+      const res = await textToSpeech.updateCustomModel(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
 
-    it('getVoiceModel()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should getCustomModel()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+      };
 
-      textToSpeech.getVoiceModel({ customizationId }, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
+      const res = await textToSpeech.getCustomModel(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-        expect(result.customization_id).toBe(customizationId);
-        expect(result.words.length).toBeTruthy();
-        done();
-      });
+      expect(result.customization_id).toBe(customizationId);
+      expect(result.words.length).toBeTruthy();
     });
 
-    it('addWords()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should addWords()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+        words: [{ word: 'iPhone', translation: 'I phone' }],
+      };
 
-      textToSpeech.addWords(
-        {
-          customizationId,
-          words: [{ word: 'iPhone', translation: 'I phone' }],
-        },
-        (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          done();
-        }
-      );
+      const res = await textToSpeech.addWords(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
 
-    it('addWord()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should addWord()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+        word: 'IEEE',
+        translation: 'I tipple E',
+      };
 
-      textToSpeech.addWord(
-        {
-          customizationId,
-          word: 'IEEE',
-          translation: 'I tipple E',
-        },
-        (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          done();
-        }
-      );
+      const res = await textToSpeech.addWord(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
 
-    it('listWords()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should listWords()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+      };
 
-      textToSpeech.listWords({ customizationId }, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
+      const res = await textToSpeech.listWords(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-        expect(result.words).toBeDefined();
-        expect(result.words.length).toBe(3); // NCAA, iPhone, IEEE
-        done();
-      });
+      expect(result.words).toBeDefined();
+      expect(result.words.length).toBe(3); // NCAA, iPhone, IEEE
     });
 
-    it('getWord()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should getWord()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+        word: 'NCAA',
+      };
 
-      textToSpeech.getWord({ customizationId, word: 'NCAA' }, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
+      const res = await textToSpeech.getWord(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-        expect(result.translation).toBe('N C double A');
-        done();
-      });
+      expect(result.translation).toBe('N C double A');
     });
 
-    it('deleteWord()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should deleteWord()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+        word: 'NCAA',
+      };
 
-      textToSpeech.deleteWord(
-        {
-          customizationId,
-          word: 'NCAA',
-        },
-        (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          done();
-        }
-      );
+      const res = await textToSpeech.deleteWord(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
 
-    it('deleteVoiceModel()', done => {
-      if (!customizationId) {
-        // We cannot run this test when voice model creation failed.
-        return done();
-      }
+    it('should deleteCustomModel()', async () => {
+      // We cannot run this test when voice model creation failed.
+      expect(customizationId).toBeTruthy();
+      const params = {
+        customizationId,
+      };
 
-      textToSpeech.deleteVoiceModel({ customizationId }, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
-        done();
-      });
+      const res = await textToSpeech.deleteCustomModel(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
   });
 });

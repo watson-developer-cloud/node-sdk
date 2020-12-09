@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019.
+ * (C) Copyright IBM Corp. 2019, 2020.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,6 +58,8 @@ describe('discovery v2 integration @slow', () => {
       erasableProjectId = result.project_id;
     });
     test('getProject', async () => {
+      expect(erasableProjectId).toBeTruthy();
+
       const params = {
         projectId: erasableProjectId,
       };
@@ -70,6 +72,8 @@ describe('discovery v2 integration @slow', () => {
     test(
       'updateProject',
       async () => {
+        expect(erasableProjectId).toBeTruthy();
+
         const params = {
           projectId: erasableProjectId,
         };
@@ -84,6 +88,8 @@ describe('discovery v2 integration @slow', () => {
     test(
       'deleteProject',
       async () => {
+        expect(erasableProjectId).toBeTruthy();
+
         const params = {
           projectId: erasableProjectId,
         };
@@ -96,19 +102,11 @@ describe('discovery v2 integration @slow', () => {
       EXTENDED_TIMEOUT
     );
 
-    test('listProjects', async done => {
-      let res;
-      try {
-        res = await discovery.listProjects();
-      } catch (err) {
-        expect(err).toBeNull();
-        return done(err);
-      }
-
+    test('listProjects', async () => {
+      const res = await discovery.listProjects();
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
   });
 
@@ -135,6 +133,8 @@ describe('discovery v2 integration @slow', () => {
       EXTENDED_TIMEOUT
     );
     test('getCollection', async () => {
+      expect(erasableCollectionId).toBeTruthy();
+
       const params = {
         projectId,
         collectionId: erasableCollectionId,
@@ -148,6 +148,8 @@ describe('discovery v2 integration @slow', () => {
     test(
       'updateCollection',
       async () => {
+        expect(erasableCollectionId).toBeTruthy();
+
         const params = {
           projectId,
           collectionId: erasableCollectionId,
@@ -163,6 +165,8 @@ describe('discovery v2 integration @slow', () => {
     test(
       'deleteCollection',
       async () => {
+        expect(erasableCollectionId).toBeTruthy();
+
         const params = {
           projectId,
           collectionId: erasableCollectionId,
@@ -194,133 +198,163 @@ describe('discovery v2 integration @slow', () => {
   });
 
   describe('queries', () => {
-    test('query', async done => {
+    test('query', async () => {
       const params = {
         projectId,
       };
 
-      let res;
-      try {
-        res = await discovery.query(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.query(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
 
-    test('getAutocompletion', async done => {
+    test('getAutocompletion', async () => {
       const params = {
         projectId,
         prefix: 'ye',
       };
 
-      let res;
-      try {
-        res = await discovery.getAutocompletion(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.getAutocompletion(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
 
-    test('queryNotices', async done => {
+    test('queryNotices', async () => {
       const params = {
         projectId,
       };
 
-      let res;
-      try {
-        res = await discovery.queryNotices(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.queryNotices(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
 
-    test('listFields', async done => {
+    test('listFields', async () => {
       const params = {
         projectId,
       };
 
-      let res;
-      try {
-        res = await discovery.listFields(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.listFields(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
   });
 
   describe('componentSettings', () => {
-    test('getComponentSettings', async done => {
+    test('getComponentSettings', async () => {
       const params = {
         projectId,
       };
 
-      let res;
-      try {
-        res = await discovery.getComponentSettings(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.getComponentSettings(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
   });
 
   describe('documents', () => {
-    test('addDocument', async done => {
+    test('addDocument', async () => {
       const params = {
         projectId,
         collectionId,
         file: fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx')),
       };
 
-      let res;
-      try {
-        res = await discovery.addDocument(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.addDocument(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
       expect(result.document_id).toBeDefined();
       documentId = result.document_id;
-      done();
     });
 
-    test('updateDocument', async done => {
-      if (!documentId) {
-        return done();
-      }
+    describe('trainingData', () => {
+      let queryId;
+      test('listTrainingQueries', async () => {
+        const params = {
+          projectId,
+        };
+
+        const res = await discovery.listTrainingQueries(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      });
+
+      test('createTrainingQuery', async () => {
+        const params = {
+          projectId,
+          naturalLanguageQuery: 'the original query',
+          examples: [
+            {
+              document_id: documentId,
+              collection_id: collectionId,
+              relevance: 5,
+            },
+          ],
+        };
+
+        const res = await discovery.createTrainingQuery(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+        expect(result.query_id).toBeDefined();
+        queryId = result.query_id;
+      });
+
+      test('getTrainingQuery', async () => {
+        expect(queryId).toBeTruthy();
+        const params = {
+          projectId,
+          queryId,
+        };
+
+        const res = await discovery.getTrainingQuery(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      });
+
+      test('updateTrainingQuery', async () => {
+        expect(queryId).toBeTruthy();
+        const params = {
+          projectId,
+          queryId,
+          naturalLanguageQuery: 'the new query',
+          examples: [
+            {
+              document_id: documentId,
+              collection_id: collectionId,
+              relevance: 1,
+            },
+          ],
+        };
+
+        const res = await discovery.updateTrainingQuery(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      });
+
+      test('deleteTrainingQueries', async () => {
+        const params = {
+          projectId,
+        };
+
+        const res = await discovery.deleteTrainingQueries(params);
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      });
+    });
+
+    test('updateDocument', async () => {
+      expect(documentId).toBeTruthy();
       const params = {
         projectId,
         collectionId,
@@ -328,186 +362,48 @@ describe('discovery v2 integration @slow', () => {
         metadata: '{"metadata": "value"}',
       };
 
-      let res;
-      try {
-        res = await discovery.updateDocument(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.updateDocument(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
 
-    test('deleteDocument', async done => {
-      if (!documentId) {
-        return done();
-      }
+    test('deleteDocument', async () => {
+      expect(documentId).toBeTruthy();
       const params = {
         projectId,
         collectionId,
         documentId,
       };
 
-      let res;
-      try {
-        res = await discovery.deleteDocument(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
+      const res = await discovery.deleteDocument(params);
       expect(res).toBeDefined();
       const { result } = res || {};
       expect(result).toBeDefined();
-      done();
     });
 
-    // For later use
-    // test('analyzeDocument', async done => {
-    //   if (!documentId) {
-    //     return done();
-    //   }
-    //   const params = {
-    //     projectId,
-    //     collectionId,
-    //     file: fs.createReadStream(path.join(__dirname, '../resources/sampleWord.docx')),
-    //     filename: 'sampleWord.docx',
-    //   };
+    test(
+      'analyzeDocument',
+      async () => {
+        const params = {
+          projectId,
+          collectionId,
+          file: fs.createReadStream(path.join(__dirname, '../resources/analyzeDocument.json')),
+        };
 
-    //   let res;
-    //   try {
-    //     res = await discovery.analyzeDocument(params);
-    //   } catch (err) {
-    //     expect(err).toBeNull();
-    //     return done();
-    //   }
+        let res;
+        try {
+          res = await discovery.analyzeDocument(params);
+        } catch (err) {
+          expect(err).toBeNull();
+        }
 
-    //   expect(res).toBeDefined();
-    //   const { result } = res || {};
-    //   expect(result).toBeDefined();
-    //   done();
-    // });
-  });
-
-  describe('trainingData', () => {
-    let queryId;
-    test('listTrainingQueries', async done => {
-      const params = {
-        projectId,
-      };
-
-      let res;
-      try {
-        res = await discovery.listTrainingQueries(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
-      expect(res).toBeDefined();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
-
-    test('createTrainingQuery', async done => {
-      const params = {
-        projectId,
-        naturalLanguageQuery: 'the original query',
-      };
-
-      let res;
-      try {
-        res = await discovery.createTrainingQuery(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
-      expect(res).toBeDefined();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      expect(result.query_id).toBeDefined();
-      queryId = result.query_id;
-      done();
-    });
-
-    test('getTrainingQuery', async done => {
-      if (!queryId) {
-        return done();
-      }
-      const params = {
-        projectId,
-        queryId,
-      };
-
-      let res;
-      try {
-        res = await discovery.getTrainingQuery(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
-      expect(res).toBeDefined();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
-
-    test('updateTrainingQuery', async done => {
-      if (!queryId) {
-        return done();
-      }
-      const params = {
-        projectId,
-        queryId,
-        naturalLanguageQuery: 'the new query',
-        examples: [
-          {
-            document_id: documentId,
-            collection_id: collectionId,
-            relevance: 1,
-          },
-        ],
-      };
-
-      let res;
-      try {
-        res = await discovery.updateTrainingQuery(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
-      expect(res).toBeDefined();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
-
-    test('deleteTrainingQueries', async done => {
-      const params = {
-        projectId,
-      };
-
-      let res;
-      try {
-        res = await discovery.deleteTrainingQueries(params);
-      } catch (err) {
-        expect(err).toBeNull();
-        return done();
-      }
-
-      expect(res).toBeDefined();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
+        expect(res).toBeDefined();
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      },
+      EXTENDED_TIMEOUT
+    );
   });
 
   describe('enrichments', () => {
@@ -546,6 +442,8 @@ describe('discovery v2 integration @slow', () => {
     test(
       'getEnrichment',
       async () => {
+        expect(erasableEnrichmentId).toBeTruthy();
+
         const params = {
           projectId,
           enrichmentId: erasableEnrichmentId,
@@ -561,6 +459,8 @@ describe('discovery v2 integration @slow', () => {
     test(
       'updateEnrichment',
       async () => {
+        expect(erasableEnrichmentId).toBeTruthy();
+
         const params = {
           projectId,
           enrichmentId: erasableEnrichmentId,
@@ -578,6 +478,8 @@ describe('discovery v2 integration @slow', () => {
     test(
       'deleteEnrichment',
       async () => {
+        expect(erasableEnrichmentId).toBeTruthy();
+
         const params = {
           projectId,
           enrichmentId: erasableEnrichmentId,
@@ -593,7 +495,7 @@ describe('discovery v2 integration @slow', () => {
 
     test(
       'listEnrichments',
-      async done => {
+      async () => {
         const params = {
           projectId,
         };
@@ -603,7 +505,6 @@ describe('discovery v2 integration @slow', () => {
         expect(res).toBeDefined();
         const { result } = res || {};
         expect(result).toBeDefined();
-        done();
       },
       EXTENDED_TIMEOUT
     );

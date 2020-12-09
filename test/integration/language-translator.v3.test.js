@@ -16,173 +16,137 @@ describe('language translator integration', () => {
   options.version = '2019-03-27';
   const languageTranslator = new LanguageTranslatorV3(options);
 
-  it('listModels()', done => {
-    languageTranslator.listModels(null, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+  it('should listModels()', async () => {
+    const res = await languageTranslator.listModels();
+    expect(res).toBeDefined();
   });
 
-  it('translate()', done => {
+  it('should translate()', async () => {
     const params = {
       text: 'this is a test',
       source: 'en',
       target: 'es',
     };
-    languageTranslator.translate(params, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+    const res = await languageTranslator.translate(params);
+    expect(res).toBeDefined();
   });
 
-  it('listLanguages()', done => {
-    languageTranslator.listLanguages((err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
+  it('should listLanguages()', async () => {
+    const res = await languageTranslator.listLanguages();
+    expect(res).toBeDefined();
+    const { result } = res || {};
+    expect(result).toBeDefined();
   });
 
-  it('listIdentifiableLanguages()', done => {
-    languageTranslator.listIdentifiableLanguages((err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+  it('should listIdentifiableLanguages()', async () => {
+    const res = await languageTranslator.listIdentifiableLanguages();
+    expect(res).toBeDefined();
   });
 
-  it('identify()', done => {
+  it('should identify()', async () => {
     const params = {
       text: 'this is an important test that needs to work',
     };
-    languageTranslator.identify(params, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+    const res = await languageTranslator.identify(params);
+    expect(res).toBeDefined();
   });
 
   describe('models', () => {
     let modelId;
-    it('should list all the models', done => {
-      languageTranslator.listModels((err, res) => {
-        const { result } = res || {};
-        expect(result).toBeDefined();
-        done();
-      });
+    it('should list all the models', async () => {
+      const res = await languageTranslator.listModels();
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
 
-    it('should create a model', done => {
-      languageTranslator.createModel(
-        {
-          name: 'node-test-custom-en-fr',
-          baseModelId: 'en-fr',
-          forcedGlossary: fs.createReadStream('./test/resources/glossary.tmx'),
-        },
-        (err, res) => {
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          modelId = result.model_id;
-          done();
-        }
-      );
+    it('should create a model', async () => {
+      const params = {
+        name: 'node-test-custom-en-fr',
+        baseModelId: 'en-fr',
+        forcedGlossary: fs.createReadStream('./test/resources/glossary.tmx'),
+      };
+
+      const res = await languageTranslator.createModel(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      modelId = result.model_id;
     });
 
-    it('should get the details of the model', done => {
-      if (!modelId) {
-        // We cannot run this test when model creation failed.
-        return done();
-      }
+    it('should get the details of the model', async () => {
+      // We cannot run this test when model creation failed.
+      expect(modelId).toBeTruthy();
+      const params = {
+        modelId,
+      };
 
-      languageTranslator.getModel({ modelId }, (err, res) => {
-        expect(err).toBeNull();
-        expect(res).toBeDefined();
-        done();
-      });
+      const res = await languageTranslator.getModel(params);
+      expect(res).toBeDefined();
     });
 
-    it('should delete the model', done => {
-      if (!modelId) {
-        // We cannot run this test when model creation failed.
-        return done();
-      }
+    it('should delete the model', async () => {
+      // We cannot run this test when model creation failed.
+      expect(modelId).toBeTruthy();
+      const params = {
+        modelId,
+      };
 
-      languageTranslator.deleteModel({ modelId }, (err, res) => {
-        expect(err).toBeNull();
-        expect(res).toBeDefined();
-        done();
-      });
+      const res = await languageTranslator.deleteModel(params);
+      expect(res).toBeDefined();
     });
   });
 
   describe('documentTranslation @slow', () => {
     let documentId;
     // The service was down, could not test the test.
-    it('should translate document', done => {
-      languageTranslator.translateDocument(
-        {
-          file: fs.createReadStream('./test/resources/alchemy-text.txt'),
-          filename: 'alchemy-text.txt',
-          modelId: 'en-es',
-        },
-        (err, res) => {
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          documentId = result.document_id;
-          done();
-        }
-      );
+    it('should translate document', async () => {
+      const params = {
+        file: fs.createReadStream('./test/resources/alchemy-text.txt'),
+        filename: 'alchemy-text.txt',
+        modelId: 'en-es',
+      };
+      const res = await languageTranslator.translateDocument(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      documentId = result.document_id;
+      console.log(documentId);
     });
 
-    it('should list translated documents', done => {
-      languageTranslator.listDocuments((err, res) => {
-        expect(err).toBeNull();
-        expect(res).toBeDefined();
-        done();
-      });
+    it('should list translated documents', async () => {
+      const res = await languageTranslator.listDocuments();
+      expect(res).toBeDefined();
     });
 
-    it('should get translated document status', done => {
-      if (!documentId) {
-        // We cannot run this test when document upload failed.
-        return done();
-      }
+    it('should get translated document status', async () => {
+      // We cannot run this test when document upload failed.
+      expect(documentId).toBeTruthy();
+      const params = {
+        documentId,
+      };
 
-      languageTranslator.getDocumentStatus({ documentId }, (err, res) => {
-        expect(err).toBeNull();
-        expect(res).toBeDefined();
-        done();
-      });
+      const res = await languageTranslator.getDocumentStatus(params);
+      expect(res).toBeDefined();
     });
 
-    it('should get translated document', done => {
-      if (!documentId) {
-        // We cannot run this test when document upload failed.
-        return done();
-      }
+    it('should get translated document', async () => {
+      // We cannot run this test when document upload failed.
+      expect(documentId).toBeTruthy();
+      const params = {
+        documentId,
+      };
 
-      languageTranslator.getTranslatedDocument({ documentId }, (err, res) => {
-        expect(err).toBeNull();
-        expect(res).toBeDefined();
-        done();
-      });
+      const res = await languageTranslator.getTranslatedDocument(params);
+      expect(res).toBeDefined();
     });
 
-    it('should delete document', done => {
-      if (!documentId) {
-        // We cannot run this test when document upload failed.
-        return done();
-      }
+    it('should delete document', async () => {
+      // We cannot run this test when document upload failed.
+      expect(documentId).toBeTruthy();
+      const params = {
+        documentId,
+      };
 
-      languageTranslator.deleteDocument({ documentId }, (err, res) => {
-        expect(err).toBeNull();
-        expect(res).toBeDefined();
-        done();
-      });
+      const res = await languageTranslator.deleteDocument(params);
+      expect(res).toBeDefined();
     });
   });
 });

@@ -11,66 +11,60 @@ describe('compare comply integration', () => {
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const compareComply = new CompareComply(options);
   describe('html conversion @slow', () => {
-    test('convertToHtml', done => {
+    it('should convertToHtml', async () => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
       };
-      compareComply.convertToHtml(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.html).toBeTruthy();
-        done();
-      });
+
+      const res = await compareComply.convertToHtml(params);
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.html).toBeTruthy();
     });
   });
 
   describe('elementClassification', () => {
-    test('classifyElements @slow', done => {
+    it('should classifyElements @slow', async () => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compareComply.classifyElements(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.document).toBeTruthy();
-        expect(result.model_id).toBeTruthy();
-        expect(result.model_version).toBeTruthy();
-        expect(result.elements).toBeTruthy();
-        expect(result.tables).toBeTruthy();
-        expect(result.document_structure).toBeTruthy();
-        expect(result.parties).toBeTruthy();
-        expect(result.effective_dates).toBeTruthy();
-        expect(result.termination_dates).toBeTruthy();
-        expect(result.contract_amounts).toBeTruthy();
-        done();
-      });
+
+      const res = await compareComply.classifyElements(params);
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.document).toBeTruthy();
+      expect(result.model_id).toBeTruthy();
+      expect(result.model_version).toBeTruthy();
+      expect(result.elements).toBeTruthy();
+      expect(result.tables).toBeTruthy();
+      expect(result.document_structure).toBeTruthy();
+      expect(result.parties).toBeTruthy();
+      expect(result.effective_dates).toBeTruthy();
+      expect(result.termination_dates).toBeTruthy();
+      expect(result.contract_amounts).toBeTruthy();
     }, 10000);
   });
 
   describe('tables', () => {
-    test('extractTables @slow', done => {
+    it('should extractTables @slow', async () => {
       const params = {
         file: fs.createReadStream(__dirname + '/../resources/TestTable.pdf'),
         filename: 'TestTable.pdf',
       };
-      compareComply.extractTables(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.document).toBeTruthy();
-        expect(result.model_id).toBeTruthy();
-        expect(result.model_version).toBeTruthy();
-        expect(result.tables).toBeTruthy();
-        done();
-      });
+
+      const res = await compareComply.extractTables(params);
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.document).toBeTruthy();
+      expect(result.model_id).toBeTruthy();
+      expect(result.model_version).toBeTruthy();
+      expect(result.tables).toBeTruthy();
     }, 10000);
   });
 
   describe('comparison', () => {
-    test('compareDocuments @slow', done => {
+    it('should compareDocuments @slow', async () => {
       jest.setTimeout(7000); // this test usually takes just under 7 seconds
       const params = {
         file1: fs.createReadStream(__dirname + '/../resources/contract_A.pdf'),
@@ -80,23 +74,21 @@ describe('compare comply integration', () => {
         file2Filename: 'contract_B.pdf',
         file2Label: 'test-file-2',
       };
-      compareComply.compareDocuments(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.model_version).toBeTruthy();
-        expect(result.documents).toBeTruthy();
-        expect(result.aligned_elements).toBeTruthy();
-        expect(result.model_id).toBeTruthy();
-        expect(result.unaligned_elements).toBeTruthy();
-        done();
-      });
+
+      const res = await compareComply.compareDocuments(params);
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.model_version).toBeTruthy();
+      expect(result.documents).toBeTruthy();
+      expect(result.aligned_elements).toBeTruthy();
+      expect(result.model_id).toBeTruthy();
+      expect(result.unaligned_elements).toBeTruthy();
     });
   });
 
   describe('feedback', () => {
     let feedbackId;
-    test('addFeedback', done => {
+    it('should addFeedback', async () => {
       const params = {
         comment: 'testing testing comments v2 - node sdk test',
         userId: 'user_id_123x',
@@ -175,27 +167,22 @@ describe('compare comply integration', () => {
         },
       };
 
-      compareComply.addFeedback(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
+      const res = await compareComply.addFeedback(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-        feedbackId = result.feedback_id;
+      feedbackId = result.feedback_id;
 
-        expect(result.feedback_id).toBeDefined();
-        expect(result.user_id).toBeDefined();
-        expect(result.comment).toBeDefined();
-        expect(result.created).toBeDefined();
-        expect(result.feedback_data).toBeDefined();
-        done();
-      });
+      expect(result.feedback_id).toBeDefined();
+      expect(result.user_id).toBeDefined();
+      expect(result.comment).toBeDefined();
+      expect(result.created).toBeDefined();
+      expect(result.feedback_data).toBeDefined();
     }, 25000);
 
-    test('getFeedback', done => {
-      if (!feedbackId) {
-        // We cannot run this test when addFeedback failed.
-        return done();
-      }
+    it('should getFeedback', async () => {
+      // We cannot run this test when addFeedback failed.
+      expect(feedbackId).toBeTruthy();
 
       const params = {
         feedbackId,
@@ -203,54 +190,45 @@ describe('compare comply integration', () => {
           'x-watson-metadata': 'customer_id=sdk-test-customer-id',
         },
       };
-      compareComply.getFeedback(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.feedback_id).toBeDefined();
-        expect(result.user_id).toBeDefined();
-        expect(result.comment).toBeDefined();
-        expect(result.created).toBeDefined();
-        expect(result.feedback_data).toBeDefined();
-        done();
-      });
+
+      const res = await compareComply.getFeedback(params);
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.feedback_id).toBeDefined();
+      expect(result.user_id).toBeDefined();
+      expect(result.comment).toBeDefined();
+      expect(result.created).toBeDefined();
+      expect(result.feedback_data).toBeDefined();
     }, 20000);
 
-    test('listFeedback', done => {
-      compareComply.listFeedback((err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.feedback).toBeDefined();
-        expect(result.pagination).toBeDefined();
-        done();
-      });
+    it('should listFeedback', async () => {
+      const res = await compareComply.listFeedback();
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.feedback).toBeDefined();
+      expect(result.pagination).toBeDefined();
     }, 10000);
 
-    test('deleteFeedback', done => {
-      if (!feedbackId) {
-        // We cannot run this test when addFeedback failed.
-        return done();
-      }
+    it('should deleteFeedback', async () => {
+      // We cannot run this test when addFeedback failed.
+      expect(feedbackId).toBeTruthy();
 
       const params = {
         feedbackId,
       };
-      compareComply.deleteFeedback(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.status).toBe(200);
-        expect(result.message).toBeDefined();
-        done();
-      });
+
+      const res = await compareComply.deleteFeedback(params);
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.status).toBe(200);
+      expect(result.message).toBeDefined();
     });
   });
 
   describe('batches @slow', () => {
     let batchId;
-    test('createBatch / updateBatch', done => {
-      const params = {
+    it('should createBatch / updateBatch', async () => {
+      let params = {
         _function: 'html_conversion',
         inputCredentialsFile: fs.createReadStream(
           __dirname + '/../resources/cc_input_auth_file.json'
@@ -263,8 +241,9 @@ describe('compare comply integration', () => {
         outputBucketLocation: 'us-south',
         outputBucketName: 'compare-comply-integration-test-bucket-output',
       };
-      compareComply.createBatch(params, (err, res) => {
-        expect(err).toBeNull();
+
+      try {
+        const res = await compareComply.createBatch(params);
         const { result } = res || {};
         expect(res).toBeDefined();
         expect(result.function).toBeTruthy();
@@ -281,40 +260,20 @@ describe('compare comply integration', () => {
 
         // save the batch id
         batchId = result.batch_id;
-
-        // updateBatch needs to run almost immediately after createBatch
-        // the update method ONLY works on documents that are 'pending' and it does
-        // not take long for the documents to finish processing.
-        const params = {
-          batchId,
-          action: 'rescan',
-        };
-
-        compareComply.updateBatch(params, (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(res).toBeDefined();
-          expect(result.function).toBeTruthy();
-          expect(result.input_bucket_name).toBeTruthy();
-          expect(result.output_bucket_name).toBeTruthy();
-          expect(result.input_bucket_location).toBeTruthy();
-          expect(result.output_bucket_location).toBeTruthy();
-          expect(result.status).toBeTruthy();
-          expect(result.created).toBeTruthy();
-          expect(result.updated).toBeTruthy();
-          expect(result.batch_id).toBeTruthy();
-          expect(result.document_counts).toBeTruthy();
-          done();
-        });
-      });
-    });
-
-    test('getBatch', done => {
-      const params = {
-        batchId,
-      };
-      compareComply.getBatch(params, (err, res) => {
+      } catch (err) {
         expect(err).toBeNull();
+      }
+
+      params = {
+        batchId,
+        action: 'rescan',
+      };
+
+      // updateBatch needs to run almost immediately after createBatch
+      // the update method ONLY works on documents that are 'pending' and it does
+      // not take long for the documents to finish processing.
+      try {
+        const res = await compareComply.updateBatch(params);
         const { result } = res || {};
         expect(res).toBeDefined();
         expect(result.function).toBeTruthy();
@@ -327,18 +286,36 @@ describe('compare comply integration', () => {
         expect(result.updated).toBeTruthy();
         expect(result.batch_id).toBeTruthy();
         expect(result.document_counts).toBeTruthy();
-        done();
-      });
+      } catch (err) {
+        expect(err).toBeNull();
+      }
     });
 
-    test('listBatches', done => {
-      compareComply.listBatches((err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(res).toBeDefined();
-        expect(result.batches).toBeTruthy();
-        done();
-      });
+    it('should getBatch', async () => {
+      const params = {
+        batchId,
+      };
+
+      const res = await compareComply.getBatch(params);
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.function).toBeTruthy();
+      expect(result.input_bucket_name).toBeTruthy();
+      expect(result.output_bucket_name).toBeTruthy();
+      expect(result.input_bucket_location).toBeTruthy();
+      expect(result.output_bucket_location).toBeTruthy();
+      expect(result.status).toBeTruthy();
+      expect(result.created).toBeTruthy();
+      expect(result.updated).toBeTruthy();
+      expect(result.batch_id).toBeTruthy();
+      expect(result.document_counts).toBeTruthy();
+    });
+
+    it('should listBatches', async () => {
+      const res = await compareComply.listBatches();
+      const { result } = res || {};
+      expect(res).toBeDefined();
+      expect(result.batches).toBeTruthy();
     });
   });
 });

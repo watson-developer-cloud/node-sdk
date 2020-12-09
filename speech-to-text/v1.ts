@@ -49,77 +49,61 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {Number} [params.times=30] - maximum number of attempts
    * @param {Function} callback
    */
-  whenCorporaAnalyzed(params: SpeechToTextV1.WhenCorporaAnalyzedParams, callback: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>): void {
+  async whenCorporaAnalyzed(params: SpeechToTextV1.WhenCorporaAnalyzedParams): Promise<any> {
     const self = this;
 
-    async.parallel(
-      [
-        // validate that it has at least one corpus
-        (next: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>) => {
-          self.listCorpora(params, (err, res) => {
-            const result = res.result;
-            if (err) {
-              return next(err);
-            }
-            if (!result.corpora.length) {
-              const sttError: SpeechToTextV1.SpeechToTextError = new Error(
-                'Customization has no corpa and therefore corpus cannot be analyzed'
-              );
-              sttError.code = SpeechToTextV1.ERR_NO_CORPORA;
-              return next(sttError);
-            }
-            next(null);
-          });
-        },
-        // check the customization status repeatedly until it's available
-        (next: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>) => {
-          const options: SpeechToTextV1.WhenCorporaAnalyzedOptions = extend(
-            {
-              interval: 5000,
-              times: 30
-            },
-            params,
-            {
-              errorFilter: (err: SpeechToTextV1.SpeechToTextError): boolean => {
-              // if it's a timeout error, then listCorpora is called again after params.interval
-              // otherwise the error is passed back to the user
-              // if the params.times limit is reached, the error will be passed to the user regardless
-                return err.code === SpeechToTextV1.ERR_TIMEOUT;
-              }
-            }
-          );
+    try {
+      const res = await self.listCorpora(params)
+      const result = res.result;
+      if (!result.corpora.length) {
+        const sttError: SpeechToTextV1.SpeechToTextError = new Error(
+          'Customization has no corpa and therefore corpus cannot be analyzed'
+        );
+        sttError.code = SpeechToTextV1.ERR_NO_CORPORA;
+        return Promise.reject<any>(sttError);
+      }
+    } catch(err) {
+      return Promise.reject<any>(err);
+    }
 
-          async.retry(
-            options,
-            (done: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.Corpora>) => {
-              self.listCorpora(params, (err, res) => {
-                const corpora = res.result;
-                if (err) {
-                  done(err);
-                } else if (corpora !== undefined && isProcessing(corpora)) {
-                  // if the loop times out, async returns the last error, which will be this one.
-                  const sttError: SpeechToTextV1.SpeechToTextError = new Error(
-                    'Corpora is still being processed, try increasing interval or times params'
-                  );
-                  sttError.code = SpeechToTextV1.ERR_TIMEOUT;
-                  done(sttError);
-                } else if (corpora !== undefined && isAnalyzed(corpora)) {
-                  done(null, corpora);
-                } else {
-                  done(new Error('Unexpected corpus analysis status'));
-                }
-              });
-            },
-            next
-          );
+    const options: SpeechToTextV1.WhenCorporaAnalyzedOptions = extend(
+      {
+        interval: 5000,
+        times: 30
+      },
+      params,
+      {
+        errorFilter: (err: SpeechToTextV1.SpeechToTextError): boolean => {
+        // if it's a timeout error, then listCorpora is called again after params.interval
+        // otherwise the error is passed back to the user
+        // if the params.times limit is reached, the error will be passed to the user regardless
+          return err.code === SpeechToTextV1.ERR_TIMEOUT;
         }
-      ],
-      (err: Error | SpeechToTextV1.SpeechToTextError | null, res?: [null, GeneratedSpeechToTextV1.Corpora]) => {
-        const result = res;
-        if (err) {
-          return callback(err);
+      }
+    );
+
+    return async.retry(
+      options,
+      async (done) => {
+        try {
+          const res = await self.listCorpora(params);
+          const corpora = res.result;
+          
+          if (corpora !== undefined && isProcessing(corpora)) {
+            // if the loop times out, async returns the last error, which will be this one.
+            const sttError: SpeechToTextV1.SpeechToTextError = new Error(
+              'Corpora is still being processed, try increasing interval or times params'
+            );
+            sttError.code = SpeechToTextV1.ERR_TIMEOUT;
+            done(sttError);
+          } else if (corpora !== undefined && isAnalyzed(corpora)) {
+            done(null, corpora);
+          } else {
+            done(new Error('Unexpected corpus analysis status'));
+          }
+        } catch(err) {
+          done(err);
         }
-        callback(null, result[1]); // callback with the final customization object
       }
     );
   }
@@ -152,13 +136,12 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     return new RecognizeStream(streamParams);
   }
 
-  recognize(params: GeneratedSpeechToTextV1.RecognizeParams, callback: GeneratedSpeechToTextV1.Callback<GeneratedSpeechToTextV1.SpeechRecognitionResults>): Promise<GeneratedSpeechToTextV1.Response<GeneratedSpeechToTextV1.SpeechRecognitionResults>> {
+  recognize(params: GeneratedSpeechToTextV1.RecognizeParams): Promise<GeneratedSpeechToTextV1.Response<GeneratedSpeechToTextV1.SpeechRecognitionResults>> {
     if (params && params.audio && isStream(params.audio) && !params.contentType) {
-      callback(new Error('If providing `audio` as a Stream, `contentType` is required.'));
-      return;
+      return Promise.reject(new Error('If providing `audio` as a Stream, `contentType` is required.'));
     }
 
-    return super.recognize(params, callback);
+    return super.recognize(params);
   }
 
   /**
@@ -174,11 +157,10 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
    * @param {Number} [params.times=30] - maximum number of attempts
    * @param {Function} callback
    */
-  whenCustomizationReady(params: SpeechToTextV1.WhenCustomizationReadyParams, callback: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.LanguageModel>): void {
+  async whenCustomizationReady(params: SpeechToTextV1.WhenCustomizationReadyParams): Promise<any> {
     const self = this;
 
     // check the customization status repeatedly until it's ready or available
-
     const options: SpeechToTextV1.WhenCustomizationReadyOptions = extend(
       {
         interval: 5000,
@@ -194,47 +176,48 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
         }
       }
     );
-    async.retry(
+    return async.retry(
       options,
-      (next: SpeechToTextV1.Callback<GeneratedSpeechToTextV1.LanguageModel>) => {
-        self.getLanguageModel(params, (err, res) => {
-          const customization = err ? null : res.result;
-          if (err) {
-            next(err);
-          } else if (
-            customization.status === 'pending' ||
-            customization.status === 'training'
-          ) {
-            // if the loop times out, async returns the last error, which will be this one.
-            const sttError: SpeechToTextV1.SpeechToTextError = new Error(
-              'Customization is still pending, try increasing interval or times params',
-            );
-            sttError.code = SpeechToTextV1.ERR_TIMEOUT;
-            next(sttError);
-          } else if (
-            customization.status === 'ready' ||
-            customization.status === 'available'
-          ) {
-            next(null, customization);
-          } else if (customization.status === 'failed') {
-            next(new Error('Customization training failed'));
-          } else {
-            next(
-              new Error(
-                'Unexpected customization status: ' + customization.status
-              )
-            );
-          }
-        });
-      },
-      callback
+      async (done) => {
+        try {
+          const res = await self.getLanguageModel(params);
+          const customization = res.result;
+            if (
+              customization.status === 'pending' ||
+              customization.status === 'training'
+            ){
+              // if the loop times out, async returns the last error, which will be this one.
+              const sttError: SpeechToTextV1.SpeechToTextError = new Error(
+                'Customization is still pending, try increasing interval or times params',
+              );
+              sttError.code = SpeechToTextV1.ERR_TIMEOUT;
+              done(sttError);
+            }
+  
+            else if (customization.status === 'ready' ||
+            customization.status === 'available'){
+              done(null, customization);
+            }
+  
+            else if (customization.status === 'failed'){
+              done(new Error('Customization training failed'));
+            }
+            else{
+              done(
+                new Error(
+                  'Unexpected customization status: ' + customization.status
+                )
+              );
+            }
+        } catch(err) {
+          done(err);
+        }
+      }
     );
   }
 }
 
 namespace SpeechToTextV1 {
-  export type Callback<T> = (err: Error | SpeechToTextError | null, res?: T) => void;
-
   export interface SpeechToTextError extends Error {
     message: string;
     code?: string;

@@ -550,7 +550,34 @@ compareComply.compareDocuments(
   });
 ```
 
-### Discovery
+### Discovery v2
+
+Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
+
+```js
+const DiscoveryV2 = require('ibm-watson/discovery/v2');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const discovery = new DiscoveryV2({
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
+  serviceUrl: 'https://api.us-south.discovery.watson.cloud.ibm.com',
+  version: '2019-11-22'
+});
+
+discovery.query(
+  {
+    projectId: '<project_id>',
+    collectionId: '<collection_id>',
+    query: 'my_query'
+  })
+  .then(response => {
+    console.log(JSON.stringify(response.result, null, 2));
+  })
+  .catch(err => {
+    console.log(err);
+  });
+```
+### Discovery v1 
 
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
 
@@ -680,6 +707,9 @@ nlu.analyze(
 
 
 ### Personality Insights
+**On 1 December 2021, Personality Insights will no longer be available. 
+    Consider migrating to Watson Natural Language Understanding. 
+    For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation**
 
 Analyze text in English and get a personality profile by using the
 [Personality Insights][personality_insights] service.
@@ -819,13 +849,40 @@ toneAnalyzer.tone(
   });
 ```
 
-
-### Visual Recognition
+### Visual Recognition v4
 
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
 
-<img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" />
+```js
+const VisualRecognitionV4 = require('ibm-watson/visual-recognition/v4');
+const { IamAuthenticator } = require('ibm-watson/auth');
+
+const visualRecognition = new VisualRecognitionV4({
+  serviceUrl: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
+  version: '2019-02-11',
+  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
+});
+
+const params = {
+  collectionIds: ['<collectionId1','collectionId2','collectionId3'],
+  features: 'objects'
+};
+
+visualRecognition.classify(params)
+  .then(response => {
+    const image = response.result.images[0]
+    const detectedObjects = image.objects.collections[0].objects
+    console.log(detectedObjects)
+  })
+  .catch(err => {
+    console.log(err);
+  });
+```
+### Visual Recognition v3
+
+Use the [Visual Recognition][visual_recognition] service to recognize the
+following picture.
 
 ```js
 const fs = require('fs');
@@ -833,7 +890,7 @@ const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
 const visualRecognition = new VisualRecognitionV3({
-  serviceUrl: '<service_url>',
+  serviceUrl: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
   version: '2018-03-19',
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
 });

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -29,25 +34,32 @@ class CompareComplyV1 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.compare-comply.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'compare-comply';
 
+  /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+   *  version is `2018-10-15`.
+   */
+  version: string;
+
   /**
    * Construct a CompareComplyV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
-   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
-   * the API version for the date you specify, or the most recent version before that date. Note that you should not
-   * programmatically specify the current date at runtime, in case the API has been updated since your application's
-   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
-   * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
+   * YYYY-MM-DD format. The current version is `2018-10-15`.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.compare-comply.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {CompareComplyV1}
-   * @throws {Error}
    */
   constructor(options: UserOptions) {
+    options = options || {};
+
+    const requiredParams = ['version'];
+    const missingParams = getMissingParams(options, requiredParams);
+    if (missingParams) {
+      throw missingParams;
+    }
     if (!options.serviceName) {
       options.serviceName = CompareComplyV1.DEFAULT_SERVICE_NAME;
     }
@@ -60,11 +72,7 @@ class CompareComplyV1 extends BaseService {
     if (options.serviceUrl) {
       this.setServiceUrl(options.serviceUrl);
     }
-    // check if 'version' was provided
-    if (typeof this.baseOptions.version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
-    this.baseOptions.qs.version = options.version;
+    this.version = options.version;
   }
 
   /*************************
@@ -84,68 +92,47 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.HTMLReturn>>}
    */
-  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams, callback?: CompareComplyV1.Callback<CompareComplyV1.HTMLReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.HTMLReturn>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams): Promise<CompareComplyV1.Response<CompareComplyV1.HTMLReturn>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['file'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'file': {
+        data: _params.file,
+        contentType: _params.fileContentType
       }
+    };
 
-      const formData = {
-        'file': {
-          data: _params.file,
-          contentType: _params.fileContentType
-        }
-      };
+    const query = {
+      'version': this.version,
+      'model': _params.model
+    };
 
-      const query = {
-        'model': _params.model
-      };
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'convertToHtml');
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'convertToHtml');
+    const parameters = {
+      options: {
+        url: '/v1/html_conversion',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/html_conversion',
-          method: 'POST',
-          qs: query,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
-
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -165,68 +152,47 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.ClassifyReturn>>}
    */
-  public classifyElements(params: CompareComplyV1.ClassifyElementsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.ClassifyReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.ClassifyReturn>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public classifyElements(params: CompareComplyV1.ClassifyElementsParams): Promise<CompareComplyV1.Response<CompareComplyV1.ClassifyReturn>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['file'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'file': {
+        data: _params.file,
+        contentType: _params.fileContentType
       }
+    };
 
-      const formData = {
-        'file': {
-          data: _params.file,
-          contentType: _params.fileContentType
-        }
-      };
+    const query = {
+      'version': this.version,
+      'model': _params.model
+    };
 
-      const query = {
-        'model': _params.model
-      };
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'classifyElements');
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'classifyElements');
+    const parameters = {
+      options: {
+        url: '/v1/element_classification',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/element_classification',
-          method: 'POST',
-          qs: query,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
-
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -246,68 +212,47 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.TableReturn>>}
    */
-  public extractTables(params: CompareComplyV1.ExtractTablesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.TableReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.TableReturn>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public extractTables(params: CompareComplyV1.ExtractTablesParams): Promise<CompareComplyV1.Response<CompareComplyV1.TableReturn>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['file'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'file': {
+        data: _params.file,
+        contentType: _params.fileContentType
       }
+    };
 
-      const formData = {
-        'file': {
-          data: _params.file,
-          contentType: _params.fileContentType
-        }
-      };
+    const query = {
+      'version': this.version,
+      'model': _params.model
+    };
 
-      const query = {
-        'model': _params.model
-      };
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'extractTables');
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'extractTables');
+    const parameters = {
+      options: {
+        url: '/v1/tables',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/tables',
-          method: 'POST',
-          qs: query,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
-
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -331,74 +276,53 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.CompareReturn>>}
    */
-  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams, callback?: CompareComplyV1.Callback<CompareComplyV1.CompareReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.CompareReturn>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams): Promise<CompareComplyV1.Response<CompareComplyV1.CompareReturn>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['file1', 'file2'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'file_1': {
+        data: _params.file1,
+        contentType: _params.file1ContentType
+      },
+      'file_2': {
+        data: _params.file2,
+        contentType: _params.file2ContentType
       }
+    };
 
-      const formData = {
-        'file_1': {
-          data: _params.file1,
-          contentType: _params.file1ContentType
-        },
-        'file_2': {
-          data: _params.file2,
-          contentType: _params.file2ContentType
-        }
-      };
+    const query = {
+      'version': this.version,
+      'file_1_label': _params.file1Label,
+      'file_2_label': _params.file2Label,
+      'model': _params.model
+    };
 
-      const query = {
-        'file_1_label': _params.file1Label,
-        'file_2_label': _params.file2Label,
-        'model': _params.model
-      };
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'compareDocuments');
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'compareDocuments');
+    const parameters = {
+      options: {
+        url: '/v1/comparison',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/comparison',
-          method: 'POST',
-          qs: query,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
-
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -417,62 +341,45 @@ class CompareComplyV1 extends BaseService {
    * @param {string} [params.userId] - An optional string identifying the user.
    * @param {string} [params.comment] - An optional comment on or description of the feedback.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackReturn>>}
    */
-  public addFeedback(params: CompareComplyV1.AddFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackReturn>): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackReturn>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public addFeedback(params: CompareComplyV1.AddFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackReturn>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['feedbackData'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'feedback_data': _params.feedbackData,
-        'user_id': _params.userId,
-        'comment': _params.comment
-      };
+    const body = {
+      'feedback_data': _params.feedbackData,
+      'user_id': _params.userId,
+      'comment': _params.comment
+    };
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'addFeedback');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/feedback',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'addFeedback');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v1/feedback',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -483,10 +390,6 @@ class CompareComplyV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.feedbackType] - An optional string that filters the output to include only feedback with
    * the specified feedback type. The only permitted value is `element_classification`.
-   * @param {string} [params.before] - An optional string in the format `YYYY-MM-DD` that filters the output to include
-   * only feedback that was added before the specified date.
-   * @param {string} [params.after] - An optional string in the format `YYYY-MM-DD` that filters the output to include
-   * only feedback that was added after the specified date.
    * @param {string} [params.documentTitle] - An optional string that filters the output to include only feedback from
    * the document with the specified `document_title`.
    * @param {string} [params.modelId] - An optional string that filters the output to include only feedback with the
@@ -521,64 +424,45 @@ class CompareComplyV1 extends BaseService {
    * @param {boolean} [params.includeTotal] - An optional boolean value. If specified as `true`, the `pagination` object
    * in the output includes a value called `total` that gives the total count of feedback created.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackList>>}
    */
-  public listFeedback(params?: CompareComplyV1.ListFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackList>): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackList>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listFeedback(params?: CompareComplyV1.ListFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackList>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'feedback_type': _params.feedbackType,
-        'before': _params.before,
-        'after': _params.after,
-        'document_title': _params.documentTitle,
-        'model_id': _params.modelId,
-        'model_version': _params.modelVersion,
-        'category_removed': _params.categoryRemoved,
-        'category_added': _params.categoryAdded,
-        'category_not_changed': _params.categoryNotChanged,
-        'type_removed': _params.typeRemoved,
-        'type_added': _params.typeAdded,
-        'type_not_changed': _params.typeNotChanged,
-        'page_limit': _params.pageLimit,
-        'cursor': _params.cursor,
-        'sort': _params.sort,
-        'include_total': _params.includeTotal
-      };
+    const query = {
+      'version': this.version,
+      'feedback_type': _params.feedbackType,
+      'document_title': _params.documentTitle,
+      'model_id': _params.modelId,
+      'model_version': _params.modelVersion,
+      'category_removed': _params.categoryRemoved,
+      'category_added': _params.categoryAdded,
+      'category_not_changed': _params.categoryNotChanged,
+      'type_removed': _params.typeRemoved,
+      'type_added': _params.typeAdded,
+      'type_not_changed': _params.typeNotChanged,
+      'page_limit': _params.pageLimit,
+      'cursor': _params.cursor,
+      'sort': _params.sort,
+      'include_total': _params.includeTotal
+    };
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'listFeedback');
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'listFeedback');
 
-      const parameters = {
-        options: {
-          url: '/v1/feedback',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/feedback',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -593,64 +477,43 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.GetFeedback>>}
    */
-  public getFeedback(params: CompareComplyV1.GetFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.GetFeedback>): Promise<CompareComplyV1.Response<CompareComplyV1.GetFeedback>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getFeedback(params: CompareComplyV1.GetFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.GetFeedback>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['feedbackId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'model': _params.model
-      };
+    const query = {
+      'version': this.version,
+      'model': _params.model
+    };
 
-      const path = {
-        'feedback_id': _params.feedbackId
-      };
+    const path = {
+      'feedback_id': _params.feedbackId
+    };
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'getFeedback');
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'getFeedback');
 
-      const parameters = {
-        options: {
-          url: '/v1/feedback/{feedback_id}',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/feedback/{feedback_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -665,64 +528,43 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackDeleted>>}
    */
-  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams, callback?: CompareComplyV1.Callback<CompareComplyV1.FeedbackDeleted>): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackDeleted>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackDeleted>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['feedbackId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'model': _params.model
-      };
+    const query = {
+      'version': this.version,
+      'model': _params.model
+    };
 
-      const path = {
-        'feedback_id': _params.feedbackId
-      };
+    const path = {
+      'feedback_id': _params.feedbackId
+    };
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteFeedback');
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteFeedback');
 
-      const parameters = {
-        options: {
-          url: '/v1/feedback/{feedback_id}',
-          method: 'DELETE',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/feedback/{feedback_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -759,77 +601,56 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>>}
    */
-  public createBatch(params: CompareComplyV1.CreateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createBatch(params: CompareComplyV1.CreateBatchParams): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['_function', 'inputCredentialsFile', 'inputBucketLocation', 'inputBucketName', 'outputCredentialsFile', 'outputBucketLocation', 'outputBucketName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const formData = {
-        'input_credentials_file': {
-          data: _params.inputCredentialsFile,
-          contentType: 'application/json'
-        },
-        'input_bucket_location': _params.inputBucketLocation,
-        'input_bucket_name': _params.inputBucketName,
-        'output_credentials_file': {
-          data: _params.outputCredentialsFile,
-          contentType: 'application/json'
-        },
-        'output_bucket_location': _params.outputBucketLocation,
-        'output_bucket_name': _params.outputBucketName
-      };
+    const formData = {
+      'input_credentials_file': {
+        data: _params.inputCredentialsFile,
+        contentType: 'application/json'
+      },
+      'input_bucket_location': _params.inputBucketLocation,
+      'input_bucket_name': _params.inputBucketName,
+      'output_credentials_file': {
+        data: _params.outputCredentialsFile,
+        contentType: 'application/json'
+      },
+      'output_bucket_location': _params.outputBucketLocation,
+      'output_bucket_name': _params.outputBucketName
+    };
 
-      const query = {
-        'function': _params._function,
-        'model': _params.model
-      };
+    const query = {
+      'version': this.version,
+      'function': _params._function,
+      'model': _params.model
+    };
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'createBatch');
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'createBatch');
 
-      const parameters = {
-        options: {
-          url: '/v1/batches',
-          method: 'POST',
-          qs: query,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/batches',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -839,44 +660,31 @@ class CompareComplyV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.Batches>>}
    */
-  public listBatches(params?: CompareComplyV1.ListBatchesParams, callback?: CompareComplyV1.Callback<CompareComplyV1.Batches>): Promise<CompareComplyV1.Response<CompareComplyV1.Batches>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listBatches(params?: CompareComplyV1.ListBatchesParams): Promise<CompareComplyV1.Response<CompareComplyV1.Batches>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'listBatches');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/batches',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'listBatches');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v1/batches',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -887,59 +695,42 @@ class CompareComplyV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.batchId - The ID of the batch-processing job whose information you want to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>>}
    */
-  public getBatch(params: CompareComplyV1.GetBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getBatch(params: CompareComplyV1.GetBatchParams): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['batchId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'batch_id': _params.batchId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'getBatch');
+    const path = {
+      'batch_id': _params.batchId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/batches/{batch_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'getBatch');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v1/batches/{batch_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -956,65 +747,44 @@ class CompareComplyV1 extends BaseService {
    * is `tables`. These defaults apply to the standalone methods as well as to the methods' use in batch-processing
    * requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>>}
    */
-  public updateBatch(params: CompareComplyV1.UpdateBatchParams, callback?: CompareComplyV1.Callback<CompareComplyV1.BatchStatus>): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public updateBatch(params: CompareComplyV1.UpdateBatchParams): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['batchId', 'action'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'action': _params.action,
-        'model': _params.model
-      };
+    const query = {
+      'version': this.version,
+      'action': _params.action,
+      'model': _params.model
+    };
 
-      const path = {
-        'batch_id': _params.batchId
-      };
+    const path = {
+      'batch_id': _params.batchId
+    };
 
-      const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'updateBatch');
+    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'updateBatch');
 
-      const parameters = {
-        options: {
-          url: '/v1/batches/{batch_id}',
-          method: 'PUT',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/batches/{batch_id}',
+        method: 'PUT',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
 }
@@ -1025,7 +795,16 @@ class CompareComplyV1 extends BaseService {
 
 namespace CompareComplyV1 {
 
-  /** An operation response. **/
+  /** Options for the `CompareComplyV1` constructor. */
+  export interface Options extends UserOptions {
+
+    /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+     *  version is `2018-10-15`.
+     */
+    version: string;
+  }
+
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -1224,14 +1003,6 @@ namespace CompareComplyV1 {
      *  only permitted value is `element_classification`.
      */
     feedbackType?: string;
-    /** An optional string in the format `YYYY-MM-DD` that filters the output to include only feedback that was
-     *  added before the specified date.
-     */
-    before?: string;
-    /** An optional string in the format `YYYY-MM-DD` that filters the output to include only feedback that was
-     *  added after the specified date.
-     */
-    after?: string;
     /** An optional string that filters the output to include only feedback from the document with the specified
      *  `document_title`.
      */
@@ -1459,7 +1230,7 @@ namespace CompareComplyV1 {
     /** The method to be run against the documents. Possible values are `html_conversion`, `element_classification`,
      *  and `tables`.
      */
-    _function?: string;
+    function?: string;
     /** The geographical location of the Cloud Object Storage input bucket as listed on the **Endpoint** tab of your
      *  COS instance; for example, `us-geo`, `eu-geo`, or `ap-geo`.
      */
@@ -1533,6 +1304,8 @@ namespace CompareComplyV1 {
     label?: string;
     /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
+    /** The type of modification of the feedback entry in the updated labels response. */
+    modification?: string;
   }
 
   /** Information defining an element's subject matter. */
@@ -2021,10 +1794,6 @@ namespace CompareComplyV1 {
      *  element.
      */
     categories?: Category[];
-    /** A string identifying the type of modification the feedback entry in the `updated_labels` array. Possible
-     *  values are `added`, `not_changed`, and `removed`.
-     */
-    modification?: string;
   }
 
   /** Pagination details, if required by the length of the output. */
@@ -2249,6 +2018,8 @@ namespace CompareComplyV1 {
     label?: Label;
     /** Hashed values that you can send to IBM to provide feedback or receive support. */
     provenance_ids?: string[];
+    /** The type of modification of the feedback entry in the updated labels response. */
+    modification?: string;
   }
 
   /** Identification of a specific type. */
@@ -2299,10 +2070,6 @@ namespace CompareComplyV1 {
      *  element.
      */
     categories?: Category[];
-    /** The type of modification the feedback entry in the `updated_labels` array. Possible values are `added`,
-     *  `not_changed`, and `removed`.
-     */
-    modification?: string;
   }
 
   /** A value in a key-value pair. */

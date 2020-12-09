@@ -19,53 +19,44 @@ describe('speech to text integration', () => {
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const speechToText = new SpeechToTextV1(options);
 
-  it('recognize()', done => {
+  it('should recognize()', async () => {
     const params = {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       contentType: 'audio/ogg; codec=opus',
     };
-    speechToText.recognize(params, (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
+    const res = await speechToText.recognize(params);
+    const { result } = res || {};
+    expect(result).toBeDefined();
   });
 
-  it('recognize() keywords', done => {
+  it('should recognize() keywords', async () => {
     const params = {
       audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
       keywords: ['hail', 'tornadoes', 'rain'],
       keywordsThreshold: 0.6,
       contentType: 'audio/ogg; codec=opus',
     };
-    speechToText.recognize(params, (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
+    const res = await speechToText.recognize(params);
+    const { result } = res || {};
+    expect(result).toBeDefined();
 
-      expect(result.results).toBeDefined();
-      expect(result.results[0]).toBeDefined();
-      expect(result.results[0].keywords_result).toBeDefined();
-      const keywords_result = result.results[0].keywords_result;
-      expect(keywords_result.tornadoes).toBeDefined();
-      expect(keywords_result.hail).toBeDefined();
-      expect(keywords_result.rain).toBeDefined();
-      done();
-    });
+    expect(result.results).toBeDefined();
+    expect(result.results[0]).toBeDefined();
+    expect(result.results[0].keywords_result).toBeDefined();
+    const keywords_result = result.results[0].keywords_result;
+    expect(keywords_result.tornadoes).toBeDefined();
+    expect(keywords_result.hail).toBeDefined();
+    expect(keywords_result.rain).toBeDefined();
   });
 
-  it('listModels()', done => {
-    speechToText.listModels({}, (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      done();
-    });
+  it('should listModels()', async () => {
+    const res = await speechToText.listModels();
+    const { result } = res || {};
+    expect(result).toBeDefined();
   });
 
   describe('recognizeUsingWebSocket()', () => {
-    it('transcribes audio over a websocket @slow', done => {
+    it('should transcribe audio over a websocket @slow', done => {
       const recognizeStream = speechToText.recognizeUsingWebSocket();
       recognizeStream.setEncoding('utf8');
       fs.createReadStream(path.join(__dirname, '../resources/weather.flac'))
@@ -82,7 +73,7 @@ describe('speech to text integration', () => {
         );
     });
 
-    it('works when stream has no words', done => {
+    it('should work when stream has no words', done => {
       const recognizeStream = speechToText.recognizeUsingWebSocket({
         contentType: 'audio/l16; rate=44100',
       });
@@ -98,358 +89,285 @@ describe('speech to text integration', () => {
   });
 
   describe('customization @slow', () => {
+    jest.setTimeout(TWO_MINUTES);
+
     let customizationId;
 
-    // many API calls leave the customization in a pending state.
-    // this prevents tests from starting until the API is ready again
-    function waitUntilReady(test) {
-      return done => {
-        jest.setTimeout(TWO_MINUTES);
-        speechToText.whenCustomizationReady({ customizationId, interval: 250, times: 400 }, err => {
-          if (err && err.code !== SpeechToTextV1.ERR_NO_CORPORA) {
-            return done(err);
-          }
-          test(done);
-        });
-      };
-    }
+    beforeAll(async () => {
+      const res = await speechToText.listLanguageModels();
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-    beforeAll(done => {
-      speechToText.listLanguageModels({}, (err, res) => {
-        if (err) {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - 1);
+      const toDelete = result.customizations.filter(cust => {
+        const old = new Date(cust.created) < cutoffDate;
+        const permanent = cust.name.indexOf('permanent') !== -1;
+        return old && !permanent;
+      });
+
+      for (const cust of toDelete) {
+        const params = {
+          customizationId: cust.customization_id,
+        };
+        try {
+          await speechToText.deleteLanguageModel(params);
+        } catch (err) {
           // eslint-disable-next-line no-console
-          console.warn('Error retrieving old customization models for cleanup', err);
-          return done();
+          console.warn('error deleting old customization model', cust, err);
         }
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
-
-        const cutoffDate = new Date();
-        cutoffDate.setDate(cutoffDate.getDate() - 1);
-        const toDelete = result.customizations.filter(cust => {
-          const old = new Date(cust.created) < cutoffDate;
-          const permanent = cust.name.indexOf('permanent') !== -1;
-          return old && !permanent;
-        });
-        async.forEach(
-          toDelete,
-          (cust, next) => {
-            speechToText.deleteLanguageModel(cust, err => {
-              if (err) {
-                // eslint-disable-next-line no-console
-                console.warn('error deleting old customization model', cust, err);
-              }
-              next();
-            });
-          },
-          done
-        );
-      });
+      }
     });
 
-    it('createLanguageModel()', done => {
-      speechToText.createLanguageModel(
-        {
-          name: 'js-sdk-test-temporary',
-          baseModelName: 'en-US_BroadbandModel',
-          description:
-            'Temporary customization to test the JS SDK. Should be automatically deleted within a few minutes.',
-        },
-        (err, result) => {
-          if (err) {
-            return done(err);
-          }
-          expect(result.customization_id).toBeDefined();
-          customizationId = result.customization_id;
-          done();
-        }
-      );
+    it('should createLanguageModel()', async () => {
+      const params = {
+        name: 'js-sdk-test-temporary',
+        baseModelName: 'en-US_BroadbandModel',
+        description:
+          'Temporary customization to test the JS SDK. Should be automatically deleted within a few minutes.',
+      };
+      const res = await speechToText.createLanguageModel(params);
+      const { result } = res || {};
+      expect(result.customization_id).toBeDefined();
+      customizationId = result.customization_id;
     });
 
-    it('listCustomizations()', done => {
-      speechToText.listLanguageModels({}, (err, result) => {
-        expect(err).toBeNull();
-        expect(result.customizations.length).toBeDefined();
-        done();
-      });
+    it('should listCustomizations()', async () => {
+      const res = await speechToText.listLanguageModels();
+      const { result } = res || {};
+      expect(result.customizations.length).toBeDefined();
     });
 
-    it('getLanguageModel()', done => {
-      speechToText.getLanguageModel({ customizationId }, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
-        expect(result.name).toBe('js-sdk-test-temporary');
-        done();
-      });
+    it('should getLanguageModel()', async () => {
+      const params = {
+        customizationId,
+      };
+      const res = await speechToText.getLanguageModel(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      expect(result.name).toBe('js-sdk-test-temporary');
     });
 
     // note: no waitUntilReady() on the first one because it'll never be ready until after the first word or corpus is added
-    it('addCorpus() - stream', done => {
-      speechToText.addCorpus(
-        {
-          customizationId,
-          corpusName: 'test_corpus_1',
-          corpusFile: fs.createReadStream(
-            path.join(__dirname, '../resources/speechToText/corpus-short-1.txt')
-          ),
-        },
-        done
-      );
+    it('should addCorpus() - stream', async () => {
+      const params = {
+        customizationId,
+        corpusName: 'test_corpus_1',
+        corpusFile: fs.createReadStream(
+          path.join(__dirname, '../resources/speech_to_test/corpus-short-1.txt')
+        ),
+      };
+      await speechToText.addCorpus(params);
     });
 
-    it.skip(
-      'addCorpus() - buffer',
-      waitUntilReady(done => {
-        // var customization_id='adfab4c0-9708-11e6-be92-bb627d4684b9';
-        speechToText.addCorpus(
-          {
-            customizationId,
-            corpusName: 'test_corpus_2',
-            corpusFile: fs.readFileSync(
-              path.join(__dirname, '../resources/speechToText/corpus-short-2.txt')
-            ),
-          },
-          done
-        );
-      })
-    );
-
-    it(
-      'addCorpus() - string, overwrite',
-      waitUntilReady(done => {
-        speechToText.addCorpus(
-          {
-            customizationId,
-            corpusName: 'test_corpus_2',
-            corpusFile: fs
-              .readFileSync(path.join(__dirname, '../resources/speechToText/corpus-short-2.txt'))
-              .toString(),
-            allow_overwrite: true,
-          },
-          done
-        );
-      })
-    );
-
-    it('listCorpora()', done => {
-      speechToText.listCorpora({ customizationId }, done);
+    it('addCorpus() - buffer', async () => {
+      const params = {
+        customizationId,
+        corpusName: 'test_corpus_2',
+        corpusFile: fs.readFileSync(
+          path.join(__dirname, '../resources/speech_to_test/corpus-short-2.txt')
+        ),
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.addCorpus(params);
     });
 
-    it(
-      'addWords()',
-      waitUntilReady(done => {
-        speechToText.addWords(
-          {
-            customizationId,
-            words: [
-              {
-                word: 'hhonors',
-                sounds_like: ['hilton honors', 'h honors'],
-                display_as: 'HHonors',
-              },
-              {
-                word: 'ieee',
-                sounds_like: ['i triple e'],
-                display_as: 'IEEE',
-              },
-            ],
-          },
-          done
-        );
-      })
-    );
+    it('should addCorpus() - string, overwrite', async () => {
+      const params = {
+        customizationId,
+        corpusName: 'test_corpus_3',
+        corpusFile: fs
+          .readFileSync(path.join(__dirname, '../resources/speech_to_test/corpus-short-2.txt'))
+          .toString(),
+        allow_overwrite: true,
+      };
 
-    it(
-      'addWord()',
-      waitUntilReady(done => {
-        speechToText.addWord(
-          {
-            customizationId,
-            wordName: 'tomato',
-            soundsLike: ['tomatoh', 'tomayto'],
-          },
-          done
-        );
-      })
-    );
-
-    it('listWords()', done => {
-      speechToText.listWords({ customizationId, sort: '+alphabetical' }, done);
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.addCorpus(params);
     });
 
-    it('getWord()', done => {
-      speechToText.getWord(
-        {
-          customizationId,
-          wordName: 'ieee',
-        },
-        done
-      );
+    it('should listCorpora()', async () => {
+      const params = {
+        customizationId,
+      };
+      await speechToText.listCorpora(params);
     });
 
-    it(
-      'deleteWord()',
-      waitUntilReady(done => {
-        speechToText.deleteWord(
+    it('addWords()', async () => {
+      const params = {
+        customizationId,
+        words: [
           {
-            customizationId,
-            wordName: 'tomato',
+            word: 'hhonors',
+            sounds_like: ['hilton honors', 'h honors'],
+            display_as: 'HHonors',
           },
-          done
-        );
-      })
-    );
-
-    it(
-      'deleteWord()',
-      waitUntilReady(done => {
-        speechToText.deleteWord(
           {
-            customizationId,
-            wordName: 'hhonors',
+            word: 'ieee',
+            sounds_like: ['i triple e'],
+            display_as: 'IEEE',
           },
-          done
-        );
-      })
-    );
+        ],
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.addWords(params);
+    });
 
-    it(
-      'addAudio()',
-      waitUntilReady(done => {
-        speechToText.addAudio(
-          {
-            customizationId,
-            audioName: 'blank',
-            audioResource: fs.readFileSync(path.join(__dirname, '../resources/blank.wav')),
-            contentType: 'audio/wav',
-          },
-          done
-        );
-      })
-    );
+    it('addWord()', async () => {
+      const params = {
+        customizationId,
+        wordName: 'tomato',
+        soundsLike: ['tomatoh', 'tomayto'],
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.addWord(params);
+    });
 
-    it(
-      'deleteAudio()',
-      waitUntilReady(done => {
-        speechToText.deleteAudio(
-          {
-            customizationId,
-            audioName: 'blank',
-          },
-          done
-        );
-      })
-    );
+    it('should listWords()', async () => {
+      const params = {
+        customizationId,
+        sort: '+alphabetical',
+      };
+      await speechToText.listWords(params);
+    });
 
-    it(
-      'deleteCorpus()',
-      waitUntilReady(done => {
-        speechToText.deleteCorpus({ customizationId, corpusName: 'test_corpus_1' }, done);
-      })
-    );
+    it('should getWord()', async () => {
+      const params = {
+        customizationId,
+        wordName: 'ieee',
+      };
+      await speechToText.getWord(params);
+    });
 
-    it(
-      'trainLanguageModel()',
-      waitUntilReady(done => {
-        speechToText.trainLanguageModel({ customizationId }, done);
-      })
-    );
+    it('deleteWord()', async () => {
+      const params = {
+        customizationId,
+        wordName: 'tomato',
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.deleteWord(params);
+    });
 
-    it(
-      'recognize() - with customization',
-      waitUntilReady(done => {
-        const params = {
-          audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
-          contentType: 'audio/ogg; codec=opus',
-          customizationId,
-        };
-        speechToText.recognize(params, done);
-      })
-    );
+    it('deleteWord()', async () => {
+      const params = {
+        customizationId,
+        wordName: 'hhonors',
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.deleteWord(params);
+    });
+
+    it('addAudio()', async () => {
+      const params = {
+        customizationId,
+        audioName: 'blank',
+        audioResource: fs.readFileSync(path.join(__dirname, '../resources/blank.wav')),
+        contentType: 'audio/wav',
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.addAudio(params);
+    });
+
+    it('deleteAudio()', async () => {
+      const params = {
+        customizationId,
+        audioName: 'blank',
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.deleteAudio(params);
+    });
+
+    it('deleteCorpus()', async () => {
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.deleteCorpus({ customizationId, corpusName: 'test_corpus_1' });
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.deleteCorpus({ customizationId, corpusName: 'test_corpus_2' });
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.deleteCorpus({ customizationId, corpusName: 'test_corpus_3' });
+    });
+
+    it('trainLanguageModel()', async () => {
+      const params = {
+        customizationId,
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.trainLanguageModel(params);
+    });
+
+    it('recognize() - with customization', async () => {
+      const params = {
+        audio: fs.createReadStream(path.join(__dirname, '../resources/weather.ogg')),
+        contentType: 'audio/ogg; codec=opus',
+        customizationId,
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.recognize(params);
+    });
 
     describe('grammar tests', () => {
       const grammarName = 'node-sdk-test-grammar';
 
-      it(
-        'should addGrammar',
-        waitUntilReady(done => {
-          const params = {
-            customizationId,
-            grammarName,
-            grammar_file: path.join(__dirname, '../resources/confirm.abnf'),
-            contentType: 'application/srgs',
-            allow_overwrite: true,
-          };
-          speechToText.addGrammar(params, (err, res) => {
-            expect(err).toBeNull();
-            expect(res).toEqual({});
-            done();
-          });
-        })
-      );
-      it(
-        'should getGrammar',
-        waitUntilReady(done => {
-          const params = {
-            customizationId,
-            grammarName,
-          };
-          speechToText.getGrammar(params, (err, res) => {
-            expect(err).toBeNull();
-            const { result } = res || {};
-            expect(result).toBeDefined();
+      it('should addGrammar', async () => {
+        const params = {
+          customizationId,
+          grammarName,
+          grammarFile: path.join(__dirname, '../resources/confirm.abnf'),
+          contentType: 'application/srgs',
+          allow_overwrite: true,
+        };
+        const res = await speechToText.addGrammar(params);
+        expect(res).toEqual({});
+      });
+      it('should getGrammar', async () => {
+        const params = {
+          customizationId,
+          grammarName,
+        };
 
-            expect(result.out_of_vocabulary_words).toBeDefined();
-            expect(result.name).toBeDefined();
-            expect(result.status).toBeDefined();
-            done();
-          });
-        })
-      );
-      it(
-        'should listGrammars',
-        waitUntilReady(done => {
-          const params = {
-            customizationId,
-          };
-          speechToText.listGrammars(params, (err, res) => {
-            expect(err).toBeNull();
-            const { result } = res || {};
-            expect(result).toBeDefined();
+        const res = await speechToText.getGrammar(params);
+        const { result } = res || {};
+        expect(result).toBeDefined();
 
-            expect(result.grammars).toBeDefined();
-            expect(result.grammars.length).toBeTruthy();
-            done();
-          });
-        })
-      );
-      it(
-        'should deleteGrammar',
-        waitUntilReady(done => {
-          const params = {
-            customizationId,
-            grammarName,
-          };
-          speechToText.deleteGrammar(params, (err, res) => {
-            expect(err).toBeNull();
-            expect(res).toEqual({});
-            done();
-          });
-        })
-      );
+        expect(result.out_of_vocabulary_words).toBeDefined();
+        expect(result.name).toBeDefined();
+        expect(result.status).toBeDefined();
+      });
+      it('should listGrammars', async () => {
+        const params = {
+          customizationId,
+        };
+        const res = await speechToText.listGrammars(params);
+        const { result } = res || {};
+        expect(result).toBeDefined();
+
+        expect(result.grammars).toBeDefined();
+        expect(result.grammars.length).toBeTruthy();
+      });
+      it('should deleteGrammar', async () => {
+        const params = {
+          customizationId,
+          grammarName,
+        };
+        await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+        const res = await speechToText.deleteGrammar(params);
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      });
     });
-    it(
-      'resetLanguageModel()',
-      waitUntilReady(done => {
-        speechToText.resetLanguageModel({ customizationId }, done);
-      })
-    );
+    it('resetLanguageModel()', async () => {
+      const params = {
+        customizationId,
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.resetLanguageModel(params);
+    });
 
-    it('deleteLanguageModel()', done => {
-      // var customizationId = '7964f4c0-97ab-11e6-8ac8-6333954f158e';
-      speechToText.deleteLanguageModel({ customizationId }, done);
+    it('should deleteLanguageModel()', async () => {
+      const params = {
+        customizationId,
+      };
+      await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
+      await speechToText.deleteLanguageModel(params);
       customizationId = null;
     });
   });
@@ -457,42 +375,40 @@ describe('speech to text integration', () => {
   describe('asynchronous api', () => {
     let jobId = null;
 
-    const deleteAfterRecognitionCompleted = (jobId, done) => {
-      speechToText.checkJob({ id: jobId }, (err, res) => {
-        expect(err).toBeNull();
+    const deleteAfterRecognitionCompleted = async jobId => {
+      try {
+        const res = await speechToText.checkJob({ id: jobId });
         const { result } = res || {};
         expect(result).toBeDefined();
 
         if (result.status !== 'completed') {
-          setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId, done), 300);
+          setTimeout(deleteAfterRecognitionCompleted.bind(null, jobId), 300);
         } else {
-          speechToText.deleteJob({ id: result.id }, (err, resp) => {
-            expect(err).toBeNull();
+          try {
+            const resp = await speechToText.deleteJob({ id: result.id });
             expect(resp).toBeDefined();
-            done();
-          });
+          } catch (err) {
+            expect(err).toBeNull();
+          }
         }
-      });
+      } catch (err) {
+        expect(err).toBeNull();
+      }
     };
 
-    it('registerCallback()', done => {
-      speechToText.registerCallback(
-        {
-          // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
-          callbackUrl:
-            'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
-          userSecret: 'ThisIsMySecret',
-        },
-        (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          done();
-        }
-      );
+    it('should registerCallback()', async () => {
+      const params = {
+        // if this fails, logs are available at https://watson-test-resources.mybluemix.net/speech-to-text-async/secure
+        callbackUrl:
+          'https://watson-test-resources.mybluemix.net/speech-to-text-async/secure/callback',
+        userSecret: 'ThisIsMySecret',
+      };
+      const res = await speechToText.registerCallback(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
 
-    it('createJob()', done => {
+    it('should createJob()', async () => {
       const params = {
         audio: fs.createReadStream(__dirname + '/../resources/weather.ogg'),
         contentType: 'audio/ogg; codec=opus',
@@ -503,58 +419,35 @@ describe('speech to text integration', () => {
         events: 'recognitions.completed',
         resultsTtl: 1,
       };
-      speechToText.createJob(params, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
+      const res = await speechToText.createJob(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
 
-        jobId = result.id;
-        done();
-      });
+      jobId = result.id;
     });
 
-    it('checkJobs() @slow', done => {
-      speechToText.checkJobs(done);
+    it('should checkJobs() @slow', async () => {
+      const res = await speechToText.checkJobs();
+      expect(res).toBeDefined();
     });
 
-    it('checkJob()', done => {
-      if (!jobId) {
-        // We cannot run this test when job creation failed.
-        return done();
-      }
-      speechToText.checkJob({ id: jobId }, (err, res) => {
-        expect(err).toBeNull();
-        const { result } = res || {};
-        expect(result).toBeDefined();
-        done();
-      });
+    it('should checkJob()', async () => {
+      // We cannot run this test when job creation failed.
+      expect(jobId).toBeTruthy();
+      const params = {
+        id: jobId,
+      };
+
+      const res = await speechToText.checkJob(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
     });
 
-    it('deleteJob()', done => {
-      if (!jobId) {
-        // We cannot run this test when job creation failed.
-        return done();
-      }
+    it('should deleteJob()', async () => {
+      // We cannot run this test when job creation failed.
+      expect(jobId).toBeTruthy();
 
-      deleteAfterRecognitionCompleted(jobId, done);
-    });
-  });
-
-  describe('createLanguageModel', () => {
-    it('should create a language model', done => {
-      speechToText.createLanguageModel(
-        {
-          name: 'testName',
-          baseModelName: 'en-US_BroadbandModel',
-          contentType: 'application/json',
-        },
-        (err, res) => {
-          expect(err).toBeNull();
-          const { result } = res || {};
-          expect(result).toBeDefined();
-          done();
-        }
-      );
+      await deleteAfterRecognitionCompleted(jobId);
     });
   });
 });

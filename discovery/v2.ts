@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -31,25 +36,32 @@ class DiscoveryV2 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.discovery.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'discovery';
 
+  /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+   *  version is `2019-11-22`.
+   */
+  version: string;
+
   /**
    * Construct a DiscoveryV2 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
-   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
-   * the API version for the date you specify, or the most recent version before that date. Note that you should not
-   * programmatically specify the current date at runtime, in case the API has been updated since your application's
-   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
-   * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
+   * YYYY-MM-DD format. The current version is `2019-11-22`.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.discovery.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {DiscoveryV2}
-   * @throws {Error}
    */
   constructor(options: UserOptions) {
+    options = options || {};
+
+    const requiredParams = ['version'];
+    const missingParams = getMissingParams(options, requiredParams);
+    if (missingParams) {
+      throw missingParams;
+    }
     if (!options.serviceName) {
       options.serviceName = DiscoveryV2.DEFAULT_SERVICE_NAME;
     }
@@ -62,11 +74,7 @@ class DiscoveryV2 extends BaseService {
     if (options.serviceUrl) {
       this.setServiceUrl(options.serviceUrl);
     }
-    // check if 'version' was provided
-    if (typeof this.baseOptions.version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
-    this.baseOptions.qs.version = options.version;
+    this.version = options.version;
   }
 
   /*************************
@@ -82,59 +90,42 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>>}
    */
-  public listCollections(params: DiscoveryV2.ListCollectionsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ListCollectionsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listCollections(params: DiscoveryV2.ListCollectionsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listCollections');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listCollections');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -150,68 +141,51 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.language] - The language of the collection.
    * @param {CollectionEnrichment[]} [params.enrichments] - An array of enrichments that are applied to this collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
-  public createCollection(params: DiscoveryV2.CreateCollectionParams, callback?: DiscoveryV2.Callback<DiscoveryV2.CollectionDetails>): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createCollection(params: DiscoveryV2.CreateCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'name'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'description': _params.description,
-        'language': _params.language,
-        'enrichments': _params.enrichments
-      };
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'language': _params.language,
+      'enrichments': _params.enrichments
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createCollection');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createCollection');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -224,60 +198,43 @@ class DiscoveryV2 extends BaseService {
    * Discovery administrative tooling.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
-  public getCollection(params: DiscoveryV2.GetCollectionParams, callback?: DiscoveryV2.Callback<DiscoveryV2.CollectionDetails>): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getCollection(params: DiscoveryV2.GetCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'collectionId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId,
-        'collection_id': _params.collectionId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getCollection');
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections/{collection_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getCollection');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -293,68 +250,51 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.description] - A description of the collection.
    * @param {CollectionEnrichment[]} [params.enrichments] - An array of enrichments that are applied to this collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
-  public updateCollection(params: DiscoveryV2.UpdateCollectionParams, callback?: DiscoveryV2.Callback<DiscoveryV2.CollectionDetails>): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public updateCollection(params: DiscoveryV2.UpdateCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'collectionId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'description': _params.description,
-        'enrichments': _params.enrichments
-      };
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'enrichments': _params.enrichments
+    };
 
-      const path = {
-        'project_id': _params.projectId,
-        'collection_id': _params.collectionId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateCollection');
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections/{collection_id}',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateCollection');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -368,59 +308,42 @@ class DiscoveryV2 extends BaseService {
    * Discovery administrative tooling.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteCollection(params: DiscoveryV2.DeleteCollectionParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Empty>): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteCollection(params: DiscoveryV2.DeleteCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'collectionId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId,
-        'collection_id': _params.collectionId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteCollection');
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections/{collection_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteCollection');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -469,78 +392,61 @@ class DiscoveryV2 extends BaseService {
    * @param {QueryLargeSuggestedRefinements} [params.suggestedRefinements] - Configuration for suggested refinements.
    * @param {QueryLargePassages} [params.passages] - Configuration for passage retrieval.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>>}
    */
-  public query(params: DiscoveryV2.QueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.QueryResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public query(params: DiscoveryV2.QueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'collection_ids': _params.collectionIds,
-        'filter': _params.filter,
-        'query': _params.query,
-        'natural_language_query': _params.naturalLanguageQuery,
-        'aggregation': _params.aggregation,
-        'count': _params.count,
-        'return': _params._return,
-        'offset': _params.offset,
-        'sort': _params.sort,
-        'highlight': _params.highlight,
-        'spelling_suggestions': _params.spellingSuggestions,
-        'table_results': _params.tableResults,
-        'suggested_refinements': _params.suggestedRefinements,
-        'passages': _params.passages
-      };
+    const body = {
+      'collection_ids': _params.collectionIds,
+      'filter': _params.filter,
+      'query': _params.query,
+      'natural_language_query': _params.naturalLanguageQuery,
+      'aggregation': _params.aggregation,
+      'count': _params.count,
+      'return': _params._return,
+      'offset': _params.offset,
+      'sort': _params.sort,
+      'highlight': _params.highlight,
+      'spelling_suggestions': _params.spellingSuggestions,
+      'table_results': _params.tableResults,
+      'suggested_refinements': _params.suggestedRefinements,
+      'passages': _params.passages
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'query');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/query',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'query');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/query',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -559,67 +465,46 @@ class DiscoveryV2 extends BaseService {
    * from.
    * @param {number} [params.count] - The number of autocompletion suggestions to return.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Completions>>}
    */
-  public getAutocompletion(params: DiscoveryV2.GetAutocompletionParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Completions>): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getAutocompletion(params: DiscoveryV2.GetAutocompletionParams): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'prefix'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'prefix': _params.prefix,
-        'collection_ids': _params.collectionIds,
-        'field': _params.field,
-        'count': _params.count
-      };
+    const query = {
+      'version': this.version,
+      'prefix': _params.prefix,
+      'collection_ids': _params.collectionIds,
+      'field': _params.field,
+      'count': _params.count
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getAutocompletion');
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getAutocompletion');
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/autocompletion',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/autocompletion',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -643,68 +528,47 @@ class DiscoveryV2 extends BaseService {
    * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
    * **count** and **offset** values together in any one query is **10000**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
    */
-  public queryNotices(params: DiscoveryV2.QueryNoticesParams, callback?: DiscoveryV2.Callback<DiscoveryV2.QueryNoticesResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public queryNotices(params: DiscoveryV2.QueryNoticesParams): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'filter': _params.filter,
-        'query': _params.query,
-        'natural_language_query': _params.naturalLanguageQuery,
-        'count': _params.count,
-        'offset': _params.offset
-      };
+    const query = {
+      'version': this.version,
+      'filter': _params.filter,
+      'query': _params.query,
+      'natural_language_query': _params.naturalLanguageQuery,
+      'count': _params.count,
+      'offset': _params.offset
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'queryNotices');
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'queryNotices');
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/notices',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/notices',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -718,64 +582,43 @@ class DiscoveryV2 extends BaseService {
    * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
    * specified, all collections in the project are used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>>}
    */
-  public listFields(params: DiscoveryV2.ListFieldsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ListFieldsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listFields(params: DiscoveryV2.ListFieldsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'collection_ids': _params.collectionIds
-      };
+    const query = {
+      'version': this.version,
+      'collection_ids': _params.collectionIds
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listFields');
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listFields');
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/fields',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/fields',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -791,59 +634,42 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>>}
    */
-  public getComponentSettings(params: DiscoveryV2.GetComponentSettingsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ComponentSettingsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getComponentSettings(params: DiscoveryV2.GetComponentSettingsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getComponentSettings');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/component_settings',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getComponentSettings');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/component_settings',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -900,72 +726,55 @@ class DiscoveryV2 extends BaseService {
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>>}
    */
-  public addDocument(params: DiscoveryV2.AddDocumentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.DocumentAccepted>): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public addDocument(params: DiscoveryV2.AddDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'collectionId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const formData = {
-        'file': {
-          data: _params.file,
-          filename: _params.filename,
-          contentType: _params.fileContentType
-        },
-        'metadata': _params.metadata
-      };
+    const formData = {
+      'file': {
+        data: _params.file,
+        filename: _params.filename,
+        contentType: _params.fileContentType
+      },
+      'metadata': _params.metadata
+    };
 
-      const path = {
-        'project_id': _params.projectId,
-        'collection_id': _params.collectionId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'addDocument');
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections/{collection_id}/documents',
-          method: 'POST',
-          path,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-            'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'addDocument');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/documents',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1007,73 +816,56 @@ class DiscoveryV2 extends BaseService {
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>>}
    */
-  public updateDocument(params: DiscoveryV2.UpdateDocumentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.DocumentAccepted>): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public updateDocument(params: DiscoveryV2.UpdateDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'collectionId', 'documentId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const formData = {
-        'file': {
-          data: _params.file,
-          filename: _params.filename,
-          contentType: _params.fileContentType
-        },
-        'metadata': _params.metadata
-      };
+    const formData = {
+      'file': {
+        data: _params.file,
+        filename: _params.filename,
+        contentType: _params.fileContentType
+      },
+      'metadata': _params.metadata
+    };
 
-      const path = {
-        'project_id': _params.projectId,
-        'collection_id': _params.collectionId,
-        'document_id': _params.documentId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateDocument');
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+      'document_id': _params.documentId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
-          method: 'POST',
-          path,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-            'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateDocument');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1096,62 +888,45 @@ class DiscoveryV2 extends BaseService {
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>>}
    */
-  public deleteDocument(params: DiscoveryV2.DeleteDocumentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.DeleteDocumentResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteDocument(params: DiscoveryV2.DeleteDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'collectionId', 'documentId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId,
-        'collection_id': _params.collectionId,
-        'document_id': _params.documentId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteDocument');
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+      'document_id': _params.documentId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteDocument');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1167,59 +942,42 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>>}
    */
-  public listTrainingQueries(params: DiscoveryV2.ListTrainingQueriesParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuerySet>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listTrainingQueries(params: DiscoveryV2.ListTrainingQueriesParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listTrainingQueries');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/training_data/queries',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listTrainingQueries');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/training_data/queries',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1231,58 +989,41 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteTrainingQueries(params: DiscoveryV2.DeleteTrainingQueriesParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Empty>): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteTrainingQueries(params: DiscoveryV2.DeleteTrainingQueriesParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteTrainingQueries');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/training_data/queries',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteTrainingQueries');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/training_data/queries',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1298,67 +1039,50 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
    * applied.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
-  public createTrainingQuery(params: DiscoveryV2.CreateTrainingQueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuery>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createTrainingQuery(params: DiscoveryV2.CreateTrainingQueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'natural_language_query': _params.naturalLanguageQuery,
-        'examples': _params.examples,
-        'filter': _params.filter
-      };
+    const body = {
+      'natural_language_query': _params.naturalLanguageQuery,
+      'examples': _params.examples,
+      'filter': _params.filter
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createTrainingQuery');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/training_data/queries',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createTrainingQuery');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/training_data/queries',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1371,60 +1095,43 @@ class DiscoveryV2 extends BaseService {
    * Discovery administrative tooling.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
-  public getTrainingQuery(params: DiscoveryV2.GetTrainingQueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuery>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getTrainingQuery(params: DiscoveryV2.GetTrainingQueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'queryId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId,
-        'query_id': _params.queryId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getTrainingQuery');
+    const path = {
+      'project_id': _params.projectId,
+      'query_id': _params.queryId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/training_data/queries/{query_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getTrainingQuery');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/training_data/queries/{query_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1441,68 +1148,132 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
    * applied.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
-  public updateTrainingQuery(params: DiscoveryV2.UpdateTrainingQueryParams, callback?: DiscoveryV2.Callback<DiscoveryV2.TrainingQuery>): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public updateTrainingQuery(params: DiscoveryV2.UpdateTrainingQueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'natural_language_query': _params.naturalLanguageQuery,
-        'examples': _params.examples,
-        'filter': _params.filter
-      };
+    const body = {
+      'natural_language_query': _params.naturalLanguageQuery,
+      'examples': _params.examples,
+      'filter': _params.filter
+    };
 
-      const path = {
-        'project_id': _params.projectId,
-        'query_id': _params.queryId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateTrainingQuery');
+    const path = {
+      'project_id': _params.projectId,
+      'query_id': _params.queryId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/training_data/queries/{query_id}',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateTrainingQuery');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/training_data/queries/{query_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * analyze
+   ************************/
+
+  /**
+   * Analyze a Document.
+   *
+   * Process a document using the specified collection's settings and return it for realtime use.
+   *
+   * **Note:** Documents processed using this method are not added to the specified collection.
+   *
+   * **Note:** This method is only supported on IBM Cloud Pak for Data instances of Discovery.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
+   * Discovery administrative tooling.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
+   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
+   * configuration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.fileContentType] - The content type of file.
+   * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
+   * MB are rejected.
+   *
+   *
+   * Example:  ``` {
+   *   "Creator": "Johnny Appleseed",
+   *   "Subject": "Apples"
+   * } ```.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>>}
+   */
+  public analyzeDocument(params: DiscoveryV2.AnalyzeDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['projectId', 'collectionId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'file': {
+        data: _params.file,
+        filename: _params.filename,
+        contentType: _params.fileContentType
+      },
+      'metadata': _params.metadata
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId
+    };
+
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'analyzeDocument');
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/analyze',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1518,59 +1289,42 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>>}
    */
-  public listEnrichments(params: DiscoveryV2.ListEnrichmentsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Enrichments>): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public listEnrichments(params: DiscoveryV2.ListEnrichmentsParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listEnrichments');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/enrichments',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listEnrichments');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/enrichments',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1584,69 +1338,52 @@ class DiscoveryV2 extends BaseService {
    * @param {CreateEnrichment} params.enrichment -
    * @param {NodeJS.ReadableStream|Buffer} [params.file] - The enrichment file to upload.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
-  public createEnrichment(params: DiscoveryV2.CreateEnrichmentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Enrichment>): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createEnrichment(params: DiscoveryV2.CreateEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'enrichment'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'enrichment': _params.enrichment,
+      'file': {
+        data: _params.file,
+        contentType: 'application/octet-stream'
       }
+    };
 
-      const formData = {
-        'enrichment': _params.enrichment,
-        'file': {
-          data: _params.file,
-          contentType: 'application/octet-stream'
-        }
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createEnrichment');
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createEnrichment');
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/enrichments',
-          method: 'POST',
-          path,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/enrichments',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1659,60 +1396,43 @@ class DiscoveryV2 extends BaseService {
    * Discovery administrative tooling.
    * @param {string} params.enrichmentId - The ID of the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
-  public getEnrichment(params: DiscoveryV2.GetEnrichmentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Enrichment>): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getEnrichment(params: DiscoveryV2.GetEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'enrichmentId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId,
-        'enrichment_id': _params.enrichmentId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getEnrichment');
+    const path = {
+      'project_id': _params.projectId,
+      'enrichment_id': _params.enrichmentId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/enrichments/{enrichment_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getEnrichment');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/enrichments/{enrichment_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1727,67 +1447,50 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.name - A new name for the enrichment.
    * @param {string} [params.description] - A new description for the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
-  public updateEnrichment(params: DiscoveryV2.UpdateEnrichmentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Enrichment>): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public updateEnrichment(params: DiscoveryV2.UpdateEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'enrichmentId', 'name'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'description': _params.description
-      };
+    const body = {
+      'name': _params.name,
+      'description': _params.description
+    };
 
-      const path = {
-        'project_id': _params.projectId,
-        'enrichment_id': _params.enrichmentId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateEnrichment');
+    const path = {
+      'project_id': _params.projectId,
+      'enrichment_id': _params.enrichmentId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/enrichments/{enrichment_id}',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateEnrichment');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/enrichments/{enrichment_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1802,59 +1505,42 @@ class DiscoveryV2 extends BaseService {
    * Discovery administrative tooling.
    * @param {string} params.enrichmentId - The ID of the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteEnrichment(params: DiscoveryV2.DeleteEnrichmentParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Empty>): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteEnrichment(params: DiscoveryV2.DeleteEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId', 'enrichmentId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId,
-        'enrichment_id': _params.enrichmentId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteEnrichment');
+    const path = {
+      'project_id': _params.projectId,
+      'enrichment_id': _params.enrichmentId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}/enrichments/{enrichment_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteEnrichment');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/enrichments/{enrichment_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1868,44 +1554,31 @@ class DiscoveryV2 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>>}
    */
-  public listProjects(params?: DiscoveryV2.ListProjectsParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ListProjectsResponse>): Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listProjects(params?: DiscoveryV2.ListProjectsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listProjects');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listProjects');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1918,62 +1591,45 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.type - The project type of this project.
    * @param {DefaultQueryParams} [params.defaultQueryParameters] - Default query parameters for this project.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
    */
-  public createProject(params: DiscoveryV2.CreateProjectParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ProjectDetails>): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createProject(params: DiscoveryV2.CreateProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'type'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'type': _params.type,
-        'default_query_parameters': _params.defaultQueryParameters
-      };
+    const body = {
+      'name': _params.name,
+      'type': _params.type,
+      'default_query_parameters': _params.defaultQueryParameters
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createProject');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createProject');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1985,59 +1641,42 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
    */
-  public getProject(params: DiscoveryV2.GetProjectParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ProjectDetails>): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getProject(params: DiscoveryV2.GetProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getProject');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getProject');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2050,65 +1689,48 @@ class DiscoveryV2 extends BaseService {
    * Discovery administrative tooling.
    * @param {string} [params.name] - The new name to give this project.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
    */
-  public updateProject(params: DiscoveryV2.UpdateProjectParams, callback?: DiscoveryV2.Callback<DiscoveryV2.ProjectDetails>): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public updateProject(params: DiscoveryV2.UpdateProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name
-      };
+    const body = {
+      'name': _params.name
+    };
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateProject');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateProject');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2123,58 +1745,41 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
    * Discovery administrative tooling.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteProject(params: DiscoveryV2.DeleteProjectParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Empty>): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteProject(params: DiscoveryV2.DeleteProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['projectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'project_id': _params.projectId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteProject');
+    const path = {
+      'project_id': _params.projectId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v2/projects/{project_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteProject');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -2197,58 +1802,37 @@ class DiscoveryV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteUserData(params: DiscoveryV2.DeleteUserDataParams, callback?: DiscoveryV2.Callback<DiscoveryV2.Empty>): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteUserData(params: DiscoveryV2.DeleteUserDataParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customerId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'customer_id': _params.customerId
-      };
+    const query = {
+      'version': this.version,
+      'customer_id': _params.customerId
+    };
 
-      const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
 
-      const parameters = {
-        options: {
-          url: '/v2/user_data',
-          method: 'DELETE',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/user_data',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
 }
@@ -2259,7 +1843,16 @@ class DiscoveryV2 extends BaseService {
 
 namespace DiscoveryV2 {
 
-  /** An operation response. **/
+  /** Options for the `DiscoveryV2` constructor. */
+  export interface Options extends UserOptions {
+
+    /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+     *  version is `2019-11-22`.
+     */
+    version: string;
+  }
+
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -2650,6 +2243,48 @@ namespace DiscoveryV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `analyzeDocument` operation. */
+  export interface AnalyzeDocumentParams {
+    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
+     *  tooling.
+     */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
+     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
+     *  supported size are rejected.
+     */
+    file?: NodeJS.ReadableStream|Buffer;
+    /** The filename for file. */
+    filename?: string;
+    /** The content type of file. */
+    fileContentType?: AnalyzeDocumentConstants.FileContentType | string;
+    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
+     *
+     *
+     *  Example:  ``` {
+     *    "Creator": "Johnny Appleseed",
+     *    "Subject": "Apples"
+     *  } ```.
+     */
+    metadata?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `analyzeDocument` operation. */
+  export namespace AnalyzeDocumentConstants {
+    /** The content type of file. */
+    export enum FileContentType {
+      APPLICATION_JSON = 'application/json',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      APPLICATION_PDF = 'application/pdf',
+      TEXT_HTML = 'text/html',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+    }
+  }
+
   /** Parameters for the `listEnrichments` operation. */
   export interface ListEnrichmentsParams {
     /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
@@ -2775,6 +2410,22 @@ namespace DiscoveryV2 {
    * model interfaces
    ************************/
 
+  /** An object containing the converted document and any identified enrichments. */
+  export interface AnalyzedDocument {
+    /** Array of document results that match the query. */
+    notices?: Notice[];
+    /** Result of the document analysis. */
+    result?: AnalyzedResult;
+  }
+
+  /** Result of the document analysis. */
+  export interface AnalyzedResult {
+    /** Metadata of the document. */
+    metadata?: JsonObject;
+    /** AnalyzedResult accepts additional properties. */
+    [propName: string]: any;
+  }
+
   /** A collection for storing documents. */
   export interface Collection {
     /** The unique identifier of the collection. */
@@ -2809,7 +2460,7 @@ namespace DiscoveryV2 {
 
   /** An object containing an array of autocompletion suggestions. */
   export interface Completions {
-    /** Array of autcomplete suggestion based on the provided prefix. */
+    /** Array of autocomplete suggestion based on the provided prefix. */
     completions?: string[];
   }
 
@@ -2885,16 +2536,16 @@ namespace DiscoveryV2 {
     aggregation?: string;
     /** Object containing suggested refinement settings. */
     suggested_refinements?: DefaultQueryParamsSuggestedRefinements;
-    /** When `true`, a spelling suggestions for the query are retuned by default. */
+    /** When `true`, a spelling suggestions for the query are returned by default. */
     spelling_suggestions?: boolean;
-    /** When `true`, a highlights for the query are retuned by default. */
+    /** When `true`, a highlights for the query are returned by default. */
     highlight?: boolean;
     /** The number of document results returned by default. */
     count?: number;
     /** A comma separated list of document fields to sort results by default. */
     sort?: string;
     /** An array of field names to return in document results if present by default. */
-    _return?: string[];
+    return?: string[];
   }
 
   /** Default settings configuration for passage search options. */
@@ -2903,7 +2554,7 @@ namespace DiscoveryV2 {
     enabled?: boolean;
     /** The number of passages to return. */
     count?: number;
-    /** An array of field names to perfom the passage search on. */
+    /** An array of field names to perform the passage search on. */
     fields?: string[];
     /** The approximate number of characters that each returned passage will contain. */
     characters?: number;
@@ -2919,7 +2570,7 @@ namespace DiscoveryV2 {
 
   /** Object containing suggested refinement settings. */
   export interface DefaultQueryParamsSuggestedRefinements {
-    /** When `true`, a suggested refinements for the query are retuned by default. */
+    /** When `true`, a suggested refinements for the query are returned by default. */
     enabled?: boolean;
     /** The number of suggested refinements to return by default. */
     count?: number;
@@ -2927,7 +2578,7 @@ namespace DiscoveryV2 {
 
   /** Default project query settings for table results. */
   export interface DefaultQueryParamsTableResults {
-    /** When `true`, a table results for the query are retuned by default. */
+    /** When `true`, a table results for the query are returned by default. */
     enabled?: boolean;
     /** The number of table results to return by default. */
     count?: number;
@@ -3096,13 +2747,13 @@ namespace DiscoveryV2 {
     data_updated?: string;
     /** The total number of examples. */
     total_examples?: number;
-    /** When `true`, sufficent label diversity is present to allow training for this project. */
+    /** When `true`, sufficient label diversity is present to allow training for this project. */
     sufficient_label_diversity?: boolean;
     /** When `true`, the relevancy training is in processing. */
     processing?: boolean;
     /** When `true`, the minimum number of examples required to train has been met. */
     minimum_examples_added?: boolean;
-    /** The time that the most recent successful training occured. */
+    /** The time that the most recent successful training occurred. */
     successfully_trained?: string;
     /** When `true`, relevancy training is available when querying collections in the project. */
     available?: boolean;
@@ -3210,6 +2861,26 @@ namespace DiscoveryV2 {
     suggested_refinements?: QuerySuggestedRefinement[];
     /** Array of table results. */
     table_results?: QueryTableResult[];
+    /** Passages returned by Discovery. */
+    passages?: QueryResponsePassage[];
+  }
+
+  /** A passage query response. */
+  export interface QueryResponsePassage {
+    /** The content of the extracted passage. */
+    passage_text?: string;
+    /** The confidence score of the passage's analysis. A higher score indicates greater confidence. */
+    passage_score?: number;
+    /** The unique identifier of the ingested document. */
+    document_id?: string;
+    /** The unique identifier of the collection. */
+    collection_id?: string;
+    /** The position of the first character of the extracted passage in the originating field. */
+    start_offset?: number;
+    /** The position of the last character of the extracted passage in the originating field. */
+    end_offset?: number;
+    /** The label of the field from which the passage has been extracted. */
+    field?: string;
   }
 
   /** Result document for the specified query. */

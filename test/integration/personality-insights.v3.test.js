@@ -17,19 +17,16 @@ describe('personality insights integration', () => {
   options.authenticator = new IamAuthenticator({ apikey: options.apikey });
   const personalityInsights = new PersonalityInsightsV3(options);
 
-  it('profile with text content', done => {
+  it('profile with text content', async () => {
     const params = {
       content: mobydick,
       contentType: 'text/plain',
     };
-    personalityInsights.profile(params, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+    const res = await personalityInsights.profile(params);
+    expect(res).toBeDefined();
   });
 
-  it('profile with text content and all params', done => {
+  it('profile with text content and all params', async () => {
     const params = {
       content: mobydick,
       contentType: 'text/plain',
@@ -38,26 +35,20 @@ describe('personality insights integration', () => {
       rawScores: true,
       consumptionPreferences: true,
     };
-    personalityInsights.profile(params, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+    const res = await personalityInsights.profile(params);
+    expect(res).toBeDefined();
   });
 
-  it('profile with html content', done => {
+  it('profile with html content', async () => {
     const params = {
       content: '<div>' + mobydick + '</div>',
       contentType: 'text/html',
     };
-    personalityInsights.profile(params, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+    const res = await personalityInsights.profile(params);
+    expect(res).toBeDefined();
   });
 
-  it('profile with csv response', done => {
+  it('profile with csv response', async () => {
     const params = {
       content: mobydick,
       contentType: 'text/plain',
@@ -68,10 +59,7 @@ describe('personality insights integration', () => {
         accept: 'text/csv',
       },
     };
-    personalityInsights.profileAsCsv(params, (err, res) => {
-      expect(err).toBeNull();
-      expect(res).toBeDefined();
-      done();
-    });
+    const res = await personalityInsights.profileAsCsv(params);
+    expect(res).toBeDefined();
   });
 });

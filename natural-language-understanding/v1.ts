@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -34,25 +39,32 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'natural-language-understanding';
 
+  /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+   *  `2020-08-01`.
+   */
+  version: string;
+
   /**
    * Construct a NaturalLanguageUnderstandingV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
-   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
-   * the API version for the date you specify, or the most recent version before that date. Note that you should not
-   * programmatically specify the current date at runtime, in case the API has been updated since your application's
-   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
-   * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
+   * format. The current version is `2020-08-01`.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {NaturalLanguageUnderstandingV1}
-   * @throws {Error}
    */
   constructor(options: UserOptions) {
+    options = options || {};
+
+    const requiredParams = ['version'];
+    const missingParams = getMissingParams(options, requiredParams);
+    if (missingParams) {
+      throw missingParams;
+    }
     if (!options.serviceName) {
       options.serviceName = NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME;
     }
@@ -65,11 +77,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     if (options.serviceUrl) {
       this.setServiceUrl(options.serviceUrl);
     }
-    // check if 'version' was provided
-    if (typeof this.baseOptions.version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
-    this.baseOptions.qs.version = options.version;
+    this.version = options.version;
   }
 
   /*************************
@@ -89,7 +97,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * - Relations
    * - Semantic roles
    * - Sentiment
-   * - Syntax.
+   * - Syntax
+   * - Summarization (Experimental)
    *
    * If a language for the input text is not specified with the `language` parameter, the service [automatically detects
    * the
@@ -118,69 +127,52 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {number} [params.limitTextCharacters] - Sets the maximum number of characters that are processed by the
    * service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>>}
    */
-  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.AnalysisResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['features'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'features': _params.features,
-        'text': _params.text,
-        'html': _params.html,
-        'url': _params.url,
-        'clean': _params.clean,
-        'xpath': _params.xpath,
-        'fallback_to_raw': _params.fallbackToRaw,
-        'return_analyzed_text': _params.returnAnalyzedText,
-        'language': _params.language,
-        'limit_text_characters': _params.limitTextCharacters
-      };
+    const body = {
+      'features': _params.features,
+      'text': _params.text,
+      'html': _params.html,
+      'url': _params.url,
+      'clean': _params.clean,
+      'xpath': _params.xpath,
+      'fallback_to_raw': _params.fallbackToRaw,
+      'return_analyzed_text': _params.returnAnalyzedText,
+      'language': _params.language,
+      'limit_text_characters': _params.limitTextCharacters
+    };
 
-      const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'analyze');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/analyze',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'analyze');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v1/analyze',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -196,44 +188,31 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>>}
    */
-  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.ListModelsResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/models',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v1/models',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -244,59 +223,42 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - Model ID of the model to delete.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
    */
-  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams, callback?: NaturalLanguageUnderstandingV1.Callback<NaturalLanguageUnderstandingV1.DeleteModelResults>): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['modelId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'model_id': _params.modelId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteModel');
+    const path = {
+      'model_id': _params.modelId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v1/models/{model_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteModel');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v1/models/{model_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
 }
@@ -307,7 +269,16 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
 
 namespace NaturalLanguageUnderstandingV1 {
 
-  /** An operation response. **/
+  /** Options for the `NaturalLanguageUnderstandingV1` constructor. */
+  export interface Options extends UserOptions {
+
+    /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+     *  `2020-08-01`.
+     */
+    version: string;
+  }
+
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -402,7 +373,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The anger, disgust, fear, joy, or sadness conveyed by the content. */
     emotion?: EmotionResult;
     /** Webpage metadata, such as the author and the title of the page. */
-    metadata?: AnalysisResultsMetadata;
+    metadata?: FeaturesResultsMetadata;
     /** The relationships between entities in the content. */
     relations?: RelationsResult[];
     /** Sentences parsed into `subject`, `action`, and `object` form. */
@@ -411,20 +382,6 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: SentimentResult;
     /** Tokens and sentences returned from syntax analysis. */
     syntax?: SyntaxResult;
-  }
-
-  /** Webpage metadata, such as the author and the title of the page. */
-  export interface AnalysisResultsMetadata {
-    /** The authors of the document. */
-    authors?: Author[];
-    /** The publication date in the format ISO 8601. */
-    publication_date?: string;
-    /** The title of the document. */
-    title?: string;
-    /** URL of a prominent image on the webpage. */
-    image?: string;
-    /** RSS/ATOM feeds found on the webpage. */
-    feeds?: Feed[];
   }
 
   /** API usage information for the request. */
@@ -659,7 +616,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image,
      *  and publication date. Supports URL and HTML input types only.
      */
-    metadata?: MetadataOptions;
+    metadata?: JsonObject;
     /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo`
      *  relation might connect the entities "Nobel Prize" and "Albert Einstein". For more information, see [Relation
      *  types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-relations).
@@ -686,6 +643,20 @@ namespace NaturalLanguageUnderstandingV1 {
     categories?: CategoriesOptions;
     /** Returns tokens and sentences from the input text. */
     syntax?: SyntaxOptions;
+  }
+
+  /** Webpage metadata, such as the author and the title of the page. */
+  export interface FeaturesResultsMetadata {
+    /** The authors of the document. */
+    authors?: Author[];
+    /** The publication date in the format ISO 8601. */
+    publication_date?: string;
+    /** The title of the document. */
+    title?: string;
+    /** URL of a prominent image on the webpage. */
+    image?: string;
+    /** RSS/ATOM feeds found on the webpage. */
+    feeds?: Feed[];
   }
 
   /** RSS or ATOM feed found on the webpage. */
@@ -724,10 +695,6 @@ namespace NaturalLanguageUnderstandingV1 {
     models?: Model[];
   }
 
-  /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
-  export interface MetadataOptions {
-  }
-
   /** Model. */
   export interface Model {
     /** When the status is `available`, the model is ready to use. */
@@ -742,9 +709,7 @@ namespace NaturalLanguageUnderstandingV1 {
     workspace_id?: string;
     /** The model version, if it was manually provided in Watson Knowledge Studio. */
     model_version?: string;
-    /** (Deprecated — use `model_version`) The model version, if it was manually provided in Watson Knowledge
-     *  Studio.
-     */
+    /** Deprecated — use `model_version`. */
     version?: string;
     /** The description of the version, if it was manually provided in Watson Knowledge Studio. */
     version_description?: string;

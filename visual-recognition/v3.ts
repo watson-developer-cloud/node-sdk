@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201201-153403
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IBM Watson&trade; Visual Recognition service uses deep learning algorithms to identify scenes and objects in
- * images that you upload to the service. You can create and train a custom classifier to identify subjects that suit
- * your needs.
+ * IBM Watson&trade; Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as
+ * of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.
+ * {: deprecated}
+ *
+ * The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes and objects in images that
+ * you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.
  */
 
 class VisualRecognitionV3 extends BaseService {
@@ -30,25 +38,35 @@ class VisualRecognitionV3 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.visual-recognition.watson.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'watson_vision_combined';
 
+  /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+   *  `2018-03-19`.
+   */
+  version: string;
+
   /**
    * Construct a VisualRecognitionV3 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} options.version - The API version date to use with the service, in "YYYY-MM-DD" format. Whenever
-   * the API is changed in a backwards incompatible way, a new minor version of the API is released. The service uses
-   * the API version for the date you specify, or the most recent version before that date. Note that you should not
-   * programmatically specify the current date at runtime, in case the API has been updated since your application's
-   * release. Instead, specify a version date that is compatible with your application, and don't change it until your
-   * application is ready for a later version.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
+   * format. The current version is `2018-03-19`.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.visual-recognition.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
    * @constructor
    * @returns {VisualRecognitionV3}
-   * @throws {Error}
    */
   constructor(options: UserOptions) {
+    console.warn(`On 1 December 2021, Visual Recognition will no longer be available. 
+    For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#visual-recognition-deprecation`)
+
+    options = options || {};
+
+    const requiredParams = ['version'];
+    const missingParams = getMissingParams(options, requiredParams);
+    if (missingParams) {
+      throw missingParams;
+    }
     if (!options.serviceName) {
       options.serviceName = VisualRecognitionV3.DEFAULT_SERVICE_NAME;
     }
@@ -61,11 +79,7 @@ class VisualRecognitionV3 extends BaseService {
     if (options.serviceUrl) {
       this.setServiceUrl(options.serviceUrl);
     }
-    // check if 'version' was provided
-    if (typeof this.baseOptions.version === 'undefined') {
-      throw new Error('Argument error: version was not specified');
-    }
-    this.baseOptions.qs.version = options.version;
+    this.version = options.version;
   }
 
   /*************************
@@ -111,59 +125,46 @@ class VisualRecognitionV3 extends BaseService {
    * @param {string} [params.acceptLanguage] - The desired language of parts of the response. See the response for
    * details.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>>}
    */
-  public classify(params?: VisualRecognitionV3.ClassifyParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.ClassifiedImages>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public classify(params?: VisualRecognitionV3.ClassifyParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const formData = {
-        'images_file': {
-          data: _params.imagesFile,
-          filename: _params.imagesFilename,
-          contentType: _params.imagesFileContentType
-        },
-        'url': _params.url,
-        'threshold': _params.threshold,
-        'owners': Array.isArray(_params.owners) ? _params.owners.join(',') : _params.owners,
-        'classifier_ids': Array.isArray(_params.classifierIds) ? _params.classifierIds.join(',') : _params.classifierIds
-      };
+    const formData = {
+      'images_file': {
+        data: _params.imagesFile,
+        filename: _params.imagesFilename,
+        contentType: _params.imagesFileContentType
+      },
+      'url': _params.url,
+      'threshold': _params.threshold,
+      'owners': Array.isArray(_params.owners) ? _params.owners.join(',') : _params.owners,
+      'classifier_ids': Array.isArray(_params.classifierIds) ? _params.classifierIds.join(',') : _params.classifierIds
+    };
 
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'classify');
+    const query = {
+      'version': this.version
+    };
 
-      const parameters = {
-        options: {
-          url: '/v3/classify',
-          method: 'POST',
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'classify');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v3/classify',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -206,73 +207,56 @@ class VisualRecognitionV3 extends BaseService {
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.negativeExamplesFilename] - The filename for negativeExamples.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
-  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'positiveExamples'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'name': _params.name,
+      'negative_examples': {
+        data: _params.negativeExamples,
+        filename: _params.negativeExamplesFilename,
+        contentType: 'application/octet-stream'
       }
+    };
 
-      const formData = {
-        'name': _params.name,
-        'negative_examples': {
-          data: _params.negativeExamples,
-          filename: _params.negativeExamplesFilename,
-          contentType: 'application/octet-stream'
-        }
+    Object.keys(_params.positiveExamples || {}).forEach(key => {
+      const partName = `${key}_positive_examples`
+      formData[partName] = {
+        data: _params.positiveExamples[key],
+        contentType: 'application/octet-stream',
       };
-
-      Object.keys(_params.positiveExamples || {}).forEach(key => {
-        const partName = `${key}_positive_examples`
-        formData[partName] = {
-          data: _params.positiveExamples[key],
-          contentType: 'application/octet-stream',
-        };
-      });
-
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'createClassifier');
-
-      const parameters = {
-        options: {
-          url: '/v3/classifiers',
-          method: 'POST',
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
-
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
     });
+
+    const query = {
+      'version': this.version
+    };
+
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'createClassifier');
+
+    const parameters = {
+      options: {
+        url: '/v3/classifiers',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -282,49 +266,32 @@ class VisualRecognitionV3 extends BaseService {
    * @param {boolean} [params.verbose] - Specify `true` to return details about the classifiers. Omit this parameter to
    * return a brief list of classifiers.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>>}
    */
-  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifiers>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>> {
-    const _params = (typeof params === 'function' && !callback) ? {} : extend({}, params);
-    const _callback = (typeof params === 'function' && !callback) ? params : callback;
+  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>> {
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'verbose': _params.verbose
-      };
+    const query = {
+      'version': this.version,
+      'verbose': _params.verbose
+    };
 
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'listClassifiers');
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'listClassifiers');
 
-      const parameters = {
-        options: {
-          url: '/v3/classifiers',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/classifiers',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -335,59 +302,42 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
-  public getClassifier(params: VisualRecognitionV3.GetClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getClassifier(params: VisualRecognitionV3.GetClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['classifierId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'classifier_id': _params.classifierId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getClassifier');
+    const path = {
+      'classifier_id': _params.classifierId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v3/classifiers/{classifier_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getClassifier');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v3/classifiers/{classifier_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -431,77 +381,60 @@ class VisualRecognitionV3 extends BaseService {
    * Encode special characters in the file name in UTF-8.
    * @param {string} [params.negativeExamplesFilename] - The filename for negativeExamples.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
-  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Classifier>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['classifierId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'negative_examples': {
+        data: _params.negativeExamples,
+        filename: _params.negativeExamplesFilename,
+        contentType: 'application/octet-stream'
       }
+    };
 
-      const formData = {
-        'negative_examples': {
-          data: _params.negativeExamples,
-          filename: _params.negativeExamplesFilename,
-          contentType: 'application/octet-stream'
-        }
+    Object.keys(_params.positiveExamples || {}).forEach(key => {
+      const partName = `${key}_positive_examples`
+      formData[partName] = {
+        data: _params.positiveExamples[key],
+        contentType: 'application/octet-stream',
       };
-
-      Object.keys(_params.positiveExamples || {}).forEach(key => {
-        const partName = `${key}_positive_examples`
-        formData[partName] = {
-          data: _params.positiveExamples[key],
-          contentType: 'application/octet-stream',
-        };
-      });
-
-      const path = {
-        'classifier_id': _params.classifierId
-      };
-
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'updateClassifier');
-
-      const parameters = {
-        options: {
-          url: '/v3/classifiers/{classifier_id}',
-          method: 'POST',
-          path,
-          formData
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          }, _params.headers),
-        }),
-      };
-
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
     });
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'classifier_id': _params.classifierId
+    };
+
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'updateClassifier');
+
+    const parameters = {
+      options: {
+        url: '/v3/classifiers/{classifier_id}',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -510,59 +443,42 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>>}
    */
-  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['classifierId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'classifier_id': _params.classifierId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteClassifier');
+    const path = {
+      'classifier_id': _params.classifierId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v3/classifiers/{classifier_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteClassifier');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v3/classifiers/{classifier_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -578,60 +494,43 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream|Buffer>>}
    */
-  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams, callback?: VisualRecognitionV3.Callback<NodeJS.ReadableStream|Buffer>): Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams): Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream|Buffer>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['classifierId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'classifier_id': _params.classifierId
-      };
+    const query = {
+      'version': this.version
+    };
 
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getCoreMlModel');
+    const path = {
+      'classifier_id': _params.classifierId
+    };
 
-      const parameters = {
-        options: {
-          url: '/v3/classifiers/{classifier_id}/core_ml_model',
-          method: 'GET',
-          path,
-          responseType: 'stream',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/octet-stream',
-          }, _params.headers),
-        }),
-      };
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getCoreMlModel');
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    const parameters = {
+      options: {
+        url: '/v3/classifiers/{classifier_id}/core_ml_model',
+        method: 'GET',
+        qs: query,
+        path,
+        responseType: 'stream',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/octet-stream',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -651,59 +550,38 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @param {Function} [callback] - The callback that handles the response
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>>}
    */
-  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams, callback?: VisualRecognitionV3.Callback<VisualRecognitionV3.Empty>): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
-    const _params = extend({}, params);
-    const _callback = callback;
+  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
+    const _params = Object.assign({}, params);
     const requiredParams = ['customerId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        if (_callback) {
-          _callback(missingParams);
-          return resolve();
-        }
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'customer_id': _params.customerId
-      };
+    const query = {
+      'version': this.version,
+      'customer_id': _params.customerId
+    };
 
-      const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteUserData');
 
-      const parameters = {
-        options: {
-          url: '/v3/user_data',
-          method: 'DELETE',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/user_data',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return this.createRequest(parameters).then(
-        res => {
-          if (_callback) {
-            _callback(null, res);
-          }
-          return resolve(res);
-        },
-        err => {
-          if (_callback) {
-            _callback(err)
-            return resolve();
-          }
-          return reject(err);
-        }
-      );
-    });
+    return this.createRequest(parameters);
   };
 
 }
@@ -714,7 +592,16 @@ class VisualRecognitionV3 extends BaseService {
 
 namespace VisualRecognitionV3 {
 
-  /** An operation response. **/
+  /** Options for the `VisualRecognitionV3` constructor. */
+  export interface Options extends UserOptions {
+
+    /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+     *  `2018-03-19`.
+     */
+    version: string;
+  }
+
+  /** An operation response. */
   export interface Response<T = any>  {
     result: T;
     status: number;
@@ -904,7 +791,7 @@ namespace VisualRecognitionV3 {
   /** A category within a classifier. */
   export interface Class {
     /** The name of the class. */
-    _class: string;
+    class: string;
   }
 
   /** Result of a class within a classifier. */
@@ -916,7 +803,7 @@ namespace VisualRecognitionV3 {
      *  response might not be in the specified language when the requested language is not supported or when there is no
      *  translation for the class name.
      */
-    _class: string;
+    class: string;
     /** Confidence score for the property in the range of 0 to 1. A higher score indicates greater likelihood that
      *  the class is depicted in the image. The default threshold for returning scores from a classifier is 0.5.
      */

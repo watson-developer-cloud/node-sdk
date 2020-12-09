@@ -14,30 +14,24 @@ describe('natural language classifier integration', () => {
   const naturalLanguageClassifier = new NaturalLanguageClassifierV1(options);
   const { classifierId } = options;
 
-  it('getClassifier', done => {
+  it('should getClassifier', async () => {
     const params = {
       classifierId,
     };
-    naturalLanguageClassifier.getClassifier(params, (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      expect(result.classifier_id).toBe(params.classifierId);
-      done();
-    });
+    const res = await naturalLanguageClassifier.getClassifier(params);
+    const { result } = res || {};
+    expect(result).toBeDefined();
+    expect(result.classifier_id).toBe(params.classifierId);
   });
 
-  it('classifyCollection', done => {
+  it('should classifyCollection', async () => {
     const params = {
       classifierId,
       collection: [{ text: 'string' }],
     };
-    naturalLanguageClassifier.classifyCollection(params, (err, res) => {
-      expect(err).toBeNull();
-      const { result } = res || {};
-      expect(result).toBeDefined();
-      expect(result.classifier_id).toBe(params.classifierId);
-      done();
-    });
+    const res = await naturalLanguageClassifier.classifyCollection(params);
+    const { result } = res || {};
+    expect(result).toBeDefined();
+    expect(result.classifier_id).toBe(params.classifierId);
   });
 });
