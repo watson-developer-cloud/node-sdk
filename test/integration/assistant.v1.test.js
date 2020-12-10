@@ -55,13 +55,14 @@ const testIntentsUpdate = {
   description: 'description_2',
   examples: [
     {
-      text: 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~',
+      text: 'Hi',
     },
   ],
 };
-const testExamplesNew = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterexampleText = 'Hey, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
-const counterexampleTextNew = 'Oh, here\'s a URL ☺ http://example.com/?a=$+*^;&c=%20#!"`~';
+const testExampleText = 'Hey';
+const testExamplesNew = 'Oh, hey there';
+const counterexampleText = 'Hey';
+const counterexampleTextNew = 'Oh, hey there';
 const testEntities = [
   {
     entity: 'entity_1',
@@ -405,13 +406,13 @@ describe('assistant v1 integration', () => {
       const params = {
         workspaceId: workspace1.workspaceId,
         intent: testIntentsUpdate.intent,
-        text: 'new_example',
+        text: testExampleText,
       };
 
       const res = await assistant.createExample(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(result.text).toBe('new_example');
+      expect(result.text).toBe(testExampleText);
     });
   });
 
@@ -423,13 +424,13 @@ describe('assistant v1 integration', () => {
       const params = {
         workspaceId: workspace1.workspaceId,
         intent: testIntentsUpdate.intent,
-        text: testIntentsUpdate.examples[0].text,
+        text: testExampleText,
       };
 
       const res = await assistant.getExample(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(result.text).toBe(testIntentsUpdate.examples[0].text);
+      expect(result.text).toBe(testExampleText);
     });
   });
 
@@ -441,7 +442,7 @@ describe('assistant v1 integration', () => {
       const params = {
         workspaceId: workspace1.workspaceId,
         intent: testIntentsUpdate.intent,
-        text: testIntentsUpdate.examples[0].text,
+        text: testExampleText,
         newText: testExamplesNew,
       };
 
