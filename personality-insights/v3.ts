@@ -61,6 +61,10 @@ class PersonalityInsightsV3 extends BaseService {
    * @throws {Error}
    */
   constructor(options: UserOptions) {
+    console.warn(`On 1 December 2021, Personality Insights will no longer be available. 
+    Consider migrating to Watson Natural Language Understanding. 
+    For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation`)
+    
     if (!options.serviceName) {
       options.serviceName = PersonalityInsightsV3.DEFAULT_SERVICE_NAME;
     }
