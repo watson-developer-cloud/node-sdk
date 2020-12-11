@@ -117,10 +117,14 @@
 					<h2>ANNOUNCEMENTS!</h2>
 				</a>
 				<a href="#personality-insights-deprecation" id="personality-insights-deprecation" style="color: inherit; text-decoration: none;">
-					<h3>Personality Insights Deprecation</h3>
+					<h3>Personality Insights deprecation</h3>
 				</a>
-				<p>IBM® will begin sunsetting IBM Watson™ Personality Insights on 1 December 2020. For a period of one year from this date, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.</p>
+				<p>IBM Watson™ Personality Insights is discontinued. For a period of one year from 1 December 2020, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.</p>
 				<p>As an alternative, we encourage you to consider migrating to IBM Watson™ <a href="https://cloud.ibm.com/docs/natural-language-understanding">Natural Language Understanding</a>, a service on IBM Cloud® that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business or industry. For more information, see About Natural Language Understanding.</p>
+				<a href="#visual-recognition-deprecation" id="visual-recognition-deprecation" style="color: inherit; text-decoration: none;">
+					<h3>Visual Recognition deprecation</h3>
+				</a>
+				<p>IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can&#39;t create instances. Any instance that is provisioned on 1 December 2021 will be deleted.</p>
 				<a href="#major-version-5-released" id="major-version-5-released" style="color: inherit; text-decoration: none;">
 					<h3>Major version 5 released</h3>
 				</a>
@@ -495,7 +499,7 @@ assistant.message({
 
 <span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV2({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.assistant.watson.cloud.ibm.com'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-09-19'</span>
 });
 
@@ -521,7 +525,7 @@ assistant.message(
 
 <span class="hljs-keyword">const</span> assistant = <span class="hljs-keyword">new</span> AssistantV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/assistant/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.assistant.watson.cloud.ibm.com'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-02-16'</span>
 });
 
@@ -546,7 +550,7 @@ assistant.message(
 
 <span class="hljs-keyword">const</span> compareComply = <span class="hljs-keyword">new</span> CompareComplyV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/compare-comply/api'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.compare-comply.watson.cloud.ibm.com'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-12-06'</span>
 });
 
@@ -565,8 +569,33 @@ compareComply.compareDocuments(
   .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(err);
   });</code></pre>
-				<a href="#discovery" id="discovery" style="color: inherit; text-decoration: none;">
-					<h3>Discovery</h3>
+				<a href="#discovery-v2" id="discovery-v2" style="color: inherit; text-decoration: none;">
+					<h3>Discovery v2</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v2'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV2({
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.discovery.watson.cloud.ibm.com'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-11-22'</span>
+});
+
+discovery.query(
+  {
+    <span class="hljs-attr">projectId</span>: <span class="hljs-string">'&lt;project_id&gt;'</span>,
+    <span class="hljs-attr">collectionId</span>: <span class="hljs-string">'&lt;collection_id&gt;'</span>,
+    <span class="hljs-attr">query</span>: <span class="hljs-string">'my_query'</span>
+  })
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#discovery-v1" id="discovery-v1" style="color: inherit; text-decoration: none;">
+					<h3>Discovery v1</h3>
 				</a>
 				<p>Use the <a href="https://www.ibm.com/watson/services/discovery/">Discovery Service</a> to search and analyze structured and unstructured data.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/discovery/v1'</span>);
@@ -574,7 +603,7 @@ compareComply.compareDocuments(
 
 <span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/discovery/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.discovery.watson.cloud.ibm.com'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2017-09-01'</span>
 });
 
@@ -599,7 +628,7 @@ discovery.query(
 
 <span class="hljs-keyword">const</span> languageTranslator = <span class="hljs-keyword">new</span> LanguageTranslatorV3({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/language-translator/api/'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.language-translator.watson.cloud.ibm.com'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'YYYY-MM-DD'</span>,
 });
 
@@ -636,7 +665,7 @@ languageTranslator.identify(
 
 <span class="hljs-keyword">const</span> classifier = <span class="hljs-keyword">new</span> NaturalLanguageClassifierV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-classifier/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com'</span>
 });
 
 classifier.classify(
@@ -662,7 +691,7 @@ classifier.classify(
 <span class="hljs-keyword">const</span> nlu = <span class="hljs-keyword">new</span> NaturalLanguageUnderstandingV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-04-05'</span>,
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/natural-language-understanding/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com'</span>
 });
 
 nlu.analyze(
@@ -682,6 +711,9 @@ nlu.analyze(
 				<a href="#personality-insights" id="personality-insights" style="color: inherit; text-decoration: none;">
 					<h3>Personality Insights</h3>
 				</a>
+				<p><strong>On 1 December 2021, Personality Insights will no longer be available.
+						Consider migrating to Watson Natural Language Understanding.
+				For more information, see <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation">https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation</a></strong></p>
 				<p>Analyze text in English and get a personality profile by using the
 				<a href="https://www.ibm.com/watson/services/personality-insights/">Personality Insights</a> service.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> PersonalityInsightsV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/personality-insights/v3'</span>);
@@ -690,7 +722,7 @@ nlu.analyze(
 <span class="hljs-keyword">const</span> personalityInsights = <span class="hljs-keyword">new</span> PersonalityInsightsV3({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2016-10-19'</span>,
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/personality-insights/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.personality-insights.watson.cloud.ibm.com'</span>
 });
 
 personalityInsights.profile(
@@ -715,7 +747,7 @@ personalityInsights.profile(
 
 <span class="hljs-keyword">const</span> speechToText = <span class="hljs-keyword">new</span> SpeechToTextV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://stream.watsonplatform.net/speech-to-text/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.speech-to-text.watson.cloud.ibm.com'</span>
 });
 
 <span class="hljs-keyword">const</span> params = {
@@ -746,7 +778,7 @@ fs.createReadStream(<span class="hljs-string">'./resources/speech.wav'</span>)
 
 <span class="hljs-keyword">const</span> textToSpeech = <span class="hljs-keyword">new</span> TextToSpeechV1({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://stream.watsonplatform.net/text-to-speech/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.text-to-speech.watson.cloud.ibm.com'</span>
 });
 
 <span class="hljs-keyword">const</span> params = {
@@ -789,7 +821,7 @@ synthStream.pipe(fs.createWriteStream(<span class="hljs-string">'./audio.ogg'</s
 <span class="hljs-keyword">const</span> toneAnalyzer = <span class="hljs-keyword">new</span> ToneAnalyzerV3({
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2016-05-19'</span>,
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://gateway.watsonplatform.net/tone-analyzer/api/'</span>
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.tone-analyzer.watson.cloud.ibm.com'</span>
 });
 
 toneAnalyzer.tone(
@@ -803,18 +835,45 @@ toneAnalyzer.tone(
   .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(err);
   });</code></pre>
-				<a href="#visual-recognition" id="visual-recognition" style="color: inherit; text-decoration: none;">
-					<h3>Visual Recognition</h3>
+				<a href="#visual-recognition-v4" id="visual-recognition-v4" style="color: inherit; text-decoration: none;">
+					<h3>Visual Recognition v4</h3>
 				</a>
 				<p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
 				following picture.</p>
-				<img src="https://visual-recognition-demo.ng.bluemix.net/images/samples/5.jpg" />
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> VisualRecognitionV4 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/visual-recognition/v4'</span>);
+<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
+
+<span class="hljs-keyword">const</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV4({
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.visual-recognition.watson.cloud.ibm.com'</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-string">'2019-02-11'</span>,
+  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
+});
+
+<span class="hljs-keyword">const</span> params = {
+  <span class="hljs-attr">collectionIds</span>: [<span class="hljs-string">'&lt;collectionId1'</span>,<span class="hljs-string">'collectionId2'</span>,<span class="hljs-string">'collectionId3'</span>],
+  <span class="hljs-attr">features</span>: <span class="hljs-string">'objects'</span>
+};
+
+visualRecognition.classify(params)
+  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> image = response.result.images[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">const</span> detectedObjects = image.objects.collections[<span class="hljs-number">0</span>].objects
+    <span class="hljs-built_in">console</span>.log(detectedObjects)
+  })
+  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(err);
+  });</code></pre>
+				<a href="#visual-recognition-v3" id="visual-recognition-v3" style="color: inherit; text-decoration: none;">
+					<h3>Visual Recognition v3</h3>
+				</a>
+				<p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
+				following picture.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
 <span class="hljs-keyword">const</span> VisualRecognitionV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/visual-recognition/v3'</span>);
 <span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'ibm-watson/auth'</span>);
 
 <span class="hljs-keyword">const</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'&lt;service_url&gt;'</span>,
+  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">'https://api.us-south.visual-recognition.watson.cloud.ibm.com'</span>,
   <span class="hljs-attr">version</span>: <span class="hljs-string">'2018-03-19'</span>,
   <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">'&lt;apikey&gt;'</span> }),
 });

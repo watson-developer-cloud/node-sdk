@@ -107,6 +107,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="naturallanguageunderstandingv1.html#version" class="tsd-kind-icon">version</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="naturallanguageunderstandingv1.html#default_service_name" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="naturallanguageunderstandingv1.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a></li>
 							</ul>
@@ -119,6 +120,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageunderstandingv1.html#deletemodel" class="tsd-kind-icon">delete<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageunderstandingv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageunderstandingv1.html#listmodels" class="tsd-kind-icon">list<wbr>Models</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageunderstandingv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageunderstandingv1.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a></li>
 							</ul>
 						</section>
@@ -138,18 +140,13 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L35">natural-language-understanding/v1.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-understanding/v1.ts#L45">natural-language-understanding/v1.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Construct a NaturalLanguageUnderstandingV1 object.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>throws</dt>
-									<dd><p>{Error}</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -180,6 +177,22 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="version" class="tsd-anchor"></a>
+					<h3>version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-understanding/v1.ts#L45">natural-language-understanding/v1.ts:45</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+							<code>2020-08-01</code>.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 					<a name="default_service_name" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT_<wbr>SERVICE_<wbr>NAME</h3>
@@ -187,7 +200,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L35">natural-language-understanding/v1.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-understanding/v1.ts#L40">natural-language-understanding/v1.ts:40</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -198,7 +211,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L34">natural-language-understanding/v1.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-understanding/v1.ts#L39">natural-language-understanding/v1.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -209,13 +222,13 @@
 					<a name="analyze" class="tsd-anchor"></a>
 					<h3>analyze</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">analyze<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageunderstandingv1.analyzeparams.html" class="tsd-signature-type">AnalyzeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageunderstandingv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.analysisresults.html" class="tsd-signature-type">AnalysisResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.analysisresults.html" class="tsd-signature-type">AnalysisResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">analyze<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageunderstandingv1.analyzeparams.html" class="tsd-signature-type">AnalyzeParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.analysisresults.html" class="tsd-signature-type">AnalysisResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L124">natural-language-understanding/v1.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-understanding/v1.ts#L132">natural-language-understanding/v1.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -233,7 +246,8 @@
 									<li>Relations</li>
 									<li>Semantic roles</li>
 									<li>Sentiment</li>
-									<li>Syntax.</li>
+									<li>Syntax</li>
+									<li>Summarization (Experimental)</li>
 								</ul>
 								<p>If a language for the input text is not specified with the <code>language</code> parameter, the service <a href="https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-detectable-languages">automatically detects
 										the
@@ -347,15 +361,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageunderstandingv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.analysisresults.html" class="tsd-signature-type">AnalysisResults</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.analysisresults.html" class="tsd-signature-type">AnalysisResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -366,13 +371,13 @@
 					<a name="deletemodel" class="tsd-anchor"></a>
 					<h3>delete<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageunderstandingv1.deletemodelparams.html" class="tsd-signature-type">DeleteModelParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageunderstandingv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.deletemodelresults.html" class="tsd-signature-type">DeleteModelResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.deletemodelresults.html" class="tsd-signature-type">DeleteModelResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageunderstandingv1.deletemodelparams.html" class="tsd-signature-type">DeleteModelParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.deletemodelresults.html" class="tsd-signature-type">DeleteModelResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L250">natural-language-understanding/v1.ts:250</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-understanding/v1.ts#L228">natural-language-understanding/v1.ts:228</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -428,15 +433,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageunderstandingv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.deletemodelresults.html" class="tsd-signature-type">DeleteModelResults</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.deletemodelresults.html" class="tsd-signature-type">DeleteModelResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -470,13 +466,13 @@
 					<a name="listmodels" class="tsd-anchor"></a>
 					<h3>list<wbr>Models</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsparams.html" class="tsd-signature-type">ListModelsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageunderstandingv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsresults.html" class="tsd-signature-type">ListModelsResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsresults.html" class="tsd-signature-type">ListModelsResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsparams.html" class="tsd-signature-type">ListModelsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsresults.html" class="tsd-signature-type">ListModelsResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L202">natural-language-understanding/v1.ts:202</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-understanding/v1.ts#L193">natural-language-understanding/v1.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -528,18 +524,55 @@
 											</table>
 										</td>
 									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsresults.html" class="tsd-signature-type">ListModelsResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setenablegzipcompression" class="tsd-anchor"></a>
+					<h3>set<wbr>Enable<wbr>Gzip<wbr>Compression</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression<span class="tsd-signature-symbol">(</span>setting<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setenablegzipcompression">setEnableGzipCompression</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:90</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Turn request body compression on or off.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
 									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageunderstandingv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsresults.html" class="tsd-signature-type">ListModelsResults</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>setting</code></td>
+										<td><span class="tsd-signature-type">boolean</span></td>
+										<td></td>
 										<td>
-											<p></p>
+											<p>Will turn it on if &#x27;true&#x27;, off if &#x27;false&#x27;.
+											</p>
 											<p></p>
 										</td>
 									</tr>
 								</tbody>
 							</table>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageunderstandingv1.listmodelsresults.html" class="tsd-signature-type">ListModelsResults</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -696,6 +729,10 @@
 								<a href="naturallanguageunderstandingv1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="naturallanguageunderstandingv1.html#version" class="tsd-kind-icon">version</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 								<a href="naturallanguageunderstandingv1.html#default_service_name" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME</a>
 							</li>
@@ -718,6 +755,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="naturallanguageunderstandingv1.html#listmodels" class="tsd-kind-icon">list<wbr>Models</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="naturallanguageunderstandingv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">

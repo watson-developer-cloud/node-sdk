@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CreateVoiceModelParams | ibm-watson</title>
+	<title>Options | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/texttospeechv1.html">TextToSpeechV1</a>
+					<a href="../classes/assistantv2.html">AssistantV2</a>
 				</li>
 				<li>
-					<a href="texttospeechv1.createvoicemodelparams.html">CreateVoiceModelParams</a>
+					<a href="assistantv2.options.html">Options</a>
 				</li>
 			</ul>
-			<h1>Interface CreateVoiceModelParams</h1>
+			<h1>Interface Options</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Parameters for the <code>createVoiceModel</code> operation.</p>
+						<p>Options for the <code>AssistantV2</code> constructor.</p>
 					</div>
 				</div>
 			</section>
@@ -78,9 +78,23 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CreateVoiceModelParams</span>
+						<span class="tsd-signature-type">UserOptions</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">Options</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
+			</section>
+			<section class="tsd-panel tsd-kind-interface tsd-parent-kind-class">
+				<h3 class="tsd-before-signature">Indexable</h3>
+				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Allow additional request config parameters</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
@@ -90,10 +104,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.createvoicemodelparams.html#description" class="tsd-kind-icon">description</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.createvoicemodelparams.html#headers" class="tsd-kind-icon">headers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.createvoicemodelparams.html#language" class="tsd-kind-icon">language</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.createvoicemodelparams.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="assistantv2.options.html#authenticator" class="tsd-kind-icon">authenticator</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="assistantv2.options.html#disablesslverification" class="tsd-kind-icon">disable<wbr>Ssl<wbr>Verification</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="assistantv2.options.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="assistantv2.options.html#jar" class="tsd-kind-icon">jar</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="assistantv2.options.html#serviceurl" class="tsd-kind-icon">service<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="assistantv2.options.html#url" class="tsd-kind-icon">url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="assistantv2.options.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,60 +118,116 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="description" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> description</h3>
-					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="authenticator" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> authenticator</h3>
+					<div class="tsd-signature tsd-kind-icon">authenticator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AuthenticatorInterface</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#authenticator">authenticator</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1580">text-to-speech/v1-generated.ts:1580</a></li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:24</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A description of the new custom voice model. Specifying a description is recommended.</p>
+							<p>The Authenticator object used to authenticate requests to the service</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="disablesslverification" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> disable<wbr>Ssl<wbr>Verification</h3>
+					<div class="tsd-signature tsd-kind-icon">disable<wbr>Ssl<wbr>Verification<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#disablesslverification">disableSslVerification</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:32</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Set to <code>true</code> to allow unauthorized requests - not recommended for production use.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="headers" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#headers">headers</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1581">text-to-speech/v1-generated.ts:1581</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="language" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> language</h3>
-					<div class="tsd-signature tsd-kind-icon">language<span class="tsd-signature-symbol">:</span> <a href="../enums/texttospeechv1.createvoicemodelconstants.language.html" class="tsd-signature-type">Language</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1578">text-to-speech/v1-generated.ts:1578</a></li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:28</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The language of the new custom voice model. You create a custom voice model for a specific language, not for
-								a specific voice. A custom model can be used with any voice, standard or neural, for its specified language.
-							Omit the parameter to use the the default language, <code>en-US</code>.</p>
+							<p>Default headers that shall be included with every request to the service.</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="jar" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> jar</h3>
+					<div class="tsd-signature tsd-kind-icon">jar<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#jar">jar</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1573">text-to-speech/v1-generated.ts:1573</a></li>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:34</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The name of the new custom voice model.</p>
+							<p>Set your own cookie jar object</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="serviceurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> service<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">service<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#serviceurl">serviceUrl</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:26</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The base url to use when contacting the service. The base url may differ between IBM Cloud regions.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="url" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#url">url</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:36</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Deprecated. Use <code>serviceUrl</code> instead.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="version" class="tsd-anchor"></a>
+					<h3>version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides UserOptions.version</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v2.ts#L526">assistant/v2.ts:526</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+							<code>2020-04-01</code>.</p>
 						</div>
 					</div>
 				</section>
@@ -174,10 +247,50 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
 					</li>
+				</ul>
+				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
+					<li class="current tsd-kind-class">
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
+						<ul>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="assistantv2.options.html" class="tsd-kind-icon">Options</a>
+								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="assistantv2.options.html#authenticator" class="tsd-kind-icon">authenticator</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="assistantv2.options.html#disablesslverification" class="tsd-kind-icon">disable<wbr>Ssl<wbr>Verification</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="assistantv2.options.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="assistantv2.options.html#jar" class="tsd-kind-icon">jar</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="assistantv2.options.html#serviceurl" class="tsd-kind-icon">service<wbr>Url</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="assistantv2.options.html#url" class="tsd-kind-icon">url</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+										<a href="assistantv2.options.html#version" class="tsd-kind-icon">version</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
@@ -214,38 +327,10 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
 					</li>
-				</ul>
-				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
-						<ul>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="texttospeechv1.createvoicemodelparams.html" class="tsd-kind-icon">Create<wbr>Voice<wbr>Model<wbr>Params</a>
-								<ul>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.createvoicemodelparams.html#description" class="tsd-kind-icon">description</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.createvoicemodelparams.html#headers" class="tsd-kind-icon">headers</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.createvoicemodelparams.html#language" class="tsd-kind-icon">language</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.createvoicemodelparams.html#name" class="tsd-kind-icon">name</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>

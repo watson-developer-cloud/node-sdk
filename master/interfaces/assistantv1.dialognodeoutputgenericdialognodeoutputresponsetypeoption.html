@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>NluEnrichmentCategories | ibm-watson</title>
+	<title>DialogNodeOutputGenericDialogNodeOutputResponseTypeOption | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
+					<a href="../classes/assistantv1.html">AssistantV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.nluenrichmentcategories.html">NluEnrichmentCategories</a>
+					<a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html">DialogNodeOutputGenericDialogNodeOutputResponseTypeOption</a>
 				</li>
 			</ul>
-			<h1>Interface NluEnrichmentCategories</h1>
+			<h1>Interface DialogNodeOutputGenericDialogNodeOutputResponseTypeOption</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An object that indicates the Categories enrichment will be applied to the specified field.</p>
+						<p>An object that describes a response with response type <code>option</code>.</p>
 					</div>
 				</div>
 			</section>
@@ -78,18 +78,111 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">NluEnrichmentCategories</span>
+						<a href="assistantv1.dialognodeoutputgeneric.html" class="tsd-signature-type">DialogNodeOutputGeneric</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">DialogNodeOutputGenericDialogNodeOutputResponseTypeOption</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel tsd-kind-interface tsd-parent-kind-class">
-				<h3 class="tsd-before-signature">Indexable</h3>
-				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>NluEnrichmentCategories accepts additional properties.</p>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#options" class="tsd-kind-icon">options</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#preference" class="tsd-kind-icon">preference</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#response_type" class="tsd-kind-icon">response_<wbr>type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#title" class="tsd-kind-icon">title</a></li>
+							</ul>
+						</section>
 					</div>
-				</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="description" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L5221">assistant/v1.ts:5221</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An optional description to show with the response.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="options" class="tsd-anchor"></a>
+					<h3>options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="assistantv1.dialognodeoutputoptionselement.html" class="tsd-signature-type">DialogNodeOutputOptionsElement</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L5225">assistant/v1.ts:5225</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of objects describing the options from which the user can choose. You can include up to 20 options.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="preference" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> preference</h3>
+					<div class="tsd-signature tsd-kind-icon">preference<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L5223">assistant/v1.ts:5223</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The preferred type of control to display, if supported by the channel.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="response_type" class="tsd-anchor"></a>
+					<h3>response_<wbr>type</h3>
+					<div class="tsd-signature tsd-kind-icon">response_<wbr>type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L5217">assistant/v1.ts:5217</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The type of response returned by the dialog node. The specified response type must be supported by the
+							client application or channel.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="title" class="tsd-anchor"></a>
+					<h3>title</h3>
+					<div class="tsd-signature tsd-kind-icon">title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L5219">assistant/v1.ts:5219</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An optional title to show before the response.</p>
+						</div>
+					</div>
+				</section>
 			</section>
 		</div>
 		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
@@ -102,10 +195,42 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+				</ul>
+				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
+					<li class="current tsd-kind-class">
 						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
+						<ul>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html" class="tsd-kind-icon">Dialog<wbr>Node<wbr>Output<wbr>Generic<wbr>Dialog<wbr>Node<wbr>Output<wbr>Response<wbr>Type<wbr>Option</a>
+								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#description" class="tsd-kind-icon">description</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#options" class="tsd-kind-icon">options</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#preference" class="tsd-kind-icon">preference</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#response_type" class="tsd-kind-icon">response_<wbr>type</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv1.dialognodeoutputgenericdialognodeoutputresponsetypeoption.html#title" class="tsd-kind-icon">title</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
@@ -118,20 +243,10 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
-				</ul>
-				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
-						<ul>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.nluenrichmentcategories.html" class="tsd-kind-icon">Nlu<wbr>Enrichment<wbr>Categories</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>

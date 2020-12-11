@@ -123,6 +123,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="assistantv1.html#version" class="tsd-kind-icon">version</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="assistantv1.html#default_service_name" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>NAME</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static"><a href="assistantv1.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a></li>
 							</ul>
@@ -131,6 +132,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#bulkclassify" class="tsd-kind-icon">bulk<wbr>Classify</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#createcounterexample" class="tsd-kind-icon">create<wbr>Counterexample</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#createdialognode" class="tsd-kind-icon">create<wbr>Dialog<wbr>Node</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#createentity-1" class="tsd-kind-icon">create<wbr>Entity</a></li>
@@ -169,6 +171,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#listvalues" class="tsd-kind-icon">list<wbr>Values</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#listworkspaces" class="tsd-kind-icon">list<wbr>Workspaces</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="assistantv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="assistantv1.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#updatecounterexample" class="tsd-kind-icon">update<wbr>Counterexample</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="assistantv1.html#updatedialognode" class="tsd-kind-icon">update<wbr>Dialog<wbr>Node</a></li>
@@ -196,18 +199,13 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L32">assistant/v1.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L42">assistant/v1.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Construct a AssistantV1 object.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>throws</dt>
-									<dd><p>{Error}</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -238,6 +236,22 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="version" class="tsd-anchor"></a>
+					<h3>version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L42">assistant/v1.ts:42</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
+							<code>2020-04-01</code>.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 					<a name="default_service_name" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> DEFAULT_<wbr>SERVICE_<wbr>NAME</h3>
@@ -245,7 +259,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L32">assistant/v1.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L37">assistant/v1.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -256,7 +270,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L31">assistant/v1.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L36">assistant/v1.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -264,16 +278,96 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="createcounterexample" class="tsd-anchor"></a>
-					<h3>create<wbr>Counterexample</h3>
+					<a name="bulkclassify" class="tsd-anchor"></a>
+					<h3>bulk<wbr>Classify</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createcounterexampleparams.html" class="tsd-signature-type">CreateCounterexampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">bulk<wbr>Classify<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.bulkclassifyparams.html" class="tsd-signature-type">BulkClassifyParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.bulkclassifyresponse.html" class="tsd-signature-type">BulkClassifyResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1489">assistant/v1.ts:1489</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2980">assistant/v1.ts:2980</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Identify intents and entities in multiple user utterances.</p>
+								</div>
+								<p>Send multiple user inputs to a workspace in a single request and receive information about the intents and entities
+								recognized in each input. This method is useful for testing and comparing the performance of different workspaces.</p>
+								<p>This method is available only with Premium plans.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/assistantv1.bulkclassifyparams.html" class="tsd-signature-type">BulkClassifyParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>workspaceId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>Unique identifier of the workspace.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><code>input</code></td>
+														<td><a href="../interfaces/assistantv1.bulkclassifyutterance.html" class="tsd-signature-type">BulkClassifyUtterance</a><span class="tsd-signature-symbol">[]</span></td>
+														<td>Optional</td>
+														<td>An array of input utterances to classify.</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.bulkclassifyresponse.html" class="tsd-signature-type">BulkClassifyResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createcounterexample" class="tsd-anchor"></a>
+					<h3>create<wbr>Counterexample</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createcounterexampleparams.html" class="tsd-signature-type">CreateCounterexampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1175">assistant/v1.ts:1175</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -345,15 +439,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -364,13 +449,13 @@
 					<a name="createdialognode" class="tsd-anchor"></a>
 					<h3>create<wbr>Dialog<wbr>Node</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createdialognodeparams.html" class="tsd-signature-type">CreateDialogNodeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createdialognodeparams.html" class="tsd-signature-type">CreateDialogNodeParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3249">assistant/v1.ts:3249</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2526">assistant/v1.ts:2526</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -440,7 +525,7 @@
 													</tr>
 													<tr>
 														<td><code>context</code></td>
-														<td><a href="../interfaces/assistantv1.jsonobject.html" class="tsd-signature-type">JsonObject</a></td>
+														<td><a href="../interfaces/assistantv1.dialognodecontext.html" class="tsd-signature-type">DialogNodeContext</a></td>
 														<td>Optional</td>
 														<td>The context for the dialog node.</td>
 													</tr>
@@ -569,15 +654,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -588,13 +664,13 @@
 					<a name="createentity-1" class="tsd-anchor"></a>
 					<h3>create<wbr>Entity</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createentityparams.html" class="tsd-signature-type">CreateEntityParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createentityparams.html" class="tsd-signature-type">CreateEntityParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1881">assistant/v1.ts:1881</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1470">assistant/v1.ts:1470</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -691,15 +767,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -710,13 +777,13 @@
 					<a name="createexample" class="tsd-anchor"></a>
 					<h3>create<wbr>Example</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createexampleparams.html" class="tsd-signature-type">CreateExampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createexampleparams.html" class="tsd-signature-type">CreateExampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1093">assistant/v1.ts:1093</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L876">assistant/v1.ts:876</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -800,15 +867,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -819,13 +877,13 @@
 					<a name="createintent-1" class="tsd-anchor"></a>
 					<h3>create<wbr>Intent</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createintentparams.html" class="tsd-signature-type">CreateIntentParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createintentparams.html" class="tsd-signature-type">CreateIntentParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L683">assistant/v1.ts:683</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L563">assistant/v1.ts:563</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -909,15 +967,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -928,13 +977,13 @@
 					<a name="createsynonym" class="tsd-anchor"></a>
 					<h3>create<wbr>Synonym</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createsynonymparams.html" class="tsd-signature-type">CreateSynonymParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createsynonymparams.html" class="tsd-signature-type">CreateSynonymParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2822">assistant/v1.ts:2822</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2196">assistant/v1.ts:2196</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1018,15 +1067,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1037,13 +1077,13 @@
 					<a name="createvalue-1" class="tsd-anchor"></a>
 					<h3>create<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createvalueparams.html" class="tsd-signature-type">CreateValueParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.createvalueparams.html" class="tsd-signature-type">CreateValueParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2392">assistant/v1.ts:2392</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1863">assistant/v1.ts:1863</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1154,15 +1194,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1173,13 +1204,13 @@
 					<a name="createworkspace" class="tsd-anchor"></a>
 					<h3>create<wbr>Workspace</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/assistantv1.createworkspaceparams.html" class="tsd-signature-type">CreateWorkspaceParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/assistantv1.createworkspaceparams.html" class="tsd-signature-type">CreateWorkspaceParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L266">assistant/v1.ts:266</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L239">assistant/v1.ts:239</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1303,15 +1334,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1322,13 +1344,13 @@
 					<a name="deletecounterexample" class="tsd-anchor"></a>
 					<h3>delete<wbr>Counterexample</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletecounterexampleparams.html" class="tsd-signature-type">DeleteCounterexampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletecounterexampleparams.html" class="tsd-signature-type">DeleteCounterexampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1718">assistant/v1.ts:1718</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1341">assistant/v1.ts:1341</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1390,15 +1412,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1409,13 +1422,13 @@
 					<a name="deletedialognode" class="tsd-anchor"></a>
 					<h3>delete<wbr>Dialog<wbr>Node</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletedialognodeparams.html" class="tsd-signature-type">DeleteDialogNodeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletedialognodeparams.html" class="tsd-signature-type">DeleteDialogNodeParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3546">assistant/v1.ts:3546</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2760">assistant/v1.ts:2760</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1477,15 +1490,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1496,13 +1500,13 @@
 					<a name="deleteentity" class="tsd-anchor"></a>
 					<h3>delete<wbr>Entity</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteentityparams.html" class="tsd-signature-type">DeleteEntityParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteentityparams.html" class="tsd-signature-type">DeleteEntityParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2139">assistant/v1.ts:2139</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1665">assistant/v1.ts:1665</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1564,15 +1568,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1583,13 +1578,13 @@
 					<a name="deleteexample" class="tsd-anchor"></a>
 					<h3>delete<wbr>Example</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteexampleparams.html" class="tsd-signature-type">DeleteExampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteexampleparams.html" class="tsd-signature-type">DeleteExampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1334">assistant/v1.ts:1334</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1054">assistant/v1.ts:1054</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1657,15 +1652,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1676,13 +1662,13 @@
 					<a name="deleteintent" class="tsd-anchor"></a>
 					<h3>delete<wbr>Intent</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteintentparams.html" class="tsd-signature-type">DeleteIntentParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteintentparams.html" class="tsd-signature-type">DeleteIntentParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L935">assistant/v1.ts:935</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L752">assistant/v1.ts:752</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1744,15 +1730,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1763,13 +1740,13 @@
 					<a name="deletesynonym" class="tsd-anchor"></a>
 					<h3>delete<wbr>Synonym</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletesynonymparams.html" class="tsd-signature-type">DeleteSynonymParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletesynonymparams.html" class="tsd-signature-type">DeleteSynonymParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3066">assistant/v1.ts:3066</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2377">assistant/v1.ts:2377</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1843,15 +1820,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1862,13 +1830,13 @@
 					<a name="deleteuserdata" class="tsd-anchor"></a>
 					<h3>delete<wbr>User<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>User<wbr>Data<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteuserdataparams.html" class="tsd-signature-type">DeleteUserDataParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3775">assistant/v1.ts:3775</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2930">assistant/v1.ts:2930</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1928,15 +1896,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1947,13 +1906,13 @@
 					<a name="deletevalue" class="tsd-anchor"></a>
 					<h3>delete<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletevalueparams.html" class="tsd-signature-type">DeleteValueParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deletevalueparams.html" class="tsd-signature-type">DeleteValueParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2662">assistant/v1.ts:2662</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2070">assistant/v1.ts:2070</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2021,15 +1980,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2040,13 +1990,13 @@
 					<a name="deleteworkspace" class="tsd-anchor"></a>
 					<h3>delete<wbr>Workspace</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteworkspaceparams.html" class="tsd-signature-type">DeleteWorkspaceParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.deleteworkspaceparams.html" class="tsd-signature-type">DeleteWorkspaceParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L524">assistant/v1.ts:524</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L438">assistant/v1.ts:438</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2102,15 +2052,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2144,13 +2085,13 @@
 					<a name="getcounterexample" class="tsd-anchor"></a>
 					<h3>get<wbr>Counterexample</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getcounterexampleparams.html" class="tsd-signature-type">GetCounterexampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getcounterexampleparams.html" class="tsd-signature-type">GetCounterexampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1566">assistant/v1.ts:1566</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1231">assistant/v1.ts:1231</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2218,15 +2159,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2237,13 +2169,13 @@
 					<a name="getdialognode" class="tsd-anchor"></a>
 					<h3>get<wbr>Dialog<wbr>Node</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getdialognodeparams.html" class="tsd-signature-type">GetDialogNodeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getdialognodeparams.html" class="tsd-signature-type">GetDialogNodeParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3344">assistant/v1.ts:3344</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2600">assistant/v1.ts:2600</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2311,15 +2243,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2330,13 +2253,13 @@
 					<a name="getentity" class="tsd-anchor"></a>
 					<h3>get<wbr>Entity</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getentityparams.html" class="tsd-signature-type">GetEntityParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getentityparams.html" class="tsd-signature-type">GetEntityParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1965">assistant/v1.ts:1965</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1533">assistant/v1.ts:1533</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2412,15 +2335,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2431,13 +2345,13 @@
 					<a name="getexample" class="tsd-anchor"></a>
 					<h3>get<wbr>Example</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getexampleparams.html" class="tsd-signature-type">GetExampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getexampleparams.html" class="tsd-signature-type">GetExampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1173">assistant/v1.ts:1173</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L935">assistant/v1.ts:935</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2511,15 +2425,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2530,13 +2435,13 @@
 					<a name="getintent" class="tsd-anchor"></a>
 					<h3>get<wbr>Intent</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getintentparams.html" class="tsd-signature-type">GetIntentParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getintentparams.html" class="tsd-signature-type">GetIntentParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L765">assistant/v1.ts:765</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L624">assistant/v1.ts:624</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2612,15 +2517,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2631,13 +2527,13 @@
 					<a name="getsynonym" class="tsd-anchor"></a>
 					<h3>get<wbr>Synonym</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getsynonymparams.html" class="tsd-signature-type">GetSynonymParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getsynonymparams.html" class="tsd-signature-type">GetSynonymParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2903">assistant/v1.ts:2903</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2256">assistant/v1.ts:2256</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2717,15 +2613,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2736,13 +2623,13 @@
 					<a name="getvalue" class="tsd-anchor"></a>
 					<h3>get<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getvalueparams.html" class="tsd-signature-type">GetValueParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getvalueparams.html" class="tsd-signature-type">GetValueParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2478">assistant/v1.ts:2478</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1928">assistant/v1.ts:1928</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2824,15 +2711,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2843,13 +2721,13 @@
 					<a name="getworkspace" class="tsd-anchor"></a>
 					<h3>get<wbr>Workspace</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getworkspaceparams.html" class="tsd-signature-type">GetWorkspaceParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.getworkspaceparams.html" class="tsd-signature-type">GetWorkspaceParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L343">assistant/v1.ts:343</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L299">assistant/v1.ts:299</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2929,15 +2807,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -2948,13 +2817,13 @@
 					<a name="listalllogs" class="tsd-anchor"></a>
 					<h3>list<wbr>All<wbr>Logs</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>All<wbr>Logs<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listalllogsparams.html" class="tsd-signature-type">ListAllLogsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>All<wbr>Logs<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listalllogsparams.html" class="tsd-signature-type">ListAllLogsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3700">assistant/v1.ts:3700</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2876">assistant/v1.ts:2876</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3032,15 +2901,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3051,13 +2911,13 @@
 					<a name="listcounterexamples" class="tsd-anchor"></a>
 					<h3>list<wbr>Counterexamples</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Counterexamples<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listcounterexamplesparams.html" class="tsd-signature-type">ListCounterexamplesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexamplecollection.html" class="tsd-signature-type">CounterexampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexamplecollection.html" class="tsd-signature-type">CounterexampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Counterexamples<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listcounterexamplesparams.html" class="tsd-signature-type">ListCounterexamplesParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexamplecollection.html" class="tsd-signature-type">CounterexampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1409">assistant/v1.ts:1409</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1115">assistant/v1.ts:1115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3122,6 +2982,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -3141,15 +3008,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexamplecollection.html" class="tsd-signature-type">CounterexampleCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexamplecollection.html" class="tsd-signature-type">CounterexampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3160,13 +3018,13 @@
 					<a name="listdialognodes" class="tsd-anchor"></a>
 					<h3>list<wbr>Dialog<wbr>Nodes</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Dialog<wbr>Nodes<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listdialognodesparams.html" class="tsd-signature-type">ListDialogNodesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognodecollection.html" class="tsd-signature-type">DialogNodeCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognodecollection.html" class="tsd-signature-type">DialogNodeCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Dialog<wbr>Nodes<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listdialognodesparams.html" class="tsd-signature-type">ListDialogNodesParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognodecollection.html" class="tsd-signature-type">DialogNodeCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3142">assistant/v1.ts:3142</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2439">assistant/v1.ts:2439</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3231,6 +3089,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -3250,15 +3115,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognodecollection.html" class="tsd-signature-type">DialogNodeCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognodecollection.html" class="tsd-signature-type">DialogNodeCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3269,13 +3125,13 @@
 					<a name="listentities" class="tsd-anchor"></a>
 					<h3>list<wbr>Entities</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Entities<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listentitiesparams.html" class="tsd-signature-type">ListEntitiesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitycollection.html" class="tsd-signature-type">EntityCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitycollection.html" class="tsd-signature-type">EntityCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Entities<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listentitiesparams.html" class="tsd-signature-type">ListEntitiesParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitycollection.html" class="tsd-signature-type">EntityCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1795">assistant/v1.ts:1795</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1404">assistant/v1.ts:1404</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3348,6 +3204,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -3367,15 +3230,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitycollection.html" class="tsd-signature-type">EntityCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitycollection.html" class="tsd-signature-type">EntityCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3386,13 +3240,13 @@
 					<a name="listexamples" class="tsd-anchor"></a>
 					<h3>list<wbr>Examples</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Examples<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listexamplesparams.html" class="tsd-signature-type">ListExamplesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.examplecollection.html" class="tsd-signature-type">ExampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.examplecollection.html" class="tsd-signature-type">ExampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Examples<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listexamplesparams.html" class="tsd-signature-type">ListExamplesParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.examplecollection.html" class="tsd-signature-type">ExampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1010">assistant/v1.ts:1010</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L813">assistant/v1.ts:813</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3463,6 +3317,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -3482,15 +3343,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.examplecollection.html" class="tsd-signature-type">ExampleCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.examplecollection.html" class="tsd-signature-type">ExampleCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3501,13 +3353,13 @@
 					<a name="listintents" class="tsd-anchor"></a>
 					<h3>list<wbr>Intents</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Intents<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listintentsparams.html" class="tsd-signature-type">ListIntentsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intentcollection.html" class="tsd-signature-type">IntentCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intentcollection.html" class="tsd-signature-type">IntentCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Intents<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listintentsparams.html" class="tsd-signature-type">ListIntentsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intentcollection.html" class="tsd-signature-type">IntentCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L600">assistant/v1.ts:600</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L500">assistant/v1.ts:500</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3580,6 +3432,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -3599,15 +3458,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intentcollection.html" class="tsd-signature-type">IntentCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intentcollection.html" class="tsd-signature-type">IntentCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3618,13 +3468,13 @@
 					<a name="listlogs" class="tsd-anchor"></a>
 					<h3>list<wbr>Logs</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Logs<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listlogsparams.html" class="tsd-signature-type">ListLogsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Logs<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listlogsparams.html" class="tsd-signature-type">ListLogsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3621">assistant/v1.ts:3621</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2818">assistant/v1.ts:2818</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3706,15 +3556,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.logcollection.html" class="tsd-signature-type">LogCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3725,13 +3566,13 @@
 					<a name="listmentions" class="tsd-anchor"></a>
 					<h3>list<wbr>Mentions</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Mentions<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listmentionsparams.html" class="tsd-signature-type">ListMentionsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitymentioncollection.html" class="tsd-signature-type">EntityMentionCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitymentioncollection.html" class="tsd-signature-type">EntityMentionCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Mentions<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listmentionsparams.html" class="tsd-signature-type">ListMentionsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitymentioncollection.html" class="tsd-signature-type">EntityMentionCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2214">assistant/v1.ts:2214</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1723">assistant/v1.ts:1723</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3808,15 +3649,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitymentioncollection.html" class="tsd-signature-type">EntityMentionCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entitymentioncollection.html" class="tsd-signature-type">EntityMentionCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3827,13 +3659,13 @@
 					<a name="listsynonyms" class="tsd-anchor"></a>
 					<h3>list<wbr>Synonyms</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Synonyms<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listsynonymsparams.html" class="tsd-signature-type">ListSynonymsParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonymcollection.html" class="tsd-signature-type">SynonymCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonymcollection.html" class="tsd-signature-type">SynonymCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Synonyms<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listsynonymsparams.html" class="tsd-signature-type">ListSynonymsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonymcollection.html" class="tsd-signature-type">SynonymCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2739">assistant/v1.ts:2739</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2133">assistant/v1.ts:2133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3910,6 +3742,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -3929,15 +3768,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonymcollection.html" class="tsd-signature-type">SynonymCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonymcollection.html" class="tsd-signature-type">SynonymCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -3948,13 +3778,13 @@
 					<a name="listvalues" class="tsd-anchor"></a>
 					<h3>list<wbr>Values</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Values<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listvaluesparams.html" class="tsd-signature-type">ListValuesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.valuecollection.html" class="tsd-signature-type">ValueCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.valuecollection.html" class="tsd-signature-type">ValueCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Values<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.listvaluesparams.html" class="tsd-signature-type">ListValuesParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.valuecollection.html" class="tsd-signature-type">ValueCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2298">assistant/v1.ts:2298</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1789">assistant/v1.ts:1789</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4033,6 +3863,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -4052,15 +3889,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.valuecollection.html" class="tsd-signature-type">ValueCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.valuecollection.html" class="tsd-signature-type">ValueCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -4071,13 +3899,13 @@
 					<a name="listworkspaces" class="tsd-anchor"></a>
 					<h3>list<wbr>Workspaces</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Workspaces<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/assistantv1.listworkspacesparams.html" class="tsd-signature-type">ListWorkspacesParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspacecollection.html" class="tsd-signature-type">WorkspaceCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspacecollection.html" class="tsd-signature-type">WorkspaceCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Workspaces<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/assistantv1.listworkspacesparams.html" class="tsd-signature-type">ListWorkspacesParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspacecollection.html" class="tsd-signature-type">WorkspaceCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L192">assistant/v1.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L181">assistant/v1.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4136,6 +3964,13 @@
 														<td>Whether to include the audit properties (&#x60;created&#x60; and &#x60;updated&#x60; timestamps) in the response.</td>
 													</tr>
 													<tr>
+														<td><code>includeCount</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>Whether to include information about the number of records that satisfy the request, regardless of the page
+														limit. If this parameter is &#x60;true&#x60;, the &#x60;pagination&#x60; object in the response includes the &#x60;total&#x60; property.</td>
+													</tr>
+													<tr>
 														<td><code>pageLimit</code></td>
 														<td><span class="tsd-signature-type">number</span></td>
 														<td>Optional</td>
@@ -4155,15 +3990,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspacecollection.html" class="tsd-signature-type">WorkspaceCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspacecollection.html" class="tsd-signature-type">WorkspaceCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -4174,13 +4000,13 @@
 					<a name="message" class="tsd-anchor"></a>
 					<h3>message</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.messageparams.html" class="tsd-signature-type">MessageParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.messageresponse.html" class="tsd-signature-type">MessageResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.messageresponse.html" class="tsd-signature-type">MessageResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.messageparams.html" class="tsd-signature-type">MessageParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.messageresponse.html" class="tsd-signature-type">MessageResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L104">assistant/v1.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L111">assistant/v1.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4285,18 +4111,55 @@
 											</table>
 										</td>
 									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.messageresponse.html" class="tsd-signature-type">MessageResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setenablegzipcompression" class="tsd-anchor"></a>
+					<h3>set<wbr>Enable<wbr>Gzip<wbr>Compression</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression<span class="tsd-signature-symbol">(</span>setting<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setenablegzipcompression">setEnableGzipCompression</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:90</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Turn request body compression on or off.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
 									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.messageresponse.html" class="tsd-signature-type">MessageResponse</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>setting</code></td>
+										<td><span class="tsd-signature-type">boolean</span></td>
+										<td></td>
 										<td>
-											<p></p>
+											<p>Will turn it on if &#x27;true&#x27;, off if &#x27;false&#x27;.
+											</p>
 											<p></p>
 										</td>
 									</tr>
 								</tbody>
 							</table>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.messageresponse.html" class="tsd-signature-type">MessageResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -4350,13 +4213,13 @@
 					<a name="updatecounterexample" class="tsd-anchor"></a>
 					<h3>update<wbr>Counterexample</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatecounterexampleparams.html" class="tsd-signature-type">UpdateCounterexampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Counterexample<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatecounterexampleparams.html" class="tsd-signature-type">UpdateCounterexampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1642">assistant/v1.ts:1642</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1286">assistant/v1.ts:1286</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4432,15 +4295,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.counterexample.html" class="tsd-signature-type">Counterexample</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -4451,13 +4305,13 @@
 					<a name="updatedialognode" class="tsd-anchor"></a>
 					<h3>update<wbr>Dialog<wbr>Node</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatedialognodeparams.html" class="tsd-signature-type">UpdateDialogNodeParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Dialog<wbr>Node<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatedialognodeparams.html" class="tsd-signature-type">UpdateDialogNodeParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L3452">assistant/v1.ts:3452</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2687">assistant/v1.ts:2687</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4538,7 +4392,7 @@
 													</tr>
 													<tr>
 														<td><code>newContext</code></td>
-														<td><a href="../interfaces/assistantv1.jsonobject.html" class="tsd-signature-type">JsonObject</a></td>
+														<td><a href="../interfaces/assistantv1.dialognodecontext.html" class="tsd-signature-type">DialogNodeContext</a></td>
 														<td>Optional</td>
 														<td>The context for the dialog node.</td>
 													</tr>
@@ -4662,15 +4516,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.dialognode.html" class="tsd-signature-type">DialogNode</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -4681,13 +4526,13 @@
 					<a name="updateentity" class="tsd-anchor"></a>
 					<h3>update<wbr>Entity</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateentityparams.html" class="tsd-signature-type">UpdateEntityParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Entity<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateentityparams.html" class="tsd-signature-type">UpdateEntityParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2058">assistant/v1.ts:2058</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L1605">assistant/v1.ts:1605</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4799,15 +4644,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.entity.html" class="tsd-signature-type">Entity</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -4818,13 +4654,13 @@
 					<a name="updateexample" class="tsd-anchor"></a>
 					<h3>update<wbr>Example</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateexampleparams.html" class="tsd-signature-type">UpdateExampleParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Example<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateexampleparams.html" class="tsd-signature-type">UpdateExampleParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L1255">assistant/v1.ts:1255</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L996">assistant/v1.ts:996</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4914,15 +4750,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.example.html" class="tsd-signature-type">Example</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -4933,13 +4760,13 @@
 					<a name="updateintent" class="tsd-anchor"></a>
 					<h3>update<wbr>Intent</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateintentparams.html" class="tsd-signature-type">UpdateIntentParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Intent<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateintentparams.html" class="tsd-signature-type">UpdateIntentParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L856">assistant/v1.ts:856</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L694">assistant/v1.ts:694</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5039,15 +4866,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.intent.html" class="tsd-signature-type">Intent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -5058,13 +4876,13 @@
 					<a name="updatesynonym" class="tsd-anchor"></a>
 					<h3>update<wbr>Synonym</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatesynonymparams.html" class="tsd-signature-type">UpdateSynonymParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Synonym<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatesynonymparams.html" class="tsd-signature-type">UpdateSynonymParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2986">assistant/v1.ts:2986</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2318">assistant/v1.ts:2318</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5154,15 +4972,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.synonym.html" class="tsd-signature-type">Synonym</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -5173,13 +4982,13 @@
 					<a name="updatevalue" class="tsd-anchor"></a>
 					<h3>update<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatevalueparams.html" class="tsd-signature-type">UpdateValueParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Value<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updatevalueparams.html" class="tsd-signature-type">UpdateValueParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L2579">assistant/v1.ts:2579</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L2008">assistant/v1.ts:2008</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5306,15 +5115,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.value.html" class="tsd-signature-type">Value</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -5325,13 +5125,13 @@
 					<a name="updateworkspace" class="tsd-anchor"></a>
 					<h3>update<wbr>Workspace</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">update<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateworkspaceparams.html" class="tsd-signature-type">UpdateWorkspaceParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Workspace<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/assistantv1.updateworkspaceparams.html" class="tsd-signature-type">UpdateWorkspaceParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/assistant/v1.ts#L439">assistant/v1.ts:439</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v1.ts#L374">assistant/v1.ts:374</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5470,15 +5270,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="assistantv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/assistantv1.workspace.html" class="tsd-signature-type">Workspace</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -5614,8 +5405,28 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="assistantv1.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="assistantv1.html#version" class="tsd-kind-icon">version</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
@@ -5624,6 +5435,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 								<a href="assistantv1.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="assistantv1.html#bulkclassify" class="tsd-kind-icon">bulk<wbr>Classify</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -5776,6 +5591,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="assistantv1.html#message" class="tsd-kind-icon">message</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="assistantv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">

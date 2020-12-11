@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AnalysisResultsMetadata | ibm-watson</title>
+	<title>BulkClassifyOutput | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/naturallanguageunderstandingv1.html">NaturalLanguageUnderstandingV1</a>
+					<a href="../classes/assistantv2.html">AssistantV2</a>
 				</li>
 				<li>
-					<a href="naturallanguageunderstandingv1.analysisresultsmetadata.html">AnalysisResultsMetadata</a>
+					<a href="assistantv2.bulkclassifyoutput.html">BulkClassifyOutput</a>
 				</li>
 			</ul>
-			<h1>Interface AnalysisResultsMetadata</h1>
+			<h1>Interface BulkClassifyOutput</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Webpage metadata, such as the author and the title of the page.</p>
+						<p>BulkClassifyOutput.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">AnalysisResultsMetadata</span>
+						<span class="target">BulkClassifyOutput</span>
 					</li>
 				</ul>
 			</section>
@@ -90,11 +90,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#authors" class="tsd-kind-icon">authors</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#feeds" class="tsd-kind-icon">feeds</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#image" class="tsd-kind-icon">image</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#publication_date" class="tsd-kind-icon">publication_<wbr>date</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#title" class="tsd-kind-icon">title</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.bulkclassifyoutput.html#entities" class="tsd-kind-icon">entities</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.bulkclassifyoutput.html#input" class="tsd-kind-icon">input</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.bulkclassifyoutput.html#intents" class="tsd-kind-icon">intents</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,77 +101,47 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="authors" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> authors</h3>
-					<div class="tsd-signature tsd-kind-icon">authors<span class="tsd-signature-symbol">:</span> <a href="naturallanguageunderstandingv1.author.html" class="tsd-signature-type">Author</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="entities" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> entities</h3>
+					<div class="tsd-signature tsd-kind-icon">entities<span class="tsd-signature-symbol">:</span> <a href="assistantv2.runtimeentity.html" class="tsd-signature-type">RuntimeEntity</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L419">natural-language-understanding/v1.ts:419</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v2.ts#L672">assistant/v2.ts:672</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The authors of the document.</p>
+							<p>An array of entities identified in the utterance.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="feeds" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> feeds</h3>
-					<div class="tsd-signature tsd-kind-icon">feeds<span class="tsd-signature-symbol">:</span> <a href="naturallanguageunderstandingv1.feed.html" class="tsd-signature-type">Feed</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="input" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> input</h3>
+					<div class="tsd-signature tsd-kind-icon">input<span class="tsd-signature-symbol">:</span> <a href="assistantv2.bulkclassifyutterance.html" class="tsd-signature-type">BulkClassifyUtterance</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L427">natural-language-understanding/v1.ts:427</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v2.ts#L670">assistant/v2.ts:670</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>RSS/ATOM feeds found on the webpage.</p>
+							<p>The user input utterance to classify.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="image" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> image</h3>
-					<div class="tsd-signature tsd-kind-icon">image<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="intents" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> intents</h3>
+					<div class="tsd-signature tsd-kind-icon">intents<span class="tsd-signature-symbol">:</span> <a href="assistantv2.runtimeintent.html" class="tsd-signature-type">RuntimeIntent</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L425">natural-language-understanding/v1.ts:425</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/assistant/v2.ts#L674">assistant/v2.ts:674</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>URL of a prominent image on the webpage.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="publication_date" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> publication_<wbr>date</h3>
-					<div class="tsd-signature tsd-kind-icon">publication_<wbr>date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L421">natural-language-understanding/v1.ts:421</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The publication date in the format ISO 8601.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="title" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> title</h3>
-					<div class="tsd-signature tsd-kind-icon">title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-understanding/v1.ts#L423">natural-language-understanding/v1.ts:423</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The title of the document.</p>
+							<p>An array of intents recognized in the utterance.</p>
 						</div>
 					</div>
 				</section>
@@ -193,10 +161,34 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
 					</li>
+				</ul>
+				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
+					<li class="current tsd-kind-class">
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
+						<ul>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="assistantv2.bulkclassifyoutput.html" class="tsd-kind-icon">Bulk<wbr>Classify<wbr>Output</a>
+								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.bulkclassifyoutput.html#entities" class="tsd-kind-icon">entities</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.bulkclassifyoutput.html#input" class="tsd-kind-icon">input</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.bulkclassifyoutput.html#intents" class="tsd-kind-icon">intents</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
@@ -217,42 +209,10 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
 					</li>
-				</ul>
-				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-						<ul>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="naturallanguageunderstandingv1.analysisresultsmetadata.html" class="tsd-kind-icon">Analysis<wbr>Results<wbr>Metadata</a>
-								<ul>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#authors" class="tsd-kind-icon">authors</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#feeds" class="tsd-kind-icon">feeds</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#image" class="tsd-kind-icon">image</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#publication_date" class="tsd-kind-icon">publication_<wbr>date</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="naturallanguageunderstandingv1.analysisresultsmetadata.html#title" class="tsd-kind-icon">title</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>

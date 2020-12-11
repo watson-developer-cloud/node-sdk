@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>UpdateVoiceModelParams | ibm-watson</title>
+	<title>UpdateCustomModelParams | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../classes/texttospeechv1.html">TextToSpeechV1</a>
 				</li>
 				<li>
-					<a href="texttospeechv1.updatevoicemodelparams.html">UpdateVoiceModelParams</a>
+					<a href="texttospeechv1.updatecustommodelparams.html">UpdateCustomModelParams</a>
 				</li>
 			</ul>
-			<h1>Interface UpdateVoiceModelParams</h1>
+			<h1>Interface UpdateCustomModelParams</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Parameters for the <code>updateVoiceModel</code> operation.</p>
+						<p>Parameters for the <code>updateCustomModel</code> operation.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">UpdateVoiceModelParams</span>
+						<span class="target">UpdateCustomModelParams</span>
 					</li>
 				</ul>
 			</section>
@@ -90,11 +90,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatevoicemodelparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatevoicemodelparams.html#description" class="tsd-kind-icon">description</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatevoicemodelparams.html#headers" class="tsd-kind-icon">headers</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatevoicemodelparams.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatevoicemodelparams.html#words" class="tsd-kind-icon">words</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatecustommodelparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatecustommodelparams.html#description" class="tsd-kind-icon">description</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatecustommodelparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatecustommodelparams.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="texttospeechv1.updatecustommodelparams.html#words" class="tsd-kind-icon">words</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,13 +108,13 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1640">text-to-speech/v1-generated.ts:1640</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L1300">text-to-speech/v1-generated.ts:1300</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The customization ID (GUID) of the custom voice model. You must make the request with credentials for the
-							instance of the service that owns the custom model.</p>
+							<p>The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
+							of the service that owns the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -124,12 +124,12 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1644">text-to-speech/v1-generated.ts:1644</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L1304">text-to-speech/v1-generated.ts:1304</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A new description for the custom voice model.</p>
+							<p>A new description for the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -139,7 +139,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1649">text-to-speech/v1-generated.ts:1649</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L1309">text-to-speech/v1-generated.ts:1309</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -149,12 +149,12 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1642">text-to-speech/v1-generated.ts:1642</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L1302">text-to-speech/v1-generated.ts:1302</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A new name for the custom voice model.</p>
+							<p>A new name for the custom model.</p>
 						</div>
 					</div>
 				</section>
@@ -164,13 +164,13 @@
 					<div class="tsd-signature tsd-kind-icon">words<span class="tsd-signature-symbol">:</span> <a href="texttospeechv1.word.html" class="tsd-signature-type">Word</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/text-to-speech/v1-generated.ts#L1648">text-to-speech/v1-generated.ts:1648</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L1308">text-to-speech/v1-generated.ts:1308</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>An array of <code>Word</code> objects that provides the words and their translations that are to be added or updated
-							for the custom voice model. Pass an empty array to make no additions or updates.</p>
+							for the custom model. Pass an empty array to make no additions or updates.</p>
 						</div>
 					</div>
 				</section>
@@ -238,27 +238,27 @@
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="texttospeechv1.updatevoicemodelparams.html" class="tsd-kind-icon">Update<wbr>Voice<wbr>Model<wbr>Params</a>
+								<a href="texttospeechv1.updatecustommodelparams.html" class="tsd-kind-icon">Update<wbr>Custom<wbr>Model<wbr>Params</a>
 								<ul>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.updatevoicemodelparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a>
+										<a href="texttospeechv1.updatecustommodelparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.updatevoicemodelparams.html#description" class="tsd-kind-icon">description</a>
+										<a href="texttospeechv1.updatecustommodelparams.html#description" class="tsd-kind-icon">description</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.updatevoicemodelparams.html#headers" class="tsd-kind-icon">headers</a>
+										<a href="texttospeechv1.updatecustommodelparams.html#headers" class="tsd-kind-icon">headers</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.updatevoicemodelparams.html#name" class="tsd-kind-icon">name</a>
+										<a href="texttospeechv1.updatecustommodelparams.html#name" class="tsd-kind-icon">name</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="texttospeechv1.updatevoicemodelparams.html#words" class="tsd-kind-icon">words</a>
+										<a href="texttospeechv1.updatecustommodelparams.html#words" class="tsd-kind-icon">words</a>
 									</li>
 								</ul>
 							</li>

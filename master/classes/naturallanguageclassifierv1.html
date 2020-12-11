@@ -119,6 +119,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageclassifierv1.html#getclassifier" class="tsd-kind-icon">get<wbr>Classifier</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageclassifierv1.html#listclassifiers" class="tsd-kind-icon">list<wbr>Classifiers</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a></li>
 							</ul>
 						</section>
@@ -138,7 +139,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L31">natural-language-classifier/v1.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L36">natural-language-classifier/v1.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -182,7 +183,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L31">natural-language-classifier/v1.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L36">natural-language-classifier/v1.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +194,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L30">natural-language-classifier/v1.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L35">natural-language-classifier/v1.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -204,13 +205,13 @@
 					<a name="classify" class="tsd-anchor"></a>
 					<h3>classify</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">classify<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.classifyparams.html" class="tsd-signature-type">ClassifyParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classification.html" class="tsd-signature-type">Classification</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classification.html" class="tsd-signature-type">Classification</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">classify<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.classifyparams.html" class="tsd-signature-type">ClassifyParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classification.html" class="tsd-signature-type">Classification</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L76">natural-language-classifier/v1.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L82">natural-language-classifier/v1.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -273,15 +274,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classification.html" class="tsd-signature-type">Classification</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classification.html" class="tsd-signature-type">Classification</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -292,13 +284,13 @@
 					<a name="classifycollection" class="tsd-anchor"></a>
 					<h3>classify<wbr>Collection</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">classify<wbr>Collection<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.classifycollectionparams.html" class="tsd-signature-type">ClassifyCollectionParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classificationcollection.html" class="tsd-signature-type">ClassificationCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classificationcollection.html" class="tsd-signature-type">ClassificationCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">classify<wbr>Collection<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.classifycollectionparams.html" class="tsd-signature-type">ClassifyCollectionParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classificationcollection.html" class="tsd-signature-type">ClassificationCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L149">natural-language-classifier/v1.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L133">natural-language-classifier/v1.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -362,15 +354,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classificationcollection.html" class="tsd-signature-type">ClassificationCollection</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classificationcollection.html" class="tsd-signature-type">ClassificationCollection</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -381,13 +364,13 @@
 					<a name="createclassifier" class="tsd-anchor"></a>
 					<h3>create<wbr>Classifier</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.createclassifierparams.html" class="tsd-signature-type">CreateClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.createclassifierparams.html" class="tsd-signature-type">CreateClassifierParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L230">natural-language-classifier/v1.ts:230</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L192">natural-language-classifier/v1.ts:192</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -458,15 +441,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -477,13 +451,13 @@
 					<a name="deleteclassifier" class="tsd-anchor"></a>
 					<h3>delete<wbr>Classifier</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.deleteclassifierparams.html" class="tsd-signature-type">DeleteClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.deleteclassifierparams.html" class="tsd-signature-type">DeleteClassifierParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L409">natural-language-classifier/v1.ts:409</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L309">natural-language-classifier/v1.ts:309</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -538,15 +512,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -580,13 +545,13 @@
 					<a name="getclassifier" class="tsd-anchor"></a>
 					<h3>get<wbr>Classifier</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.getclassifierparams.html" class="tsd-signature-type">GetClassifierParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Classifier<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/naturallanguageclassifierv1.getclassifierparams.html" class="tsd-signature-type">GetClassifierParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L348">natural-language-classifier/v1.ts:348</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L270">natural-language-classifier/v1.ts:270</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -642,15 +607,6 @@
 											</table>
 										</td>
 									</tr>
-									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
-										<td>
-											<p></p>
-											<p></p>
-										</td>
-									</tr>
 								</tbody>
 							</table>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifier.html" class="tsd-signature-type">Classifier</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -661,13 +617,13 @@
 					<a name="listclassifiers" class="tsd-anchor"></a>
 					<h3>list<wbr>Classifiers</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">list<wbr>Classifiers<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/naturallanguageclassifierv1.listclassifiersparams.html" class="tsd-signature-type">ListClassifiersParams</a>, callback<span class="tsd-signature-symbol">?: </span><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifierlist.html" class="tsd-signature-type">ClassifierList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifierlist.html" class="tsd-signature-type">ClassifierList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Classifiers<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/naturallanguageclassifierv1.listclassifiersparams.html" class="tsd-signature-type">ListClassifiersParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifierlist.html" class="tsd-signature-type">ClassifierList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/4c4feae/natural-language-classifier/v1.ts#L300">natural-language-classifier/v1.ts:300</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/natural-language-classifier/v1.ts#L240">natural-language-classifier/v1.ts:240</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -717,18 +673,55 @@
 											</table>
 										</td>
 									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifierlist.html" class="tsd-signature-type">ClassifierList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setenablegzipcompression" class="tsd-anchor"></a>
+					<h3>set<wbr>Enable<wbr>Gzip<wbr>Compression</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression<span class="tsd-signature-symbol">(</span>setting<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setenablegzipcompression">setEnableGzipCompression</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:90</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Turn request body compression on or off.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
 									<tr>
-										<td><code>callback</code></td>
-										<td><a href="naturallanguageclassifierv1.html#callback" class="tsd-signature-type">Callback</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifierlist.html" class="tsd-signature-type">ClassifierList</a><span class="tsd-signature-symbol">&gt;</span></td>
-										<td>Optional</td>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>setting</code></td>
+										<td><span class="tsd-signature-type">boolean</span></td>
+										<td></td>
 										<td>
-											<p></p>
+											<p>Will turn it on if &#x27;true&#x27;, off if &#x27;false&#x27;.
+											</p>
 											<p></p>
 										</td>
 									</tr>
 								</tbody>
 							</table>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/naturallanguageclassifierv1.classifierlist.html" class="tsd-signature-type">ClassifierList</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -876,6 +869,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="naturallanguageclassifierv1.html#listclassifiers" class="tsd-kind-icon">list<wbr>Classifiers</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="naturallanguageclassifierv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">

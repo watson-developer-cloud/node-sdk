@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SystemResponse | ibm-watson</title>
+	<title>Options | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/assistantv1.html">AssistantV1</a>
+					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="assistantv1.systemresponse.html">SystemResponse</a>
+					<a href="discoveryv1.options.html">Options</a>
 				</li>
 			</ul>
-			<h1>Interface SystemResponse</h1>
+			<h1>Interface Options</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>For internal use only.</p>
+						<p>Options for the <code>DiscoveryV1</code> constructor.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">SystemResponse</span>
+						<span class="tsd-signature-type">UserOptions</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">Options</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -87,9 +92,145 @@
 				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>SystemResponse accepts additional properties.</p>
+						<p>Allow additional request config parameters</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.options.html#authenticator" class="tsd-kind-icon">authenticator</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.options.html#disablesslverification" class="tsd-kind-icon">disable<wbr>Ssl<wbr>Verification</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.options.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.options.html#jar" class="tsd-kind-icon">jar</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.options.html#serviceurl" class="tsd-kind-icon">service<wbr>Url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.options.html#url" class="tsd-kind-icon">url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite"><a href="discoveryv1.options.html#version" class="tsd-kind-icon">version</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="authenticator" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> authenticator</h3>
+					<div class="tsd-signature tsd-kind-icon">authenticator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AuthenticatorInterface</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#authenticator">authenticator</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:24</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Authenticator object used to authenticate requests to the service</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="disablesslverification" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> disable<wbr>Ssl<wbr>Verification</h3>
+					<div class="tsd-signature tsd-kind-icon">disable<wbr>Ssl<wbr>Verification<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#disablesslverification">disableSslVerification</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:32</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Set to <code>true</code> to allow unauthorized requests - not recommended for production use.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="headers" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> headers</h3>
+					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#headers">headers</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:28</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Default headers that shall be included with every request to the service.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="jar" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> jar</h3>
+					<div class="tsd-signature tsd-kind-icon">jar<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#jar">jar</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:34</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Set your own cookie jar object</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="serviceurl" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> service<wbr>Url</h3>
+					<div class="tsd-signature tsd-kind-icon">service<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#serviceurl">serviceUrl</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:26</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The base url to use when contacting the service. The base url may differ between IBM Cloud regions.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="url" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.options.html">Options</a>.<a href="discoveryv1.options.html#url">url</a></p>
+						<ul>
+							<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:36</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Deprecated. Use <code>serviceUrl</code> instead.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="version" class="tsd-anchor"></a>
+					<h3>version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Overrides UserOptions.version</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/discovery/v1.ts#L3634">discovery/v1.ts:3634</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
+							version is <code>2019-04-30</code>.</p>
+						</div>
+					</div>
+				</section>
 			</section>
 		</div>
 		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
@@ -102,20 +243,10 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class="current tsd-kind-class">
+					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
-						<ul>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="assistantv1.systemresponse.html" class="tsd-kind-icon">System<wbr>Response</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
@@ -128,10 +259,50 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
 					</li>
+				</ul>
+				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
+					<li class="current tsd-kind-class">
 						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+						<ul>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="discoveryv1.options.html" class="tsd-kind-icon">Options</a>
+								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="discoveryv1.options.html#authenticator" class="tsd-kind-icon">authenticator</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="discoveryv1.options.html#disablesslverification" class="tsd-kind-icon">disable<wbr>Ssl<wbr>Verification</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="discoveryv1.options.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="discoveryv1.options.html#jar" class="tsd-kind-icon">jar</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="discoveryv1.options.html#serviceurl" class="tsd-kind-icon">service<wbr>Url</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="discoveryv1.options.html#url" class="tsd-kind-icon">url</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
+										<a href="discoveryv1.options.html#version" class="tsd-kind-icon">version</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
