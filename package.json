@@ -1,6 +1,6 @@
 {
   "name": "ibm-watson",
-  "version": "6.0.0-rc1",
+  "version": "6.0.0",
   "description": "Client library to use the IBM Watson Services",
   "repository": {
     "type": "git",
@@ -111,7 +111,7 @@
     "doc": "jsdoc -c scripts/jsdoc/config.json",
     "minify": "uglifyjs --compress --mangle --output dist/dist/watson.min.js --preamble \"// Watson Developer Cloud\n// JavaScript SDK$npm_package_version\n// Generated at `date`\n// Copyright IBM ($npm_package_license)\n// $npm_package_homepage\" -- dist/dist/watson.js",
     "tsc-publish-dry": "tsc-publish --no-checks --dry-run",
-    "postversion": "npm run tsc-publish-dry && npm run browserify && npm run minify",
+    "postversion": "npm run tsc-publish-dry && npm run browserify",
     "test-integration": "jest test/integration",
     "test-unit": "jest test/unit/",
     "test": "jest test/",
