@@ -14,31 +14,12 @@
 
 # [6.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.7.1...v6.0.0) (2020-12-11)
 
-
-### chore
-
-* fix assistant tests and trigger major relase ([8295b78](https://github.com/watson-developer-cloud/node-sdk/commit/8295b78eed278e11cfe049a5570724d49b4e58c8))
-
-
 ### BREAKING CHANGES
 
 * Support for callbacks dropped
 * Support for Node v10 dropped
-* changes to services, see MIGRATION-V6.md
+* changes to services, see [MIGRATION-V6.md](https://github.com/watson-developer-cloud/node-sdk/blob/master/MIGRATION-V6.md)
 
-# [6.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.7.1...v6.0.0) (2020-12-11)
-
-
-### chore
-
-* fix assistant tests and trigger major relase ([8295b78](https://github.com/watson-developer-cloud/node-sdk/commit/8295b78eed278e11cfe049a5570724d49b4e58c8))
-
-
-### BREAKING CHANGES
-
-* Support for callbacks dropped
-* Support for Node v10 dropped
-* changes to services, see MIGRATION-V6.md
 
 ## [5.7.1](https://github.com/watson-developer-cloud/node-sdk/compare/v5.7.0...v5.7.1) (2020-09-29)
 
