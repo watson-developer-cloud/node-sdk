@@ -687,6 +687,85 @@ describe('AssistantV2', () => {
       });
     });
   });
+  describe('bulkClassify', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // BulkClassifyUtterance
+      const bulkClassifyUtteranceModel = {
+        text: 'testString',
+      };
+
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation bulkClassify
+        const skillId = 'testString';
+        const input = [bulkClassifyUtteranceModel];
+        const params = {
+          skillId: skillId,
+          input: input,
+        };
+
+        const bulkClassifyResult = assistantService.bulkClassify(params);
+
+        // all methods should return a Promise
+        expectToBePromise(bulkClassifyResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/skills/{skill_id}/workspace/bulk_classify', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['input']).toEqual(input);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['skill_id']).toEqual(skillId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const skillId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          skillId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.bulkClassify(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await assistantService.bulkClassify({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const bulkClassifyPromise = assistantService.bulkClassify();
+        expectToBePromise(bulkClassifyPromise);
+
+        bulkClassifyPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
   describe('listLogs', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
@@ -831,85 +910,6 @@ describe('AssistantV2', () => {
         expectToBePromise(deleteUserDataPromise);
 
         deleteUserDataPromise.catch(err => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
-      });
-    });
-  });
-  describe('bulkClassify', () => {
-    describe('positive tests', () => {
-      // Request models needed by this operation.
-
-      // BulkClassifyUtterance
-      const bulkClassifyUtteranceModel = {
-        text: 'testString',
-      };
-
-      test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation bulkClassify
-        const skillId = 'testString';
-        const input = [bulkClassifyUtteranceModel];
-        const params = {
-          skillId: skillId,
-          input: input,
-        };
-
-        const bulkClassifyResult = assistantService.bulkClassify(params);
-
-        // all methods should return a Promise
-        expectToBePromise(bulkClassifyResult);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v2/skills/{skill_id}/workspace/bulk_classify', 'POST');
-        const expectedAccept = 'application/json';
-        const expectedContentType = 'application/json';
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['input']).toEqual(input);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['skill_id']).toEqual(skillId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const skillId = 'testString';
-        const userAccept = 'fake/accept';
-        const userContentType = 'fake/contentType';
-        const params = {
-          skillId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        assistantService.bulkClassify(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-    });
-
-    describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
-        let err;
-        try {
-          await assistantService.bulkClassify({});
-        } catch (e) {
-          err = e;
-        }
-
-        expect(err.message).toMatch(/Missing required parameters/);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        const bulkClassifyPromise = assistantService.bulkClassify();
-        expectToBePromise(bulkClassifyPromise);
-
-        bulkClassifyPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

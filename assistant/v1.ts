@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201221-123327
  */
  
 
@@ -140,6 +140,66 @@ class AssistantV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/workspaces/{workspace_id}/message',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * bulkClassify
+   ************************/
+
+  /**
+   * Identify intents and entities in multiple user utterances.
+   *
+   * Send multiple user inputs to a workspace in a single request and receive information about the intents and entities
+   * recognized in each input. This method is useful for testing and comparing the performance of different workspaces.
+   *
+   * This method is available only with Premium plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {BulkClassifyUtterance[]} [params.input] - An array of input utterances to classify.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>>}
+   */
+  public bulkClassify(params: AssistantV1.BulkClassifyParams): Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['workspaceId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'input': _params.input
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'workspace_id': _params.workspaceId
+    };
+
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'bulkClassify');
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces/{workspace_id}/bulk_classify',
         method: 'POST',
         body,
         qs: query,
@@ -2959,66 +3019,6 @@ class AssistantV1 extends BaseService {
     return this.createRequest(parameters);
   };
 
-  /*************************
-   * bulkClassify
-   ************************/
-
-  /**
-   * Identify intents and entities in multiple user utterances.
-   *
-   * Send multiple user inputs to a workspace in a single request and receive information about the intents and entities
-   * recognized in each input. This method is useful for testing and comparing the performance of different workspaces.
-   *
-   * This method is available only with Premium plans.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.workspaceId - Unique identifier of the workspace.
-   * @param {BulkClassifyUtterance[]} [params.input] - An array of input utterances to classify.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>>}
-   */
-  public bulkClassify(params: AssistantV1.BulkClassifyParams): Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const body = {
-      'input': _params.input
-    };
-
-    const query = {
-      'version': this.version
-    };
-
-    const path = {
-      'workspace_id': _params.workspaceId
-    };
-
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'bulkClassify');
-
-    const parameters = {
-      options: {
-        url: '/v1/workspaces/{workspace_id}/bulk_classify',
-        method: 'POST',
-        body,
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  };
-
 }
 
 /*************************
@@ -3085,6 +3085,15 @@ namespace AssistantV1 {
      *  processing of the message.
      */
     nodesVisitedDetails?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `bulkClassify` operation. */
+  export interface BulkClassifyParams {
+    /** Unique identifier of the workspace. */
+    workspaceId: string;
+    /** An array of input utterances to classify. */
+    input?: BulkClassifyUtterance[];
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4193,18 +4202,15 @@ namespace AssistantV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `bulkClassify` operation. */
-  export interface BulkClassifyParams {
-    /** Unique identifier of the workspace. */
-    workspaceId: string;
-    /** An array of input utterances to classify. */
-    input?: BulkClassifyUtterance[];
-    headers?: OutgoingHttpHeaders;
-  }
-
   /*************************
    * model interfaces
    ************************/
+
+  /** AgentAvailabilityMessage. */
+  export interface AgentAvailabilityMessage {
+    /** The text of the message. */
+    message?: string;
+  }
 
   /** BulkClassifyOutput. */
   export interface BulkClassifyOutput {
@@ -4857,11 +4863,10 @@ namespace AssistantV1 {
     metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
-    /** An object containing detailed information about the entity recognized in the user input. This property is
-     *  included only if the new system entities are enabled for the workspace.
+    /** An object containing detailed information about the entity recognized in the user input.
      *
-     *  For more information about how the new system entities are interpreted, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-beta-system-entities).
+     *  For more information about how system entities are interpreted, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-system-entities).
      */
     interpretation?: RuntimeEntityInterpretation;
     /** An array of possible alternative values that the user might have intended instead of the value returned in
@@ -5186,11 +5191,11 @@ namespace AssistantV1 {
     /** An optional message to be displayed to the user to indicate that the conversation will be transferred to the
      *  next available agent.
      */
-    agent_available?: string;
+    agent_available?: AgentAvailabilityMessage;
     /** An optional message to be displayed to the user to indicate that no online agent is available to take over
      *  the conversation.
      */
-    agent_unavailable?: string;
+    agent_unavailable?: AgentAvailabilityMessage;
     /** Routing or other contextual information to be used by target service desk systems. */
     transfer_info?: DialogNodeOutputConnectToAgentTransferInfo;
   }
@@ -5289,11 +5294,11 @@ namespace AssistantV1 {
     /** An optional message to be displayed to the user to indicate that the conversation will be transferred to the
      *  next available agent.
      */
-    agent_available?: string;
+    agent_available?: AgentAvailabilityMessage;
     /** An optional message to be displayed to the user to indicate that no online agent is available to take over
      *  the conversation.
      */
-    agent_unavailable?: string;
+    agent_unavailable?: AgentAvailabilityMessage;
     /** Routing or other contextual information to be used by target service desk systems. */
     transfer_info?: DialogNodeOutputConnectToAgentTransferInfo;
     /** A label identifying the topic of the conversation, derived from the **title** property of the relevant node
