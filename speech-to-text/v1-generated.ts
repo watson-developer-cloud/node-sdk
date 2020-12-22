@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201221-123327
  */
  
 
@@ -125,7 +125,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - The identifier of the model in the form of its name from the output of the **Get a
-   * model** method.
+   * model** method. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>>}
    */
@@ -244,8 +244,9 @@ class SpeechToTextV1 extends BaseService {
    * @param {NodeJS.ReadableStream|Buffer} params.audio - The audio to transcribe.
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
-   * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request. See
-   * [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
+   * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
+   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
    * specified with the `model` parameter. You must make the request with credentials for the instance of the service
@@ -670,8 +671,9 @@ class SpeechToTextV1 extends BaseService {
    * @param {NodeJS.ReadableStream|Buffer} params.audio - The audio to transcribe.
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
-   * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request. See
-   * [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
+   * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
+   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
    * @param {string} [params.callbackUrl] - A URL to which callback notifications are to be sent. The URL must already
    * be successfully allowlisted by using the **Register a callback** method. You can include the same callback URL with
    * any number of job creation requests. Omit the parameter to poll the service for job completion and results.
@@ -1173,7 +1175,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned
-   * by the requesting credentials.
+   * by the requesting credentials. (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.)
    *
    * To determine the languages for which customization is available, see [Language support for
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
@@ -2435,7 +2437,8 @@ class SpeechToTextV1 extends BaseService {
    * Use a name that describes the acoustic environment of the custom model, such as `Mobile custom model` or `Noisy car
    * custom model`.
    * @param {string} params.baseModelName - The name of the base language model that is to be customized by the new
-   * custom acoustic model. The new custom model can be used only with the base model that it customizes.
+   * custom acoustic model. The new custom model can be used only with the base model that it customizes. (**Note:** The
+   * model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.)
    *
    * To determine whether a base model supports acoustic model customization, refer to [Language support for
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
@@ -2492,7 +2495,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned
-   * by the requesting credentials.
+   * by the requesting credentials. (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.)
    *
    * To determine the languages for which customization is available, see [Language support for
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
@@ -3280,16 +3283,19 @@ namespace SpeechToTextV1 {
 
   /** Parameters for the `getModel` operation. */
   export interface GetModelParams {
-    /** The identifier of the model in the form of its name from the output of the **Get a model** method. */
+    /** The identifier of the model in the form of its name from the output of the **Get a model** method.
+     *  (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.).
+     */
     modelId: GetModelConstants.ModelId | string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `getModel` operation. */
   export namespace GetModelConstants {
-    /** The identifier of the model in the form of its name from the output of the **Get a model** method. */
+    /** The identifier of the model in the form of its name from the output of the **Get a model** method. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.). */
     export enum ModelId {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
+      AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
@@ -3338,7 +3344,8 @@ namespace SpeechToTextV1 {
      *  formats (content types)** in the method description.
      */
     contentType?: RecognizeConstants.ContentType | string;
-    /** The identifier of the model that is to be used for the recognition request. See [Languages and
+    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model
+     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
      */
     model?: RecognizeConstants.Model | string;
@@ -3559,9 +3566,10 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The identifier of the model that is to be used for the recognition request. See [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models). */
+    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models). */
     export enum Model {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
+      AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
@@ -3633,7 +3641,8 @@ namespace SpeechToTextV1 {
      *  formats (content types)** in the method description.
      */
     contentType?: CreateJobConstants.ContentType | string;
-    /** The identifier of the model that is to be used for the recognition request. See [Languages and
+    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model
+     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models).
      */
     model?: CreateJobConstants.Model | string;
@@ -3913,9 +3922,10 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The identifier of the model that is to be used for the recognition request. See [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models). */
+    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models). */
     export enum Model {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
+      AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
@@ -4072,7 +4082,7 @@ namespace SpeechToTextV1 {
   export interface ListLanguageModelsParams {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit
      *  the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials.
-     *
+     *  (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.)
      *
      *  To determine the languages for which customization is available, see [Language support for
      *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
@@ -4083,9 +4093,10 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `listLanguageModels` operation. */
   export namespace ListLanguageModelsConstants {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.) To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
     export enum Language {
       AR_AR = 'ar-AR',
+      AR_MS = 'ar-MS',
       DE_DE = 'de-DE',
       EN_AU = 'en-AU',
       EN_GB = 'en-GB',
@@ -4458,7 +4469,8 @@ namespace SpeechToTextV1 {
      */
     name: string;
     /** The name of the base language model that is to be customized by the new custom acoustic model. The new
-     *  custom model can be used only with the base model that it customizes.
+     *  custom model can be used only with the base model that it customizes. (**Note:** The model
+     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.)
      *
      *  To determine whether a base model supports acoustic model customization, refer to [Language support for
      *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
@@ -4473,9 +4485,10 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `createAcousticModel` operation. */
   export namespace CreateAcousticModelConstants {
-    /** The name of the base language model that is to be customized by the new custom acoustic model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports acoustic model customization, refer to [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
+    /** The name of the base language model that is to be customized by the new custom acoustic model. The new custom model can be used only with the base model that it customizes. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) To determine whether a base model supports acoustic model customization, refer to [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
     export enum BaseModelName {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
+      AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
@@ -4520,7 +4533,7 @@ namespace SpeechToTextV1 {
   export interface ListAcousticModelsParams {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit
      *  the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials.
-     *
+     *  (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.)
      *
      *  To determine the languages for which customization is available, see [Language support for
      *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport).
@@ -4531,9 +4544,10 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `listAcousticModels` operation. */
   export namespace ListAcousticModelsConstants {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.) To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport). */
     export enum Language {
       AR_AR = 'ar-AR',
+      AR_MS = 'ar-MS',
       DE_DE = 'de-DE',
       EN_AU = 'en-AU',
       EN_GB = 'en-GB',

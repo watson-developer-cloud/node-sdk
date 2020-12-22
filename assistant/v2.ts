@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201221-123327
  */
  
 
@@ -327,6 +327,68 @@ class AssistantV2 extends BaseService {
   };
 
   /*************************
+   * bulkClassify
+   ************************/
+
+  /**
+   * Identify intents and entities in multiple user utterances.
+   *
+   * Send multiple user inputs to a dialog skill in a single request and receive information about the intents and
+   * entities recognized in each input. This method is useful for testing and comparing the performance of different
+   * skills or skill versions.
+   *
+   * This method is available only with Premium plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.skillId - Unique identifier of the skill. To find the skill ID in the Watson Assistant user
+   * interface, open the skill settings and click **API Details**.
+   * @param {BulkClassifyUtterance[]} [params.input] - An array of input utterances to classify.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>>}
+   */
+  public bulkClassify(params: AssistantV2.BulkClassifyParams): Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['skillId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'input': _params.input
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'skill_id': _params.skillId
+    };
+
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'bulkClassify');
+
+    const parameters = {
+      options: {
+        url: '/v2/skills/{skill_id}/workspace/bulk_classify',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /*************************
    * logs
    ************************/
 
@@ -447,68 +509,6 @@ class AssistantV2 extends BaseService {
     return this.createRequest(parameters);
   };
 
-  /*************************
-   * bulkClassify
-   ************************/
-
-  /**
-   * Identify intents and entities in multiple user utterances.
-   *
-   * Send multiple user inputs to a dialog skill in a single request and receive information about the intents and
-   * entities recognized in each input. This method is useful for testing and comparing the performance of different
-   * skills or skill versions.
-   *
-   * This method is available only with Premium plans.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.skillId - Unique identifier of the skill. To find the skill ID in the Watson Assistant user
-   * interface, open the skill settings and click **API Details**.
-   * @param {BulkClassifyUtterance[]} [params.input] - An array of input utterances to classify.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>>}
-   */
-  public bulkClassify(params: AssistantV2.BulkClassifyParams): Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['skillId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const body = {
-      'input': _params.input
-    };
-
-    const query = {
-      'version': this.version
-    };
-
-    const path = {
-      'skill_id': _params.skillId
-    };
-
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'bulkClassify');
-
-    const parameters = {
-      options: {
-        url: '/v2/skills/{skill_id}/workspace/bulk_classify',
-        method: 'POST',
-        body,
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  };
-
 }
 
 /*************************
@@ -618,6 +618,17 @@ namespace AssistantV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `bulkClassify` operation. */
+  export interface BulkClassifyParams {
+    /** Unique identifier of the skill. To find the skill ID in the Watson Assistant user interface, open the skill
+     *  settings and click **API Details**.
+     */
+    skillId: string;
+    /** An array of input utterances to classify. */
+    input?: BulkClassifyUtterance[];
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `listLogs` operation. */
   export interface ListLogsParams {
     /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
@@ -649,20 +660,15 @@ namespace AssistantV2 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `bulkClassify` operation. */
-  export interface BulkClassifyParams {
-    /** Unique identifier of the skill. To find the skill ID in the Watson Assistant user interface, open the skill
-     *  settings and click **API Details**.
-     */
-    skillId: string;
-    /** An array of input utterances to classify. */
-    input?: BulkClassifyUtterance[];
-    headers?: OutgoingHttpHeaders;
-  }
-
   /*************************
    * model interfaces
    ************************/
+
+  /** AgentAvailabilityMessage. */
+  export interface AgentAvailabilityMessage {
+    /** The text of the message. */
+    message?: string;
+  }
 
   /** BulkClassifyOutput. */
   export interface BulkClassifyOutput {
@@ -1327,11 +1333,11 @@ namespace AssistantV2 {
     /** An optional message to be displayed to the user to indicate that the conversation will be transferred to the
      *  next available agent.
      */
-    agent_available?: string;
+    agent_available?: AgentAvailabilityMessage;
     /** An optional message to be displayed to the user to indicate that no online agent is available to take over
      *  the conversation.
      */
-    agent_unavailable?: string;
+    agent_unavailable?: AgentAvailabilityMessage;
     /** Routing or other contextual information to be used by target service desk systems. */
     transfer_info?: DialogNodeOutputConnectToAgentTransferInfo;
     /** A label identifying the topic of the conversation, derived from the **title** property of the relevant node

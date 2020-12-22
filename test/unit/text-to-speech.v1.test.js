@@ -387,7 +387,7 @@ describe('TextToSpeechV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createCustomModel
         const name = 'testString';
-        const language = 'de-DE';
+        const language = 'ar-MS';
         const description = 'testString';
         const params = {
           name: name,
@@ -460,7 +460,7 @@ describe('TextToSpeechV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listCustomModels
-        const language = 'de-DE';
+        const language = 'ar-MS';
         const params = {
           language: language,
         };
