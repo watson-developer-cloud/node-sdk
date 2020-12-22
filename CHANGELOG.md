@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.0...v6.0.1) (2020-12-22)
+
+
+### Bug Fixes
+
+* kick off semantic release ([#1080](https://github.com/watson-developer-cloud/node-sdk/issues/1080)) ([dd178f3](https://github.com/watson-developer-cloud/node-sdk/commit/dd178f39e791ef198e7ed7c72c3821307784227b))
+
 # [6.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v5.7.1...v6.0.0) (2020-12-11)
 
 
