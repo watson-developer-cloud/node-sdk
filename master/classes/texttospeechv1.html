@@ -80,7 +80,7 @@
 						words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic
 						translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in
 						standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic
-					Representation (SPR). The Arabic, Chinese, Dutch, and Korean languages support only IPA.</p>
+					Representation (SPR). The Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -169,7 +169,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L48">text-to-speech/v1-generated.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L48">text-to-speech/v1-generated.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -213,7 +213,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L48">text-to-speech/v1-generated.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L48">text-to-speech/v1-generated.ts:48</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -224,7 +224,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L47">text-to-speech/v1-generated.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L47">text-to-speech/v1-generated.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L779">text-to-speech/v1-generated.ts:779</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L856">text-to-speech/v1-generated.ts:856</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,8 +311,8 @@
 														<td></td>
 														<td>The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for
 															representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. The
-															Arabic, Chinese, Dutch, and Korean languages support only IPA. A sounds-like is one or more words that, when
-														combined, sound like the word.</td>
+															Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA. A sounds-like is one or more
+														words that, when combined, sound like the word.</td>
 													</tr>
 													<tr>
 														<td><code>word</code></td>
@@ -360,7 +360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L653">text-to-speech/v1-generated.ts:653</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L730">text-to-speech/v1-generated.ts:730</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -458,7 +458,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L368">text-to-speech/v1-generated.ts:368</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L445">text-to-speech/v1-generated.ts:445</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -470,6 +470,25 @@
 								are used to create it.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate">Creating a custom
 								model</a>.</p>
+								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates</h3>
+								</a>
+								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
+								<ul>
+									<li>The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.</li>
+									<li>The <code>ar-AR_OmarVoice</code> voice is deprecated. Use <code>ar-MS_OmarVoice</code> voice instead.</li>
+									<li>The <code>ar-AR</code> language identifier cannot be used to create a custom model. Use the <code>ar-MS</code> identifier instead.</li>
+									<li>The standard concatenative voices for the following languages are now deprecated: Brazilian Portuguese, United
+									Kingdom and United States English, French, German, Italian, Japanese, and Spanish (all dialects).</li>
+									<li>The features expressive SSML, voice transformation SSML, and use of the <code>volume</code> attribute of the <code>&lt;prosody&gt;</code>
+									element are deprecated and are not supported with any of the service&#39;s neural voices.</li>
+									<li>All of the service&#39;s voices are now customizable and generally available (GA) for production use.</li>
+								</ul>
+								<p>The deprecated voices and features will continue to function for at least one year but might be removed at a future
+									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
+									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
+									update</a> in the release
+								notes.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -528,8 +547,9 @@
 														</td>
 														<td>Optional</td>
 														<td>The language of the new custom model. You create a custom model for a specific language, not for a specific
-															voice. A custom model can be used with any voice, standard or neural, for its specified language. Omit the
-														parameter to use the the default language, &#x60;en-US&#x60;.</td>
+															voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the
+															default language, &#x60;en-US&#x60;. **Note:** The &#x60;ar-AR&#x60; language identifier cannot be used to create a custom model.
+														Use the &#x60;ar-MS&#x60; identifier instead.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -551,7 +571,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L581">text-to-speech/v1-generated.ts:581</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L658">text-to-speech/v1-generated.ts:658</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -627,7 +647,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L938">text-to-speech/v1-generated.ts:938</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L1015">text-to-speech/v1-generated.ts:1015</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -708,7 +728,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L882">text-to-speech/v1-generated.ts:882</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L959">text-to-speech/v1-generated.ts:959</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -813,7 +833,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L535">text-to-speech/v1-generated.ts:535</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L612">text-to-speech/v1-generated.ts:612</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -890,7 +910,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L310">text-to-speech/v1-generated.ts:310</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L368">text-to-speech/v1-generated.ts:368</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -902,6 +922,25 @@
 								voice or for a specific custom model to see the translation for that model.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage">Querying a word from a
 								language</a>.</p>
+								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates</h3>
+								</a>
+								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
+								<ul>
+									<li>The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.</li>
+									<li>The <code>ar-AR_OmarVoice</code> voice is deprecated. Use <code>ar-MS_OmarVoice</code> voice instead.</li>
+									<li>The <code>ar-AR</code> language identifier cannot be used to create a custom model. Use the <code>ar-MS</code> identifier instead.</li>
+									<li>The standard concatenative voices for the following languages are now deprecated: Brazilian Portuguese, United
+									Kingdom and United States English, French, German, Italian, Japanese, and Spanish (all dialects).</li>
+									<li>The features expressive SSML, voice transformation SSML, and use of the <code>volume</code> attribute of the <code>&lt;prosody&gt;</code>
+									element are deprecated and are not supported with any of the service&#39;s neural voices.</li>
+									<li>All of the service&#39;s voices are now customizable and generally available (GA) for production use.</li>
+								</ul>
+								<p>The deprecated voices and features will continue to function for at least one year but might be removed at a future
+									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
+									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
+									update</a> in the release
+								notes.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -957,8 +996,8 @@
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td>Optional</td>
-														<td>The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, and Korean languages
-														support only IPA. Omit the parameter to obtain the pronunciation in the default format.</td>
+														<td>The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, Australian English, and
+														Korean languages support only IPA. Omit the parameter to obtain the pronunciation in the default format.</td>
 													</tr>
 													<tr>
 														<td><code>headers</code></td>
@@ -974,7 +1013,8 @@
 														</td>
 														<td>Optional</td>
 														<td>A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
-														language (for example, &#x60;en-US&#x60;) return the same translation.</td>
+															language (for example, &#x60;en-US&#x60;) return the same translation. For more information about specifying a voice, see
+														**Important voice updates** in the method description.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -996,7 +1036,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L134">text-to-speech/v1-generated.ts:134</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L153">text-to-speech/v1-generated.ts:153</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1008,6 +1048,25 @@
 								language of the specified voice. To list information about all available voices, use the <strong>List voices</strong> method.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice">Listing a specific
 								voice</a>.</p>
+								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates</h3>
+								</a>
+								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
+								<ul>
+									<li>The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.</li>
+									<li>The <code>ar-AR_OmarVoice</code> voice is deprecated. Use <code>ar-MS_OmarVoice</code> voice instead.</li>
+									<li>The <code>ar-AR</code> language identifier cannot be used to create a custom model. Use the <code>ar-MS</code> identifier instead.</li>
+									<li>The standard concatenative voices for the following languages are now deprecated: Brazilian Portuguese, United
+									Kingdom and United States English, French, German, Italian, Japanese, and Spanish (all dialects).</li>
+									<li>The features expressive SSML, voice transformation SSML, and use of the <code>volume</code> attribute of the <code>&lt;prosody&gt;</code>
+									element are deprecated and are not supported with any of the service&#39;s neural voices.</li>
+									<li>All of the service&#39;s voices are now customizable and generally available (GA) for production use.</li>
+								</ul>
+								<p>The deprecated voices and features will continue to function for at least one year but might be removed at a future
+									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
+									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
+									update</a> in the release
+								notes.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -1046,7 +1105,8 @@
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td></td>
-														<td>The voice for which information is to be returned.</td>
+														<td>The voice for which information is to be returned. For more information about specifying a voice, see
+														**Important voice updates** in the method description.</td>
 													</tr>
 													<!-- Print out all optional parameters-->
 													<tr>
@@ -1083,7 +1143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L834">text-to-speech/v1-generated.ts:834</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L911">text-to-speech/v1-generated.ts:911</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1165,7 +1225,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L419">text-to-speech/v1-generated.ts:419</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L496">text-to-speech/v1-generated.ts:496</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1246,7 +1306,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L96">text-to-speech/v1-generated.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L96">text-to-speech/v1-generated.ts:96</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1316,7 +1376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L706">text-to-speech/v1-generated.ts:706</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L783">text-to-speech/v1-generated.ts:783</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1485,7 +1545,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L243">text-to-speech/v1-generated.ts:243</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L281">text-to-speech/v1-generated.ts:281</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1537,6 +1597,25 @@
 								</ul>
 								<p>For more information about specifying an audio format, including additional details about some of the formats, see
 								<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audioFormats#audioFormats">Audio formats</a>.</p>
+								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates</h3>
+								</a>
+								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
+								<ul>
+									<li>The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.</li>
+									<li>The <code>ar-AR_OmarVoice</code> voice is deprecated. Use <code>ar-MS_OmarVoice</code> voice instead.</li>
+									<li>The <code>ar-AR</code> language identifier cannot be used to create a custom model. Use the <code>ar-MS</code> identifier instead.</li>
+									<li>The standard concatenative voices for the following languages are now deprecated: Brazilian Portuguese, United
+									Kingdom and United States English, French, German, Italian, Japanese, and Spanish (all dialects).</li>
+									<li>The features expressive SSML, voice transformation SSML, and use of the <code>volume</code> attribute of the <code>&lt;prosody&gt;</code>
+									element are deprecated and are not supported with any of the service&#39;s neural voices.</li>
+									<li>All of the service&#39;s voices are now customizable and generally available (GA) for production use.</li>
+								</ul>
+								<p>The deprecated voices and features will continue to function for at least one year but might be removed at a future
+									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
+									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
+									update</a> in the release
+								notes.</p>
 								<a href="#warning-messages" id="warning-messages" style="color: inherit; text-decoration: none;">
 									<h3>Warning messages</h3>
 								</a>
@@ -1615,7 +1694,8 @@
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td>Optional</td>
-														<td>The voice to use for synthesis.</td>
+														<td>The voice to use for synthesis. For more information about specifying a voice, see **Important voice
+														updates** in the method description.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -1637,7 +1717,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8295b78/text-to-speech/v1-generated.ts#L480">text-to-speech/v1-generated.ts:480</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e37387e/text-to-speech/v1-generated.ts#L557">text-to-speech/v1-generated.ts:557</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
