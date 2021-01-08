@@ -1,3 +1,10 @@
+## [6.0.2](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.1...v6.0.2) (2021-01-08)
+
+
+### Bug Fixes
+
+* **package.json:** update dependencies to cover vulnerabilities ([2b839c8](https://github.com/watson-developer-cloud/node-sdk/commit/2b839c8ac2a5ba7caf407edf03c5add2ca2ea348))
+
 ## [6.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.0...v6.0.1) (2020-12-22)
 
 
