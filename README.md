@@ -51,7 +51,7 @@ Node.js client library to use the Watson APIs.
 
 ## ANNOUNCEMENTS!
 ### Updating endpoint URLs from watsonplatform.net
-Watson API endpoint URLs at watsonplatform.net are changing and will not work after they are retired. Update your calls to use the newer endpoint URLs. Please see https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change for details.
+Watson API endpoint URLs at watsonplatform.net are changing and will not work after 26 May 2021. Update your calls to use the newer endpoint URLs. For more information, see https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change.
 
 ### Personality Insights deprecation
 IBM Watson™ Personality Insights is discontinued. For a period of one year from 1 December 2020, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.
@@ -62,7 +62,7 @@ As an alternative, we encourage you to consider migrating to IBM Watson™ [Natu
 IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.
 
 ### Compare and Comply deprecation
-Deprecated: IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.
+IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.
 
 ### Major version 5 released
 Version v5.0.0 of the SDK has been released and includes a number of breaking changes - see what's changed in the [migration guide](MIGRATION-V5.md).
