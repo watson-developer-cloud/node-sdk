@@ -18,7 +18,7 @@ Node.js client library to use the Watson APIs.
   * [Client-side usage](#client-side-usage)
   * [Authentication](#authentication)
   * [Setting the Service URL](#setting-the-service-url)
-  * [Callbacks vs Promises](#callbacks-vs-promises)
+  * [Promises](#promises)
   * [Sending request headers](#sending-request-headers)
   * [Parsing HTTP response](#parsing-http-response)
   * [Data collection opt-out](#data-collection-opt-out)
@@ -222,10 +222,9 @@ const discovery = DiscoveryV1({
 discovery.setServiceUrl('<new url>');
 ```
 
-## Callbacks vs Promises
+## Promises
 
-All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. Note that support for Callbacks is being deprecated and will be removed in a future major release. Using Promises is recommended.
-
+All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support with Promises.
 ```js
 const DiscoveryV1 = require('ibm-watson/discovery/v1');
 
@@ -246,15 +245,6 @@ discovery.listEnvironments()
 async function callDiscovery() { // note that callDiscovery also returns a Promise
   const body = await discovery.listEnvironments();
 }
-
-// using a Callback function
-discovery.listEnvironments((err, res) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(JSON.stringify(res, null, 2));
-  }
-});
 ```
 
 ## Sending request headers
@@ -525,6 +515,7 @@ assistant.message(
 ```
 
 ### Compare Comply
+**IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.**
 
 Use the Compare Comply service to compare and classify documents.
 
@@ -856,6 +847,7 @@ toneAnalyzer.tone(
 ```
 
 ### Visual Recognition v4
+**IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.**
 
 Use the [Visual Recognition][visual_recognition] service to recognize the
 following picture.
