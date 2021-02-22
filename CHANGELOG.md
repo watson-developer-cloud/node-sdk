@@ -1,3 +1,11 @@
+## [6.0.3](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.2...v6.0.3) (2021-02-22)
+
+
+### Bug Fixes
+
+* **cc:** add deprecation warning for Compare and Comply ([85c218a](https://github.com/watson-developer-cloud/node-sdk/commit/85c218a4d02a31534865bfde5ccede4fb113f00d))
+* **stt:** handedit- fix timestamps time to properly reflect response model ([735bcd2](https://github.com/watson-developer-cloud/node-sdk/commit/735bcd23bdd32657c5ea8e79ab9f9ff741e1d2a3)), closes [#1084](https://github.com/watson-developer-cloud/node-sdk/issues/1084)
+
 ## [6.0.2](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.1...v6.0.2) (2021-01-08)
 
 
