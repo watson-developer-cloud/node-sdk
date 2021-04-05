@@ -1,3 +1,10 @@
+## [6.0.4](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.3...v6.0.4) (2021-04-05)
+
+
+### Bug Fixes
+
+* update core to enable use with more front-end environments ([bb57a23](https://github.com/watson-developer-cloud/node-sdk/commit/bb57a23e311bfdf3b4c8636e3a9d4c03efd3dd78))
+
 ## [6.0.3](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.2...v6.0.3) (2021-02-22)
 
 
