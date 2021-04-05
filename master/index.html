@@ -81,7 +81,7 @@
 						<li><a href="#client-side-usage">Client-side usage</a></li>
 						<li><a href="#authentication">Authentication</a></li>
 						<li><a href="#setting-the-service-url">Setting the Service URL</a></li>
-						<li><a href="#callbacks-vs-promises">Callbacks vs Promises</a></li>
+						<li><a href="#promises">Promises</a></li>
 						<li><a href="#sending-request-headers">Sending request headers</a></li>
 						<li><a href="#parsing-http-response">Parsing HTTP response</a></li>
 						<li><a href="#data-collection-opt-out">Data collection opt-out</a></li>
@@ -114,8 +114,12 @@
 					</ul>
 				</details>
 				<a href="#announcements" id="announcements" style="color: inherit; text-decoration: none;">
-					<h2>ANNOUNCEMENTS!</h2>
+					<h2>Announcements</h2>
 				</a>
+				<a href="#updating-endpoint-urls-from-watsonplatformnet" id="updating-endpoint-urls-from-watsonplatformnet" style="color: inherit; text-decoration: none;">
+					<h3>Updating endpoint URLs from watsonplatform.net</h3>
+				</a>
+				<p>Watson API endpoint URLs at watsonplatform.net are changing and will not work after 26 May 2021. Update your calls to use the newer endpoint URLs. For more information, see <a href="https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change">https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change</a>.</p>
 				<a href="#personality-insights-deprecation" id="personality-insights-deprecation" style="color: inherit; text-decoration: none;">
 					<h3>Personality Insights deprecation</h3>
 				</a>
@@ -125,6 +129,10 @@
 					<h3>Visual Recognition deprecation</h3>
 				</a>
 				<p>IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can&#39;t create instances. Any instance that is provisioned on 1 December 2021 will be deleted.</p>
+				<a href="#compare-and-comply-deprecation" id="compare-and-comply-deprecation" style="color: inherit; text-decoration: none;">
+					<h3>Compare and Comply deprecation</h3>
+				</a>
+				<p>IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can&#39;t create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit <a href="https://ibm.biz/contact-wdc-premium">https://ibm.biz/contact-wdc-premium</a>.</p>
 				<a href="#major-version-5-released" id="major-version-5-released" style="color: inherit; text-decoration: none;">
 					<h3>Major version 5 released</h3>
 				</a>
@@ -271,10 +279,10 @@
 });
 
 discovery.setServiceUrl(<span class="hljs-string">&#x27;&lt;new url&gt;&#x27;</span>);</code></pre>
-				<a href="#callbacks-vs-promises" id="callbacks-vs-promises" style="color: inherit; text-decoration: none;">
-					<h2>Callbacks vs Promises</h2>
+				<a href="#promises" id="promises" style="color: inherit; text-decoration: none;">
+					<h2>Promises</h2>
 				</a>
-				<p>All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support for both Promises and Callback functions. Note that support for Callbacks is being deprecated and will be removed in a future major release. Using Promises is recommended.</p>
+				<p>All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support with Promises.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> DiscoveryV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/discovery/v1&#x27;</span>);
 
 <span class="hljs-keyword">const</span> discovery = <span class="hljs-keyword">new</span> DiscoveryV1({
@@ -293,16 +301,7 @@ discovery.listEnvironments()
 <span class="hljs-comment">// using Promises provides the ability to use async / await</span>
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">callDiscovery</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-comment">// note that callDiscovery also returns a Promise</span>
   <span class="hljs-keyword">const</span> body = <span class="hljs-keyword">await</span> discovery.listEnvironments();
-}
-
-<span class="hljs-comment">// using a Callback function</span>
-discovery.listEnvironments(<span class="hljs-function">(<span class="hljs-params">err, res</span>) =&gt;</span> {
-  <span class="hljs-keyword">if</span> (err) {
-    <span class="hljs-built_in">console</span>.log(err);
-  } <span class="hljs-keyword">else</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(res, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-  }
-});</code></pre>
+}</code></pre>
 				<a href="#sending-request-headers" id="sending-request-headers" style="color: inherit; text-decoration: none;">
 					<h2>Sending request headers</h2>
 				</a>
@@ -543,6 +542,7 @@ assistant.message(
 				<a href="#compare-comply" id="compare-comply" style="color: inherit; text-decoration: none;">
 					<h3>Compare Comply</h3>
 				</a>
+				<p><strong>IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can&#39;t create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit <a href="https://ibm.biz/contact-wdc-premium">https://ibm.biz/contact-wdc-premium</a>.</strong></p>
 				<p>Use the Compare Comply service to compare and classify documents.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
 <span class="hljs-keyword">const</span> CompareComplyV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/compare-comply/v1&#x27;</span>);
@@ -838,6 +838,7 @@ toneAnalyzer.tone(
 				<a href="#visual-recognition-v4" id="visual-recognition-v4" style="color: inherit; text-decoration: none;">
 					<h3>Visual Recognition v4</h3>
 				</a>
+				<p><strong>IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can&#39;t create instances. Any instance that is provisioned on 1 December 2021 will be deleted.</strong></p>
 				<p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
 				following picture.</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> VisualRecognitionV4 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/visual-recognition/v4&#x27;</span>);
