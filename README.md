@@ -50,6 +50,9 @@ Node.js client library to use the Watson APIs.
 </details>
 
 ## Announcements
+
+### Major version 6 released
+Version v6.0.0 of the SDK has been released and includes a number of breaking changes - see what's changed in the [migration guide](MIGRATION-V6.md).
 ### Updating endpoint URLs from watsonplatform.net
 Watson API endpoint URLs at watsonplatform.net are changing and will not work after 26 May 2021. Update your calls to use the newer endpoint URLs. For more information, see https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change.
 
@@ -63,9 +66,6 @@ IBM Watson™ Visual Recognition is discontinued. Existing instances are support
 
 ### Compare and Comply deprecation
 IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.
-
-### Major version 5 released
-Version v5.0.0 of the SDK has been released and includes a number of breaking changes - see what's changed in the [migration guide](MIGRATION-V5.md).
 
 ### Supporting Node versions 10+
 The SDK will no longer be tested with Node versions 6 and 8. Support will be officially dropped in v5.
