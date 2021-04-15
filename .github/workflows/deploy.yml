@@ -1,0 +1,49 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support documentation.
+# This workflow will download a prebuilt Node version, install dependencies, build and deploy/publish a new release
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Deploy and Publish
+
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    branches: [ master ]
+    types:
+      - completed
+
+  # Allows you to run this workflow manually from the Action tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Deploy and Publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: Set up Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 12
+   - name: Install Semantic Release dependencies
+      run: |
+        sudo apt-get install bumpversion
+        npm install -g semantic-release
+        npm install -g @semantic-release/changelog
+        npm install -g @semantic-release/exec
+        npm install -g @semantic-release/git
+        npm install -g @semantic-release/github
+        npm install -g @semantic-release/commit-analyzer
+        npm install -g @semantic-release/release-notes-generator
+    - name: Publish to Git Releases and Tags
+      if: ${{ github.event.workflow_run.conclusion == 'success' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npx semantic-release --dry-run
+
