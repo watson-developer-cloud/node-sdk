@@ -6,10 +6,9 @@ node_js:
 cache:
   npm: false
 before_install:
-- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ ! -z ${encrypted_58d69b955d05_key}
-  ] && openssl aes-256-cbc -K $encrypted_58d69b955d05_key -iv $encrypted_58d69b955d05_iv
-  -in secrets.tar.enc -out test/resources/secrets.tar -d || true'
-- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ ! -z ${encrypted_58d69b955d05_key}
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ ! -z ${secret_key}
+  ] && openssl aes-256-cbc -k "$secret_key" -in secrets.tar.enc -out test/resources/secrets.tar -d || true'
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ ! -z ${secret_key}
   ] && cd test/resources/ && tar xvf secrets.tar && cd ../.. || true'
 script:
 - npm run build
