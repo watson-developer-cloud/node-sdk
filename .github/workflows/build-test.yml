@@ -38,6 +38,9 @@ jobs:
         npm run check-packages
         sh scripts/typedoc/generate_typedoc.sh
     - name: Execute Node code coverage
-      run: |
-        npm run report-coverage
-        scripts/jsdoc/publish.sh
+      run: npm run report-coverage
+    - name: publish js docs
+    if: matrix.node-version == '10.x'
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    run: scripts/jsdoc/publish_ga.sh
