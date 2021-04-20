@@ -39,4 +39,5 @@ jobs:
         scripts/typedoc/generate_typedoc.sh
     - name: Execute Node code coverage
       run: npm run report-coverage
-
+    - name: Publish js docs
+      run: scripts/jsdoc/publish_ga.sh
