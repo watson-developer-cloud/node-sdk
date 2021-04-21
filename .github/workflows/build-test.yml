@@ -47,8 +47,7 @@ jobs:
         # TRAVIS_BRANCH: ${{ github.head_ref }} # PR only
         # TRAVIS_BRANCH2: ${{ github.head_ref }} # PR only
         TRAVIS_BRANCH1: ${{ github.ref }} # non PR only need to get last part
-        # TRAVIS_PULL_REQUEST: ${{ github.event.number }}
-        TRAVIS_PULL_REQUEST: 'false'
+        TRAVIS_PULL_REQUEST: ${{ github.event.number }}
         TRAVIS_BUILD_NUMBER: ${{ github.run_number }}
         TRAVIS_JOB_NUMBER: ${{ github.job_number }}
         TRAVIS_COMMIT: ${{ github.sha }}
