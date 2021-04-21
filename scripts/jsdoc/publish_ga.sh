@@ -6,8 +6,8 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
 
   echo "Publishing JSDoc..."
 
-  git config --global user.email "travis@travis-ci.org"
-  git config --global user.name "travis-ci"
+  git config --global user.email "watdevex@us.ibm.com"
+  git config --global user.name "watdevex"
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/watson-developer-cloud/node-sdk gh-pages > /dev/null
 
   pushd gh-pages
@@ -49,6 +49,8 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
 
 else
 
-  echo -e "Not publishing docs for build $TRAVIS_BUILD_NUMBER ($TRAVIS_JOB_NUMBER) on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG"
+  # echo -e "Not publishing docs for build $TRAVIS_BUILD_NUMBER ($TRAVIS_JOB_NUMBER) on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG"
+  echo -e "TRAVIS_BRANCH1=$TRAVIS_BRANCH1 - TRAVIS_BRANCH2=$TRAVIS_BRANCH2 - TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG - TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
+  echo -e "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER - TRAVIS_JOB_NUMBER=$TRAVIS_JOB_NUMBER - TRAVIS_COMMIT=$TRAVIS_COMMIT - TRAVIS_TAG=$TRAVIS_TAG"
 
 fi

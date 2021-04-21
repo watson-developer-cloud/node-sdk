@@ -43,4 +43,13 @@ jobs:
       if: matrix.node-version == '10.x'
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        TRAVIS_REPO_SLUG: ${{ github.repository }}
+        # TRAVIS_BRANCH: ${{ github.head_ref }} # PR only
+        TRAVIS_BRANCH2: ${{ github.head_ref }} # PR only
+        TRAVIS_BRANCH1: ${{ github.ref##*/ }} # non PR only
+        TRAVIS_PULL_REQUEST: ${{ github.event.number }}
+        TRAVIS_BUILD_NUMBER: ${{ github.run_number }}
+        TRAVIS_JOB_NUMBER: ${{ github.job_number }
+        TRAVIS_COMMIT: ${{ github.sha }
+        TRAVIS_TAG1: ${{ github.event.release.tag_name }}
       run: scripts/jsdoc/publish_ga.sh
