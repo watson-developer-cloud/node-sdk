@@ -54,5 +54,6 @@ else
   echo -e "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER - TRAVIS_JOB_NUMBER=$TRAVIS_JOB_NUMBER - TRAVIS_COMMIT=$TRAVIS_COMMIT - TRAVIS_TAG=$TRAVIS_TAG"
   if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "" ] && [ "$TRAVIS_BRANCH1" ]; then
     echo -e "Happy Happy Happy"
+    echo -e "${TRAVIS_BRANCH1##*/}"
   fi
 fi
