@@ -55,9 +55,9 @@ else
   if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "" ] && [ "$TRAVIS_BRANCH1" ]; then
     echo -e "Happy Happy Happy"
     echo -e "${TRAVIS_BRANCH1##*/}"
-    setenv TRAVIS_BRANCH="refs/heads/9260_gha"
+    export TRAVIS_BRANCH="refs/heads/9260_gha"
     echo -e "new value1 = $TRAVIS_BRANCH"
-    setenv TRAVIS_BRANCH=${TRAVIS_BRANCH1##*/}
+    export TRAVIS_BRANCH=${TRAVIS_BRANCH1##*/}
     echo -e "new value2 = $TRAVIS_BRANCH"
   fi
 fi
