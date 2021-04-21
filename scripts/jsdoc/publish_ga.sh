@@ -2,9 +2,11 @@
 
 # This is the Github Actions version based on the travis version
 
-if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "" ] && [ "$TRAVIS_BRANCH" ]; then
 
   echo "Publishing JSDoc..."
+
+  export TRAVIS_BRANCH=${TRAVIS_BRANCH##*/}    # Get the last part for true branch name - "refs/heads/9260_gha"
 
   git config --global user.email "watdevex@us.ibm.com"
   git config --global user.name "watdevex"
@@ -49,15 +51,6 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
 
 else
 
-  # echo -e "Not publishing docs for build $TRAVIS_BUILD_NUMBER ($TRAVIS_JOB_NUMBER) on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG"
-  echo -e "TRAVIS_BRANCH1=$TRAVIS_BRANCH1 - TRAVIS_BRANCH2=$TRAVIS_BRANCH2 - TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG - TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
-  echo -e "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER - TRAVIS_JOB_NUMBER=$TRAVIS_JOB_NUMBER - TRAVIS_COMMIT=$TRAVIS_COMMIT - TRAVIS_TAG=$TRAVIS_TAG"
-  if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "" ] && [ "$TRAVIS_BRANCH1" ]; then
-    echo -e "Happy Happy Happy"
-    echo -e "${TRAVIS_BRANCH1##*/}"
-    export TRAVIS_BRANCH="refs/heads/9260_gha"
-    echo -e "new value1 = $TRAVIS_BRANCH"
-    export TRAVIS_BRANCH=${TRAVIS_BRANCH1##*/}
-    echo -e "new value2 = $TRAVIS_BRANCH"
-  fi
+  echo -e "Not publishing docs for build $TRAVIS_BUILD_NUMBER ($TRAVIS_JOB_NUMBER) on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG"
+
 fi
