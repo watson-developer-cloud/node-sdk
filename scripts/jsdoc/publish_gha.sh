@@ -2,11 +2,11 @@
 
 # This is the Github Actions version based on the travis version
 
-if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "" ] && [ "$TRAVIS_BRANCH" ]; then
+if [ "$GHA_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$GHA_PULL_REQUEST" == "" ] && [ "$GHA_BRANCH" ]; then
 
   echo "Publishing JSDoc..."
 
-  export TRAVIS_BRANCH=${TRAVIS_BRANCH##*/}    # Get the last part for true branch name - "refs/heads/9260_gha"
+  export GHA_BRANCH=${GHA_BRANCH##*/}    # Get the last part for true branch name - "refs/heads/9260_gha"
 
   git config --global user.email "watdevex@us.ibm.com"
   git config --global user.name "watdevex"
@@ -14,16 +14,16 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
 
   pushd gh-pages
     # make a directory named after the branch/tag for the current build, replacing the previous one if present
-    # on tagged builds, $TRAVIS_BRANCH is the tag (e.g. v1.2.3), otherwise it's the branch name (e.g. master)
-    rm -rf $TRAVIS_BRANCH
-    mkdir $TRAVIS_BRANCH
-    cp -Rf ../doc/. ./$TRAVIS_BRANCH
+    # on tagged builds, $GHA_BRANCH is the tag (e.g. v1.2.3), otherwise it's the branch name (e.g. master)
+    rm -rf $GHA_BRANCH
+    mkdir $GHA_BRANCH
+    cp -Rf ../doc/. ./$GHA_BRANCH
 
     # update the latest/ symlink
-    # on tagged builds, $TRAVIS_TAG is set to the tag, but it's blank on regular builds, unlike $TRAVIS_BRANCH
-    if [ $TRAVIS_TAG ]; then
+    # on tagged builds, $GHA_TAG is set to the tag, but it's blank on regular builds, unlike $GHA_BRANCH
+    if [ $GHA_TAG ]; then
       rm latest
-      ln -s ./$TRAVIS_TAG latest
+      ln -s ./$GHA_TAG latest
     fi
 
     # todo: automatically delete folders that don't have a matching git branch
@@ -42,15 +42,15 @@ if [ "$TRAVIS_REPO_SLUG" == "watson-developer-cloud/node-sdk" ] && [ "$TRAVIS_PU
 
     # add all changes to git, including deleted files
     git add -f -A .
-    git commit -m "Doc for $TRAVIS_BRANCH ($TRAVIS_COMMIT)"
+    git commit -m "Doc for $GHA_BRANCH ($GHA_COMMIT)"
     git push -fq origin gh-pages > /dev/null
 
   popd
 
-  echo -e "Published Doc for $TRAVIS_BRANCH to gh-pages.\n"
+  echo -e "Published Doc for $GHA_BRANCH to gh-pages.\n"
 
 else
 
-  echo -e "Not publishing docs for build $TRAVIS_BUILD_NUMBER ($TRAVIS_JOB_NUMBER) on branch $TRAVIS_BRANCH of repo $TRAVIS_REPO_SLUG"
+  echo -e "Not publishing docs for build $GHA_BUILD_NUMBER ($GHA_JOB_NUMBER) on branch $GHA_BRANCH of repo $GHA_REPO_SLUG"
 
 fi

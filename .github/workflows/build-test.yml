@@ -38,16 +38,17 @@ jobs:
         npm run check-packages
         scripts/typedoc/generate_typedoc.sh
     - name: Execute Node code coverage
+      if: matrix.node-version == '10.x'
       run: npm run report-coverage
     - name: Publish js docs
       if: matrix.node-version == '10.x'
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        TRAVIS_REPO_SLUG: ${{ github.repository }}
-        TRAVIS_BRANCH: ${{ github.ref }} # non PR only need to get last part
-        TRAVIS_PULL_REQUEST: ${{ github.event.number }}
-        TRAVIS_BUILD_NUMBER: ${{ github.run_number }}
-        TRAVIS_JOB_NUMBER: ${{ github.job_number }}
-        TRAVIS_COMMIT: ${{ github.sha }}
-        # TRAVIS_TAG: ${{ github.event.release.tag_name }}
-      run: scripts/jsdoc/publish_ga.sh
+        GHA_REPO_SLUG: ${{ github.repository }}
+        GHA_BRANCH: ${{ github.ref }} # non PR only need to get last part
+        GHA_PULL_REQUEST: ${{ github.event.number }}
+        GHA_BUILD_NUMBER: ${{ github.run_number }}
+        GHA_JOB_NUMBER: ${{ github.job_number }}
+        GHA_COMMIT: ${{ github.sha }}
+        # GHA_TAG: ${{ github.event.release.tag_name }}
+      run: scripts/jsdoc/publish_gha.sh
