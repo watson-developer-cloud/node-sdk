@@ -9,7 +9,7 @@ name: Deploy and Publish
 on:
   workflow_run:
     workflows: ["Build and Test"]
-    branches: [ master ]
+    branches: [ '**' ]
     types:
       - completed
 
