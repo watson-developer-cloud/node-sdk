@@ -1,0 +1,54 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support documentation.
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Build and Test
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_test:
+    name: Build and Test on Node ${{ matrix.node-version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: ['10.x', '12.x']
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Execute Node unit tests
+      run: |
+        npm ci
+        npm run build --if-present
+        npm run test-unit-travis
+        npm run check-packages
+        scripts/typedoc/generate_typedoc.sh
+    - name: Execute Node code coverage
+      if: matrix.node-version == '10.x'
+      run: npm run report-coverage
+    - name: Publish js docs
+      if: matrix.node-version == '10.x'
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GHA_REPO_SLUG: ${{ github.repository }}
+        GHA_BRANCH: ${{ github.ref }} # non PR only need to get last part
+        GHA_PULL_REQUEST: ${{ github.event.number }}
+        GHA_BUILD_NUMBER: ${{ github.run_number }}
+        GHA_JOB_NUMBER: ${{ github.job_number }}
+        GHA_COMMIT: ${{ github.sha }}
+        # GHA_TAG: ${{ github.event.release.tag_name }}
+      run: scripts/jsdoc/publish_gha.sh
