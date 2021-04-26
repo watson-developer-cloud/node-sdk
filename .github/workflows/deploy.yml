@@ -9,7 +9,7 @@ name: Deploy and Publish
 on:
   workflow_run:
     workflows: ["Build and Test"]
-    branches: [ '**' ]
+    branches: [ master ]
     types:
       - completed
 
@@ -41,9 +41,9 @@ jobs:
         npm install -g @semantic-release/commit-analyzer
         npm install -g @semantic-release/release-notes-generator
     - name: Publish to Git Releases and Tags
-      # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+      if: ${{ github.event.workflow_run.conclusion == 'success' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npx semantic-release --dry-run
+      run: npx semantic-release # --dry-run
 
