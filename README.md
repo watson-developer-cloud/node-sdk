@@ -1,11 +1,15 @@
 # Watson APIs Node.js SDK
 
-[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg?branch=master)](http://travis-ci.org/watson-developer-cloud/node-sdk)
+[![Build and Test](https://github.com/watson-developer-cloud/node-sdk/workflows/Build%20and%20Test/badge.svg?branch=master)](https://github.com/watson-developer-cloud/node-sdk/actions?query=workflow%3A"Build+and+Test")
+[![Deploy and Publish](https://github.com/watson-developer-cloud/node-sdk/workflows/Deploy%20and%20Publish/badge.svg?branch=master)](https://github.com/watson-developer-cloud/node-sdk/actions?query=workflow%3A%22Deploy+and+Publish%22)
 [![codecov](https://codecov.io/gh/watson-developer-cloud/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-developer-cloud/node-sdk)
 [![Slack](https://wdc-slack-inviter.mybluemix.net/badge.svg)](https://wdc-slack-inviter.mybluemix.net)
 [![npm-version](https://img.shields.io/npm/v/ibm-watson.svg)](https://www.npmjs.com/package/ibm-watson)
 [![npm-downloads](https://img.shields.io/npm/dm/ibm-watson.svg)](https://www.npmjs.com/package/ibm-watson)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+
+## Deprecated builds
+[![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg?branch=master)](http://travis-ci.org/watson-developer-cloud/node-sdk)
 
 Node.js client library to use the Watson APIs.
 
@@ -574,7 +578,7 @@ discovery.query(
     console.log(err);
   });
 ```
-### Discovery v1 
+### Discovery v1
 
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
 
@@ -704,8 +708,8 @@ nlu.analyze(
 
 
 ### Personality Insights
-**On 1 December 2021, Personality Insights will no longer be available. 
-    Consider migrating to Watson Natural Language Understanding. 
+**On 1 December 2021, Personality Insights will no longer be available.
+    Consider migrating to Watson Natural Language Understanding.
     For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation**
 
 Analyze text in English and get a personality profile by using the
