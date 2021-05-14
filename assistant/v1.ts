@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201221-123327
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -47,7 +47,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
    * format. The current version is `2020-04-01`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.assistant.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -103,6 +103,14 @@ class AssistantV1 extends BaseService {
    * from the previous response.
    * @param {OutputData} [params.output] - An output object that includes the response to the user, the dialog nodes
    * that were triggered, and messages from the log.
+   * @param {string} [params.userId] - A string value that identifies the user who is interacting with the workspace.
+   * The client must provide a unique identifier for each individual end user who accesses the application. For
+   * user-based plans, this user ID is used to identify unique users for billing purposes. This string cannot contain
+   * carriage return, newline, or tab characters. If no value is specified in the input, **user_id** is automatically
+   * set to the value of **context.conversation_id**.
+   *
+   * **Note:** This property is the same as the **user_id** property in the context metadata. If **user_id** is
+   * specified in both locations in a message request, the value specified at the root is used.
    * @param {boolean} [params.nodesVisitedDetails] - Whether to include additional diagnostic information about the
    * dialog nodes that were visited during processing of the message.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -123,7 +131,8 @@ class AssistantV1 extends BaseService {
       'entities': _params.entities,
       'alternate_intents': _params.alternateIntents,
       'context': _params.context,
-      'output': _params.output
+      'output': _params.output,
+      'user_id': _params.userId
     };
 
     const query = {
@@ -166,7 +175,7 @@ class AssistantV1 extends BaseService {
    * Send multiple user inputs to a workspace in a single request and receive information about the intents and entities
    * recognized in each input. This method is useful for testing and comparing the performance of different workspaces.
    *
-   * This method is available only with Premium plans.
+   * This method is available only with Enterprise with Data Isolation plans.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2547,25 +2556,30 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
-   * @param {string} params.dialogNode - The dialog node ID. This string must conform to the following restrictions:
-   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * @param {string} params.dialogNode - The unique ID of the dialog node. This is an internal identifier used to refer
+   * to the dialog node from other dialog nodes and in the diagnostic information included with message responses.
+   *
+   * This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
    * @param {string} [params.description] - The description of the dialog node. This string cannot contain carriage
    * return, newline, or tab characters.
    * @param {string} [params.conditions] - The condition that will trigger the dialog node. This string cannot contain
    * carriage return, newline, or tab characters.
-   * @param {string} [params.parent] - The ID of the parent dialog node. This property is omitted if the dialog node has
-   * no parent.
-   * @param {string} [params.previousSibling] - The ID of the previous sibling dialog node. This property is omitted if
-   * the dialog node has no previous sibling.
+   * @param {string} [params.parent] - The unique ID of the parent dialog node. This property is omitted if the dialog
+   * node has no parent.
+   * @param {string} [params.previousSibling] - The unique ID of the previous sibling dialog node. This property is
+   * omitted if the dialog node has no previous sibling.
    * @param {DialogNodeOutput} [params.output] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
    * @param {DialogNodeContext} [params.context] - The context for the dialog node.
    * @param {JsonObject} [params.metadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.nextStep] - The next step to execute following this dialog node.
-   * @param {string} [params.title] - The alias used to identify the dialog node. This string must conform to the
-   * following restrictions:
-   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * @param {string} [params.title] - A human-readable name for the dialog node. If the node is included in
+   * disambiguation, this title is used to populate the **label** property of the corresponding suggestion in the
+   * `suggestion` response type (unless it is overridden by the **user_label** property). The title is also used to
+   * populate the **topic** property in the `connect_to_agent` response type.
+   *
+   * This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
    * @param {string} [params.type] - How the dialog node is processed.
    * @param {string} [params.eventName] - How an `event_handler` node is processed.
    * @param {string} [params.variable] - The location in the dialog context where output is stored.
@@ -2575,7 +2589,8 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.digressOut] - Whether this dialog node can be returned to after a digression.
    * @param {string} [params.digressOutSlots] - Whether the user can digress to top-level nodes while filling out slots.
    * @param {string} [params.userLabel] - A label that can be displayed externally to describe the purpose of the node
-   * to users.
+   * to users. If set, this label is used to identify the node in disambiguation responses (overriding the value of the
+   * **title** property).
    * @param {boolean} [params.disambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
    * suggestions. Valid only when **type**=`standard` or `frame`.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
@@ -2651,7 +2666,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
-   * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
+   * @param {string} params.dialogNode - The dialog node ID (for example, `node_1_1479323581900`).
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -2705,27 +2720,31 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
-   * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
-   * @param {string} [params.newDialogNode] - The dialog node ID. This string must conform to the following
-   * restrictions:
-   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * @param {string} params.dialogNode - The dialog node ID (for example, `node_1_1479323581900`).
+   * @param {string} [params.newDialogNode] - The unique ID of the dialog node. This is an internal identifier used to
+   * refer to the dialog node from other dialog nodes and in the diagnostic information included with message responses.
+   *
+   * This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
    * @param {string} [params.newDescription] - The description of the dialog node. This string cannot contain carriage
    * return, newline, or tab characters.
    * @param {string} [params.newConditions] - The condition that will trigger the dialog node. This string cannot
    * contain carriage return, newline, or tab characters.
-   * @param {string} [params.newParent] - The ID of the parent dialog node. This property is omitted if the dialog node
-   * has no parent.
-   * @param {string} [params.newPreviousSibling] - The ID of the previous sibling dialog node. This property is omitted
-   * if the dialog node has no previous sibling.
+   * @param {string} [params.newParent] - The unique ID of the parent dialog node. This property is omitted if the
+   * dialog node has no parent.
+   * @param {string} [params.newPreviousSibling] - The unique ID of the previous sibling dialog node. This property is
+   * omitted if the dialog node has no previous sibling.
    * @param {DialogNodeOutput} [params.newOutput] - The output of the dialog node. For more information about how to
    * specify dialog node output, see the
    * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
    * @param {DialogNodeContext} [params.newContext] - The context for the dialog node.
    * @param {JsonObject} [params.newMetadata] - The metadata for the dialog node.
    * @param {DialogNodeNextStep} [params.newNextStep] - The next step to execute following this dialog node.
-   * @param {string} [params.newTitle] - The alias used to identify the dialog node. This string must conform to the
-   * following restrictions:
-   * - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+   * @param {string} [params.newTitle] - A human-readable name for the dialog node. If the node is included in
+   * disambiguation, this title is used to populate the **label** property of the corresponding suggestion in the
+   * `suggestion` response type (unless it is overridden by the **user_label** property). The title is also used to
+   * populate the **topic** property in the `connect_to_agent` response type.
+   *
+   * This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
    * @param {string} [params.newType] - How the dialog node is processed.
    * @param {string} [params.newEventName] - How an `event_handler` node is processed.
    * @param {string} [params.newVariable] - The location in the dialog context where output is stored.
@@ -2736,7 +2755,8 @@ class AssistantV1 extends BaseService {
    * @param {string} [params.newDigressOutSlots] - Whether the user can digress to top-level nodes while filling out
    * slots.
    * @param {string} [params.newUserLabel] - A label that can be displayed externally to describe the purpose of the
-   * node to users.
+   * node to users. If set, this label is used to identify the node in disambiguation responses (overriding the value of
+   * the **title** property).
    * @param {boolean} [params.newDisambiguationOptOut] - Whether the dialog node should be excluded from disambiguation
    * suggestions. Valid only when **type**=`standard` or `frame`.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
@@ -2813,7 +2833,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
-   * @param {string} params.dialogNode - The dialog node ID (for example, `get_order`).
+   * @param {string} params.dialogNode - The dialog node ID (for example, `node_1_1479323581900`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
@@ -2862,6 +2882,8 @@ class AssistantV1 extends BaseService {
    * List log events in a workspace.
    *
    * List the events from the log of a specific workspace.
+   *
+   * This method requires Manager access.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
@@ -2982,6 +3004,11 @@ class AssistantV1 extends BaseService {
    * For more information about personal data and customer IDs, see [Information
    * security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security).
    *
+   * **Note:** This operation is intended only for deleting data associated with a single specific customer, not for
+   * deleting data associated with multiple customers or for any other purpose. For more information, see [Labeling and
+   * deleting data in Watson
+   * Assistant](https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security-gdpr-wa).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -3081,6 +3108,16 @@ namespace AssistantV1 {
      *  from the log.
      */
     output?: OutputData;
+    /** A string value that identifies the user who is interacting with the workspace. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.conversation_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the context metadata. If **user_id** is
+     *  specified in both locations in a message request, the value specified at the root is used.
+     */
+    userId?: string;
     /** Whether to include additional diagnostic information about the dialog nodes that were visited during
      *  processing of the message.
      */
@@ -3935,8 +3972,10 @@ namespace AssistantV1 {
   export interface CreateDialogNodeParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
-    /** The dialog node ID. This string must conform to the following restrictions:
-     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+    /** The unique ID of the dialog node. This is an internal identifier used to refer to the dialog node from other
+     *  dialog nodes and in the diagnostic information included with message responses.
+     *
+     *  This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
      */
     dialogNode: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
@@ -3945,10 +3984,10 @@ namespace AssistantV1 {
      *  characters.
      */
     conditions?: string;
-    /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
+    /** The unique ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     parent?: string;
-    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous
-     *  sibling.
+    /** The unique ID of the previous sibling dialog node. This property is omitted if the dialog node has no
+     *  previous sibling.
      */
     previousSibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the
@@ -3961,8 +4000,12 @@ namespace AssistantV1 {
     metadata?: JsonObject;
     /** The next step to execute following this dialog node. */
     nextStep?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:
-     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+    /** A human-readable name for the dialog node. If the node is included in disambiguation, this title is used to
+     *  populate the **label** property of the corresponding suggestion in the `suggestion` response type (unless it is
+     *  overridden by the **user_label** property). The title is also used to populate the **topic** property in the
+     *  `connect_to_agent` response type.
+     *
+     *  This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
      */
     title?: string;
     /** How the dialog node is processed. */
@@ -3979,7 +4022,9 @@ namespace AssistantV1 {
     digressOut?: CreateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digressOutSlots?: CreateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. If set, this label is
+     *  used to identify the node in disambiguation responses (overriding the value of the **title** property).
+     */
     userLabel?: string;
     /** Whether the dialog node should be excluded from disambiguation suggestions. Valid only when
      *  **type**=`standard` or `frame`.
@@ -4037,7 +4082,7 @@ namespace AssistantV1 {
   export interface GetDialogNodeParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
-    /** The dialog node ID (for example, `get_order`). */
+    /** The dialog node ID (for example, `node_1_1479323581900`). */
     dialogNode: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
@@ -4048,10 +4093,12 @@ namespace AssistantV1 {
   export interface UpdateDialogNodeParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
-    /** The dialog node ID (for example, `get_order`). */
+    /** The dialog node ID (for example, `node_1_1479323581900`). */
     dialogNode: string;
-    /** The dialog node ID. This string must conform to the following restrictions:
-     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+    /** The unique ID of the dialog node. This is an internal identifier used to refer to the dialog node from other
+     *  dialog nodes and in the diagnostic information included with message responses.
+     *
+     *  This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
      */
     newDialogNode?: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
@@ -4060,10 +4107,10 @@ namespace AssistantV1 {
      *  characters.
      */
     newConditions?: string;
-    /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
+    /** The unique ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     newParent?: string;
-    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous
-     *  sibling.
+    /** The unique ID of the previous sibling dialog node. This property is omitted if the dialog node has no
+     *  previous sibling.
      */
     newPreviousSibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the
@@ -4076,8 +4123,12 @@ namespace AssistantV1 {
     newMetadata?: JsonObject;
     /** The next step to execute following this dialog node. */
     newNextStep?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:
-     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+    /** A human-readable name for the dialog node. If the node is included in disambiguation, this title is used to
+     *  populate the **label** property of the corresponding suggestion in the `suggestion` response type (unless it is
+     *  overridden by the **user_label** property). The title is also used to populate the **topic** property in the
+     *  `connect_to_agent` response type.
+     *
+     *  This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
      */
     newTitle?: string;
     /** How the dialog node is processed. */
@@ -4094,7 +4145,9 @@ namespace AssistantV1 {
     newDigressOut?: UpdateDialogNodeConstants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     newDigressOutSlots?: UpdateDialogNodeConstants.DigressOutSlots | string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. If set, this label is
+     *  used to identify the node in disambiguation responses (overriding the value of the **title** property).
+     */
     newUserLabel?: string;
     /** Whether the dialog node should be excluded from disambiguation suggestions. Valid only when
      *  **type**=`standard` or `frame`.
@@ -4152,7 +4205,7 @@ namespace AssistantV1 {
   export interface DeleteDialogNodeParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
-    /** The dialog node ID (for example, `get_order`). */
+    /** The dialog node ID (for example, `node_1_1479323581900`). */
     dialogNode: string;
     headers?: OutgoingHttpHeaders;
   }
@@ -4240,6 +4293,27 @@ namespace AssistantV1 {
     group: string;
     /** Zero-based character offsets that indicate where the entity value begins and ends in the input text. */
     location?: number[];
+  }
+
+  /** Information used by an integration to transfer the conversation to a different channel. */
+  export interface ChannelTransferInfo {
+    /** An object specifying target channels available for the transfer. Each property of this object represents an
+     *  available transfer target. Currently, the only supported property is **chat**, representing the web chat
+     *  integration.
+     */
+    target: ChannelTransferTarget;
+  }
+
+  /** An object specifying target channels available for the transfer. Each property of this object represents an available transfer target. Currently, the only supported property is **chat**, representing the web chat integration. */
+  export interface ChannelTransferTarget {
+    /** Information for transferring to the web chat integration. */
+    chat?: ChannelTransferTargetChat;
+  }
+
+  /** Information for transferring to the web chat integration. */
+  export interface ChannelTransferTargetChat {
+    /** The URL of the target web chat. */
+    url?: string;
   }
 
   /** State information for the conversation. To maintain state, include the context from the previous response. */
@@ -4345,8 +4419,10 @@ namespace AssistantV1 {
 
   /** DialogNode. */
   export interface DialogNode {
-    /** The dialog node ID. This string must conform to the following restrictions:
-     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+    /** The unique ID of the dialog node. This is an internal identifier used to refer to the dialog node from other
+     *  dialog nodes and in the diagnostic information included with message responses.
+     *
+     *  This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
      */
     dialog_node: string;
     /** The description of the dialog node. This string cannot contain carriage return, newline, or tab characters. */
@@ -4355,10 +4431,10 @@ namespace AssistantV1 {
      *  characters.
      */
     conditions?: string;
-    /** The ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
+    /** The unique ID of the parent dialog node. This property is omitted if the dialog node has no parent. */
     parent?: string;
-    /** The ID of the previous sibling dialog node. This property is omitted if the dialog node has no previous
-     *  sibling.
+    /** The unique ID of the previous sibling dialog node. This property is omitted if the dialog node has no
+     *  previous sibling.
      */
     previous_sibling?: string;
     /** The output of the dialog node. For more information about how to specify dialog node output, see the
@@ -4371,8 +4447,12 @@ namespace AssistantV1 {
     metadata?: JsonObject;
     /** The next step to execute following this dialog node. */
     next_step?: DialogNodeNextStep;
-    /** The alias used to identify the dialog node. This string must conform to the following restrictions:
-     *  - It can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
+    /** A human-readable name for the dialog node. If the node is included in disambiguation, this title is used to
+     *  populate the **label** property of the corresponding suggestion in the `suggestion` response type (unless it is
+     *  overridden by the **user_label** property). The title is also used to populate the **topic** property in the
+     *  `connect_to_agent` response type.
+     *
+     *  This string can contain only Unicode alphanumeric, space, underscore, hyphen, and dot characters.
      */
     title?: string;
     /** How the dialog node is processed. */
@@ -4389,7 +4469,9 @@ namespace AssistantV1 {
     digress_out?: string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
     digress_out_slots?: string;
-    /** A label that can be displayed externally to describe the purpose of the node to users. */
+    /** A label that can be displayed externally to describe the purpose of the node to users. If set, this label is
+     *  used to identify the node in disambiguation responses (overriding the value of the **title** property).
+     */
     user_label?: string;
     /** Whether the dialog node should be excluded from disambiguation suggestions. Valid only when
      *  **type**=`standard` or `frame`.
@@ -4456,7 +4538,7 @@ namespace AssistantV1 {
      *       If you specify `jump_to`, then you must also specify a value for the `dialog_node` property.
      */
     behavior: string;
-    /** The ID of the dialog node to process next. This parameter is required if **behavior**=`jump_to`. */
+    /** The unique ID of the dialog node to process next. This parameter is required if **behavior**=`jump_to`. */
     dialog_node?: string;
     /** Which part of the dialog node to process next. */
     selector?: string;
@@ -4531,7 +4613,7 @@ namespace AssistantV1 {
 
   /** DialogNodeVisitedDetails. */
   export interface DialogNodeVisitedDetails {
-    /** A dialog node that was triggered during processing of the input message. */
+    /** The unique ID of a dialog node that was triggered during processing of the input message. */
     dialog_node?: string;
     /** The title of the dialog node. */
     title?: string;
@@ -4542,7 +4624,7 @@ namespace AssistantV1 {
   /** DialogSuggestion. */
   export interface DialogSuggestion {
     /** The user-facing label for the disambiguation option. This label is taken from the **title** or
-     *  **user_label** property of the corresponding dialog node, depending on the disambiguation options.
+     *  **user_label** property of the corresponding dialog node.
      */
     label: string;
     /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if
@@ -4553,8 +4635,8 @@ namespace AssistantV1 {
      *  corresponding option.
      */
     output?: JsonObject;
-    /** The ID of the dialog node that the **label** property is taken from. The **label** property is populated
-     *  using the value of the dialog node's **user_label** property.
+    /** The unique ID of the dialog node that the **label** property is taken from. The **label** property is
+     *  populated using the value of the dialog node's **title** or **user_label** property.
      */
     dialog_node?: string;
   }
@@ -4699,6 +4781,18 @@ namespace AssistantV1 {
     level: string;
     /** The text of the log message. */
     msg: string;
+    /** A code that indicates the category to which the error message belongs. */
+    code: string;
+    /** An object that identifies the dialog element that generated the error message. */
+    source?: LogMessageSource;
+  }
+
+  /** An object that identifies the dialog element that generated the error message. */
+  export interface LogMessageSource {
+    /** A string that indicates the type of dialog element that generated the error message. */
+    type?: string;
+    /** The unique identifier of the dialog node that generated the error message. */
+    dialog_node?: string;
   }
 
   /** The pagination data for the returned objects. */
@@ -4728,9 +4822,13 @@ namespace AssistantV1 {
      */
     deployment?: string;
     /** A string value that identifies the user who is interacting with the workspace. The client must provide a
-     *  unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this
-     *  user ID is used to identify unique users for billing purposes. This string cannot contain carriage return,
-     *  newline, or tab characters.
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.conversation_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property at the root of the message body. If **user_id**
+     *  is specified in both locations in a message request, the value specified at the root is used.
      */
     user_id?: string;
   }
@@ -4784,6 +4882,16 @@ namespace AssistantV1 {
     output?: OutputData;
     /** An array of objects describing any actions requested by the dialog node. */
     actions?: DialogNodeAction[];
+    /** A string value that identifies the user who is interacting with the workspace. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.conversation_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the context metadata. If **user_id** is
+     *  specified in both locations in a message request, the value specified at the root is used.
+     */
+    user_id?: string;
   }
 
   /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
@@ -4804,6 +4912,16 @@ namespace AssistantV1 {
     output: OutputData;
     /** An array of objects describing any actions requested by the dialog node. */
     actions?: DialogNodeAction[];
+    /** A string value that identifies the user who is interacting with the workspace. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.conversation_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the context metadata. If **user_id** is
+     *  specified in both locations in a message request, the value specified at the root is used.
+     */
+    user_id: string;
   }
 
   /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
@@ -4845,6 +4963,12 @@ namespace AssistantV1 {
     refresh_cursor?: string;
     /** A token identifying the next page of results. */
     next_cursor?: string;
+  }
+
+  /** ResponseGenericChannel. */
+  export interface ResponseGenericChannel {
+    /** A channel for which the response is intended. */
+    channel?: string;
   }
 
   /** A term from the request that was identified as an entity. */
@@ -5180,7 +5304,21 @@ namespace AssistantV1 {
     store_generic_responses?: boolean;
   }
 
-  /** An object that describes a response with response type `connect_to_agent`. */
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer. */
+  export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer extends DialogNodeOutputGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The message to display to the user when initiating a channel transfer. */
+    message_to_user: string;
+    /** Information used by an integration to transfer the conversation to a different channel. */
+    transfer_info: ChannelTransferInfo;
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeConnectToAgent. */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeConnectToAgent extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5198,9 +5336,11 @@ namespace AssistantV1 {
     agent_unavailable?: AgentAvailabilityMessage;
     /** Routing or other contextual information to be used by target service desk systems. */
     transfer_info?: DialogNodeOutputConnectToAgentTransferInfo;
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `image`. */
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeImage. */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeImage extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5212,9 +5352,11 @@ namespace AssistantV1 {
     title?: string;
     /** An optional description to show with the response. */
     description?: string;
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `option`. */
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeOption. */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeOption extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5228,9 +5370,11 @@ namespace AssistantV1 {
     preference?: string;
     /** An array of objects describing the options from which the user can choose. You can include up to 20 options. */
     options: DialogNodeOutputOptionsElement[];
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `pause`. */
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypePause. */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypePause extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5242,9 +5386,11 @@ namespace AssistantV1 {
      *  event.
      */
     typing?: boolean;
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `search_skill`. */
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeSearchSkill. */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeSearchSkill extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5267,9 +5413,11 @@ namespace AssistantV1 {
     filter?: string;
     /** The version of the Discovery service API to use for the query. */
     discovery_version?: string;
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `text`. */
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeText. */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeText extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5281,9 +5429,41 @@ namespace AssistantV1 {
     selection_policy?: string;
     /** The delimiter to use as a separator between responses when `selection_policy`=`multiline`. */
     delimiter?: string;
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `connect_to_agent`. */
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeUserDefined. */
+  export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeUserDefined extends DialogNodeOutputGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** An object containing any properties for the user-defined response type. The total size of this object cannot
+     *  exceed 5000 bytes.
+     */
+    user_defined: JsonObject;
+    /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeChannelTransfer. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The message to display to the user when initiating a channel transfer. */
+    message_to_user: string;
+    /** Information used by an integration to transfer the conversation to a different channel. */
+    transfer_info: ChannelTransferInfo;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended only for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeConnectToAgent. */
   export interface RuntimeResponseGenericRuntimeResponseTypeConnectToAgent extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5305,13 +5485,17 @@ namespace AssistantV1 {
      *  or the **topic** property of the dialog node response.
      */
     topic?: string;
-    /** The ID of the dialog node that the **topic** property is taken from. The **topic** property is populated
-     *  using the value of the dialog node's **title** property.
+    /** The unique ID of the dialog node that the **topic** property is taken from. The **topic** property is
+     *  populated using the value of the dialog node's **title** property.
      */
     dialog_node?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `image`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeImage. */
   export interface RuntimeResponseGenericRuntimeResponseTypeImage extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5323,9 +5507,13 @@ namespace AssistantV1 {
     title?: string;
     /** The description to show with the the response. */
     description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `option`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeOption. */
   export interface RuntimeResponseGenericRuntimeResponseTypeOption extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5339,9 +5527,13 @@ namespace AssistantV1 {
     preference?: string;
     /** An array of objects describing the options from which the user can choose. */
     options: DialogNodeOutputOptionsElement[];
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `pause`. */
+  /** RuntimeResponseGenericRuntimeResponseTypePause. */
   export interface RuntimeResponseGenericRuntimeResponseTypePause extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5351,9 +5543,13 @@ namespace AssistantV1 {
     time: number;
     /** Whether to send a "user is typing" event during the pause. */
     typing?: boolean;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `suggestion`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeSuggestion. */
   export interface RuntimeResponseGenericRuntimeResponseTypeSuggestion extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5363,9 +5559,13 @@ namespace AssistantV1 {
     title: string;
     /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
     suggestions: DialogSuggestion[];
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `text`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeText. */
   export interface RuntimeResponseGenericRuntimeResponseTypeText extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -5373,6 +5573,24 @@ namespace AssistantV1 {
     response_type: string;
     /** The text of the response. */
     text: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeUserDefined. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeUserDefined extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** An object containing any properties for the user-defined response type. */
+    user_defined: JsonObject;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
 }
