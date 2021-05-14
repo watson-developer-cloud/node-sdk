@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -25,8 +25,13 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * IBM Watson&trade; Compare and Comply analyzes governing documents to provide details about critical aspects of the
- * documents.
+ * IBM Watson&trade; Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as
+ * of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted.
+ * Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the
+ * migration process, visit [https://ibm.biz/contact-wdc-premium](https://ibm.biz/contact-wdc-premium).
+ * {: deprecated}
+ *
+ * Compare and Comply analyzes governing documents to provide details about critical aspects of the documents.
  */
 
 class CompareComplyV1 extends BaseService {
@@ -45,7 +50,7 @@ class CompareComplyV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
    * YYYY-MM-DD format. The current version is `2018-10-15`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.compare-comply.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set

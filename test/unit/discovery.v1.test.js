@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -4524,7 +4524,7 @@ describe('DiscoveryV1', () => {
       const eventDataModel = {
         environment_id: 'testString',
         session_token: 'testString',
-        client_timestamp: '2019-01-01T12:00:00',
+        client_timestamp: '2019-01-01T12:00:00.000Z',
         display_rank: 38,
         collection_id: 'testString',
         document_id: 'testString',
@@ -4667,8 +4667,8 @@ describe('DiscoveryV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getMetricsQuery
-        const startTime = '2019-01-01T12:00:00';
-        const endTime = '2019-01-01T12:00:00';
+        const startTime = '2019-01-01T12:00:00.000Z';
+        const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const params = {
           startTime: startTime,
@@ -4722,8 +4722,8 @@ describe('DiscoveryV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getMetricsQueryEvent
-        const startTime = '2019-01-01T12:00:00';
-        const endTime = '2019-01-01T12:00:00';
+        const startTime = '2019-01-01T12:00:00.000Z';
+        const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const params = {
           startTime: startTime,
@@ -4777,8 +4777,8 @@ describe('DiscoveryV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getMetricsQueryNoResults
-        const startTime = '2019-01-01T12:00:00';
-        const endTime = '2019-01-01T12:00:00';
+        const startTime = '2019-01-01T12:00:00.000Z';
+        const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const params = {
           startTime: startTime,
@@ -4832,8 +4832,8 @@ describe('DiscoveryV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getMetricsEventRate
-        const startTime = '2019-01-01T12:00:00';
-        const endTime = '2019-01-01T12:00:00';
+        const startTime = '2019-01-01T12:00:00.000Z';
+        const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const params = {
           startTime: startTime,

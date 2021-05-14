@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2020.
+ * (C) Copyright IBM Corp. 2017, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -25,13 +25,15 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * IBM&reg; will begin sunsetting IBM Watson&trade; Personality Insights on 1 December 2020. For a period of one year
- * from this date, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the
- * offering will no longer be available.<br/><br/>As an alternative, we encourage you to consider migrating to IBM
- * Watson&trade; Natural Language Understanding, a service on IBM Cloud&reg; that uses deep learning to extract data and
- * insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business
- * or industry. For more information, see [About Natural Language
- * Understanding](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-about).
+ * IBM Watson&trade; Personality Insights is discontinued. Existing instances are supported until 1 December 2021, but
+ * as of 1 December 2020, you cannot create new instances. Any instance that exists on 1 December 2021 will be
+ * deleted.<br/><br/>No direct replacement exists for Personality Insights. However, you can consider using [IBM
+ * Watson&trade; Natural Language
+ * Understanding](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-about)
+ * on IBM Cloud&reg; as part of a replacement analytic workflow for your Personality Insights use cases. You can use
+ * Natural Language Understanding to extract data and insights from text, such as keywords, categories, sentiment,
+ * emotion, and syntax. For more information about the personality models in Personality Insights, see [The science
+ * behind the service](https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-science).
  * {: deprecated}
  *
  * The IBM Watson Personality Insights service enables applications to derive insights from social media, enterprise
@@ -67,7 +69,7 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
    * YYYY-MM-DD format. The current version is `2017-10-13`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.personality-insights.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set

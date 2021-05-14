@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2020.
+ * (C) Copyright IBM Corp. 2017, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201201-153403
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -47,7 +47,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
    * YYYY-MM-DD format. The current version is `2019-04-30`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.discovery.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -1775,7 +1775,7 @@ class DiscoveryV1 extends BaseService {
    * towards field values closer to the current date. When a **number** type field is specified, returned results are
    * biased towards higher field values. This parameter cannot be used in the same query as the **sort** parameter.
    * @param {boolean} [params.spellingSuggestions] - When `true` and the **natural_language_query** parameter is used,
-   * the **natural_languge_query** parameter is spell checked. The most likely correction is retunred in the
+   * the **natural_languge_query** parameter is spell checked. The most likely correction is returned in the
    * **suggested_query** field of the response (if one exists).
    *
    * **Important:** this parameter is only valid when using the Cloud Pak version of Discovery.
@@ -4190,7 +4190,7 @@ namespace DiscoveryV1 {
      */
     bias?: string;
     /** When `true` and the **natural_language_query** parameter is used, the **natural_languge_query** parameter is
-     *  spell checked. The most likely correction is retunred in the **suggested_query** field of the response (if one
+     *  spell checked. The most likely correction is returned in the **suggested_query** field of the response (if one
      *  exists).
      *
      *  **Important:** this parameter is only valid when using the Cloud Pak version of Discovery.
