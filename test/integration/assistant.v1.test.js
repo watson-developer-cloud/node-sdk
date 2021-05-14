@@ -1066,4 +1066,20 @@ describe('assistant v1 integration', () => {
       expect(result).toBeDefined();
     });
   });
+
+  describe('bulkClassify()', () => {
+    it('should bulk classify messages', async () => {
+      const params = {
+        input: {
+          text: 'Turn on the lights',
+        },
+        workspaceId: options.workspaceId,
+      };
+
+      const res = await assistant.bulkClassify(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
+      console.log(result);
+    });
+  });
 });

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -239,10 +239,18 @@ describe('AssistantV1', () => {
         conditions: 'testString',
       };
 
+      // LogMessageSource
+      const logMessageSourceModel = {
+        type: 'dialog_node',
+        dialog_node: 'testString',
+      };
+
       // LogMessage
       const logMessageModel = {
         level: 'info',
         msg: 'testString',
+        code: 'testString',
+        source: logMessageSourceModel,
       };
 
       // DialogNodeOutputOptionsElementValue
@@ -258,6 +266,11 @@ describe('AssistantV1', () => {
         value: dialogNodeOutputOptionsElementValueModel,
       };
 
+      // ResponseGenericChannel
+      const responseGenericChannelModel = {
+        channel: 'chat',
+      };
+
       // RuntimeResponseGenericRuntimeResponseTypeOption
       const runtimeResponseGenericModel = {
         response_type: 'option',
@@ -265,6 +278,7 @@ describe('AssistantV1', () => {
         description: 'testString',
         preference: 'dropdown',
         options: [dialogNodeOutputOptionsElementModel],
+        channels: [responseGenericChannelModel],
       };
 
       // OutputData
@@ -286,6 +300,7 @@ describe('AssistantV1', () => {
         const alternateIntents = true;
         const context = contextModel;
         const output = outputDataModel;
+        const userId = 'testString';
         const nodesVisitedDetails = true;
         const params = {
           workspaceId: workspaceId,
@@ -295,6 +310,7 @@ describe('AssistantV1', () => {
           alternateIntents: alternateIntents,
           context: context,
           output: output,
+          userId: userId,
           nodesVisitedDetails: nodesVisitedDetails,
         };
 
@@ -318,6 +334,7 @@ describe('AssistantV1', () => {
         expect(options.body['alternate_intents']).toEqual(alternateIntents);
         expect(options.body['context']).toEqual(context);
         expect(options.body['output']).toEqual(output);
+        expect(options.body['user_id']).toEqual(userId);
         expect(options.qs['version']).toEqual(service.version);
         expect(options.qs['nodes_visited_details']).toEqual(nodesVisitedDetails);
         expect(options.path['workspace_id']).toEqual(workspaceId);
@@ -509,12 +526,32 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeImage
+      // ChannelTransferTargetChat
+      const channelTransferTargetChatModel = {
+        url: 'testString',
+      };
+
+      // ChannelTransferTarget
+      const channelTransferTargetModel = {
+        chat: channelTransferTargetChatModel,
+      };
+
+      // ChannelTransferInfo
+      const channelTransferInfoModel = {
+        target: channelTransferTargetModel,
+      };
+
+      // ResponseGenericChannel
+      const responseGenericChannelModel = {
+        channel: 'chat',
+      };
+
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
       const dialogNodeOutputGenericModel = {
-        response_type: 'image',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'channel_transfer',
+        message_to_user: 'testString',
+        transfer_info: channelTransferInfoModel,
+        channels: [responseGenericChannelModel],
       };
 
       // DialogNodeOutputModifiers
@@ -829,12 +866,32 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeImage
+      // ChannelTransferTargetChat
+      const channelTransferTargetChatModel = {
+        url: 'testString',
+      };
+
+      // ChannelTransferTarget
+      const channelTransferTargetModel = {
+        chat: channelTransferTargetChatModel,
+      };
+
+      // ChannelTransferInfo
+      const channelTransferInfoModel = {
+        target: channelTransferTargetModel,
+      };
+
+      // ResponseGenericChannel
+      const responseGenericChannelModel = {
+        channel: 'chat',
+      };
+
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
       const dialogNodeOutputGenericModel = {
-        response_type: 'image',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'channel_transfer',
+        message_to_user: 'testString',
+        transfer_info: channelTransferInfoModel,
+        channels: [responseGenericChannelModel],
       };
 
       // DialogNodeOutputModifiers
@@ -4005,12 +4062,32 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeImage
+      // ChannelTransferTargetChat
+      const channelTransferTargetChatModel = {
+        url: 'testString',
+      };
+
+      // ChannelTransferTarget
+      const channelTransferTargetModel = {
+        chat: channelTransferTargetChatModel,
+      };
+
+      // ChannelTransferInfo
+      const channelTransferInfoModel = {
+        target: channelTransferTargetModel,
+      };
+
+      // ResponseGenericChannel
+      const responseGenericChannelModel = {
+        channel: 'chat',
+      };
+
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
       const dialogNodeOutputGenericModel = {
-        response_type: 'image',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'channel_transfer',
+        message_to_user: 'testString',
+        transfer_info: channelTransferInfoModel,
+        channels: [responseGenericChannelModel],
       };
 
       // DialogNodeOutputModifiers
@@ -4262,12 +4339,32 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeImage
+      // ChannelTransferTargetChat
+      const channelTransferTargetChatModel = {
+        url: 'testString',
+      };
+
+      // ChannelTransferTarget
+      const channelTransferTargetModel = {
+        chat: channelTransferTargetChatModel,
+      };
+
+      // ChannelTransferInfo
+      const channelTransferInfoModel = {
+        target: channelTransferTargetModel,
+      };
+
+      // ResponseGenericChannel
+      const responseGenericChannelModel = {
+        channel: 'chat',
+      };
+
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
       const dialogNodeOutputGenericModel = {
-        response_type: 'image',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'channel_transfer',
+        message_to_user: 'testString',
+        transfer_info: channelTransferInfoModel,
+        channels: [responseGenericChannelModel],
       };
 
       // DialogNodeOutputModifiers
