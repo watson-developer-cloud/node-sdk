@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -411,11 +411,13 @@ describe('AssistantV2', () => {
         const sessionId = 'testString';
         const input = messageInputModel;
         const context = messageContextModel;
+        const userId = 'testString';
         const params = {
           assistantId: assistantId,
           sessionId: sessionId,
           input: input,
           context: context,
+          userId: userId,
         };
 
         const messageResult = assistantService.message(params);
@@ -438,6 +440,7 @@ describe('AssistantV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['input']).toEqual(input);
         expect(options.body['context']).toEqual(context);
+        expect(options.body['user_id']).toEqual(userId);
         expect(options.qs['version']).toEqual(service.version);
         expect(options.path['assistant_id']).toEqual(assistantId);
         expect(options.path['session_id']).toEqual(sessionId);
@@ -619,10 +622,12 @@ describe('AssistantV2', () => {
         const assistantId = 'testString';
         const input = messageInputStatelessModel;
         const context = messageContextStatelessModel;
+        const userId = 'testString';
         const params = {
           assistantId: assistantId,
           input: input,
           context: context,
+          userId: userId,
         };
 
         const messageStatelessResult = assistantService.messageStateless(params);
@@ -641,6 +646,7 @@ describe('AssistantV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.body['input']).toEqual(input);
         expect(options.body['context']).toEqual(context);
+        expect(options.body['user_id']).toEqual(userId);
         expect(options.qs['version']).toEqual(service.version);
         expect(options.path['assistant_id']).toEqual(assistantId);
       });

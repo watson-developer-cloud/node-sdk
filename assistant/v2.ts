@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-be3b4618-20201221-123327
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -38,7 +38,7 @@ class AssistantV2 extends BaseService {
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2020-04-01`.
+   *  `2020-09-24`.
    */
   version: string;
 
@@ -47,8 +47,8 @@ class AssistantV2 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2020-04-01`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.assistant.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
+   * format. The current version is `2020-09-24`.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -214,6 +214,14 @@ class AssistantV2 extends BaseService {
    * per-session basis.
    *
    * **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
+   * @param {string} [params.userId] - A string value that identifies the user who is interacting with the assistant.
+   * The client must provide a unique identifier for each individual end user who accesses the application. For
+   * user-based plans, this user ID is used to identify unique users for billing purposes. This string cannot contain
+   * carriage return, newline, or tab characters. If no value is specified in the input, **user_id** is automatically
+   * set to the value of **context.global.session_id**.
+   *
+   * **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
+   * specified in both locations, the value specified at the root is used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponse>>}
    */
@@ -228,7 +236,8 @@ class AssistantV2 extends BaseService {
 
     const body = {
       'input': _params.input,
-      'context': _params.context
+      'context': _params.context,
+      'user_id': _params.userId
     };
 
     const query = {
@@ -280,6 +289,14 @@ class AssistantV2 extends BaseService {
    * assistant. To maintain session state, include the context from the previous response.
    *
    * **Note:** The total size of the context data for a stateless session cannot exceed 250KB.
+   * @param {string} [params.userId] - A string value that identifies the user who is interacting with the assistant.
+   * The client must provide a unique identifier for each individual end user who accesses the application. For
+   * user-based plans, this user ID is used to identify unique users for billing purposes. This string cannot contain
+   * carriage return, newline, or tab characters. If no value is specified in the input, **user_id** is automatically
+   * set to the value of **context.global.session_id**.
+   *
+   * **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
+   * specified in both locations in a message request, the value specified at the root is used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>>}
    */
@@ -294,7 +311,8 @@ class AssistantV2 extends BaseService {
 
     const body = {
       'input': _params.input,
-      'context': _params.context
+      'context': _params.context,
+      'user_id': _params.userId
     };
 
     const query = {
@@ -337,7 +355,7 @@ class AssistantV2 extends BaseService {
    * entities recognized in each input. This method is useful for testing and comparing the performance of different
    * skills or skill versions.
    *
-   * This method is available only with Premium plans.
+   * This method is available only with Enterprise with Data Isolation plans.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.skillId - Unique identifier of the skill. To find the skill ID in the Watson Assistant user
@@ -397,7 +415,7 @@ class AssistantV2 extends BaseService {
    *
    * List the events from the log of an assistant.
    *
-   * This method is available only with Premium plans.
+   * This method requires Manager access, and is available only with Enterprise plans.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
@@ -470,7 +488,10 @@ class AssistantV2 extends BaseService {
    * For more information about personal data and customer IDs, see [Information
    * security](https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security).
    *
-   * This operation is limited to 4 requests per minute. For more information, see **Rate limiting**.
+   * **Note:** This operation is intended only for deleting data associated with a single specific customer, not for
+   * deleting data associated with multiple customers or for any other purpose. For more information, see [Labeling and
+   * deleting data in Watson
+   * Assistant](https://cloud.ibm.com/docs/assistant?topic=assistant-information-security#information-security-gdpr-wa).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
@@ -521,7 +542,7 @@ namespace AssistantV2 {
   export interface Options extends UserOptions {
 
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2020-04-01`.
+     *  `2020-09-24`.
      */
     version: string;
   }
@@ -594,6 +615,16 @@ namespace AssistantV2 {
      *  **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
      */
     context?: MessageContext;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
+     *  specified in both locations, the value specified at the root is used.
+     */
+    userId?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -615,6 +646,16 @@ namespace AssistantV2 {
      *  **Note:** The total size of the context data for a stateless session cannot exceed 250KB.
      */
     context?: MessageContextStateless;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
+     *  specified in both locations in a message request, the value specified at the root is used.
+     */
+    userId?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -700,12 +741,37 @@ namespace AssistantV2 {
     location?: number[];
   }
 
+  /** Information used by an integration to transfer the conversation to a different channel. */
+  export interface ChannelTransferInfo {
+    /** An object specifying target channels available for the transfer. Each property of this object represents an
+     *  available transfer target. Currently, the only supported property is **chat**, representing the web chat
+     *  integration.
+     */
+    target: ChannelTransferTarget;
+  }
+
+  /** An object specifying target channels available for the transfer. Each property of this object represents an available transfer target. Currently, the only supported property is **chat**, representing the web chat integration. */
+  export interface ChannelTransferTarget {
+    /** Information for transferring to the web chat integration. */
+    chat?: ChannelTransferTargetChat;
+  }
+
+  /** Information for transferring to the web chat integration. */
+  export interface ChannelTransferTargetChat {
+    /** The URL of the target web chat. */
+    url?: string;
+  }
+
   /** Dialog log message details. */
   export interface DialogLogMessage {
     /** The severity of the log message. */
     level: string;
     /** The text of the log message. */
     message: string;
+    /** A code that indicates the category to which the error message belongs. */
+    code: string;
+    /** An object that identifies the dialog element that generated the error message. */
+    source?: LogMessageSource;
   }
 
   /** DialogNodeAction. */
@@ -809,6 +875,10 @@ namespace AssistantV2 {
     pagination: LogPagination;
   }
 
+  /** An object that identifies the dialog element that generated the error message. */
+  export interface LogMessageSource {
+  }
+
   /** The pagination data for the returned objects. */
   export interface LogPagination {
     /** The URL that will return the next page of results, if any. */
@@ -852,9 +922,13 @@ namespace AssistantV2 {
     /** The user time zone. The assistant uses the time zone to correctly resolve relative time references. */
     timezone?: string;
     /** A string value that identifies the user who is interacting with the assistant. The client must provide a
-     *  unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this
-     *  user ID is used to identify unique users for billing purposes. This string cannot contain carriage return,
-     *  newline, or tab characters.
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property at the root of the message body. If **user_id**
+     *  is specified in both locations in a message request, the value specified at the root is used.
      */
     user_id?: string;
     /** A counter that is automatically incremented with each turn of the conversation. A value of 1 indicates that
@@ -1084,6 +1158,16 @@ namespace AssistantV2 {
      *  **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
      */
     context?: MessageContext;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
+     *  specified in both locations, the value specified at the root is used.
+     */
+    user_id?: string;
   }
 
   /** A response from the Watson Assistant service. */
@@ -1097,6 +1181,15 @@ namespace AssistantV2 {
      *  Full context is always included in logs.
      */
     context?: MessageContext;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context.
+     */
+    user_id: string;
   }
 
   /** A stateless response from the Watson Assistant service. */
@@ -1107,6 +1200,21 @@ namespace AssistantV2 {
      *  stored by the assistant; to maintain session state, include the context from the response in the next message.
      */
     context: MessageContextStateless;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context.
+     */
+    user_id?: string;
+  }
+
+  /** ResponseGenericChannel. */
+  export interface ResponseGenericChannel {
+    /** A channel for which the response is intended. */
+    channel?: string;
   }
 
   /** The entity value that was recognized in the user input. */
@@ -1264,7 +1372,7 @@ namespace AssistantV2 {
   export interface SearchResult {
     /** The unique identifier of the document in the Discovery service collection.
      *
-     *  This property is included in responses from search skills, which are available only to Plus or Premium plan
+     *  This property is included in responses from search skills, which are available only to Plus or Enterprise plan
      *  users.
      */
     id: string;
@@ -1306,9 +1414,7 @@ namespace AssistantV2 {
 
   /** An object containing search result metadata from the Discovery service. */
   export interface SearchResultMetadata {
-    /** The confidence score for the given result. For more information about how the confidence is calculated, see
-     *  the Discovery service [documentation](../discovery#query-your-collection).
-     */
+    /** The confidence score for the given result, as returned by the Discovery service. */
     confidence?: number;
     /** An unbounded measure of the relevance of a particular result, dependent on the query and matching document.
      *  A higher score indicates a greater match to the query parameters.
@@ -1322,7 +1428,61 @@ namespace AssistantV2 {
     session_id: string;
   }
 
-  /** An object that describes a response with response type `connect_to_agent`. */
+  /** An object that identifies the dialog element that generated the error message. */
+  export interface LogMessageSourceAction extends LogMessageSource {
+    /** A string that indicates the type of dialog element that generated the error message. */
+    type: string;
+    /** The unique identifier of the action that generated the error message. */
+    action: string;
+  }
+
+  /** An object that identifies the dialog element that generated the error message. */
+  export interface LogMessageSourceDialogNode extends LogMessageSource {
+    /** A string that indicates the type of dialog element that generated the error message. */
+    type: string;
+    /** The unique identifier of the dialog node that generated the error message. */
+    dialog_node: string;
+  }
+
+  /** An object that identifies the dialog element that generated the error message. */
+  export interface LogMessageSourceHandler extends LogMessageSource {
+    /** A string that indicates the type of dialog element that generated the error message. */
+    type: string;
+    /** The unique identifier of the action that generated the error message. */
+    action: string;
+    /** The unique identifier of the step that generated the error message. */
+    step?: string;
+    /** The unique identifier of the handler that generated the error message. */
+    handler: string;
+  }
+
+  /** An object that identifies the dialog element that generated the error message. */
+  export interface LogMessageSourceStep extends LogMessageSource {
+    /** A string that indicates the type of dialog element that generated the error message. */
+    type: string;
+    /** The unique identifier of the action that generated the error message. */
+    action: string;
+    /** The unique identifier of the step that generated the error message. */
+    step: string;
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeChannelTransfer. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The message to display to the user when initiating a channel transfer. */
+    message_to_user: string;
+    /** Information used by an integration to transfer the conversation to a different channel. */
+    transfer_info: ChannelTransferInfo;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeConnectToAgent. */
   export interface RuntimeResponseGenericRuntimeResponseTypeConnectToAgent extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -1344,9 +1504,13 @@ namespace AssistantV2 {
      *  or the **topic** property of the dialog node response.
      */
     topic?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `image`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeImage. */
   export interface RuntimeResponseGenericRuntimeResponseTypeImage extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -1358,9 +1522,13 @@ namespace AssistantV2 {
     title?: string;
     /** The description to show with the the response. */
     description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `option`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeOption. */
   export interface RuntimeResponseGenericRuntimeResponseTypeOption extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -1374,9 +1542,13 @@ namespace AssistantV2 {
     preference?: string;
     /** An array of objects describing the options from which the user can choose. */
     options: DialogNodeOutputOptionsElement[];
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `pause`. */
+  /** RuntimeResponseGenericRuntimeResponseTypePause. */
   export interface RuntimeResponseGenericRuntimeResponseTypePause extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -1386,9 +1558,13 @@ namespace AssistantV2 {
     time: number;
     /** Whether to send a "user is typing" event during the pause. */
     typing?: boolean;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `search`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeSearch. */
   export interface RuntimeResponseGenericRuntimeResponseTypeSearch extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -1402,9 +1578,13 @@ namespace AssistantV2 {
     primary_results: SearchResult[];
     /** An array of objects that contains additional search results that can be displayed to the user upon request. */
     additional_results: SearchResult[];
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `suggestion`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeSuggestion. */
   export interface RuntimeResponseGenericRuntimeResponseTypeSuggestion extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -1414,9 +1594,13 @@ namespace AssistantV2 {
     title: string;
     /** An array of objects describing the possible matching dialog nodes from which the user can choose. */
     suggestions: DialogSuggestion[];
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
-  /** An object that describes a response with response type `text`. */
+  /** RuntimeResponseGenericRuntimeResponseTypeText. */
   export interface RuntimeResponseGenericRuntimeResponseTypeText extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -1424,6 +1608,24 @@ namespace AssistantV2 {
     response_type: string;
     /** The text of the response. */
     text: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeUserDefined. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeUserDefined extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** An object containing any properties for the user-defined response type. */
+    user_defined: JsonObject;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
   }
 
 }
