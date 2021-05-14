@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2020.
+ * (C) Copyright IBM Corp. 2019, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -568,6 +568,8 @@ describe('DiscoveryV2', () => {
         fields: ['testString'],
         count: 100,
         characters: 50,
+        find_answers: true,
+        max_answers_per_passage: 38,
       };
 
       test('should pass the right params to createRequest', () => {
@@ -756,6 +758,99 @@ describe('DiscoveryV2', () => {
         expectToBePromise(getAutocompletionPromise);
 
         getAutocompletionPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('queryCollectionNotices', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation queryCollectionNotices
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const filter = 'testString';
+        const query = 'testString';
+        const naturalLanguageQuery = 'testString';
+        const count = 38;
+        const offset = 38;
+        const params = {
+          projectId: projectId,
+          collectionId: collectionId,
+          filter: filter,
+          query: query,
+          naturalLanguageQuery: naturalLanguageQuery,
+          count: count,
+          offset: offset,
+        };
+
+        const queryCollectionNoticesResult = discoveryService.queryCollectionNotices(params);
+
+        // all methods should return a Promise
+        expectToBePromise(queryCollectionNoticesResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/collections/{collection_id}/notices',
+          'GET'
+        );
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.qs['filter']).toEqual(filter);
+        expect(options.qs['query']).toEqual(query);
+        expect(options.qs['natural_language_query']).toEqual(naturalLanguageQuery);
+        expect(options.qs['count']).toEqual(count);
+        expect(options.qs['offset']).toEqual(offset);
+        expect(options.path['project_id']).toEqual(projectId);
+        expect(options.path['collection_id']).toEqual(collectionId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          projectId,
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        discoveryService.queryCollectionNotices(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await discoveryService.queryCollectionNotices({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const queryCollectionNoticesPromise = discoveryService.queryCollectionNotices();
+        expectToBePromise(queryCollectionNoticesPromise);
+
+        queryCollectionNoticesPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1665,6 +1760,84 @@ describe('DiscoveryV2', () => {
         expectToBePromise(updateTrainingQueryPromise);
 
         updateTrainingQueryPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteTrainingQuery', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation deleteTrainingQuery
+        const projectId = 'testString';
+        const queryId = 'testString';
+        const params = {
+          projectId: projectId,
+          queryId: queryId,
+        };
+
+        const deleteTrainingQueryResult = discoveryService.deleteTrainingQuery(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteTrainingQueryResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(
+          options,
+          '/v2/projects/{project_id}/training_data/queries/{query_id}',
+          'DELETE'
+        );
+        const expectedAccept = undefined;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['project_id']).toEqual(projectId);
+        expect(options.path['query_id']).toEqual(queryId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const projectId = 'testString';
+        const queryId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          projectId,
+          queryId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        discoveryService.deleteTrainingQuery(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await discoveryService.deleteTrainingQuery({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const deleteTrainingQueryPromise = discoveryService.deleteTrainingQuery();
+        expectToBePromise(deleteTrainingQueryPromise);
+
+        deleteTrainingQueryPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
