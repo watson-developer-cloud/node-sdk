@@ -232,6 +232,18 @@ describe('discovery v2 integration @slow', () => {
       expect(result).toBeDefined();
     });
 
+    test('queryCollectionNotices', async () => {
+      const params = {
+        projectId,
+        collectionId,
+      };
+
+      const res = await discovery.queryCollectionNotices(params);
+      expect(res).toBeDefined();
+      const { result } = res || {};
+      expect(result).toBeDefined();
+    });
+
     test('listFields', async () => {
       const params = {
         projectId,
