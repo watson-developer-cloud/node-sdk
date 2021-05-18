@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -148,6 +148,18 @@ describe('NaturalLanguageUnderstandingV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // CategoriesOptions
+      const categoriesOptionsModel = {
+        explanation: true,
+        limit: 10,
+        model: 'testString',
+      };
+
+      // ClassificationsOptions
+      const classificationsOptionsModel = {
+        model: 'testString',
+      };
+
       // ConceptsOptions
       const conceptsOptionsModel = {
         limit: 50,
@@ -191,13 +203,12 @@ describe('NaturalLanguageUnderstandingV1', () => {
       const sentimentOptionsModel = {
         document: true,
         targets: ['testString'],
+        model: 'testString',
       };
 
-      // CategoriesOptions
-      const categoriesOptionsModel = {
-        explanation: true,
+      // SummarizationOptions
+      const summarizationOptionsModel = {
         limit: 10,
-        model: 'testString',
       };
 
       // SyntaxOptionsTokens
@@ -214,6 +225,8 @@ describe('NaturalLanguageUnderstandingV1', () => {
 
       // Features
       const featuresModel = {
+        categories: categoriesOptionsModel,
+        classifications: classificationsOptionsModel,
         concepts: conceptsOptionsModel,
         emotion: emotionOptionsModel,
         entities: entitiesOptionsModel,
@@ -222,7 +235,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         relations: relationsOptionsModel,
         semantic_roles: semanticRolesOptionsModel,
         sentiment: sentimentOptionsModel,
-        categories: categoriesOptionsModel,
+        summarization: summarizationOptionsModel,
         syntax: syntaxOptionsModel,
       };
 
@@ -428,6 +441,1148 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expectToBePromise(deleteModelPromise);
 
         deleteModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('createSentimentModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation createSentimentModel
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const name = 'testString';
+        const description = 'testString';
+        const modelVersion = 'testString';
+        const workspaceId = 'testString';
+        const versionDescription = 'testString';
+        const params = {
+          language: language,
+          trainingData: trainingData,
+          name: name,
+          description: description,
+          modelVersion: modelVersion,
+          workspaceId: workspaceId,
+          versionDescription: versionDescription,
+        };
+
+        const createSentimentModelResult = naturalLanguageUnderstandingService.createSentimentModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(createSentimentModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/sentiment', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['language']).toEqual(language);
+        expect(options.formData['training_data'].data).toEqual(trainingData);
+        expect(options.formData['training_data'].contentType).toEqual('text/csv');
+        expect(options.formData['name']).toEqual(name);
+        expect(options.formData['description']).toEqual(description);
+        expect(options.formData['model_version']).toEqual(modelVersion);
+        expect(options.formData['workspace_id']).toEqual(workspaceId);
+        expect(options.formData['version_description']).toEqual(versionDescription);
+        expect(options.qs['version']).toEqual(service.version);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          language,
+          trainingData,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.createSentimentModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.createSentimentModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const createSentimentModelPromise = naturalLanguageUnderstandingService.createSentimentModel();
+        expectToBePromise(createSentimentModelPromise);
+
+        createSentimentModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listSentimentModels', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation listSentimentModels
+        const params = {};
+
+        const listSentimentModelsResult = naturalLanguageUnderstandingService.listSentimentModels(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(listSentimentModelsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/sentiment', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.listSentimentModels(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        naturalLanguageUnderstandingService.listSentimentModels({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+  describe('getSentimentModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getSentimentModel
+        const modelId = 'testString';
+        const params = {
+          modelId: modelId,
+        };
+
+        const getSentimentModelResult = naturalLanguageUnderstandingService.getSentimentModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(getSentimentModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/sentiment/{model_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.getSentimentModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.getSentimentModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getSentimentModelPromise = naturalLanguageUnderstandingService.getSentimentModel();
+        expectToBePromise(getSentimentModelPromise);
+
+        getSentimentModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('updateSentimentModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation updateSentimentModel
+        const modelId = 'testString';
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const name = 'testString';
+        const description = 'testString';
+        const modelVersion = 'testString';
+        const workspaceId = 'testString';
+        const versionDescription = 'testString';
+        const params = {
+          modelId: modelId,
+          language: language,
+          trainingData: trainingData,
+          name: name,
+          description: description,
+          modelVersion: modelVersion,
+          workspaceId: workspaceId,
+          versionDescription: versionDescription,
+        };
+
+        const updateSentimentModelResult = naturalLanguageUnderstandingService.updateSentimentModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(updateSentimentModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/sentiment/{model_id}', 'PUT');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['language']).toEqual(language);
+        expect(options.formData['training_data'].data).toEqual(trainingData);
+        expect(options.formData['training_data'].contentType).toEqual('text/csv');
+        expect(options.formData['name']).toEqual(name);
+        expect(options.formData['description']).toEqual(description);
+        expect(options.formData['model_version']).toEqual(modelVersion);
+        expect(options.formData['workspace_id']).toEqual(workspaceId);
+        expect(options.formData['version_description']).toEqual(versionDescription);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          language,
+          trainingData,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.updateSentimentModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.updateSentimentModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const updateSentimentModelPromise = naturalLanguageUnderstandingService.updateSentimentModel();
+        expectToBePromise(updateSentimentModelPromise);
+
+        updateSentimentModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteSentimentModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation deleteSentimentModel
+        const modelId = 'testString';
+        const params = {
+          modelId: modelId,
+        };
+
+        const deleteSentimentModelResult = naturalLanguageUnderstandingService.deleteSentimentModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(deleteSentimentModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/sentiment/{model_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.deleteSentimentModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.deleteSentimentModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const deleteSentimentModelPromise = naturalLanguageUnderstandingService.deleteSentimentModel();
+        expectToBePromise(deleteSentimentModelPromise);
+
+        deleteSentimentModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('createCategoriesModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation createCategoriesModel
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const trainingDataContentType = 'json';
+        const name = 'testString';
+        const description = 'testString';
+        const modelVersion = 'testString';
+        const workspaceId = 'testString';
+        const versionDescription = 'testString';
+        const params = {
+          language: language,
+          trainingData: trainingData,
+          trainingDataContentType: trainingDataContentType,
+          name: name,
+          description: description,
+          modelVersion: modelVersion,
+          workspaceId: workspaceId,
+          versionDescription: versionDescription,
+        };
+
+        const createCategoriesModelResult = naturalLanguageUnderstandingService.createCategoriesModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(createCategoriesModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/categories', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['language']).toEqual(language);
+        expect(options.formData['training_data'].data).toEqual(trainingData);
+        expect(options.formData['training_data'].contentType).toEqual(trainingDataContentType);
+        expect(options.formData['name']).toEqual(name);
+        expect(options.formData['description']).toEqual(description);
+        expect(options.formData['model_version']).toEqual(modelVersion);
+        expect(options.formData['workspace_id']).toEqual(workspaceId);
+        expect(options.formData['version_description']).toEqual(versionDescription);
+        expect(options.qs['version']).toEqual(service.version);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          language,
+          trainingData,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.createCategoriesModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.createCategoriesModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const createCategoriesModelPromise = naturalLanguageUnderstandingService.createCategoriesModel();
+        expectToBePromise(createCategoriesModelPromise);
+
+        createCategoriesModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listCategoriesModels', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation listCategoriesModels
+        const params = {};
+
+        const listCategoriesModelsResult = naturalLanguageUnderstandingService.listCategoriesModels(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(listCategoriesModelsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/categories', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.listCategoriesModels(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        naturalLanguageUnderstandingService.listCategoriesModels({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+  describe('getCategoriesModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getCategoriesModel
+        const modelId = 'testString';
+        const params = {
+          modelId: modelId,
+        };
+
+        const getCategoriesModelResult = naturalLanguageUnderstandingService.getCategoriesModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(getCategoriesModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/categories/{model_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.getCategoriesModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.getCategoriesModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getCategoriesModelPromise = naturalLanguageUnderstandingService.getCategoriesModel();
+        expectToBePromise(getCategoriesModelPromise);
+
+        getCategoriesModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('updateCategoriesModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation updateCategoriesModel
+        const modelId = 'testString';
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const trainingDataContentType = 'json';
+        const name = 'testString';
+        const description = 'testString';
+        const modelVersion = 'testString';
+        const workspaceId = 'testString';
+        const versionDescription = 'testString';
+        const params = {
+          modelId: modelId,
+          language: language,
+          trainingData: trainingData,
+          trainingDataContentType: trainingDataContentType,
+          name: name,
+          description: description,
+          modelVersion: modelVersion,
+          workspaceId: workspaceId,
+          versionDescription: versionDescription,
+        };
+
+        const updateCategoriesModelResult = naturalLanguageUnderstandingService.updateCategoriesModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(updateCategoriesModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/categories/{model_id}', 'PUT');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['language']).toEqual(language);
+        expect(options.formData['training_data'].data).toEqual(trainingData);
+        expect(options.formData['training_data'].contentType).toEqual(trainingDataContentType);
+        expect(options.formData['name']).toEqual(name);
+        expect(options.formData['description']).toEqual(description);
+        expect(options.formData['model_version']).toEqual(modelVersion);
+        expect(options.formData['workspace_id']).toEqual(workspaceId);
+        expect(options.formData['version_description']).toEqual(versionDescription);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          language,
+          trainingData,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.updateCategoriesModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.updateCategoriesModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const updateCategoriesModelPromise = naturalLanguageUnderstandingService.updateCategoriesModel();
+        expectToBePromise(updateCategoriesModelPromise);
+
+        updateCategoriesModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteCategoriesModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation deleteCategoriesModel
+        const modelId = 'testString';
+        const params = {
+          modelId: modelId,
+        };
+
+        const deleteCategoriesModelResult = naturalLanguageUnderstandingService.deleteCategoriesModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(deleteCategoriesModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/categories/{model_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.deleteCategoriesModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.deleteCategoriesModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const deleteCategoriesModelPromise = naturalLanguageUnderstandingService.deleteCategoriesModel();
+        expectToBePromise(deleteCategoriesModelPromise);
+
+        deleteCategoriesModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('createClassificationsModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation createClassificationsModel
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const trainingDataContentType = 'json';
+        const name = 'testString';
+        const description = 'testString';
+        const modelVersion = 'testString';
+        const workspaceId = 'testString';
+        const versionDescription = 'testString';
+        const params = {
+          language: language,
+          trainingData: trainingData,
+          trainingDataContentType: trainingDataContentType,
+          name: name,
+          description: description,
+          modelVersion: modelVersion,
+          workspaceId: workspaceId,
+          versionDescription: versionDescription,
+        };
+
+        const createClassificationsModelResult = naturalLanguageUnderstandingService.createClassificationsModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(createClassificationsModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/classifications', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['language']).toEqual(language);
+        expect(options.formData['training_data'].data).toEqual(trainingData);
+        expect(options.formData['training_data'].contentType).toEqual(trainingDataContentType);
+        expect(options.formData['name']).toEqual(name);
+        expect(options.formData['description']).toEqual(description);
+        expect(options.formData['model_version']).toEqual(modelVersion);
+        expect(options.formData['workspace_id']).toEqual(workspaceId);
+        expect(options.formData['version_description']).toEqual(versionDescription);
+        expect(options.qs['version']).toEqual(service.version);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          language,
+          trainingData,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.createClassificationsModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.createClassificationsModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const createClassificationsModelPromise = naturalLanguageUnderstandingService.createClassificationsModel();
+        expectToBePromise(createClassificationsModelPromise);
+
+        createClassificationsModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listClassificationsModels', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation listClassificationsModels
+        const params = {};
+
+        const listClassificationsModelsResult = naturalLanguageUnderstandingService.listClassificationsModels(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(listClassificationsModelsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/classifications', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.listClassificationsModels(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        naturalLanguageUnderstandingService.listClassificationsModels({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+  describe('getClassificationsModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getClassificationsModel
+        const modelId = 'testString';
+        const params = {
+          modelId: modelId,
+        };
+
+        const getClassificationsModelResult = naturalLanguageUnderstandingService.getClassificationsModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(getClassificationsModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/classifications/{model_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.getClassificationsModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.getClassificationsModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getClassificationsModelPromise = naturalLanguageUnderstandingService.getClassificationsModel();
+        expectToBePromise(getClassificationsModelPromise);
+
+        getClassificationsModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('updateClassificationsModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation updateClassificationsModel
+        const modelId = 'testString';
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const trainingDataContentType = 'json';
+        const name = 'testString';
+        const description = 'testString';
+        const modelVersion = 'testString';
+        const workspaceId = 'testString';
+        const versionDescription = 'testString';
+        const params = {
+          modelId: modelId,
+          language: language,
+          trainingData: trainingData,
+          trainingDataContentType: trainingDataContentType,
+          name: name,
+          description: description,
+          modelVersion: modelVersion,
+          workspaceId: workspaceId,
+          versionDescription: versionDescription,
+        };
+
+        const updateClassificationsModelResult = naturalLanguageUnderstandingService.updateClassificationsModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(updateClassificationsModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/classifications/{model_id}', 'PUT');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.formData['language']).toEqual(language);
+        expect(options.formData['training_data'].data).toEqual(trainingData);
+        expect(options.formData['training_data'].contentType).toEqual(trainingDataContentType);
+        expect(options.formData['name']).toEqual(name);
+        expect(options.formData['description']).toEqual(description);
+        expect(options.formData['model_version']).toEqual(modelVersion);
+        expect(options.formData['workspace_id']).toEqual(workspaceId);
+        expect(options.formData['version_description']).toEqual(versionDescription);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const language = 'testString';
+        const trainingData = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          language,
+          trainingData,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.updateClassificationsModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.updateClassificationsModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const updateClassificationsModelPromise = naturalLanguageUnderstandingService.updateClassificationsModel();
+        expectToBePromise(updateClassificationsModelPromise);
+
+        updateClassificationsModelPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteClassificationsModel', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation deleteClassificationsModel
+        const modelId = 'testString';
+        const params = {
+          modelId: modelId,
+        };
+
+        const deleteClassificationsModelResult = naturalLanguageUnderstandingService.deleteClassificationsModel(
+          params
+        );
+
+        // all methods should return a Promise
+        expectToBePromise(deleteClassificationsModelResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/models/classifications/{model_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['version']).toEqual(service.version);
+        expect(options.path['model_id']).toEqual(modelId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const modelId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          modelId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        naturalLanguageUnderstandingService.deleteClassificationsModel(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.deleteClassificationsModel({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const deleteClassificationsModelPromise = naturalLanguageUnderstandingService.deleteClassificationsModel();
+        expectToBePromise(deleteClassificationsModelPromise);
+
+        deleteClassificationsModelPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2020.
+ * (C) Copyright IBM Corp. 2017, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -40,7 +40,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   static DEFAULT_SERVICE_NAME: string = 'natural-language-understanding';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2020-08-01`.
+   *  `2021-03-25`.
    */
   version: string;
 
@@ -49,8 +49,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2020-08-01`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com'). The base url may differ between IBM Cloud regions.
+   * format. The current version is `2021-03-25`.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -89,6 +89,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * Analyzes text, HTML, or a public webpage for the following features:
    * - Categories
+   * - Classifications
    * - Concepts
    * - Emotion
    * - Entities
@@ -261,6 +262,817 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     return this.createRequest(parameters);
   };
 
+  /*************************
+   * manageSentimentModels
+   ************************/
+
+  /**
+   * Create sentiment model.
+   *
+   * (Beta) Creates a custom sentiment model by uploading training data and associated metadata. The model begins the
+   * training and deploying process and is ready to use when the `status` is `available`.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.language - The 2-letter language code of this model.
+   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in CSV format. For more information, see
+   * [Sentiment training data
+   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
+   * @param {string} [params.name] - An optional name for the model.
+   * @param {string} [params.description] - An optional description of the model.
+   * @param {string} [params.modelVersion] - An optional version string.
+   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
+   * Natural Language Understanding.
+   * @param {string} [params.versionDescription] - The description of the version.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
+   */
+  public createSentimentModel(params: NaturalLanguageUnderstandingV1.CreateSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['language', 'trainingData'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'language': _params.language,
+      'training_data': {
+        data: _params.trainingData,
+        contentType: 'text/csv'
+      },
+      'name': _params.name,
+      'description': _params.description,
+      'model_version': _params.modelVersion,
+      'workspace_id': _params.workspaceId,
+      'version_description': _params.versionDescription
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createSentimentModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/sentiment',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * List sentiment models.
+   *
+   * (Beta) Returns all custom sentiment models associated with this service instance.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>>}
+   */
+  public listSentimentModels(params?: NaturalLanguageUnderstandingV1.ListSentimentModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>> {
+    const _params = Object.assign({}, params);
+
+    const query = {
+      'version': this.version
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listSentimentModels');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/sentiment',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get sentiment model details.
+   *
+   * (Beta) Returns the status of the sentiment model with the given model ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
+   */
+  public getSentimentModel(params: NaturalLanguageUnderstandingV1.GetSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getSentimentModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/sentiment/{model_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Update sentiment model.
+   *
+   * (Beta) Overwrites the training data associated with this custom sentiment model and retrains the model. The new
+   * model replaces the current deployment.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {string} params.language - The 2-letter language code of this model.
+   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in CSV format. For more information, see
+   * [Sentiment training data
+   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
+   * @param {string} [params.name] - An optional name for the model.
+   * @param {string} [params.description] - An optional description of the model.
+   * @param {string} [params.modelVersion] - An optional version string.
+   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
+   * Natural Language Understanding.
+   * @param {string} [params.versionDescription] - The description of the version.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
+   */
+  public updateSentimentModel(params: NaturalLanguageUnderstandingV1.UpdateSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId', 'language', 'trainingData'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'language': _params.language,
+      'training_data': {
+        data: _params.trainingData,
+        contentType: 'text/csv'
+      },
+      'name': _params.name,
+      'description': _params.description,
+      'model_version': _params.modelVersion,
+      'workspace_id': _params.workspaceId,
+      'version_description': _params.versionDescription
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateSentimentModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/sentiment/{model_id}',
+        method: 'PUT',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Delete sentiment model.
+   *
+   * (Beta) Un-deploys the custom sentiment model with the given model ID and deletes all associated customer data,
+   * including any training data or binary artifacts.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
+   */
+  public deleteSentimentModel(params: NaturalLanguageUnderstandingV1.DeleteSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteSentimentModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/sentiment/{model_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * manageCategoriesModels
+   ************************/
+
+  /**
+   * Create categories model.
+   *
+   * (Beta) Creates a custom categories model by uploading training data and associated metadata. The model begins the
+   * training and deploying process and is ready to use when the `status` is `available`.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.language - The 2-letter language code of this model.
+   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
+   * [Categories training data
+   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
+   * @param {string} [params.trainingDataContentType] - The content type of trainingData.
+   * @param {string} [params.name] - An optional name for the model.
+   * @param {string} [params.description] - An optional description of the model.
+   * @param {string} [params.modelVersion] - An optional version string.
+   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
+   * Natural Language Understanding.
+   * @param {string} [params.versionDescription] - The description of the version.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>>}
+   */
+  public createCategoriesModel(params: NaturalLanguageUnderstandingV1.CreateCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['language', 'trainingData'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'language': _params.language,
+      'training_data': {
+        data: _params.trainingData,
+        contentType: _params.trainingDataContentType
+      },
+      'name': _params.name,
+      'description': _params.description,
+      'model_version': _params.modelVersion,
+      'workspace_id': _params.workspaceId,
+      'version_description': _params.versionDescription
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createCategoriesModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/categories',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * List categories models.
+   *
+   * (Beta) Returns all custom categories models associated with this service instance.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListCategoriesModelsResponse>>}
+   */
+  public listCategoriesModels(params?: NaturalLanguageUnderstandingV1.ListCategoriesModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListCategoriesModelsResponse>> {
+    const _params = Object.assign({}, params);
+
+    const query = {
+      'version': this.version
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listCategoriesModels');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/categories',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get categories model details.
+   *
+   * (Beta) Returns the status of the categories model with the given model ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>>}
+   */
+  public getCategoriesModel(params: NaturalLanguageUnderstandingV1.GetCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getCategoriesModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/categories/{model_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Update categories model.
+   *
+   * (Beta) Overwrites the training data associated with this custom categories model and retrains the model. The new
+   * model replaces the current deployment.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {string} params.language - The 2-letter language code of this model.
+   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
+   * [Categories training data
+   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
+   * @param {string} [params.trainingDataContentType] - The content type of trainingData.
+   * @param {string} [params.name] - An optional name for the model.
+   * @param {string} [params.description] - An optional description of the model.
+   * @param {string} [params.modelVersion] - An optional version string.
+   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
+   * Natural Language Understanding.
+   * @param {string} [params.versionDescription] - The description of the version.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>>}
+   */
+  public updateCategoriesModel(params: NaturalLanguageUnderstandingV1.UpdateCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId', 'language', 'trainingData'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'language': _params.language,
+      'training_data': {
+        data: _params.trainingData,
+        contentType: _params.trainingDataContentType
+      },
+      'name': _params.name,
+      'description': _params.description,
+      'model_version': _params.modelVersion,
+      'workspace_id': _params.workspaceId,
+      'version_description': _params.versionDescription
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCategoriesModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/categories/{model_id}',
+        method: 'PUT',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Delete categories model.
+   *
+   * (Beta) Un-deploys the custom categories model with the given model ID and deletes all associated customer data,
+   * including any training data or binary artifacts.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
+   */
+  public deleteCategoriesModel(params: NaturalLanguageUnderstandingV1.DeleteCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCategoriesModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/categories/{model_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * manageClassificationsModels
+   ************************/
+
+  /**
+   * Create classifications model.
+   *
+   * (Beta) Creates a custom classifications model by uploading training data and associated metadata. The model begins
+   * the training and deploying process and is ready to use when the `status` is `available`.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.language - The 2-letter language code of this model.
+   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
+   * [Classifications training data
+   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
+   * @param {string} [params.trainingDataContentType] - The content type of trainingData.
+   * @param {string} [params.name] - An optional name for the model.
+   * @param {string} [params.description] - An optional description of the model.
+   * @param {string} [params.modelVersion] - An optional version string.
+   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
+   * Natural Language Understanding.
+   * @param {string} [params.versionDescription] - The description of the version.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
+   */
+  public createClassificationsModel(params: NaturalLanguageUnderstandingV1.CreateClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['language', 'trainingData'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'language': _params.language,
+      'training_data': {
+        data: _params.trainingData,
+        contentType: _params.trainingDataContentType
+      },
+      'name': _params.name,
+      'description': _params.description,
+      'model_version': _params.modelVersion,
+      'workspace_id': _params.workspaceId,
+      'version_description': _params.versionDescription
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createClassificationsModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/classifications',
+        method: 'POST',
+        qs: query,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * List classifications models.
+   *
+   * (Beta) Returns all custom classifications models associated with this service instance.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListClassificationsModelsResponse>>}
+   */
+  public listClassificationsModels(params?: NaturalLanguageUnderstandingV1.ListClassificationsModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListClassificationsModelsResponse>> {
+    const _params = Object.assign({}, params);
+
+    const query = {
+      'version': this.version
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listClassificationsModels');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/classifications',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get classifications model details.
+   *
+   * (Beta) Returns the status of the classifications model with the given model ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
+   */
+  public getClassificationsModel(params: NaturalLanguageUnderstandingV1.GetClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getClassificationsModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/classifications/{model_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Update classifications model.
+   *
+   * (Beta) Overwrites the training data associated with this custom classifications model and retrains the model. The
+   * new model replaces the current deployment.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {string} params.language - The 2-letter language code of this model.
+   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
+   * [Classifications training data
+   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
+   * @param {string} [params.trainingDataContentType] - The content type of trainingData.
+   * @param {string} [params.name] - An optional name for the model.
+   * @param {string} [params.description] - An optional description of the model.
+   * @param {string} [params.modelVersion] - An optional version string.
+   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
+   * Natural Language Understanding.
+   * @param {string} [params.versionDescription] - The description of the version.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
+   */
+  public updateClassificationsModel(params: NaturalLanguageUnderstandingV1.UpdateClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId', 'language', 'trainingData'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const formData = {
+      'language': _params.language,
+      'training_data': {
+        data: _params.trainingData,
+        contentType: _params.trainingDataContentType
+      },
+      'name': _params.name,
+      'description': _params.description,
+      'model_version': _params.modelVersion,
+      'workspace_id': _params.workspaceId,
+      'version_description': _params.versionDescription
+    };
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateClassificationsModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/classifications/{model_id}',
+        method: 'PUT',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Delete classifications model.
+   *
+   * (Beta) Un-deploys the custom classifications model with the given model ID and deletes all associated customer
+   * data, including any training data or binary artifacts.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.modelId - ID of the model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
+   */
+  public deleteClassificationsModel(params: NaturalLanguageUnderstandingV1.DeleteClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['modelId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'version': this.version
+    };
+
+    const path = {
+      'model_id': _params.modelId
+    };
+
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteClassificationsModel');
+
+    const parameters = {
+      options: {
+        url: '/v1/models/classifications/{model_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
 }
 
 /*************************
@@ -273,7 +1085,7 @@ namespace NaturalLanguageUnderstandingV1 {
   export interface Options extends UserOptions {
 
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2020-08-01`.
+     *  `2021-03-25`.
      */
     version: string;
   }
@@ -348,6 +1160,239 @@ namespace NaturalLanguageUnderstandingV1 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `createSentimentModel` operation. */
+  export interface CreateSentimentModelParams {
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** Training data in CSV format. For more information, see [Sentiment training data
+     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
+     */
+    trainingData: NodeJS.ReadableStream|Buffer;
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    modelVersion?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspaceId?: string;
+    /** The description of the version. */
+    versionDescription?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listSentimentModels` operation. */
+  export interface ListSentimentModelsParams {
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getSentimentModel` operation. */
+  export interface GetSentimentModelParams {
+    /** ID of the model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateSentimentModel` operation. */
+  export interface UpdateSentimentModelParams {
+    /** ID of the model. */
+    modelId: string;
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** Training data in CSV format. For more information, see [Sentiment training data
+     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
+     */
+    trainingData: NodeJS.ReadableStream|Buffer;
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    modelVersion?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspaceId?: string;
+    /** The description of the version. */
+    versionDescription?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteSentimentModel` operation. */
+  export interface DeleteSentimentModelParams {
+    /** ID of the model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createCategoriesModel` operation. */
+  export interface CreateCategoriesModelParams {
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** Training data in JSON format. For more information, see [Categories training data
+     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
+     */
+    trainingData: NodeJS.ReadableStream|Buffer;
+    /** The content type of trainingData. */
+    trainingDataContentType?: CreateCategoriesModelConstants.TrainingDataContentType | string;
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    modelVersion?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspaceId?: string;
+    /** The description of the version. */
+    versionDescription?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `createCategoriesModel` operation. */
+  export namespace CreateCategoriesModelConstants {
+    /** The content type of trainingData. */
+    export enum TrainingDataContentType {
+      JSON = 'json',
+      APPLICATION_JSON = 'application/json',
+    }
+  }
+
+  /** Parameters for the `listCategoriesModels` operation. */
+  export interface ListCategoriesModelsParams {
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getCategoriesModel` operation. */
+  export interface GetCategoriesModelParams {
+    /** ID of the model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateCategoriesModel` operation. */
+  export interface UpdateCategoriesModelParams {
+    /** ID of the model. */
+    modelId: string;
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** Training data in JSON format. For more information, see [Categories training data
+     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
+     */
+    trainingData: NodeJS.ReadableStream|Buffer;
+    /** The content type of trainingData. */
+    trainingDataContentType?: UpdateCategoriesModelConstants.TrainingDataContentType | string;
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    modelVersion?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspaceId?: string;
+    /** The description of the version. */
+    versionDescription?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `updateCategoriesModel` operation. */
+  export namespace UpdateCategoriesModelConstants {
+    /** The content type of trainingData. */
+    export enum TrainingDataContentType {
+      JSON = 'json',
+      APPLICATION_JSON = 'application/json',
+    }
+  }
+
+  /** Parameters for the `deleteCategoriesModel` operation. */
+  export interface DeleteCategoriesModelParams {
+    /** ID of the model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createClassificationsModel` operation. */
+  export interface CreateClassificationsModelParams {
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** Training data in JSON format. For more information, see [Classifications training data
+     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
+     */
+    trainingData: NodeJS.ReadableStream|Buffer;
+    /** The content type of trainingData. */
+    trainingDataContentType?: CreateClassificationsModelConstants.TrainingDataContentType | string;
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    modelVersion?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspaceId?: string;
+    /** The description of the version. */
+    versionDescription?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `createClassificationsModel` operation. */
+  export namespace CreateClassificationsModelConstants {
+    /** The content type of trainingData. */
+    export enum TrainingDataContentType {
+      JSON = 'json',
+      APPLICATION_JSON = 'application/json',
+    }
+  }
+
+  /** Parameters for the `listClassificationsModels` operation. */
+  export interface ListClassificationsModelsParams {
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getClassificationsModel` operation. */
+  export interface GetClassificationsModelParams {
+    /** ID of the model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateClassificationsModel` operation. */
+  export interface UpdateClassificationsModelParams {
+    /** ID of the model. */
+    modelId: string;
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** Training data in JSON format. For more information, see [Classifications training data
+     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
+     */
+    trainingData: NodeJS.ReadableStream|Buffer;
+    /** The content type of trainingData. */
+    trainingDataContentType?: UpdateClassificationsModelConstants.TrainingDataContentType | string;
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    modelVersion?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspaceId?: string;
+    /** The description of the version. */
+    versionDescription?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `updateClassificationsModel` operation. */
+  export namespace UpdateClassificationsModelConstants {
+    /** The content type of trainingData. */
+    export enum TrainingDataContentType {
+      JSON = 'json',
+      APPLICATION_JSON = 'application/json',
+    }
+  }
+
+  /** Parameters for the `deleteClassificationsModel` operation. */
+  export interface DeleteClassificationsModelParams {
+    /** ID of the model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /*************************
    * model interfaces
    ************************/
@@ -370,6 +1415,8 @@ namespace NaturalLanguageUnderstandingV1 {
     keywords?: KeywordsResult[];
     /** The categories that the service assigned to the analyzed text. */
     categories?: CategoriesResult[];
+    /** The classifications assigned to the analyzed text. */
+    classifications?: ClassificationsResult[];
     /** The anger, disgust, fear, joy, or sadness conveyed by the content. */
     emotion?: EmotionResult;
     /** Webpage metadata, such as the author and the title of the page. */
@@ -400,6 +1447,43 @@ namespace NaturalLanguageUnderstandingV1 {
     name?: string;
   }
 
+  /** Categories model. */
+  export interface CategoriesModel {
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional map of metadata key-value pairs to store with this model. */
+    user_metadata?: JsonObject;
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    model_version?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspace_id?: string;
+    /** The description of the version. */
+    version_description?: string;
+    /** The service features that are supported by the custom model. */
+    features?: string[];
+    /** When the status is `available`, the model is ready to use. */
+    status: string;
+    /** Unique model ID. */
+    model_id: string;
+    /** dateTime indicating when the model was created. */
+    created: string;
+    notices?: Notice[];
+    /** dateTime of last successful model training. */
+    last_trained?: string;
+    /** dateTime of last successful model deployment. */
+    last_deployed?: string;
+  }
+
+  /** List of categories models. */
+  export interface CategoriesModelList {
+    /** The categories models. */
+    models?: CategoriesModel[];
+  }
+
   /** Returns a five-level taxonomy of the content. The top three categories are returned. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
   export interface CategoriesOptions {
     /** Set this to `true` to return explanations for each categorization. **This is available only for English
@@ -408,14 +1492,9 @@ namespace NaturalLanguageUnderstandingV1 {
     explanation?: boolean;
     /** Maximum number of categories to return. */
     limit?: number;
-    /** Enter a [custom
+    /** (Beta) Enter a [custom
      *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
-     *  ID to override the standard categories model.
-     *
-     *  The custom categories experimental feature will be retired on 19 December 2019. On that date, deployed custom
-     *  categories models will no longer be accessible in Natural Language Understanding. The feature will be removed
-     *  from Knowledge Studio on an earlier date. Custom categories models will no longer be accessible in Knowledge
-     *  Studio on 17 December 2019.
+     *  ID to override the standard categories model. **This is available only for English categories.**.
      */
     model?: string;
   }
@@ -446,6 +1525,60 @@ namespace NaturalLanguageUnderstandingV1 {
      *  impactful.
      */
     relevant_text?: CategoriesRelevantText[];
+  }
+
+  /** Classifications model. */
+  export interface ClassificationsModel {
+    /** An optional name for the model. */
+    name?: string;
+    /** An optional map of metadata key-value pairs to store with this model. */
+    user_metadata?: JsonObject;
+    /** The 2-letter language code of this model. */
+    language: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    model_version?: string;
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspace_id?: string;
+    /** The description of the version. */
+    version_description?: string;
+    /** The service features that are supported by the custom model. */
+    features?: string[];
+    /** When the status is `available`, the model is ready to use. */
+    status: string;
+    /** Unique model ID. */
+    model_id: string;
+    /** dateTime indicating when the model was created. */
+    created: string;
+    notices?: Notice[];
+    /** dateTime of last successful model training. */
+    last_trained?: string;
+    /** dateTime of last successful model deployment. */
+    last_deployed?: string;
+  }
+
+  /** List of classifications models. */
+  export interface ClassificationsModelList {
+    /** The classifications models. */
+    models?: ClassificationsModel[];
+  }
+
+  /** Returns text classifications for the content. Supported languages: English only. */
+  export interface ClassificationsOptions {
+    /** (Beta) Enter a [custom
+     *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
+     *  ID of the classification model to be used.
+     */
+    model?: string;
+  }
+
+  /** A classification of the analyzed text. */
+  export interface ClassificationsResult {
+    /** Classification assigned to the text. */
+    class_name?: string;
+    /** Confidence score for the classification. Higher values indicate greater confidence. */
+    confidence?: number;
   }
 
   /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
@@ -587,6 +1720,16 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Analysis features and options. */
   export interface Features {
+    /** Returns a five-level taxonomy of the content. The top three categories are returned.
+     *
+     *  Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
+     */
+    categories?: CategoriesOptions;
+    /** Returns text classifications for the content.
+     *
+     *  Supported languages: English only.
+     */
+    classifications?: ClassificationsOptions;
     /** Returns high-level concepts in the content. For example, a research paper about deep learning might return
      *  the concept, "Artificial Intelligence" although the term is not mentioned.
      *
@@ -636,11 +1779,11 @@ namespace NaturalLanguageUnderstandingV1 {
      *   Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish.
      */
     sentiment?: SentimentOptions;
-    /** Returns a five-level taxonomy of the content. The top three categories are returned.
+    /** (Experimental) Returns a summary of content.
      *
-     *  Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
+     *  Supported languages: English only.
      */
-    categories?: CategoriesOptions;
+    summarization?: SummarizationOptions;
     /** Returns tokens and sentences from the input text. */
     syntax?: SyntaxOptions;
   }
@@ -689,10 +1832,25 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: FeatureSentimentResults;
   }
 
+  /** ListCategoriesModelsResponse. */
+  export interface ListCategoriesModelsResponse {
+    models?: CategoriesModelList[];
+  }
+
+  /** ListClassificationsModelsResponse. */
+  export interface ListClassificationsModelsResponse {
+    models?: ClassificationsModelList[];
+  }
+
   /** Custom models that are available for entities and relations. */
   export interface ListModelsResults {
     /** An array of available models. */
     models?: Model[];
+  }
+
+  /** ListSentimentModelsResponse. */
+  export interface ListSentimentModelsResponse {
+    models?: SentimentModel[];
   }
 
   /** Model. */
@@ -715,6 +1873,12 @@ namespace NaturalLanguageUnderstandingV1 {
     version_description?: string;
     /** A dateTime indicating when the model was created. */
     created?: string;
+  }
+
+  /** A list of messages describing model training issues when model status is `error`. */
+  export interface Notice {
+    /** Describes deficiencies or inconsistencies in training data. */
+    message?: string;
   }
 
   /** RelationArgument. */
@@ -835,12 +1999,49 @@ namespace NaturalLanguageUnderstandingV1 {
     location?: number[];
   }
 
+  /** SentimentModel. */
+  export interface SentimentModel {
+    /** The service features that are supported by the custom model. */
+    features?: string[];
+    /** When the status is `available`, the model is ready to use. */
+    status?: string;
+    /** Unique model ID. */
+    model_id?: string;
+    /** dateTime indicating when the model was created. */
+    created?: string;
+    /** dateTime of last successful model training. */
+    last_trained?: string;
+    /** dateTime of last successful model deployment. */
+    last_deployed?: string;
+    /** A name for the model. */
+    name?: string;
+    /** An optional map of metadata key-value pairs to store with this model. */
+    user_metadata?: JsonObject;
+    /** The 2-letter language code of this model. */
+    language?: string;
+    /** An optional description of the model. */
+    description?: string;
+    /** An optional version string. */
+    model_version?: string;
+    notices?: Notice[];
+    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
+    workspace_id?: string;
+    /** The description of the version. */
+    version_description?: string;
+  }
+
   /** Analyzes the general sentiment of your content or the sentiment toward specific target phrases. You can analyze sentiment for detected entities with `entities.sentiment` and for keywords with `keywords.sentiment`. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish. */
   export interface SentimentOptions {
     /** Set this to `false` to hide document-level sentiment results. */
     document?: boolean;
     /** Sentiment results will be returned for each target string that is found in the document. */
     targets?: string[];
+    /** (Beta) Enter a [custom
+     *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
+     *  ID to override the standard sentiment model for all sentiment analysis operations in the request, including
+     *  targeted sentiment for entities and keywords.
+     */
+    model?: string;
   }
 
   /** The sentiment of the content. */
@@ -849,6 +2050,12 @@ namespace NaturalLanguageUnderstandingV1 {
     document?: DocumentSentimentResults;
     /** The targeted sentiment to analyze. */
     targets?: TargetedSentimentResults[];
+  }
+
+  /** (Experimental) Returns a summary of content. Supported languages: English only. */
+  export interface SummarizationOptions {
+    /** Maximum number of summary sentences to return. */
+    limit?: number;
   }
 
   /** Returns tokens and sentences from the input text. */
