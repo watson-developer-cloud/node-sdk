@@ -279,6 +279,7 @@ namespace SpeechToTextV1 {
     splitTranscriptAtPhraseEnd?: boolean;
     speechDetectorSensitivity?: number;
     backgroundAudioSuppression?: number;
+    lowLatency?: boolean;
   }
 }
 
