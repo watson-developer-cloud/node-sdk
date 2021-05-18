@@ -2,6 +2,8 @@
 
 const { IamAuthenticator } = require('../../dist/auth');
 const TextToSpeechV1 = require('../../dist/text-to-speech/v1');
+const fs = require('fs');
+const path = require('path');
 const wav = require('wav');
 const authHelper = require('../resources/auth_helper.js');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
@@ -92,6 +94,66 @@ describe('text to speech_integration', () => {
 
       expect(result.customization_id).toBeDefined();
       customizationId = result.customization_id;
+    });
+
+    describe('custom prompts', () => {
+      const promptId = 'Hello';
+
+      it('should addCustomPrompt()', async () => {
+        expect(customizationId).toBeTruthy();
+
+        const params = {
+          customizationId,
+          promptId,
+          metadata: {
+            prompt_text: 'Hello, how are you today?',
+          },
+          file: fs.createReadStream(path.join(__dirname, '../resources/tts_audio.wav')),
+          filename: 'tts_audio.wav',
+        };
+
+        const res = await textToSpeech.addCustomPrompt(params);
+        const { result } = res || {};
+        expect(result.prompt_id).toBe('Hello');
+      });
+
+      it('should listCustomPrompts()', async () => {
+        expect(customizationId).toBeTruthy();
+
+        const params = {
+          customizationId,
+        };
+
+        const res = await textToSpeech.listCustomPrompts(params);
+        const { result } = res || {};
+        expect(result.prompts.length).toBeTruthy();
+      });
+
+      it('should getCustomPrompt()', async () => {
+        expect(customizationId).toBeTruthy();
+
+        const params = {
+          customizationId,
+          promptId,
+        };
+
+        const res = await textToSpeech.getCustomPrompt(params);
+        const { result } = res || {};
+        expect(result.prompt_id).toBe('Hello');
+      });
+
+      it('should deleteCustomPrompt()', async () => {
+        expect(customizationId).toBeTruthy();
+
+        const params = {
+          customizationId,
+          promptId,
+        };
+
+        const res = await textToSpeech.deleteCustomPrompt(params);
+        const { result } = res || {};
+        expect(result).toBeDefined();
+      });
     });
 
     it('should listCustomModels() with language', async () => {
@@ -216,6 +278,54 @@ describe('text to speech_integration', () => {
       };
 
       const res = await textToSpeech.deleteCustomModel(params);
+      const { result } = res || {};
+      expect(result).toBeDefined();
+    });
+  });
+
+  describe('speaker models', () => {
+    let speakerId;
+
+    it('should createSpeakerModel()', async () => {
+      const params = {
+        speakerName: 'Angelo',
+        audio: fs.createReadStream(path.join(__dirname, '../resources/tts_audio.wav')),
+      };
+
+      const res = await textToSpeech.createSpeakerModel(params);
+      const { result } = res || {};
+      expect(result.speaker_id).toBeDefined();
+      speakerId = result.speaker_id;
+    });
+
+    it('should listSpeakerModels()', async () => {
+      expect(speakerId).toBeTruthy();
+
+      const res = await textToSpeech.listSpeakerModels();
+      const { result } = res || {};
+      expect(result.speakers.length).toBeTruthy();
+    });
+
+    it('should getSpeakerModel()', async () => {
+      expect(speakerId).toBeTruthy();
+
+      const params = {
+        speakerId,
+      };
+
+      const res = await textToSpeech.getSpeakerModel(params);
+      const { result } = res || {};
+      expect(result.customizations).toBeDefined();
+    });
+
+    it('should deleteSpeakerModel()', async () => {
+      expect(speakerId).toBeTruthy();
+
+      const params = {
+        speakerId,
+      };
+
+      const res = await textToSpeech.deleteSpeakerModel(params);
       const { result } = res || {};
       expect(result).toBeDefined();
     });

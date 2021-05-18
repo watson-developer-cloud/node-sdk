@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -253,6 +253,7 @@ describe('SpeechToTextV1', () => {
         const splitTranscriptAtPhraseEnd = true;
         const speechDetectorSensitivity = 36.0;
         const backgroundAudioSuppression = 36.0;
+        const lowLatency = true;
         const params = {
           audio: audio,
           contentType: contentType,
@@ -279,6 +280,7 @@ describe('SpeechToTextV1', () => {
           splitTranscriptAtPhraseEnd: splitTranscriptAtPhraseEnd,
           speechDetectorSensitivity: speechDetectorSensitivity,
           backgroundAudioSuppression: backgroundAudioSuppression,
+          lowLatency: lowLatency,
         };
 
         const recognizeResult = speechToTextService.recognize(params);
@@ -320,6 +322,7 @@ describe('SpeechToTextV1', () => {
         expect(options.qs['split_transcript_at_phrase_end']).toEqual(splitTranscriptAtPhraseEnd);
         expect(options.qs['speech_detector_sensitivity']).toEqual(speechDetectorSensitivity);
         expect(options.qs['background_audio_suppression']).toEqual(backgroundAudioSuppression);
+        expect(options.qs['low_latency']).toEqual(lowLatency);
       });
 
       test('should prioritize user-given headers', () => {
@@ -538,6 +541,7 @@ describe('SpeechToTextV1', () => {
         const splitTranscriptAtPhraseEnd = true;
         const speechDetectorSensitivity = 36.0;
         const backgroundAudioSuppression = 36.0;
+        const lowLatency = true;
         const params = {
           audio: audio,
           contentType: contentType,
@@ -570,6 +574,7 @@ describe('SpeechToTextV1', () => {
           splitTranscriptAtPhraseEnd: splitTranscriptAtPhraseEnd,
           speechDetectorSensitivity: speechDetectorSensitivity,
           backgroundAudioSuppression: backgroundAudioSuppression,
+          lowLatency: lowLatency,
         };
 
         const createJobResult = speechToTextService.createJob(params);
@@ -617,6 +622,7 @@ describe('SpeechToTextV1', () => {
         expect(options.qs['split_transcript_at_phrase_end']).toEqual(splitTranscriptAtPhraseEnd);
         expect(options.qs['speech_detector_sensitivity']).toEqual(speechDetectorSensitivity);
         expect(options.qs['background_audio_suppression']).toEqual(backgroundAudioSuppression);
+        expect(options.qs['low_latency']).toEqual(lowLatency);
       });
 
       test('should prioritize user-given headers', () => {
