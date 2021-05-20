@@ -1079,7 +1079,6 @@ describe('assistant v1 integration', () => {
       const res = await assistant.bulkClassify(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      console.log(result);
     });
   });
 });
