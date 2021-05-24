@@ -609,9 +609,9 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListCategoriesModelsResponse>>}
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModelList>>}
    */
-  public listCategoriesModels(params?: NaturalLanguageUnderstandingV1.ListCategoriesModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListCategoriesModelsResponse>> {
+  public listCategoriesModels(params?: NaturalLanguageUnderstandingV1.ListCategoriesModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModelList>> {
     const _params = Object.assign({}, params);
 
     const query = {
@@ -1830,11 +1830,6 @@ namespace NaturalLanguageUnderstandingV1 {
     emotion?: EmotionScores;
     /** Sentiment analysis results for the keyword, enabled with the `sentiment` option. */
     sentiment?: FeatureSentimentResults;
-  }
-
-  /** ListCategoriesModelsResponse. */
-  export interface ListCategoriesModelsResponse {
-    models?: CategoriesModelList[];
   }
 
   /** ListClassificationsModelsResponse. */
