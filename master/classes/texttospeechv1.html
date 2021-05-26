@@ -81,6 +81,9 @@
 						translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in
 						standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic
 					Representation (SPR). The Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA.</p>
+					<p>The service also offers a Tune by Example feature that lets you define custom prompts. You can also define speaker
+						models to improve the quality of your custom prompts. The service support custom prompts only for US English custom
+					models and voices.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -133,18 +136,26 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#addcustomprompt" class="tsd-kind-icon">add<wbr>Custom<wbr>Prompt</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#addword" class="tsd-kind-icon">add<wbr>Word</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#addwords" class="tsd-kind-icon">add<wbr>Words</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#createcustommodel" class="tsd-kind-icon">create<wbr>Custom<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#createspeakermodel" class="tsd-kind-icon">create<wbr>Speaker<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deletecustommodel" class="tsd-kind-icon">delete<wbr>Custom<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deletecustomprompt" class="tsd-kind-icon">delete<wbr>Custom<wbr>Prompt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deletespeakermodel" class="tsd-kind-icon">delete<wbr>Speaker<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deleteuserdata" class="tsd-kind-icon">delete<wbr>User<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deleteword" class="tsd-kind-icon">delete<wbr>Word</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getcustommodel" class="tsd-kind-icon">get<wbr>Custom<wbr>Model</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getcustomprompt" class="tsd-kind-icon">get<wbr>Custom<wbr>Prompt</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getpronunciation" class="tsd-kind-icon">get<wbr>Pronunciation</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getspeakermodel" class="tsd-kind-icon">get<wbr>Speaker<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getvoice" class="tsd-kind-icon">get<wbr>Voice</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getword" class="tsd-kind-icon">get<wbr>Word</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listcustommodels" class="tsd-kind-icon">list<wbr>Custom<wbr>Models</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listcustomprompts" class="tsd-kind-icon">list<wbr>Custom<wbr>Prompts</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listspeakermodels" class="tsd-kind-icon">list<wbr>Speaker<wbr>Models</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listvoices" class="tsd-kind-icon">list<wbr>Voices</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listwords" class="tsd-kind-icon">list<wbr>Words</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a></li>
@@ -169,7 +180,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L48">text-to-speech/v1-generated.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L52">text-to-speech/v1-generated.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -213,7 +224,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L48">text-to-speech/v1-generated.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L52">text-to-speech/v1-generated.ts:52</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -224,13 +235,184 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L47">text-to-speech/v1-generated.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L51">text-to-speech/v1-generated.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addcustomprompt" class="tsd-anchor"></a>
+					<h3>add<wbr>Custom<wbr>Prompt</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Custom<wbr>Prompt<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.addcustompromptparams.html" class="tsd-signature-type">AddCustomPromptParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.prompt.html" class="tsd-signature-type">Prompt</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1146">text-to-speech/v1-generated.ts:1146</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add a custom prompt.</p>
+								</div>
+								<p>Adds a custom prompt to a custom model. A prompt is defined by the text that is to be spoken, the audio for that
+									text, a unique user-specified ID for the prompt, and an optional speaker ID. The information is used to generate
+									prosodic data that is not visible to the user. This data is used by the service to produce the synthesized audio
+									upon request. You must use credentials for the instance of the service that owns a custom model to add a prompt to
+								it. You can add a maximum of 1000 custom prompts to a single custom model.</p>
+								<p>You are recommended to assign meaningful values for prompt IDs. For example, use <code>goodbye</code> to identify a prompt
+									that speaks a farewell message. Prompt IDs must be unique within a given custom model. You cannot define two
+									prompts with the same name for the same custom model. If you provide the ID of an existing prompt, the previously
+									uploaded prompt is replaced by the new information. The existing prompt is reprocessed by using the new text and
+								audio and, if provided, new speaker model, and the prosody data associated with the prompt is updated.</p>
+								<p>The quality of a prompt is undefined if the language of a prompt does not match the language of its custom model.
+									This is consistent with any text or SSML that is specified for a speech synthesis request. The service makes a
+									best-effort attempt to render the specified text for the prompt; it does not validate that the language of the text
+								matches the language of the model.</p>
+								<p>Adding a prompt is an asynchronous operation. Although it accepts less audio than speaker enrollment, the service
+									must align the audio with the provided text. The time that it takes to process a prompt depends on the prompt
+									itself. The processing time for a reasonably sized prompt generally matches the length of the audio (for example,
+								it takes 20 seconds to process a 20-second prompt).</p>
+								<p>For shorter prompts, you can wait for a reasonable amount of time and then check the status of the prompt with the
+									<strong>Get a custom prompt</strong> method. For longer prompts, consider using that method to poll the service every few
+									seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it is in the
+								<code>processing</code> or <code>failed</code> state. Only prompts that are in the <code>available</code> state can be used for speech synthesis.</p>
+								<p>When it processes a request, the service attempts to align the text and the audio that are provided for the prompt.
+									The text that is passed with a prompt must match the spoken audio as closely as possible. Optimally, the text and
+									audio match exactly. The service does its best to align the specified text with the audio, and it can often
+									compensate for mismatches between the two. But if the service cannot effectively align the text and the audio,
+								possibly because the magnitude of mismatches between the two is too great, processing of the prompt fails.</p>
+								<a href="#evaluating-a-prompt" id="evaluating-a-prompt" style="color: inherit; text-decoration: none;">
+									<h3>Evaluating a prompt</h3>
+								</a>
+								<p> Always listen to and evaluate a prompt to determine its quality before using it in production. To evaluate a
+									prompt, include only the single prompt in a speech synthesis request by using the following SSML extension, in this
+								case for a prompt whose ID is <code>goodbye</code>:</p>
+								<p><code>&lt;ibm:prompt id=&quot;goodbye&quot;/&gt;</code></p>
+								<p>In some cases, you might need to rerecord and resubmit a prompt as many as five times to address the following
+								possible problems:</p>
+								<ul>
+									<li>The service might fail to detect a mismatch between the prompt’s text and audio. The longer the prompt, the
+										greater the chance for misalignment between its text and audio. Therefore, multiple shorter prompts are preferable
+									to a single long prompt.</li>
+									<li>The text of a prompt might include a word that the service does not recognize. In this case, you can create a
+										custom word and pronunciation pair to tell the service how to pronounce the word. You must then re-create the
+									prompt.</li>
+									<li>The quality of the input audio might be insufficient or the service’s processing of the audio might fail to
+									detect the intended prosody. Submitting new audio for the prompt can correct these issues.</li>
+								</ul>
+								<p>If a prompt that is created without a speaker ID does not adequately reflect the intended prosody, enrolling the
+									speaker and providing a speaker ID for the prompt is one recommended means of potentially improving the quality of
+									the prompt. This is especially important for shorter prompts such as &quot;good-bye&quot; or &quot;thank you,&quot; where less audio
+								data makes it more difficult to match the prosody of the speaker.</p>
+								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
+								voices.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li>[Add a custom
+									prompt](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-create#tbe-create-add-prompt">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-create#tbe-create-add-prompt</a>)</li>
+									<li>[Evaluate a custom
+									prompt](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-create#tbe-create-evaluate-prompt">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-create#tbe-create-evaluate-prompt</a>)</li>
+									<li>[Rules for creating custom
+									prompts](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-rules#tbe-rules-prompts">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-rules#tbe-rules-prompts</a>).</li>
+								</ul>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.addcustompromptparams.html" class="tsd-signature-type">AddCustomPromptParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
+														of the service that owns the custom model.</td>
+													</tr>
+													<tr>
+														<td><code>file</code></td>
+														<td><span class="tsd-signature-type">ReadableStream</span>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">Buffer</span>
+														</td>
+														<td></td>
+														<td>An audio file that speaks the text of the prompt with intonation and prosody that matches how you would like
+															the prompt to be spoken.
+															* The prompt audio must be in WAV format and must have a minimum sampling rate of 16 kHz. The service accepts
+															audio with higher sampling rates. The service transcodes all audio to 16 kHz before processing it.
+														* The length of the prompt audio is limited to 30 seconds.</td>
+													</tr>
+													<tr>
+														<td><code>filename</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The filename for file.</td>
+													</tr>
+													<tr>
+														<td><code>metadata</code></td>
+														<td><a href="../interfaces/texttospeechv1.promptmetadata.html" class="tsd-signature-type">PromptMetadata</a></td>
+														<td></td>
+														<td>Information about the prompt that is to be added to a custom model. The following example of a
+														&#x60;PromptMetadata&#x60; object includes both the required prompt text and an optional speaker model ID:</td>
+													</tr>
+													<tr>
+														<td><code>promptId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The identifier of the prompt that is to be added to the custom model:
+															* Include a maximum of 49 characters in the ID.
+															* Include only alphanumeric characters and &#x60;_&#x60; (underscores) in the ID.
+															* Do not include XML sensitive characters (double quotes, single quotes, ampersands, angle brackets, and
+															slashes) in the ID.
+															* To add a new prompt, the ID must be unique for the specified custom model. Otherwise, the new information for
+														the prompt overwrites the existing prompt that has that ID.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.prompt.html" class="tsd-signature-type">Prompt</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="addword" class="tsd-anchor"></a>
 					<h3>add<wbr>Word</h3>
@@ -241,7 +423,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L856">text-to-speech/v1-generated.ts:856</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L861">text-to-speech/v1-generated.ts:861</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -360,7 +542,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L730">text-to-speech/v1-generated.ts:730</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L735">text-to-speech/v1-generated.ts:735</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -458,7 +640,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L445">text-to-speech/v1-generated.ts:445</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L449">text-to-speech/v1-generated.ts:449</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -562,6 +744,127 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createspeakermodel" class="tsd-anchor"></a>
+					<h3>create<wbr>Speaker<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Speaker<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.createspeakermodelparams.html" class="tsd-signature-type">CreateSpeakerModelParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.speakermodel.html" class="tsd-signature-type">SpeakerModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1394">text-to-speech/v1-generated.ts:1394</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a speaker model.</p>
+								</div>
+								<p>Creates a new speaker model, which is an optional enrollment token for users who are to add prompts to custom
+									models. A speaker model contains information about a user&#39;s voice. The service extracts this information from a WAV
+									audio sample that you pass as the body of the request. Associating a speaker model with a prompt is optional, but
+								the information that is extracted from the speaker model helps the service learn about the speaker&#39;s voice.</p>
+								<p>A speaker model can make an appreciable difference in the quality of prompts, especially short prompts with
+									relatively little audio, that are associated with that speaker. A speaker model can help the service produce a
+								prompt with more confidence; the lack of a speaker model can potentially compromise the quality of a prompt.</p>
+								<p>The gender of the speaker who creates a speaker model does not need to match the gender of a voice that is used
+									with prompts that are associated with that speaker model. For example, a speaker model that is created by a male
+								speaker can be associated with prompts that are spoken by female voices.</p>
+								<p>You create a speaker model for a given instance of the service. The new speaker model is owned by the service
+									instance whose credentials are used to create it. That same speaker can then be used to create prompts for all
+									custom models within that service instance. No language is associated with a speaker model, but each custom model
+								has a single specified language. You can add prompts only to US English models.</p>
+								<p>You specify a name for the speaker when you create it. The name must be unique among all speaker names for the
+									owning service instance. To re-create a speaker model for an existing speaker name, you must first delete the
+								existing speaker model that has that name.</p>
+								<p>Speaker enrollment is a synchronous operation. Although it accepts more audio data than a prompt, the process of
+									adding a speaker is very fast. The service simply extracts information about the speaker’s voice from the audio.
+									Unlike prompts, speaker models neither need nor accept a transcription of the audio. When the call returns, the
+								audio is fully processed and the speaker enrollment is complete.</p>
+								<p>The service returns a speaker ID with the request. A speaker ID is globally unique identifier (GUID) that you use
+								to identify the speaker in subsequent requests to the service.</p>
+								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
+								only for use with US English custom models and voices.</p>
+								<p><strong>See also:</strong></p>
+								<ul>
+									<li>[Create a speaker
+									model](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-create#tbe-create-speaker-model">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-create#tbe-create-speaker-model</a>)</li>
+									<li>[Rules for creating speaker
+									models](<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-rules#tbe-rules-speakers">https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-rules#tbe-rules-speakers</a>).</li>
+								</ul>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.createspeakermodelparams.html" class="tsd-signature-type">CreateSpeakerModelParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>audio</code></td>
+														<td><span class="tsd-signature-type">ReadableStream</span>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">Buffer</span>
+														</td>
+														<td></td>
+														<td>An enrollment audio file that contains a sample of the speaker’s voice.
+															* The enrollment audio must be in WAV format and must have a minimum sampling rate of 16 kHz. The service
+															accepts audio with higher sampling rates. It transcodes all audio to 16 kHz before processing it.
+															* The length of the enrollment audio is limited to 1 minute. Speaking one or two paragraphs of text that include
+														five to ten sentences is recommended.</td>
+													</tr>
+													<tr>
+														<td><code>speakerName</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The name of the speaker that is to be added to the service instance.
+															* Include a maximum of 49 characters in the name.
+															* Include only alphanumeric characters and &#x60;_&#x60; (underscores) in the name.
+															* Do not include XML sensitive characters (double quotes, single quotes, ampersands, angle brackets, and
+															slashes) in the name.
+														* Do not use the name of an existing speaker that is already defined for the service instance.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.speakermodel.html" class="tsd-signature-type">SpeakerModel</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="deletecustommodel" class="tsd-anchor"></a>
 					<h3>delete<wbr>Custom<wbr>Model</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -571,7 +874,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L658">text-to-speech/v1-generated.ts:658</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L663">text-to-speech/v1-generated.ts:663</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -638,6 +941,176 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deletecustomprompt" class="tsd-anchor"></a>
+					<h3>delete<wbr>Custom<wbr>Prompt</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Custom<wbr>Prompt<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletecustompromptparams.html" class="tsd-signature-type">DeleteCustomPromptParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1264">text-to-speech/v1-generated.ts:1264</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete a custom prompt.</p>
+								</div>
+								<p>Deletes an existing custom prompt from a custom model. The service deletes the prompt with the specified ID. You
+									must use credentials for the instance of the service that owns the custom model from which the prompt is to be
+								deleted.</p>
+								<p><strong>Caution:</strong> Deleting a custom prompt elicits a 400 response code from synthesis requests that attempt to use the
+								prompt. Make sure that you do not attempt to use a deleted prompt in a production application.</p>
+								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
+								voices.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-delete">Deleting a custom
+								prompt</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.deletecustompromptparams.html" class="tsd-signature-type">DeleteCustomPromptParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
+														of the service that owns the custom model.</td>
+													</tr>
+													<tr>
+														<td><code>promptId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The identifier (name) of the prompt that is to be deleted.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deletespeakermodel" class="tsd-anchor"></a>
+					<h3>delete<wbr>Speaker<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Speaker<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.deletespeakermodelparams.html" class="tsd-signature-type">DeleteSpeakerModelParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1503">text-to-speech/v1-generated.ts:1503</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Delete a speaker model.</p>
+								</div>
+								<p>Deletes an existing speaker model from the service instance. The service deletes the enrolled speaker with the
+									specified speaker ID. You must use credentials for the instance of the service that owns a speaker model to delete
+								the speaker.</p>
+								<p>Any prompts that are associated with the deleted speaker are not affected by the speaker&#39;s deletion. The prosodic
+									data that defines the quality of a prompt is established when the prompt is created. A prompt is static and remains
+									unaffected by deletion of its associated speaker. However, the prompt cannot be resubmitted or updated with its
+								original speaker once that speaker is deleted.</p>
+								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
+								only for use with US English custom models and voices.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-delete">Deleting a speaker
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.deletespeakermodelparams.html" class="tsd-signature-type">DeleteSpeakerModelParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>speakerId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The speaker ID (GUID) of the speaker model. You must make the request with service credentials for the
+														instance of the service that owns the speaker model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.empty.html" class="tsd-signature-type">Empty</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="deleteuserdata" class="tsd-anchor"></a>
 					<h3>delete<wbr>User<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -647,7 +1120,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L1015">text-to-speech/v1-generated.ts:1015</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1558">text-to-speech/v1-generated.ts:1558</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -728,7 +1201,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L959">text-to-speech/v1-generated.ts:959</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L964">text-to-speech/v1-generated.ts:964</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -833,7 +1306,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L612">text-to-speech/v1-generated.ts:612</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L617">text-to-speech/v1-generated.ts:617</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -841,8 +1314,9 @@
 									<p>Get a custom model.</p>
 								</div>
 								<p>Gets all information about a specified custom model. In addition to metadata such as the name and description of
-									the custom model, the output includes the words and their translations as defined in the model. To see just the
-								metadata for a model, use the <strong>List custom models</strong> method.</p>
+									the custom model, the output includes the words and their translations that are defined for the model, as well as
+									any prompts that are defined for the model. To see just the metadata for a model, use the <strong>List custom models</strong>
+								method.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery">Querying a custom
 								model</a>.</p>
 							</div>
@@ -901,6 +1375,91 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getcustomprompt" class="tsd-anchor"></a>
+					<h3>get<wbr>Custom<wbr>Prompt</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Custom<wbr>Prompt<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getcustompromptparams.html" class="tsd-signature-type">GetCustomPromptParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.prompt.html" class="tsd-signature-type">Prompt</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1209">text-to-speech/v1-generated.ts:1209</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a custom prompt.</p>
+								</div>
+								<p>Gets information about a specified custom prompt for a specified custom model. The information includes the prompt
+									ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
+								the instance of the service that owns the custom model.</p>
+								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
+								voices.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list">Listing custom
+								prompts</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.getcustompromptparams.html" class="tsd-signature-type">GetCustomPromptParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
+														of the service that owns the custom model.</td>
+													</tr>
+													<tr>
+														<td><code>promptId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The identifier (name) of the prompt.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.prompt.html" class="tsd-signature-type">Prompt</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getpronunciation" class="tsd-anchor"></a>
 					<h3>get<wbr>Pronunciation</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -910,7 +1469,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L368">text-to-speech/v1-generated.ts:368</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L372">text-to-speech/v1-generated.ts:372</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1027,6 +1586,86 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getspeakermodel" class="tsd-anchor"></a>
+					<h3>get<wbr>Speaker<wbr>Model</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Speaker<wbr>Model<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.getspeakermodelparams.html" class="tsd-signature-type">GetSpeakerModelParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.speakercustommodels.html" class="tsd-signature-type">SpeakerCustomModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1448">text-to-speech/v1-generated.ts:1448</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a speaker model.</p>
+								</div>
+								<p>Gets information about all prompts that are defined by a specified speaker for all custom models that are owned by
+									a service instance. The information is grouped by the customization IDs of the custom models. For each custom
+									model, the information lists information about each prompt that is defined for that custom model by the speaker.
+								You must use credentials for the instance of the service that owns a speaker model to list its prompts.</p>
+								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
+								only for use with US English custom models and voices.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-list-prompts">Listing the custom prompts for a speaker
+								model</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.getspeakermodelparams.html" class="tsd-signature-type">GetSpeakerModelParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>speakerId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The speaker ID (GUID) of the speaker model. You must make the request with service credentials for the
+														instance of the service that owns the speaker model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.speakercustommodels.html" class="tsd-signature-type">SpeakerCustomModels</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getvoice" class="tsd-anchor"></a>
 					<h3>get<wbr>Voice</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1036,7 +1675,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L153">text-to-speech/v1-generated.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L157">text-to-speech/v1-generated.ts:157</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1143,7 +1782,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L911">text-to-speech/v1-generated.ts:911</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L916">text-to-speech/v1-generated.ts:916</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1225,7 +1864,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L496">text-to-speech/v1-generated.ts:496</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L500">text-to-speech/v1-generated.ts:500</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1233,9 +1872,9 @@
 									<p>List custom models.</p>
 								</div>
 								<p>Lists metadata such as the name and description for all custom models that are owned by an instance of the service.
-									Specify a language to list the custom models for that language only. To see the words in addition to the metadata
-									for a specific custom model, use the <strong>List a custom model</strong> method. You must use credentials for the instance of
-								the service that owns a model to list information about it.</p>
+									Specify a language to list the custom models for that language only. To see the words and prompts in addition to
+									the metadata for a specific custom model, use the <strong>Get a custom model</strong> method. You must use credentials for the
+								instance of the service that owns a model to list information about it.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll">Querying all custom
 								models</a>.</p>
 							</div>
@@ -1297,6 +1936,159 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="listcustomprompts" class="tsd-anchor"></a>
+					<h3>list<wbr>Custom<wbr>Prompts</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Custom<wbr>Prompts<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.listcustompromptsparams.html" class="tsd-signature-type">ListCustomPromptsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.prompts.html" class="tsd-signature-type">Prompts</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1020">text-to-speech/v1-generated.ts:1020</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>List custom prompts.</p>
+								</div>
+								<p>Lists information about all custom prompts that are defined for a custom model. The information includes the prompt
+									ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
+									the instance of the service that owns the custom model. The same information about all of the prompts for a custom
+									model is also provided by the <strong>Get a custom model</strong> method. That method provides complete details about a
+								specified custom model, including its language, owner, custom words, and more.</p>
+								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
+								voices.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list">Listing custom
+								prompts</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.listcustompromptsparams.html" class="tsd-signature-type">ListCustomPromptsParams</a></td>
+										<td></td>
+										<td>
+											<p>The parameters to send to the service.</p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<tr>
+														<td><code>customizationId</code></td>
+														<td><span class="tsd-signature-type">string</span></td>
+														<td></td>
+														<td>The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
+														of the service that owns the custom model.</td>
+													</tr>
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.prompts.html" class="tsd-signature-type">Prompts</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="listspeakermodels" class="tsd-anchor"></a>
+					<h3>list<wbr>Speaker<wbr>Models</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">list<wbr>Speaker<wbr>Models<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">?: </span><a href="../interfaces/texttospeechv1.listspeakermodelsparams.html" class="tsd-signature-type">ListSpeakerModelsParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.speakers.html" class="tsd-signature-type">Speakers</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L1316">text-to-speech/v1-generated.ts:1316</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>List speaker models.</p>
+								</div>
+								<p>Lists information about all speaker models that are defined for a service instance. The information includes the
+									speaker ID and speaker name of each defined speaker. You must use credentials for the instance of a service to list
+								its speakers.</p>
+								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
+								only for use with US English custom models and voices.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-list">Listing speaker
+								models</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>params</code></td>
+										<td><a href="../interfaces/texttospeechv1.listspeakermodelsparams.html" class="tsd-signature-type">ListSpeakerModelsParams</a></td>
+										<td>Optional</td>
+										<td>
+											<p></p>
+											<p></p>
+											<h4>Properties</h4>
+											<table>
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Attributes</th>
+														<th>Description</th>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- Print out all required parameters-->
+													<!-- Print out all optional parameters-->
+													<tr>
+														<td><code>headers</code></td>
+														<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+														<td>Optional</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.speakers.html" class="tsd-signature-type">Speakers</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="listvoices" class="tsd-anchor"></a>
 					<h3>list<wbr>Voices</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1306,7 +2098,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L96">text-to-speech/v1-generated.ts:96</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L100">text-to-speech/v1-generated.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1376,7 +2168,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L783">text-to-speech/v1-generated.ts:783</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L788">text-to-speech/v1-generated.ts:788</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1545,7 +2337,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L281">text-to-speech/v1-generated.ts:281</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L285">text-to-speech/v1-generated.ts:285</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1717,7 +2509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/text-to-speech/v1-generated.ts#L557">text-to-speech/v1-generated.ts:557</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/text-to-speech/v1-generated.ts#L561">text-to-speech/v1-generated.ts:561</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1908,6 +2700,23 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="texttospeechv1.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
@@ -1918,6 +2727,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-static">
 								<a href="texttospeechv1.html#default_service_url" class="tsd-kind-icon">DEFAULT_<wbr>SERVICE_<wbr>URL</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#addcustomprompt" class="tsd-kind-icon">add<wbr>Custom<wbr>Prompt</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1933,7 +2746,19 @@
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#createspeakermodel" class="tsd-kind-icon">create<wbr>Speaker<wbr>Model</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="texttospeechv1.html#deletecustommodel" class="tsd-kind-icon">delete<wbr>Custom<wbr>Model</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#deletecustomprompt" class="tsd-kind-icon">delete<wbr>Custom<wbr>Prompt</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#deletespeakermodel" class="tsd-kind-icon">delete<wbr>Speaker<wbr>Model</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1953,7 +2778,15 @@
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#getcustomprompt" class="tsd-kind-icon">get<wbr>Custom<wbr>Prompt</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="texttospeechv1.html#getpronunciation" class="tsd-kind-icon">get<wbr>Pronunciation</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#getspeakermodel" class="tsd-kind-icon">get<wbr>Speaker<wbr>Model</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1966,6 +2799,14 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="texttospeechv1.html#listcustommodels" class="tsd-kind-icon">list<wbr>Custom<wbr>Models</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#listcustomprompts" class="tsd-kind-icon">list<wbr>Custom<wbr>Prompts</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="texttospeechv1.html#listspeakermodels" class="tsd-kind-icon">list<wbr>Speaker<wbr>Models</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">

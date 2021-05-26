@@ -92,6 +92,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageresponsestateless.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageresponsestateless.html#output" class="tsd-kind-icon">output</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messageresponsestateless.html#user_id" class="tsd-kind-icon">user_<wbr>id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -105,7 +106,7 @@
 					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <a href="assistantv2.messagecontextstateless.html" class="tsd-signature-type">MessageContextStateless</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1109">assistant/v2.ts:1109</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1202">assistant/v2.ts:1202</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -121,13 +122,33 @@
 					<div class="tsd-signature tsd-kind-icon">output<span class="tsd-signature-symbol">:</span> <a href="assistantv2.messageoutput.html" class="tsd-signature-type">MessageOutput</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1105">assistant/v2.ts:1105</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1198">assistant/v2.ts:1198</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Assistant output to be rendered or processed by the client.</p>
 						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="user_id" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> user_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">user_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1211">assistant/v2.ts:1211</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A string value that identifies the user who is interacting with the assistant. The client must provide a
+								unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+								is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+								tab characters. If no value is specified in the input, <strong>user_id</strong> is automatically set to the value of
+							<strong>context.global.session_id</strong>.</p>
+						</div>
+						<p> <strong>Note:</strong> This property is the same as the <strong>user_id</strong> property in the global system context.</p>
 					</div>
 				</section>
 			</section>
@@ -163,6 +184,10 @@
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.messageresponsestateless.html#output" class="tsd-kind-icon">output</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messageresponsestateless.html#user_id" class="tsd-kind-icon">user_<wbr>id</a>
 									</li>
 								</ul>
 							</li>

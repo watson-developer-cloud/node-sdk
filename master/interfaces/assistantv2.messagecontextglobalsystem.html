@@ -108,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">locale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L871">assistant/v2.ts:871</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L945">assistant/v2.ts:945</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -126,7 +126,7 @@
 					<div class="tsd-signature tsd-kind-icon">reference_<wbr>time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L882">assistant/v2.ts:882</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L956">assistant/v2.ts:956</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,7 +147,7 @@
 					<div class="tsd-signature tsd-kind-icon">timezone<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L853">assistant/v2.ts:853</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L923">assistant/v2.ts:923</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">turn_<wbr>count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L864">assistant/v2.ts:864</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L938">assistant/v2.ts:938</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -179,16 +179,19 @@
 					<div class="tsd-signature tsd-kind-icon">user_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L859">assistant/v2.ts:859</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L933">assistant/v2.ts:933</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>A string value that identifies the user who is interacting with the assistant. The client must provide a
-								unique identifier for each individual end user who accesses the application. For Plus and Premium plans, this
-								user ID is used to identify unique users for billing purposes. This string cannot contain carriage return,
-							newline, or tab characters.</p>
+								unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+								is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+								tab characters. If no value is specified in the input, <strong>user_id</strong> is automatically set to the value of
+							<strong>context.global.session_id</strong>.</p>
 						</div>
+						<p> <strong>Note:</strong> This property is the same as the <strong>user_id</strong> property at the root of the message body. If <strong>user_id</strong>
+						is specified in both locations in a message request, the value specified at the root is used.</p>
 					</div>
 				</section>
 			</section>

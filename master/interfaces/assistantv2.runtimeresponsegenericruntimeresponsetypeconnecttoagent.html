@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An object that describes a response with response type <code>connect_to_agent</code>.</p>
+						<p>RuntimeResponseGenericRuntimeResponseTypeConnectToAgent.</p>
 					</div>
 				</div>
 			</section>
@@ -97,6 +97,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#agent_available" class="tsd-kind-icon">agent_<wbr>available</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#agent_unavailable" class="tsd-kind-icon">agent_<wbr>unavailable</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#channels" class="tsd-kind-icon">channels</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#message_to_human_agent" class="tsd-kind-icon">message_<wbr>to_<wbr>human_<wbr>agent</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#response_type" class="tsd-kind-icon">response_<wbr>type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#topic" class="tsd-kind-icon">topic</a></li>
@@ -114,7 +115,7 @@
 					<div class="tsd-signature tsd-kind-icon">agent_<wbr>available<span class="tsd-signature-symbol">:</span> <a href="assistantv2.agentavailabilitymessage.html" class="tsd-signature-type">AgentAvailabilityMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1336">assistant/v2.ts:1336</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1496">assistant/v2.ts:1496</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -130,7 +131,7 @@
 					<div class="tsd-signature tsd-kind-icon">agent_<wbr>unavailable<span class="tsd-signature-symbol">:</span> <a href="assistantv2.agentavailabilitymessage.html" class="tsd-signature-type">AgentAvailabilityMessage</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1340">assistant/v2.ts:1340</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1500">assistant/v2.ts:1500</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -141,12 +142,28 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="channels" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> channels</h3>
+					<div class="tsd-signature tsd-kind-icon">channels<span class="tsd-signature-symbol">:</span> <a href="assistantv2.responsegenericchannel.html" class="tsd-signature-type">ResponseGenericChannel</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1510">assistant/v2.ts:1510</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of objects specifying channels for which the response is intended. If <strong>channels</strong> is present, the
+							response is intended for a built-in integration and should not be handled by an API client.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="message_to_human_agent" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> message_<wbr>to_<wbr>human_<wbr>agent</h3>
 					<div class="tsd-signature tsd-kind-icon">message_<wbr>to_<wbr>human_<wbr>agent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1332">assistant/v2.ts:1332</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1492">assistant/v2.ts:1492</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -161,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">response_<wbr>type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1330">assistant/v2.ts:1330</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1490">assistant/v2.ts:1490</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -177,7 +194,7 @@
 					<div class="tsd-signature tsd-kind-icon">topic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1346">assistant/v2.ts:1346</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1506">assistant/v2.ts:1506</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -193,7 +210,7 @@
 					<div class="tsd-signature tsd-kind-icon">transfer_<wbr>info<span class="tsd-signature-symbol">:</span> <a href="assistantv2.dialognodeoutputconnecttoagenttransferinfo.html" class="tsd-signature-type">DialogNodeOutputConnectToAgentTransferInfo</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1342">assistant/v2.ts:1342</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1502">assistant/v2.ts:1502</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -235,6 +252,10 @@
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#agent_unavailable" class="tsd-kind-icon">agent_<wbr>unavailable</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.runtimeresponsegenericruntimeresponsetypeconnecttoagent.html#channels" class="tsd-kind-icon">channels</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">

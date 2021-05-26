@@ -69,11 +69,15 @@
 					<div class="lead">
 						<p>The IBM Watson&trade; Speech to Text service provides APIs that use IBM&#39;s speech-recognition capabilities to produce
 							transcripts of spoken audio. The service can transcribe speech from various languages and audio formats. In addition
-							to basic transcription, the service can produce detailed information about many different aspects of the audio. For
-							most languages, the service supports two sampling rates, broadband and narrowband. It returns all JSON response
-							content in the UTF-8 character set.
+							to basic transcription, the service can produce detailed information about many different aspects of the audio. It
+							returns all JSON response content in the UTF-8 character set.
 						interfaces</p>
 					</div>
+					<p>The service supports two types of models: previous-generation models that include the terms <code>Broadband</code> and
+						<code>Narrowband</code> in their names, and beta next-generation models that include the terms <code>Multimedia</code> and <code>Telephony</code> in
+						their names. Broadband and multimedia models have minimum sampling rates of 16 kHz. Narrowband and telephony models
+						have minimum sampling rates of 8 kHz. The beta next-generation models currently support fewer languages and features,
+					but they offer high throughput and greater transcription accuracy.</p>
 					<p>For speech recognition, the service supports synchronous and asynchronous HTTP Representational State Transfer (REST)
 						interfaces. It also supports a WebSocket interface that provides a full-duplex, low-latency communication channel:
 					Clients send requests and audio to the service and receive results over a single connection asynchronously.</p>
@@ -82,8 +86,8 @@
 						characteristics of your audio. For language model customization, the service also supports grammars. A grammar is a
 					formal language specification that lets you restrict the phrases that the service can recognize.</p>
 					<p>Language model customization and acoustic model customization are generally available for production use with all
-						language models that are generally available. Grammars are beta functionality for all language models that support
-					language model customization.</p>
+						previous-generation models that are generally available. Grammars are beta functionality for all previous-generation
+					models that support language model customization. Next-generation models do not support customization at this time.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -203,7 +207,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L51">speech-to-text/v1-generated.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L56">speech-to-text/v1-generated.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -247,7 +251,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L51">speech-to-text/v1-generated.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L56">speech-to-text/v1-generated.ts:56</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -258,7 +262,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L50">speech-to-text/v1-generated.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L55">speech-to-text/v1-generated.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -275,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L3035">speech-to-text/v1-generated.ts:3035</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L3139">speech-to-text/v1-generated.ts:3139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -335,7 +339,7 @@
 									broadband models, at least 16 kHz; for narrowband models, at least 8 kHz. If the sampling rate of the audio is
 									higher than the minimum required rate, the service down-samples the audio to the appropriate rate. If the sampling
 								rate of the audio is lower than the minimum required rate, the service labels the audio file as <code>invalid</code>.</p>
-								<p> <strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats#audio-formats">Audio
+								<p> <strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats">Supported audio
 								formats</a>.</p>
 								<a href="#content-types-for-archive-type-resources" id="content-types-for-archive-type-resources" style="color: inherit; text-decoration: none;">
 									<h3>Content types for archive-type resources</h3>
@@ -482,7 +486,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1628">speech-to-text/v1-generated.ts:1628</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1732">speech-to-text/v1-generated.ts:1732</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -623,7 +627,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2274">speech-to-text/v1-generated.ts:2274</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2378">speech-to-text/v1-generated.ts:2378</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -774,7 +778,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2010">speech-to-text/v1-generated.ts:2010</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2114">speech-to-text/v1-generated.ts:2114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -916,7 +920,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1907">speech-to-text/v1-generated.ts:1907</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2011">speech-to-text/v1-generated.ts:2011</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1039,7 +1043,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1004">speech-to-text/v1-generated.ts:1004</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1105">speech-to-text/v1-generated.ts:1105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1120,7 +1124,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L963">speech-to-text/v1-generated.ts:963</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1064">speech-to-text/v1-generated.ts:1064</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1193,7 +1197,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2450">speech-to-text/v1-generated.ts:2450</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2554">speech-to-text/v1-generated.ts:2554</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1293,7 +1297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L884">speech-to-text/v1-generated.ts:884</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L984">speech-to-text/v1-generated.ts:984</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1378,8 +1382,34 @@
 									models, at least 16 kHz; for narrowband models, at least 8 kHz. If the sampling rate of the audio is higher than
 									the minimum required rate, the service down-samples the audio to the appropriate rate. If the sampling rate of the
 								audio is lower than the minimum required rate, the request fails.</p>
-								<p> <strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats#audio-formats">Audio
+								<p> <strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats">Supported audio
 								formats</a>.</p>
+								<a href="#next-generation-models" id="next-generation-models" style="color: inherit; text-decoration: none;">
+									<h3>Next-generation models</h3>
+								</a>
+								<p> <strong>Note:</strong> The next-generation language models are beta functionality. They support a limited number of languages
+								and features at this time. The supported languages, models, and features will increase with future releases.</p>
+								<p>The service supports next-generation <code>Multimedia</code> (16 kHz) and <code>Telephony</code> (8 kHz) models for many languages.
+									Next-generation models have higher throughput than the service&#39;s previous generation of <code>Broadband</code> and
+									<code>Narrowband</code> models. When you use next-generation models, the service can return transcriptions more quickly and
+								also provide noticeably better transcription accuracy.</p>
+								<p>You specify a next-generation model by using the <code>model</code> query parameter, as you do a previous-generation model.
+									Next-generation models support the same request headers as previous-generation models, but they support only the
+								following additional query parameters:</p>
+								<ul>
+									<li><code>background_audio_suppression</code></li>
+									<li><code>inactivity_timeout</code></li>
+									<li><code>profanity_filter</code></li>
+									<li><code>redaction</code></li>
+									<li><code>smart_formatting</code></li>
+									<li><code>speaker_labels</code></li>
+									<li><code>speech_detector_sensitivity</code></li>
+									<li><code>timestamps</code></li>
+								</ul>
+								<p>Many next-generation models also support the beta <code>low_latency</code> parameter, which is not available with
+								previous-generation models.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng">Next-generation languages and
+								models</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -1428,8 +1458,8 @@
 														<td>The customization ID (GUID) of a custom acoustic model that is to be used with the recognition request. The
 															base model of the specified custom acoustic model must match the model specified with the &#x60;model&#x60; parameter. You
 															must make the request with credentials for the instance of the service that owns the custom model. By default,
-															no custom acoustic model is used. See [Custom
-														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#custom-input).</td>
+															no custom acoustic model is used. See [Using a custom acoustic model for speech
+														recognition](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-acousticUse).</td>
 													</tr>
 													<tr>
 														<td><code>audioMetrics</code></td>
@@ -1452,8 +1482,9 @@
 														<td>The version of the specified base model that is to be used with the recognition request. Multiple versions
 															of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily
 															for use with custom models that have been upgraded for a new base model. The default value depends on whether
-															the parameter is used with or without a custom model. See [Base model
-														version](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#version).</td>
+															the parameter is used with or without a custom model. See [Making speech recognition requests with upgraded
+															custom
+														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-custom-upgrade-use#custom-upgrade-use-recognition).</td>
 													</tr>
 													<tr>
 														<td><code>callbackUrl</code></td>
@@ -1522,8 +1553,8 @@
 														<td>The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must
 															also use the &#x60;language_customization_id&#x60; parameter to specify the name of the custom language model for which
 															the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it
-															does not recognize other custom words from the model&#x27;s words resource. See
-														[Grammars](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#grammars-input).</td>
+															does not recognize other custom words from the model&#x27;s words resource. See [Using a grammar for speech
+														recognition](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-grammarUse).</td>
 													</tr>
 													<tr>
 														<td><code>headers</code></td>
@@ -1557,7 +1588,7 @@
 															if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. If you
 															specify a threshold, you must also specify one or more keywords. The service performs no keyword spotting if you
 															omit either parameter. See [Keyword
-														spotting](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#keyword_spotting).</td>
+														spotting](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-spotting#keyword-spotting).</td>
 													</tr>
 													<tr>
 														<td><code>languageCustomizationId</code></td>
@@ -1566,8 +1597,17 @@
 														<td>The customization ID (GUID) of a custom language model that is to be used with the recognition request. The
 															base model of the specified custom language model must match the model specified with the &#x60;model&#x60; parameter. You
 															must make the request with credentials for the instance of the service that owns the custom model. By default,
-															no custom language model is used. See [Custom
-														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#custom-input).</td>
+															no custom language model is used. See [Using a custom language model for speech
+														recognition](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-languageUse).</td>
+													</tr>
+													<tr>
+														<td><code>lowLatency</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>If &#x60;true&#x60; for next-generation &#x60;Multimedia&#x60; and &#x60;Telephony&#x60; models that support low latency, directs the
+															service to produce results even more quickly than it usually does. Next-generation models produce transcription
+															results faster than previous-generation models. The &#x60;low_latency&#x60; parameter causes the models to produce results
+														even more quickly, though the results might be less accurate when the parameter is used.</td>
 													</tr>
 													<tr>
 														<td><code>maxAlternatives</code></td>
@@ -1575,7 +1615,7 @@
 														<td>Optional</td>
 														<td>The maximum number of alternative transcripts that the service is to return. By default, the service returns
 															a single transcript. If you specify a value of &#x60;0&#x60;, the service uses the default value, &#x60;1&#x60;. See [Maximum
-														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#max_alternatives).</td>
+														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-metadata#max-alternatives).</td>
 													</tr>
 													<tr>
 														<td><code>model</code></td>
@@ -1586,7 +1626,8 @@
 														<td>Optional</td>
 														<td>The identifier of the model that is to be used for the recognition request. (**Note:** The model
 															&#x60;ar-AR_BroadbandModel&#x60; is deprecated; use &#x60;ar-MS_BroadbandModel&#x60; instead.) See [Languages and
-														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-models#models).</td>
+															models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-models) and [Next-generation languages
+														and models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-models-ng).</td>
 													</tr>
 													<tr>
 														<td><code>processingMetrics</code></td>
@@ -1610,8 +1651,8 @@
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the service filters profanity from all output except for keyword results by replacing
 															inappropriate words with a series of asterisks. Set the parameter to &#x60;false&#x60; to return results with no
-															censoring. Applies to US English transcription only. See [Profanity
-														filtering](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#profanity_filter).</td>
+															censoring. Applies to US English and Japanese transcription only. See [Profanity
+														filtering](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-formatting#profanity-filtering).</td>
 													</tr>
 													<tr>
 														<td><code>redaction</code></td>
@@ -1644,7 +1685,11 @@
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the response includes labels that identify which words were spoken by which participants in a
 															multi-person exchange. By default, the service returns no speaker labels. Setting &#x60;speaker_labels&#x60; to &#x60;true&#x60;
-														forces the &#x60;timestamps&#x60; parameter to be &#x60;true&#x60;, regardless of whether you specify &#x60;false&#x60; for the parameter.</td>
+															forces the &#x60;timestamps&#x60; parameter to be &#x60;true&#x60;, regardless of whether you specify &#x60;false&#x60; for the parameter.
+															* For previous-generation models, can be used for US English, Australian English, German, Japanese, Korean, and
+															Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
+															* For next-generation models, can be used for English (Australian, UK, and US), German, and Spanish
+														transcription only.</td>
 													</tr>
 													<tr>
 														<td><code>speechDetectorSensitivity</code></td>
@@ -1669,7 +1714,7 @@
 														<td><span class="tsd-signature-type">boolean</span></td>
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the service returns time alignment for each word. By default, no timestamps are returned. See
-														[Word timestamps](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#word_timestamps).</td>
+														[Word timestamps](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-metadata#word-timestamps).</td>
 													</tr>
 													<tr>
 														<td><code>userToken</code></td>
@@ -1687,7 +1732,7 @@
 															known as &quot;Confusion Networks&quot;). An alternative word is considered if its confidence is greater than or equal to
 															the threshold. Specify a probability between 0.0 and 1.0. By default, the service computes no alternative words.
 															See [Word
-														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#word_alternatives).</td>
+														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-spotting#word-alternatives).</td>
 													</tr>
 													<tr>
 														<td><code>wordConfidence</code></td>
@@ -1695,7 +1740,7 @@
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the service returns a confidence measure in the range of 0.0 to 1.0 for each word. By default,
 															the service returns no word confidence scores. See [Word
-														confidence](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#word_confidence).</td>
+														confidence](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-metadata#word-confidence).</td>
 													</tr>
 												</tbody>
 											</table>
@@ -1717,7 +1762,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1129">speech-to-text/v1-generated.ts:1129</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1230">speech-to-text/v1-generated.ts:1230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1823,7 +1868,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2594">speech-to-text/v1-generated.ts:2594</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2698">speech-to-text/v1-generated.ts:2698</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1900,7 +1945,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L3160">speech-to-text/v1-generated.ts:3160</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L3264">speech-to-text/v1-generated.ts:3264</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1986,7 +2031,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1744">speech-to-text/v1-generated.ts:1744</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1848">speech-to-text/v1-generated.ts:1848</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2071,7 +2116,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2384">speech-to-text/v1-generated.ts:2384</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2488">speech-to-text/v1-generated.ts:2488</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2156,7 +2201,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1050">speech-to-text/v1-generated.ts:1050</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1151">speech-to-text/v1-generated.ts:1151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2232,7 +2277,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1274">speech-to-text/v1-generated.ts:1274</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1375">speech-to-text/v1-generated.ts:1375</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2309,7 +2354,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L3218">speech-to-text/v1-generated.ts:3218</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L3322">speech-to-text/v1-generated.ts:3322</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2391,7 +2436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2123">speech-to-text/v1-generated.ts:2123</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2227">speech-to-text/v1-generated.ts:2227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2478,7 +2523,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2546">speech-to-text/v1-generated.ts:2546</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2650">speech-to-text/v1-generated.ts:2650</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2554,7 +2599,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L3106">speech-to-text/v1-generated.ts:3106</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L3210">speech-to-text/v1-generated.ts:3210</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2674,7 +2719,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1692">speech-to-text/v1-generated.ts:1692</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1796">speech-to-text/v1-generated.ts:1796</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2757,7 +2802,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2332">speech-to-text/v1-generated.ts:2332</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2436">speech-to-text/v1-generated.ts:2436</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2840,7 +2885,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1226">speech-to-text/v1-generated.ts:1226</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1327">speech-to-text/v1-generated.ts:1327</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2916,7 +2961,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L132">speech-to-text/v1-generated.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L137">speech-to-text/v1-generated.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2925,7 +2970,7 @@
 								</div>
 								<p>Gets information for a single specified language model that is available for use with the service. The information
 								includes the name of the model and its minimum sampling rate in Hertz, among other things.</p>
-								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models">Languages and models</a>.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-list">Listing models</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -2994,7 +3039,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2069">speech-to-text/v1-generated.ts:2069</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2173">speech-to-text/v1-generated.ts:2173</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3078,7 +3123,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2505">speech-to-text/v1-generated.ts:2505</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2609">speech-to-text/v1-generated.ts:2609</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3160,7 +3205,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2876">speech-to-text/v1-generated.ts:2876</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2980">speech-to-text/v1-generated.ts:2980</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3239,7 +3284,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1524">speech-to-text/v1-generated.ts:1524</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1628">speech-to-text/v1-generated.ts:1628</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3316,7 +3361,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2176">speech-to-text/v1-generated.ts:2176</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2280">speech-to-text/v1-generated.ts:2280</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3393,7 +3438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1185">speech-to-text/v1-generated.ts:1185</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1286">speech-to-text/v1-generated.ts:1286</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3475,7 +3520,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L98">speech-to-text/v1-generated.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L103">speech-to-text/v1-generated.ts:103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3485,7 +3530,7 @@
 								<p>Lists all language models that are available for use with the service. The information includes the name of the
 									model and its minimum sampling rate in Hertz, among other things. The ordering of the list of models can change
 								from call to call; do not rely on an alphabetized or static list of models.</p>
-								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models#models">Languages and models</a>.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-list">Listing models</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -3544,7 +3589,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1810">speech-to-text/v1-generated.ts:1810</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1914">speech-to-text/v1-generated.ts:1914</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3650,7 +3695,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L409">speech-to-text/v1-generated.ts:409</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L461">speech-to-text/v1-generated.ts:461</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3712,8 +3757,34 @@
 									models, at least 16 kHz; for narrowband models, at least 8 kHz. If the sampling rate of the audio is higher than
 									the minimum required rate, the service down-samples the audio to the appropriate rate. If the sampling rate of the
 								audio is lower than the minimum required rate, the request fails.</p>
-								<p> <strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats#audio-formats">Audio
+								<p> <strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats">Supported audio
 								formats</a>.</p>
+								<a href="#next-generation-models" id="next-generation-models" style="color: inherit; text-decoration: none;">
+									<h3>Next-generation models</h3>
+								</a>
+								<p> <strong>Note:</strong> The next-generation language models are beta functionality. They support a limited number of languages
+								and features at this time. The supported languages, models, and features will increase with future releases.</p>
+								<p>The service supports next-generation <code>Multimedia</code> (16 kHz) and <code>Telephony</code> (8 kHz) models for many languages.
+									Next-generation models have higher throughput than the service&#39;s previous generation of <code>Broadband</code> and
+									<code>Narrowband</code> models. When you use next-generation models, the service can return transcriptions more quickly and
+								also provide noticeably better transcription accuracy.</p>
+								<p>You specify a next-generation model by using the <code>model</code> query parameter, as you do a previous-generation model.
+									Next-generation models support the same request headers as previous-generation models, but they support only the
+								following additional query parameters:</p>
+								<ul>
+									<li><code>background_audio_suppression</code></li>
+									<li><code>inactivity_timeout</code></li>
+									<li><code>profanity_filter</code></li>
+									<li><code>redaction</code></li>
+									<li><code>smart_formatting</code></li>
+									<li><code>speaker_labels</code></li>
+									<li><code>speech_detector_sensitivity</code></li>
+									<li><code>timestamps</code></li>
+								</ul>
+								<p>Many next-generation models also support the beta <code>low_latency</code> parameter, which is not available with
+								previous-generation models.</p>
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng">Next-generation languages and
+								models</a>.</p>
 								<a href="#multipart-speech-recognition" id="multipart-speech-recognition" style="color: inherit; text-decoration: none;">
 									<h3>Multipart speech recognition</h3>
 								</a>
@@ -3775,8 +3846,8 @@
 														<td>The customization ID (GUID) of a custom acoustic model that is to be used with the recognition request. The
 															base model of the specified custom acoustic model must match the model specified with the &#x60;model&#x60; parameter. You
 															must make the request with credentials for the instance of the service that owns the custom model. By default,
-															no custom acoustic model is used. See [Custom
-														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#custom-input).</td>
+															no custom acoustic model is used. See [Using a custom acoustic model for speech
+														recognition](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-acousticUse).</td>
 													</tr>
 													<tr>
 														<td><code>audioMetrics</code></td>
@@ -3799,8 +3870,9 @@
 														<td>The version of the specified base model that is to be used with the recognition request. Multiple versions
 															of a base model can exist when a model is updated for internal improvements. The parameter is intended primarily
 															for use with custom models that have been upgraded for a new base model. The default value depends on whether
-															the parameter is used with or without a custom model. See [Base model
-														version](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#version).</td>
+															the parameter is used with or without a custom model. See [Making speech recognition requests with upgraded
+															custom
+														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-custom-upgrade-use#custom-upgrade-use-recognition).</td>
 													</tr>
 													<tr>
 														<td><code>contentType</code></td>
@@ -3844,8 +3916,8 @@
 														<td>The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must
 															also use the &#x60;language_customization_id&#x60; parameter to specify the name of the custom language model for which
 															the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it
-															does not recognize other custom words from the model&#x27;s words resource. See
-														[Grammars](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#grammars-input).</td>
+															does not recognize other custom words from the model&#x27;s words resource. See [Using a grammar for speech
+														recognition](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-grammarUse).</td>
 													</tr>
 													<tr>
 														<td><code>headers</code></td>
@@ -3879,7 +3951,7 @@
 															if its confidence is greater than or equal to the threshold. Specify a probability between 0.0 and 1.0. If you
 															specify a threshold, you must also specify one or more keywords. The service performs no keyword spotting if you
 															omit either parameter. See [Keyword
-														spotting](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#keyword_spotting).</td>
+														spotting](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-spotting#keyword-spotting).</td>
 													</tr>
 													<tr>
 														<td><code>languageCustomizationId</code></td>
@@ -3888,8 +3960,17 @@
 														<td>The customization ID (GUID) of a custom language model that is to be used with the recognition request. The
 															base model of the specified custom language model must match the model specified with the &#x60;model&#x60; parameter. You
 															must make the request with credentials for the instance of the service that owns the custom model. By default,
-															no custom language model is used. See [Custom
-														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-input#custom-input).</td>
+															no custom language model is used. See [Using a custom language model for speech
+														recognition](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-languageUse).</td>
+													</tr>
+													<tr>
+														<td><code>lowLatency</code></td>
+														<td><span class="tsd-signature-type">boolean</span></td>
+														<td>Optional</td>
+														<td>If &#x60;true&#x60; for next-generation &#x60;Multimedia&#x60; and &#x60;Telephony&#x60; models that support low latency, directs the
+															service to produce results even more quickly than it usually does. Next-generation models produce transcription
+															results faster than previous-generation models. The &#x60;low_latency&#x60; parameter causes the models to produce results
+														even more quickly, though the results might be less accurate when the parameter is used.</td>
 													</tr>
 													<tr>
 														<td><code>maxAlternatives</code></td>
@@ -3897,7 +3978,7 @@
 														<td>Optional</td>
 														<td>The maximum number of alternative transcripts that the service is to return. By default, the service returns
 															a single transcript. If you specify a value of &#x60;0&#x60;, the service uses the default value, &#x60;1&#x60;. See [Maximum
-														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#max_alternatives).</td>
+														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-metadata#max-alternatives).</td>
 													</tr>
 													<tr>
 														<td><code>model</code></td>
@@ -3908,7 +3989,8 @@
 														<td>Optional</td>
 														<td>The identifier of the model that is to be used for the recognition request. (**Note:** The model
 															&#x60;ar-AR_BroadbandModel&#x60; is deprecated; use &#x60;ar-MS_BroadbandModel&#x60; instead.) See [Languages and
-														models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-models#models).</td>
+															models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-models) and [Next-generation languages
+														and models](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-models-ng).</td>
 													</tr>
 													<tr>
 														<td><code>profanityFilter</code></td>
@@ -3916,8 +3998,8 @@
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the service filters profanity from all output except for keyword results by replacing
 															inappropriate words with a series of asterisks. Set the parameter to &#x60;false&#x60; to return results with no
-															censoring. Applies to US English transcription only. See [Profanity
-														filtering](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#profanity_filter).</td>
+															censoring. Applies to US English and Japanese transcription only. See [Profanity
+														filtering](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-formatting#profanity-filtering).</td>
 													</tr>
 													<tr>
 														<td><code>redaction</code></td>
@@ -3942,7 +4024,11 @@
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the response includes labels that identify which words were spoken by which participants in a
 															multi-person exchange. By default, the service returns no speaker labels. Setting &#x60;speaker_labels&#x60; to &#x60;true&#x60;
-														forces the &#x60;timestamps&#x60; parameter to be &#x60;true&#x60;, regardless of whether you specify &#x60;false&#x60; for the parameter.</td>
+															forces the &#x60;timestamps&#x60; parameter to be &#x60;true&#x60;, regardless of whether you specify &#x60;false&#x60; for the parameter.
+															* For previous-generation models, can be used for US English, Australian English, German, Japanese, Korean, and
+															Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
+															* For next-generation models, can be used for English (Australian, UK, and US), German, and Spanish
+														transcription only.</td>
 													</tr>
 													<tr>
 														<td><code>speechDetectorSensitivity</code></td>
@@ -3967,7 +4053,7 @@
 														<td><span class="tsd-signature-type">boolean</span></td>
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the service returns time alignment for each word. By default, no timestamps are returned. See
-														[Word timestamps](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#word_timestamps).</td>
+														[Word timestamps](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-metadata#word-timestamps).</td>
 													</tr>
 													<tr>
 														<td><code>wordAlternativesThreshold</code></td>
@@ -3977,7 +4063,7 @@
 															known as &quot;Confusion Networks&quot;). An alternative word is considered if its confidence is greater than or equal to
 															the threshold. Specify a probability between 0.0 and 1.0. By default, the service computes no alternative words.
 															See [Word
-														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#word_alternatives).</td>
+														alternatives](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-spotting#word-alternatives).</td>
 													</tr>
 													<tr>
 														<td><code>wordConfidence</code></td>
@@ -3985,7 +4071,7 @@
 														<td>Optional</td>
 														<td>If &#x60;true&#x60;, the service returns a confidence measure in the range of 0.0 to 1.0 for each word. By default,
 															the service returns no word confidence scores. See [Word
-														confidence](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-output#word_confidence).</td>
+														confidence](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-metadata#word-confidence).</td>
 													</tr>
 												</tbody>
 											</table>
@@ -4007,7 +4093,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L512">speech-to-text/v1-generated.ts:512</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L565">speech-to-text/v1-generated.ts:565</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4111,7 +4197,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2744">speech-to-text/v1-generated.ts:2744</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2848">speech-to-text/v1-generated.ts:2848</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4191,7 +4277,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1416">speech-to-text/v1-generated.ts:1416</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1520">speech-to-text/v1-generated.ts:1520</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4361,7 +4447,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2688">speech-to-text/v1-generated.ts:2688</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2792">speech-to-text/v1-generated.ts:2792</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4490,7 +4576,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1361">speech-to-text/v1-generated.ts:1361</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1465">speech-to-text/v1-generated.ts:1465</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4611,7 +4697,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L558">speech-to-text/v1-generated.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L611">speech-to-text/v1-generated.ts:611</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4686,7 +4772,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L2816">speech-to-text/v1-generated.ts:2816</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L2920">speech-to-text/v1-generated.ts:2920</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4709,7 +4795,7 @@
 									<code>custom_language_model_id</code> parameter to specify the GUID of that custom language model. The custom language model
 									must be upgraded before the custom acoustic model can be upgraded. Omit the parameter if the custom acoustic model
 								was not trained with a custom language model.</p>
-								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customUpgrade#upgradeAcoustic">Upgrading a custom acoustic
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-acoustic">Upgrading a custom acoustic
 								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -4767,7 +4853,7 @@
 															was last trained. Use this parameter only to force the upgrade of a custom acoustic model that is trained with a
 															custom language model, and only if you receive a 400 response code and the message &#x60;No input data modified since
 															last training&#x60;. See [Upgrading a custom acoustic
-														model](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-customUpgrade#upgradeAcoustic).</td>
+														model](https://cloud.ibm.com/docs/speech-to-text?topic&#x3D;speech-to-text-custom-upgrade#custom-upgrade-acoustic).</td>
 													</tr>
 													<tr>
 														<td><code>headers</code></td>
@@ -4795,7 +4881,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/speech-to-text/v1-generated.ts#L1472">speech-to-text/v1-generated.ts:1472</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/speech-to-text/v1-generated.ts#L1576">speech-to-text/v1-generated.ts:1576</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4812,7 +4898,7 @@
 									status every 10 seconds. While it is being upgraded, the custom model has the status <code>upgrading</code>. When the upgrade
 									is complete, the model resumes the status that it had prior to upgrade. The service cannot accept subsequent
 								requests for the model until the upgrade completes.</p>
-								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customUpgrade#upgradeLanguage">Upgrading a custom language
+								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-language">Upgrading a custom language
 								model</a>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>

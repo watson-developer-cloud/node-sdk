@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An object that describes a response with response type <code>suggestion</code>.</p>
+						<p>RuntimeResponseGenericRuntimeResponseTypeSuggestion.</p>
 					</div>
 				</div>
 			</section>
@@ -95,6 +95,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypesuggestion.html#channels" class="tsd-kind-icon">channels</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypesuggestion.html#response_type" class="tsd-kind-icon">response_<wbr>type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypesuggestion.html#suggestions" class="tsd-kind-icon">suggestions</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.runtimeresponsegenericruntimeresponsetypesuggestion.html#title" class="tsd-kind-icon">title</a></li>
@@ -106,12 +107,28 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="channels" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> channels</h3>
+					<div class="tsd-signature tsd-kind-icon">channels<span class="tsd-signature-symbol">:</span> <a href="assistantv2.responsegenericchannel.html" class="tsd-signature-type">ResponseGenericChannel</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1600">assistant/v2.ts:1600</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An array of objects specifying channels for which the response is intended. If <strong>channels</strong> is present, the
+							response is intended for a built-in integration and should not be handled by an API client.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="response_type" class="tsd-anchor"></a>
 					<h3>response_<wbr>type</h3>
 					<div class="tsd-signature tsd-kind-icon">response_<wbr>type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1412">assistant/v2.ts:1412</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1592">assistant/v2.ts:1592</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -127,7 +144,7 @@
 					<div class="tsd-signature tsd-kind-icon">suggestions<span class="tsd-signature-symbol">:</span> <a href="assistantv2.dialogsuggestion.html" class="tsd-signature-type">DialogSuggestion</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1416">assistant/v2.ts:1416</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1596">assistant/v2.ts:1596</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,7 +159,7 @@
 					<div class="tsd-signature tsd-kind-icon">title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/bdd0baa/assistant/v2.ts#L1414">assistant/v2.ts:1414</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/82a82a3/assistant/v2.ts#L1594">assistant/v2.ts:1594</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -177,6 +194,10 @@
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
 								<a href="assistantv2.runtimeresponsegenericruntimeresponsetypesuggestion.html" class="tsd-kind-icon">Runtime<wbr>Response<wbr>Generic<wbr>Runtime<wbr>Response<wbr>Type<wbr>Suggestion</a>
 								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.runtimeresponsegenericruntimeresponsetypesuggestion.html#channels" class="tsd-kind-icon">channels</a>
+									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.runtimeresponsegenericruntimeresponsetypesuggestion.html#response_type" class="tsd-kind-icon">response_<wbr>type</a>
