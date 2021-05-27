@@ -40,6 +40,7 @@ jobs:
         npm install -g @semantic-release/github
         npm install -g @semantic-release/commit-analyzer
         npm install -g @semantic-release/release-notes-generator
+        npm install
     - name: Publish to Git Releases and Tags
       if: ${{ github.event.workflow_run.conclusion == 'success' }}
       env:
