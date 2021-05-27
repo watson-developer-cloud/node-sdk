@@ -1,3 +1,21 @@
+# [6.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.4...v6.1.0) (2021-05-27)
+
+
+### Bug Fixes
+
+* **nlu:** remove ListCategoriesModelsResponse ([82a82a3](https://github.com/watson-developer-cloud/node-sdk/commit/82a82a3edd3ce3ba045f6320aeb1d53da9d3ca68))
+* **wss,assistantv1:** address review changes ([ab0c8a2](https://github.com/watson-developer-cloud/node-sdk/commit/ab0c8a294450358a9222df3b361206c4b65bb72d))
+
+
+### Features
+
+* **assistantv1:** generation release changes ([8b10b2d](https://github.com/watson-developer-cloud/node-sdk/commit/8b10b2d6b1df0dcd20001f8898ef511b8d2b14f5))
+* **assistantv2:** generation release changes ([403145e](https://github.com/watson-developer-cloud/node-sdk/commit/403145e3db666db5189ef7111dc25a062c53e9b2))
+* **discov2:** generation release changes ([8e70b7f](https://github.com/watson-developer-cloud/node-sdk/commit/8e70b7faaa9d3fcd35e3c34aa9d5b04e80a2c81a))
+* **nlu:** generation release changes ([4d74c0a](https://github.com/watson-developer-cloud/node-sdk/commit/4d74c0a6fccbf50685733c9a3002cea819f26c98))
+* **stt:** update websocket parameters ([8f257e7](https://github.com/watson-developer-cloud/node-sdk/commit/8f257e7ffca1e13d895c6ae76f235306b30bd57d))
+* **stt-tts:** generation release changes ([1bc946b](https://github.com/watson-developer-cloud/node-sdk/commit/1bc946b6e53cf75c03d8c51f0fba613615dae3bb))
+
 ## [6.0.4](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.3...v6.0.4) (2021-04-05)
 
 
