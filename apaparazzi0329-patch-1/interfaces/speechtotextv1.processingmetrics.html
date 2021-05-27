@@ -1,0 +1,336 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ProcessingMetrics | ibm-watson</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">ibm-watson</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../classes/speechtotextv1.html">SpeechToTextV1</a>
+				</li>
+				<li>
+					<a href="speechtotextv1.processingmetrics.html">ProcessingMetrics</a>
+				</li>
+			</ul>
+			<h1>Interface ProcessingMetrics</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-9 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>If processing metrics are requested, information about the service&#39;s processing of the input audio. Processing metrics are not available with the synchronous <strong>Recognize audio</strong> method.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">ProcessingMetrics</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<!-- Unless the section is part of the exclusion list, render them -->
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.processingmetrics.html#periodic" class="tsd-kind-icon">periodic</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.processingmetrics.html#processed_audio" class="tsd-kind-icon">processed_<wbr>audio</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.processingmetrics.html#wall_clock_since_first_byte_received" class="tsd-kind-icon">wall_<wbr>clock_<wbr>since_<wbr>first_<wbr>byte_<wbr>received</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="periodic" class="tsd-anchor"></a>
+					<h3>periodic</h3>
+					<div class="tsd-signature tsd-kind-icon">periodic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2de8c4f/speech-to-text/v1-generated.ts#L5408">speech-to-text/v1-generated.ts:5408</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An indication of whether the metrics apply to a periodic interval or a transcription event:</p>
+							<ul>
+								<li><code>true</code> means that the response was triggered by a specified processing interval. The information contains
+								processing metrics only.</li>
+								<li><code>false</code> means that the response was triggered by a transcription event. The information contains processing
+								metrics plus transcription results.</li>
+							</ul>
+						</div>
+						<p> Use the field to identify why the service generated the response and to filter different results if necessary.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="processed_audio" class="tsd-anchor"></a>
+					<h3>processed_<wbr>audio</h3>
+					<div class="tsd-signature tsd-kind-icon">processed_<wbr>audio<span class="tsd-signature-symbol">:</span> <a href="speechtotextv1.processedaudio.html" class="tsd-signature-type">ProcessedAudio</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2de8c4f/speech-to-text/v1-generated.ts#L5391">speech-to-text/v1-generated.ts:5391</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Detailed timing information about the service&#39;s processing of the input audio.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="wall_clock_since_first_byte_received" class="tsd-anchor"></a>
+					<h3>wall_<wbr>clock_<wbr>since_<wbr>first_<wbr>byte_<wbr>received</h3>
+					<div class="tsd-signature tsd-kind-icon">wall_<wbr>clock_<wbr>since_<wbr>first_<wbr>byte_<wbr>received<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/2de8c4f/speech-to-text/v1-generated.ts#L5399">speech-to-text/v1-generated.ts:5399</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The amount of real time in seconds that has passed since the service received the first byte of input audio.
+							Values in this field are generally multiples of the specified metrics interval, with two differences:</p>
+							<ul>
+								<li>Values might not reflect exact intervals (for instance, 0.25, 0.5, and so on). Actual values might be 0.27,</li>
+							</ul>
+							<p> 0.52, and so on, depending on when the service receives and processes audio.</p>
+							<ul>
+								<li>The service also returns values for transcription events if you set the <code>interim_results</code> parameter to <code>true</code>.
+								The service returns both processing metrics and transcription results when such events occur.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-3 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class="current tsd-kind-class">
+						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
+						<ul>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="speechtotextv1.processingmetrics.html" class="tsd-kind-icon">Processing<wbr>Metrics</a>
+								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.processingmetrics.html#periodic" class="tsd-kind-icon">periodic</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.processingmetrics.html#processed_audio" class="tsd-kind-icon">processed_<wbr>audio</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.processingmetrics.html#wall_clock_since_first_byte_received" class="tsd-kind-icon">wall_<wbr>clock_<wbr>since_<wbr>first_<wbr>byte_<wbr>received</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#url" class="tsd-kind-icon">url</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
