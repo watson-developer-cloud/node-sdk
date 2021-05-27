@@ -1720,11 +1720,6 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Analysis features and options. */
   export interface Features {
-    /** Returns a five-level taxonomy of the content. The top three categories are returned.
-     *
-     *  Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
-     */
-    categories?: CategoriesOptions;
     /** Returns text classifications for the content.
      *
      *  Supported languages: English only.
@@ -1784,6 +1779,11 @@ namespace NaturalLanguageUnderstandingV1 {
      *  Supported languages: English only.
      */
     summarization?: SummarizationOptions;
+    /** Returns a five-level taxonomy of the content. The top three categories are returned.
+     *
+     *  Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
+     */
+    categories?: CategoriesOptions;
     /** Returns tokens and sentences from the input text. */
     syntax?: SyntaxOptions;
   }
