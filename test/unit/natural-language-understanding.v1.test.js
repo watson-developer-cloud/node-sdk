@@ -148,13 +148,6 @@ describe('NaturalLanguageUnderstandingV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // CategoriesOptions
-      const categoriesOptionsModel = {
-        explanation: true,
-        limit: 10,
-        model: 'testString',
-      };
-
       // ClassificationsOptions
       const classificationsOptionsModel = {
         model: 'testString',
@@ -211,6 +204,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
         limit: 10,
       };
 
+      // CategoriesOptions
+      const categoriesOptionsModel = {
+        explanation: true,
+        limit: 10,
+        model: 'testString',
+      };
+
       // SyntaxOptionsTokens
       const syntaxOptionsTokensModel = {
         lemma: true,
@@ -225,7 +225,6 @@ describe('NaturalLanguageUnderstandingV1', () => {
 
       // Features
       const featuresModel = {
-        categories: categoriesOptionsModel,
         classifications: classificationsOptionsModel,
         concepts: conceptsOptionsModel,
         emotion: emotionOptionsModel,
@@ -236,6 +235,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         semantic_roles: semanticRolesOptionsModel,
         sentiment: sentimentOptionsModel,
         summarization: summarizationOptionsModel,
+        categories: categoriesOptionsModel,
         syntax: syntaxOptionsModel,
       };
 
