@@ -1139,13 +1139,12 @@ class TextToSpeechV1 extends BaseService {
    * * The prompt audio must be in WAV format and must have a minimum sampling rate of 16 kHz. The service accepts audio
    * with higher sampling rates. The service transcodes all audio to 16 kHz before processing it.
    * * The length of the prompt audio is limited to 30 seconds.
-   * @param {string} params.filename - The filename for file.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>>}
    */
   public addCustomPrompt(params: TextToSpeechV1.AddCustomPromptParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['customizationId', 'promptId', 'metadata', 'file', 'filename'];
+    const requiredParams = ['customizationId', 'promptId', 'metadata', 'file'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -1156,7 +1155,6 @@ class TextToSpeechV1 extends BaseService {
       'metadata': _params.metadata,
       'file': {
         data: _params.file,
-        filename: _params.filename,
         contentType: 'audio/wav'
       }
     };
@@ -2109,8 +2107,6 @@ namespace TextToSpeechV1 {
      *  * The length of the prompt audio is limited to 30 seconds.
      */
     file: NodeJS.ReadableStream|Buffer;
-    /** The filename for file. */
-    filename: string;
     headers?: OutgoingHttpHeaders;
   }
 

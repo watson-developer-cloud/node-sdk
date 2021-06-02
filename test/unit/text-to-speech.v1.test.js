@@ -1187,13 +1187,11 @@ describe('TextToSpeechV1', () => {
         const promptId = 'testString';
         const metadata = promptMetadataModel;
         const file = Buffer.from('This is a mock file.');
-        const filename = 'testString';
         const params = {
           customizationId: customizationId,
           promptId: promptId,
           metadata: metadata,
           file: file,
-          filename: filename,
         };
 
         const addCustomPromptResult = textToSpeechService.addCustomPrompt(params);
@@ -1216,7 +1214,6 @@ describe('TextToSpeechV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.formData['metadata']).toEqual(metadata);
         expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].filename).toEqual(filename);
         expect(options.formData['file'].contentType).toEqual('audio/wav');
         expect(options.path['customization_id']).toEqual(customizationId);
         expect(options.path['prompt_id']).toEqual(promptId);
@@ -1228,7 +1225,6 @@ describe('TextToSpeechV1', () => {
         const promptId = 'testString';
         const metadata = promptMetadataModel;
         const file = Buffer.from('This is a mock file.');
-        const filename = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1236,7 +1232,6 @@ describe('TextToSpeechV1', () => {
           promptId,
           metadata,
           file,
-          filename,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
