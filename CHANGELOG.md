@@ -1,3 +1,10 @@
+## [6.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v6.1.0...v6.1.1) (2021-06-02)
+
+
+### Bug Fixes
+
+* **tts:** remove unnecessary filename param ([d30bb25](https://github.com/watson-developer-cloud/node-sdk/commit/d30bb259a4de3cc6e4f20f6bc7b1e328c60aa0b0))
+
 # [6.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v6.0.4...v6.1.0) (2021-05-27)
 
 
