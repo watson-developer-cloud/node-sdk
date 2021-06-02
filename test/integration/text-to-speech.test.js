@@ -109,7 +109,6 @@ describe('text to speech_integration', () => {
             prompt_text: 'Hello, how are you today?',
           },
           file: fs.createReadStream(path.join(__dirname, '../resources/tts_audio.wav')),
-          filename: 'tts_audio.wav',
         };
 
         const res = await textToSpeech.addCustomPrompt(params);
