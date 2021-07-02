@@ -1366,6 +1366,12 @@ namespace AssistantV2 {
 
   /** RuntimeResponseGeneric. */
   export interface RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+     response_type: string;
+     /** The text of the response. */
+     text: string;
   }
 
   /** SearchResult. */
