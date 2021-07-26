@@ -13,46 +13,6 @@
 
 Node.js client library to use the Watson APIs.
 
-<details>
-  <summary>Table of Contents</summary>
-
-  * [Before you begin](#before-you-begin)
-  * [Installation](#installation)
-  * [Usage](#usage)
-  * [Client-side usage](#client-side-usage)
-  * [Authentication](#authentication)
-  * [Setting the Service URL](#setting-the-service-url)
-  * [Promises](#promises)
-  * [Sending request headers](#sending-request-headers)
-  * [Parsing HTTP response](#parsing-http-response)
-  * [Data collection opt-out](#data-collection-opt-out)
-  * [Configuring the HTTPS Agent](#configuring-the-https-agent)
-  * [Usw behind a corporate proxy](#use-behind-a-corporate-proxy)
-  * [Sending custom certificates](#sending-custom-certificates)
-  * [Documentation](#documentation)
-  * [Questions](#questions)
-  * [IBM Watson services](#ibm-watson-services)
-    * [Authorization](#authorization)
-    * [Assistant v2](#assistant-v2)
-    * [Assistant v1](#assistant-v1)
-    * [Discovery](#discovery)
-    * [Language Translator](#language-translator)
-    * [Natural Language Classifier](#natural-language-classifier)
-    * [Natural Language Understanding](#natural-language-understanding)
-    * [Personality Insights](#personality-insights)
-    * [Speech to Text](#speech-to-text)
-    * [Text to Speech](#text-to-speech)
-    * [Tone Analyzer](#tone-analyzer)
-    * [Visual Recognition](#visual-recognition)
-  * [Composing Services](#composing-services)
-  * [Debug](#debug)
-  * [Tests](#tests)
-  * [Contributing](#contributing)
-  * [Featured Projects](#featured-projects)
-  * [License](#license)
-
-</details>
-
 ## Announcements
 
 ### Major version 6 released
@@ -964,7 +924,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 [COPYING][license].
 
 [assistant]: https://www.ibm.com/cloud/watson-assistant/
-[discovery]: https://www.ibm.com/watson/services/discovery/
+[discovery]: https://www.ibm.com/cloud/watson-discovery
 [personality_insights]: https://www.ibm.com/watson/services/personality-insights/
 [visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/
 [tone_analyzer]: https://www.ibm.com/watson/services/tone-analyzer/
