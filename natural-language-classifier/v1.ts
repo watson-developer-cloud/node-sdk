@@ -47,6 +47,11 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @returns {NaturalLanguageClassifierV1}
    */
   constructor(options: UserOptions) {
+    console.warn(`On 9 August 2021, IBM announced the deprecation of the Natural Language Classifier service.
+    The service will no longer be available from 8 August 2022. As of 9 September 2021, you will not be able to create new instances. 
+    Existing instances will be supported until 8 August 2022. Any instance that still exists on that date will be deleted.
+    For more information, see https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-migrating`)
+
     options = options || {};
 
     if (!options.serviceName) {
