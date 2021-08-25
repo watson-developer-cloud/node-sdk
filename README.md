@@ -1,5 +1,3 @@
-# Watson APIs Node.js SDK
-
 [![Build and Test](https://github.com/watson-developer-cloud/node-sdk/workflows/Build%20and%20Test/badge.svg?branch=master)](https://github.com/watson-developer-cloud/node-sdk/actions?query=workflow%3A"Build+and+Test")
 [![Deploy and Publish](https://github.com/watson-developer-cloud/node-sdk/workflows/Deploy%20and%20Publish/badge.svg?branch=master)](https://github.com/watson-developer-cloud/node-sdk/actions?query=workflow%3A%22Deploy+and+Publish%22)
 [![codecov](https://codecov.io/gh/watson-developer-cloud/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/watson-developer-cloud/node-sdk)
@@ -11,36 +9,24 @@
 ## Deprecated builds
 [![Build Status](https://secure.travis-ci.org/watson-developer-cloud/node-sdk.svg?branch=master)](http://travis-ci.org/watson-developer-cloud/node-sdk)
 
-Node.js client library to use the Watson APIs.
+# Watson APIs Node.js SDK
+Node.js client library to use the [Watson APIs](https://cloud.ibm.com/developer/watson/documentation).
 
 ## Announcements
-
-### Natural Language Classifier deprecation
-On 9 August 2021, IBM announced the deprecation of the Natural Language Classifier service. The service will no longer be available from 8 August 2022. As of 9 September 2021, you will not be able to create new instances. Existing instances will be supported until 8 August 2022. Any instance that still exists on that date will be deleted.
-
-As an alternative, we encourage you to consider migrating to the Natural Language Understanding service on IBM Cloud that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax, along with advanced multi-label text classification capabilities, to provide even richer insights for your business or industry. For more information, see [Migrating to Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-migrating).
 
 ### Major version 6 released
 Version v6.0.0 of the SDK has been released and includes a number of breaking changes - see what's changed in the [migration guide](MIGRATION-V6.md).
 ### Updating endpoint URLs from watsonplatform.net
 Watson API endpoint URLs at watsonplatform.net are changing and will not work after 26 May 2021. Update your calls to use the newer endpoint URLs. For more information, see https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change.
 
-### Personality Insights deprecation
-IBM Watson™ Personality Insights is discontinued. For a period of one year from 1 December 2020, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.
-
-As an alternative, we encourage you to consider migrating to IBM Watson™ [Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-understanding), a service on IBM Cloud® that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business or industry. For more information, see About Natural Language Understanding.
-
-### Visual Recognition deprecation
-IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.
-
-### Compare and Comply deprecation
-IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.
-
 ### Supporting Node versions 10+
 The SDK will no longer be tested with Node versions 6 and 8. Support will be officially dropped in v5.
 
 ### Package Rename
 This package has been moved under the name `ibm-watson`. The package is still available at `watson-developer-cloud`, but that will no longer receive updates. Use `ibm-watson` to stay up to date.
+
+### Service Deprecations
+Occasionally services will be discontinued. For more information see [Service Deprecations](#service-deprecations-1).
 
 ## Before you begin
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
@@ -177,6 +163,18 @@ When uploading your application to IBM Cloud there is a certain priority Watson 
 1. Programmatic (i.e. IamAuthenticator)
 2. Credentials File
 3. VCAP_SERVICES (an environment variable used by IBM Cloud, details found [here](https://cloud.ibm.com/docs/watson?topic=watson-vcapServices))
+
+## Unauthenticated requests
+The SDK always expects an authenticator to be passed in. To make an unautuhenticated request, use the `NoAuthAuthenticator`.
+
+```js
+const watson = require('ibm-watson');
+const { NoAuthAuthenticator } = require('ibm-watson/auth');
+
+const assistant = new watson.AssistantV1({
+  authenticator: new NoAuthAuthenticator(),
+});
+```
 
 ## Setting the Service URL
 You can set or reset the base URL after constructing the client instance using the `setServiceUrl` method:
@@ -875,18 +873,6 @@ visualRecognition.classify(params)
   });
 ```
 
-## Unauthenticated requests
-The SDK always expects an authenticator to be passed in. To make an unautuhenticated request, use the `NoAuthAuthenticator`.
-
-```js
-const watson = require('ibm-watson');
-const { NoAuthAuthenticator } = require('ibm-watson/auth');
-
-const assistant = new watson.AssistantV1({
-  authenticator: new NoAuthAuthenticator(),
-});
-```
-
 ## Debug
 
 This library relies on the `axios` npm module written by
@@ -910,19 +896,29 @@ Running a specific test:
 $ jest '<path to test>'
 ```
 
+## Service Deprecations
+### Natural Language Classifier deprecation
+On 9 August 2021, IBM announced the deprecation of the Natural Language Classifier service. The service will no longer be available from 8 August 2022. As of 9 September 2021, you will not be able to create new instances. Existing instances will be supported until 8 August 2022. Any instance that still exists on that date will be deleted.
+
+As an alternative, we encourage you to consider migrating to the Natural Language Understanding service on IBM Cloud that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax, along with advanced multi-label text classification capabilities, to provide even richer insights for your business or industry. For more information, see [Migrating to Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-migrating).
+
+### Personality Insights deprecation
+IBM Watson™ Personality Insights is discontinued. For a period of one year from 1 December 2020, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.
+
+As an alternative, we encourage you to consider migrating to IBM Watson™ [Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-understanding), a service on IBM Cloud® that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business or industry. For more information, see About Natural Language Understanding.
+
+### Visual Recognition deprecation
+IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.
+
+### Compare and Comply deprecation
+IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.
+
+
 ## Open source @ IBM
 [Find more open source projects on the IBM Github Page.](http://ibm.github.io/)
 
 ## Contributing
 See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/master/.github/CONTRIBUTING.md).
-
-## Featured Projects
-We love to highlight cool open-source projects that use this SDK! If you'd like to get your project added to the list, feel free to make an issue linking us to it.
-- [Watson Speech to Text Demo App](https://github.com/watson-developer-cloud/speech-to-text-nodejs)
-- [Watson Assistant Demo App](https://github.com/watson-developer-cloud/assistant-demo)
-- [Virtual TJBot Node-RED Nodes](https://github.com/jeancarl/node-red-contrib-virtual-tjbot)
-- [CLI tool for Watson Assistant](https://github.com/Themandunord/IWAC)
-- [CLI tool for Watson Visual Recognition](https://github.com/boneskull/puddlenuts)
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in
