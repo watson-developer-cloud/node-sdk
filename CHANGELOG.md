@@ -1,3 +1,10 @@
+## [6.1.2](https://github.com/watson-developer-cloud/node-sdk/compare/v6.1.1...v6.1.2) (2021-08-25)
+
+
+### Bug Fixes
+
+* **nlc:** add deprecation warning ([5b269ae](https://github.com/watson-developer-cloud/node-sdk/commit/5b269ae1afec11bdc0eb078f82f12827d336f644)), closes [#9622](https://github.com/watson-developer-cloud/node-sdk/issues/9622)
+
 ## [6.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v6.1.0...v6.1.1) (2021-06-02)
 
 
