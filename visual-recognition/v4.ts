@@ -1680,8 +1680,6 @@ namespace VisualRecognitionV4 {
     updated: string;
     /** Number of images in the collection. */
     image_count: number;
-    /** Training status information for the collection. */
-    training_status: CollectionTrainingStatus;
   }
 
   /** The objects in a collection that are detected in an image. */
