@@ -269,7 +269,6 @@ describe('VisualRecognitionV4', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.name).toEqual(name);
         expect(mockRequestOptions.body.description).toEqual(description);
-        expect(mockRequestOptions.body.training_status).toEqual(trainingStatus);
         expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
       });
 
@@ -457,7 +456,6 @@ describe('VisualRecognitionV4', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.name).toEqual(name);
         expect(mockRequestOptions.body.description).toEqual(description);
-        expect(mockRequestOptions.body.training_status).toEqual(trainingStatus);
         expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });

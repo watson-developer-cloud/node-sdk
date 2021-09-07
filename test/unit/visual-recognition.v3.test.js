@@ -184,8 +184,9 @@ describe('VisualRecognitionV3', () => {
         expect(mockRequestOptions.formData.images_file.contentType).toEqual(imagesFileContentType);
         expect(mockRequestOptions.formData.url).toEqual(url);
         expect(mockRequestOptions.formData.threshold).toEqual(threshold);
-        expect(mockRequestOptions.formData.owners).toEqual(owners);
-        expect(mockRequestOptions.formData.classifier_ids).toEqual(classifierIds);
+        // Break in pattern due to owners and classifier_ids converting arrays into csv strings
+        expect(mockRequestOptions.formData.owners).toEqual('testString');
+        expect(mockRequestOptions.formData.classifier_ids).toEqual('testString');
         expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
       });
 
