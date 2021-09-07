@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b00691c-20210824-142310
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -32,11 +37,14 @@ import { getSdkHeaders } from '../lib/common';
  * {: deprecated}
  *
  * Compare and Comply analyzes governing documents to provide details about critical aspects of the documents.
+ *
+ * API Version: 1.0
+ * See: https://cloud.ibm.com/docs/compare-comply?topic=compare-comply-about
  */
 
 class CompareComplyV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.compare-comply.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'compare-comply';
 
   /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
@@ -93,7 +101,7 @@ class CompareComplyV1 extends BaseService {
    * Converts a document to HTML.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.file - The document to convert.
+   * @param {NodeJS.ReadableStream | Buffer} params.file - The document to convert.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
@@ -102,8 +110,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.HTMLReturn>>}
    */
-  public convertToHtml(params: CompareComplyV1.ConvertToHtmlParams): Promise<CompareComplyV1.Response<CompareComplyV1.HTMLReturn>> {
-    const _params = Object.assign({}, params);
+  public convertToHtml(
+    params: CompareComplyV1.ConvertToHtmlParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.HTMLReturn>> {
+    const _params = { ...params };
     const requiredParams = ['file'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -114,16 +124,20 @@ class CompareComplyV1 extends BaseService {
     const formData = {
       'file': {
         data: _params.file,
-        contentType: _params.fileContentType
-      }
+        contentType: _params.fileContentType,
+      },
     };
 
     const query = {
       'version': this.version,
-      'model': _params.model
+      'model': _params.model,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'convertToHtml');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'convertToHtml'
+    );
 
     const parameters = {
       options: {
@@ -133,16 +147,20 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * elementClassification
    ************************/
@@ -153,7 +171,7 @@ class CompareComplyV1 extends BaseService {
    * Analyzes the structural and semantic elements of a document.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.file - The document to classify.
+   * @param {NodeJS.ReadableStream | Buffer} params.file - The document to classify.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
@@ -162,8 +180,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.ClassifyReturn>>}
    */
-  public classifyElements(params: CompareComplyV1.ClassifyElementsParams): Promise<CompareComplyV1.Response<CompareComplyV1.ClassifyReturn>> {
-    const _params = Object.assign({}, params);
+  public classifyElements(
+    params: CompareComplyV1.ClassifyElementsParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.ClassifyReturn>> {
+    const _params = { ...params };
     const requiredParams = ['file'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -174,16 +194,20 @@ class CompareComplyV1 extends BaseService {
     const formData = {
       'file': {
         data: _params.file,
-        contentType: _params.fileContentType
-      }
+        contentType: _params.fileContentType,
+      },
     };
 
     const query = {
       'version': this.version,
-      'model': _params.model
+      'model': _params.model,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'classifyElements');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'classifyElements'
+    );
 
     const parameters = {
       options: {
@@ -193,16 +217,20 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * tables
    ************************/
@@ -213,7 +241,7 @@ class CompareComplyV1 extends BaseService {
    * Analyzes the tables in a document.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.file - The document on which to run table extraction.
+   * @param {NodeJS.ReadableStream | Buffer} params.file - The document on which to run table extraction.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.model] - The analysis model to be used by the service. For the **Element classification**
    * and **Compare two documents** methods, the default is `contracts`. For the **Extract tables** method, the default
@@ -222,8 +250,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.TableReturn>>}
    */
-  public extractTables(params: CompareComplyV1.ExtractTablesParams): Promise<CompareComplyV1.Response<CompareComplyV1.TableReturn>> {
-    const _params = Object.assign({}, params);
+  public extractTables(
+    params: CompareComplyV1.ExtractTablesParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.TableReturn>> {
+    const _params = { ...params };
     const requiredParams = ['file'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -234,16 +264,20 @@ class CompareComplyV1 extends BaseService {
     const formData = {
       'file': {
         data: _params.file,
-        contentType: _params.fileContentType
-      }
+        contentType: _params.fileContentType,
+      },
     };
 
     const query = {
       'version': this.version,
-      'model': _params.model
+      'model': _params.model,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'extractTables');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'extractTables'
+    );
 
     const parameters = {
       options: {
@@ -253,16 +287,20 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * comparison
    ************************/
@@ -273,8 +311,8 @@ class CompareComplyV1 extends BaseService {
    * Compares two input documents. Documents must be in the same format.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.file1 - The first document to compare.
-   * @param {NodeJS.ReadableStream|Buffer} params.file2 - The second document to compare.
+   * @param {NodeJS.ReadableStream | Buffer} params.file1 - The first document to compare.
+   * @param {NodeJS.ReadableStream | Buffer} params.file2 - The second document to compare.
    * @param {string} [params.file1ContentType] - The content type of file1.
    * @param {string} [params.file2ContentType] - The content type of file2.
    * @param {string} [params.file1Label] - A text label for the first document.
@@ -286,8 +324,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.CompareReturn>>}
    */
-  public compareDocuments(params: CompareComplyV1.CompareDocumentsParams): Promise<CompareComplyV1.Response<CompareComplyV1.CompareReturn>> {
-    const _params = Object.assign({}, params);
+  public compareDocuments(
+    params: CompareComplyV1.CompareDocumentsParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.CompareReturn>> {
+    const _params = { ...params };
     const requiredParams = ['file1', 'file2'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -298,22 +338,26 @@ class CompareComplyV1 extends BaseService {
     const formData = {
       'file_1': {
         data: _params.file1,
-        contentType: _params.file1ContentType
+        contentType: _params.file1ContentType,
       },
       'file_2': {
         data: _params.file2,
-        contentType: _params.file2ContentType
-      }
+        contentType: _params.file2ContentType,
+      },
     };
 
     const query = {
       'version': this.version,
       'file_1_label': _params.file1Label,
       'file_2_label': _params.file2Label,
-      'model': _params.model
+      'model': _params.model,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'compareDocuments');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'compareDocuments'
+    );
 
     const parameters = {
       options: {
@@ -323,16 +367,20 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * feedback
    ************************/
@@ -351,8 +399,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackReturn>>}
    */
-  public addFeedback(params: CompareComplyV1.AddFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackReturn>> {
-    const _params = Object.assign({}, params);
+  public addFeedback(
+    params: CompareComplyV1.AddFeedbackParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackReturn>> {
+    const _params = { ...params };
     const requiredParams = ['feedbackData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -363,14 +413,18 @@ class CompareComplyV1 extends BaseService {
     const body = {
       'feedback_data': _params.feedbackData,
       'user_id': _params.userId,
-      'comment': _params.comment
+      'comment': _params.comment,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'addFeedback');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addFeedback'
+    );
 
     const parameters = {
       options: {
@@ -380,15 +434,20 @@ class CompareComplyV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List the feedback in a document.
@@ -434,8 +493,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackList>>}
    */
-  public listFeedback(params?: CompareComplyV1.ListFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackList>> {
-    const _params = Object.assign({}, params);
+  public listFeedback(
+    params?: CompareComplyV1.ListFeedbackParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackList>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
@@ -452,10 +513,14 @@ class CompareComplyV1 extends BaseService {
       'page_limit': _params.pageLimit,
       'cursor': _params.cursor,
       'sort': _params.sort,
-      'include_total': _params.includeTotal
+      'include_total': _params.includeTotal,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'listFeedback');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listFeedback'
+    );
 
     const parameters = {
       options: {
@@ -464,14 +529,19 @@ class CompareComplyV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a specified feedback entry.
@@ -487,8 +557,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.GetFeedback>>}
    */
-  public getFeedback(params: CompareComplyV1.GetFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.GetFeedback>> {
-    const _params = Object.assign({}, params);
+  public getFeedback(
+    params: CompareComplyV1.GetFeedbackParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.GetFeedback>> {
+    const _params = { ...params };
     const requiredParams = ['feedbackId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -498,14 +570,18 @@ class CompareComplyV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'model': _params.model
+      'model': _params.model,
     };
 
     const path = {
-      'feedback_id': _params.feedbackId
+      'feedback_id': _params.feedbackId,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'getFeedback');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getFeedback'
+    );
 
     const parameters = {
       options: {
@@ -515,14 +591,19 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a specified feedback entry.
@@ -538,8 +619,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackDeleted>>}
    */
-  public deleteFeedback(params: CompareComplyV1.DeleteFeedbackParams): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackDeleted>> {
-    const _params = Object.assign({}, params);
+  public deleteFeedback(
+    params: CompareComplyV1.DeleteFeedbackParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.FeedbackDeleted>> {
+    const _params = { ...params };
     const requiredParams = ['feedbackId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -549,14 +632,18 @@ class CompareComplyV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'model': _params.model
+      'model': _params.model,
     };
 
     const path = {
-      'feedback_id': _params.feedbackId
+      'feedback_id': _params.feedbackId,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteFeedback');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteFeedback'
+    );
 
     const parameters = {
       options: {
@@ -566,15 +653,19 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * batches
    ************************/
@@ -591,13 +682,13 @@ class CompareComplyV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params._function - The Compare and Comply method to run across the submitted input documents.
-   * @param {NodeJS.ReadableStream|Buffer} params.inputCredentialsFile - A JSON file containing the input Cloud Object
+   * @param {NodeJS.ReadableStream | Buffer} params.inputCredentialsFile - A JSON file containing the input Cloud Object
    * Storage credentials. At a minimum, the credentials must enable `READ` permissions on the bucket defined by the
    * `input_bucket_name` parameter.
    * @param {string} params.inputBucketLocation - The geographical location of the Cloud Object Storage input bucket as
    * listed on the **Endpoint** tab of your Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or `ap-geo`.
    * @param {string} params.inputBucketName - The name of the Cloud Object Storage input bucket.
-   * @param {NodeJS.ReadableStream|Buffer} params.outputCredentialsFile - A JSON file that lists the Cloud Object
+   * @param {NodeJS.ReadableStream | Buffer} params.outputCredentialsFile - A JSON file that lists the Cloud Object
    * Storage output credentials. At a minimum, the credentials must enable `READ` and `WRITE` permissions on the bucket
    * defined by the `output_bucket_name` parameter.
    * @param {string} params.outputBucketLocation - The geographical location of the Cloud Object Storage output bucket
@@ -611,8 +702,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>>}
    */
-  public createBatch(params: CompareComplyV1.CreateBatchParams): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
-    const _params = Object.assign({}, params);
+  public createBatch(
+    params: CompareComplyV1.CreateBatchParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
+    const _params = { ...params };
     const requiredParams = ['_function', 'inputCredentialsFile', 'inputBucketLocation', 'inputBucketName', 'outputCredentialsFile', 'outputBucketLocation', 'outputBucketName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -623,25 +716,29 @@ class CompareComplyV1 extends BaseService {
     const formData = {
       'input_credentials_file': {
         data: _params.inputCredentialsFile,
-        contentType: 'application/json'
+        contentType: 'application/json',
       },
       'input_bucket_location': _params.inputBucketLocation,
       'input_bucket_name': _params.inputBucketName,
       'output_credentials_file': {
         data: _params.outputCredentialsFile,
-        contentType: 'application/json'
+        contentType: 'application/json',
       },
       'output_bucket_location': _params.outputBucketLocation,
-      'output_bucket_name': _params.outputBucketName
+      'output_bucket_name': _params.outputBucketName,
     };
 
     const query = {
       'version': this.version,
       'function': _params._function,
-      'model': _params.model
+      'model': _params.model,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'createBatch');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createBatch'
+    );
 
     const parameters = {
       options: {
@@ -651,15 +748,20 @@ class CompareComplyV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List submitted batch-processing jobs.
@@ -670,14 +772,20 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.Batches>>}
    */
-  public listBatches(params?: CompareComplyV1.ListBatchesParams): Promise<CompareComplyV1.Response<CompareComplyV1.Batches>> {
-    const _params = Object.assign({}, params);
+  public listBatches(
+    params?: CompareComplyV1.ListBatchesParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.Batches>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'listBatches');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listBatches'
+    );
 
     const parameters = {
       options: {
@@ -686,14 +794,19 @@ class CompareComplyV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get information about a specific batch-processing job.
@@ -705,8 +818,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>>}
    */
-  public getBatch(params: CompareComplyV1.GetBatchParams): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
-    const _params = Object.assign({}, params);
+  public getBatch(
+    params: CompareComplyV1.GetBatchParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
+    const _params = { ...params };
     const requiredParams = ['batchId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -715,14 +830,18 @@ class CompareComplyV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'batch_id': _params.batchId
+      'batch_id': _params.batchId,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'getBatch');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getBatch'
+    );
 
     const parameters = {
       options: {
@@ -732,14 +851,19 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a pending or active batch-processing job.
@@ -757,8 +881,10 @@ class CompareComplyV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>>}
    */
-  public updateBatch(params: CompareComplyV1.UpdateBatchParams): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
-    const _params = Object.assign({}, params);
+  public updateBatch(
+    params: CompareComplyV1.UpdateBatchParams
+  ): Promise<CompareComplyV1.Response<CompareComplyV1.BatchStatus>> {
+    const _params = { ...params };
     const requiredParams = ['batchId', 'action'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -769,14 +895,18 @@ class CompareComplyV1 extends BaseService {
     const query = {
       'version': this.version,
       'action': _params.action,
-      'model': _params.model
+      'model': _params.model,
     };
 
     const path = {
-      'batch_id': _params.batchId
+      'batch_id': _params.batchId,
     };
 
-    const sdkHeaders = getSdkHeaders(CompareComplyV1.DEFAULT_SERVICE_NAME, 'v1', 'updateBatch');
+    const sdkHeaders = getSdkHeaders(
+      CompareComplyV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateBatch'
+    );
 
     const parameters = {
       options: {
@@ -786,15 +916,19 @@ class CompareComplyV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -802,10 +936,8 @@ class CompareComplyV1 extends BaseService {
  ************************/
 
 namespace CompareComplyV1 {
-
   /** Options for the `CompareComplyV1` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
      *  version is `2018-10-15`.
      */
@@ -813,7 +945,7 @@ namespace CompareComplyV1 {
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -824,7 +956,7 @@ namespace CompareComplyV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -838,7 +970,7 @@ namespace CompareComplyV1 {
   /** Parameters for the `convertToHtml` operation. */
   export interface ConvertToHtmlParams {
     /** The document to convert. */
-    file: NodeJS.ReadableStream|Buffer;
+    file: NodeJS.ReadableStream | Buffer;
     /** The content type of file. */
     fileContentType?: ConvertToHtmlConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two
@@ -873,7 +1005,7 @@ namespace CompareComplyV1 {
   /** Parameters for the `classifyElements` operation. */
   export interface ClassifyElementsParams {
     /** The document to classify. */
-    file: NodeJS.ReadableStream|Buffer;
+    file: NodeJS.ReadableStream | Buffer;
     /** The content type of file. */
     fileContentType?: ClassifyElementsConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two
@@ -907,7 +1039,7 @@ namespace CompareComplyV1 {
   /** Parameters for the `extractTables` operation. */
   export interface ExtractTablesParams {
     /** The document on which to run table extraction. */
-    file: NodeJS.ReadableStream|Buffer;
+    file: NodeJS.ReadableStream | Buffer;
     /** The content type of file. */
     fileContentType?: ExtractTablesConstants.FileContentType | string;
     /** The analysis model to be used by the service. For the **Element classification** and **Compare two
@@ -942,9 +1074,9 @@ namespace CompareComplyV1 {
   /** Parameters for the `compareDocuments` operation. */
   export interface CompareDocumentsParams {
     /** The first document to compare. */
-    file1: NodeJS.ReadableStream|Buffer;
+    file1: NodeJS.ReadableStream | Buffer;
     /** The second document to compare. */
-    file2: NodeJS.ReadableStream|Buffer;
+    file2: NodeJS.ReadableStream | Buffer;
     /** The content type of file1. */
     file1ContentType?: CompareDocumentsConstants.File1ContentType | string;
     /** The content type of file2. */
@@ -1112,7 +1244,7 @@ namespace CompareComplyV1 {
     /** A JSON file containing the input Cloud Object Storage credentials. At a minimum, the credentials must enable
      *  `READ` permissions on the bucket defined by the `input_bucket_name` parameter.
      */
-    inputCredentialsFile: NodeJS.ReadableStream|Buffer;
+    inputCredentialsFile: NodeJS.ReadableStream | Buffer;
     /** The geographical location of the Cloud Object Storage input bucket as listed on the **Endpoint** tab of your
      *  Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or `ap-geo`.
      */
@@ -1122,7 +1254,7 @@ namespace CompareComplyV1 {
     /** A JSON file that lists the Cloud Object Storage output credentials. At a minimum, the credentials must
      *  enable `READ` and `WRITE` permissions on the bucket defined by the `output_bucket_name` parameter.
      */
-    outputCredentialsFile: NodeJS.ReadableStream|Buffer;
+    outputCredentialsFile: NodeJS.ReadableStream | Buffer;
     /** The geographical location of the Cloud Object Storage output bucket as listed on the **Endpoint** tab of
      *  your Cloud Object Storage instance; for example, `us-geo`, `eu-geo`, or `ap-geo`.
      */
@@ -2091,7 +2223,6 @@ namespace CompareComplyV1 {
     /** The text content of the table cell without HTML markup. */
     text?: string;
   }
-
 }
 
 export = CompareComplyV1;

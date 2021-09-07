@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const ToneAnalyzerV3 = require('../../dist/tone-analyzer/v3');
@@ -29,13 +29,13 @@ const {
   checkUserHeader,
 } = unitTestUtils;
 
-const service = {
+const toneAnalyzerServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com',
   version: 'testString',
 };
 
-const toneAnalyzerService = new ToneAnalyzerV3(service);
+const toneAnalyzerService = new ToneAnalyzerV3(toneAnalyzerServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(toneAnalyzerService, 'createRequest');
@@ -134,29 +134,22 @@ describe('ToneAnalyzerV3', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new ToneAnalyzerV3(service);
+        const serviceObj = new ToneAnalyzerV3(toneAnalyzerServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(toneAnalyzerServiceOptions.version);
       });
     });
   });
   describe('tone', () => {
     describe('positive tests', () => {
-      // Request models needed by this operation.
-
-      // ToneInput
-      const toneInputModel = {
-        text: 'testString',
-      };
-
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation tone
-        const toneInput = toneInputModel;
+        const toneInput = {};
         const contentType = 'application/json';
         const sentences = true;
         const tones = ['emotion'];
         const contentLanguage = 'en';
-        const acceptLanguage = 'ar';
+        const acceptLanguage = 'en';
         const params = {
           toneInput: toneInput,
           contentType: contentType,
@@ -174,24 +167,24 @@ describe('ToneAnalyzerV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/tone', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/tone', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = contentType;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'Content-Type', contentType);
         checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
         checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
-        expect(options.body).toEqual(toneInput);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['sentences']).toEqual(sentences);
-        expect(options.qs['tones']).toEqual(tones);
+        expect(mockRequestOptions.body).toEqual(toneInput);
+        expect(mockRequestOptions.qs.version).toEqual(toneAnalyzerServiceOptions.version);
+        expect(mockRequestOptions.qs.sentences).toEqual(sentences);
+        expect(mockRequestOptions.qs.tones).toEqual(tones);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const toneInput = toneInputModel;
+        const toneInput = {};
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -208,7 +201,7 @@ describe('ToneAnalyzerV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await toneAnalyzerService.tone({});
@@ -220,11 +213,11 @@ describe('ToneAnalyzerV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const tonePromise = toneAnalyzerService.tone();
         expectToBePromise(tonePromise);
 
-        tonePromise.catch(err => {
+        tonePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -245,7 +238,7 @@ describe('ToneAnalyzerV3', () => {
         // Construct the params object for operation toneChat
         const utterances = [utteranceModel];
         const contentLanguage = 'en';
-        const acceptLanguage = 'ar';
+        const acceptLanguage = 'en';
         const params = {
           utterances: utterances,
           contentLanguage: contentLanguage,
@@ -260,16 +253,16 @@ describe('ToneAnalyzerV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/tone_chat', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/tone_chat', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
         checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
-        expect(options.body['utterances']).toEqual(utterances);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.body.utterances).toEqual(utterances);
+        expect(mockRequestOptions.qs.version).toEqual(toneAnalyzerServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -291,7 +284,7 @@ describe('ToneAnalyzerV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await toneAnalyzerService.toneChat({});
@@ -303,11 +296,11 @@ describe('ToneAnalyzerV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const toneChatPromise = toneAnalyzerService.toneChat();
         expectToBePromise(toneChatPromise);
 
-        toneChatPromise.catch(err => {
+        toneChatPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

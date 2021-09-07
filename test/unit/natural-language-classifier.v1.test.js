@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const NaturalLanguageClassifierV1 = require('../../dist/natural-language-classifier/v1');
@@ -29,12 +29,12 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const naturalLanguageClassifierServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com',
 };
 
-const naturalLanguageClassifierService = new NaturalLanguageClassifierV1(service);
+const naturalLanguageClassifierService = new NaturalLanguageClassifierV1(naturalLanguageClassifierServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(naturalLanguageClassifierService, 'createRequest');
@@ -69,9 +69,7 @@ describe('NaturalLanguageClassifierV1', () => {
 
       const testInstance = new NaturalLanguageClassifierV1(options);
 
-      expect(testInstance.baseOptions.serviceUrl).toBe(
-        NaturalLanguageClassifierV1.DEFAULT_SERVICE_URL
-      );
+      expect(testInstance.baseOptions.serviceUrl).toBe(NaturalLanguageClassifierV1.DEFAULT_SERVICE_URL);
     });
 
     test('use user-given service name', () => {
@@ -92,9 +90,7 @@ describe('NaturalLanguageClassifierV1', () => {
 
       const testInstance = new NaturalLanguageClassifierV1(options);
 
-      expect(testInstance.baseOptions.serviceName).toBe(
-        NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME
-      );
+      expect(testInstance.baseOptions.serviceName).toBe(NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME);
     });
 
     test('use user-given service authenticator', () => {
@@ -134,14 +130,14 @@ describe('NaturalLanguageClassifierV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}/classify', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/classifiers/{classifier_id}/classify', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['text']).toEqual(text);
-        expect(options.path['classifier_id']).toEqual(classifierId);
+        expect(mockRequestOptions.body.text).toEqual(text);
+        expect(mockRequestOptions.path.classifier_id).toEqual(classifierId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -165,7 +161,7 @@ describe('NaturalLanguageClassifierV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await naturalLanguageClassifierService.classify({});
@@ -177,11 +173,11 @@ describe('NaturalLanguageClassifierV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const classifyPromise = naturalLanguageClassifierService.classify();
         expectToBePromise(classifyPromise);
 
-        classifyPromise.catch(err => {
+        classifyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -206,9 +202,7 @@ describe('NaturalLanguageClassifierV1', () => {
           collection: collection,
         };
 
-        const classifyCollectionResult = naturalLanguageClassifierService.classifyCollection(
-          params
-        );
+        const classifyCollectionResult = naturalLanguageClassifierService.classifyCollection(params);
 
         // all methods should return a Promise
         expectToBePromise(classifyCollectionResult);
@@ -216,14 +210,14 @@ describe('NaturalLanguageClassifierV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}/classify_collection', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/classifiers/{classifier_id}/classify_collection', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['collection']).toEqual(collection);
-        expect(options.path['classifier_id']).toEqual(classifierId);
+        expect(mockRequestOptions.body.collection).toEqual(collection);
+        expect(mockRequestOptions.path.classifier_id).toEqual(classifierId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -247,7 +241,7 @@ describe('NaturalLanguageClassifierV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await naturalLanguageClassifierService.classifyCollection({});
@@ -259,11 +253,11 @@ describe('NaturalLanguageClassifierV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const classifyCollectionPromise = naturalLanguageClassifierService.classifyCollection();
         expectToBePromise(classifyCollectionPromise);
 
-        classifyCollectionPromise.catch(err => {
+        classifyCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -289,16 +283,16 @@ describe('NaturalLanguageClassifierV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/classifiers', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/classifiers', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['training_metadata'].data).toEqual(trainingMetadata);
-        expect(options.formData['training_metadata'].contentType).toEqual('application/json');
-        expect(options.formData['training_data'].data).toEqual(trainingData);
-        expect(options.formData['training_data'].contentType).toEqual('text/csv');
+        expect(mockRequestOptions.formData.training_metadata.data).toEqual(trainingMetadata);
+        expect(mockRequestOptions.formData.training_metadata.contentType).toEqual('application/json');
+        expect(mockRequestOptions.formData.training_data.data).toEqual(trainingData);
+        expect(mockRequestOptions.formData.training_data.contentType).toEqual('text/csv');
       });
 
       test('should prioritize user-given headers', () => {
@@ -322,7 +316,7 @@ describe('NaturalLanguageClassifierV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await naturalLanguageClassifierService.createClassifier({});
@@ -334,11 +328,11 @@ describe('NaturalLanguageClassifierV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createClassifierPromise = naturalLanguageClassifierService.createClassifier();
         expectToBePromise(createClassifierPromise);
 
-        createClassifierPromise.catch(err => {
+        createClassifierPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -359,9 +353,9 @@ describe('NaturalLanguageClassifierV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/classifiers', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/classifiers', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -406,13 +400,13 @@ describe('NaturalLanguageClassifierV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/classifiers/{classifier_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['classifier_id']).toEqual(classifierId);
+        expect(mockRequestOptions.path.classifier_id).toEqual(classifierId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -434,7 +428,7 @@ describe('NaturalLanguageClassifierV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await naturalLanguageClassifierService.getClassifier({});
@@ -446,11 +440,11 @@ describe('NaturalLanguageClassifierV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getClassifierPromise = naturalLanguageClassifierService.getClassifier();
         expectToBePromise(getClassifierPromise);
 
-        getClassifierPromise.catch(err => {
+        getClassifierPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -474,13 +468,13 @@ describe('NaturalLanguageClassifierV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/classifiers/{classifier_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v1/classifiers/{classifier_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['classifier_id']).toEqual(classifierId);
+        expect(mockRequestOptions.path.classifier_id).toEqual(classifierId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -502,7 +496,7 @@ describe('NaturalLanguageClassifierV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await naturalLanguageClassifierService.deleteClassifier({});
@@ -514,11 +508,11 @@ describe('NaturalLanguageClassifierV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteClassifierPromise = naturalLanguageClassifierService.deleteClassifier();
         expectToBePromise(deleteClassifierPromise);
 
-        deleteClassifierPromise.catch(err => {
+        deleteClassifierPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

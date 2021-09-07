@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b00691c-20210824-142310
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -51,11 +56,14 @@ import { getSdkHeaders } from '../lib/common';
  *
  * **Note:** Request logging is disabled for the Personality Insights service. Regardless of whether you set the
  * `X-Watson-Learning-Opt-Out` request header, the service does not log or retain data from requests and responses.
+ *
+ * API Version: 3.4.4
+ * See: https://cloud.ibm.com/docs/personality-insights
  */
 
 class PersonalityInsightsV3 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.personality-insights.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'personality_insights';
 
   /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
@@ -146,8 +154,8 @@ class PersonalityInsightsV3 extends BaseService {
    * profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-outputCSV#outputCSV).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {Content|string} params.content - A maximum of 20 MB of content to analyze, though the service requires much
-   * less text; for more information, see [Providing sufficient
+   * @param {Content | string} params.content - A maximum of 20 MB of content to analyze, though the service requires
+   * much less text; for more information, see [Providing sufficient
    * input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-input#sufficient). For JSON
    * input, provide an object of type `Content`.
    * @param {string} [params.contentType] - The type of the input. For more information, see **Content types** in the
@@ -175,8 +183,10 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>>}
    */
-  public profile(params: PersonalityInsightsV3.ProfileParams): Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>> {
-    const _params = Object.assign({}, params);
+  public profile(
+    params: PersonalityInsightsV3.ProfileParams
+  ): Promise<PersonalityInsightsV3.Response<PersonalityInsightsV3.Profile>> {
+    const _params = { ...params };
     const requiredParams = ['content'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -189,10 +199,14 @@ class PersonalityInsightsV3 extends BaseService {
       'version': this.version,
       'raw_scores': _params.rawScores,
       'csv_headers': _params.csvHeaders,
-      'consumption_preferences': _params.consumptionPreferences
+      'consumption_preferences': _params.consumptionPreferences,
     };
 
-    const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profile');
+    const sdkHeaders = getSdkHeaders(
+      PersonalityInsightsV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'profile'
+    );
 
     const parameters = {
       options: {
@@ -202,17 +216,22 @@ class PersonalityInsightsV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType,
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get profile as csv.
@@ -253,8 +272,8 @@ class PersonalityInsightsV3 extends BaseService {
    * profile](https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-outputCSV#outputCSV).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {Content|string} params.content - A maximum of 20 MB of content to analyze, though the service requires much
-   * less text; for more information, see [Providing sufficient
+   * @param {Content | string} params.content - A maximum of 20 MB of content to analyze, though the service requires
+   * much less text; for more information, see [Providing sufficient
    * input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-input#sufficient). For JSON
    * input, provide an object of type `Content`.
    * @param {string} [params.contentType] - The type of the input. For more information, see **Content types** in the
@@ -280,10 +299,12 @@ class PersonalityInsightsV3 extends BaseService {
    * @param {boolean} [params.consumptionPreferences] - Indicates whether consumption preferences are returned with the
    * results. By default, no consumption preferences are returned.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>>}
+   * @returns {Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream | Buffer>>}
    */
-  public profileAsCsv(params: PersonalityInsightsV3.ProfileAsCsvParams): Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public profileAsCsv(
+    params: PersonalityInsightsV3.ProfileAsCsvParams
+  ): Promise<PersonalityInsightsV3.Response<NodeJS.ReadableStream | Buffer>> {
+    const _params = { ...params };
     const requiredParams = ['content'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -296,10 +317,14 @@ class PersonalityInsightsV3 extends BaseService {
       'version': this.version,
       'raw_scores': _params.rawScores,
       'csv_headers': _params.csvHeaders,
-      'consumption_preferences': _params.consumptionPreferences
+      'consumption_preferences': _params.consumptionPreferences,
     };
 
-    const sdkHeaders = getSdkHeaders(PersonalityInsightsV3.DEFAULT_SERVICE_NAME, 'v3', 'profileAsCsv');
+    const sdkHeaders = getSdkHeaders(
+      PersonalityInsightsV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'profileAsCsv'
+    );
 
     const parameters = {
       options: {
@@ -309,18 +334,22 @@ class PersonalityInsightsV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'text/csv',
-          'Content-Type': _params.contentType,
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'text/csv',
+            'Content-Type': _params.contentType,
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -328,10 +357,8 @@ class PersonalityInsightsV3 extends BaseService {
  ************************/
 
 namespace PersonalityInsightsV3 {
-
   /** Options for the `PersonalityInsightsV3` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
      *  version is `2017-10-13`.
      */
@@ -339,7 +366,7 @@ namespace PersonalityInsightsV3 {
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -350,7 +377,7 @@ namespace PersonalityInsightsV3 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -368,7 +395,7 @@ namespace PersonalityInsightsV3 {
      *  input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-input#sufficient). For JSON
      *  input, provide an object of type `Content`.
      */
-    content: Content|string;
+    content: Content | string;
     /** The type of the input. For more information, see **Content types** in the method description. */
     contentType?: ProfileConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional
@@ -441,7 +468,7 @@ namespace PersonalityInsightsV3 {
      *  input](https://cloud.ibm.com/docs/personality-insights?topic=personality-insights-input#sufficient). For JSON
      *  input, provide an object of type `Content`.
      */
-    content: Content|string;
+    content: Content | string;
     /** The type of the input. For more information, see **Content types** in the method description. */
     contentType?: ProfileAsCsvConstants.ContentType | string;
     /** The language of the input text for the request: Arabic, English, Japanese, Korean, or Spanish. Regional
@@ -697,7 +724,6 @@ namespace PersonalityInsightsV3 {
      */
     message: string;
   }
-
 }
 
 export = PersonalityInsightsV3;

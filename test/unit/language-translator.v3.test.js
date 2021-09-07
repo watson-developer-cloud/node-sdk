@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const LanguageTranslatorV3 = require('../../dist/language-translator/v3');
@@ -30,13 +30,13 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const languageTranslatorServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.language-translator.watson.cloud.ibm.com',
-  version: 'testString',
+  version: '2018-05-01',
 };
 
-const languageTranslatorService = new LanguageTranslatorV3(service);
+const languageTranslatorService = new LanguageTranslatorV3(languageTranslatorServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(languageTranslatorService, 'createRequest');
@@ -56,7 +56,7 @@ let requiredGlobals;
 beforeEach(() => {
   // these are changed when passed into the factory/constructor, so re-init
   requiredGlobals = {
-    version: 'testString',
+    version: '2018-05-01',
   };
 });
 
@@ -135,9 +135,9 @@ describe('LanguageTranslatorV3', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new LanguageTranslatorV3(service);
+        const serviceObj = new LanguageTranslatorV3(languageTranslatorServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(languageTranslatorServiceOptions.version);
       });
     });
   });
@@ -155,13 +155,13 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/languages', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v3/languages', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -209,17 +209,17 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/translate', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/translate', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['text']).toEqual(text);
-        expect(options.body['model_id']).toEqual(modelId);
-        expect(options.body['source']).toEqual(source);
-        expect(options.body['target']).toEqual(target);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.body.text).toEqual(text);
+        expect(mockRequestOptions.body.model_id).toEqual(modelId);
+        expect(mockRequestOptions.body.source).toEqual(source);
+        expect(mockRequestOptions.body.target).toEqual(target);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -241,7 +241,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.translate({});
@@ -253,11 +253,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const translatePromise = languageTranslatorService.translate();
         expectToBePromise(translatePromise);
 
-        translatePromise.catch(err => {
+        translatePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -270,9 +270,7 @@ describe('LanguageTranslatorV3', () => {
         // Construct the params object for operation listIdentifiableLanguages
         const params = {};
 
-        const listIdentifiableLanguagesResult = languageTranslatorService.listIdentifiableLanguages(
-          params
-        );
+        const listIdentifiableLanguagesResult = languageTranslatorService.listIdentifiableLanguages(params);
 
         // all methods should return a Promise
         expectToBePromise(listIdentifiableLanguagesResult);
@@ -280,13 +278,13 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/identifiable_languages', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v3/identifiable_languages', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -328,14 +326,14 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/identify', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/identify', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'text/plain';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body).toEqual(text);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.body).toEqual(text);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -357,7 +355,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.identify({});
@@ -369,11 +367,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const identifyPromise = languageTranslatorService.identify();
         expectToBePromise(identifyPromise);
 
-        identifyPromise.catch(err => {
+        identifyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -401,16 +399,16 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/models', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v3/models', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['source']).toEqual(source);
-        expect(options.qs['target']).toEqual(target);
-        expect(options.qs['default']).toEqual(_default);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+        expect(mockRequestOptions.qs.source).toEqual(source);
+        expect(mockRequestOptions.qs.target).toEqual(target);
+        expect(mockRequestOptions.qs.default).toEqual(_default);
       });
 
       test('should prioritize user-given headers', () => {
@@ -458,19 +456,19 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/models', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/models', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['forced_glossary'].data).toEqual(forcedGlossary);
-        expect(options.formData['forced_glossary'].contentType).toEqual('application/octet-stream');
-        expect(options.formData['parallel_corpus'].data).toEqual(parallelCorpus);
-        expect(options.formData['parallel_corpus'].contentType).toEqual('application/octet-stream');
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['base_model_id']).toEqual(baseModelId);
-        expect(options.qs['name']).toEqual(name);
+        expect(mockRequestOptions.formData.forced_glossary.data).toEqual(forcedGlossary);
+        expect(mockRequestOptions.formData.forced_glossary.contentType).toEqual('application/octet-stream');
+        expect(mockRequestOptions.formData.parallel_corpus.data).toEqual(parallelCorpus);
+        expect(mockRequestOptions.formData.parallel_corpus.contentType).toEqual('application/octet-stream');
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+        expect(mockRequestOptions.qs.base_model_id).toEqual(baseModelId);
+        expect(mockRequestOptions.qs.name).toEqual(name);
       });
 
       test('should prioritize user-given headers', () => {
@@ -492,7 +490,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.createModel({});
@@ -504,11 +502,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createModelPromise = languageTranslatorService.createModel();
         expectToBePromise(createModelPromise);
 
-        createModelPromise.catch(err => {
+        createModelPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -532,14 +530,14 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/models/{model_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v3/models/{model_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['model_id']).toEqual(modelId);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+        expect(mockRequestOptions.path.model_id).toEqual(modelId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -561,7 +559,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.deleteModel({});
@@ -573,11 +571,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteModelPromise = languageTranslatorService.deleteModel();
         expectToBePromise(deleteModelPromise);
 
-        deleteModelPromise.catch(err => {
+        deleteModelPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -601,14 +599,14 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/models/{model_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v3/models/{model_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['model_id']).toEqual(modelId);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+        expect(mockRequestOptions.path.model_id).toEqual(modelId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -630,7 +628,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.getModel({});
@@ -642,11 +640,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getModelPromise = languageTranslatorService.getModel();
         expectToBePromise(getModelPromise);
 
-        getModelPromise.catch(err => {
+        getModelPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -667,13 +665,13 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/documents', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v3/documents', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -727,20 +725,20 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/documents', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/documents', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].filename).toEqual(filename);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.formData['model_id']).toEqual(modelId);
-        expect(options.formData['source']).toEqual(source);
-        expect(options.formData['target']).toEqual(target);
-        expect(options.formData['document_id']).toEqual(documentId);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.filename).toEqual(filename);
+        expect(mockRequestOptions.formData.file.contentType).toEqual(fileContentType);
+        expect(mockRequestOptions.formData.model_id).toEqual(modelId);
+        expect(mockRequestOptions.formData.source).toEqual(source);
+        expect(mockRequestOptions.formData.target).toEqual(target);
+        expect(mockRequestOptions.formData.document_id).toEqual(documentId);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -764,7 +762,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.translateDocument({});
@@ -776,11 +774,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const translateDocumentPromise = languageTranslatorService.translateDocument();
         expectToBePromise(translateDocumentPromise);
 
-        translateDocumentPromise.catch(err => {
+        translateDocumentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -804,14 +802,14 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/documents/{document_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v3/documents/{document_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['document_id']).toEqual(documentId);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+        expect(mockRequestOptions.path.document_id).toEqual(documentId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -833,7 +831,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.getDocumentStatus({});
@@ -845,11 +843,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getDocumentStatusPromise = languageTranslatorService.getDocumentStatus();
         expectToBePromise(getDocumentStatusPromise);
 
-        getDocumentStatusPromise.catch(err => {
+        getDocumentStatusPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -873,14 +871,14 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/documents/{document_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v3/documents/{document_id}', 'DELETE');
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['document_id']).toEqual(documentId);
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+        expect(mockRequestOptions.path.document_id).toEqual(documentId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -902,7 +900,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.deleteDocument({});
@@ -914,11 +912,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteDocumentPromise = languageTranslatorService.deleteDocument();
         expectToBePromise(deleteDocumentPromise);
 
-        deleteDocumentPromise.catch(err => {
+        deleteDocumentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -944,16 +942,16 @@ describe('LanguageTranslatorV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/documents/{document_id}/translated_document', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v3/documents/{document_id}/translated_document', 'GET');
         const expectedAccept = accept;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'Accept', accept);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['document_id']).toEqual(documentId);
-        expect(options.responseType).toBe('stream');
+        expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+        expect(mockRequestOptions.path.document_id).toEqual(documentId);
+        expect(mockRequestOptions.responseType).toBe('stream');
       });
 
       test('should prioritize user-given headers', () => {
@@ -975,7 +973,7 @@ describe('LanguageTranslatorV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await languageTranslatorService.getTranslatedDocument({});
@@ -987,11 +985,11 @@ describe('LanguageTranslatorV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getTranslatedDocumentPromise = languageTranslatorService.getTranslatedDocument();
         expectToBePromise(getTranslatedDocumentPromise);
 
-        getTranslatedDocumentPromise.catch(err => {
+        getTranslatedDocumentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

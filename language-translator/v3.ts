@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b00691c-20210824-142310
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,11 +34,14 @@ import { getSdkHeaders } from '../lib/common';
  * IBM-provided translation models that you can customize based on your unique terminology and language. Use Language
  * Translator to take news from across the globe and present it in your language, communicate with your customers in
  * their own language, and more.
+ *
+ * API Version: 3.0.0
+ * See: https://cloud.ibm.com/docs/language-translator
  */
 
 class LanguageTranslatorV3 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.language-translator.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'language_translator';
 
   /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
@@ -94,14 +102,20 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Languages>>}
    */
-  public listLanguages(params?: LanguageTranslatorV3.ListLanguagesParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Languages>> {
-    const _params = Object.assign({}, params);
+  public listLanguages(
+    params?: LanguageTranslatorV3.ListLanguagesParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Languages>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listLanguages');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'listLanguages'
+    );
 
     const parameters = {
       options: {
@@ -110,15 +124,19 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * translation
    ************************/
@@ -148,8 +166,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>>}
    */
-  public translate(params: LanguageTranslatorV3.TranslateParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>> {
-    const _params = Object.assign({}, params);
+  public translate(
+    params: LanguageTranslatorV3.TranslateParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>> {
+    const _params = { ...params };
     const requiredParams = ['text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -161,14 +181,18 @@ class LanguageTranslatorV3 extends BaseService {
       'text': _params.text,
       'model_id': _params.modelId,
       'source': _params.source,
-      'target': _params.target
+      'target': _params.target,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'translate');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'translate'
+    );
 
     const parameters = {
       options: {
@@ -178,16 +202,20 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * identification
    ************************/
@@ -202,14 +230,20 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiableLanguages>>}
    */
-  public listIdentifiableLanguages(params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiableLanguages>> {
-    const _params = Object.assign({}, params);
+  public listIdentifiableLanguages(
+    params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiableLanguages>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listIdentifiableLanguages');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'listIdentifiableLanguages'
+    );
 
     const parameters = {
       options: {
@@ -218,14 +252,19 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Identify language.
@@ -237,8 +276,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiedLanguages>>}
    */
-  public identify(params: LanguageTranslatorV3.IdentifyParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiedLanguages>> {
-    const _params = Object.assign({}, params);
+  public identify(
+    params: LanguageTranslatorV3.IdentifyParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiedLanguages>> {
+    const _params = { ...params };
     const requiredParams = ['text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -248,10 +289,14 @@ class LanguageTranslatorV3 extends BaseService {
 
     const body = _params.text;
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'identify');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'identify'
+    );
 
     const parameters = {
       options: {
@@ -261,16 +306,20 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'text/plain',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'text/plain',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * models
    ************************/
@@ -290,17 +339,23 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>>}
    */
-  public listModels(params?: LanguageTranslatorV3.ListModelsParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>> {
-    const _params = Object.assign({}, params);
+  public listModels(
+    params?: LanguageTranslatorV3.ListModelsParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
       'source': _params.source,
       'target': _params.target,
-      'default': _params._default
+      'default': _params._default,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listModels');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'listModels'
+    );
 
     const parameters = {
       options: {
@@ -309,14 +364,19 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create model.
@@ -386,7 +446,7 @@ class LanguageTranslatorV3 extends BaseService {
    * available models and IDs, use the `List models` method. Most models that are provided with the service are
    * customizable. In addition, all models that you create with parallel corpora customization can be further customized
    * with a forced glossary.
-   * @param {NodeJS.ReadableStream|Buffer} [params.forcedGlossary] - A file with forced glossary terms for the source
+   * @param {NodeJS.ReadableStream | Buffer} [params.forcedGlossary] - A file with forced glossary terms for the source
    * and target languages. The customizations in the file completely overwrite the domain translation data, including
    * high frequency or high confidence phrase translations.
    *
@@ -395,7 +455,7 @@ class LanguageTranslatorV3 extends BaseService {
    * the method description.
    *
    * *With `curl`, use `--form forced_glossary=@{filename}`.*.
-   * @param {NodeJS.ReadableStream|Buffer} [params.parallelCorpus] - A file with parallel sentences for the source and
+   * @param {NodeJS.ReadableStream | Buffer} [params.parallelCorpus] - A file with parallel sentences for the source and
    * target languages. You can upload multiple parallel corpus files in one request by repeating the parameter. All
    * uploaded parallel corpus files combined must contain at least 5000 parallel sentences to train successfully. You
    * can provide a maximum of 500,000 parallel sentences across all corpora.
@@ -409,8 +469,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>>}
    */
-  public createModel(params: LanguageTranslatorV3.CreateModelParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
-    const _params = Object.assign({}, params);
+  public createModel(
+    params: LanguageTranslatorV3.CreateModelParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
+    const _params = { ...params };
     const requiredParams = ['baseModelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -421,21 +483,25 @@ class LanguageTranslatorV3 extends BaseService {
     const formData = {
       'forced_glossary': {
         data: _params.forcedGlossary,
-        contentType: 'application/octet-stream'
+        contentType: 'application/octet-stream',
       },
       'parallel_corpus': {
         data: _params.parallelCorpus,
-        contentType: 'application/octet-stream'
-      }
+        contentType: 'application/octet-stream',
+      },
     };
 
     const query = {
       'version': this.version,
       'base_model_id': _params.baseModelId,
-      'name': _params.name
+      'name': _params.name,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'createModel');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'createModel'
+    );
 
     const parameters = {
       options: {
@@ -445,15 +511,20 @@ class LanguageTranslatorV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete model.
@@ -465,8 +536,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DeleteModelResult>>}
    */
-  public deleteModel(params: LanguageTranslatorV3.DeleteModelParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DeleteModelResult>> {
-    const _params = Object.assign({}, params);
+  public deleteModel(
+    params: LanguageTranslatorV3.DeleteModelParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DeleteModelResult>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -475,14 +548,18 @@ class LanguageTranslatorV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteModel');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'deleteModel'
+    );
 
     const parameters = {
       options: {
@@ -492,14 +569,19 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get model details.
@@ -512,8 +594,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>>}
    */
-  public getModel(params: LanguageTranslatorV3.GetModelParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
-    const _params = Object.assign({}, params);
+  public getModel(
+    params: LanguageTranslatorV3.GetModelParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -522,14 +606,18 @@ class LanguageTranslatorV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getModel');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'getModel'
+    );
 
     const parameters = {
       options: {
@@ -539,15 +627,19 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * documentTranslation
    ************************/
@@ -561,14 +653,20 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentList>>}
    */
-  public listDocuments(params?: LanguageTranslatorV3.ListDocumentsParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentList>> {
-    const _params = Object.assign({}, params);
+  public listDocuments(
+    params?: LanguageTranslatorV3.ListDocumentsParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentList>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listDocuments');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'listDocuments'
+    );
 
     const parameters = {
       options: {
@@ -577,14 +675,19 @@ class LanguageTranslatorV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Translate document.
@@ -595,9 +698,9 @@ class LanguageTranslatorV3 extends BaseService {
    * * 2 MB for service instances on the Lite plan.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.file - The contents of the source file to translate. The maximum file
-   * size for document translation is 20 MB for service instances on the Standard, Advanced, and Premium plans, and 2 MB
-   * for service instances on the Lite plan. For more information, see [Supported file formats
+   * @param {NodeJS.ReadableStream | Buffer} params.file - The contents of the source file to translate. The maximum
+   * file size for document translation is 20 MB for service instances on the Standard, Advanced, and Premium plans, and
+   * 2 MB for service instances on the Lite plan. For more information, see [Supported file formats
    * (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
    * @param {string} params.filename - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
@@ -614,8 +717,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>>}
    */
-  public translateDocument(params: LanguageTranslatorV3.TranslateDocumentParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
-    const _params = Object.assign({}, params);
+  public translateDocument(
+    params: LanguageTranslatorV3.TranslateDocumentParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
+    const _params = { ...params };
     const requiredParams = ['file', 'filename'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -627,19 +732,23 @@ class LanguageTranslatorV3 extends BaseService {
       'file': {
         data: _params.file,
         filename: _params.filename,
-        contentType: _params.fileContentType
+        contentType: _params.fileContentType,
       },
       'model_id': _params.modelId,
       'source': _params.source,
       'target': _params.target,
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'translateDocument');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'translateDocument'
+    );
 
     const parameters = {
       options: {
@@ -649,15 +758,20 @@ class LanguageTranslatorV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get document status.
@@ -669,8 +783,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>>}
    */
-  public getDocumentStatus(params: LanguageTranslatorV3.GetDocumentStatusParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
-    const _params = Object.assign({}, params);
+  public getDocumentStatus(
+    params: LanguageTranslatorV3.GetDocumentStatusParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
+    const _params = { ...params };
     const requiredParams = ['documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -679,14 +795,18 @@ class LanguageTranslatorV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getDocumentStatus');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'getDocumentStatus'
+    );
 
     const parameters = {
       options: {
@@ -696,14 +816,19 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete document.
@@ -715,8 +840,10 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>>}
    */
-  public deleteDocument(params: LanguageTranslatorV3.DeleteDocumentParams): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteDocument(
+    params: LanguageTranslatorV3.DeleteDocumentParams
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -725,14 +852,18 @@ class LanguageTranslatorV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteDocument');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'deleteDocument'
+    );
 
     const parameters = {
       options: {
@@ -742,13 +873,18 @@ class LanguageTranslatorV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get translated document.
@@ -767,10 +903,12 @@ class LanguageTranslatorV3 extends BaseService {
    * text/richtext, text/rtf, or text/xml. A character encoding can be specified by including a `charset` parameter. For
    * example, 'text/html;charset=utf-8'.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream|Buffer>>}
+   * @returns {Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream | Buffer>>}
    */
-  public getTranslatedDocument(params: LanguageTranslatorV3.GetTranslatedDocumentParams): Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public getTranslatedDocument(
+    params: LanguageTranslatorV3.GetTranslatedDocumentParams
+  ): Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream | Buffer>> {
+    const _params = { ...params };
     const requiredParams = ['documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -779,14 +917,18 @@ class LanguageTranslatorV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getTranslatedDocument');
+    const sdkHeaders = getSdkHeaders(
+      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'getTranslatedDocument'
+    );
 
     const parameters = {
       options: {
@@ -797,15 +939,19 @@ class LanguageTranslatorV3 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': _params.accept
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': _params.accept,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -813,10 +959,8 @@ class LanguageTranslatorV3 extends BaseService {
  ************************/
 
 namespace LanguageTranslatorV3 {
-
   /** Options for the `LanguageTranslatorV3` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
      *  version is `2018-05-01`.
      */
@@ -824,7 +968,7 @@ namespace LanguageTranslatorV3 {
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -835,7 +979,7 @@ namespace LanguageTranslatorV3 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -916,7 +1060,7 @@ namespace LanguageTranslatorV3 {
      *
      *  *With `curl`, use `--form forced_glossary=@{filename}`.*.
      */
-    forcedGlossary?: NodeJS.ReadableStream|Buffer;
+    forcedGlossary?: NodeJS.ReadableStream | Buffer;
     /** A file with parallel sentences for the source and target languages. You can upload multiple parallel corpus
      *  files in one request by repeating the parameter. All uploaded parallel corpus files combined must contain at
      *  least 5000 parallel sentences to train successfully. You can provide a maximum of 500,000 parallel sentences
@@ -928,7 +1072,7 @@ namespace LanguageTranslatorV3 {
      *
      *  *With `curl`, use `--form parallel_corpus=@{filename}`.*.
      */
-    parallelCorpus?: NodeJS.ReadableStream|Buffer;
+    parallelCorpus?: NodeJS.ReadableStream | Buffer;
     /** An optional model name that you can use to identify the model. Valid characters are letters, numbers,
      *  dashes, underscores, spaces, and apostrophes. The maximum length of the name is 32 characters.
      */
@@ -962,7 +1106,7 @@ namespace LanguageTranslatorV3 {
      *  For more information, see [Supported file formats
      *  (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
      */
-    file: NodeJS.ReadableStream|Buffer;
+    file: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */
     filename: string;
     /** The content type of file. */
@@ -1252,7 +1396,6 @@ namespace LanguageTranslatorV3 {
     /** List of translation output in UTF-8, corresponding to the input text entries. */
     translations: Translation[];
   }
-
 }
 
 export = LanguageTranslatorV3;

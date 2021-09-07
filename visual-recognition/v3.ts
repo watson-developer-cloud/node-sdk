@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b00691c-20210824-142310
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -31,11 +36,14 @@ import { getSdkHeaders } from '../lib/common';
  *
  * The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes and objects in images that
  * you upload to the service. You can create and train a custom classifier to identify subjects that suit your needs.
+ *
+ * API Version: 3.0
+ * See: https://cloud.ibm.com/docs/visual-recognition
  */
 
 class VisualRecognitionV3 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.visual-recognition.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'watson_vision_combined';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
@@ -92,7 +100,7 @@ class VisualRecognitionV3 extends BaseService {
    * Classify images with built-in or custom classifiers.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} [params.imagesFile] - An image file (.gif, .jpg, .png, .tif) or .zip file
+   * @param {NodeJS.ReadableStream | Buffer} [params.imagesFile] - An image file (.gif, .jpg, .png, .tif) or .zip file
    * with images. Maximum image size is 10 MB. Include no more than 20 images and limit the .zip file to 100 MB. Encode
    * the image and .zip file names in UTF-8 if they contain non-ASCII characters. The service assumes UTF-8 encoding if
    * it encounters non-ASCII characters.
@@ -127,14 +135,16 @@ class VisualRecognitionV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>>}
    */
-  public classify(params?: VisualRecognitionV3.ClassifyParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
-    const _params = Object.assign({}, params);
+  public classify(
+    params?: VisualRecognitionV3.ClassifyParams
+  ): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.ClassifiedImages>> {
+    const _params = { ...params };
 
     const formData = {
       'images_file': {
         data: _params.imagesFile,
         filename: _params.imagesFilename,
-        contentType: _params.imagesFileContentType
+        contentType: _params.imagesFileContentType,
       },
       'url': _params.url,
       'threshold': _params.threshold,
@@ -143,10 +153,14 @@ class VisualRecognitionV3 extends BaseService {
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'classify');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'classify'
+    );
 
     const parameters = {
       options: {
@@ -156,17 +170,21 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * custom
    ************************/
@@ -189,7 +207,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new classifier. Encode special characters in UTF-8.
-   * @param {Record<string, NodeJS.ReadableStream|Buffer>} params.positiveExamples - A dictionary that contains the
+   * @param {Record<string, NodeJS.ReadableStream | Buffer>} params.positiveExamples - A dictionary that contains the
    * value for each classname. The value is a .zip file of images that depict the visual subject of a class in the new
    * classifier. You can include more than one positive example file in a call.
    *
@@ -201,7 +219,7 @@ class VisualRecognitionV3 extends BaseService {
    * maximum number of images is 10,000 images or 100 MB per .zip file.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {NodeJS.ReadableStream|Buffer} [params.negativeExamples] - A .zip file of images that do not depict the
+   * @param {NodeJS.ReadableStream | Buffer} [params.negativeExamples] - A .zip file of images that do not depict the
    * visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
@@ -209,8 +227,10 @@ class VisualRecognitionV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
-  public createClassifier(params: VisualRecognitionV3.CreateClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
-    const _params = Object.assign({}, params);
+  public createClassifier(
+    params: VisualRecognitionV3.CreateClassifierParams
+  ): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'positiveExamples'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -223,12 +243,12 @@ class VisualRecognitionV3 extends BaseService {
       'negative_examples': {
         data: _params.negativeExamples,
         filename: _params.negativeExamplesFilename,
-        contentType: 'application/octet-stream'
-      }
+        contentType: 'application/octet-stream',
+      },
     };
 
     Object.keys(_params.positiveExamples || {}).forEach(key => {
-      const partName = `${key}_positive_examples`
+      const partName = `${key}_positive_examples`;
       formData[partName] = {
         data: _params.positiveExamples[key],
         contentType: 'application/octet-stream',
@@ -236,10 +256,14 @@ class VisualRecognitionV3 extends BaseService {
     });
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'createClassifier');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'createClassifier'
+    );
 
     const parameters = {
       options: {
@@ -249,15 +273,20 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Retrieve a list of classifiers.
@@ -268,15 +297,21 @@ class VisualRecognitionV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>>}
    */
-  public listClassifiers(params?: VisualRecognitionV3.ListClassifiersParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>> {
-    const _params = Object.assign({}, params);
+  public listClassifiers(
+    params?: VisualRecognitionV3.ListClassifiersParams
+  ): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifiers>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
-      'verbose': _params.verbose
+      'verbose': _params.verbose,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'listClassifiers');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'listClassifiers'
+    );
 
     const parameters = {
       options: {
@@ -285,14 +320,19 @@ class VisualRecognitionV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Retrieve classifier details.
@@ -304,8 +344,10 @@ class VisualRecognitionV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
-  public getClassifier(params: VisualRecognitionV3.GetClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
-    const _params = Object.assign({}, params);
+  public getClassifier(
+    params: VisualRecognitionV3.GetClassifierParams
+  ): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -314,14 +356,18 @@ class VisualRecognitionV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getClassifier');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'getClassifier'
+    );
 
     const parameters = {
       options: {
@@ -331,14 +377,19 @@ class VisualRecognitionV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a classifier.
@@ -362,7 +413,7 @@ class VisualRecognitionV3 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
-   * @param {Record<string, NodeJS.ReadableStream|Buffer>} [params.positiveExamples] - A dictionary that contains the
+   * @param {Record<string, NodeJS.ReadableStream | Buffer>} [params.positiveExamples] - A dictionary that contains the
    * value for each classname. The value is a .zip file of images that depict the visual subject of a class in the
    * classifier. The positive examples create or update classes in the classifier. You can include more than one
    * positive example file in a call.
@@ -375,7 +426,7 @@ class VisualRecognitionV3 extends BaseService {
    * maximum number of images is 10,000 images or 100 MB per .zip file.
    *
    * Encode special characters in the file name in UTF-8.
-   * @param {NodeJS.ReadableStream|Buffer} [params.negativeExamples] - A .zip file of images that do not depict the
+   * @param {NodeJS.ReadableStream | Buffer} [params.negativeExamples] - A .zip file of images that do not depict the
    * visual subject of any of the classes of the new classifier. Must contain a minimum of 10 images.
    *
    * Encode special characters in the file name in UTF-8.
@@ -383,8 +434,10 @@ class VisualRecognitionV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>>}
    */
-  public updateClassifier(params: VisualRecognitionV3.UpdateClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
-    const _params = Object.assign({}, params);
+  public updateClassifier(
+    params: VisualRecognitionV3.UpdateClassifierParams
+  ): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Classifier>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -396,12 +449,12 @@ class VisualRecognitionV3 extends BaseService {
       'negative_examples': {
         data: _params.negativeExamples,
         filename: _params.negativeExamplesFilename,
-        contentType: 'application/octet-stream'
-      }
+        contentType: 'application/octet-stream',
+      },
     };
 
     Object.keys(_params.positiveExamples || {}).forEach(key => {
-      const partName = `${key}_positive_examples`
+      const partName = `${key}_positive_examples`;
       formData[partName] = {
         data: _params.positiveExamples[key],
         contentType: 'application/octet-stream',
@@ -409,14 +462,18 @@ class VisualRecognitionV3 extends BaseService {
     });
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'updateClassifier');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'updateClassifier'
+    );
 
     const parameters = {
       options: {
@@ -427,15 +484,20 @@ class VisualRecognitionV3 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a classifier.
@@ -445,8 +507,10 @@ class VisualRecognitionV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>>}
    */
-  public deleteClassifier(params: VisualRecognitionV3.DeleteClassifierParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteClassifier(
+    params: VisualRecognitionV3.DeleteClassifierParams
+  ): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -455,14 +519,18 @@ class VisualRecognitionV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteClassifier');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'deleteClassifier'
+    );
 
     const parameters = {
       options: {
@@ -472,15 +540,19 @@ class VisualRecognitionV3 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * coreML
    ************************/
@@ -494,10 +566,12 @@ class VisualRecognitionV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream|Buffer>>}
+   * @returns {Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream | Buffer>>}
    */
-  public getCoreMlModel(params: VisualRecognitionV3.GetCoreMlModelParams): Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public getCoreMlModel(
+    params: VisualRecognitionV3.GetCoreMlModelParams
+  ): Promise<VisualRecognitionV3.Response<NodeJS.ReadableStream | Buffer>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -506,14 +580,18 @@ class VisualRecognitionV3 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'getCoreMlModel');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'getCoreMlModel'
+    );
 
     const parameters = {
       options: {
@@ -524,15 +602,19 @@ class VisualRecognitionV3 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/octet-stream',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/octet-stream',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -552,8 +634,10 @@ class VisualRecognitionV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>>}
    */
-  public deleteUserData(params: VisualRecognitionV3.DeleteUserDataParams): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: VisualRecognitionV3.DeleteUserDataParams
+  ): Promise<VisualRecognitionV3.Response<VisualRecognitionV3.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -563,10 +647,14 @@ class VisualRecognitionV3 extends BaseService {
 
     const query = {
       'version': this.version,
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -575,15 +663,19 @@ class VisualRecognitionV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -591,10 +683,8 @@ class VisualRecognitionV3 extends BaseService {
  ************************/
 
 namespace VisualRecognitionV3 {
-
   /** Options for the `VisualRecognitionV3` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
      *  `2018-03-19`.
      */
@@ -602,7 +692,7 @@ namespace VisualRecognitionV3 {
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -613,7 +703,7 @@ namespace VisualRecognitionV3 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -632,7 +722,7 @@ namespace VisualRecognitionV3 {
      *
      *  You can also include an image with the **url** parameter.
      */
-    imagesFile?: NodeJS.ReadableStream|Buffer;
+    imagesFile?: NodeJS.ReadableStream | Buffer;
     /** The filename for imagesFile. */
     imagesFilename?: string;
     /** The content type of imagesFile. */
@@ -706,13 +796,13 @@ namespace VisualRecognitionV3 {
      *
      *  Encode special characters in the file name in UTF-8.
      */
-    positiveExamples: Record<string, NodeJS.ReadableStream|Buffer>;
+    positiveExamples: Record<string, NodeJS.ReadableStream | Buffer>;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier.
      *  Must contain a minimum of 10 images.
      *
      *  Encode special characters in the file name in UTF-8.
      */
-    negativeExamples?: NodeJS.ReadableStream|Buffer;
+    negativeExamples?: NodeJS.ReadableStream | Buffer;
     /** The filename for negativeExamples. */
     negativeExamplesFilename?: string;
     headers?: OutgoingHttpHeaders;
@@ -751,13 +841,13 @@ namespace VisualRecognitionV3 {
      *
      *  Encode special characters in the file name in UTF-8.
      */
-    positiveExamples?: Record<string, NodeJS.ReadableStream|Buffer>;
+    positiveExamples?: Record<string, NodeJS.ReadableStream | Buffer>;
     /** A .zip file of images that do not depict the visual subject of any of the classes of the new classifier.
      *  Must contain a minimum of 10 images.
      *
      *  Encode special characters in the file name in UTF-8.
      */
-    negativeExamples?: NodeJS.ReadableStream|Buffer;
+    negativeExamples?: NodeJS.ReadableStream | Buffer;
     /** The filename for negativeExamples. */
     negativeExamplesFilename?: string;
     headers?: OutgoingHttpHeaders;
@@ -906,7 +996,6 @@ namespace VisualRecognitionV3 {
     /** Information about the error. */
     description: string;
   }
-
 }
 
 export = VisualRecognitionV3;

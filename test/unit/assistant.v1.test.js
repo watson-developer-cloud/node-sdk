@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const AssistantV1 = require('../../dist/assistant/v1');
@@ -29,13 +29,13 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const assistantServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: 'testString',
 };
 
-const assistantService = new AssistantV1(service);
+const assistantService = new AssistantV1(assistantServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(assistantService, 'createRequest');
@@ -134,9 +134,9 @@ describe('AssistantV1', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new AssistantV1(service);
+        const serviceObj = new AssistantV1(assistantServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(assistantServiceOptions.version);
       });
     });
   });
@@ -147,8 +147,8 @@ describe('AssistantV1', () => {
       // MessageInput
       const messageInputModel = {
         text: 'testString',
-        spelling_suggestions: true,
-        spelling_auto_correct: true,
+        spelling_suggestions: false,
+        spelling_auto_correct: false,
         foo: 'testString',
       };
 
@@ -211,7 +211,7 @@ describe('AssistantV1', () => {
         location: [38],
         value: 'testString',
         confidence: 72.5,
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         groups: [captureGroupModel],
         interpretation: runtimeEntityInterpretationModel,
         alternatives: [runtimeEntityAlternativeModel],
@@ -227,7 +227,7 @@ describe('AssistantV1', () => {
       // Context
       const contextModel = {
         conversation_id: 'testString',
-        system: { key1: 'testString' },
+        system: { 'key1': 'testString' },
         metadata: messageContextMetadataModel,
         foo: 'testString',
       };
@@ -297,11 +297,11 @@ describe('AssistantV1', () => {
         const input = messageInputModel;
         const intents = [runtimeIntentModel];
         const entities = [runtimeEntityModel];
-        const alternateIntents = true;
+        const alternateIntents = false;
         const context = contextModel;
         const output = outputDataModel;
         const userId = 'testString';
-        const nodesVisitedDetails = true;
+        const nodesVisitedDetails = false;
         const params = {
           workspaceId: workspaceId,
           input: input,
@@ -322,22 +322,22 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/message', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/message', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['input']).toEqual(input);
-        expect(options.body['intents']).toEqual(intents);
-        expect(options.body['entities']).toEqual(entities);
-        expect(options.body['alternate_intents']).toEqual(alternateIntents);
-        expect(options.body['context']).toEqual(context);
-        expect(options.body['output']).toEqual(output);
-        expect(options.body['user_id']).toEqual(userId);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['nodes_visited_details']).toEqual(nodesVisitedDetails);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.body.input).toEqual(input);
+        expect(mockRequestOptions.body.intents).toEqual(intents);
+        expect(mockRequestOptions.body.entities).toEqual(entities);
+        expect(mockRequestOptions.body.alternate_intents).toEqual(alternateIntents);
+        expect(mockRequestOptions.body.context).toEqual(context);
+        expect(mockRequestOptions.body.output).toEqual(output);
+        expect(mockRequestOptions.body.user_id).toEqual(userId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.nodes_visited_details).toEqual(nodesVisitedDetails);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -359,7 +359,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.message({});
@@ -371,11 +371,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const messagePromise = assistantService.message();
         expectToBePromise(messagePromise);
 
-        messagePromise.catch(err => {
+        messagePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -408,15 +408,15 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/bulk_classify', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/bulk_classify', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['input']).toEqual(input);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.body.input).toEqual(input);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -438,7 +438,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.bulkClassify({});
@@ -450,11 +450,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const bulkClassifyPromise = assistantService.bulkClassify();
         expectToBePromise(bulkClassifyPromise);
 
-        bulkClassifyPromise.catch(err => {
+        bulkClassifyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -466,10 +466,10 @@ describe('AssistantV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listWorkspaces
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'name';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           pageLimit: pageLimit,
           includeCount: includeCount,
@@ -486,18 +486,18 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
       });
 
       test('should prioritize user-given headers', () => {
@@ -562,14 +562,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         foo: 'testString',
       };
 
@@ -584,7 +584,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { key1: 'testString' },
+        parameters: { 'key1': 'testString' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -598,7 +598,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -609,7 +609,7 @@ describe('AssistantV1', () => {
         digress_out: 'allow_returning',
         digress_out_slots: 'not_allowed',
         user_label: 'testString',
-        disambiguation_opt_out: true,
+        disambiguation_opt_out: false,
       };
 
       // Counterexample
@@ -626,7 +626,7 @@ describe('AssistantV1', () => {
       const workspaceSystemSettingsDisambiguationModel = {
         prompt: 'testString',
         none_of_the_above_prompt: 'testString',
-        enabled: true,
+        enabled: false,
         sensitivity: 'auto',
         randomize: true,
         max_suggestions: 1,
@@ -635,21 +635,21 @@ describe('AssistantV1', () => {
 
       // WorkspaceSystemSettingsSystemEntities
       const workspaceSystemSettingsSystemEntitiesModel = {
-        enabled: true,
+        enabled: false,
       };
 
       // WorkspaceSystemSettingsOffTopic
       const workspaceSystemSettingsOffTopicModel = {
-        enabled: true,
+        enabled: false,
       };
 
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { key1: 'testString' },
-        spelling_suggestions: true,
-        spelling_auto_correct: true,
+        human_agent_assist: { 'key1': 'testString' },
+        spelling_suggestions: false,
+        spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
         off_topic: workspaceSystemSettingsOffTopicModel,
       };
@@ -689,7 +689,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -699,7 +699,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -711,13 +711,13 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { key1: 'testString' };
-        const learningOptOut = true;
+        const metadata = { 'key1': 'testString' };
+        const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
         const intents = [createIntentModel];
         const entities = [createEntityModel];
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           name: name,
           description: description,
@@ -741,25 +741,25 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['language']).toEqual(language);
-        expect(options.body['dialog_nodes']).toEqual(dialogNodes);
-        expect(options.body['counterexamples']).toEqual(counterexamples);
-        expect(options.body['metadata']).toEqual(metadata);
-        expect(options.body['learning_opt_out']).toEqual(learningOptOut);
-        expect(options.body['system_settings']).toEqual(systemSettings);
-        expect(options.body['webhooks']).toEqual(webhooks);
-        expect(options.body['intents']).toEqual(intents);
-        expect(options.body['entities']).toEqual(entities);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.language).toEqual(language);
+        expect(mockRequestOptions.body.dialog_nodes).toEqual(dialogNodes);
+        expect(mockRequestOptions.body.counterexamples).toEqual(counterexamples);
+        expect(mockRequestOptions.body.metadata).toEqual(metadata);
+        expect(mockRequestOptions.body.learning_opt_out).toEqual(learningOptOut);
+        expect(mockRequestOptions.body.system_settings).toEqual(systemSettings);
+        expect(mockRequestOptions.body.webhooks).toEqual(webhooks);
+        expect(mockRequestOptions.body.intents).toEqual(intents);
+        expect(mockRequestOptions.body.entities).toEqual(entities);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
       });
 
       test('should prioritize user-given headers', () => {
@@ -789,8 +789,8 @@ describe('AssistantV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getWorkspace
         const workspaceId = 'testString';
-        const _export = true;
-        const includeAudit = true;
+        const _export = false;
+        const includeAudit = false;
         const sort = 'stable';
         const params = {
           workspaceId: workspaceId,
@@ -807,17 +807,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -839,7 +839,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getWorkspace({});
@@ -851,11 +851,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getWorkspacePromise = assistantService.getWorkspace();
         expectToBePromise(getWorkspacePromise);
 
-        getWorkspacePromise.catch(err => {
+        getWorkspacePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -902,14 +902,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         foo: 'testString',
       };
 
@@ -924,7 +924,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { key1: 'testString' },
+        parameters: { 'key1': 'testString' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -938,7 +938,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -949,7 +949,7 @@ describe('AssistantV1', () => {
         digress_out: 'allow_returning',
         digress_out_slots: 'not_allowed',
         user_label: 'testString',
-        disambiguation_opt_out: true,
+        disambiguation_opt_out: false,
       };
 
       // Counterexample
@@ -966,7 +966,7 @@ describe('AssistantV1', () => {
       const workspaceSystemSettingsDisambiguationModel = {
         prompt: 'testString',
         none_of_the_above_prompt: 'testString',
-        enabled: true,
+        enabled: false,
         sensitivity: 'auto',
         randomize: true,
         max_suggestions: 1,
@@ -975,21 +975,21 @@ describe('AssistantV1', () => {
 
       // WorkspaceSystemSettingsSystemEntities
       const workspaceSystemSettingsSystemEntitiesModel = {
-        enabled: true,
+        enabled: false,
       };
 
       // WorkspaceSystemSettingsOffTopic
       const workspaceSystemSettingsOffTopicModel = {
-        enabled: true,
+        enabled: false,
       };
 
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { key1: 'testString' },
-        spelling_suggestions: true,
-        spelling_auto_correct: true,
+        human_agent_assist: { 'key1': 'testString' },
+        spelling_suggestions: false,
+        spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
         off_topic: workspaceSystemSettingsOffTopicModel,
       };
@@ -1029,7 +1029,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -1039,7 +1039,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -1052,14 +1052,14 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { key1: 'testString' };
-        const learningOptOut = true;
+        const metadata = { 'key1': 'testString' };
+        const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
         const intents = [createIntentModel];
         const entities = [createEntityModel];
-        const append = true;
-        const includeAudit = true;
+        const append = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           name: name,
@@ -1085,27 +1085,27 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['language']).toEqual(language);
-        expect(options.body['dialog_nodes']).toEqual(dialogNodes);
-        expect(options.body['counterexamples']).toEqual(counterexamples);
-        expect(options.body['metadata']).toEqual(metadata);
-        expect(options.body['learning_opt_out']).toEqual(learningOptOut);
-        expect(options.body['system_settings']).toEqual(systemSettings);
-        expect(options.body['webhooks']).toEqual(webhooks);
-        expect(options.body['intents']).toEqual(intents);
-        expect(options.body['entities']).toEqual(entities);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['append']).toEqual(append);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.language).toEqual(language);
+        expect(mockRequestOptions.body.dialog_nodes).toEqual(dialogNodes);
+        expect(mockRequestOptions.body.counterexamples).toEqual(counterexamples);
+        expect(mockRequestOptions.body.metadata).toEqual(metadata);
+        expect(mockRequestOptions.body.learning_opt_out).toEqual(learningOptOut);
+        expect(mockRequestOptions.body.system_settings).toEqual(systemSettings);
+        expect(mockRequestOptions.body.webhooks).toEqual(webhooks);
+        expect(mockRequestOptions.body.intents).toEqual(intents);
+        expect(mockRequestOptions.body.entities).toEqual(entities);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.append).toEqual(append);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1127,7 +1127,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateWorkspace({});
@@ -1139,11 +1139,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateWorkspacePromise = assistantService.updateWorkspace();
         expectToBePromise(updateWorkspacePromise);
 
-        updateWorkspacePromise.catch(err => {
+        updateWorkspacePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1167,14 +1167,14 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1196,7 +1196,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteWorkspace({});
@@ -1208,11 +1208,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteWorkspacePromise = assistantService.deleteWorkspace();
         expectToBePromise(deleteWorkspacePromise);
 
-        deleteWorkspacePromise.catch(err => {
+        deleteWorkspacePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1224,12 +1224,12 @@ describe('AssistantV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listIntents
         const workspaceId = 'testString';
-        const _export = true;
+        const _export = false;
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'intent';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           _export: _export,
@@ -1248,20 +1248,20 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1283,7 +1283,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listIntents({});
@@ -1295,11 +1295,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listIntentsPromise = assistantService.listIntents();
         expectToBePromise(listIntentsPromise);
 
-        listIntentsPromise.catch(err => {
+        listIntentsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1328,7 +1328,7 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const description = 'testString';
         const examples = [exampleModel];
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           intent: intent,
@@ -1345,18 +1345,18 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['intent']).toEqual(intent);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['examples']).toEqual(examples);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.body.intent).toEqual(intent);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.examples).toEqual(examples);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1380,7 +1380,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createIntent({});
@@ -1392,11 +1392,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createIntentPromise = assistantService.createIntent();
         expectToBePromise(createIntentPromise);
 
-        createIntentPromise.catch(err => {
+        createIntentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1409,8 +1409,8 @@ describe('AssistantV1', () => {
         // Construct the params object for operation getIntent
         const workspaceId = 'testString';
         const intent = 'testString';
-        const _export = true;
-        const includeAudit = true;
+        const _export = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           intent: intent,
@@ -1426,17 +1426,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents/{intent}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1460,7 +1460,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getIntent({});
@@ -1472,11 +1472,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getIntentPromise = assistantService.getIntent();
         expectToBePromise(getIntentPromise);
 
-        getIntentPromise.catch(err => {
+        getIntentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1506,8 +1506,8 @@ describe('AssistantV1', () => {
         const newIntent = 'testString';
         const newDescription = 'testString';
         const newExamples = [exampleModel];
-        const append = true;
-        const includeAudit = true;
+        const append = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           intent: intent,
@@ -1526,20 +1526,20 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents/{intent}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['intent']).toEqual(newIntent);
-        expect(options.body['description']).toEqual(newDescription);
-        expect(options.body['examples']).toEqual(newExamples);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['append']).toEqual(append);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
+        expect(mockRequestOptions.body.intent).toEqual(newIntent);
+        expect(mockRequestOptions.body.description).toEqual(newDescription);
+        expect(mockRequestOptions.body.examples).toEqual(newExamples);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.append).toEqual(append);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1563,7 +1563,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateIntent({});
@@ -1575,11 +1575,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateIntentPromise = assistantService.updateIntent();
         expectToBePromise(updateIntentPromise);
 
-        updateIntentPromise.catch(err => {
+        updateIntentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1605,15 +1605,15 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/intents/{intent}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1637,7 +1637,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteIntent({});
@@ -1649,11 +1649,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteIntentPromise = assistantService.deleteIntent();
         expectToBePromise(deleteIntentPromise);
 
-        deleteIntentPromise.catch(err => {
+        deleteIntentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1667,10 +1667,10 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const intent = 'testString';
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'text';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           intent: intent,
@@ -1689,24 +1689,20 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}/examples', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1730,7 +1726,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listExamples({});
@@ -1742,11 +1738,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listExamplesPromise = assistantService.listExamples();
         expectToBePromise(listExamplesPromise);
 
-        listExamplesPromise.catch(err => {
+        listExamplesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1769,7 +1765,7 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const text = 'testString';
         const mentions = [mentionModel];
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           intent: intent,
@@ -1786,22 +1782,18 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/intents/{intent}/examples',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}/examples', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['text']).toEqual(text);
-        expect(options.body['mentions']).toEqual(mentions);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
+        expect(mockRequestOptions.body.text).toEqual(text);
+        expect(mockRequestOptions.body.mentions).toEqual(mentions);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1827,7 +1819,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createExample({});
@@ -1839,11 +1831,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createExamplePromise = assistantService.createExample();
         expectToBePromise(createExamplePromise);
 
-        createExamplePromise.catch(err => {
+        createExamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1857,7 +1849,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const intent = 'testString';
         const text = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           intent: intent,
@@ -1873,21 +1865,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
-        expect(options.path['text']).toEqual(text);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
+        expect(mockRequestOptions.path.text).toEqual(text);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1913,7 +1901,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getExample({});
@@ -1925,11 +1913,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getExamplePromise = assistantService.getExample();
         expectToBePromise(getExamplePromise);
 
-        getExamplePromise.catch(err => {
+        getExamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1953,7 +1941,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const newText = 'testString';
         const newMentions = [mentionModel];
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           intent: intent,
@@ -1971,23 +1959,19 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['text']).toEqual(newText);
-        expect(options.body['mentions']).toEqual(newMentions);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
-        expect(options.path['text']).toEqual(text);
+        expect(mockRequestOptions.body.text).toEqual(newText);
+        expect(mockRequestOptions.body.mentions).toEqual(newMentions);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
+        expect(mockRequestOptions.path.text).toEqual(text);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2013,7 +1997,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateExample({});
@@ -2025,11 +2009,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateExamplePromise = assistantService.updateExample();
         expectToBePromise(updateExamplePromise);
 
-        updateExamplePromise.catch(err => {
+        updateExamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2057,20 +2041,16 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/intents/{intent}/examples/{text}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['intent']).toEqual(intent);
-        expect(options.path['text']).toEqual(text);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.intent).toEqual(intent);
+        expect(mockRequestOptions.path.text).toEqual(text);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2096,7 +2076,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteExample({});
@@ -2108,11 +2088,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteExamplePromise = assistantService.deleteExample();
         expectToBePromise(deleteExamplePromise);
 
-        deleteExamplePromise.catch(err => {
+        deleteExamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2125,10 +2105,10 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listCounterexamples
         const workspaceId = 'testString';
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'text';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           pageLimit: pageLimit,
@@ -2146,19 +2126,19 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/counterexamples', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/counterexamples', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2180,7 +2160,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listCounterexamples({});
@@ -2192,11 +2172,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listCounterexamplesPromise = assistantService.listCounterexamples();
         expectToBePromise(listCounterexamplesPromise);
 
-        listCounterexamplesPromise.catch(err => {
+        listCounterexamplesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2209,7 +2189,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation createCounterexample
         const workspaceId = 'testString';
         const text = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           text: text,
@@ -2224,16 +2204,16 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/counterexamples', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/counterexamples', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['text']).toEqual(text);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.body.text).toEqual(text);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2257,7 +2237,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createCounterexample({});
@@ -2269,11 +2249,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createCounterexamplePromise = assistantService.createCounterexample();
         expectToBePromise(createCounterexamplePromise);
 
-        createCounterexamplePromise.catch(err => {
+        createCounterexamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2286,7 +2266,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation getCounterexample
         const workspaceId = 'testString';
         const text = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           text: text,
@@ -2301,16 +2281,16 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/counterexamples/{text}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/counterexamples/{text}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['text']).toEqual(text);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.text).toEqual(text);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2334,7 +2314,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getCounterexample({});
@@ -2346,11 +2326,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getCounterexamplePromise = assistantService.getCounterexample();
         expectToBePromise(getCounterexamplePromise);
 
-        getCounterexamplePromise.catch(err => {
+        getCounterexamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2364,7 +2344,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const text = 'testString';
         const newText = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           text: text,
@@ -2380,17 +2360,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/counterexamples/{text}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/counterexamples/{text}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['text']).toEqual(newText);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['text']).toEqual(text);
+        expect(mockRequestOptions.body.text).toEqual(newText);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.text).toEqual(text);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2414,7 +2394,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateCounterexample({});
@@ -2426,11 +2406,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateCounterexamplePromise = assistantService.updateCounterexample();
         expectToBePromise(updateCounterexamplePromise);
 
-        updateCounterexamplePromise.catch(err => {
+        updateCounterexamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2456,19 +2436,15 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/counterexamples/{text}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/counterexamples/{text}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['text']).toEqual(text);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.text).toEqual(text);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2492,7 +2468,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteCounterexample({});
@@ -2504,11 +2480,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteCounterexamplePromise = assistantService.deleteCounterexample();
         expectToBePromise(deleteCounterexamplePromise);
 
-        deleteCounterexamplePromise.catch(err => {
+        deleteCounterexamplePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2520,12 +2496,12 @@ describe('AssistantV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listEntities
         const workspaceId = 'testString';
-        const _export = true;
+        const _export = false;
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'entity';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           _export: _export,
@@ -2544,20 +2520,20 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2579,7 +2555,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listEntities({});
@@ -2591,11 +2567,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listEntitiesPromise = assistantService.listEntities();
         expectToBePromise(listEntitiesPromise);
 
-        listEntitiesPromise.catch(err => {
+        listEntitiesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2609,7 +2585,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -2620,10 +2596,10 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const description = 'testString';
-        const metadata = { key1: 'testString' };
+        const metadata = { 'key1': 'testString' };
         const fuzzyMatch = true;
         const values = [createValueModel];
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -2642,20 +2618,20 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['entity']).toEqual(entity);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['metadata']).toEqual(metadata);
-        expect(options.body['fuzzy_match']).toEqual(fuzzyMatch);
-        expect(options.body['values']).toEqual(values);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.body.entity).toEqual(entity);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.metadata).toEqual(metadata);
+        expect(mockRequestOptions.body.fuzzy_match).toEqual(fuzzyMatch);
+        expect(mockRequestOptions.body.values).toEqual(values);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2679,7 +2655,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createEntity({});
@@ -2691,11 +2667,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createEntityPromise = assistantService.createEntity();
         expectToBePromise(createEntityPromise);
 
-        createEntityPromise.catch(err => {
+        createEntityPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2708,8 +2684,8 @@ describe('AssistantV1', () => {
         // Construct the params object for operation getEntity
         const workspaceId = 'testString';
         const entity = 'testString';
-        const _export = true;
-        const includeAudit = true;
+        const _export = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -2725,17 +2701,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2759,7 +2735,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getEntity({});
@@ -2771,11 +2747,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getEntityPromise = assistantService.getEntity();
         expectToBePromise(getEntityPromise);
 
-        getEntityPromise.catch(err => {
+        getEntityPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2789,7 +2765,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -2801,11 +2777,11 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const newEntity = 'testString';
         const newDescription = 'testString';
-        const newMetadata = { key1: 'testString' };
+        const newMetadata = { 'key1': 'testString' };
         const newFuzzyMatch = true;
         const newValues = [createValueModel];
-        const append = true;
-        const includeAudit = true;
+        const append = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -2826,22 +2802,22 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['entity']).toEqual(newEntity);
-        expect(options.body['description']).toEqual(newDescription);
-        expect(options.body['metadata']).toEqual(newMetadata);
-        expect(options.body['fuzzy_match']).toEqual(newFuzzyMatch);
-        expect(options.body['values']).toEqual(newValues);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['append']).toEqual(append);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
+        expect(mockRequestOptions.body.entity).toEqual(newEntity);
+        expect(mockRequestOptions.body.description).toEqual(newDescription);
+        expect(mockRequestOptions.body.metadata).toEqual(newMetadata);
+        expect(mockRequestOptions.body.fuzzy_match).toEqual(newFuzzyMatch);
+        expect(mockRequestOptions.body.values).toEqual(newValues);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.append).toEqual(append);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2865,7 +2841,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateEntity({});
@@ -2877,11 +2853,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateEntityPromise = assistantService.updateEntity();
         expectToBePromise(updateEntityPromise);
 
-        updateEntityPromise.catch(err => {
+        updateEntityPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2907,15 +2883,15 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2939,7 +2915,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteEntity({});
@@ -2951,11 +2927,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteEntityPromise = assistantService.deleteEntity();
         expectToBePromise(deleteEntityPromise);
 
-        deleteEntityPromise.catch(err => {
+        deleteEntityPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2968,8 +2944,8 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listMentions
         const workspaceId = 'testString';
         const entity = 'testString';
-        const _export = true;
-        const includeAudit = true;
+        const _export = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -2985,21 +2961,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/mentions',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/mentions', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3023,7 +2995,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listMentions({});
@@ -3035,11 +3007,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listMentionsPromise = assistantService.listMentions();
         expectToBePromise(listMentionsPromise);
 
-        listMentionsPromise.catch(err => {
+        listMentionsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3052,12 +3024,12 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listValues
         const workspaceId = 'testString';
         const entity = 'testString';
-        const _export = true;
+        const _export = false;
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'value';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3077,21 +3049,21 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/entities/{entity}/values', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3115,7 +3087,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listValues({});
@@ -3127,11 +3099,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listValuesPromise = assistantService.listValues();
         expectToBePromise(listValuesPromise);
 
-        listValuesPromise.catch(err => {
+        listValuesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3145,11 +3117,11 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
-        const metadata = { key1: 'testString' };
+        const metadata = { 'key1': 'testString' };
         const type = 'synonyms';
         const synonyms = ['testString'];
         const patterns = ['testString'];
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3169,25 +3141,21 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['value']).toEqual(value);
-        expect(options.body['metadata']).toEqual(metadata);
-        expect(options.body['type']).toEqual(type);
-        expect(options.body['synonyms']).toEqual(synonyms);
-        expect(options.body['patterns']).toEqual(patterns);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
+        expect(mockRequestOptions.body.value).toEqual(value);
+        expect(mockRequestOptions.body.metadata).toEqual(metadata);
+        expect(mockRequestOptions.body.type).toEqual(type);
+        expect(mockRequestOptions.body.synonyms).toEqual(synonyms);
+        expect(mockRequestOptions.body.patterns).toEqual(patterns);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3213,7 +3181,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createValue({});
@@ -3225,11 +3193,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createValuePromise = assistantService.createValue();
         expectToBePromise(createValuePromise);
 
-        createValuePromise.catch(err => {
+        createValuePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3243,8 +3211,8 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
-        const _export = true;
-        const includeAudit = true;
+        const _export = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3261,22 +3229,18 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['export']).toEqual(_export);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.export).toEqual(_export);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3302,7 +3266,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getValue({});
@@ -3314,11 +3278,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getValuePromise = assistantService.getValue();
         expectToBePromise(getValuePromise);
 
-        getValuePromise.catch(err => {
+        getValuePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3333,12 +3297,12 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const value = 'testString';
         const newValue = 'testString';
-        const newMetadata = { key1: 'testString' };
+        const newMetadata = { 'key1': 'testString' };
         const newType = 'synonyms';
         const newSynonyms = ['testString'];
         const newPatterns = ['testString'];
-        const append = true;
-        const includeAudit = true;
+        const append = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3360,27 +3324,23 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['value']).toEqual(newValue);
-        expect(options.body['metadata']).toEqual(newMetadata);
-        expect(options.body['type']).toEqual(newType);
-        expect(options.body['synonyms']).toEqual(newSynonyms);
-        expect(options.body['patterns']).toEqual(newPatterns);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['append']).toEqual(append);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
+        expect(mockRequestOptions.body.value).toEqual(newValue);
+        expect(mockRequestOptions.body.metadata).toEqual(newMetadata);
+        expect(mockRequestOptions.body.type).toEqual(newType);
+        expect(mockRequestOptions.body.synonyms).toEqual(newSynonyms);
+        expect(mockRequestOptions.body.patterns).toEqual(newPatterns);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.append).toEqual(append);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3406,7 +3366,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateValue({});
@@ -3418,11 +3378,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateValuePromise = assistantService.updateValue();
         expectToBePromise(updateValuePromise);
 
-        updateValuePromise.catch(err => {
+        updateValuePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3450,20 +3410,16 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3489,7 +3445,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteValue({});
@@ -3501,11 +3457,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteValuePromise = assistantService.deleteValue();
         expectToBePromise(deleteValuePromise);
 
-        deleteValuePromise.catch(err => {
+        deleteValuePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3520,10 +3476,10 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const value = 'testString';
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'synonym';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3543,25 +3499,21 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3587,7 +3539,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listSynonyms({});
@@ -3599,11 +3551,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listSynonymsPromise = assistantService.listSynonyms();
         expectToBePromise(listSynonymsPromise);
 
-        listSynonymsPromise.catch(err => {
+        listSynonymsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3618,7 +3570,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const value = 'testString';
         const synonym = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3635,22 +3587,18 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['synonym']).toEqual(synonym);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
+        expect(mockRequestOptions.body.synonym).toEqual(synonym);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3678,7 +3626,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createSynonym({});
@@ -3690,11 +3638,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createSynonymPromise = assistantService.createSynonym();
         expectToBePromise(createSynonymPromise);
 
-        createSynonymPromise.catch(err => {
+        createSynonymPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3709,7 +3657,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const value = 'testString';
         const synonym = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3726,22 +3674,18 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
-        expect(options.path['synonym']).toEqual(synonym);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
+        expect(mockRequestOptions.path.synonym).toEqual(synonym);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3769,7 +3713,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getSynonym({});
@@ -3781,11 +3725,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getSynonymPromise = assistantService.getSynonym();
         expectToBePromise(getSynonymPromise);
 
-        getSynonymPromise.catch(err => {
+        getSynonymPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3801,7 +3745,7 @@ describe('AssistantV1', () => {
         const value = 'testString';
         const synonym = 'testString';
         const newSynonym = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           entity: entity,
@@ -3819,23 +3763,19 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['synonym']).toEqual(newSynonym);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
-        expect(options.path['synonym']).toEqual(synonym);
+        expect(mockRequestOptions.body.synonym).toEqual(newSynonym);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
+        expect(mockRequestOptions.path.synonym).toEqual(synonym);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3863,7 +3803,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateSynonym({});
@@ -3875,11 +3815,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateSynonymPromise = assistantService.updateSynonym();
         expectToBePromise(updateSynonymPromise);
 
-        updateSynonymPromise.catch(err => {
+        updateSynonymPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3909,21 +3849,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/entities/{entity}/values/{value}/synonyms/{synonym}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['entity']).toEqual(entity);
-        expect(options.path['value']).toEqual(value);
-        expect(options.path['synonym']).toEqual(synonym);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.entity).toEqual(entity);
+        expect(mockRequestOptions.path.value).toEqual(value);
+        expect(mockRequestOptions.path.synonym).toEqual(synonym);
       });
 
       test('should prioritize user-given headers', () => {
@@ -3951,7 +3887,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteSynonym({});
@@ -3963,11 +3899,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteSynonymPromise = assistantService.deleteSynonym();
         expectToBePromise(deleteSynonymPromise);
 
-        deleteSynonymPromise.catch(err => {
+        deleteSynonymPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -3980,10 +3916,10 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listDialogNodes
         const workspaceId = 'testString';
         const pageLimit = 38;
-        const includeCount = true;
+        const includeCount = false;
         const sort = 'dialog_node';
         const cursor = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           pageLimit: pageLimit,
@@ -4001,19 +3937,19 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/dialog_nodes', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/dialog_nodes', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['include_count']).toEqual(includeCount);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4035,7 +3971,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listDialogNodes({});
@@ -4047,11 +3983,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listDialogNodesPromise = assistantService.listDialogNodes();
         expectToBePromise(listDialogNodesPromise);
 
-        listDialogNodesPromise.catch(err => {
+        listDialogNodesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -4098,14 +4034,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         foo: 'testString',
       };
 
@@ -4120,7 +4056,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { key1: 'testString' },
+        parameters: { 'key1': 'testString' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -4135,7 +4071,7 @@ describe('AssistantV1', () => {
         const previousSibling = 'testString';
         const output = dialogNodeOutputModel;
         const context = dialogNodeContextModel;
-        const metadata = { key1: 'testString' };
+        const metadata = { 'key1': 'testString' };
         const nextStep = dialogNodeNextStepModel;
         const title = 'testString';
         const type = 'standard';
@@ -4146,8 +4082,8 @@ describe('AssistantV1', () => {
         const digressOut = 'allow_returning';
         const digressOutSlots = 'not_allowed';
         const userLabel = 'testString';
-        const disambiguationOptOut = true;
-        const includeAudit = true;
+        const disambiguationOptOut = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           dialogNode: dialogNode,
@@ -4180,34 +4116,34 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/dialog_nodes', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/dialog_nodes', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['dialog_node']).toEqual(dialogNode);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['conditions']).toEqual(conditions);
-        expect(options.body['parent']).toEqual(parent);
-        expect(options.body['previous_sibling']).toEqual(previousSibling);
-        expect(options.body['output']).toEqual(output);
-        expect(options.body['context']).toEqual(context);
-        expect(options.body['metadata']).toEqual(metadata);
-        expect(options.body['next_step']).toEqual(nextStep);
-        expect(options.body['title']).toEqual(title);
-        expect(options.body['type']).toEqual(type);
-        expect(options.body['event_name']).toEqual(eventName);
-        expect(options.body['variable']).toEqual(variable);
-        expect(options.body['actions']).toEqual(actions);
-        expect(options.body['digress_in']).toEqual(digressIn);
-        expect(options.body['digress_out']).toEqual(digressOut);
-        expect(options.body['digress_out_slots']).toEqual(digressOutSlots);
-        expect(options.body['user_label']).toEqual(userLabel);
-        expect(options.body['disambiguation_opt_out']).toEqual(disambiguationOptOut);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.body.dialog_node).toEqual(dialogNode);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.conditions).toEqual(conditions);
+        expect(mockRequestOptions.body.parent).toEqual(parent);
+        expect(mockRequestOptions.body.previous_sibling).toEqual(previousSibling);
+        expect(mockRequestOptions.body.output).toEqual(output);
+        expect(mockRequestOptions.body.context).toEqual(context);
+        expect(mockRequestOptions.body.metadata).toEqual(metadata);
+        expect(mockRequestOptions.body.next_step).toEqual(nextStep);
+        expect(mockRequestOptions.body.title).toEqual(title);
+        expect(mockRequestOptions.body.type).toEqual(type);
+        expect(mockRequestOptions.body.event_name).toEqual(eventName);
+        expect(mockRequestOptions.body.variable).toEqual(variable);
+        expect(mockRequestOptions.body.actions).toEqual(actions);
+        expect(mockRequestOptions.body.digress_in).toEqual(digressIn);
+        expect(mockRequestOptions.body.digress_out).toEqual(digressOut);
+        expect(mockRequestOptions.body.digress_out_slots).toEqual(digressOutSlots);
+        expect(mockRequestOptions.body.user_label).toEqual(userLabel);
+        expect(mockRequestOptions.body.disambiguation_opt_out).toEqual(disambiguationOptOut);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4231,7 +4167,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createDialogNode({});
@@ -4243,11 +4179,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createDialogNodePromise = assistantService.createDialogNode();
         expectToBePromise(createDialogNodePromise);
 
-        createDialogNodePromise.catch(err => {
+        createDialogNodePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -4260,7 +4196,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation getDialogNode
         const workspaceId = 'testString';
         const dialogNode = 'testString';
-        const includeAudit = true;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           dialogNode: dialogNode,
@@ -4275,20 +4211,16 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['dialog_node']).toEqual(dialogNode);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.dialog_node).toEqual(dialogNode);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4312,7 +4244,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.getDialogNode({});
@@ -4324,11 +4256,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getDialogNodePromise = assistantService.getDialogNode();
         expectToBePromise(getDialogNodePromise);
 
-        getDialogNodePromise.catch(err => {
+        getDialogNodePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -4375,14 +4307,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { key1: { key1: 'testString' } },
+        integrations: { 'key1': { 'key1': 'testString' } },
         foo: 'testString',
       };
 
@@ -4397,7 +4329,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { key1: 'testString' },
+        parameters: { 'key1': 'testString' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -4413,7 +4345,7 @@ describe('AssistantV1', () => {
         const newPreviousSibling = 'testString';
         const newOutput = dialogNodeOutputModel;
         const newContext = dialogNodeContextModel;
-        const newMetadata = { key1: 'testString' };
+        const newMetadata = { 'key1': 'testString' };
         const newNextStep = dialogNodeNextStepModel;
         const newTitle = 'testString';
         const newType = 'standard';
@@ -4424,8 +4356,8 @@ describe('AssistantV1', () => {
         const newDigressOut = 'allow_returning';
         const newDigressOutSlots = 'not_allowed';
         const newUserLabel = 'testString';
-        const newDisambiguationOptOut = true;
-        const includeAudit = true;
+        const newDisambiguationOptOut = false;
+        const includeAudit = false;
         const params = {
           workspaceId: workspaceId,
           dialogNode: dialogNode,
@@ -4459,39 +4391,35 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['dialog_node']).toEqual(newDialogNode);
-        expect(options.body['description']).toEqual(newDescription);
-        expect(options.body['conditions']).toEqual(newConditions);
-        expect(options.body['parent']).toEqual(newParent);
-        expect(options.body['previous_sibling']).toEqual(newPreviousSibling);
-        expect(options.body['output']).toEqual(newOutput);
-        expect(options.body['context']).toEqual(newContext);
-        expect(options.body['metadata']).toEqual(newMetadata);
-        expect(options.body['next_step']).toEqual(newNextStep);
-        expect(options.body['title']).toEqual(newTitle);
-        expect(options.body['type']).toEqual(newType);
-        expect(options.body['event_name']).toEqual(newEventName);
-        expect(options.body['variable']).toEqual(newVariable);
-        expect(options.body['actions']).toEqual(newActions);
-        expect(options.body['digress_in']).toEqual(newDigressIn);
-        expect(options.body['digress_out']).toEqual(newDigressOut);
-        expect(options.body['digress_out_slots']).toEqual(newDigressOutSlots);
-        expect(options.body['user_label']).toEqual(newUserLabel);
-        expect(options.body['disambiguation_opt_out']).toEqual(newDisambiguationOptOut);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['include_audit']).toEqual(includeAudit);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['dialog_node']).toEqual(dialogNode);
+        expect(mockRequestOptions.body.dialog_node).toEqual(newDialogNode);
+        expect(mockRequestOptions.body.description).toEqual(newDescription);
+        expect(mockRequestOptions.body.conditions).toEqual(newConditions);
+        expect(mockRequestOptions.body.parent).toEqual(newParent);
+        expect(mockRequestOptions.body.previous_sibling).toEqual(newPreviousSibling);
+        expect(mockRequestOptions.body.output).toEqual(newOutput);
+        expect(mockRequestOptions.body.context).toEqual(newContext);
+        expect(mockRequestOptions.body.metadata).toEqual(newMetadata);
+        expect(mockRequestOptions.body.next_step).toEqual(newNextStep);
+        expect(mockRequestOptions.body.title).toEqual(newTitle);
+        expect(mockRequestOptions.body.type).toEqual(newType);
+        expect(mockRequestOptions.body.event_name).toEqual(newEventName);
+        expect(mockRequestOptions.body.variable).toEqual(newVariable);
+        expect(mockRequestOptions.body.actions).toEqual(newActions);
+        expect(mockRequestOptions.body.digress_in).toEqual(newDigressIn);
+        expect(mockRequestOptions.body.digress_out).toEqual(newDigressOut);
+        expect(mockRequestOptions.body.digress_out_slots).toEqual(newDigressOutSlots);
+        expect(mockRequestOptions.body.user_label).toEqual(newUserLabel);
+        expect(mockRequestOptions.body.disambiguation_opt_out).toEqual(newDisambiguationOptOut);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.dialog_node).toEqual(dialogNode);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4515,7 +4443,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.updateDialogNode({});
@@ -4527,11 +4455,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateDialogNodePromise = assistantService.updateDialogNode();
         expectToBePromise(updateDialogNodePromise);
 
-        updateDialogNodePromise.catch(err => {
+        updateDialogNodePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -4557,19 +4485,15 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/dialog_nodes/{dialog_node}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
-        expect(options.path['dialog_node']).toEqual(dialogNode);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+        expect(mockRequestOptions.path.dialog_node).toEqual(dialogNode);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4593,7 +4517,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteDialogNode({});
@@ -4605,11 +4529,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteDialogNodePromise = assistantService.deleteDialogNode();
         expectToBePromise(deleteDialogNodePromise);
 
-        deleteDialogNodePromise.catch(err => {
+        deleteDialogNodePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -4641,18 +4565,18 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/workspaces/{workspace_id}/logs', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces/{workspace_id}/logs', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['filter']).toEqual(filter);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.path['workspace_id']).toEqual(workspaceId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.filter).toEqual(filter);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4674,7 +4598,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listLogs({});
@@ -4686,11 +4610,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listLogsPromise = assistantService.listLogs();
         expectToBePromise(listLogsPromise);
 
-        listLogsPromise.catch(err => {
+        listLogsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -4720,17 +4644,17 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/logs', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/logs', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['filter']).toEqual(filter);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['cursor']).toEqual(cursor);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.filter).toEqual(filter);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4752,7 +4676,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listAllLogs({});
@@ -4764,11 +4688,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listAllLogsPromise = assistantService.listAllLogs();
         expectToBePromise(listAllLogsPromise);
 
-        listAllLogsPromise.catch(err => {
+        listAllLogsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -4792,14 +4716,14 @@ describe('AssistantV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/user_data', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v1/user_data', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['customer_id']).toEqual(customerId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.customer_id).toEqual(customerId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -4821,7 +4745,7 @@ describe('AssistantV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteUserData({});
@@ -4833,11 +4757,11 @@ describe('AssistantV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteUserDataPromise = assistantService.deleteUserData();
         expectToBePromise(deleteUserDataPromise);
 
-        deleteUserDataPromise.catch(err => {
+        deleteUserDataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

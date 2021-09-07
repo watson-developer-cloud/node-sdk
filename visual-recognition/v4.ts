@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b00691c-20210824-142310
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { FileWithMetadata } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -32,11 +37,14 @@ import { getSdkHeaders } from '../lib/common';
  *
  * Provide images to the IBM Watson Visual Recognition service for analysis. The service detects objects based on a set
  * of images with training data.
+ *
+ * API Version: 4.0
+ * See: https://cloud.ibm.com/docs/visual-recognition?topic=visual-recognition-object-detection-overview
  */
 
 class VisualRecognitionV4 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.visual-recognition.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'watson_vision_combined';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
@@ -116,8 +124,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.AnalyzeResponse>>}
    */
-  public analyze(params: VisualRecognitionV4.AnalyzeParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.AnalyzeResponse>> {
-    const _params = Object.assign({}, params);
+  public analyze(
+    params: VisualRecognitionV4.AnalyzeParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.AnalyzeResponse>> {
+    const _params = { ...params };
     const requiredParams = ['collectionIds', 'features'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -130,14 +140,18 @@ class VisualRecognitionV4 extends BaseService {
       'features': _params.features,
       'images_file': _params.imagesFile,
       'image_url': _params.imageUrl,
-      'threshold': _params.threshold
+      'threshold': _params.threshold,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'analyze');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'analyze'
+    );
 
     const parameters = {
       options: {
@@ -147,16 +161,20 @@ class VisualRecognitionV4 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * collections
    ************************/
@@ -178,8 +196,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
-  public createCollection(params?: VisualRecognitionV4.CreateCollectionParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
-    const _params = Object.assign({}, params);
+  public createCollection(
+    params?: VisualRecognitionV4.CreateCollectionParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
+    const _params = { ...params };
 
     const body = {
       'name': _params.name,
@@ -187,10 +207,14 @@ class VisualRecognitionV4 extends BaseService {
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'createCollection');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'createCollection'
+    );
 
     const parameters = {
       options: {
@@ -200,15 +224,20 @@ class VisualRecognitionV4 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List collections.
@@ -219,14 +248,20 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.CollectionsList>>}
    */
-  public listCollections(params?: VisualRecognitionV4.ListCollectionsParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.CollectionsList>> {
-    const _params = Object.assign({}, params);
+  public listCollections(
+    params?: VisualRecognitionV4.ListCollectionsParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.CollectionsList>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'listCollections');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'listCollections'
+    );
 
     const parameters = {
       options: {
@@ -235,14 +270,19 @@ class VisualRecognitionV4 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get collection details.
@@ -254,8 +294,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
-  public getCollection(params: VisualRecognitionV4.GetCollectionParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
-    const _params = Object.assign({}, params);
+  public getCollection(
+    params: VisualRecognitionV4.GetCollectionParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -264,14 +306,18 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getCollection');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getCollection'
+    );
 
     const parameters = {
       options: {
@@ -281,14 +327,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a collection.
@@ -306,8 +357,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
-  public updateCollection(params: VisualRecognitionV4.UpdateCollectionParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
-    const _params = Object.assign({}, params);
+  public updateCollection(
+    params: VisualRecognitionV4.UpdateCollectionParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -321,14 +374,18 @@ class VisualRecognitionV4 extends BaseService {
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'updateCollection');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'updateCollection'
+    );
 
     const parameters = {
       options: {
@@ -339,15 +396,20 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a collection.
@@ -359,8 +421,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
    */
-  public deleteCollection(params: VisualRecognitionV4.DeleteCollectionParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteCollection(
+    params: VisualRecognitionV4.DeleteCollectionParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -369,14 +433,18 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteCollection');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'deleteCollection'
+    );
 
     const parameters = {
       options: {
@@ -386,14 +454,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a model.
@@ -410,10 +483,12 @@ class VisualRecognitionV4 extends BaseService {
    * @param {string} params.feature - The feature for the model.
    * @param {string} params.modelFormat - The format of the returned model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>>}
+   * @returns {Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream | Buffer>>}
    */
-  public getModelFile(params: VisualRecognitionV4.GetModelFileParams): Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public getModelFile(
+    params: VisualRecognitionV4.GetModelFileParams
+  ): Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream | Buffer>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'feature', 'modelFormat'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -424,14 +499,18 @@ class VisualRecognitionV4 extends BaseService {
     const query = {
       'version': this.version,
       'feature': _params.feature,
-      'model_format': _params.modelFormat
+      'model_format': _params.modelFormat,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getModelFile');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getModelFile'
+    );
 
     const parameters = {
       options: {
@@ -442,15 +521,19 @@ class VisualRecognitionV4 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/octet-stream',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/octet-stream',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * images
    ************************/
@@ -486,8 +569,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetailsList>>}
    */
-  public addImages(params: VisualRecognitionV4.AddImagesParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetailsList>> {
-    const _params = Object.assign({}, params);
+  public addImages(
+    params: VisualRecognitionV4.AddImagesParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetailsList>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -498,18 +583,22 @@ class VisualRecognitionV4 extends BaseService {
     const formData = {
       'images_file': _params.imagesFile,
       'image_url': _params.imageUrl,
-      'training_data': _params.trainingData
+      'training_data': _params.trainingData,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'addImages');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'addImages'
+    );
 
     const parameters = {
       options: {
@@ -520,15 +609,20 @@ class VisualRecognitionV4 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List images.
@@ -540,8 +634,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageSummaryList>>}
    */
-  public listImages(params: VisualRecognitionV4.ListImagesParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageSummaryList>> {
-    const _params = Object.assign({}, params);
+  public listImages(
+    params: VisualRecognitionV4.ListImagesParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageSummaryList>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -550,14 +646,18 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'listImages');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'listImages'
+    );
 
     const parameters = {
       options: {
@@ -567,14 +667,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get image details.
@@ -587,8 +692,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetails>>}
    */
-  public getImageDetails(params: VisualRecognitionV4.GetImageDetailsParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetails>> {
-    const _params = Object.assign({}, params);
+  public getImageDetails(
+    params: VisualRecognitionV4.GetImageDetailsParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ImageDetails>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'imageId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -597,15 +704,19 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'collection_id': _params.collectionId,
-      'image_id': _params.imageId
+      'image_id': _params.imageId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getImageDetails');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getImageDetails'
+    );
 
     const parameters = {
       options: {
@@ -615,14 +726,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete an image.
@@ -635,8 +751,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
    */
-  public deleteImage(params: VisualRecognitionV4.DeleteImageParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteImage(
+    params: VisualRecognitionV4.DeleteImageParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'imageId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -645,15 +763,19 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'collection_id': _params.collectionId,
-      'image_id': _params.imageId
+      'image_id': _params.imageId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteImage');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'deleteImage'
+    );
 
     const parameters = {
       options: {
@@ -663,14 +785,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a JPEG file of an image.
@@ -684,10 +811,12 @@ class VisualRecognitionV4 extends BaseService {
    * aspect ratio but is no larger than 200 pixels in the larger dimension. For example, an original 800 x 1000 image is
    * resized to 160 x 200 pixels.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>>}
+   * @returns {Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream | Buffer>>}
    */
-  public getJpegImage(params: VisualRecognitionV4.GetJpegImageParams): Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public getJpegImage(
+    params: VisualRecognitionV4.GetJpegImageParams
+  ): Promise<VisualRecognitionV4.Response<NodeJS.ReadableStream | Buffer>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'imageId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -697,15 +826,19 @@ class VisualRecognitionV4 extends BaseService {
 
     const query = {
       'version': this.version,
-      'size': _params.size
+      'size': _params.size,
     };
 
     const path = {
       'collection_id': _params.collectionId,
-      'image_id': _params.imageId
+      'image_id': _params.imageId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getJpegImage');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getJpegImage'
+    );
 
     const parameters = {
       options: {
@@ -716,15 +849,19 @@ class VisualRecognitionV4 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'image/jpeg',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'image/jpeg',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * objects
    ************************/
@@ -739,8 +876,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadataList>>}
    */
-  public listObjectMetadata(params: VisualRecognitionV4.ListObjectMetadataParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadataList>> {
-    const _params = Object.assign({}, params);
+  public listObjectMetadata(
+    params: VisualRecognitionV4.ListObjectMetadataParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadataList>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -749,14 +888,18 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'listObjectMetadata');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'listObjectMetadata'
+    );
 
     const parameters = {
       options: {
@@ -766,14 +909,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update an object name.
@@ -788,8 +936,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.UpdateObjectMetadata>>}
    */
-  public updateObjectMetadata(params: VisualRecognitionV4.UpdateObjectMetadataParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.UpdateObjectMetadata>> {
-    const _params = Object.assign({}, params);
+  public updateObjectMetadata(
+    params: VisualRecognitionV4.UpdateObjectMetadataParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.UpdateObjectMetadata>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'object', 'newObject'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -798,19 +948,23 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const body = {
-      'object': _params.newObject
+      'object': _params.newObject,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'collection_id': _params.collectionId,
-      'object': _params.object
+      'object': _params.object,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'updateObjectMetadata');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'updateObjectMetadata'
+    );
 
     const parameters = {
       options: {
@@ -821,15 +975,20 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get object metadata.
@@ -842,8 +1001,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadata>>}
    */
-  public getObjectMetadata(params: VisualRecognitionV4.GetObjectMetadataParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadata>> {
-    const _params = Object.assign({}, params);
+  public getObjectMetadata(
+    params: VisualRecognitionV4.GetObjectMetadataParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.ObjectMetadata>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'object'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -852,15 +1013,19 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'collection_id': _params.collectionId,
-      'object': _params.object
+      'object': _params.object,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getObjectMetadata');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getObjectMetadata'
+    );
 
     const parameters = {
       options: {
@@ -870,14 +1035,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete an object.
@@ -891,8 +1061,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
    */
-  public deleteObject(params: VisualRecognitionV4.DeleteObjectParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteObject(
+    params: VisualRecognitionV4.DeleteObjectParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'object'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -901,15 +1073,19 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'collection_id': _params.collectionId,
-      'object': _params.object
+      'object': _params.object,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteObject');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'deleteObject'
+    );
 
     const parameters = {
       options: {
@@ -919,15 +1095,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * training
    ************************/
@@ -944,8 +1124,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>>}
    */
-  public train(params: VisualRecognitionV4.TrainParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
-    const _params = Object.assign({}, params);
+  public train(
+    params: VisualRecognitionV4.TrainParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Collection>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -954,14 +1136,18 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'train');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'train'
+    );
 
     const parameters = {
       options: {
@@ -971,14 +1157,19 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add training data to an image.
@@ -999,8 +1190,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingDataObjects>>}
    */
-  public addImageTrainingData(params: VisualRecognitionV4.AddImageTrainingDataParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingDataObjects>> {
-    const _params = Object.assign({}, params);
+  public addImageTrainingData(
+    params: VisualRecognitionV4.AddImageTrainingDataParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingDataObjects>> {
+    const _params = { ...params };
     const requiredParams = ['collectionId', 'imageId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1009,19 +1202,23 @@ class VisualRecognitionV4 extends BaseService {
     }
 
     const body = {
-      'objects': _params.objects
+      'objects': _params.objects,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'collection_id': _params.collectionId,
-      'image_id': _params.imageId
+      'image_id': _params.imageId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'addImageTrainingData');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'addImageTrainingData'
+    );
 
     const parameters = {
       options: {
@@ -1032,15 +1229,20 @@ class VisualRecognitionV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get training usage.
@@ -1057,16 +1259,22 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingEvents>>}
    */
-  public getTrainingUsage(params?: VisualRecognitionV4.GetTrainingUsageParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingEvents>> {
-    const _params = Object.assign({}, params);
+  public getTrainingUsage(
+    params?: VisualRecognitionV4.GetTrainingUsageParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.TrainingEvents>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
       'start_time': _params.startTime,
-      'end_time': _params.endTime
+      'end_time': _params.endTime,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'getTrainingUsage');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getTrainingUsage'
+    );
 
     const parameters = {
       options: {
@@ -1075,15 +1283,19 @@ class VisualRecognitionV4 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -1103,8 +1315,10 @@ class VisualRecognitionV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>>}
    */
-  public deleteUserData(params: VisualRecognitionV4.DeleteUserDataParams): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: VisualRecognitionV4.DeleteUserDataParams
+  ): Promise<VisualRecognitionV4.Response<VisualRecognitionV4.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1114,10 +1328,14 @@ class VisualRecognitionV4 extends BaseService {
 
     const query = {
       'version': this.version,
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(VisualRecognitionV4.DEFAULT_SERVICE_NAME, 'v4', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      VisualRecognitionV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -1126,15 +1344,19 @@ class VisualRecognitionV4 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -1142,10 +1364,8 @@ class VisualRecognitionV4 extends BaseService {
  ************************/
 
 namespace VisualRecognitionV4 {
-
   /** Options for the `VisualRecognitionV4` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
      *  `2019-02-11`.
      */
@@ -1153,7 +1373,7 @@ namespace VisualRecognitionV4 {
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -1164,7 +1384,7 @@ namespace VisualRecognitionV4 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1727,7 +1947,6 @@ namespace VisualRecognitionV4 {
     /** A URL for more information about the solution. */
     more_info?: string;
   }
-
 }
 
 export = VisualRecognitionV4;

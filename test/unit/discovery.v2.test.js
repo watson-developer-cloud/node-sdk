@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const DiscoveryV2 = require('../../dist/discovery/v2');
@@ -30,13 +30,13 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const discoveryServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.discovery.watson.cloud.ibm.com',
   version: 'testString',
 };
 
-const discoveryService = new DiscoveryV2(service);
+const discoveryService = new DiscoveryV2(discoveryServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(discoveryService, 'createRequest');
@@ -135,9 +135,9 @@ describe('DiscoveryV2', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new DiscoveryV2(service);
+        const serviceObj = new DiscoveryV2(discoveryServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(discoveryServiceOptions.version);
       });
     });
   });
@@ -158,14 +158,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/collections', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -187,7 +187,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.listCollections({});
@@ -199,11 +199,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listCollectionsPromise = discoveryService.listCollections();
         expectToBePromise(listCollectionsPromise);
 
-        listCollectionsPromise.catch(err => {
+        listCollectionsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -225,7 +225,7 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const name = 'testString';
         const description = 'testString';
-        const language = 'testString';
+        const language = 'en';
         const enrichments = [collectionEnrichmentModel];
         const params = {
           projectId: projectId,
@@ -243,18 +243,18 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/collections', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['language']).toEqual(language);
-        expect(options.body['enrichments']).toEqual(enrichments);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.language).toEqual(language);
+        expect(mockRequestOptions.body.enrichments).toEqual(enrichments);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -278,7 +278,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.createCollection({});
@@ -290,11 +290,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createCollectionPromise = discoveryService.createCollection();
         expectToBePromise(createCollectionPromise);
 
-        createCollectionPromise.catch(err => {
+        createCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -320,15 +320,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/collections/{collection_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -352,7 +352,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.getCollection({});
@@ -364,11 +364,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getCollectionPromise = discoveryService.getCollection();
         expectToBePromise(getCollectionPromise);
 
-        getCollectionPromise.catch(err => {
+        getCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -408,18 +408,18 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/collections/{collection_id}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['enrichments']).toEqual(enrichments);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.enrichments).toEqual(enrichments);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -443,7 +443,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.updateCollection({});
@@ -455,11 +455,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateCollectionPromise = discoveryService.updateCollection();
         expectToBePromise(updateCollectionPromise);
 
-        updateCollectionPromise.catch(err => {
+        updateCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -485,19 +485,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/collections/{collection_id}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}', 'DELETE');
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -521,7 +517,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.deleteCollection({});
@@ -533,11 +529,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteCollectionPromise = discoveryService.deleteCollection();
         expectToBePromise(deleteCollectionPromise);
 
-        deleteCollectionPromise.catch(err => {
+        deleteCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -566,9 +562,9 @@ describe('DiscoveryV2', () => {
         per_document: true,
         max_per_document: 38,
         fields: ['testString'],
-        count: 100,
+        count: 400,
         characters: 50,
-        find_answers: true,
+        find_answers: false,
         max_answers_per_passage: 38,
       };
 
@@ -615,28 +611,28 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/query', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/query', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['collection_ids']).toEqual(collectionIds);
-        expect(options.body['filter']).toEqual(filter);
-        expect(options.body['query']).toEqual(query);
-        expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
-        expect(options.body['aggregation']).toEqual(aggregation);
-        expect(options.body['count']).toEqual(count);
-        expect(options.body['return']).toEqual(_return);
-        expect(options.body['offset']).toEqual(offset);
-        expect(options.body['sort']).toEqual(sort);
-        expect(options.body['highlight']).toEqual(highlight);
-        expect(options.body['spelling_suggestions']).toEqual(spellingSuggestions);
-        expect(options.body['table_results']).toEqual(tableResults);
-        expect(options.body['suggested_refinements']).toEqual(suggestedRefinements);
-        expect(options.body['passages']).toEqual(passages);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.body.collection_ids).toEqual(collectionIds);
+        expect(mockRequestOptions.body.filter).toEqual(filter);
+        expect(mockRequestOptions.body.query).toEqual(query);
+        expect(mockRequestOptions.body.natural_language_query).toEqual(naturalLanguageQuery);
+        expect(mockRequestOptions.body.aggregation).toEqual(aggregation);
+        expect(mockRequestOptions.body.count).toEqual(count);
+        expect(mockRequestOptions.body.return).toEqual(_return);
+        expect(mockRequestOptions.body.offset).toEqual(offset);
+        expect(mockRequestOptions.body.sort).toEqual(sort);
+        expect(mockRequestOptions.body.highlight).toEqual(highlight);
+        expect(mockRequestOptions.body.spelling_suggestions).toEqual(spellingSuggestions);
+        expect(mockRequestOptions.body.table_results).toEqual(tableResults);
+        expect(mockRequestOptions.body.suggested_refinements).toEqual(suggestedRefinements);
+        expect(mockRequestOptions.body.passages).toEqual(passages);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -658,7 +654,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.query({});
@@ -670,11 +666,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const queryPromise = discoveryService.query();
         expectToBePromise(queryPromise);
 
-        queryPromise.catch(err => {
+        queryPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -706,18 +702,18 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/autocompletion', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/autocompletion', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['prefix']).toEqual(prefix);
-        expect(options.qs['collection_ids']).toEqual(collectionIds);
-        expect(options.qs['field']).toEqual(field);
-        expect(options.qs['count']).toEqual(count);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.qs.prefix).toEqual(prefix);
+        expect(mockRequestOptions.qs.collection_ids).toEqual(collectionIds);
+        expect(mockRequestOptions.qs.field).toEqual(field);
+        expect(mockRequestOptions.qs.count).toEqual(count);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -741,7 +737,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.getAutocompletion({});
@@ -753,11 +749,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getAutocompletionPromise = discoveryService.getAutocompletion();
         expectToBePromise(getAutocompletionPromise);
 
-        getAutocompletionPromise.catch(err => {
+        getAutocompletionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -793,24 +789,20 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/collections/{collection_id}/notices',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/notices', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['filter']).toEqual(filter);
-        expect(options.qs['query']).toEqual(query);
-        expect(options.qs['natural_language_query']).toEqual(naturalLanguageQuery);
-        expect(options.qs['count']).toEqual(count);
-        expect(options.qs['offset']).toEqual(offset);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.qs.filter).toEqual(filter);
+        expect(mockRequestOptions.qs.query).toEqual(query);
+        expect(mockRequestOptions.qs.natural_language_query).toEqual(naturalLanguageQuery);
+        expect(mockRequestOptions.qs.count).toEqual(count);
+        expect(mockRequestOptions.qs.offset).toEqual(offset);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -834,7 +826,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.queryCollectionNotices({});
@@ -846,11 +838,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const queryCollectionNoticesPromise = discoveryService.queryCollectionNotices();
         expectToBePromise(queryCollectionNoticesPromise);
 
-        queryCollectionNoticesPromise.catch(err => {
+        queryCollectionNoticesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -884,19 +876,19 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/notices', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/notices', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['filter']).toEqual(filter);
-        expect(options.qs['query']).toEqual(query);
-        expect(options.qs['natural_language_query']).toEqual(naturalLanguageQuery);
-        expect(options.qs['count']).toEqual(count);
-        expect(options.qs['offset']).toEqual(offset);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.qs.filter).toEqual(filter);
+        expect(mockRequestOptions.qs.query).toEqual(query);
+        expect(mockRequestOptions.qs.natural_language_query).toEqual(naturalLanguageQuery);
+        expect(mockRequestOptions.qs.count).toEqual(count);
+        expect(mockRequestOptions.qs.offset).toEqual(offset);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -918,7 +910,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.queryNotices({});
@@ -930,11 +922,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const queryNoticesPromise = discoveryService.queryNotices();
         expectToBePromise(queryNoticesPromise);
 
-        queryNoticesPromise.catch(err => {
+        queryNoticesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -960,15 +952,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/fields', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/fields', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['collection_ids']).toEqual(collectionIds);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.qs.collection_ids).toEqual(collectionIds);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -990,7 +982,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.listFields({});
@@ -1002,11 +994,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listFieldsPromise = discoveryService.listFields();
         expectToBePromise(listFieldsPromise);
 
-        listFieldsPromise.catch(err => {
+        listFieldsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1030,14 +1022,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/component_settings', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/component_settings', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1059,7 +1051,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.getComponentSettings({});
@@ -1071,11 +1063,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getComponentSettingsPromise = discoveryService.getComponentSettings();
         expectToBePromise(getComponentSettingsPromise);
 
-        getComponentSettingsPromise.catch(err => {
+        getComponentSettingsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1092,7 +1084,7 @@ describe('DiscoveryV2', () => {
         const filename = 'testString';
         const fileContentType = 'application/json';
         const metadata = 'testString';
-        const xWatsonDiscoveryForce = true;
+        const xWatsonDiscoveryForce = false;
         const params = {
           projectId: projectId,
           collectionId: collectionId,
@@ -1111,24 +1103,20 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/collections/{collection_id}/documents',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/documents', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'X-Watson-Discovery-Force', xWatsonDiscoveryForce);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].filename).toEqual(filename);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.formData['metadata']).toEqual(metadata);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.filename).toEqual(filename);
+        expect(mockRequestOptions.formData.file.contentType).toEqual(fileContentType);
+        expect(mockRequestOptions.formData.metadata).toEqual(metadata);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1152,7 +1140,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.addDocument({});
@@ -1164,11 +1152,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const addDocumentPromise = discoveryService.addDocument();
         expectToBePromise(addDocumentPromise);
 
-        addDocumentPromise.catch(err => {
+        addDocumentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1186,7 +1174,7 @@ describe('DiscoveryV2', () => {
         const filename = 'testString';
         const fileContentType = 'application/json';
         const metadata = 'testString';
-        const xWatsonDiscoveryForce = true;
+        const xWatsonDiscoveryForce = false;
         const params = {
           projectId: projectId,
           collectionId: collectionId,
@@ -1206,25 +1194,21 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'X-Watson-Discovery-Force', xWatsonDiscoveryForce);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].filename).toEqual(filename);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.formData['metadata']).toEqual(metadata);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['document_id']).toEqual(documentId);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.filename).toEqual(filename);
+        expect(mockRequestOptions.formData.file.contentType).toEqual(fileContentType);
+        expect(mockRequestOptions.formData.metadata).toEqual(metadata);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.document_id).toEqual(documentId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1250,7 +1234,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.updateDocument({});
@@ -1262,11 +1246,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateDocumentPromise = discoveryService.updateDocument();
         expectToBePromise(updateDocumentPromise);
 
-        updateDocumentPromise.catch(err => {
+        updateDocumentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1280,7 +1264,7 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionId = 'testString';
         const documentId = 'testString';
-        const xWatsonDiscoveryForce = true;
+        const xWatsonDiscoveryForce = false;
         const params = {
           projectId: projectId,
           collectionId: collectionId,
@@ -1296,21 +1280,17 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'X-Watson-Discovery-Force', xWatsonDiscoveryForce);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['document_id']).toEqual(documentId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.document_id).toEqual(documentId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1336,7 +1316,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.deleteDocument({});
@@ -1348,11 +1328,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteDocumentPromise = discoveryService.deleteDocument();
         expectToBePromise(deleteDocumentPromise);
 
-        deleteDocumentPromise.catch(err => {
+        deleteDocumentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1376,14 +1356,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/training_data/queries', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/training_data/queries', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1405,7 +1385,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.listTrainingQueries({});
@@ -1417,11 +1397,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listTrainingQueriesPromise = discoveryService.listTrainingQueries();
         expectToBePromise(listTrainingQueriesPromise);
 
-        listTrainingQueriesPromise.catch(err => {
+        listTrainingQueriesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1445,14 +1425,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/training_data/queries', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/training_data/queries', 'DELETE');
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1474,7 +1454,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.deleteTrainingQueries({});
@@ -1486,11 +1466,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteTrainingQueriesPromise = discoveryService.deleteTrainingQueries();
         expectToBePromise(deleteTrainingQueriesPromise);
 
-        deleteTrainingQueriesPromise.catch(err => {
+        deleteTrainingQueriesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1529,17 +1509,17 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/training_data/queries', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/training_data/queries', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
-        expect(options.body['examples']).toEqual(examples);
-        expect(options.body['filter']).toEqual(filter);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.body.natural_language_query).toEqual(naturalLanguageQuery);
+        expect(mockRequestOptions.body.examples).toEqual(examples);
+        expect(mockRequestOptions.body.filter).toEqual(filter);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1565,7 +1545,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.createTrainingQuery({});
@@ -1577,11 +1557,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createTrainingQueryPromise = discoveryService.createTrainingQuery();
         expectToBePromise(createTrainingQueryPromise);
 
-        createTrainingQueryPromise.catch(err => {
+        createTrainingQueryPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1607,19 +1587,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/training_data/queries/{query_id}',
-          'GET'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/training_data/queries/{query_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['query_id']).toEqual(queryId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.query_id).toEqual(queryId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1643,7 +1619,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.getTrainingQuery({});
@@ -1655,11 +1631,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getTrainingQueryPromise = discoveryService.getTrainingQuery();
         expectToBePromise(getTrainingQueryPromise);
 
-        getTrainingQueryPromise.catch(err => {
+        getTrainingQueryPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1700,22 +1676,18 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/training_data/queries/{query_id}',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/training_data/queries/{query_id}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['natural_language_query']).toEqual(naturalLanguageQuery);
-        expect(options.body['examples']).toEqual(examples);
-        expect(options.body['filter']).toEqual(filter);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['query_id']).toEqual(queryId);
+        expect(mockRequestOptions.body.natural_language_query).toEqual(naturalLanguageQuery);
+        expect(mockRequestOptions.body.examples).toEqual(examples);
+        expect(mockRequestOptions.body.filter).toEqual(filter);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.query_id).toEqual(queryId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1743,7 +1715,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.updateTrainingQuery({});
@@ -1755,11 +1727,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateTrainingQueryPromise = discoveryService.updateTrainingQuery();
         expectToBePromise(updateTrainingQueryPromise);
 
-        updateTrainingQueryPromise.catch(err => {
+        updateTrainingQueryPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1785,19 +1757,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/training_data/queries/{query_id}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/training_data/queries/{query_id}', 'DELETE');
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['query_id']).toEqual(queryId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.query_id).toEqual(queryId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1821,7 +1789,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.deleteTrainingQuery({});
@@ -1833,11 +1801,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteTrainingQueryPromise = discoveryService.deleteTrainingQuery();
         expectToBePromise(deleteTrainingQueryPromise);
 
-        deleteTrainingQueryPromise.catch(err => {
+        deleteTrainingQueryPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1871,23 +1839,19 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/collections/{collection_id}/analyze',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/analyze', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].filename).toEqual(filename);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.formData['metadata']).toEqual(metadata);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.filename).toEqual(filename);
+        expect(mockRequestOptions.formData.file.contentType).toEqual(fileContentType);
+        expect(mockRequestOptions.formData.metadata).toEqual(metadata);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1911,7 +1875,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.analyzeDocument({});
@@ -1923,11 +1887,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const analyzeDocumentPromise = discoveryService.analyzeDocument();
         expectToBePromise(analyzeDocumentPromise);
 
-        analyzeDocumentPromise.catch(err => {
+        analyzeDocumentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1951,14 +1915,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/enrichments', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/enrichments', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1980,7 +1944,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.listEnrichments({});
@@ -1992,11 +1956,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listEnrichmentsPromise = discoveryService.listEnrichments();
         expectToBePromise(listEnrichmentsPromise);
 
-        listEnrichmentsPromise.catch(err => {
+        listEnrichmentsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2042,17 +2006,17 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/enrichments', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/enrichments', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['enrichment']).toEqual(enrichment);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].contentType).toEqual('application/octet-stream');
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.formData.enrichment).toEqual(enrichment);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.contentType).toEqual('application/octet-stream');
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2076,7 +2040,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.createEnrichment({});
@@ -2088,11 +2052,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createEnrichmentPromise = discoveryService.createEnrichment();
         expectToBePromise(createEnrichmentPromise);
 
-        createEnrichmentPromise.catch(err => {
+        createEnrichmentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2118,15 +2082,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/enrichments/{enrichment_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/enrichments/{enrichment_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['enrichment_id']).toEqual(enrichmentId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.enrichment_id).toEqual(enrichmentId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2150,7 +2114,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.getEnrichment({});
@@ -2162,11 +2126,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getEnrichmentPromise = discoveryService.getEnrichment();
         expectToBePromise(getEnrichmentPromise);
 
-        getEnrichmentPromise.catch(err => {
+        getEnrichmentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2196,17 +2160,17 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}/enrichments/{enrichment_id}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/enrichments/{enrichment_id}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['enrichment_id']).toEqual(enrichmentId);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.enrichment_id).toEqual(enrichmentId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2232,7 +2196,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.updateEnrichment({});
@@ -2244,11 +2208,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateEnrichmentPromise = discoveryService.updateEnrichment();
         expectToBePromise(updateEnrichmentPromise);
 
-        updateEnrichmentPromise.catch(err => {
+        updateEnrichmentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2274,19 +2238,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/projects/{project_id}/enrichments/{enrichment_id}',
-          'DELETE'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/enrichments/{enrichment_id}', 'DELETE');
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
-        expect(options.path['enrichment_id']).toEqual(enrichmentId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.enrichment_id).toEqual(enrichmentId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2310,7 +2270,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.deleteEnrichment({});
@@ -2322,11 +2282,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteEnrichmentPromise = discoveryService.deleteEnrichment();
         expectToBePromise(deleteEnrichmentPromise);
 
-        deleteEnrichmentPromise.catch(err => {
+        deleteEnrichmentPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2347,13 +2307,13 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2438,16 +2398,16 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['type']).toEqual(type);
-        expect(options.body['default_query_parameters']).toEqual(defaultQueryParameters);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.type).toEqual(type);
+        expect(mockRequestOptions.body.default_query_parameters).toEqual(defaultQueryParameters);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2471,7 +2431,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.createProject({});
@@ -2483,11 +2443,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createProjectPromise = discoveryService.createProject();
         expectToBePromise(createProjectPromise);
 
-        createProjectPromise.catch(err => {
+        createProjectPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2511,14 +2471,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2540,7 +2500,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.getProject({});
@@ -2552,11 +2512,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getProjectPromise = discoveryService.getProject();
         expectToBePromise(getProjectPromise);
 
-        getProjectPromise.catch(err => {
+        getProjectPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2582,15 +2542,15 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2612,7 +2572,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.updateProject({});
@@ -2624,11 +2584,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateProjectPromise = discoveryService.updateProject();
         expectToBePromise(updateProjectPromise);
 
-        updateProjectPromise.catch(err => {
+        updateProjectPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2652,14 +2612,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/projects/{project_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}', 'DELETE');
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['project_id']).toEqual(projectId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2681,7 +2641,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.deleteProject({});
@@ -2693,11 +2653,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteProjectPromise = discoveryService.deleteProject();
         expectToBePromise(deleteProjectPromise);
 
-        deleteProjectPromise.catch(err => {
+        deleteProjectPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2721,14 +2681,14 @@ describe('DiscoveryV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/user_data', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v2/user_data', 'DELETE');
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['customer_id']).toEqual(customerId);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.qs.customer_id).toEqual(customerId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2750,7 +2710,7 @@ describe('DiscoveryV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await discoveryService.deleteUserData({});
@@ -2762,11 +2722,11 @@ describe('DiscoveryV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteUserDataPromise = discoveryService.deleteUserData();
         expectToBePromise(deleteUserDataPromise);
 
-        deleteUserDataPromise.catch(err => {
+        deleteUserDataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

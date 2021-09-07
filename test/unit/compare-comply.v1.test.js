@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const CompareComplyV1 = require('../../dist/compare-comply/v1');
@@ -29,13 +29,13 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const compareComplyServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.compare-comply.watson.cloud.ibm.com',
   version: 'testString',
 };
 
-const compareComplyService = new CompareComplyV1(service);
+const compareComplyService = new CompareComplyV1(compareComplyServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(compareComplyService, 'createRequest');
@@ -134,9 +134,9 @@ describe('CompareComplyV1', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new CompareComplyV1(service);
+        const serviceObj = new CompareComplyV1(compareComplyServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(compareComplyServiceOptions.version);
       });
     });
   });
@@ -161,16 +161,16 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/html_conversion', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/html_conversion', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['model']).toEqual(model);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.contentType).toEqual(fileContentType);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.model).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
@@ -192,7 +192,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.convertToHtml({});
@@ -204,11 +204,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const convertToHtmlPromise = compareComplyService.convertToHtml();
         expectToBePromise(convertToHtmlPromise);
 
-        convertToHtmlPromise.catch(err => {
+        convertToHtmlPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -236,16 +236,16 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/element_classification', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/element_classification', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['model']).toEqual(model);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.contentType).toEqual(fileContentType);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.model).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
@@ -267,7 +267,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.classifyElements({});
@@ -279,11 +279,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const classifyElementsPromise = compareComplyService.classifyElements();
         expectToBePromise(classifyElementsPromise);
 
-        classifyElementsPromise.catch(err => {
+        classifyElementsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -311,16 +311,16 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/tables', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/tables', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['file'].data).toEqual(file);
-        expect(options.formData['file'].contentType).toEqual(fileContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['model']).toEqual(model);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.contentType).toEqual(fileContentType);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.model).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
@@ -342,7 +342,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.extractTables({});
@@ -354,11 +354,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const extractTablesPromise = compareComplyService.extractTables();
         expectToBePromise(extractTablesPromise);
 
-        extractTablesPromise.catch(err => {
+        extractTablesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -373,8 +373,8 @@ describe('CompareComplyV1', () => {
         const file2 = Buffer.from('This is a mock file.');
         const file1ContentType = 'application/pdf';
         const file2ContentType = 'application/pdf';
-        const file1Label = 'testString';
-        const file2Label = 'testString';
+        const file1Label = 'file_1';
+        const file2Label = 'file_2';
         const model = 'contracts';
         const params = {
           file1: file1,
@@ -394,20 +394,20 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/comparison', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/comparison', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['file_1'].data).toEqual(file1);
-        expect(options.formData['file_1'].contentType).toEqual(file1ContentType);
-        expect(options.formData['file_2'].data).toEqual(file2);
-        expect(options.formData['file_2'].contentType).toEqual(file2ContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['file_1_label']).toEqual(file1Label);
-        expect(options.qs['file_2_label']).toEqual(file2Label);
-        expect(options.qs['model']).toEqual(model);
+        expect(mockRequestOptions.formData.file_1.data).toEqual(file1);
+        expect(mockRequestOptions.formData.file_1.contentType).toEqual(file1ContentType);
+        expect(mockRequestOptions.formData.file_2.data).toEqual(file2);
+        expect(mockRequestOptions.formData.file_2.contentType).toEqual(file2ContentType);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.file_1_label).toEqual(file1Label);
+        expect(mockRequestOptions.qs.file_2_label).toEqual(file2Label);
+        expect(mockRequestOptions.qs.model).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
@@ -431,7 +431,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.compareDocuments({});
@@ -443,11 +443,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const compareDocumentsPromise = compareComplyService.compareDocuments();
         expectToBePromise(compareDocumentsPromise);
 
-        compareDocumentsPromise.catch(err => {
+        compareDocumentsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -533,16 +533,16 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/feedback', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/feedback', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['feedback_data']).toEqual(feedbackData);
-        expect(options.body['user_id']).toEqual(userId);
-        expect(options.body['comment']).toEqual(comment);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.body.feedback_data).toEqual(feedbackData);
+        expect(mockRequestOptions.body.user_id).toEqual(userId);
+        expect(mockRequestOptions.body.comment).toEqual(comment);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -564,7 +564,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.addFeedback({});
@@ -576,11 +576,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const addFeedbackPromise = compareComplyService.addFeedback();
         expectToBePromise(addFeedbackPromise);
 
-        addFeedbackPromise.catch(err => {
+        addFeedbackPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -630,27 +630,27 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/feedback', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/feedback', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['feedback_type']).toEqual(feedbackType);
-        expect(options.qs['document_title']).toEqual(documentTitle);
-        expect(options.qs['model_id']).toEqual(modelId);
-        expect(options.qs['model_version']).toEqual(modelVersion);
-        expect(options.qs['category_removed']).toEqual(categoryRemoved);
-        expect(options.qs['category_added']).toEqual(categoryAdded);
-        expect(options.qs['category_not_changed']).toEqual(categoryNotChanged);
-        expect(options.qs['type_removed']).toEqual(typeRemoved);
-        expect(options.qs['type_added']).toEqual(typeAdded);
-        expect(options.qs['type_not_changed']).toEqual(typeNotChanged);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['include_total']).toEqual(includeTotal);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.feedback_type).toEqual(feedbackType);
+        expect(mockRequestOptions.qs.document_title).toEqual(documentTitle);
+        expect(mockRequestOptions.qs.model_id).toEqual(modelId);
+        expect(mockRequestOptions.qs.model_version).toEqual(modelVersion);
+        expect(mockRequestOptions.qs.category_removed).toEqual(categoryRemoved);
+        expect(mockRequestOptions.qs.category_added).toEqual(categoryAdded);
+        expect(mockRequestOptions.qs.category_not_changed).toEqual(categoryNotChanged);
+        expect(mockRequestOptions.qs.type_removed).toEqual(typeRemoved);
+        expect(mockRequestOptions.qs.type_added).toEqual(typeAdded);
+        expect(mockRequestOptions.qs.type_not_changed).toEqual(typeNotChanged);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.include_total).toEqual(includeTotal);
       });
 
       test('should prioritize user-given headers', () => {
@@ -694,15 +694,15 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/feedback/{feedback_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['model']).toEqual(model);
-        expect(options.path['feedback_id']).toEqual(feedbackId);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.model).toEqual(model);
+        expect(mockRequestOptions.path.feedback_id).toEqual(feedbackId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -724,7 +724,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.getFeedback({});
@@ -736,11 +736,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getFeedbackPromise = compareComplyService.getFeedback();
         expectToBePromise(getFeedbackPromise);
 
-        getFeedbackPromise.catch(err => {
+        getFeedbackPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -766,15 +766,15 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/feedback/{feedback_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v1/feedback/{feedback_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['model']).toEqual(model);
-        expect(options.path['feedback_id']).toEqual(feedbackId);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.model).toEqual(model);
+        expect(mockRequestOptions.path.feedback_id).toEqual(feedbackId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -796,7 +796,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.deleteFeedback({});
@@ -808,11 +808,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteFeedbackPromise = compareComplyService.deleteFeedback();
         expectToBePromise(deleteFeedbackPromise);
 
-        deleteFeedbackPromise.catch(err => {
+        deleteFeedbackPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -850,23 +850,23 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/batches', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v1/batches', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['input_credentials_file'].data).toEqual(inputCredentialsFile);
-        expect(options.formData['input_credentials_file'].contentType).toEqual('application/json');
-        expect(options.formData['input_bucket_location']).toEqual(inputBucketLocation);
-        expect(options.formData['input_bucket_name']).toEqual(inputBucketName);
-        expect(options.formData['output_credentials_file'].data).toEqual(outputCredentialsFile);
-        expect(options.formData['output_credentials_file'].contentType).toEqual('application/json');
-        expect(options.formData['output_bucket_location']).toEqual(outputBucketLocation);
-        expect(options.formData['output_bucket_name']).toEqual(outputBucketName);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['function']).toEqual(_function);
-        expect(options.qs['model']).toEqual(model);
+        expect(mockRequestOptions.formData.input_credentials_file.data).toEqual(inputCredentialsFile);
+        expect(mockRequestOptions.formData.input_credentials_file.contentType).toEqual('application/json');
+        expect(mockRequestOptions.formData.input_bucket_location).toEqual(inputBucketLocation);
+        expect(mockRequestOptions.formData.input_bucket_name).toEqual(inputBucketName);
+        expect(mockRequestOptions.formData.output_credentials_file.data).toEqual(outputCredentialsFile);
+        expect(mockRequestOptions.formData.output_credentials_file.contentType).toEqual('application/json');
+        expect(mockRequestOptions.formData.output_bucket_location).toEqual(outputBucketLocation);
+        expect(mockRequestOptions.formData.output_bucket_name).toEqual(outputBucketName);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.function).toEqual(_function);
+        expect(mockRequestOptions.qs.model).toEqual(model);
       });
 
       test('should prioritize user-given headers', () => {
@@ -900,7 +900,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.createBatch({});
@@ -912,11 +912,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createBatchPromise = compareComplyService.createBatch();
         expectToBePromise(createBatchPromise);
 
-        createBatchPromise.catch(err => {
+        createBatchPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -937,13 +937,13 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/batches', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/batches', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -985,14 +985,14 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/batches/{batch_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v1/batches/{batch_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['batch_id']).toEqual(batchId);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.path.batch_id).toEqual(batchId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1014,7 +1014,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.getBatch({});
@@ -1026,11 +1026,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getBatchPromise = compareComplyService.getBatch();
         expectToBePromise(getBatchPromise);
 
-        getBatchPromise.catch(err => {
+        getBatchPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1058,16 +1058,16 @@ describe('CompareComplyV1', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v1/batches/{batch_id}', 'PUT');
+        checkUrlAndMethod(mockRequestOptions, '/v1/batches/{batch_id}', 'PUT');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['action']).toEqual(action);
-        expect(options.qs['model']).toEqual(model);
-        expect(options.path['batch_id']).toEqual(batchId);
+        expect(mockRequestOptions.qs.version).toEqual(compareComplyServiceOptions.version);
+        expect(mockRequestOptions.qs.action).toEqual(action);
+        expect(mockRequestOptions.qs.model).toEqual(model);
+        expect(mockRequestOptions.path.batch_id).toEqual(batchId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1091,7 +1091,7 @@ describe('CompareComplyV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await compareComplyService.updateBatch({});
@@ -1103,11 +1103,11 @@ describe('CompareComplyV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateBatchPromise = compareComplyService.updateBatch();
         expectToBePromise(updateBatchPromise);
 
-        updateBatchPromise.catch(err => {
+        updateBatchPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

@@ -13,23 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const AssistantV2 = require('../../dist/assistant/v2');
 
-const { getOptions, checkUrlAndMethod, checkMediaHeaders, expectToBePromise } = unitTestUtils;
+const {
+  getOptions,
+  checkUrlAndMethod,
+  checkMediaHeaders,
+  expectToBePromise,
+} = unitTestUtils;
 
-const service = {
+const assistantServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.assistant.watson.cloud.ibm.com',
   version: 'testString',
 };
 
-const assistantService = new AssistantV2(service);
+const assistantService = new AssistantV2(assistantServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(assistantService, 'createRequest');
@@ -128,9 +133,9 @@ describe('AssistantV2', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new AssistantV2(service);
+        const serviceObj = new AssistantV2(assistantServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(assistantServiceOptions.version);
       });
     });
   });
@@ -151,14 +156,14 @@ describe('AssistantV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/sessions', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['assistant_id']).toEqual(assistantId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -180,7 +185,7 @@ describe('AssistantV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.createSession({});
@@ -192,11 +197,11 @@ describe('AssistantV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createSessionPromise = assistantService.createSession();
         expectToBePromise(createSessionPromise);
 
-        createSessionPromise.catch(err => {
+        createSessionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -222,15 +227,15 @@ describe('AssistantV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/sessions/{session_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/sessions/{session_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['assistant_id']).toEqual(assistantId);
-        expect(options.path['session_id']).toEqual(sessionId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.session_id).toEqual(sessionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -254,7 +259,7 @@ describe('AssistantV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteSession({});
@@ -266,11 +271,11 @@ describe('AssistantV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteSessionPromise = assistantService.deleteSession();
         expectToBePromise(deleteSessionPromise);
 
-        deleteSessionPromise.catch(err => {
+        deleteSessionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -340,7 +345,7 @@ describe('AssistantV2', () => {
         location: [38],
         value: 'testString',
         confidence: 72.5,
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         groups: [captureGroupModel],
         interpretation: runtimeEntityInterpretationModel,
         alternatives: [runtimeEntityAlternativeModel],
@@ -355,12 +360,12 @@ describe('AssistantV2', () => {
 
       // MessageInputOptions
       const messageInputOptionsModel = {
-        restart: true,
-        alternate_intents: true,
+        restart: false,
+        alternate_intents: false,
         spelling: messageInputOptionsSpellingModel,
-        debug: true,
-        return_context: true,
-        export: true,
+        debug: false,
+        return_context: false,
+        export: false,
       };
 
       // MessageInput
@@ -395,14 +400,14 @@ describe('AssistantV2', () => {
 
       // MessageContextSkill
       const messageContextSkillModel = {
-        user_defined: { key1: { foo: 'bar' } },
+        user_defined: { 'key1': { foo: 'bar' } },
         system: messageContextSkillSystemModel,
       };
 
       // MessageContext
       const messageContextModel = {
         global: messageContextGlobalModel,
-        skills: { key1: messageContextSkillModel },
+        skills: { 'key1': messageContextSkillModel },
       };
 
       test('should pass the right params to createRequest', () => {
@@ -428,22 +433,18 @@ describe('AssistantV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/sessions/{session_id}/message', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['input']).toEqual(input);
-        expect(options.body['context']).toEqual(context);
-        expect(options.body['user_id']).toEqual(userId);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['assistant_id']).toEqual(assistantId);
-        expect(options.path['session_id']).toEqual(sessionId);
+        expect(mockRequestOptions.body.input).toEqual(input);
+        expect(mockRequestOptions.body.context).toEqual(context);
+        expect(mockRequestOptions.body.user_id).toEqual(userId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.session_id).toEqual(sessionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -467,7 +468,7 @@ describe('AssistantV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.message({});
@@ -479,11 +480,11 @@ describe('AssistantV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const messagePromise = assistantService.message();
         expectToBePromise(messagePromise);
 
-        messagePromise.catch(err => {
+        messagePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -553,7 +554,7 @@ describe('AssistantV2', () => {
         location: [38],
         value: 'testString',
         confidence: 72.5,
-        metadata: { key1: 'testString' },
+        metadata: { 'key1': 'testString' },
         groups: [captureGroupModel],
         interpretation: runtimeEntityInterpretationModel,
         alternatives: [runtimeEntityAlternativeModel],
@@ -568,10 +569,10 @@ describe('AssistantV2', () => {
 
       // MessageInputOptionsStateless
       const messageInputOptionsStatelessModel = {
-        restart: true,
-        alternate_intents: true,
+        restart: false,
+        alternate_intents: false,
         spelling: messageInputOptionsSpellingModel,
-        debug: true,
+        debug: false,
       };
 
       // MessageInputStateless
@@ -607,14 +608,14 @@ describe('AssistantV2', () => {
 
       // MessageContextSkill
       const messageContextSkillModel = {
-        user_defined: { key1: { foo: 'bar' } },
+        user_defined: { 'key1': { foo: 'bar' } },
         system: messageContextSkillSystemModel,
       };
 
       // MessageContextStateless
       const messageContextStatelessModel = {
         global: messageContextGlobalStatelessModel,
-        skills: { key1: messageContextSkillModel },
+        skills: { 'key1': messageContextSkillModel },
       };
 
       test('should pass the right params to createRequest', () => {
@@ -638,17 +639,17 @@ describe('AssistantV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/message', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/message', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['input']).toEqual(input);
-        expect(options.body['context']).toEqual(context);
-        expect(options.body['user_id']).toEqual(userId);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['assistant_id']).toEqual(assistantId);
+        expect(mockRequestOptions.body.input).toEqual(input);
+        expect(mockRequestOptions.body.context).toEqual(context);
+        expect(mockRequestOptions.body.user_id).toEqual(userId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -670,7 +671,7 @@ describe('AssistantV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.messageStateless({});
@@ -682,11 +683,11 @@ describe('AssistantV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const messageStatelessPromise = assistantService.messageStateless();
         expectToBePromise(messageStatelessPromise);
 
-        messageStatelessPromise.catch(err => {
+        messageStatelessPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -719,15 +720,15 @@ describe('AssistantV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/skills/{skill_id}/workspace/bulk_classify', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/skills/{skill_id}/workspace/bulk_classify', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['input']).toEqual(input);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['skill_id']).toEqual(skillId);
+        expect(mockRequestOptions.body.input).toEqual(input);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.skill_id).toEqual(skillId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -749,7 +750,7 @@ describe('AssistantV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.bulkClassify({});
@@ -761,11 +762,11 @@ describe('AssistantV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const bulkClassifyPromise = assistantService.bulkClassify();
         expectToBePromise(bulkClassifyPromise);
 
-        bulkClassifyPromise.catch(err => {
+        bulkClassifyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -797,18 +798,18 @@ describe('AssistantV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/assistants/{assistant_id}/logs', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/logs', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['filter']).toEqual(filter);
-        expect(options.qs['page_limit']).toEqual(pageLimit);
-        expect(options.qs['cursor']).toEqual(cursor);
-        expect(options.path['assistant_id']).toEqual(assistantId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.filter).toEqual(filter);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -830,7 +831,7 @@ describe('AssistantV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.listLogs({});
@@ -842,11 +843,11 @@ describe('AssistantV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listLogsPromise = assistantService.listLogs();
         expectToBePromise(listLogsPromise);
 
-        listLogsPromise.catch(err => {
+        listLogsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -870,14 +871,14 @@ describe('AssistantV2', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v2/user_data', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v2/user_data', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['customer_id']).toEqual(customerId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.customer_id).toEqual(customerId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -899,7 +900,7 @@ describe('AssistantV2', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await assistantService.deleteUserData({});
@@ -911,11 +912,11 @@ describe('AssistantV2', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteUserDataPromise = assistantService.deleteUserData();
         expectToBePromise(deleteUserDataPromise);
 
-        deleteUserDataPromise.catch(err => {
+        deleteUserDataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
