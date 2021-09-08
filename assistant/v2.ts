@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -30,15 +35,18 @@ import { getSdkHeaders } from '../lib/common';
  *
  * The Assistant v2 API provides runtime methods your client application can use to send user input to an assistant and
  * receive a response.
+ *
+ * API Version: 2.0
+ * See: https://cloud.ibm.com/docs/assistant
  */
 
 class AssistantV2 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.assistant.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2020-09-24`.
+   *  `2021-06-14`.
    */
   version: string;
 
@@ -47,7 +55,7 @@ class AssistantV2 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2020-09-24`.
+   * format. The current version is `2021-06-14`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -100,8 +108,10 @@ class AssistantV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.SessionResponse>>}
    */
-  public createSession(params: AssistantV2.CreateSessionParams): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
-    const _params = Object.assign({}, params);
+  public createSession(
+    params: AssistantV2.CreateSessionParams
+  ): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
+    const _params = { ...params };
     const requiredParams = ['assistantId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -110,14 +120,18 @@ class AssistantV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'assistant_id': _params.assistantId
+      'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createSession');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createSession'
+    );
 
     const parameters = {
       options: {
@@ -127,14 +141,19 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete session.
@@ -153,8 +172,10 @@ class AssistantV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
    */
-  public deleteSession(params: AssistantV2.DeleteSessionParams): Promise<AssistantV2.Response<AssistantV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteSession(
+    params: AssistantV2.DeleteSessionParams
+  ): Promise<AssistantV2.Response<AssistantV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['assistantId', 'sessionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -163,15 +184,19 @@ class AssistantV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'assistant_id': _params.assistantId,
-      'session_id': _params.sessionId
+      'session_id': _params.sessionId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteSession');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteSession'
+    );
 
     const parameters = {
       options: {
@@ -181,15 +206,19 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * message
    ************************/
@@ -225,8 +254,10 @@ class AssistantV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponse>>}
    */
-  public message(params: AssistantV2.MessageParams): Promise<AssistantV2.Response<AssistantV2.MessageResponse>> {
-    const _params = Object.assign({}, params);
+  public message(
+    params: AssistantV2.MessageParams
+  ): Promise<AssistantV2.Response<AssistantV2.MessageResponse>> {
+    const _params = { ...params };
     const requiredParams = ['assistantId', 'sessionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -237,19 +268,23 @@ class AssistantV2 extends BaseService {
     const body = {
       'input': _params.input,
       'context': _params.context,
-      'user_id': _params.userId
+      'user_id': _params.userId,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'assistant_id': _params.assistantId,
-      'session_id': _params.sessionId
+      'session_id': _params.sessionId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'message');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'message'
+    );
 
     const parameters = {
       options: {
@@ -260,15 +295,20 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Send user input to assistant (stateless).
@@ -300,8 +340,10 @@ class AssistantV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>>}
    */
-  public messageStateless(params: AssistantV2.MessageStatelessParams): Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>> {
-    const _params = Object.assign({}, params);
+  public messageStateless(
+    params: AssistantV2.MessageStatelessParams
+  ): Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>> {
+    const _params = { ...params };
     const requiredParams = ['assistantId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -312,18 +354,22 @@ class AssistantV2 extends BaseService {
     const body = {
       'input': _params.input,
       'context': _params.context,
-      'user_id': _params.userId
+      'user_id': _params.userId,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'assistant_id': _params.assistantId
+      'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'messageStateless');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'messageStateless'
+    );
 
     const parameters = {
       options: {
@@ -334,16 +380,20 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * bulkClassify
    ************************/
@@ -364,8 +414,10 @@ class AssistantV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>>}
    */
-  public bulkClassify(params: AssistantV2.BulkClassifyParams): Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>> {
-    const _params = Object.assign({}, params);
+  public bulkClassify(
+    params: AssistantV2.BulkClassifyParams
+  ): Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>> {
+    const _params = { ...params };
     const requiredParams = ['skillId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -374,18 +426,22 @@ class AssistantV2 extends BaseService {
     }
 
     const body = {
-      'input': _params.input
+      'input': _params.input,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'skill_id': _params.skillId
+      'skill_id': _params.skillId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'bulkClassify');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'bulkClassify'
+    );
 
     const parameters = {
       options: {
@@ -396,16 +452,20 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * logs
    ************************/
@@ -434,8 +494,10 @@ class AssistantV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.LogCollection>>}
    */
-  public listLogs(params: AssistantV2.ListLogsParams): Promise<AssistantV2.Response<AssistantV2.LogCollection>> {
-    const _params = Object.assign({}, params);
+  public listLogs(
+    params: AssistantV2.ListLogsParams
+  ): Promise<AssistantV2.Response<AssistantV2.LogCollection>> {
+    const _params = { ...params };
     const requiredParams = ['assistantId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -448,14 +510,18 @@ class AssistantV2 extends BaseService {
       'sort': _params.sort,
       'filter': _params.filter,
       'page_limit': _params.pageLimit,
-      'cursor': _params.cursor
+      'cursor': _params.cursor,
     };
 
     const path = {
-      'assistant_id': _params.assistantId
+      'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listLogs');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listLogs'
+    );
 
     const parameters = {
       options: {
@@ -465,15 +531,19 @@ class AssistantV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -498,8 +568,10 @@ class AssistantV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
    */
-  public deleteUserData(params: AssistantV2.DeleteUserDataParams): Promise<AssistantV2.Response<AssistantV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: AssistantV2.DeleteUserDataParams
+  ): Promise<AssistantV2.Response<AssistantV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -509,10 +581,14 @@ class AssistantV2 extends BaseService {
 
     const query = {
       'version': this.version,
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -521,15 +597,19 @@ class AssistantV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -537,18 +617,16 @@ class AssistantV2 extends BaseService {
  ************************/
 
 namespace AssistantV2 {
-
   /** Options for the `AssistantV2` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2020-09-24`.
+     *  `2021-06-14`.
      */
     version: string;
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -559,7 +637,7 @@ namespace AssistantV2 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -990,7 +1068,13 @@ namespace AssistantV2 {
 
   /** An input object that includes the input text. */
   export interface MessageInput {
-    /** The type of user input. Currently, only text input is supported. */
+    /** The type of the message:
+     *
+     *  - `text`: The user input is processed normally by the assistant.
+     *  - `search`: Only search results are returned. (Any dialog or actions skill is bypassed.)
+     *
+     *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
+     */
     message_type?: string;
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
@@ -1076,7 +1160,13 @@ namespace AssistantV2 {
 
   /** An input object that includes the input text. */
   export interface MessageInputStateless {
-    /** The type of user input. Currently, only text input is supported. */
+    /** The type of the message:
+     *
+     *  - `text`: The user input is processed normally by the assistant.
+     *  - `search`: Only search results are returned. (Any dialog or actions skill is bypassed.)
+     *
+     *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
+     */
     message_type?: string;
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
@@ -1224,12 +1314,16 @@ namespace AssistantV2 {
     /** An array of zero-based character offsets that indicate where the detected entity values begin and end in the
      *  input text.
      */
-    location: number[];
+    location?: number[];
     /** The term in the input text that was recognized as an entity value. */
     value: string;
     /** A decimal percentage that represents Watson's confidence in the recognized entity. */
     confidence?: number;
-    /** Any metadata for the entity. */
+    /** **Deprecated.** Any metadata for the entity.
+     *
+     *  Beginning with the `2021-06-14` API version, the `metadata` property is no longer returned. For information
+     *  about system entities recognized in the user input, see the `interpretation` property.
+     */
     metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
@@ -1516,7 +1610,7 @@ namespace AssistantV2 {
      *  client application or channel.
      */
     response_type: string;
-    /** The URL of the image. */
+    /** The `https:` URL of the image. */
     source: string;
     /** The title to show before the response. */
     title?: string;
@@ -1627,7 +1721,6 @@ namespace AssistantV2 {
      */
     channels?: ResponseGenericChannel[];
   }
-
 }
 
 export = AssistantV2;
