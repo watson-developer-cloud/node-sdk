@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -48,11 +53,14 @@ import { getSdkHeaders } from '../lib/common';
  * Language model customization and acoustic model customization are generally available for production use with all
  * previous-generation models that are generally available. Grammars are beta functionality for all previous-generation
  * models that support language model customization. Next-generation models do not support customization at this time.
+ *
+ * API Version: 1.0.0
+ * See: https://cloud.ibm.com/docs/speech-to-text
  */
 
 class SpeechToTextV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.speech-to-text.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'speech_to_text';
 
   /**
@@ -100,10 +108,16 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModels>>}
    */
-  public listModels(params?: SpeechToTextV1.ListModelsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModels>> {
-    const _params = Object.assign({}, params);
+  public listModels(
+    params?: SpeechToTextV1.ListModelsParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModels>> {
+    const _params = { ...params };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listModels'
+    );
 
     const parameters = {
       options: {
@@ -111,14 +125,19 @@ class SpeechToTextV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a model.
@@ -134,8 +153,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>>}
    */
-  public getModel(params: SpeechToTextV1.GetModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>> {
-    const _params = Object.assign({}, params);
+  public getModel(
+    params: SpeechToTextV1.GetModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -144,10 +165,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getModel'
+    );
 
     const parameters = {
       options: {
@@ -156,15 +181,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * synchronous
    ************************/
@@ -231,7 +260,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * ### Next-generation models
    *
-   *  **Note:** The next-generation language models are beta functionality. They support a limited number of languages
+   *  **Beta:** The next-generation language models are beta functionality. They support a limited number of languages
    * and features at this time. The supported languages, models, and features will increase with future releases.
    *
    * The service supports next-generation `Multimedia` (16 kHz) and `Telephony` (8 kHz) models for many languages.
@@ -242,6 +271,7 @@ class SpeechToTextV1 extends BaseService {
    * You specify a next-generation model by using the `model` query parameter, as you do a previous-generation model.
    * Next-generation models support the same request headers as previous-generation models, but they support only the
    * following additional query parameters:
+   * * `audio_metrics`
    * * `background_audio_suppression`
    * * `inactivity_timeout`
    * * `profanity_filter`
@@ -250,6 +280,7 @@ class SpeechToTextV1 extends BaseService {
    * * `speaker_labels`
    * * `speech_detector_sensitivity`
    * * `timestamps`
+   * * `word_confidence`
    *
    * Many next-generation models also support the beta `low_latency` parameter, which is not available with
    * previous-generation models.
@@ -274,12 +305,13 @@ class SpeechToTextV1 extends BaseService {
    * request](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-http#HTTP-multi).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.audio - The audio to transcribe.
+   * @param {NodeJS.ReadableStream | Buffer} params.audio - The audio to transcribe.
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
    * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
-   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
-   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages and
+   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See
+   * [Previous-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models)
+   * and [Next-generation languages and
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
@@ -356,17 +388,19 @@ class SpeechToTextV1 extends BaseService {
    * the final transcript of a recognition request. For US English, the service also converts certain keyword strings to
    * punctuation symbols. By default, the service performs no smart formatting.
    *
-   * **Note:** Applies to US English, Japanese, and Spanish transcription only.
+   * **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Spanish transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
    * `false` for the parameter.
-   * * For previous-generation models, can be used for US English, Australian English, German, Japanese, Korean, and
-   * Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
-   * * For next-generation models, can be used for English (Australian, UK, and US), German, and Spanish transcription
-   * only.
+   *
+   * **Beta:** The parameter is beta functionality.
+   * * For previous-generation models, the parameter can be used for US English, Australian English, German, Japanese,
+   * Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
+   * * For next-generation models, the parameter can be used for English (Australian, Indian, UK, and US), German,
+   * Japanese, Korean, and Spanish transcription only.
    *
    * Restrictions and limitations apply to the use of speaker labels for both types of models. See [Speaker
    * labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
@@ -376,8 +410,12 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.grammarName] - The name of a grammar that is to be used with the recognition request. If
    * you specify a grammar, you must also use the `language_customization_id` parameter to specify the name of the
    * custom language model for which the grammar is defined. The service recognizes only strings that are recognized by
-   * the specified grammar; it does not recognize other custom words from the model's words resource. See [Using a
-   * grammar for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-grammarUse).
+   * the specified grammar; it does not recognize other custom words from the model's words resource.
+   *
+   * **Beta:** The parameter is beta functionality.
+   *
+   * See [Using a grammar for speech
+   * recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-grammarUse).
    * @param {boolean} [params.redaction] - If `true`, the service redacts, or masks, numeric data from final
    * transcripts. The feature redacts any number that has three or more consecutive digits by replacing each digit with
    * an `X` character. It is intended to redact sensitive numeric data, such as credit card numbers. By default, the
@@ -388,7 +426,7 @@ class SpeechToTextV1 extends BaseService {
    * `keywords` and `keywords_threshold` parameters) and returns only a single final transcript (forces the
    * `max_alternatives` parameter to be `1`).
    *
-   * **Note:** Applies to US English, Japanese, and Korean transcription only.
+   * **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Korean transcription only.
    *
    * See [Numeric
    * redaction](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#numeric-redaction).
@@ -447,10 +485,10 @@ class SpeechToTextV1 extends BaseService {
    * models produce transcription results faster than previous-generation models. The `low_latency` parameter causes the
    * models to produce results even more quickly, though the results might be less accurate when the parameter is used.
    *
-   * **Note:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
+   * **Beta:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
    * `Narrowband` models. It is available only for some next-generation models.
    *
-   * * For a list of next-generation models that support low latency, see [Supported language
+   * * For a list of next-generation models that support low latency, see [Supported next-generation language
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported) for
    * next-generation models.
    * * For more information about the `low_latency` parameter, see [Low
@@ -458,8 +496,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>>}
    */
-  public recognize(params: SpeechToTextV1.RecognizeParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
-    const _params = Object.assign({}, params);
+  public recognize(
+    params: SpeechToTextV1.RecognizeParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
+    const _params = { ...params };
     const requiredParams = ['audio'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -492,10 +532,14 @@ class SpeechToTextV1 extends BaseService {
       'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
       'speech_detector_sensitivity': _params.speechDetectorSensitivity,
       'background_audio_suppression': _params.backgroundAudioSuppression,
-      'low_latency': _params.lowLatency
+      'low_latency': _params.lowLatency,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'recognize');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'recognize'
+    );
 
     const parameters = {
       options: {
@@ -505,16 +549,20 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * asynchronous
    ************************/
@@ -562,8 +610,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RegisterStatus>>}
    */
-  public registerCallback(params: SpeechToTextV1.RegisterCallbackParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RegisterStatus>> {
-    const _params = Object.assign({}, params);
+  public registerCallback(
+    params: SpeechToTextV1.RegisterCallbackParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RegisterStatus>> {
+    const _params = { ...params };
     const requiredParams = ['callbackUrl'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -573,10 +623,14 @@ class SpeechToTextV1 extends BaseService {
 
     const query = {
       'callback_url': _params.callbackUrl,
-      'user_secret': _params.userSecret
+      'user_secret': _params.userSecret,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'registerCallback');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'registerCallback'
+    );
 
     const parameters = {
       options: {
@@ -585,14 +639,19 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Unregister a callback.
@@ -608,8 +667,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public unregisterCallback(params: SpeechToTextV1.UnregisterCallbackParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public unregisterCallback(
+    params: SpeechToTextV1.UnregisterCallbackParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['callbackUrl'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -618,10 +679,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const query = {
-      'callback_url': _params.callbackUrl
+      'callback_url': _params.callbackUrl,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'unregisterCallback');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'unregisterCallback'
+    );
 
     const parameters = {
       options: {
@@ -630,13 +695,18 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a job.
@@ -722,7 +792,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * ### Next-generation models
    *
-   *  **Note:** The next-generation language models are beta functionality. They support a limited number of languages
+   *  **Beta:** The next-generation language models are beta functionality. They support a limited number of languages
    * and features at this time. The supported languages, models, and features will increase with future releases.
    *
    * The service supports next-generation `Multimedia` (16 kHz) and `Telephony` (8 kHz) models for many languages.
@@ -733,6 +803,7 @@ class SpeechToTextV1 extends BaseService {
    * You specify a next-generation model by using the `model` query parameter, as you do a previous-generation model.
    * Next-generation models support the same request headers as previous-generation models, but they support only the
    * following additional query parameters:
+   * * `audio_metrics`
    * * `background_audio_suppression`
    * * `inactivity_timeout`
    * * `profanity_filter`
@@ -741,6 +812,7 @@ class SpeechToTextV1 extends BaseService {
    * * `speaker_labels`
    * * `speech_detector_sensitivity`
    * * `timestamps`
+   * * `word_confidence`
    *
    * Many next-generation models also support the beta `low_latency` parameter, which is not available with
    * previous-generation models.
@@ -749,12 +821,13 @@ class SpeechToTextV1 extends BaseService {
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.audio - The audio to transcribe.
+   * @param {NodeJS.ReadableStream | Buffer} params.audio - The audio to transcribe.
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
    * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
-   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
-   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages and
+   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See
+   * [Previous-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models)
+   * and [Next-generation languages and
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng).
    * @param {string} [params.callbackUrl] - A URL to which callback notifications are to be sent. The URL must already
    * be successfully allowlisted by using the **Register a callback** method. You can include the same callback URL with
@@ -859,17 +932,19 @@ class SpeechToTextV1 extends BaseService {
    * the final transcript of a recognition request. For US English, the service also converts certain keyword strings to
    * punctuation symbols. By default, the service performs no smart formatting.
    *
-   * **Note:** Applies to US English, Japanese, and Spanish transcription only.
+   * **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Spanish transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
    * `false` for the parameter.
-   * * For previous-generation models, can be used for US English, Australian English, German, Japanese, Korean, and
-   * Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
-   * * For next-generation models, can be used for English (Australian, UK, and US), German, and Spanish transcription
-   * only.
+   *
+   * **Beta:** The parameter is beta functionality.
+   * * For previous-generation models, the parameter can be used for US English, Australian English, German, Japanese,
+   * Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
+   * * For next-generation models, the parameter can be used for English (Australian, Indian, UK, and US), German,
+   * Japanese, Korean, and Spanish transcription only.
    *
    * Restrictions and limitations apply to the use of speaker labels for both types of models. See [Speaker
    * labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
@@ -879,8 +954,12 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.grammarName] - The name of a grammar that is to be used with the recognition request. If
    * you specify a grammar, you must also use the `language_customization_id` parameter to specify the name of the
    * custom language model for which the grammar is defined. The service recognizes only strings that are recognized by
-   * the specified grammar; it does not recognize other custom words from the model's words resource. See [Using a
-   * grammar for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-grammarUse).
+   * the specified grammar; it does not recognize other custom words from the model's words resource.
+   *
+   * **Beta:** The parameter is beta functionality.
+   *
+   * See [Using a grammar for speech
+   * recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-grammarUse).
    * @param {boolean} [params.redaction] - If `true`, the service redacts, or masks, numeric data from final
    * transcripts. The feature redacts any number that has three or more consecutive digits by replacing each digit with
    * an `X` character. It is intended to redact sensitive numeric data, such as credit card numbers. By default, the
@@ -891,7 +970,7 @@ class SpeechToTextV1 extends BaseService {
    * `keywords` and `keywords_threshold` parameters) and returns only a single final transcript (forces the
    * `max_alternatives` parameter to be `1`).
    *
-   * **Note:** Applies to US English, Japanese, and Korean transcription only.
+   * **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Korean transcription only.
    *
    * See [Numeric
    * redaction](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#numeric-redaction).
@@ -970,10 +1049,10 @@ class SpeechToTextV1 extends BaseService {
    * models produce transcription results faster than previous-generation models. The `low_latency` parameter causes the
    * models to produce results even more quickly, though the results might be less accurate when the parameter is used.
    *
-   * **Note:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
+   * **Beta:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
    * `Narrowband` models. It is available only for some next-generation models.
    *
-   * * For a list of next-generation models that support low latency, see [Supported language
+   * * For a list of next-generation models that support low latency, see [Supported next-generation language
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported) for
    * next-generation models.
    * * For more information about the `low_latency` parameter, see [Low
@@ -981,8 +1060,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>>}
    */
-  public createJob(params: SpeechToTextV1.CreateJobParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
-    const _params = Object.assign({}, params);
+  public createJob(
+    params: SpeechToTextV1.CreateJobParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
+    const _params = { ...params };
     const requiredParams = ['audio'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1021,10 +1102,14 @@ class SpeechToTextV1 extends BaseService {
       'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
       'speech_detector_sensitivity': _params.speechDetectorSensitivity,
       'background_audio_suppression': _params.backgroundAudioSuppression,
-      'low_latency': _params.lowLatency
+      'low_latency': _params.lowLatency,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createJob');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createJob'
+    );
 
     const parameters = {
       options: {
@@ -1034,15 +1119,20 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Check jobs.
@@ -1061,10 +1151,16 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJobs>>}
    */
-  public checkJobs(params?: SpeechToTextV1.CheckJobsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJobs>> {
-    const _params = Object.assign({}, params);
+  public checkJobs(
+    params?: SpeechToTextV1.CheckJobsParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJobs>> {
+    const _params = { ...params };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJobs');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'checkJobs'
+    );
 
     const parameters = {
       options: {
@@ -1072,14 +1168,19 @@ class SpeechToTextV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Check a job.
@@ -1102,8 +1203,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>>}
    */
-  public checkJob(params: SpeechToTextV1.CheckJobParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
-    const _params = Object.assign({}, params);
+  public checkJob(
+    params: SpeechToTextV1.CheckJobParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1112,10 +1215,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJob');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'checkJob'
+    );
 
     const parameters = {
       options: {
@@ -1124,14 +1231,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a job.
@@ -1148,8 +1260,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteJob(params: SpeechToTextV1.DeleteJobParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteJob(
+    params: SpeechToTextV1.DeleteJobParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1158,10 +1272,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteJob');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteJob'
+    );
 
     const parameters = {
       options: {
@@ -1170,14 +1288,18 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customLanguageModels
    ************************/
@@ -1227,8 +1349,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>>}
    */
-  public createLanguageModel(params: SpeechToTextV1.CreateLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
-    const _params = Object.assign({}, params);
+  public createLanguageModel(
+    params: SpeechToTextV1.CreateLanguageModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'baseModelName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1240,10 +1364,14 @@ class SpeechToTextV1 extends BaseService {
       'name': _params.name,
       'base_model_name': _params.baseModelName,
       'dialect': _params.dialect,
-      'description': _params.description
+      'description': _params.description,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createLanguageModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createLanguageModel'
+    );
 
     const parameters = {
       options: {
@@ -1252,15 +1380,20 @@ class SpeechToTextV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List custom language models.
@@ -1283,14 +1416,20 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>>}
    */
-  public listLanguageModels(params?: SpeechToTextV1.ListLanguageModelsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>> {
-    const _params = Object.assign({}, params);
+  public listLanguageModels(
+    params?: SpeechToTextV1.ListLanguageModelsParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>> {
+    const _params = { ...params };
 
     const query = {
-      'language': _params.language
+      'language': _params.language,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listLanguageModels');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listLanguageModels'
+    );
 
     const parameters = {
       options: {
@@ -1299,14 +1438,19 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a custom language model.
@@ -1324,8 +1468,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>>}
    */
-  public getLanguageModel(params: SpeechToTextV1.GetLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
-    const _params = Object.assign({}, params);
+  public getLanguageModel(
+    params: SpeechToTextV1.GetLanguageModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1334,10 +1480,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getLanguageModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getLanguageModel'
+    );
 
     const parameters = {
       options: {
@@ -1346,14 +1496,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a custom language model.
@@ -1372,8 +1527,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteLanguageModel(params: SpeechToTextV1.DeleteLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteLanguageModel(
+    params: SpeechToTextV1.DeleteLanguageModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1382,10 +1539,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteLanguageModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteLanguageModel'
+    );
 
     const parameters = {
       options: {
@@ -1394,14 +1555,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Train a custom language model.
@@ -1462,8 +1628,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>>}
    */
-  public trainLanguageModel(params: SpeechToTextV1.TrainLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
-    const _params = Object.assign({}, params);
+  public trainLanguageModel(
+    params: SpeechToTextV1.TrainLanguageModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1473,14 +1641,18 @@ class SpeechToTextV1 extends BaseService {
 
     const query = {
       'word_type_to_add': _params.wordTypeToAdd,
-      'customization_weight': _params.customizationWeight
+      'customization_weight': _params.customizationWeight,
     };
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainLanguageModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'trainLanguageModel'
+    );
 
     const parameters = {
       options: {
@@ -1490,14 +1662,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Reset a custom language model.
@@ -1517,8 +1694,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public resetLanguageModel(params: SpeechToTextV1.ResetLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public resetLanguageModel(
+    params: SpeechToTextV1.ResetLanguageModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1527,10 +1706,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetLanguageModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'resetLanguageModel'
+    );
 
     const parameters = {
       options: {
@@ -1539,14 +1722,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Upgrade a custom language model.
@@ -1573,8 +1761,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public upgradeLanguageModel(params: SpeechToTextV1.UpgradeLanguageModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public upgradeLanguageModel(
+    params: SpeechToTextV1.UpgradeLanguageModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1583,10 +1773,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeLanguageModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'upgradeLanguageModel'
+    );
 
     const parameters = {
       options: {
@@ -1595,15 +1789,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customCorpora
    ************************/
@@ -1625,8 +1823,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpora>>}
    */
-  public listCorpora(params: SpeechToTextV1.ListCorporaParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpora>> {
-    const _params = Object.assign({}, params);
+  public listCorpora(
+    params: SpeechToTextV1.ListCorporaParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpora>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1635,10 +1835,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listCorpora');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCorpora'
+    );
 
     const parameters = {
       options: {
@@ -1647,14 +1851,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add a corpus.
@@ -1714,8 +1923,8 @@ class SpeechToTextV1 extends BaseService {
    * * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by
    * the user.
    * * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.corpusFile - A plain text file that contains the training data for the
-   * corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it
+   * @param {NodeJS.ReadableStream | Buffer} params.corpusFile - A plain text file that contains the training data for
+   * the corpus. Encode the file in UTF-8 if it contains non-ASCII characters; the service assumes UTF-8 encoding if it
    * encounters non-ASCII characters.
    *
    * Make sure that you know the character encoding of the file. You must use that encoding when working with the words
@@ -1729,8 +1938,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addCorpus(params: SpeechToTextV1.AddCorpusParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public addCorpus(
+    params: SpeechToTextV1.AddCorpusParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'corpusName', 'corpusFile'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1741,20 +1952,24 @@ class SpeechToTextV1 extends BaseService {
     const formData = {
       'corpus_file': {
         data: _params.corpusFile,
-        contentType: 'text/plain'
-      }
+        contentType: 'text/plain',
+      },
     };
 
     const query = {
-      'allow_overwrite': _params.allowOverwrite
+      'allow_overwrite': _params.allowOverwrite,
     };
 
     const path = {
       'customization_id': _params.customizationId,
-      'corpus_name': _params.corpusName
+      'corpus_name': _params.corpusName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addCorpus');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addCorpus'
+    );
 
     const parameters = {
       options: {
@@ -1765,15 +1980,20 @@ class SpeechToTextV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a corpus.
@@ -1793,8 +2013,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpus>>}
    */
-  public getCorpus(params: SpeechToTextV1.GetCorpusParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpus>> {
-    const _params = Object.assign({}, params);
+  public getCorpus(
+    params: SpeechToTextV1.GetCorpusParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpus>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'corpusName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1804,10 +2026,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'corpus_name': _params.corpusName
+      'corpus_name': _params.corpusName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getCorpus');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCorpus'
+    );
 
     const parameters = {
       options: {
@@ -1816,14 +2042,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a corpus.
@@ -1845,8 +2076,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteCorpus(params: SpeechToTextV1.DeleteCorpusParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteCorpus(
+    params: SpeechToTextV1.DeleteCorpusParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'corpusName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1856,10 +2089,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'corpus_name': _params.corpusName
+      'corpus_name': _params.corpusName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCorpus');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCorpus'
+    );
 
     const parameters = {
       options: {
@@ -1868,15 +2105,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customWords
    ************************/
@@ -1911,8 +2152,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Words>>}
    */
-  public listWords(params: SpeechToTextV1.ListWordsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Words>> {
-    const _params = Object.assign({}, params);
+  public listWords(
+    params: SpeechToTextV1.ListWordsParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Words>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1922,14 +2165,18 @@ class SpeechToTextV1 extends BaseService {
 
     const query = {
       'word_type': _params.wordType,
-      'sort': _params.sort
+      'sort': _params.sort,
     };
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listWords');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listWords'
+    );
 
     const parameters = {
       options: {
@@ -1939,14 +2186,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add custom words.
@@ -2008,8 +2260,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addWords(params: SpeechToTextV1.AddWordsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public addWords(
+    params: SpeechToTextV1.AddWordsParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'words'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2018,14 +2272,18 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const body = {
-      'words': _params.words
+      'words': _params.words,
     };
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWords');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addWords'
+    );
 
     const parameters = {
       options: {
@@ -2035,15 +2293,20 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add a custom word.
@@ -2111,8 +2374,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addWord(params: SpeechToTextV1.AddWordParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public addWord(
+    params: SpeechToTextV1.AddWordParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'wordName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2123,15 +2388,19 @@ class SpeechToTextV1 extends BaseService {
     const body = {
       'word': _params.word,
       'sounds_like': _params.soundsLike,
-      'display_as': _params.displayAs
+      'display_as': _params.displayAs,
     };
 
     const path = {
       'customization_id': _params.customizationId,
-      'word_name': _params.wordName
+      'word_name': _params.wordName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWord');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addWord'
+    );
 
     const parameters = {
       options: {
@@ -2141,15 +2410,20 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a custom word.
@@ -2170,8 +2444,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Word>>}
    */
-  public getWord(params: SpeechToTextV1.GetWordParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Word>> {
-    const _params = Object.assign({}, params);
+  public getWord(
+    params: SpeechToTextV1.GetWordParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Word>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'wordName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2181,10 +2457,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'word_name': _params.wordName
+      'word_name': _params.wordName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getWord');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getWord'
+    );
 
     const parameters = {
       options: {
@@ -2193,14 +2473,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a custom word.
@@ -2224,8 +2509,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteWord(params: SpeechToTextV1.DeleteWordParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteWord(
+    params: SpeechToTextV1.DeleteWordParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'wordName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2235,10 +2522,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'word_name': _params.wordName
+      'word_name': _params.wordName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWord');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteWord'
+    );
 
     const parameters = {
       options: {
@@ -2247,15 +2538,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customGrammars
    ************************/
@@ -2265,7 +2560,8 @@ class SpeechToTextV1 extends BaseService {
    *
    * Lists information about all grammars from a custom language model. The information includes the total number of
    * out-of-vocabulary (OOV) words, name, and status of each grammar. You must use credentials for the instance of the
-   * service that owns a model to list its grammars.
+   * service that owns a model to list its grammars. Grammars are available for all languages and models that support
+   * language customization.
    *
    * **See also:** [Listing grammars from a custom language
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageGrammars#listGrammars).
@@ -2277,8 +2573,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammars>>}
    */
-  public listGrammars(params: SpeechToTextV1.ListGrammarsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammars>> {
-    const _params = Object.assign({}, params);
+  public listGrammars(
+    params: SpeechToTextV1.ListGrammarsParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammars>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2287,10 +2585,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listGrammars');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listGrammars'
+    );
 
     const parameters = {
       options: {
@@ -2299,14 +2601,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add a grammar.
@@ -2336,7 +2643,8 @@ class SpeechToTextV1 extends BaseService {
    *
    * The service limits the overall amount of data that you can add to a custom model to a maximum of 10 million total
    * words from all sources combined. Also, you can add no more than 90 thousand OOV words to a model. This includes
-   * words that the service extracts from corpora and grammars and words that you add directly.
+   * words that the service extracts from corpora and grammars and words that you add directly. Grammars are available
+   * for all languages and models that support language customization.
    *
    * **See also:**
    * * [Understanding
@@ -2359,9 +2667,9 @@ class SpeechToTextV1 extends BaseService {
    * * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by
    * the user.
    * * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service.
-   * @param {string|NodeJS.ReadableStream|Buffer} params.grammarFile - A plain text file that contains the grammar in
-   * the format specified by the `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using any
-   * other encoding can lead to issues when compiling the grammar or to unexpected results in decoding. The service
+   * @param {string | NodeJS.ReadableStream | Buffer} params.grammarFile - A plain text file that contains the grammar
+   * in the format specified by the `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using
+   * any other encoding can lead to issues when compiling the grammar or to unexpected results in decoding. The service
    * ignores an encoding that is specified in the header of the grammar.
    *
    * With the `curl` command, use the `--data-binary` option to upload the file for the request.
@@ -2375,8 +2683,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addGrammar(params: SpeechToTextV1.AddGrammarParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public addGrammar(
+    params: SpeechToTextV1.AddGrammarParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'grammarName', 'grammarFile', 'contentType'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2386,15 +2696,19 @@ class SpeechToTextV1 extends BaseService {
 
     const body = _params.grammarFile;
     const query = {
-      'allow_overwrite': _params.allowOverwrite
+      'allow_overwrite': _params.allowOverwrite,
     };
 
     const path = {
       'customization_id': _params.customizationId,
-      'grammar_name': _params.grammarName
+      'grammar_name': _params.grammarName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addGrammar');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addGrammar'
+    );
 
     const parameters = {
       options: {
@@ -2405,22 +2719,28 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a grammar.
    *
    * Gets information about a grammar from a custom language model. The information includes the total number of
    * out-of-vocabulary (OOV) words, name, and status of the grammar. You must use credentials for the instance of the
-   * service that owns a model to list its grammars.
+   * service that owns a model to list its grammars. Grammars are available for all languages and models that support
+   * language customization.
    *
    * **See also:** [Listing grammars from a custom language
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageGrammars#listGrammars).
@@ -2433,8 +2753,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammar>>}
    */
-  public getGrammar(params: SpeechToTextV1.GetGrammarParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammar>> {
-    const _params = Object.assign({}, params);
+  public getGrammar(
+    params: SpeechToTextV1.GetGrammarParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammar>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'grammarName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2444,10 +2766,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'grammar_name': _params.grammarName
+      'grammar_name': _params.grammarName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getGrammar');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getGrammar'
+    );
 
     const parameters = {
       options: {
@@ -2456,14 +2782,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a grammar.
@@ -2472,7 +2803,8 @@ class SpeechToTextV1 extends BaseService {
    * associated with the grammar from the custom model's words resource unless they were also added by another resource
    * or they were modified in some way with the **Add custom words** or **Add a custom word** method. Removing a grammar
    * does not affect the custom model until you train the model with the **Train a custom language model** method. You
-   * must use credentials for the instance of the service that owns a model to delete its grammar.
+   * must use credentials for the instance of the service that owns a model to delete its grammar. Grammars are
+   * available for all languages and models that support language customization.
    *
    * **See also:** [Deleting a grammar from a custom language
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageGrammars#deleteGrammar).
@@ -2485,8 +2817,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteGrammar(params: SpeechToTextV1.DeleteGrammarParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteGrammar(
+    params: SpeechToTextV1.DeleteGrammarParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'grammarName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2496,10 +2830,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'grammar_name': _params.grammarName
+      'grammar_name': _params.grammarName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteGrammar');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteGrammar'
+    );
 
     const parameters = {
       options: {
@@ -2508,15 +2846,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customAcousticModels
    ************************/
@@ -2551,8 +2893,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>>}
    */
-  public createAcousticModel(params: SpeechToTextV1.CreateAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
-    const _params = Object.assign({}, params);
+  public createAcousticModel(
+    params: SpeechToTextV1.CreateAcousticModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'baseModelName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2563,10 +2907,14 @@ class SpeechToTextV1 extends BaseService {
     const body = {
       'name': _params.name,
       'base_model_name': _params.baseModelName,
-      'description': _params.description
+      'description': _params.description,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createAcousticModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createAcousticModel'
+    );
 
     const parameters = {
       options: {
@@ -2575,15 +2923,20 @@ class SpeechToTextV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List custom acoustic models.
@@ -2606,14 +2959,20 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>>}
    */
-  public listAcousticModels(params?: SpeechToTextV1.ListAcousticModelsParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>> {
-    const _params = Object.assign({}, params);
+  public listAcousticModels(
+    params?: SpeechToTextV1.ListAcousticModelsParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>> {
+    const _params = { ...params };
 
     const query = {
-      'language': _params.language
+      'language': _params.language,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAcousticModels');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listAcousticModels'
+    );
 
     const parameters = {
       options: {
@@ -2622,14 +2981,19 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a custom acoustic model.
@@ -2647,8 +3011,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>>}
    */
-  public getAcousticModel(params: SpeechToTextV1.GetAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
-    const _params = Object.assign({}, params);
+  public getAcousticModel(
+    params: SpeechToTextV1.GetAcousticModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2657,10 +3023,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAcousticModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getAcousticModel'
+    );
 
     const parameters = {
       options: {
@@ -2669,14 +3039,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a custom acoustic model.
@@ -2695,8 +3070,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteAcousticModel(params: SpeechToTextV1.DeleteAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteAcousticModel(
+    params: SpeechToTextV1.DeleteAcousticModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2705,10 +3082,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAcousticModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteAcousticModel'
+    );
 
     const parameters = {
       options: {
@@ -2717,14 +3098,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Train a custom acoustic model.
@@ -2789,8 +3175,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>>}
    */
-  public trainAcousticModel(params: SpeechToTextV1.TrainAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
-    const _params = Object.assign({}, params);
+  public trainAcousticModel(
+    params: SpeechToTextV1.TrainAcousticModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2799,14 +3187,18 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const query = {
-      'custom_language_model_id': _params.customLanguageModelId
+      'custom_language_model_id': _params.customLanguageModelId,
     };
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainAcousticModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'trainAcousticModel'
+    );
 
     const parameters = {
       options: {
@@ -2816,14 +3208,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Reset a custom acoustic model.
@@ -2845,8 +3242,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public resetAcousticModel(params: SpeechToTextV1.ResetAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public resetAcousticModel(
+    params: SpeechToTextV1.ResetAcousticModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2855,10 +3254,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetAcousticModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'resetAcousticModel'
+    );
 
     const parameters = {
       options: {
@@ -2867,14 +3270,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Upgrade a custom acoustic model.
@@ -2917,8 +3325,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public upgradeAcousticModel(params: SpeechToTextV1.UpgradeAcousticModelParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public upgradeAcousticModel(
+    params: SpeechToTextV1.UpgradeAcousticModelParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2928,14 +3338,18 @@ class SpeechToTextV1 extends BaseService {
 
     const query = {
       'custom_language_model_id': _params.customLanguageModelId,
-      'force': _params.force
+      'force': _params.force,
     };
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeAcousticModel');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'upgradeAcousticModel'
+    );
 
     const parameters = {
       options: {
@@ -2945,15 +3359,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customAudioResources
    ************************/
@@ -2977,8 +3395,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioResources>>}
    */
-  public listAudio(params: SpeechToTextV1.ListAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioResources>> {
-    const _params = Object.assign({}, params);
+  public listAudio(
+    params: SpeechToTextV1.ListAudioParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioResources>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2987,10 +3407,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAudio');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listAudio'
+    );
 
     const parameters = {
       options: {
@@ -2999,14 +3423,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add an audio resource.
@@ -3109,7 +3538,7 @@ class SpeechToTextV1 extends BaseService {
    * prevent the use of these characters. But because they must be URL-encoded wherever used, their use is strongly
    * discouraged.)
    * * Do not use the name of an audio resource that has already been added to the custom model.
-   * @param {NodeJS.ReadableStream|Buffer} params.audioResource - The audio resource that is to be added to the custom
+   * @param {NodeJS.ReadableStream | Buffer} params.audioResource - The audio resource that is to be added to the custom
    * acoustic model, an individual audio file or an archive file.
    *
    * With the `curl` command, use the `--data-binary` option to upload the file for the request.
@@ -3136,8 +3565,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public addAudio(params: SpeechToTextV1.AddAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public addAudio(
+    params: SpeechToTextV1.AddAudioParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'audioName', 'audioResource'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3147,15 +3578,19 @@ class SpeechToTextV1 extends BaseService {
 
     const body = _params.audioResource;
     const query = {
-      'allow_overwrite': _params.allowOverwrite
+      'allow_overwrite': _params.allowOverwrite,
     };
 
     const path = {
       'customization_id': _params.customizationId,
-      'audio_name': _params.audioName
+      'audio_name': _params.audioName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addAudio');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addAudio'
+    );
 
     const parameters = {
       options: {
@@ -3166,16 +3601,21 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType,
-          'Contained-Content-Type': _params.containedContentType
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+            'Contained-Content-Type': _params.containedContentType,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get an audio resource.
@@ -3207,8 +3647,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioListing>>}
    */
-  public getAudio(params: SpeechToTextV1.GetAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioListing>> {
-    const _params = Object.assign({}, params);
+  public getAudio(
+    params: SpeechToTextV1.GetAudioParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioListing>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'audioName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3218,10 +3660,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'audio_name': _params.audioName
+      'audio_name': _params.audioName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAudio');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getAudio'
+    );
 
     const parameters = {
       options: {
@@ -3230,14 +3676,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete an audio resource.
@@ -3261,8 +3712,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteAudio(params: SpeechToTextV1.DeleteAudioParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteAudio(
+    params: SpeechToTextV1.DeleteAudioParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'audioName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3272,10 +3725,14 @@ class SpeechToTextV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'audio_name': _params.audioName
+      'audio_name': _params.audioName,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAudio');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteAudio'
+    );
 
     const parameters = {
       options: {
@@ -3284,15 +3741,19 @@ class SpeechToTextV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -3319,8 +3780,10 @@ class SpeechToTextV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
-  public deleteUserData(params: SpeechToTextV1.DeleteUserDataParams): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: SpeechToTextV1.DeleteUserDataParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3329,10 +3792,14 @@ class SpeechToTextV1 extends BaseService {
     }
 
     const query = {
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      SpeechToTextV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -3341,14 +3808,18 @@ class SpeechToTextV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -3356,9 +3827,8 @@ class SpeechToTextV1 extends BaseService {
  ************************/
 
 namespace SpeechToTextV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -3369,7 +3839,7 @@ namespace SpeechToTextV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -3410,6 +3880,7 @@ namespace SpeechToTextV1 {
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_GB_TELEPHONY = 'en-GB_Telephony',
+      EN_IN_TELEPHONY = 'en-IN_Telephony',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
       EN_US_MULTIMEDIA = 'en-US_Multimedia',
       EN_US_NARROWBANDMODEL = 'en-US_NarrowbandModel',
@@ -3432,15 +3903,21 @@ namespace SpeechToTextV1 {
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
+      FR_FR_MULTIMEDIA = 'fr-FR_Multimedia',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       FR_FR_TELEPHONY = 'fr-FR_Telephony',
+      HI_IN_TELEPHONY = 'hi-IN_Telephony',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
+      JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
       JA_JP_NARROWBANDMODEL = 'ja-JP_NarrowbandModel',
       KO_KR_BROADBANDMODEL = 'ko-KR_BroadbandModel',
+      KO_KR_MULTIMEDIA = 'ko-KR_Multimedia',
       KO_KR_NARROWBANDMODEL = 'ko-KR_NarrowbandModel',
+      KO_KR_TELEPHONY = 'ko-KR_Telephony',
+      NL_BE_TELEPHONY = 'nl-BE_Telephony',
       NL_NL_BROADBANDMODEL = 'nl-NL_BroadbandModel',
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
@@ -3454,15 +3931,15 @@ namespace SpeechToTextV1 {
   /** Parameters for the `recognize` operation. */
   export interface RecognizeParams {
     /** The audio to transcribe. */
-    audio: NodeJS.ReadableStream|Buffer;
+    audio: NodeJS.ReadableStream | Buffer;
     /** The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio
      *  formats (content types)** in the method description.
      */
     contentType?: RecognizeConstants.ContentType | string;
     /** The identifier of the model that is to be used for the recognition request. (**Note:** The model
-     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
-     *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages
-     *  and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng).
+     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Previous-generation languages
+     *  and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation
+     *  languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng).
      */
     model?: RecognizeConstants.Model | string;
     /** The customization ID (GUID) of a custom language model that is to be used with the recognition request. The
@@ -3563,7 +4040,7 @@ namespace SpeechToTextV1 {
      *  request. For US English, the service also converts certain keyword strings to punctuation symbols. By default,
      *  the service performs no smart formatting.
      *
-     *  **Note:** Applies to US English, Japanese, and Spanish transcription only.
+     *  **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Spanish transcription only.
      *
      *  See [Smart
      *  formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
@@ -3572,10 +4049,13 @@ namespace SpeechToTextV1 {
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
-     *  * For previous-generation models, can be used for US English, Australian English, German, Japanese, Korean, and
-     *  Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
-     *  * For next-generation models, can be used for English (Australian, UK, and US), German, and Spanish
+     *
+     *  **Beta:** The parameter is beta functionality.
+     *  * For previous-generation models, the parameter can be used for US English, Australian English, German,
+     *  Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model)
      *  transcription only.
+     *  * For next-generation models, the parameter can be used for English (Australian, Indian, UK, and US), German,
+     *  Japanese, Korean, and Spanish transcription only.
      *
      *  Restrictions and limitations apply to the use of speaker labels for both types of models. See [Speaker
      *  labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
@@ -3589,7 +4069,11 @@ namespace SpeechToTextV1 {
     /** The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must
      *  also use the `language_customization_id` parameter to specify the name of the custom language model for which
      *  the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it
-     *  does not recognize other custom words from the model's words resource. See [Using a grammar for speech
+     *  does not recognize other custom words from the model's words resource.
+     *
+     *  **Beta:** The parameter is beta functionality.
+     *
+     *  See [Using a grammar for speech
      *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-grammarUse).
      */
     grammarName?: string;
@@ -3602,7 +4086,7 @@ namespace SpeechToTextV1 {
      *  the `keywords` and `keywords_threshold` parameters) and returns only a single final transcript (forces the
      *  `max_alternatives` parameter to be `1`).
      *
-     *  **Note:** Applies to US English, Japanese, and Korean transcription only.
+     *  **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Korean transcription only.
      *
      *  See [Numeric
      *  redaction](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#numeric-redaction).
@@ -3670,10 +4154,10 @@ namespace SpeechToTextV1 {
      *  results faster than previous-generation models. The `low_latency` parameter causes the models to produce results
      *  even more quickly, though the results might be less accurate when the parameter is used.
      *
-     *  **Note:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
+     *  **Beta:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
      *  `Narrowband` models. It is available only for some next-generation models.
      *
-     *  * For a list of next-generation models that support low latency, see [Supported language
+     *  * For a list of next-generation models that support low latency, see [Supported next-generation language
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported) for
      *  next-generation models.
      *  * For more information about the `low_latency` parameter, see [Low
@@ -3704,7 +4188,7 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng). */
+    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Previous-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng). */
     export enum Model {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
@@ -3715,6 +4199,7 @@ namespace SpeechToTextV1 {
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
       EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_AU_TELEPHONY = 'en-AU_Telephony',
+      EN_IN_TELEPHONY = 'en-IN_Telephony',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_GB_TELEPHONY = 'en-GB_Telephony',
@@ -3740,15 +4225,21 @@ namespace SpeechToTextV1 {
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
+      FR_FR_MULTIMEDIA = 'fr-FR_Multimedia',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       FR_FR_TELEPHONY = 'fr-FR_Telephony',
+      HI_IN_TELEPHONY = 'hi-IN_Telephony',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
+      JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
       JA_JP_NARROWBANDMODEL = 'ja-JP_NarrowbandModel',
       KO_KR_BROADBANDMODEL = 'ko-KR_BroadbandModel',
+      KO_KR_MULTIMEDIA = 'ko-KR_Multimedia',
       KO_KR_NARROWBANDMODEL = 'ko-KR_NarrowbandModel',
+      KO_KR_TELEPHONY = 'ko-KR_Telephony',
+      NL_BE_TELEPHONY = 'nl-BE_Telephony',
       NL_NL_BROADBANDMODEL = 'nl-NL_BroadbandModel',
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
@@ -3785,15 +4276,15 @@ namespace SpeechToTextV1 {
   /** Parameters for the `createJob` operation. */
   export interface CreateJobParams {
     /** The audio to transcribe. */
-    audio: NodeJS.ReadableStream|Buffer;
+    audio: NodeJS.ReadableStream | Buffer;
     /** The format (MIME type) of the audio. For more information about specifying an audio format, see **Audio
      *  formats (content types)** in the method description.
      */
     contentType?: CreateJobConstants.ContentType | string;
     /** The identifier of the model that is to be used for the recognition request. (**Note:** The model
-     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and
-     *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages
-     *  and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng).
+     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Previous-generation languages
+     *  and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation
+     *  languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng).
      */
     model?: CreateJobConstants.Model | string;
     /** A URL to which callback notifications are to be sent. The URL must already be successfully allowlisted by
@@ -3930,7 +4421,7 @@ namespace SpeechToTextV1 {
      *  request. For US English, the service also converts certain keyword strings to punctuation symbols. By default,
      *  the service performs no smart formatting.
      *
-     *  **Note:** Applies to US English, Japanese, and Spanish transcription only.
+     *  **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Spanish transcription only.
      *
      *  See [Smart
      *  formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
@@ -3939,10 +4430,13 @@ namespace SpeechToTextV1 {
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
-     *  * For previous-generation models, can be used for US English, Australian English, German, Japanese, Korean, and
-     *  Spanish (both broadband and narrowband models) and UK English (narrowband model) transcription only.
-     *  * For next-generation models, can be used for English (Australian, UK, and US), German, and Spanish
+     *
+     *  **Beta:** The parameter is beta functionality.
+     *  * For previous-generation models, the parameter can be used for US English, Australian English, German,
+     *  Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model)
      *  transcription only.
+     *  * For next-generation models, the parameter can be used for English (Australian, Indian, UK, and US), German,
+     *  Japanese, Korean, and Spanish transcription only.
      *
      *  Restrictions and limitations apply to the use of speaker labels for both types of models. See [Speaker
      *  labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
@@ -3956,7 +4450,11 @@ namespace SpeechToTextV1 {
     /** The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must
      *  also use the `language_customization_id` parameter to specify the name of the custom language model for which
      *  the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it
-     *  does not recognize other custom words from the model's words resource. See [Using a grammar for speech
+     *  does not recognize other custom words from the model's words resource.
+     *
+     *  **Beta:** The parameter is beta functionality.
+     *
+     *  See [Using a grammar for speech
      *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-grammarUse).
      */
     grammarName?: string;
@@ -3969,7 +4467,7 @@ namespace SpeechToTextV1 {
      *  the `keywords` and `keywords_threshold` parameters) and returns only a single final transcript (forces the
      *  `max_alternatives` parameter to be `1`).
      *
-     *  **Note:** Applies to US English, Japanese, and Korean transcription only.
+     *  **Beta:** The parameter is beta functionality. Applies to US English, Japanese, and Korean transcription only.
      *
      *  See [Numeric
      *  redaction](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#numeric-redaction).
@@ -4060,10 +4558,10 @@ namespace SpeechToTextV1 {
      *  results faster than previous-generation models. The `low_latency` parameter causes the models to produce results
      *  even more quickly, though the results might be less accurate when the parameter is used.
      *
-     *  **Note:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
+     *  **Beta:** The parameter is beta functionality. It is not available for previous-generation `Broadband` and
      *  `Narrowband` models. It is available only for some next-generation models.
      *
-     *  * For a list of next-generation models that support low latency, see [Supported language
+     *  * For a list of next-generation models that support low latency, see [Supported next-generation language
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported) for
      *  next-generation models.
      *  * For more information about the `low_latency` parameter, see [Low
@@ -4094,7 +4592,7 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng). */
+    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Previous-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models) and [Next-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng). */
     export enum Model {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
@@ -4105,6 +4603,7 @@ namespace SpeechToTextV1 {
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
       EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_AU_TELEPHONY = 'en-AU_Telephony',
+      EN_IN_TELEPHONY = 'en-IN_Telephony',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_GB_TELEPHONY = 'en-GB_Telephony',
@@ -4130,15 +4629,21 @@ namespace SpeechToTextV1 {
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
+      FR_FR_MULTIMEDIA = 'fr-FR_Multimedia',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
       FR_FR_TELEPHONY = 'fr-FR_Telephony',
+      HI_IN_TELEPHONY = 'hi-IN_Telephony',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
+      JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
       JA_JP_NARROWBANDMODEL = 'ja-JP_NarrowbandModel',
       KO_KR_BROADBANDMODEL = 'ko-KR_BroadbandModel',
+      KO_KR_MULTIMEDIA = 'ko-KR_Multimedia',
       KO_KR_NARROWBANDMODEL = 'ko-KR_NarrowbandModel',
+      KO_KR_TELEPHONY = 'ko-KR_Telephony',
+      NL_BE_TELEPHONY = 'nl-BE_Telephony',
       NL_NL_BROADBANDMODEL = 'nl-NL_BroadbandModel',
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
@@ -4414,7 +4919,7 @@ namespace SpeechToTextV1 {
      *
      *  With the `curl` command, use the `--data-binary` option to upload the file for the request.
      */
-    corpusFile: NodeJS.ReadableStream|Buffer;
+    corpusFile: NodeJS.ReadableStream | Buffer;
     /** If `true`, the specified corpus overwrites an existing corpus with the same name. If `false`, the request
      *  fails if a corpus with the same name already exists. The parameter has no effect if a corpus with the same name
      *  does not already exist.
@@ -4600,7 +5105,7 @@ namespace SpeechToTextV1 {
      *
      *  With the `curl` command, use the `--data-binary` option to upload the file for the request.
      */
-    grammarFile: string|NodeJS.ReadableStream|Buffer;
+    grammarFile: string | NodeJS.ReadableStream | Buffer;
     /** The format (MIME type) of the grammar file:
      *  * `application/srgs` for Augmented Backus-Naur Form (ABNF), which uses a plain-text representation that is
      *  similar to traditional BNF grammars.
@@ -4851,7 +5356,7 @@ namespace SpeechToTextV1 {
      *
      *  With the `curl` command, use the `--data-binary` option to upload the file for the request.
      */
-    audioResource: NodeJS.ReadableStream|Buffer;
+    audioResource: NodeJS.ReadableStream | Buffer;
     /** For an audio-type resource, the format (MIME type) of the audio. For more information, see **Content types
      *  for audio-type resources** in the method description.
      *
@@ -5526,17 +6031,15 @@ namespace SpeechToTextV1 {
   export interface SpeechRecognitionAlternative {
     /** A transcription of the audio. */
     transcript: string;
-    /** A score that indicates the service's confidence in the transcript in the range of 0.0 to 1.0. For speech
-     *  recognition with previous-generation models, a confidence score is returned only for the best alternative and
-     *  only with results marked as final. For speech recognition with next-generation models, a confidence score is
-     *  never returned.
+    /** A score that indicates the service's confidence in the transcript in the range of 0.0 to 1.0. The service
+     *  returns a confidence score only for the best alternative and only with results marked as final.
      */
     confidence?: number;
     /** Time alignments for each word from the transcript as a list of lists. Each inner list consists of three
      *  elements: the word followed by its start and end time in seconds, for example:
      *  `[["hello",0.0,1.2],["world",1.2,2.5]]`. Timestamps are returned only for the best alternative.
      */
-    timestamps?: [string, number, number][];
+    timestamps?: string[];
     /** A confidence score for each word of the transcript as a list of lists. Each inner list consists of two
      *  elements: the word and its confidence score in the range of 0.0 to 1.0, for example:
      *  `[["hello",0.95],["world",0.866]]`. Confidence scores are returned only for the best alternative and only with
@@ -5726,7 +6229,6 @@ namespace SpeechToTextV1 {
      */
     words: Word[];
   }
-
 }
 
 export = SpeechToTextV1;
