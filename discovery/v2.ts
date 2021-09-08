@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,15 +34,18 @@ import { getSdkHeaders } from '../lib/common';
  * identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and
  * unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual
  * filtering of results.
+ *
+ * API Version: 2.0
+ * See: https://cloud.ibm.com/docs/discovery-data
  */
 
 class DiscoveryV2 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.discovery.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'discovery';
 
   /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
-   *  version is `2019-11-22`.
+   *  version is `2020-08-30`.
    */
   version: string;
 
@@ -46,7 +54,7 @@ class DiscoveryV2 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
-   * YYYY-MM-DD format. The current version is `2019-11-22`.
+   * YYYY-MM-DD format. The current version is `2020-08-30`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -87,13 +95,15 @@ class DiscoveryV2 extends BaseService {
    * Lists existing collections for the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>>}
    */
-  public listCollections(params: DiscoveryV2.ListCollectionsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>> {
-    const _params = Object.assign({}, params);
+  public listCollections(
+    params: DiscoveryV2.ListCollectionsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -102,14 +112,18 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listCollections');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listCollections'
+    );
 
     const parameters = {
       options: {
@@ -119,14 +133,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a collection.
@@ -134,8 +153,8 @@ class DiscoveryV2 extends BaseService {
    * Create a new collection in the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.name - The name of the collection.
    * @param {string} [params.description] - A description of the collection.
    * @param {string} [params.language] - The language of the collection.
@@ -143,8 +162,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
-  public createCollection(params: DiscoveryV2.CreateCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
-    const _params = Object.assign({}, params);
+  public createCollection(
+    params: DiscoveryV2.CreateCollectionParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -156,18 +177,22 @@ class DiscoveryV2 extends BaseService {
       'name': _params.name,
       'description': _params.description,
       'language': _params.language,
-      'enrichments': _params.enrichments
+      'enrichments': _params.enrichments,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createCollection'
+    );
 
     const parameters = {
       options: {
@@ -178,15 +203,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get collection.
@@ -194,14 +224,16 @@ class DiscoveryV2 extends BaseService {
    * Get details about the specified collection.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
-  public getCollection(params: DiscoveryV2.GetCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
-    const _params = Object.assign({}, params);
+  public getCollection(
+    params: DiscoveryV2.GetCollectionParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -210,15 +242,19 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getCollection'
+    );
 
     const parameters = {
       options: {
@@ -228,14 +264,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a collection.
@@ -243,8 +284,8 @@ class DiscoveryV2 extends BaseService {
    * Updates the specified collection's name, description, and enrichments.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} [params.name] - The name of the collection.
    * @param {string} [params.description] - A description of the collection.
@@ -252,8 +293,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
-  public updateCollection(params: DiscoveryV2.UpdateCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
-    const _params = Object.assign({}, params);
+  public updateCollection(
+    params: DiscoveryV2.UpdateCollectionParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -264,19 +307,23 @@ class DiscoveryV2 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'enrichments': _params.enrichments
+      'enrichments': _params.enrichments,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateCollection'
+    );
 
     const parameters = {
       options: {
@@ -287,15 +334,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a collection.
@@ -304,14 +356,16 @@ class DiscoveryV2 extends BaseService {
    * is also deleted.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteCollection(params: DiscoveryV2.DeleteCollectionParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteCollection(
+    params: DiscoveryV2.DeleteCollectionParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -320,15 +374,19 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteCollection'
+    );
 
     const parameters = {
       options: {
@@ -338,14 +396,18 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * queries
    ************************/
@@ -361,8 +423,8 @@ class DiscoveryV2 extends BaseService {
    * set custom default query settings.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string[]} [params.collectionIds] - A comma-separated list of collection IDs to be queried against.
    * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
    * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
@@ -375,14 +437,13 @@ class DiscoveryV2 extends BaseService {
    * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
    * aggregations, see the Query reference.
    * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params._return] - A list of the fields in the document hierarchy to return. If this parameter
-   * not specified, then all top-level fields are returned.
+   * @param {string[]} [params._return] - A list of the fields in the document hierarchy to return. If this parameter is
+   * an empty list, then all fields are returned.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
    * number of results that are returned is 10 and the offset is 8, it returns the last two results.
    * @param {string} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
-   * default sort direction if no prefix is specified. This parameter cannot be used in the same query as the **bias**
-   * parameter.
+   * default sort direction if no prefix is specified.
    * @param {boolean} [params.highlight] - When `true`, a highlight field is returned for each result which contains the
    * fields which match the query with `<em></em>` tags around the matching query terms.
    * @param {boolean} [params.spellingSuggestions] - When `true` and the **natural_language_query** parameter is used,
@@ -390,12 +451,15 @@ class DiscoveryV2 extends BaseService {
    * **suggested_query** field of the response (if one exists).
    * @param {QueryLargeTableResults} [params.tableResults] - Configuration for table retrieval.
    * @param {QueryLargeSuggestedRefinements} [params.suggestedRefinements] - Configuration for suggested refinements.
+   * Available with Premium plans only.
    * @param {QueryLargePassages} [params.passages] - Configuration for passage retrieval.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>>}
    */
-  public query(params: DiscoveryV2.QueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
-    const _params = Object.assign({}, params);
+  public query(
+    params: DiscoveryV2.QueryParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -417,18 +481,22 @@ class DiscoveryV2 extends BaseService {
       'spelling_suggestions': _params.spellingSuggestions,
       'table_results': _params.tableResults,
       'suggested_refinements': _params.suggestedRefinements,
-      'passages': _params.passages
+      'passages': _params.passages,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'query');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'query'
+    );
 
     const parameters = {
       options: {
@@ -439,15 +507,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get Autocomplete Suggestions.
@@ -455,10 +528,10 @@ class DiscoveryV2 extends BaseService {
    * Returns completion query suggestions for the specified prefix.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.prefix - The prefix to use for autocompletion. For example, the prefix `Ho` could
-   * autocomplete to `Hot`, `Housing`, or `How do I upgrade`. Possible completions are.
+   * autocomplete to `hot`, `housing`, or `how`.
    * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
    * specified, all collections in the project are used.
    * @param {string} [params.field] - The field in the result documents that autocompletion suggestions are identified
@@ -467,8 +540,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Completions>>}
    */
-  public getAutocompletion(params: DiscoveryV2.GetAutocompletionParams): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
-    const _params = Object.assign({}, params);
+  public getAutocompletion(
+    params: DiscoveryV2.GetAutocompletionParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'prefix'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -481,14 +556,18 @@ class DiscoveryV2 extends BaseService {
       'prefix': _params.prefix,
       'collection_ids': _params.collectionIds,
       'field': _params.field,
-      'count': _params.count
+      'count': _params.count,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getAutocompletion');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getAutocompletion'
+    );
 
     const parameters = {
       options: {
@@ -498,14 +577,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Query collection notices.
@@ -513,8 +597,8 @@ class DiscoveryV2 extends BaseService {
    * Finds collection-level notices (errors and warnings) that are generated when documents are ingested.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
    * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
@@ -530,8 +614,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
    */
-  public queryCollectionNotices(params: DiscoveryV2.QueryCollectionNoticesParams): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
-    const _params = Object.assign({}, params);
+  public queryCollectionNotices(
+    params: DiscoveryV2.QueryCollectionNoticesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -545,15 +631,19 @@ class DiscoveryV2 extends BaseService {
       'query': _params.query,
       'natural_language_query': _params.naturalLanguageQuery,
       'count': _params.count,
-      'offset': _params.offset
+      'offset': _params.offset,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'queryCollectionNotices');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'queryCollectionNotices'
+    );
 
     const parameters = {
       options: {
@@ -563,14 +653,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Query project notices.
@@ -579,8 +674,8 @@ class DiscoveryV2 extends BaseService {
    * training.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
    * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
    * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
@@ -595,8 +690,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
    */
-  public queryNotices(params: DiscoveryV2.QueryNoticesParams): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
-    const _params = Object.assign({}, params);
+  public queryNotices(
+    params: DiscoveryV2.QueryNoticesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -610,14 +707,18 @@ class DiscoveryV2 extends BaseService {
       'query': _params.query,
       'natural_language_query': _params.naturalLanguageQuery,
       'count': _params.count,
-      'offset': _params.offset
+      'offset': _params.offset,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'queryNotices');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'queryNotices'
+    );
 
     const parameters = {
       options: {
@@ -627,14 +728,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List fields.
@@ -642,15 +748,17 @@ class DiscoveryV2 extends BaseService {
    * Gets a list of the unique fields (and their types) stored in the the specified collections.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
    * specified, all collections in the project are used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>>}
    */
-  public listFields(params: DiscoveryV2.ListFieldsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
-    const _params = Object.assign({}, params);
+  public listFields(
+    params: DiscoveryV2.ListFieldsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -660,14 +768,18 @@ class DiscoveryV2 extends BaseService {
 
     const query = {
       'version': this.version,
-      'collection_ids': _params.collectionIds
+      'collection_ids': _params.collectionIds,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listFields');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listFields'
+    );
 
     const parameters = {
       options: {
@@ -677,15 +789,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * componentSettings
    ************************/
@@ -696,13 +812,15 @@ class DiscoveryV2 extends BaseService {
    * Returns default configuration settings for components.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>>}
    */
-  public getComponentSettings(params: DiscoveryV2.GetComponentSettingsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
-    const _params = Object.assign({}, params);
+  public getComponentSettings(
+    params: DiscoveryV2.GetComponentSettingsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -711,14 +829,18 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getComponentSettings');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getComponentSettings'
+    );
 
     const parameters = {
       options: {
@@ -728,15 +850,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * documents
    ************************/
@@ -746,7 +872,7 @@ class DiscoveryV2 extends BaseService {
    *
    * Add a document to a collection with optional metadata.
    *
-   *  Returns immediately after the system has accepted the document for processing.
+   * Returns immediately after the system has accepted the document for processing.
    *
    *   * The user must provide document content, metadata, or both. If the request is missing both document content and
    * metadata, it is rejected.
@@ -755,29 +881,29 @@ class DiscoveryV2 extends BaseService {
    * document. If the **Content-Type** parameter is missing or is one of the generic media types (for example,
    * `application/octet-stream`), then the service attempts to automatically detect the document's media type.
    *
-   *   * The following field names are reserved and will be filtered out if present after normalization: `id`, `score`,
+   *   * The following field names are reserved and are filtered out if present after normalization: `id`, `score`,
    * `highlight`, and any field with the prefix of: `_`, `+`, or `-`
    *
    *   * Fields with empty name values after normalization are filtered out before indexing.
    *
-   *   * Fields containing the following characters after normalization are filtered out before indexing: `#` and `,`
+   *   * Fields that contain the following characters after normalization are filtered out before indexing: `#` and `,`
    *
-   *   If the document is uploaded to a collection that has it's data shared with another collection, the
+   *   If the document is uploaded to a collection that shares its data with another collection, the
    * **X-Watson-Discovery-Force** header must be set to `true`.
    *
-   *  **Note:** Documents can be added with a specific **document_id** by using the
+   * **Note:** Documents can be added with a specific **document_id** by using the
    * **_/v2/projects/{project_id}/collections/{collection_id}/documents** method.
    *
    * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
    * modify a collection that connects to an external source such as Microsoft SharePoint.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
-   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * configuration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. For maximum
+   * supported file size limits, see [the
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -793,8 +919,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>>}
    */
-  public addDocument(params: DiscoveryV2.AddDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
-    const _params = Object.assign({}, params);
+  public addDocument(
+    params: DiscoveryV2.AddDocumentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -806,21 +934,25 @@ class DiscoveryV2 extends BaseService {
       'file': {
         data: _params.file,
         filename: _params.filename,
-        contentType: _params.fileContentType
+        contentType: _params.fileContentType,
       },
-      'metadata': _params.metadata
+      'metadata': _params.metadata,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'addDocument');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'addDocument'
+    );
 
     const parameters = {
       options: {
@@ -831,16 +963,21 @@ class DiscoveryV2 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a document.
@@ -848,7 +985,7 @@ class DiscoveryV2 extends BaseService {
    * Replace an existing document or add a document with a specified **document_id**. Starts ingesting a document with
    * optional metadata.
    *
-   * If the document is uploaded to a collection that has it's data shared with another collection, the
+   * If the document is uploaded to a collection that shares its data with another collection, the
    * **X-Watson-Discovery-Force** header must be set to `true`.
    *
    * **Note:** When uploading a new document with this method it automatically replaces any document stored with the
@@ -857,17 +994,17 @@ class DiscoveryV2 extends BaseService {
    * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
    * modify a collection that connects to an external source such as Microsoft SharePoint.
    *
-   * **Note:** If an uploaded document is segmented, all segments will be overwritten, even if the updated version of
-   * the document has fewer segments.
+   * **Note:** If an uploaded document is segmented, all segments are overwritten, even if the updated version of the
+   * document has fewer segments.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.documentId - The ID of the document.
-   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
-   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * configuration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. For maximum
+   * supported file size limits, see [the
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -883,8 +1020,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>>}
    */
-  public updateDocument(params: DiscoveryV2.UpdateDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
-    const _params = Object.assign({}, params);
+  public updateDocument(
+    params: DiscoveryV2.UpdateDocumentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId', 'documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -896,22 +1035,26 @@ class DiscoveryV2 extends BaseService {
       'file': {
         data: _params.file,
         filename: _params.filename,
-        contentType: _params.fileContentType
+        contentType: _params.fileContentType,
       },
-      'metadata': _params.metadata
+      'metadata': _params.metadata,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
       'collection_id': _params.collectionId,
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateDocument');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateDocument'
+    );
 
     const parameters = {
       options: {
@@ -922,16 +1065,21 @@ class DiscoveryV2 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-          'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+            'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a document.
@@ -946,8 +1094,8 @@ class DiscoveryV2 extends BaseService {
    * the `parent_document_id` of a segment result.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.documentId - The ID of the document.
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
@@ -955,8 +1103,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>>}
    */
-  public deleteDocument(params: DiscoveryV2.DeleteDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>> {
-    const _params = Object.assign({}, params);
+  public deleteDocument(
+    params: DiscoveryV2.DeleteDocumentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId', 'documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -965,16 +1115,20 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
       'collection_id': _params.collectionId,
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteDocument');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteDocument'
+    );
 
     const parameters = {
       options: {
@@ -984,16 +1138,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * trainingData
    ************************/
@@ -1004,13 +1162,15 @@ class DiscoveryV2 extends BaseService {
    * List the training queries for the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>>}
    */
-  public listTrainingQueries(params: DiscoveryV2.ListTrainingQueriesParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>> {
-    const _params = Object.assign({}, params);
+  public listTrainingQueries(
+    params: DiscoveryV2.ListTrainingQueriesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1019,14 +1179,18 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listTrainingQueries');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listTrainingQueries'
+    );
 
     const parameters = {
       options: {
@@ -1036,14 +1200,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete training queries.
@@ -1051,13 +1220,15 @@ class DiscoveryV2 extends BaseService {
    * Removes all training queries for the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteTrainingQueries(params: DiscoveryV2.DeleteTrainingQueriesParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteTrainingQueries(
+    params: DiscoveryV2.DeleteTrainingQueriesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1066,14 +1237,18 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteTrainingQueries');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteTrainingQueries'
+    );
 
     const parameters = {
       options: {
@@ -1083,13 +1258,18 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create training query.
@@ -1097,8 +1277,8 @@ class DiscoveryV2 extends BaseService {
    * Add a query to the training data for this project. The query can contain a filter and natural language query.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.naturalLanguageQuery - The natural text query for the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
@@ -1106,8 +1286,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
-  public createTrainingQuery(params: DiscoveryV2.CreateTrainingQueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
-    const _params = Object.assign({}, params);
+  public createTrainingQuery(
+    params: DiscoveryV2.CreateTrainingQueryParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1118,18 +1300,22 @@ class DiscoveryV2 extends BaseService {
     const body = {
       'natural_language_query': _params.naturalLanguageQuery,
       'examples': _params.examples,
-      'filter': _params.filter
+      'filter': _params.filter,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createTrainingQuery');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createTrainingQuery'
+    );
 
     const parameters = {
       options: {
@@ -1140,15 +1326,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a training data query.
@@ -1156,14 +1347,16 @@ class DiscoveryV2 extends BaseService {
    * Get details for a specific training data query, including the query string and all examples.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
-  public getTrainingQuery(params: DiscoveryV2.GetTrainingQueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
-    const _params = Object.assign({}, params);
+  public getTrainingQuery(
+    params: DiscoveryV2.GetTrainingQueryParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'queryId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1172,15 +1365,19 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'query_id': _params.queryId
+      'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getTrainingQuery');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getTrainingQuery'
+    );
 
     const parameters = {
       options: {
@@ -1190,14 +1387,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a training query.
@@ -1205,8 +1407,8 @@ class DiscoveryV2 extends BaseService {
    * Updates an existing training query and it's examples.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {string} params.naturalLanguageQuery - The natural text query for the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
@@ -1215,8 +1417,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
-  public updateTrainingQuery(params: DiscoveryV2.UpdateTrainingQueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
-    const _params = Object.assign({}, params);
+  public updateTrainingQuery(
+    params: DiscoveryV2.UpdateTrainingQueryParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1227,19 +1431,23 @@ class DiscoveryV2 extends BaseService {
     const body = {
       'natural_language_query': _params.naturalLanguageQuery,
       'examples': _params.examples,
-      'filter': _params.filter
+      'filter': _params.filter,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'query_id': _params.queryId
+      'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateTrainingQuery');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateTrainingQuery'
+    );
 
     const parameters = {
       options: {
@@ -1250,15 +1458,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a training data query.
@@ -1266,14 +1479,16 @@ class DiscoveryV2 extends BaseService {
    * Removes details from a training data query, including the query string and all examples.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteTrainingQuery(params: DiscoveryV2.DeleteTrainingQueryParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteTrainingQuery(
+    params: DiscoveryV2.DeleteTrainingQueryParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'queryId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1282,15 +1497,19 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'query_id': _params.queryId
+      'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteTrainingQuery');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteTrainingQuery'
+    );
 
     const parameters = {
       options: {
@@ -1300,14 +1519,18 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * analyze
    ************************/
@@ -1322,12 +1545,12 @@ class DiscoveryV2 extends BaseService {
    * **Note:** This method is only supported on IBM Cloud Pak for Data instances of Discovery.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
-   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * configuration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. For maximum
+   * supported file size limits, see [the
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -1341,8 +1564,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>>}
    */
-  public analyzeDocument(params: DiscoveryV2.AnalyzeDocumentParams): Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>> {
-    const _params = Object.assign({}, params);
+  public analyzeDocument(
+    params: DiscoveryV2.AnalyzeDocumentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1354,21 +1579,25 @@ class DiscoveryV2 extends BaseService {
       'file': {
         data: _params.file,
         filename: _params.filename,
-        contentType: _params.fileContentType
+        contentType: _params.fileContentType,
       },
-      'metadata': _params.metadata
+      'metadata': _params.metadata,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'analyzeDocument');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'analyzeDocument'
+    );
 
     const parameters = {
       options: {
@@ -1379,16 +1608,20 @@ class DiscoveryV2 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * enrichments
    ************************/
@@ -1399,13 +1632,15 @@ class DiscoveryV2 extends BaseService {
    * List the enrichments available to this project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>>}
    */
-  public listEnrichments(params: DiscoveryV2.ListEnrichmentsParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>> {
-    const _params = Object.assign({}, params);
+  public listEnrichments(
+    params: DiscoveryV2.ListEnrichmentsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1414,14 +1649,18 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listEnrichments');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listEnrichments'
+    );
 
     const parameters = {
       options: {
@@ -1431,30 +1670,37 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create an enrichment.
    *
-   * Create an enrichment for use with the specified project/.
+   * Create an enrichment for use with the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {CreateEnrichment} params.enrichment - Information about a specific enrichment.
-   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The enrichment file to upload.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The enrichment file to upload.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
-  public createEnrichment(params: DiscoveryV2.CreateEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
-    const _params = Object.assign({}, params);
+  public createEnrichment(
+    params: DiscoveryV2.CreateEnrichmentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'enrichment'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1466,19 +1712,23 @@ class DiscoveryV2 extends BaseService {
       'enrichment': _params.enrichment,
       'file': {
         data: _params.file,
-        contentType: 'application/octet-stream'
-      }
+        contentType: 'application/octet-stream',
+      },
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createEnrichment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createEnrichment'
+    );
 
     const parameters = {
       options: {
@@ -1489,15 +1739,20 @@ class DiscoveryV2 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get enrichment.
@@ -1505,14 +1760,16 @@ class DiscoveryV2 extends BaseService {
    * Get details about a specific enrichment.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.enrichmentId - The ID of the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
-  public getEnrichment(params: DiscoveryV2.GetEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
-    const _params = Object.assign({}, params);
+  public getEnrichment(
+    params: DiscoveryV2.GetEnrichmentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'enrichmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1521,15 +1778,19 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'enrichment_id': _params.enrichmentId
+      'enrichment_id': _params.enrichmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getEnrichment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getEnrichment'
+    );
 
     const parameters = {
       options: {
@@ -1539,14 +1800,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update an enrichment.
@@ -1554,16 +1820,18 @@ class DiscoveryV2 extends BaseService {
    * Updates an existing enrichment's name and description.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.enrichmentId - The ID of the enrichment.
    * @param {string} params.name - A new name for the enrichment.
    * @param {string} [params.description] - A new description for the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
-  public updateEnrichment(params: DiscoveryV2.UpdateEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
-    const _params = Object.assign({}, params);
+  public updateEnrichment(
+    params: DiscoveryV2.UpdateEnrichmentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'enrichmentId', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1573,19 +1841,23 @@ class DiscoveryV2 extends BaseService {
 
     const body = {
       'name': _params.name,
-      'description': _params.description
+      'description': _params.description,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'enrichment_id': _params.enrichmentId
+      'enrichment_id': _params.enrichmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateEnrichment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateEnrichment'
+    );
 
     const parameters = {
       options: {
@@ -1596,15 +1868,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete an enrichment.
@@ -1614,14 +1891,16 @@ class DiscoveryV2 extends BaseService {
    * **Note:** Only enrichments that have been manually created can be deleted.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} params.enrichmentId - The ID of the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteEnrichment(params: DiscoveryV2.DeleteEnrichmentParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteEnrichment(
+    params: DiscoveryV2.DeleteEnrichmentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['projectId', 'enrichmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1630,15 +1909,19 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'project_id': _params.projectId,
-      'enrichment_id': _params.enrichmentId
+      'enrichment_id': _params.enrichmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteEnrichment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteEnrichment'
+    );
 
     const parameters = {
       options: {
@@ -1648,14 +1931,18 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * projects
    ************************/
@@ -1669,14 +1956,20 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>>}
    */
-  public listProjects(params?: DiscoveryV2.ListProjectsParams): Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>> {
-    const _params = Object.assign({}, params);
+  public listProjects(
+    params?: DiscoveryV2.ListProjectsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listProjects');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listProjects'
+    );
 
     const parameters = {
       options: {
@@ -1685,14 +1978,19 @@ class DiscoveryV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a Project.
@@ -1701,13 +1999,21 @@ class DiscoveryV2 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The human readable name of this project.
-   * @param {string} params.type - The project type of this project.
+   * @param {string} params.type - The type of project.
+   *
+   * The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom*
+   * project.
+   *
+   * The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data deployments
+   * only.
    * @param {DefaultQueryParams} [params.defaultQueryParameters] - Default query parameters for this project.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
    */
-  public createProject(params: DiscoveryV2.CreateProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
-    const _params = Object.assign({}, params);
+  public createProject(
+    params: DiscoveryV2.CreateProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'type'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1718,14 +2024,18 @@ class DiscoveryV2 extends BaseService {
     const body = {
       'name': _params.name,
       'type': _params.type,
-      'default_query_parameters': _params.defaultQueryParameters
+      'default_query_parameters': _params.defaultQueryParameters,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createProject');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createProject'
+    );
 
     const parameters = {
       options: {
@@ -1735,15 +2045,20 @@ class DiscoveryV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get project.
@@ -1751,13 +2066,15 @@ class DiscoveryV2 extends BaseService {
    * Get details on the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
    */
-  public getProject(params: DiscoveryV2.GetProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
-    const _params = Object.assign({}, params);
+  public getProject(
+    params: DiscoveryV2.GetProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1766,14 +2083,18 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getProject');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getProject'
+    );
 
     const parameters = {
       options: {
@@ -1783,14 +2104,19 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a project.
@@ -1798,14 +2124,16 @@ class DiscoveryV2 extends BaseService {
    * Update the specified project's name.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {string} [params.name] - The new name to give this project.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
    */
-  public updateProject(params: DiscoveryV2.UpdateProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
-    const _params = Object.assign({}, params);
+  public updateProject(
+    params: DiscoveryV2.UpdateProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1814,18 +2142,22 @@ class DiscoveryV2 extends BaseService {
     }
 
     const body = {
-      'name': _params.name
+      'name': _params.name,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateProject');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateProject'
+    );
 
     const parameters = {
       options: {
@@ -1836,15 +2168,20 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a project.
@@ -1855,13 +2192,15 @@ class DiscoveryV2 extends BaseService {
    * collections.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the deploy page of the
-   * Discovery administrative tooling.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteProject(params: DiscoveryV2.DeleteProjectParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteProject(
+    params: DiscoveryV2.DeleteProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['projectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1870,14 +2209,18 @@ class DiscoveryV2 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'project_id': _params.projectId
+      'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteProject');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteProject'
+    );
 
     const parameters = {
       options: {
@@ -1887,14 +2230,18 @@ class DiscoveryV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -1917,8 +2264,10 @@ class DiscoveryV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteUserData(params: DiscoveryV2.DeleteUserDataParams): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: DiscoveryV2.DeleteUserDataParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1928,10 +2277,14 @@ class DiscoveryV2 extends BaseService {
 
     const query = {
       'version': this.version,
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -1940,14 +2293,18 @@ class DiscoveryV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -1955,18 +2312,16 @@ class DiscoveryV2 extends BaseService {
  ************************/
 
 namespace DiscoveryV2 {
-
   /** Options for the `DiscoveryV2` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
-     *  version is `2019-11-22`.
+     *  version is `2020-08-30`.
      */
     version: string;
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -1977,7 +2332,7 @@ namespace DiscoveryV2 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1990,18 +2345,14 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `listCollections` operation. */
   export interface ListCollectionsParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createCollection` operation. */
   export interface CreateCollectionParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The name of the collection. */
     name: string;
@@ -2016,9 +2367,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getCollection` operation. */
   export interface GetCollectionParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
@@ -2027,9 +2376,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `updateCollection` operation. */
   export interface UpdateCollectionParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
@@ -2044,9 +2391,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteCollection` operation. */
   export interface DeleteCollectionParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
@@ -2055,9 +2400,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `query` operation. */
   export interface QueryParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** A comma-separated list of collection IDs to be queried against. */
     collectionIds?: string[];
@@ -2080,8 +2423,8 @@ namespace DiscoveryV2 {
     aggregation?: string;
     /** Number of results to return. */
     count?: number;
-    /** A list of the fields in the document hierarchy to return. If this parameter not specified, then all
-     *  top-level fields are returned.
+    /** A list of the fields in the document hierarchy to return. If this parameter is an empty list, then all
+     *  fields are returned.
      */
     _return?: string[];
     /** The number of query results to skip at the beginning. For example, if the total number of results that are
@@ -2090,7 +2433,7 @@ namespace DiscoveryV2 {
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by
      *  prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no
-     *  prefix is specified. This parameter cannot be used in the same query as the **bias** parameter.
+     *  prefix is specified.
      */
     sort?: string;
     /** When `true`, a highlight field is returned for each result which contains the fields which match the query
@@ -2104,7 +2447,7 @@ namespace DiscoveryV2 {
     spellingSuggestions?: boolean;
     /** Configuration for table retrieval. */
     tableResults?: QueryLargeTableResults;
-    /** Configuration for suggested refinements. */
+    /** Configuration for suggested refinements. Available with Premium plans only. */
     suggestedRefinements?: QueryLargeSuggestedRefinements;
     /** Configuration for passage retrieval. */
     passages?: QueryLargePassages;
@@ -2113,12 +2456,10 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getAutocompletion` operation. */
   export interface GetAutocompletionParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
-    /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `Hot`, `Housing`,
-     *  or `How do I upgrade`. Possible completions are.
+    /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `hot`, `housing`,
+     *  or `how`.
      */
     prefix: string;
     /** Comma separated list of the collection IDs. If this parameter is not specified, all collections in the
@@ -2134,9 +2475,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `queryCollectionNotices` operation. */
   export interface QueryCollectionNoticesParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
@@ -2166,9 +2505,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `queryNotices` operation. */
   export interface QueryNoticesParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better
      *  for metadata-type searches and for assessing the concepts in the data set.
@@ -2196,9 +2533,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `listFields` operation. */
   export interface ListFieldsParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** Comma separated list of the collection IDs. If this parameter is not specified, all collections in the
      *  project are used.
@@ -2209,26 +2544,21 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getComponentSettings` operation. */
   export interface GetComponentSettingsParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `addDocument` operation. */
   export interface AddDocumentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
-    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
-     *  supported size are rejected.
+    /** The content of the document to ingest. For maximum supported file size limits, see [the
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
      */
-    file?: NodeJS.ReadableStream|Buffer;
+    file?: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */
     filename?: string;
     /** The content type of file. */
@@ -2264,19 +2594,16 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `updateDocument` operation. */
   export interface UpdateDocumentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
     /** The ID of the document. */
     documentId: string;
-    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
-     *  supported size are rejected.
+    /** The content of the document to ingest. For maximum supported file size limits, see [the
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
      */
-    file?: NodeJS.ReadableStream|Buffer;
+    file?: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */
     filename?: string;
     /** The content type of file. */
@@ -2312,9 +2639,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteDocument` operation. */
   export interface DeleteDocumentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
@@ -2329,27 +2654,21 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `listTrainingQueries` operation. */
   export interface ListTrainingQueriesParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteTrainingQueries` operation. */
   export interface DeleteTrainingQueriesParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createTrainingQuery` operation. */
   export interface CreateTrainingQueryParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The natural text query for the training query. */
     naturalLanguageQuery: string;
@@ -2362,9 +2681,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getTrainingQuery` operation. */
   export interface GetTrainingQueryParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
@@ -2373,9 +2690,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `updateTrainingQuery` operation. */
   export interface UpdateTrainingQueryParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
@@ -2390,9 +2705,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteTrainingQuery` operation. */
   export interface DeleteTrainingQueryParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
@@ -2401,17 +2714,14 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `analyzeDocument` operation. */
   export interface AnalyzeDocumentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
-    /** The content of the document to ingest. The maximum supported file size when adding a file to a collection is
-     *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
-     *  supported size are rejected.
+    /** The content of the document to ingest. For maximum supported file size limits, see [the
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
      */
-    file?: NodeJS.ReadableStream|Buffer;
+    file?: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */
     filename?: string;
     /** The content type of file. */
@@ -2443,31 +2753,25 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `listEnrichments` operation. */
   export interface ListEnrichmentsParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createEnrichment` operation. */
   export interface CreateEnrichmentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** Information about a specific enrichment. */
     enrichment: CreateEnrichment;
     /** The enrichment file to upload. */
-    file?: NodeJS.ReadableStream|Buffer;
+    file?: NodeJS.ReadableStream | Buffer;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getEnrichment` operation. */
   export interface GetEnrichmentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the enrichment. */
     enrichmentId: string;
@@ -2476,9 +2780,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `updateEnrichment` operation. */
   export interface UpdateEnrichmentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the enrichment. */
     enrichmentId: string;
@@ -2491,9 +2793,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteEnrichment` operation. */
   export interface DeleteEnrichmentParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The ID of the enrichment. */
     enrichmentId: string;
@@ -2509,7 +2809,14 @@ namespace DiscoveryV2 {
   export interface CreateProjectParams {
     /** The human readable name of this project. */
     name: string;
-    /** The project type of this project. */
+    /** The type of project.
+     *
+     *  The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a
+     *  *Custom* project.
+     *
+     *  The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data
+     *  deployments only.
+     */
     type: CreateProjectConstants.Type | string;
     /** Default query parameters for this project. */
     defaultQueryParameters?: DefaultQueryParams;
@@ -2518,10 +2825,11 @@ namespace DiscoveryV2 {
 
   /** Constants for the `createProject` operation. */
   export namespace CreateProjectConstants {
-    /** The project type of this project. */
+    /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data deployments only. */
     export enum Type {
       DOCUMENT_RETRIEVAL = 'document_retrieval',
-      ANSWER_RETRIEVAL = 'answer_retrieval',
+      CONVERSATIONAL_SEARCH = 'conversational_search',
+      CONTENT_INTELLIGENCE = 'content_intelligence',
       CONTENT_MINING = 'content_mining',
       OTHER = 'other',
     }
@@ -2529,18 +2837,14 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getProject` operation. */
   export interface GetProjectParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateProject` operation. */
   export interface UpdateProjectParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     /** The new name to give this project. */
     name?: string;
@@ -2549,9 +2853,7 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteProject` operation. */
   export interface DeleteProjectParams {
-    /** The ID of the project. This information can be found from the deploy page of the Discovery administrative
-     *  tooling.
-     */
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
@@ -2567,7 +2869,7 @@ namespace DiscoveryV2 {
    * model interfaces
    ************************/
 
-  /** An object containing the converted document and any identified enrichments. */
+  /** An object that contains the converted document and any identified enrichments. */
   export interface AnalyzedDocument {
     /** Array of document results that match the query. */
     notices?: Notice[];
@@ -2615,7 +2917,7 @@ namespace DiscoveryV2 {
     fields?: string[];
   }
 
-  /** An object containing an array of autocompletion suggestions. */
+  /** An object that contains an array of autocompletion suggestions. */
   export interface Completions {
     /** Array of autocomplete suggestion based on the provided prefix. */
     completions?: string[];
@@ -2677,7 +2979,9 @@ namespace DiscoveryV2 {
     description?: string;
     /** The type of this enrichment. */
     type?: string;
-    /** A object containing options for the current enrichment. */
+    /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the
+     *  enrichment options are not included in responses from the List Enrichments method.
+     */
     options?: EnrichmentOptions;
   }
 
@@ -2691,7 +2995,7 @@ namespace DiscoveryV2 {
     table_results?: DefaultQueryParamsTableResults;
     /** A string representing the default aggregation query for the project. */
     aggregation?: string;
-    /** Object containing suggested refinement settings. */
+    /** Object that contains suggested refinement settings. Available with Premium plans only. */
     suggested_refinements?: DefaultQueryParamsSuggestedRefinements;
     /** When `true`, a spelling suggestions for the query are returned by default. */
     spelling_suggestions?: boolean;
@@ -2725,9 +3029,9 @@ namespace DiscoveryV2 {
     max_per_document?: number;
   }
 
-  /** Object containing suggested refinement settings. */
+  /** Object that contains suggested refinement settings. Available with Premium plans only. */
   export interface DefaultQueryParamsSuggestedRefinements {
-    /** When `true`, a suggested refinements for the query are returned by default. */
+    /** When `true`, suggested refinements for the query are returned by default. */
     enabled?: boolean;
     /** The number of suggested refinements to return by default. */
     count?: number;
@@ -2783,35 +3087,39 @@ namespace DiscoveryV2 {
     description?: string;
     /** The type of this enrichment. */
     type?: string;
-    /** A object containing options for the current enrichment. */
+    /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the
+     *  enrichment options are not included in responses from the List Enrichments method.
+     */
     options?: EnrichmentOptions;
   }
 
-  /** A object containing options for the current enrichment. */
+  /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the enrichment options are not included in responses from the List Enrichments method. */
   export interface EnrichmentOptions {
-    /** An array of supported languages for this enrichment. */
+    /** An array of supported languages for this enrichment. Required when `type` is `dictionary`. Optional when
+     *  `type` is `rule_based`. Not valid when creating any other type of enrichment.
+     */
     languages?: string[];
-    /** The type of entity. Required when creating `dictionary` and `regular_expression` **type** enrichment. Not
-     *  valid when creating any other type of enrichment.
+    /** The name of the entity type. This value is used as the field name in the index. Required when `type` is
+     *  `dictionary` or `regular_expression`. Not valid when creating any other type of enrichment.
      */
     entity_type?: string;
-    /** The regular expression to apply for this enrichment. Required only when the **type** of enrichment being
-     *  created is a `regular_expression`. Not valid when creating any other type of enrichment.
+    /** The regular expression to apply for this enrichment. Required when `type` is `regular_expression`. Not valid
+     *  when creating any other type of enrichment.
      */
     regular_expression?: string;
-    /** The name of the result document field that this enrichment creates. Required only when the enrichment
-     *  **type** is `rule_based`. Not valid when creating any other type of enrichment.
+    /** The name of the result document field that this enrichment creates. Required when `type` is `rule_based`.
+     *  Not valid when creating any other type of enrichment.
      */
     result_field?: string;
   }
 
-  /** An object containing an array of enrichment definitions. */
+  /** An object that contains an array of enrichment definitions. */
   export interface Enrichments {
     /** An array of enrichment definitions. */
     enrichments?: Enrichment[];
   }
 
-  /** Object containing field details. */
+  /** Object that contains field details. */
   export interface Field {
     /** The name of the field. */
     field?: string;
@@ -2821,15 +3129,15 @@ namespace DiscoveryV2 {
     collection_id?: string;
   }
 
-  /** Response object containing an array of collection details. */
+  /** Response object that contains an array of collection details. */
   export interface ListCollectionsResponse {
-    /** An array containing information about each collection in the project. */
+    /** An array that contains information about each collection in the project. */
     collections?: Collection[];
   }
 
   /** The list of fetched fields. The fields are returned using a fully qualified name format, however, the format differs slightly from that used by the query operations. * Fields which contain nested objects are assigned a type of "nested". * Fields which belong to a nested object are prefixed with `.properties` (for example, `warnings.properties.severity` means that the `warnings` object has a property called `severity`). */
   export interface ListFieldsResponse {
-    /** An array containing information about each field in the collections. */
+    /** An array that contains information about each field in the collections. */
     fields?: Field[];
   }
 
@@ -2874,7 +3182,14 @@ namespace DiscoveryV2 {
     project_id?: string;
     /** The human readable name of this project. */
     name?: string;
-    /** The project type of this project. */
+    /** The type of project.
+     *
+     *  The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a
+     *  *Custom* project.
+     *
+     *  The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data
+     *  deployments only.
+     */
     type?: string;
     /** Relevancy training status information for this project. */
     relevancy_training_status?: ProjectListDetailsRelevancyTrainingStatus;
@@ -2890,7 +3205,14 @@ namespace DiscoveryV2 {
     project_id?: string;
     /** The human readable name of this project. */
     name?: string;
-    /** The project type of this project. */
+    /** The type of project.
+     *
+     *  The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a
+     *  *Custom* project.
+     *
+     *  The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data
+     *  deployments only.
+     */
     type?: string;
     /** Relevancy training status information for this project. */
     relevancy_training_status?: ProjectListDetailsRelevancyTrainingStatus;
@@ -2932,7 +3254,7 @@ namespace DiscoveryV2 {
   export interface QueryGroupByAggregationResult {
     /** Value of the field with a non-zero frequency in the document set. */
     key: string;
-    /** Number of documents containing the 'key'. */
+    /** Number of documents that contain the 'key'. */
     matching_results: number;
     /** The relevancy for this group. */
     relevancy?: number;
@@ -2944,7 +3266,7 @@ namespace DiscoveryV2 {
      *  when the `relevancy` parameter is set to `true`.
      */
     estimated_matching_documents?: number;
-    /** An array of sub aggregations. */
+    /** An array of sub-aggregations. */
     aggregations?: QueryAggregation[];
   }
 
@@ -2954,7 +3276,7 @@ namespace DiscoveryV2 {
     key: number;
     /** Number of documents with the specified key as the upper bound. */
     matching_results: number;
-    /** An array of sub aggregations. */
+    /** An array of sub-aggregations. */
     aggregations?: QueryAggregation[];
   }
 
@@ -2962,33 +3284,41 @@ namespace DiscoveryV2 {
   export interface QueryLargePassages {
     /** A passages query that returns the most relevant passages from the results. */
     enabled?: boolean;
-    /** When `true`, passages will be returned within their respective result. */
+    /** If `true`, ranks the documents by document quality, and then returns the highest-ranked passages per
+     *  document in a `document_passages` field for each document entry in the results list of the response.
+     *
+     *  If `false`, ranks the passages from all of the documents by passage quality regardless of the document quality
+     *  and returns them in a separate `passages` field in the response.
+     */
     per_document?: boolean;
-    /** Maximum number of passages to return per result. */
+    /** Maximum number of passages to return per document in the result. Ignored if `passages.per_document` is
+     *  `false`.
+     */
     max_per_document?: number;
-    /** A list of fields that passages are drawn from. If this parameter not specified, then all top-level fields
+    /** A list of fields to extract passages from. If this parameter is an empty list, then all root-level fields
      *  are included.
      */
     fields?: string[];
-    /** The maximum number of passages to return. The search returns fewer passages if the requested total is not
-     *  found. The maximum is `100`.
-     */
+    /** The maximum number of passages to return. Ignored if `passages.per_document` is `true`. */
     count?: number;
     /** The approximate number of characters that any one passage will have. */
     characters?: number;
     /** When true, `answer` objects are returned as part of each passage in the query results. The primary
      *  difference between an `answer` and a `passage` is that the length of a passage is defined by the query, where
-     *  the length of an `answer` is calculated by Discovery based on how much text is needed to answer the
-     *  question./n/nThis parameter is ignored if passages are not enabled for the query, or no
-     *  **natural_language_query** is specified./n/nIf the **find_answers** parameter is set to `true` and
-     *  **per_document** parameter is also set to `true`, then the document search results and the passage search
-     *  results within each document are reordered using the answer confidences. The goal of this reordering is to do as
-     *  much as possible to make sure that the first answer of the first passage of the first document is the best
-     *  answer. Similarly, if the **find_answers** parameter is set to `true` and **per_document** parameter is set to
-     *  `false`, then the passage search results are reordered in decreasing order of the highest confidence answer for
-     *  each document and passage./n/nThe **find_answers** parameter is **beta** functionality available only on managed
-     *  instances and should not be used in a production environment. This parameter is not available on installed
-     *  instances of Discovery.
+     *  the length of an `answer` is calculated by Discovery based on how much text is needed to answer the question.
+     *
+     *  This parameter is ignored if passages are not enabled for the query, or no **natural_language_query** is
+     *  specified.
+     *
+     *  If the **find_answers** parameter is set to `true` and **per_document** parameter is also set to `true`, then
+     *  the document search results and the passage search results within each document are reordered using the answer
+     *  confidences. The goal of this reordering is to place the best answer as the first answer of the first passage of
+     *  the first document. Similarly, if the **find_answers** parameter is set to `true` and **per_document** parameter
+     *  is set to `false`, then the passage search results are reordered in decreasing order of the highest confidence
+     *  answer for each document and passage.
+     *
+     *  The **find_answers** parameter is **beta** functionality available only on managed instances and should not be
+     *  used in a production environment. This parameter is not available on installed instances of Discovery.
      */
     find_answers?: boolean;
     /** The number of `answer` objects to return per passage if the **find_answers** parmeter is specified as
@@ -2997,7 +3327,7 @@ namespace DiscoveryV2 {
     max_answers_per_passage?: number;
   }
 
-  /** Configuration for suggested refinements. */
+  /** Configuration for suggested refinements. Available with Premium plans only. */
   export interface QueryLargeSuggestedRefinements {
     /** Whether to perform suggested refinements. */
     enabled?: boolean;
@@ -3013,7 +3343,7 @@ namespace DiscoveryV2 {
     count?: number;
   }
 
-  /** Object containing notice query results. */
+  /** Object that contains notice query results. */
   export interface QueryNoticesResponse {
     /** The number of matching results. */
     matching_results?: number;
@@ -3021,9 +3351,11 @@ namespace DiscoveryV2 {
     notices?: Notice[];
   }
 
-  /** A response containing the documents and aggregations for the query. */
+  /** A response that contains the documents and aggregations for the query. */
   export interface QueryResponse {
-    /** The number of matching results for the query. */
+    /** The number of matching results for the query. Results that match due to a curation only are not counted in
+     *  the total.
+     */
     matching_results?: number;
     /** Array of document results for the query. */
     results?: QueryResult[];
@@ -3037,7 +3369,7 @@ namespace DiscoveryV2 {
     suggested_refinements?: QuerySuggestedRefinement[];
     /** Array of table results. */
     table_results?: QueryTableResult[];
-    /** Passages returned by Discovery. */
+    /** Passages that best match the query from across all of the collections in the project. */
     passages?: QueryResponsePassage[];
   }
 
@@ -3053,7 +3385,7 @@ namespace DiscoveryV2 {
     collection_id?: string;
     /** The position of the first character of the extracted passage in the originating field. */
     start_offset?: number;
-    /** The position of the last character of the extracted passage in the originating field. */
+    /** The position after the last character of the extracted passage in the originating field. */
     end_offset?: number;
     /** The label of the field from which the passage has been extracted. */
     field?: string;
@@ -3071,7 +3403,7 @@ namespace DiscoveryV2 {
     metadata?: JsonObject;
     /** Metadata of a query result. */
     result_metadata: QueryResultMetadata;
-    /** Passages returned by Discovery. */
+    /** Passages from the document that best matches the query. */
     document_passages?: QueryResultPassage[];
     /** QueryResult accepts additional properties. */
     [propName: string]: any;
@@ -3098,7 +3430,7 @@ namespace DiscoveryV2 {
     passage_text?: string;
     /** The position of the first character of the extracted passage in the originating field. */
     start_offset?: number;
-    /** The position of the last character of the extracted passage in the originating field. */
+    /** The position after the last character of the extracted passage in the originating field. */
     end_offset?: number;
     /** The label of the field from which the passage has been extracted. */
     field?: string;
@@ -3134,7 +3466,7 @@ namespace DiscoveryV2 {
   export interface QueryTermAggregationResult {
     /** Value of the field with a non-zero frequency in the document set. */
     key: string;
-    /** Number of documents containing the 'key'. */
+    /** Number of documents that contain the 'key'. */
     matching_results: number;
     /** The relevancy for this term. */
     relevancy?: number;
@@ -3146,7 +3478,7 @@ namespace DiscoveryV2 {
      *  when the `relevancy` parameter is set to `true`.
      */
     estimated_matching_documents?: number;
-    /** An array of sub aggregations. */
+    /** An array of sub-aggregations. */
     aggregations?: QueryAggregation[];
   }
 
@@ -3158,11 +3490,11 @@ namespace DiscoveryV2 {
     key: number;
     /** Number of documents with the specified key as the upper bound. */
     matching_results: number;
-    /** An array of sub aggregations. */
+    /** An array of sub-aggregations. */
     aggregations?: QueryAggregation[];
   }
 
-  /** A query response containing the matching documents for the preceding aggregations. */
+  /** A query response that contains the matching documents for the preceding aggregations. */
   export interface QueryTopHitsAggregationResult {
     /** Number of matching results. */
     matching_results: number;
@@ -3170,13 +3502,13 @@ namespace DiscoveryV2 {
     hits?: JsonObject[];
   }
 
-  /** Object containing a potential answer to the specified query. */
+  /** Object that contains a potential answer to the specified query. */
   export interface ResultPassageAnswer {
     /** Answer text for the specified query as identified by Discovery. */
     answer_text?: string;
     /** The position of the first character of the extracted answer in the originating field. */
     start_offset?: number;
-    /** The position of the last character of the extracted answer in the originating field. */
+    /** The position after the last character of the extracted answer in the originating field. */
     end_offset?: number;
     /** An estimate of the probability that the answer is relevant. */
     confidence?: number;
@@ -3187,8 +3519,8 @@ namespace DiscoveryV2 {
     /** Identifies the document retrieval strategy used for this query. `relevancy_training` indicates that the
      *  results were returned using a relevancy trained model.
      *
-     *   **Note**: In the event of trained collections being queried, but the trained model is not used to return
-     *  results, the **document_retrieval_strategy** will be listed as `untrained`.
+     *  **Note**: In the event of trained collections being queried, but the trained model is not used to return
+     *  results, the **document_retrieval_strategy** is listed as `untrained`.
      */
     document_retrieval_strategy?: string;
   }
@@ -3413,7 +3745,7 @@ namespace DiscoveryV2 {
     location?: TableElementLocation;
   }
 
-  /** Object containing example response details for a training query. */
+  /** Object that contains example response details for a training query. */
   export interface TrainingExample {
     /** The document ID associated with this training example. */
     document_id: string;
@@ -3427,7 +3759,7 @@ namespace DiscoveryV2 {
     updated?: string;
   }
 
-  /** Object containing training query details. */
+  /** Object that contains training query details. */
   export interface TrainingQuery {
     /** The query ID associated with the training query. */
     query_id?: string;
@@ -3457,15 +3789,15 @@ namespace DiscoveryV2 {
     value?: number;
   }
 
-  /** A modifier that will narrow down the document set of the sub aggregations it precedes. */
+  /** A modifier that narrows the document set of the sub-aggregations it precedes. */
   export interface QueryFilterAggregation extends QueryAggregation {
-    /** The filter written in Discovery Query Language syntax applied to the documents before sub aggregations are
-     *  run.
+    /** The filter that is written in Discovery Query Language syntax and is applied to the documents before
+     *  sub-aggregations are run.
      */
     match: string;
-    /** Number of documents matching the filter. */
+    /** Number of documents that match the filter. */
     matching_results: number;
-    /** An array of sub aggregations. */
+    /** An array of sub-aggregations. */
     aggregations?: QueryAggregation[];
   }
 
@@ -3487,13 +3819,13 @@ namespace DiscoveryV2 {
     results?: QueryHistogramAggregationResult[];
   }
 
-  /** A restriction that alter the document set used for sub aggregations it precedes to nested documents found in the field specified. */
+  /** A restriction that alters the document set that is used for sub-aggregations it precedes to nested documents found in the field specified. */
   export interface QueryNestedAggregation extends QueryAggregation {
-    /** The path to the document field to scope sub aggregations to. */
+    /** The path to the document field to scope sub-aggregations to. */
     path: string;
     /** Number of nested documents found in the specified field. */
     matching_results: number;
-    /** An array of sub aggregations. */
+    /** An array of sub-aggregations. */
     aggregations?: QueryAggregation[];
   }
 
@@ -3529,7 +3861,6 @@ namespace DiscoveryV2 {
     name?: string;
     hits?: QueryTopHitsAggregationResult;
   }
-
 }
 
 export = DiscoveryV2;
