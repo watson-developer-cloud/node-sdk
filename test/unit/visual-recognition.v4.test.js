@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const VisualRecognitionV4 = require('../../dist/visual-recognition/v4');
@@ -29,13 +29,13 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const visualRecognitionServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
   version: 'testString',
 };
 
-const visualRecognitionService = new VisualRecognitionV4(service);
+const visualRecognitionService = new VisualRecognitionV4(visualRecognitionServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(visualRecognitionService, 'createRequest');
@@ -134,9 +134,9 @@ describe('VisualRecognitionV4', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new VisualRecognitionV4(service);
+        const serviceObj = new VisualRecognitionV4(visualRecognitionServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(visualRecognitionServiceOptions.version);
       });
     });
   });
@@ -165,18 +165,18 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/analyze', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v4/analyze', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['collection_ids']).toEqual(collectionIds);
-        expect(options.formData['features']).toEqual(features);
-        expect(options.formData['images_file']).toEqual(imagesFile);
-        expect(options.formData['image_url']).toEqual(imageUrl);
-        expect(options.formData['threshold']).toEqual(threshold);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.formData.collection_ids).toEqual(collectionIds);
+        expect(mockRequestOptions.formData.features).toEqual(features);
+        expect(mockRequestOptions.formData.images_file).toEqual(imagesFile);
+        expect(mockRequestOptions.formData.image_url).toEqual(imageUrl);
+        expect(mockRequestOptions.formData.threshold).toEqual(threshold);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -200,7 +200,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.analyze({});
@@ -212,11 +212,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const analyzePromise = visualRecognitionService.analyze();
         expectToBePromise(analyzePromise);
 
-        analyzePromise.catch(err => {
+        analyzePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -227,13 +227,30 @@ describe('VisualRecognitionV4', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // ObjectTrainingStatus
+      const objectTrainingStatusModel = {
+        ready: true,
+        in_progress: true,
+        data_changed: true,
+        latest_failed: true,
+        rscnn_ready: true,
+        description: 'testString',
+      };
+
+      // TrainingStatus
+      const trainingStatusModel = {
+        objects: objectTrainingStatusModel,
+      };
+
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createCollection
         const name = 'testString';
         const description = 'testString';
+        const trainingStatus = trainingStatusModel;
         const params = {
           name: name,
           description: description,
+          trainingStatus: trainingStatus,
         };
 
         const createCollectionResult = visualRecognitionService.createCollection(params);
@@ -244,15 +261,15 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -291,13 +308,13 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
       });
 
       test('should prioritize user-given headers', () => {
@@ -339,14 +356,14 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -368,7 +385,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.getCollection({});
@@ -380,11 +397,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getCollectionPromise = visualRecognitionService.getCollection();
         expectToBePromise(getCollectionPromise);
 
-        getCollectionPromise.catch(err => {
+        getCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -395,15 +412,32 @@ describe('VisualRecognitionV4', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // ObjectTrainingStatus
+      const objectTrainingStatusModel = {
+        ready: true,
+        in_progress: true,
+        data_changed: true,
+        latest_failed: true,
+        rscnn_ready: true,
+        description: 'testString',
+      };
+
+      // TrainingStatus
+      const trainingStatusModel = {
+        objects: objectTrainingStatusModel,
+      };
+
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateCollection
         const collectionId = 'testString';
         const name = 'testString';
         const description = 'testString';
+        const trainingStatus = trainingStatusModel;
         const params = {
           collectionId: collectionId,
           name: name,
           description: description,
+          trainingStatus: trainingStatus,
         };
 
         const updateCollectionResult = visualRecognitionService.updateCollection(params);
@@ -414,16 +448,16 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -445,7 +479,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.updateCollection({});
@@ -457,11 +491,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateCollectionPromise = visualRecognitionService.updateCollection();
         expectToBePromise(updateCollectionPromise);
 
-        updateCollectionPromise.catch(err => {
+        updateCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -485,14 +519,14 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -514,7 +548,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.deleteCollection({});
@@ -526,11 +560,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteCollectionPromise = visualRecognitionService.deleteCollection();
         expectToBePromise(deleteCollectionPromise);
 
-        deleteCollectionPromise.catch(err => {
+        deleteCollectionPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -558,17 +592,17 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/model', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/model', 'GET');
         const expectedAccept = 'application/octet-stream';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['feature']).toEqual(feature);
-        expect(options.qs['model_format']).toEqual(modelFormat);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.responseType).toBe('stream');
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.qs.feature).toEqual(feature);
+        expect(mockRequestOptions.qs.model_format).toEqual(modelFormat);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.responseType).toBe('stream');
       });
 
       test('should prioritize user-given headers', () => {
@@ -594,7 +628,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.getModelFile({});
@@ -606,11 +640,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getModelFilePromise = visualRecognitionService.getModelFile();
         expectToBePromise(getModelFilePromise);
 
-        getModelFilePromise.catch(err => {
+        getModelFilePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -624,7 +658,7 @@ describe('VisualRecognitionV4', () => {
         const collectionId = 'testString';
         const imagesFile = [Buffer.from('This is a mock file.')];
         const imageUrl = ['testString'];
-        const trainingData = 'testString';
+        const trainingData = '{"objects":[{"object":"2018-Fit","location":{"left":33,"top":8,"width":760,"height":419}}]}';
         const params = {
           collectionId: collectionId,
           imagesFile: imagesFile,
@@ -640,17 +674,17 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/images', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.formData['images_file']).toEqual(imagesFile);
-        expect(options.formData['image_url']).toEqual(imageUrl);
-        expect(options.formData['training_data']).toEqual(trainingData);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.formData.images_file).toEqual(imagesFile);
+        expect(mockRequestOptions.formData.image_url).toEqual(imageUrl);
+        expect(mockRequestOptions.formData.training_data).toEqual(trainingData);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -672,7 +706,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.addImages({});
@@ -684,11 +718,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const addImagesPromise = visualRecognitionService.addImages();
         expectToBePromise(addImagesPromise);
 
-        addImagesPromise.catch(err => {
+        addImagesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -712,14 +746,14 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/images', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -741,7 +775,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.listImages({});
@@ -753,11 +787,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listImagesPromise = visualRecognitionService.listImages();
         expectToBePromise(listImagesPromise);
 
-        listImagesPromise.catch(err => {
+        listImagesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -783,15 +817,15 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images/{image_id}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/images/{image_id}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['image_id']).toEqual(imageId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.image_id).toEqual(imageId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -815,7 +849,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.getImageDetails({});
@@ -827,11 +861,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getImageDetailsPromise = visualRecognitionService.getImageDetails();
         expectToBePromise(getImageDetailsPromise);
 
-        getImageDetailsPromise.catch(err => {
+        getImageDetailsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -857,15 +891,15 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images/{image_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/images/{image_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['image_id']).toEqual(imageId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.image_id).toEqual(imageId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -889,7 +923,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.deleteImage({});
@@ -901,11 +935,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteImagePromise = visualRecognitionService.deleteImage();
         expectToBePromise(deleteImagePromise);
 
-        deleteImagePromise.catch(err => {
+        deleteImagePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -933,17 +967,17 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/images/{image_id}/jpeg', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/images/{image_id}/jpeg', 'GET');
         const expectedAccept = 'image/jpeg';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['size']).toEqual(size);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['image_id']).toEqual(imageId);
-        expect(options.responseType).toBe('stream');
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.qs.size).toEqual(size);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.image_id).toEqual(imageId);
+        expect(mockRequestOptions.responseType).toBe('stream');
       });
 
       test('should prioritize user-given headers', () => {
@@ -967,7 +1001,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.getJpegImage({});
@@ -979,11 +1013,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getJpegImagePromise = visualRecognitionService.getJpegImage();
         expectToBePromise(getJpegImagePromise);
 
-        getJpegImagePromise.catch(err => {
+        getJpegImagePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1007,14 +1041,14 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/objects', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1036,7 +1070,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.listObjectMetadata({});
@@ -1048,11 +1082,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const listObjectMetadataPromise = visualRecognitionService.listObjectMetadata();
         expectToBePromise(listObjectMetadataPromise);
 
-        listObjectMetadataPromise.catch(err => {
+        listObjectMetadataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1080,16 +1114,16 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects/{object}', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/objects/{object}', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['object']).toEqual(newObject);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['object']).toEqual(object);
+        expect(mockRequestOptions.body.object).toEqual(newObject);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.object).toEqual(object);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1115,7 +1149,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.updateObjectMetadata({});
@@ -1127,11 +1161,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateObjectMetadataPromise = visualRecognitionService.updateObjectMetadata();
         expectToBePromise(updateObjectMetadataPromise);
 
-        updateObjectMetadataPromise.catch(err => {
+        updateObjectMetadataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1157,15 +1191,15 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects/{object}', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/objects/{object}', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['object']).toEqual(object);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.object).toEqual(object);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1189,7 +1223,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.getObjectMetadata({});
@@ -1201,11 +1235,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getObjectMetadataPromise = visualRecognitionService.getObjectMetadata();
         expectToBePromise(getObjectMetadataPromise);
 
-        getObjectMetadataPromise.catch(err => {
+        getObjectMetadataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1231,15 +1265,15 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/objects/{object}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/objects/{object}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['object']).toEqual(object);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.object).toEqual(object);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1263,7 +1297,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.deleteObject({});
@@ -1275,11 +1309,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteObjectPromise = visualRecognitionService.deleteObject();
         expectToBePromise(deleteObjectPromise);
 
-        deleteObjectPromise.catch(err => {
+        deleteObjectPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1303,14 +1337,14 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/collections/{collection_id}/train', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/train', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1332,7 +1366,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.train({});
@@ -1344,11 +1378,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const trainPromise = visualRecognitionService.train();
         expectToBePromise(trainPromise);
 
-        trainPromise.catch(err => {
+        trainPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1392,20 +1426,16 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(
-          options,
-          '/v4/collections/{collection_id}/images/{image_id}/training_data',
-          'POST'
-        );
+        checkUrlAndMethod(mockRequestOptions, '/v4/collections/{collection_id}/images/{image_id}/training_data', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['objects']).toEqual(objects);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.path['collection_id']).toEqual(collectionId);
-        expect(options.path['image_id']).toEqual(imageId);
+        expect(mockRequestOptions.body.objects).toEqual(objects);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.image_id).toEqual(imageId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1429,7 +1459,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.addImageTrainingData({});
@@ -1441,11 +1471,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const addImageTrainingDataPromise = visualRecognitionService.addImageTrainingData();
         expectToBePromise(addImageTrainingDataPromise);
 
-        addImageTrainingDataPromise.catch(err => {
+        addImageTrainingDataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1471,15 +1501,15 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/training_usage', 'GET');
+        checkUrlAndMethod(mockRequestOptions, '/v4/training_usage', 'GET');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['start_time']).toEqual(startTime);
-        expect(options.qs['end_time']).toEqual(endTime);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.qs.start_time).toEqual(startTime);
+        expect(mockRequestOptions.qs.end_time).toEqual(endTime);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1521,14 +1551,14 @@ describe('VisualRecognitionV4', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v4/user_data', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v4/user_data', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['customer_id']).toEqual(customerId);
+        expect(mockRequestOptions.qs.version).toEqual(visualRecognitionServiceOptions.version);
+        expect(mockRequestOptions.qs.customer_id).toEqual(customerId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1550,7 +1580,7 @@ describe('VisualRecognitionV4', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await visualRecognitionService.deleteUserData({});
@@ -1562,11 +1592,11 @@ describe('VisualRecognitionV4', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteUserDataPromise = visualRecognitionService.deleteUserData();
         expectToBePromise(deleteUserDataPromise);
 
-        deleteUserDataPromise.catch(err => {
+        deleteUserDataPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
