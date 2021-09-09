@@ -55,10 +55,11 @@
     "@commitlint/config-conventional": "^8.2.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "browserify": "^16.5.2",
     "codecov": "^3.8.1",
     "concat-stream": "^2.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.15.0",
@@ -202,5 +203,10 @@
       ]
     }
   },
-  "snyk": true
+  "snyk": true,
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
