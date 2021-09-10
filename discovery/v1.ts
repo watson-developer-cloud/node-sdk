@@ -3792,9 +3792,8 @@ class DiscoveryV1 extends BaseService {
    * @param {CredentialDetails} [params.credentialDetails] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
-   * @param {string} [params.status] - The current status of this set of credentials. `connected` indicates that the
-   * credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials
-   * (for example, the password provided has expired) and must be corrected before they can be used with a collection.
+   * @param {StatusDetails} [params.status] - Object that contains details about the status of the authentication
+   * process.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>>}
    */
@@ -3934,9 +3933,8 @@ class DiscoveryV1 extends BaseService {
    * @param {CredentialDetails} [params.credentialDetails] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
-   * @param {string} [params.status] - The current status of this set of credentials. `connected` indicates that the
-   * credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials
-   * (for example, the password provided has expired) and must be corrected before they can be used with a collection.
+   * @param {StatusDetails} [params.status] - Object that contains details about the status of the authentication
+   * process.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>>}
    */
@@ -5413,11 +5411,8 @@ namespace DiscoveryV1 {
      *  Obtain credentials for your source from the administrator of the source.
      */
     credentialDetails?: CredentialDetails;
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to
-     *  use with the source configuration of a collection. `invalid` refers to the credentials (for example, the
-     *  password provided has expired) and must be corrected before they can be used with a collection.
-     */
-    status?: CreateCredentialsConstants.Status | string;
+    /** Object that contains details about the status of the authentication process. */
+    status?: StatusDetails;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5430,11 +5425,6 @@ namespace DiscoveryV1 {
       SHAREPOINT = 'sharepoint',
       WEB_CRAWL = 'web_crawl',
       CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
-    }
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials (for example, the password provided has expired) and must be corrected before they can be used with a collection. */
-    export enum Status {
-      CONNECTED = 'connected',
-      INVALID = 'invalid',
     }
   }
 
@@ -5466,11 +5456,8 @@ namespace DiscoveryV1 {
      *  Obtain credentials for your source from the administrator of the source.
      */
     credentialDetails?: CredentialDetails;
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to
-     *  use with the source configuration of a collection. `invalid` refers to the credentials (for example, the
-     *  password provided has expired) and must be corrected before they can be used with a collection.
-     */
-    status?: UpdateCredentialsConstants.Status | string;
+    /** Object that contains details about the status of the authentication process. */
+    status?: StatusDetails;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5483,11 +5470,6 @@ namespace DiscoveryV1 {
       SHAREPOINT = 'sharepoint',
       WEB_CRAWL = 'web_crawl',
       CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
-    }
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials (for example, the password provided has expired) and must be corrected before they can be used with a collection. */
-    export enum Status {
-      CONNECTED = 'connected',
-      INVALID = 'invalid',
     }
   }
 
@@ -5777,11 +5759,8 @@ namespace DiscoveryV1 {
      *  Obtain credentials for your source from the administrator of the source.
      */
     credential_details?: CredentialDetails;
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to
-     *  use with the source configuration of a collection. `invalid` refers to the credentials (for example, the
-     *  password provided has expired) and must be corrected before they can be used with a collection.
-     */
-    status?: string;
+    /** Object that contains details about the status of the authentication process. */
+    status?: StatusDetails;
   }
 
   /** Object containing array of credential definitions. */
@@ -6817,6 +6796,14 @@ namespace DiscoveryV1 {
     status?: string;
     /** Date in `RFC 3339` format indicating the time of the next crawl attempt. */
     next_crawl?: string;
+  }
+
+  /** Object that contains details about the status of the authentication process. */
+  export interface StatusDetails {
+    /** Indicates whether the credential is accepted by the target data source. */
+    authentication?: boolean;
+    /** If `authentication` is `false`, a message describes why the authentication was unsuccessful. */
+    error_message?: string;
   }
 
   /** An object defining a single tokenizaion rule. */

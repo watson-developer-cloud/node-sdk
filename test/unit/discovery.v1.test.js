@@ -4890,12 +4890,18 @@ describe('DiscoveryV1', () => {
         secret_access_key: 'testString',
       };
 
+      // StatusDetails
+      const statusDetailsModel = {
+        authentication: true,
+        error_message: 'testString',
+      };
+
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createCredentials
         const environmentId = 'testString';
         const sourceType = 'box';
         const credentialDetails = credentialDetailsModel;
-        const status = 'connected';
+        const status = statusDetailsModel;
         const params = {
           environmentId: environmentId,
           sourceType: sourceType,
@@ -5067,13 +5073,19 @@ describe('DiscoveryV1', () => {
         secret_access_key: 'testString',
       };
 
+      // StatusDetails
+      const statusDetailsModel = {
+        authentication: true,
+        error_message: 'testString',
+      };
+
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateCredentials
         const environmentId = 'testString';
         const credentialId = 'testString';
         const sourceType = 'box';
         const credentialDetails = credentialDetailsModel;
-        const status = 'connected';
+        const status = statusDetailsModel;
         const params = {
           environmentId: environmentId,
           credentialId: credentialId,
