@@ -108,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">base<wbr>Model<wbr>Name<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.createlanguagemodelconstants.basemodelname.html" class="tsd-signature-type">BaseModelName</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L4701">speech-to-text/v1-generated.ts:4701</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L4764">speech-to-text/v1-generated.ts:4764</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,8 +116,9 @@
 							<p>The name of the base language model that is to be customized by the new custom language model. The new
 							custom model can be used only with the base model that it customizes.</p>
 						</div>
-						<p> To determine whether a base model supports language model customization, use the <strong>Get a model</strong> method and
-							check that the attribute <code>custom_language_model</code> is set to <code>true</code>. You can also refer to <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-customization#languageSupport">Language support for
+						<p> To determine whether a base model supports language model customization, use the <a href="#getmodel">Get a model</a> method
+							and check that the attribute <code>custom_language_model</code> is set to <code>true</code>. You can also refer to <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support#custom-language-support">Language support
+								for
 						customization</a>.</p>
 					</div>
 				</section>
@@ -127,7 +128,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L4723">speech-to-text/v1-generated.ts:4723</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L4784">speech-to-text/v1-generated.ts:4784</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -143,28 +144,27 @@
 					<div class="tsd-signature tsd-kind-icon">dialect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L4719">speech-to-text/v1-generated.ts:4719</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L4780">speech-to-text/v1-generated.ts:4780</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The dialect of the specified language that is to be used with the custom language model. For most languages,
-								the dialect matches the language of the base model by default. For example, <code>en-US</code> is used for either of the US
-							English language models.</p>
+								the dialect matches the language of the base model by default. For example, <code>en-US</code> is used for the US English
+							language models. All dialect values are case-insensitive.</p>
 						</div>
-						<p> For a Spanish language, the service creates a custom language model that is suited for speech in one of the
-						following dialects:</p>
+						<p> The parameter is meaningful only for Spanish language models, for which you can always safely omit the parameter
+							to have the service create the correct mapping. For Spanish, the service creates a custom language model that is
+						suited for speech in one of the following dialects:</p>
 						<ul>
 							<li><p><code>es-ES</code> for Castilian Spanish (<code>es-ES</code> models)</p>
 							</li>
 							<li><p><code>es-LA</code> for Latin American Spanish (<code>es-AR</code>, <code>es-CL</code>, <code>es-CO</code>, and <code>es-PE</code> models)</p>
 							</li>
 							<li><p><code>es-US</code> for Mexican (North American) Spanish (<code>es-MX</code> models)</p>
-								<p>The parameter is meaningful only for Spanish models, for which you can always safely omit the parameter to have
-								the service create the correct mapping.</p>
-								<p>If you specify the <code>dialect</code> parameter for non-Spanish language models, its value must match the language of the
-									base model. If you specify the <code>dialect</code> for Spanish language models, its value must match one of the defined
-								mappings as indicated (<code>es-ES</code>, <code>es-LA</code>, or <code>es-MX</code>). All dialect values are case-insensitive.</p>
+								<p>If you specify the <code>dialect</code> parameter for a non-Spanish language model, its value must match the language of
+									the base model. If you specify the <code>dialect</code> for a Spanish language model, its value must match one of the
+								defined mappings (<code>es-ES</code>, <code>es-LA</code>, or <code>es-MX</code>).</p>
 							</li>
 						</ul>
 					</div>
@@ -175,7 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L4724">speech-to-text/v1-generated.ts:4724</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L4785">speech-to-text/v1-generated.ts:4785</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -185,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L4693">speech-to-text/v1-generated.ts:4693</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L4755">speech-to-text/v1-generated.ts:4755</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

@@ -184,7 +184,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L63">text-to-speech/v1-generated.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L63">text-to-speech/v1-generated.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -228,7 +228,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L63">text-to-speech/v1-generated.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L63">text-to-speech/v1-generated.ts:63</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -239,7 +239,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L61">text-to-speech/v1-generated.ts:61</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L61">text-to-speech/v1-generated.ts:61</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -256,7 +256,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1319">text-to-speech/v1-generated.ts:1319</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1330">text-to-speech/v1-generated.ts:1330</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -282,9 +282,10 @@
 									itself. The processing time for a reasonably sized prompt generally matches the length of the audio (for example,
 								it takes 20 seconds to process a 20-second prompt).</p>
 								<p>For shorter prompts, you can wait for a reasonable amount of time and then check the status of the prompt with the
-									<strong>Get a custom prompt</strong> method. For longer prompts, consider using that method to poll the service every few
-									seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it is in the
-								<code>processing</code> or <code>failed</code> state. Only prompts that are in the <code>available</code> state can be used for speech synthesis.</p>
+									<a href="#getcustomprompt">Get a custom prompt</a> method. For longer prompts, consider using that method to poll the service
+									every few seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it
+									is in the <code>processing</code> or <code>failed</code> state. Only prompts that are in the <code>available</code> state can be used for speech
+								synthesis.</p>
 								<p>When it processes a request, the service attempts to align the text and the audio that are provided for the prompt.
 									The text that is passed with a prompt must match the spoken audio as closely as possible. Optimally, the text and
 									audio match exactly. The service does its best to align the specified text with the audio, and it can often
@@ -420,7 +421,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L996">text-to-speech/v1-generated.ts:996</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1006">text-to-speech/v1-generated.ts:1006</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -539,7 +540,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L848">text-to-speech/v1-generated.ts:848</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L858">text-to-speech/v1-generated.ts:858</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -607,8 +608,8 @@
 														<td><code>words</code></td>
 														<td><a href="../interfaces/texttospeechv1.word.html" class="tsd-signature-type">Word</a><span class="tsd-signature-symbol">[]</span></td>
 														<td></td>
-														<td>The **Add custom words** method accepts an array of &#x60;Word&#x60; objects. Each object provides a word that is to
-														be added or updated for the custom model and the word&#x27;s translation.</td>
+														<td>The [Add custom words](#addwords) method accepts an array of &#x60;Word&#x60; objects. Each object provides a word
+														that is to be added or updated for the custom model and the word&#x27;s translation.</td>
 													</tr>
 													<!-- Print out all optional parameters-->
 													<tr>
@@ -637,7 +638,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L508">text-to-speech/v1-generated.ts:508</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L518">text-to-speech/v1-generated.ts:518</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -728,8 +729,7 @@
 														<td>The language of the new custom model. You create a custom model for a specific language, not for a specific
 															voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the
 															default language, &#x60;en-US&#x60;. **Note:** The &#x60;ar-AR&#x60; language identifier cannot be used to create a custom model.
-															Use the &#x60;ar-MS&#x60; identifier instead. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean
-														languages and voices are supported only for IBM Cloud.</td>
+														Use the &#x60;ar-MS&#x60; identifier instead.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -751,7 +751,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1601">text-to-speech/v1-generated.ts:1601</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1612">text-to-speech/v1-generated.ts:1612</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -871,7 +871,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L766">text-to-speech/v1-generated.ts:766</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L776">text-to-speech/v1-generated.ts:776</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -947,7 +947,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1454">text-to-speech/v1-generated.ts:1454</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1465">text-to-speech/v1-generated.ts:1465</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1033,7 +1033,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1729">text-to-speech/v1-generated.ts:1729</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1740">text-to-speech/v1-generated.ts:1740</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1115,7 +1115,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1794">text-to-speech/v1-generated.ts:1794</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1805">text-to-speech/v1-generated.ts:1805</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1196,7 +1196,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1121">text-to-speech/v1-generated.ts:1121</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1131">text-to-speech/v1-generated.ts:1131</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1301,7 +1301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L709">text-to-speech/v1-generated.ts:709</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L719">text-to-speech/v1-generated.ts:719</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1310,8 +1310,8 @@
 								</div>
 								<p>Gets all information about a specified custom model. In addition to metadata such as the name and description of
 									the custom model, the output includes the words and their translations that are defined for the model, as well as
-									any prompts that are defined for the model. To see just the metadata for a model, use the <strong>List custom models</strong>
-								method.</p>
+									any prompts that are defined for the model. To see just the metadata for a model, use the <a href="#listcustommodels">List custom
+								models</a> method.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery">Querying a custom
 								model</a>.</p>
 							</div>
@@ -1379,7 +1379,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1390">text-to-speech/v1-generated.ts:1390</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1401">text-to-speech/v1-generated.ts:1401</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1463,7 +1463,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L420">text-to-speech/v1-generated.ts:420</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L428">text-to-speech/v1-generated.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1567,8 +1567,7 @@
 														<td>Optional</td>
 														<td>A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
 															language (for example, &#x60;en-US&#x60;) return the same translation. For more information about specifying a voice, see
-															**Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch,
-														Australian English, and Korean languages and voices are supported only for IBM Cloud.</td>
+														**Important voice updates for IBM Cloud** in the method description.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -1590,7 +1589,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1665">text-to-speech/v1-generated.ts:1665</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1676">text-to-speech/v1-generated.ts:1676</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1670,7 +1669,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L180">text-to-speech/v1-generated.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L184">text-to-speech/v1-generated.ts:184</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1679,7 +1678,8 @@
 								</div>
 								<p>Gets information about the specified voice. The information includes the name, language, gender, and other details
 									about the voice. Specify a customization ID to obtain information for a custom model that is defined for the
-								language of the specified voice. To list information about all available voices, use the <strong>List voices</strong> method.</p>
+									language of the specified voice. To list information about all available voices, use the <a href="#listvoices">List voices</a>
+								method.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice">Listing a specific
 								voice</a>.</p>
 								<a href="#important-voice-updates-for-ibm-cloud" id="important-voice-updates-for-ibm-cloud" style="color: inherit; text-decoration: none;">
@@ -1740,8 +1740,7 @@
 														</td>
 														<td></td>
 														<td>The voice for which information is to be returned. For more information about specifying a voice, see
-															**Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch,
-														Australian English, and Korean languages and voices are supported only for IBM Cloud.</td>
+														**Important voice updates for IBM Cloud** in the method description.</td>
 													</tr>
 													<!-- Print out all optional parameters-->
 													<tr>
@@ -1778,7 +1777,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1062">text-to-speech/v1-generated.ts:1062</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1072">text-to-speech/v1-generated.ts:1072</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1860,7 +1859,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L570">text-to-speech/v1-generated.ts:570</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L580">text-to-speech/v1-generated.ts:580</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1869,8 +1868,8 @@
 								</div>
 								<p>Lists metadata such as the name and description for all custom models that are owned by an instance of the service.
 									Specify a language to list the custom models for that language only. To see the words and prompts in addition to
-									the metadata for a specific custom model, use the <strong>Get a custom model</strong> method. You must use credentials for the
-								instance of the service that owns a model to list information about it.</p>
+									the metadata for a specific custom model, use the <a href="#getcustommodel">Get a custom model</a> method. You must use
+								credentials for the instance of the service that owns a model to list information about it.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll">Querying all custom
 								models</a>.</p>
 							</div>
@@ -1941,7 +1940,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1185">text-to-speech/v1-generated.ts:1185</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1195">text-to-speech/v1-generated.ts:1195</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1951,9 +1950,9 @@
 								<p>Lists information about all custom prompts that are defined for a custom model. The information includes the prompt
 									ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
 									the instance of the service that owns the custom model. The same information about all of the prompts for a custom
-									model is also provided by the <strong>Get a custom model</strong> method. That method provides complete details about a
-									specified custom model, including its language, owner, custom words, and more. Custom prompts are supported only
-								for use with US English custom models and voices.</p>
+									model is also provided by the <a href="#getcustommodel">Get a custom model</a> method. That method provides complete details
+									about a specified custom model, including its language, owner, custom words, and more. Custom prompts are supported
+								only for use with US English custom models and voices.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list">Listing custom
 								prompts</a>.</p>
 							</div>
@@ -2021,7 +2020,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L1514">text-to-speech/v1-generated.ts:1514</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L1525">text-to-speech/v1-generated.ts:1525</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2092,7 +2091,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L111">text-to-speech/v1-generated.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L112">text-to-speech/v1-generated.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2101,7 +2100,7 @@
 								</div>
 								<p>Lists all voices available for use with the service. The information includes the name, language, gender, and other
 									details about the voice. The ordering of the list of voices can change from call to call; do not rely on an
-								alphabetized or static list of voices. To see information about a specific voice, use the <strong>Get a voice</strong> method.</p>
+								alphabetized or static list of voices. To see information about a specific voice, use the <a href="#getvoice">Get a voice</a>.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices">Listing all available
 								voices</a>.</p>
 							</div>
@@ -2162,7 +2161,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L912">text-to-speech/v1-generated.ts:912</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L922">text-to-speech/v1-generated.ts:922</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2331,7 +2330,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L322">text-to-speech/v1-generated.ts:322</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L328">text-to-speech/v1-generated.ts:328</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2481,8 +2480,7 @@
 														</td>
 														<td>Optional</td>
 														<td>The voice to use for synthesis. For more information about specifying a voice, see **Important voice updates
-															for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and
-														Korean languages and voices are supported only for IBM Cloud.</td>
+														for IBM Cloud** in the method description.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -2504,7 +2502,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/text-to-speech/v1-generated.ts#L642">text-to-speech/v1-generated.ts:642</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/text-to-speech/v1-generated.ts#L652">text-to-speech/v1-generated.ts:652</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

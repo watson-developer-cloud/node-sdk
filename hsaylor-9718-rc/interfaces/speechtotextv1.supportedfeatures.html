@@ -106,7 +106,7 @@
 					<div class="tsd-signature tsd-kind-icon">custom_<wbr>language_<wbr>model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L6129">speech-to-text/v1-generated.ts:6129</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L6237">speech-to-text/v1-generated.ts:6237</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -122,7 +122,7 @@
 					<div class="tsd-signature tsd-kind-icon">low_<wbr>latency<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L6141">speech-to-text/v1-generated.ts:6141</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L6255">speech-to-text/v1-generated.ts:6255</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,16 +139,25 @@
 					<div class="tsd-signature tsd-kind-icon">speaker_<wbr>labels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29b9b4e/speech-to-text/v1-generated.ts#L6136">speech-to-text/v1-generated.ts:6136</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/16420fc/speech-to-text/v1-generated.ts#L6250">speech-to-text/v1-generated.ts:6250</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Indicates whether the <code>speaker_labels</code> parameter can be used with the language model.</p>
 						</div>
-						<p> <strong>Note:</strong> The field returns <code>true</code> for all models. However, speaker labels are supported only for US English,
-							Australian English, German, Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English
-						(narrowband model only). Speaker labels are not supported for any other models.</p>
+						<p> <strong>Note:</strong> The field returns <code>true</code> for all models. However, speaker labels are supported as beta functionality
+						only for the following languages and models:</p>
+						<ul>
+							<li><p>For previous-generation models, the parameter can be used for Australian English, US English, German,
+									Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model)
+								transcription only.</p>
+							</li>
+							<li><p>For next-generation models, the parameter can be used for English (Australian, Indian, UK, and US), German,
+								Japanese, Korean, and Spanish transcription only.</p>
+								<p>Speaker labels are not supported for any other models.</p>
+							</li>
+						</ul>
 					</div>
 				</section>
 			</section>
