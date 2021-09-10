@@ -16,7 +16,6 @@
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
-const { CreateProjectConstants } = require('../../dist/discovery/v2');
 
 const { NoAuthAuthenticator, unitTestUtils } = core;
 

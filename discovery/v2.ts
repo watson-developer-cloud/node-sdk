@@ -877,8 +877,8 @@ class DiscoveryV2 extends BaseService {
    *   * The user must provide document content, metadata, or both. If the request is missing both document content and
    * metadata, it is rejected.
    *
-   *   * The user can set the **Content-Type** parameter on the **file** part to indicate the media type of the
-   * document. If the **Content-Type** parameter is missing or is one of the generic media types (for example,
+   *   * You can set the **Content-Type** parameter on the **file** part to indicate the media type of the document. If
+   * the **Content-Type** parameter is missing or is one of the generic media types (for example,
    * `application/octet-stream`), then the service attempts to automatically detect the document's media type.
    *
    *   * The following field names are reserved and are filtered out if present after normalization: `id`, `score`,
@@ -891,11 +891,12 @@ class DiscoveryV2 extends BaseService {
    *   If the document is uploaded to a collection that shares its data with another collection, the
    * **X-Watson-Discovery-Force** header must be set to `true`.
    *
-   * **Note:** Documents can be added with a specific **document_id** by using the
-   * **_/v2/projects/{project_id}/collections/{collection_id}/documents** method.
+   * **Note:** You can assign an ID to a document that you add by appending the ID to the endpoint
+   * (`/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}`). If a document already exists
+   * with the specified ID, it is replaced.
    *
-   * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
-   * modify a collection that connects to an external source such as Microsoft SharePoint.
+   * **Note:** This operation works with a file upload collection. It cannot be used to modify a collection that crawls
+   * an external data source.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -1538,11 +1539,11 @@ class DiscoveryV2 extends BaseService {
   /**
    * Analyze a Document.
    *
-   * Process a document using the specified collection's settings and return it for realtime use.
+   * Process a document and return it for realtime use. Supports JSON files only.
    *
-   * **Note:** Documents processed using this method are not added to the specified collection.
+   * The document is processed according to the collection's configuration settings but is not stored in the collection.
    *
-   * **Note:** This method is only supported on IBM Cloud Pak for Data instances of Discovery.
+   * **Note:** This method is supported on installed instances of Discovery only.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -1629,7 +1630,8 @@ class DiscoveryV2 extends BaseService {
   /**
    * List Enrichments.
    *
-   * List the enrichments available to this project.
+   * Lists the enrichments available to this project. The *Part of Speech* and *Sentiment of Phrases* enrichments might
+   * be listed, but are reserved for internal use only.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -2004,8 +2006,8 @@ class DiscoveryV2 extends BaseService {
    * The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom*
    * project.
    *
-   * The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data deployments
-   * only.
+   * The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
+   * installed deployments only.
    * @param {DefaultQueryParams} [params.defaultQueryParameters] - Default query parameters for this project.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
@@ -2814,8 +2816,8 @@ namespace DiscoveryV2 {
      *  The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a
      *  *Custom* project.
      *
-     *  The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data
-     *  deployments only.
+     *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
+     *  installed deployments only.
      */
     type: CreateProjectConstants.Type | string;
     /** Default query parameters for this project. */
@@ -2825,7 +2827,7 @@ namespace DiscoveryV2 {
 
   /** Constants for the `createProject` operation. */
   export namespace CreateProjectConstants {
-    /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data deployments only. */
+    /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. */
     export enum Type {
       DOCUMENT_RETRIEVAL = 'document_retrieval',
       CONVERSATIONAL_SEARCH = 'conversational_search',
@@ -2913,7 +2915,11 @@ namespace DiscoveryV2 {
   export interface CollectionEnrichment {
     /** The unique identifier of this enrichment. */
     enrichment_id?: string;
-    /** An array of field names that the enrichment is applied to. */
+    /** An array of field names that the enrichment is applied to.
+     *
+     *  If you apply an enrichment to a field from a JSON file, the data is converted to an array automatically, even if
+     *  the field contains a single value.
+     */
     fields?: string[];
   }
 
@@ -3187,8 +3193,8 @@ namespace DiscoveryV2 {
      *  The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a
      *  *Custom* project.
      *
-     *  The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data
-     *  deployments only.
+     *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
+     *  installed deployments only.
      */
     type?: string;
     /** Relevancy training status information for this project. */
@@ -3210,8 +3216,8 @@ namespace DiscoveryV2 {
      *  The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a
      *  *Custom* project.
      *
-     *  The `content_mining` and `content_intelligence` types are available with Premium and Cloud Pak for Data
-     *  deployments only.
+     *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
+     *  installed deployments only.
      */
     type?: string;
     /** Relevancy training status information for this project. */
@@ -3317,8 +3323,7 @@ namespace DiscoveryV2 {
      *  is set to `false`, then the passage search results are reordered in decreasing order of the highest confidence
      *  answer for each document and passage.
      *
-     *  The **find_answers** parameter is **beta** functionality available only on managed instances and should not be
-     *  used in a production environment. This parameter is not available on installed instances of Discovery.
+     *  The **find_answers** parameter is available only on managed instances of Discovery.
      */
     find_answers?: boolean;
     /** The number of `answer` objects to return per passage if the **find_answers** parmeter is specified as
@@ -3811,7 +3816,7 @@ namespace DiscoveryV2 {
   export interface QueryHistogramAggregation extends QueryAggregation {
     /** The numeric field name used to create the histogram. */
     field: string;
-    /** The size of the sections the results are split into. */
+    /** The size of the sections that the results are split into. */
     interval: number;
     /** Identifier specified in the query request of this aggregation. */
     name?: string;

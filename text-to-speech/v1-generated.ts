@@ -99,7 +99,8 @@ class TextToSpeechV1 extends BaseService {
    *
    * Lists all voices available for use with the service. The information includes the name, language, gender, and other
    * details about the voice. The ordering of the list of voices can change from call to call; do not rely on an
-   * alphabetized or static list of voices. To see information about a specific voice, use the **Get a voice** method.
+   * alphabetized or static list of voices. To see information about a specific voice, use the [Get a voice](#getvoice).
+   *
    *
    * **See also:** [Listing all available
    * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices).
@@ -144,7 +145,8 @@ class TextToSpeechV1 extends BaseService {
    *
    * Gets information about the specified voice. The information includes the name, language, gender, and other details
    * about the voice. Specify a customization ID to obtain information for a custom model that is defined for the
-   * language of the specified voice. To list information about all available voices, use the **List voices** method.
+   * language of the specified voice. To list information about all available voices, use the [List voices](#listvoices)
+   * method.
    *
    * **See also:** [Listing a specific
    * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice).
@@ -169,8 +171,10 @@ class TextToSpeechV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned. For more information about
-   * specifying a voice, see **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The
-   * Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only for IBM Cloud.
+   * specifying a voice, see **Important voice updates for IBM Cloud** in the method description.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
    * @param {string} [params.customizationId] - The customization ID (GUID) of a custom model for which information is
    * to be returned. You must make the request with credentials for the instance of the service that owns the custom
    * model. Omit the parameter to see information about the specified voice with no customization.
@@ -307,8 +311,10 @@ class TextToSpeechV1 extends BaseService {
    * the `accept` parameter to specify the audio format. For more information about specifying an audio format, see
    * **Audio formats (accept types)** in the method description.
    * @param {string} [params.voice] - The voice to use for synthesis. For more information about specifying a voice, see
-   * **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch,
-   * Australian English, and Korean languages and voices are supported only for IBM Cloud.
+   * **Important voice updates for IBM Cloud** in the method description.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
    *
    * **See also:** See also [Using languages and
    * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices).
@@ -404,8 +410,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.text - The word for which the pronunciation is requested.
    * @param {string} [params.voice] - A voice that specifies the language in which the pronunciation is to be returned.
    * All voices for the same language (for example, `en-US`) return the same translation. For more information about
-   * specifying a voice, see **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The
-   * Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only for IBM Cloud.
+   * specifying a voice, see **Important voice updates for IBM Cloud** in the method description.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
    * @param {string} [params.format] - The phoneme format in which to return the pronunciation. The Arabic, Chinese,
    * Dutch, Australian English, and Korean languages support only IPA. Omit the parameter to obtain the pronunciation in
    * the default format.
@@ -498,8 +506,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.language] - The language of the new custom model. You create a custom model for a specific
    * language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the
    * parameter to use the the default language, `en-US`. **Note:** The `ar-AR` language identifier cannot be used to
-   * create a custom model. Use the `ar-MS` identifier instead. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian
-   * English, and Korean languages and voices are supported only for IBM Cloud.
+   * create a custom model. Use the `ar-MS` identifier instead.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
    * @param {string} [params.description] - A description of the new custom model. Specifying a description is
    * recommended.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -555,8 +565,8 @@ class TextToSpeechV1 extends BaseService {
    *
    * Lists metadata such as the name and description for all custom models that are owned by an instance of the service.
    * Specify a language to list the custom models for that language only. To see the words and prompts in addition to
-   * the metadata for a specific custom model, use the **Get a custom model** method. You must use credentials for the
-   * instance of the service that owns a model to list information about it.
+   * the metadata for a specific custom model, use the [Get a custom model](#getcustommodel) method. You must use
+   * credentials for the instance of the service that owns a model to list information about it.
    *
    * **See also:** [Querying all custom
    * models](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll).
@@ -694,8 +704,8 @@ class TextToSpeechV1 extends BaseService {
    *
    * Gets all information about a specified custom model. In addition to metadata such as the name and description of
    * the custom model, the output includes the words and their translations that are defined for the model, as well as
-   * any prompts that are defined for the model. To see just the metadata for a model, use the **List custom models**
-   * method.
+   * any prompts that are defined for the model. To see just the metadata for a model, use the [List custom
+   * models](#listcustommodels) method.
    *
    * **See also:** [Querying a custom
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery).
@@ -836,12 +846,12 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom model. You must make the request
    * with credentials for the instance of the service that owns the custom model.
-   * @param {Word[]} params.words - The **Add custom words** method accepts an array of `Word` objects. Each object
-   * provides a word that is to be added or updated for the custom model and the word's translation.
+   * @param {Word[]} params.words - The [Add custom words](#addwords) method accepts an array of `Word` objects. Each
+   * object provides a word that is to be added or updated for the custom model and the word's translation.
    *
-   * The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation
-   * from the custom model. The words are listed in alphabetical order, with uppercase letters listed before lowercase
-   * letters. The array is empty if the custom model contains no words.
+   * The [List custom words](#listwords) method returns an array of `Word` objects. Each object shows a word and its
+   * translation from the custom model. The words are listed in alphabetical order, with uppercase letters listed before
+   * lowercase letters. The array is empty if the custom model contains no words.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
@@ -1169,9 +1179,9 @@ class TextToSpeechV1 extends BaseService {
    * Lists information about all custom prompts that are defined for a custom model. The information includes the prompt
    * ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
    * the instance of the service that owns the custom model. The same information about all of the prompts for a custom
-   * model is also provided by the **Get a custom model** method. That method provides complete details about a
-   * specified custom model, including its language, owner, custom words, and more. Custom prompts are supported only
-   * for use with US English custom models and voices.
+   * model is also provided by the [Get a custom model](#getcustommodel) method. That method provides complete details
+   * about a specified custom model, including its language, owner, custom words, and more. Custom prompts are supported
+   * only for use with US English custom models and voices.
    *
    * **See also:** [Listing custom
    * prompts](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list).
@@ -1250,9 +1260,10 @@ class TextToSpeechV1 extends BaseService {
    * it takes 20 seconds to process a 20-second prompt).
    *
    * For shorter prompts, you can wait for a reasonable amount of time and then check the status of the prompt with the
-   * **Get a custom prompt** method. For longer prompts, consider using that method to poll the service every few
-   * seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it is in the
-   * `processing` or `failed` state. Only prompts that are in the `available` state can be used for speech synthesis.
+   * [Get a custom prompt](#getcustomprompt) method. For longer prompts, consider using that method to poll the service
+   * every few seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it
+   * is in the `processing` or `failed` state. Only prompts that are in the `available` state can be used for speech
+   * synthesis.
    *
    * When it processes a request, the service attempts to align the text and the audio that are provided for the prompt.
    * The text that is passed with a prompt must match the spoken audio as closely as possible. Optimally, the text and
@@ -1869,8 +1880,10 @@ namespace TextToSpeechV1 {
   /** Parameters for the `getVoice` operation. */
   export interface GetVoiceParams {
     /** The voice for which information is to be returned. For more information about specifying a voice, see
-     *  **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch,
-     *  Australian English, and Korean languages and voices are supported only for IBM Cloud.
+     *  **Important voice updates for IBM Cloud** in the method description.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
      */
     voice: GetVoiceConstants.Voice | string;
     /** The customization ID (GUID) of a custom model for which information is to be returned. You must make the
@@ -1949,8 +1962,10 @@ namespace TextToSpeechV1 {
      */
     accept?: SynthesizeConstants.Accept | string;
     /** The voice to use for synthesis. For more information about specifying a voice, see **Important voice updates
-     *  for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and
-     *  Korean languages and voices are supported only for IBM Cloud.
+     *  for IBM Cloud** in the method description.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
      *
      *  **See also:** See also [Using languages and
      *  voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices).
@@ -2045,8 +2060,10 @@ namespace TextToSpeechV1 {
     text: string;
     /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
      *  language (for example, `en-US`) return the same translation. For more information about specifying a voice, see
-     *  **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch,
-     *  Australian English, and Korean languages and voices are supported only for IBM Cloud.
+     *  **Important voice updates for IBM Cloud** in the method description.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
      */
     voice?: GetPronunciationConstants.Voice | string;
     /** The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, Australian English, and
@@ -2133,8 +2150,10 @@ namespace TextToSpeechV1 {
     /** The language of the new custom model. You create a custom model for a specific language, not for a specific
      *  voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the
      *  default language, `en-US`. **Note:** The `ar-AR` language identifier cannot be used to create a custom model.
-     *  Use the `ar-MS` identifier instead. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean
-     *  languages and voices are supported only for IBM Cloud.
+     *  Use the `ar-MS` identifier instead.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
      */
     language?: CreateCustomModelConstants.Language | string;
     /** A description of the new custom model. Specifying a description is recommended. */
@@ -2239,10 +2258,10 @@ namespace TextToSpeechV1 {
      *  of the service that owns the custom model.
      */
     customizationId: string;
-    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to
-     *  be added or updated for the custom model and the word's translation.
+    /** The [Add custom words](#addwords) method accepts an array of `Word` objects. Each object provides a word
+     *  that is to be added or updated for the custom model and the word's translation.
      *
-     *  The **List custom words** method returns an array of `Word` objects. Each object shows a word and its
+     *  The [List custom words](#listwords) method returns an array of `Word` objects. Each object shows a word and its
      *  translation from the custom model. The words are listed in alphabetical order, with uppercase letters listed
      *  before lowercase letters. The array is empty if the custom model contains no words.
      */
@@ -2447,8 +2466,8 @@ namespace TextToSpeechV1 {
 
   /** Information about an existing custom model. */
   export interface CustomModel {
-    /** The customization ID (GUID) of the custom model. The **Create a custom model** method returns only this
-     *  field. It does not not return the other fields of this object.
+    /** The customization ID (GUID) of the custom model. The [Create a custom model](#createcustommodel) method
+     *  returns only this field. It does not not return the other fields of this object.
      */
     customization_id: string;
     /** The name of the custom model. */
@@ -2470,12 +2489,13 @@ namespace TextToSpeechV1 {
     description?: string;
     /** An array of `Word` objects that lists the words and their translations from the custom model. The words are
      *  listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if no
-     *  words are defined for the custom model. This field is returned only by the **Get a custom model** method.
+     *  words are defined for the custom model. This field is returned only by the [Get a custom model](#getcustommodel)
+     *  method.
      */
     words?: Word[];
     /** An array of `Prompt` objects that provides information about the prompts that are defined for the specified
      *  custom model. The array is empty if no prompts are defined for the custom model. This field is returned only by
-     *  the **Get a custom model** method.
+     *  the [Get a custom model](#getcustommodel) method.
      */
     prompts?: Prompt[];
   }
@@ -2652,8 +2672,8 @@ namespace TextToSpeechV1 {
     customizable: boolean;
     /** Additional service features that are supported with the voice. */
     supported_features: SupportedFeatures;
-    /** Returns information about a specified custom model. This field is returned only by the **Get a voice**
-     *  method and only when you specify the customization ID of a custom model.
+    /** Returns information about a specified custom model. This field is returned only by the [Get a
+     *  voice](#getvoice) method and only when you specify the customization ID of a custom model.
      */
     customization?: CustomModel;
   }
@@ -2683,12 +2703,12 @@ namespace TextToSpeechV1 {
     part_of_speech?: string;
   }
 
-  /** For the **Add custom words** method, one or more words that are to be added or updated for the custom model and the translation for each specified word. For the **List custom words** method, the words and their translations from the custom model. */
+  /** For the [Add custom words](#addwords) method, one or more words that are to be added or updated for the custom model and the translation for each specified word. For the [List custom words](#listwords) method, the words and their translations from the custom model. */
   export interface Words {
-    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to
-     *  be added or updated for the custom model and the word's translation.
+    /** The [Add custom words](#addwords) method accepts an array of `Word` objects. Each object provides a word
+     *  that is to be added or updated for the custom model and the word's translation.
      *
-     *  The **List custom words** method returns an array of `Word` objects. Each object shows a word and its
+     *  The [List custom words](#listwords) method returns an array of `Word` objects. Each object shows a word and its
      *  translation from the custom model. The words are listed in alphabetical order, with uppercase letters listed
      *  before lowercase letters. The array is empty if the custom model contains no words.
      */

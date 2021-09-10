@@ -68,7 +68,7 @@ class CompareComplyV1 extends BaseService {
   constructor(options: UserOptions) {
     console.warn(`On 30 November 2021, Compare and Comply will no longer be available. 
     For more information, see https://github.com/watson-developer-cloud/node-sdk#compare-and-comply-deprecation`);
-
+    
     options = options || {};
 
     const requiredParams = ['version'];

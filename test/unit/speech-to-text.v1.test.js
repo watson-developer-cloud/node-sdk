@@ -852,7 +852,7 @@ describe('SpeechToTextV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createLanguageModel
         const name = 'testString';
-        const baseModelName = 'de-DE_BroadbandModel';
+        const baseModelName = 'ar-MS_Telephony';
         const dialect = 'testString';
         const description = 'testString';
         const params = {
@@ -885,7 +885,7 @@ describe('SpeechToTextV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const name = 'testString';
-        const baseModelName = 'de-DE_BroadbandModel';
+        const baseModelName = 'ar-MS_Telephony';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {

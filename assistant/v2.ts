@@ -1026,12 +1026,27 @@ namespace AssistantV2 {
      *  This can be useful for simulating past or future times for testing purposes, or when analyzing documents such as
      *  news articles.
      *
-     *  This value must be a UTC time value formatted according to ISO 8601 (for example, `2019-06-26T12:00:00Z` for
-     *  noon on 26 June 2019.
+     *  This value must be a UTC time value formatted according to ISO 8601 (for example, `2021-06-26T12:00:00Z` for
+     *  noon UTC on 26 June 2021).
      *
      *  This property is included only if the new system entities are enabled for the skill.
      */
     reference_time?: string;
+    /** The time at which the session started. With the stateful `message` method, the start time is always present,
+     *  and is set by the service based on the time the session was created. With the stateless `message` method, the
+     *  start time is set by the service in the response to the first message, and should be returned as part of the
+     *  context with each subsequent message in the session.
+     *
+     *  This value is a UTC time value formatted according to ISO 8601 (for example, `2021-06-26T12:00:00Z` for noon UTC
+     *  on 26 June 2021).
+     */
+    session_start_time?: string;
+    /** An encoded string that represents the configuration state of the assistant at the beginning of the
+     *  conversation. If you are using the stateless `message` method, save this value and then send it in the context
+     *  of the subsequent message request to avoid disruptions if there are configuration changes during the
+     *  conversation (such as a change to a skill the assistant uses).
+     */
+    state?: string;
   }
 
   /** Contains information specific to a particular skill used by the Assistant. The property name must be the same as the name of the skill (for example, `main skill`). */
@@ -1620,6 +1635,8 @@ namespace AssistantV2 {
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
     channels?: ResponseGenericChannel[];
+    /** Descriptive text that can be used for screen readers or other situations where the image cannot be seen. */
+    alt_text?: string;
   }
 
   /** RuntimeResponseGenericRuntimeResponseTypeOption. */

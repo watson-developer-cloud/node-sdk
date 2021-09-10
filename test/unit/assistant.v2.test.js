@@ -385,6 +385,8 @@ describe('AssistantV2', () => {
         turn_count: 38,
         locale: 'en-us',
         reference_time: 'testString',
+        session_start_time: 'testString',
+        state: 'testString',
       };
 
       // MessageContextGlobal
@@ -592,6 +594,8 @@ describe('AssistantV2', () => {
         turn_count: 38,
         locale: 'en-us',
         reference_time: 'testString',
+        session_start_time: 'testString',
+        state: 'testString',
       };
 
       // MessageContextGlobalStateless
