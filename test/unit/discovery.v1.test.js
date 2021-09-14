@@ -4892,7 +4892,7 @@ describe('DiscoveryV1', () => {
 
       // StatusDetails
       const statusDetailsModel = {
-        authentication: true,
+        authenticated: true,
         error_message: 'testString',
       };
 
@@ -5075,7 +5075,7 @@ describe('DiscoveryV1', () => {
 
       // StatusDetails
       const statusDetailsModel = {
-        authentication: true,
+        authenticated: true,
         error_message: 'testString',
       };
 

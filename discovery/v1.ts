@@ -6801,8 +6801,8 @@ namespace DiscoveryV1 {
   /** Object that contains details about the status of the authentication process. */
   export interface StatusDetails {
     /** Indicates whether the credential is accepted by the target data source. */
-    authentication?: boolean;
-    /** If `authentication` is `false`, a message describes why the authentication was unsuccessful. */
+    authenticated?: boolean;
+    /** If `authenticated` is `false`, a message describes why the authentication was unsuccessful. */
     error_message?: string;
   }
 

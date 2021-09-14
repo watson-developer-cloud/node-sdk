@@ -1501,6 +1501,21 @@ namespace AssistantV2 {
      *  `<em>` tags.
      */
     highlight?: SearchResultHighlight;
+    /** An array specifying segments of text within the result that were identified as direct answers to the search
+     *  query. Currently, only the single answer with the highest confidence (if any) is returned.
+     *
+     *  **Note:** This property uses the answer finding beta feature, and is available only if the search skill is
+     *  connected to a Discovery v2 service instance.
+     */
+    answers?: SearchResultAnswer[];
+  }
+
+  /** An object specifing a segment of text that was identified as a direct answer to the search query. */
+  export interface SearchResultAnswer {
+    /** The text of the answer. */
+    text: string;
+    /** The confidence score for the answer, as returned by the Discovery service. */
+    confidence: number;
   }
 
   /** An object containing segments of text from search results with query-matching text highlighted using HTML `<em>` tags. */
