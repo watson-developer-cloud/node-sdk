@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,11 +34,14 @@ import { getSdkHeaders } from '../lib/common';
  * identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and
  * unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual
  * filtering of results.
+ *
+ * API Version: 1.0
+ * See: https://cloud.ibm.com/docs/discovery
  */
 
 class DiscoveryV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.discovery.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'discovery';
 
   /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
@@ -97,8 +105,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Environment>>}
    */
-  public createEnvironment(params: DiscoveryV1.CreateEnvironmentParams): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
-    const _params = Object.assign({}, params);
+  public createEnvironment(
+    params: DiscoveryV1.CreateEnvironmentParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
+    const _params = { ...params };
     const requiredParams = ['name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -109,14 +119,18 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'size': _params.size
+      'size': _params.size,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createEnvironment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createEnvironment'
+    );
 
     const parameters = {
       options: {
@@ -126,15 +140,20 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List environments.
@@ -146,15 +165,21 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.ListEnvironmentsResponse>>}
    */
-  public listEnvironments(params?: DiscoveryV1.ListEnvironmentsParams): Promise<DiscoveryV1.Response<DiscoveryV1.ListEnvironmentsResponse>> {
-    const _params = Object.assign({}, params);
+  public listEnvironments(
+    params?: DiscoveryV1.ListEnvironmentsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.ListEnvironmentsResponse>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
-      'name': _params.name
+      'name': _params.name,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listEnvironments');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listEnvironments'
+    );
 
     const parameters = {
       options: {
@@ -163,14 +188,19 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get environment info.
@@ -180,8 +210,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Environment>>}
    */
-  public getEnvironment(params: DiscoveryV1.GetEnvironmentParams): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
-    const _params = Object.assign({}, params);
+  public getEnvironment(
+    params: DiscoveryV1.GetEnvironmentParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -190,14 +222,18 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getEnvironment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getEnvironment'
+    );
 
     const parameters = {
       options: {
@@ -207,14 +243,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update an environment.
@@ -231,8 +272,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Environment>>}
    */
-  public updateEnvironment(params: DiscoveryV1.UpdateEnvironmentParams): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
-    const _params = Object.assign({}, params);
+  public updateEnvironment(
+    params: DiscoveryV1.UpdateEnvironmentParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -243,18 +286,22 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'size': _params.size
+      'size': _params.size,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateEnvironment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateEnvironment'
+    );
 
     const parameters = {
       options: {
@@ -265,15 +312,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete environment.
@@ -283,8 +335,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DeleteEnvironmentResponse>>}
    */
-  public deleteEnvironment(params: DiscoveryV1.DeleteEnvironmentParams): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteEnvironmentResponse>> {
-    const _params = Object.assign({}, params);
+  public deleteEnvironment(
+    params: DiscoveryV1.DeleteEnvironmentParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteEnvironmentResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -293,14 +347,18 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteEnvironment');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteEnvironment'
+    );
 
     const parameters = {
       options: {
@@ -310,14 +368,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List fields across collections.
@@ -330,8 +393,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>>}
    */
-  public listFields(params: DiscoveryV1.ListFieldsParams): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
-    const _params = Object.assign({}, params);
+  public listFields(
+    params: DiscoveryV1.ListFieldsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionIds'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -341,14 +406,18 @@ class DiscoveryV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'collection_ids': _params.collectionIds
+      'collection_ids': _params.collectionIds,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listFields');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listFields'
+    );
 
     const parameters = {
       options: {
@@ -358,15 +427,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * configurations
    ************************/
@@ -396,8 +469,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>>}
    */
-  public createConfiguration(params: DiscoveryV1.CreateConfigurationParams): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
-    const _params = Object.assign({}, params);
+  public createConfiguration(
+    params: DiscoveryV1.CreateConfigurationParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -411,18 +486,22 @@ class DiscoveryV1 extends BaseService {
       'conversions': _params.conversions,
       'enrichments': _params.enrichments,
       'normalizations': _params.normalizations,
-      'source': _params.source
+      'source': _params.source,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createConfiguration');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createConfiguration'
+    );
 
     const parameters = {
       options: {
@@ -433,15 +512,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List configurations.
@@ -454,8 +538,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.ListConfigurationsResponse>>}
    */
-  public listConfigurations(params: DiscoveryV1.ListConfigurationsParams): Promise<DiscoveryV1.Response<DiscoveryV1.ListConfigurationsResponse>> {
-    const _params = Object.assign({}, params);
+  public listConfigurations(
+    params: DiscoveryV1.ListConfigurationsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.ListConfigurationsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -465,14 +551,18 @@ class DiscoveryV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'name': _params.name
+      'name': _params.name,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listConfigurations');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listConfigurations'
+    );
 
     const parameters = {
       options: {
@@ -482,14 +572,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get configuration details.
@@ -500,8 +595,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>>}
    */
-  public getConfiguration(params: DiscoveryV1.GetConfigurationParams): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
-    const _params = Object.assign({}, params);
+  public getConfiguration(
+    params: DiscoveryV1.GetConfigurationParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'configurationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -510,15 +607,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'configuration_id': _params.configurationId
+      'configuration_id': _params.configurationId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getConfiguration');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getConfiguration'
+    );
 
     const parameters = {
       options: {
@@ -528,14 +629,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a configuration.
@@ -561,8 +667,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>>}
    */
-  public updateConfiguration(params: DiscoveryV1.UpdateConfigurationParams): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
-    const _params = Object.assign({}, params);
+  public updateConfiguration(
+    params: DiscoveryV1.UpdateConfigurationParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'configurationId', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -576,19 +684,23 @@ class DiscoveryV1 extends BaseService {
       'conversions': _params.conversions,
       'enrichments': _params.enrichments,
       'normalizations': _params.normalizations,
-      'source': _params.source
+      'source': _params.source,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'configuration_id': _params.configurationId
+      'configuration_id': _params.configurationId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateConfiguration');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateConfiguration'
+    );
 
     const parameters = {
       options: {
@@ -599,15 +711,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a configuration.
@@ -623,8 +740,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DeleteConfigurationResponse>>}
    */
-  public deleteConfiguration(params: DiscoveryV1.DeleteConfigurationParams): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteConfigurationResponse>> {
-    const _params = Object.assign({}, params);
+  public deleteConfiguration(
+    params: DiscoveryV1.DeleteConfigurationParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteConfigurationResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'configurationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -633,15 +752,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'configuration_id': _params.configurationId
+      'configuration_id': _params.configurationId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteConfiguration');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteConfiguration'
+    );
 
     const parameters = {
       options: {
@@ -651,15 +774,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * collections
    ************************/
@@ -677,8 +804,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Collection>>}
    */
-  public createCollection(params: DiscoveryV1.CreateCollectionParams): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
-    const _params = Object.assign({}, params);
+  public createCollection(
+    params: DiscoveryV1.CreateCollectionParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -690,18 +819,22 @@ class DiscoveryV1 extends BaseService {
       'name': _params.name,
       'description': _params.description,
       'configuration_id': _params.configurationId,
-      'language': _params.language
+      'language': _params.language,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createCollection'
+    );
 
     const parameters = {
       options: {
@@ -712,15 +845,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List collections.
@@ -733,8 +871,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionsResponse>>}
    */
-  public listCollections(params: DiscoveryV1.ListCollectionsParams): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionsResponse>> {
-    const _params = Object.assign({}, params);
+  public listCollections(
+    params: DiscoveryV1.ListCollectionsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -744,14 +884,18 @@ class DiscoveryV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'name': _params.name
+      'name': _params.name,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listCollections');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCollections'
+    );
 
     const parameters = {
       options: {
@@ -761,14 +905,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get collection details.
@@ -779,8 +928,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Collection>>}
    */
-  public getCollection(params: DiscoveryV1.GetCollectionParams): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
-    const _params = Object.assign({}, params);
+  public getCollection(
+    params: DiscoveryV1.GetCollectionParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -789,15 +940,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCollection'
+    );
 
     const parameters = {
       options: {
@@ -807,14 +962,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a collection.
@@ -828,8 +988,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Collection>>}
    */
-  public updateCollection(params: DiscoveryV1.UpdateCollectionParams): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
-    const _params = Object.assign({}, params);
+  public updateCollection(
+    params: DiscoveryV1.UpdateCollectionParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -840,19 +1002,23 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'configuration_id': _params.configurationId
+      'configuration_id': _params.configurationId,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateCollection'
+    );
 
     const parameters = {
       options: {
@@ -863,15 +1029,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a collection.
@@ -882,8 +1053,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCollectionResponse>>}
    */
-  public deleteCollection(params: DiscoveryV1.DeleteCollectionParams): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCollectionResponse>> {
-    const _params = Object.assign({}, params);
+  public deleteCollection(
+    params: DiscoveryV1.DeleteCollectionParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCollectionResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -892,15 +1065,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCollection');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCollection'
+    );
 
     const parameters = {
       options: {
@@ -910,14 +1087,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List collection fields.
@@ -930,8 +1112,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>>}
    */
-  public listCollectionFields(params: DiscoveryV1.ListCollectionFieldsParams): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
-    const _params = Object.assign({}, params);
+  public listCollectionFields(
+    params: DiscoveryV1.ListCollectionFieldsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -940,15 +1124,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listCollectionFields');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCollectionFields'
+    );
 
     const parameters = {
       options: {
@@ -958,15 +1146,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * queryModifications
    ************************/
@@ -983,8 +1175,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>>}
    */
-  public listExpansions(params: DiscoveryV1.ListExpansionsParams): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
-    const _params = Object.assign({}, params);
+  public listExpansions(
+    params: DiscoveryV1.ListExpansionsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -993,15 +1187,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listExpansions');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listExpansions'
+    );
 
     const parameters = {
       options: {
@@ -1011,14 +1209,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create or update expansion list.
@@ -1045,8 +1248,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>>}
    */
-  public createExpansions(params: DiscoveryV1.CreateExpansionsParams): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
-    const _params = Object.assign({}, params);
+  public createExpansions(
+    params: DiscoveryV1.CreateExpansionsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'expansions'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1055,19 +1260,23 @@ class DiscoveryV1 extends BaseService {
     }
 
     const body = {
-      'expansions': _params.expansions
+      'expansions': _params.expansions,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createExpansions');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createExpansions'
+    );
 
     const parameters = {
       options: {
@@ -1078,15 +1287,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete the expansion list.
@@ -1100,8 +1314,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
    */
-  public deleteExpansions(params: DiscoveryV1.DeleteExpansionsParams): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteExpansions(
+    params: DiscoveryV1.DeleteExpansionsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1110,15 +1326,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteExpansions');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteExpansions'
+    );
 
     const parameters = {
       options: {
@@ -1128,13 +1348,18 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get tokenization dictionary status.
@@ -1147,8 +1372,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>>}
    */
-  public getTokenizationDictionaryStatus(params: DiscoveryV1.GetTokenizationDictionaryStatusParams): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
-    const _params = Object.assign({}, params);
+  public getTokenizationDictionaryStatus(
+    params: DiscoveryV1.GetTokenizationDictionaryStatusParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1157,15 +1384,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getTokenizationDictionaryStatus');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getTokenizationDictionaryStatus'
+    );
 
     const parameters = {
       options: {
@@ -1175,14 +1406,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create tokenization dictionary.
@@ -1198,8 +1434,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>>}
    */
-  public createTokenizationDictionary(params: DiscoveryV1.CreateTokenizationDictionaryParams): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
-    const _params = Object.assign({}, params);
+  public createTokenizationDictionary(
+    params: DiscoveryV1.CreateTokenizationDictionaryParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1208,19 +1446,23 @@ class DiscoveryV1 extends BaseService {
     }
 
     const body = {
-      'tokenization_rules': _params.tokenizationRules
+      'tokenization_rules': _params.tokenizationRules,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createTokenizationDictionary');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createTokenizationDictionary'
+    );
 
     const parameters = {
       options: {
@@ -1231,15 +1473,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete tokenization dictionary.
@@ -1252,8 +1499,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
    */
-  public deleteTokenizationDictionary(params: DiscoveryV1.DeleteTokenizationDictionaryParams): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteTokenizationDictionary(
+    params: DiscoveryV1.DeleteTokenizationDictionaryParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1262,15 +1511,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTokenizationDictionary');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteTokenizationDictionary'
+    );
 
     const parameters = {
       options: {
@@ -1280,13 +1533,18 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get stopword list status.
@@ -1299,8 +1557,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>>}
    */
-  public getStopwordListStatus(params: DiscoveryV1.GetStopwordListStatusParams): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
-    const _params = Object.assign({}, params);
+  public getStopwordListStatus(
+    params: DiscoveryV1.GetStopwordListStatusParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1309,15 +1569,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getStopwordListStatus');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getStopwordListStatus'
+    );
 
     const parameters = {
       options: {
@@ -1327,14 +1591,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create stopword list.
@@ -1344,13 +1613,15 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream|Buffer} params.stopwordFile - The content of the stopword list to ingest.
+   * @param {NodeJS.ReadableStream | Buffer} params.stopwordFile - The content of the stopword list to ingest.
    * @param {string} params.stopwordFilename - The filename for stopwordFile.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>>}
    */
-  public createStopwordList(params: DiscoveryV1.CreateStopwordListParams): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
-    const _params = Object.assign({}, params);
+  public createStopwordList(
+    params: DiscoveryV1.CreateStopwordListParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1362,20 +1633,24 @@ class DiscoveryV1 extends BaseService {
       'stopword_file': {
         data: _params.stopwordFile,
         filename: _params.stopwordFilename,
-        contentType: 'application/octet-stream'
-      }
+        contentType: 'application/octet-stream',
+      },
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createStopwordList');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createStopwordList'
+    );
 
     const parameters = {
       options: {
@@ -1386,15 +1661,20 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a custom stopword list.
@@ -1408,8 +1688,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
    */
-  public deleteStopwordList(params: DiscoveryV1.DeleteStopwordListParams): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteStopwordList(
+    params: DiscoveryV1.DeleteStopwordListParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1418,15 +1700,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteStopwordList');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteStopwordList'
+    );
 
     const parameters = {
       options: {
@@ -1436,14 +1722,18 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * documents
    ************************/
@@ -1477,9 +1767,9 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
-   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * configuration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. The maximum
+   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
+   * testing a configuration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -1490,8 +1780,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>>}
    */
-  public addDocument(params: DiscoveryV1.AddDocumentParams): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
-    const _params = Object.assign({}, params);
+  public addDocument(
+    params: DiscoveryV1.AddDocumentParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1503,21 +1795,25 @@ class DiscoveryV1 extends BaseService {
       'file': {
         data: _params.file,
         filename: _params.filename,
-        contentType: _params.fileContentType
+        contentType: _params.fileContentType,
       },
-      'metadata': _params.metadata
+      'metadata': _params.metadata,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'addDocument');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addDocument'
+    );
 
     const parameters = {
       options: {
@@ -1528,15 +1824,20 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get document details.
@@ -1552,8 +1853,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DocumentStatus>>}
    */
-  public getDocumentStatus(params: DiscoveryV1.GetDocumentStatusParams): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentStatus>> {
-    const _params = Object.assign({}, params);
+  public getDocumentStatus(
+    params: DiscoveryV1.GetDocumentStatusParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentStatus>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1562,16 +1865,20 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getDocumentStatus');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getDocumentStatus'
+    );
 
     const parameters = {
       options: {
@@ -1581,14 +1888,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a document.
@@ -1603,9 +1915,9 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.documentId - The ID of the document.
-   * @param {NodeJS.ReadableStream|Buffer} [params.file] - The content of the document to ingest. The maximum supported
-   * file size when adding a file to a collection is 50 megabytes, the maximum supported file size when testing a
-   * configuration is 1 megabyte. Files larger than the supported size are rejected.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. The maximum
+   * supported file size when adding a file to a collection is 50 megabytes, the maximum supported file size when
+   * testing a configuration is 1 megabyte. Files larger than the supported size are rejected.
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
@@ -1616,8 +1928,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>>}
    */
-  public updateDocument(params: DiscoveryV1.UpdateDocumentParams): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
-    const _params = Object.assign({}, params);
+  public updateDocument(
+    params: DiscoveryV1.UpdateDocumentParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1629,22 +1943,26 @@ class DiscoveryV1 extends BaseService {
       'file': {
         data: _params.file,
         filename: _params.filename,
-        contentType: _params.fileContentType
+        contentType: _params.fileContentType,
       },
-      'metadata': _params.metadata
+      'metadata': _params.metadata,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateDocument');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateDocument'
+    );
 
     const parameters = {
       options: {
@@ -1655,15 +1973,20 @@ class DiscoveryV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a document.
@@ -1678,8 +2001,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DeleteDocumentResponse>>}
    */
-  public deleteDocument(params: DiscoveryV1.DeleteDocumentParams): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteDocumentResponse>> {
-    const _params = Object.assign({}, params);
+  public deleteDocument(
+    params: DiscoveryV1.DeleteDocumentParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteDocumentResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'documentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1688,16 +2013,20 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
-      'document_id': _params.documentId
+      'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteDocument');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteDocument'
+    );
 
     const parameters = {
       options: {
@@ -1707,15 +2036,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * queries
    ************************/
@@ -1784,8 +2117,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>>}
    */
-  public query(params: DiscoveryV1.QueryParams): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
-    const _params = Object.assign({}, params);
+  public query(
+    params: DiscoveryV1.QueryParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1813,19 +2148,23 @@ class DiscoveryV1 extends BaseService {
       'similar.document_ids': _params.similarDocumentIds,
       'similar.fields': _params.similarFields,
       'bias': _params.bias,
-      'spelling_suggestions': _params.spellingSuggestions
+      'spelling_suggestions': _params.spellingSuggestions,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'query');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'query'
+    );
 
     const parameters = {
       options: {
@@ -1836,16 +2175,21 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Query system notices.
@@ -1899,8 +2243,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>>}
    */
-  public queryNotices(params: DiscoveryV1.QueryNoticesParams): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
-    const _params = Object.assign({}, params);
+  public queryNotices(
+    params: DiscoveryV1.QueryNoticesParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1926,15 +2272,19 @@ class DiscoveryV1 extends BaseService {
       'deduplicate.field': _params.deduplicateField,
       'similar': _params.similar,
       'similar.document_ids': _params.similarDocumentIds,
-      'similar.fields': _params.similarFields
+      'similar.fields': _params.similarFields,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'queryNotices');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'queryNotices'
+    );
 
     const parameters = {
       options: {
@@ -1944,14 +2294,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Query multiple collections.
@@ -2012,8 +2367,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>>}
    */
-  public federatedQuery(params: DiscoveryV1.FederatedQueryParams): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
-    const _params = Object.assign({}, params);
+  public federatedQuery(
+    params: DiscoveryV1.FederatedQueryParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionIds'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2041,18 +2398,22 @@ class DiscoveryV1 extends BaseService {
       'similar': _params.similar,
       'similar.document_ids': _params.similarDocumentIds,
       'similar.fields': _params.similarFields,
-      'bias': _params.bias
+      'bias': _params.bias,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'federatedQuery');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'federatedQuery'
+    );
 
     const parameters = {
       options: {
@@ -2063,16 +2424,21 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Watson-Logging-Opt-Out': _params.xWatsonLoggingOptOut,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Query multiple collection system notices.
@@ -2120,8 +2486,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>>}
    */
-  public federatedQueryNotices(params: DiscoveryV1.FederatedQueryNoticesParams): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
-    const _params = Object.assign({}, params);
+  public federatedQueryNotices(
+    params: DiscoveryV1.FederatedQueryNoticesParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionIds'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2144,14 +2512,18 @@ class DiscoveryV1 extends BaseService {
       'deduplicate.field': _params.deduplicateField,
       'similar': _params.similar,
       'similar.document_ids': _params.similarDocumentIds,
-      'similar.fields': _params.similarFields
+      'similar.fields': _params.similarFields,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'federatedQueryNotices');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'federatedQueryNotices'
+    );
 
     const parameters = {
       options: {
@@ -2161,14 +2533,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get Autocomplete Suggestions.
@@ -2180,15 +2557,17 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.prefix - The prefix to use for autocompletion. For example, the prefix `Ho` could
-   * autocomplete to `Hot`, `Housing`, or `How do I upgrade`. Possible completions are.
+   * autocomplete to `hot`, `housing`, or `how`.
    * @param {string} [params.field] - The field in the result documents that autocompletion suggestions are identified
    * from.
    * @param {number} [params.count] - The number of autocompletion suggestions to return.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Completions>>}
    */
-  public getAutocompletion(params: DiscoveryV1.GetAutocompletionParams): Promise<DiscoveryV1.Response<DiscoveryV1.Completions>> {
-    const _params = Object.assign({}, params);
+  public getAutocompletion(
+    params: DiscoveryV1.GetAutocompletionParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Completions>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'prefix'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2200,15 +2579,19 @@ class DiscoveryV1 extends BaseService {
       'version': this.version,
       'prefix': _params.prefix,
       'field': _params.field,
-      'count': _params.count
+      'count': _params.count,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getAutocompletion');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getAutocompletion'
+    );
 
     const parameters = {
       options: {
@@ -2218,15 +2601,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * trainingData
    ************************/
@@ -2242,8 +2629,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TrainingDataSet>>}
    */
-  public listTrainingData(params: DiscoveryV1.ListTrainingDataParams): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingDataSet>> {
-    const _params = Object.assign({}, params);
+  public listTrainingData(
+    params: DiscoveryV1.ListTrainingDataParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingDataSet>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2252,15 +2641,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listTrainingData');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listTrainingData'
+    );
 
     const parameters = {
       options: {
@@ -2270,14 +2663,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add query to training data.
@@ -2294,8 +2692,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>>}
    */
-  public addTrainingData(params: DiscoveryV1.AddTrainingDataParams): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
-    const _params = Object.assign({}, params);
+  public addTrainingData(
+    params: DiscoveryV1.AddTrainingDataParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2306,19 +2706,23 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'natural_language_query': _params.naturalLanguageQuery,
       'filter': _params.filter,
-      'examples': _params.examples
+      'examples': _params.examples,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'addTrainingData');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addTrainingData'
+    );
 
     const parameters = {
       options: {
@@ -2329,15 +2733,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete all training data.
@@ -2350,8 +2759,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
    */
-  public deleteAllTrainingData(params: DiscoveryV1.DeleteAllTrainingDataParams): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteAllTrainingData(
+    params: DiscoveryV1.DeleteAllTrainingDataParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2360,15 +2771,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'collection_id': _params.collectionId
+      'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAllTrainingData');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteAllTrainingData'
+    );
 
     const parameters = {
       options: {
@@ -2378,13 +2793,18 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get details about a query.
@@ -2398,8 +2818,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>>}
    */
-  public getTrainingData(params: DiscoveryV1.GetTrainingDataParams): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
-    const _params = Object.assign({}, params);
+  public getTrainingData(
+    params: DiscoveryV1.GetTrainingDataParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2408,16 +2830,20 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
-      'query_id': _params.queryId
+      'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getTrainingData');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getTrainingData'
+    );
 
     const parameters = {
       options: {
@@ -2427,14 +2853,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a training data query.
@@ -2448,8 +2879,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
    */
-  public deleteTrainingData(params: DiscoveryV1.DeleteTrainingDataParams): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteTrainingData(
+    params: DiscoveryV1.DeleteTrainingDataParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2458,16 +2891,20 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
-      'query_id': _params.queryId
+      'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTrainingData');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteTrainingData'
+    );
 
     const parameters = {
       options: {
@@ -2477,13 +2914,18 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List examples for a training data query.
@@ -2497,8 +2939,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExampleList>>}
    */
-  public listTrainingExamples(params: DiscoveryV1.ListTrainingExamplesParams): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExampleList>> {
-    const _params = Object.assign({}, params);
+  public listTrainingExamples(
+    params: DiscoveryV1.ListTrainingExamplesParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExampleList>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2507,16 +2951,20 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
-      'query_id': _params.queryId
+      'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listTrainingExamples');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listTrainingExamples'
+    );
 
     const parameters = {
       options: {
@@ -2526,14 +2974,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add example to training data query.
@@ -2550,8 +3003,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>>}
    */
-  public createTrainingExample(params: DiscoveryV1.CreateTrainingExampleParams): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
-    const _params = Object.assign({}, params);
+  public createTrainingExample(
+    params: DiscoveryV1.CreateTrainingExampleParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'queryId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2562,20 +3017,24 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'document_id': _params.documentId,
       'cross_reference': _params.crossReference,
-      'relevance': _params.relevance
+      'relevance': _params.relevance,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
-      'query_id': _params.queryId
+      'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createTrainingExample');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createTrainingExample'
+    );
 
     const parameters = {
       options: {
@@ -2586,15 +3045,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete example for training data query.
@@ -2609,8 +3073,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
    */
-  public deleteTrainingExample(params: DiscoveryV1.DeleteTrainingExampleParams): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteTrainingExample(
+    params: DiscoveryV1.DeleteTrainingExampleParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2619,17 +3085,21 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
       'query_id': _params.queryId,
-      'example_id': _params.exampleId
+      'example_id': _params.exampleId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTrainingExample');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteTrainingExample'
+    );
 
     const parameters = {
       options: {
@@ -2639,13 +3109,18 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Change label or cross reference for example.
@@ -2662,8 +3137,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>>}
    */
-  public updateTrainingExample(params: DiscoveryV1.UpdateTrainingExampleParams): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
-    const _params = Object.assign({}, params);
+  public updateTrainingExample(
+    params: DiscoveryV1.UpdateTrainingExampleParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2673,21 +3150,25 @@ class DiscoveryV1 extends BaseService {
 
     const body = {
       'cross_reference': _params.crossReference,
-      'relevance': _params.relevance
+      'relevance': _params.relevance,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
       'query_id': _params.queryId,
-      'example_id': _params.exampleId
+      'example_id': _params.exampleId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateTrainingExample');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateTrainingExample'
+    );
 
     const parameters = {
       options: {
@@ -2698,15 +3179,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get details for training data example.
@@ -2721,8 +3207,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>>}
    */
-  public getTrainingExample(params: DiscoveryV1.GetTrainingExampleParams): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
-    const _params = Object.assign({}, params);
+  public getTrainingExample(
+    params: DiscoveryV1.GetTrainingExampleParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2731,17 +3219,21 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
       'collection_id': _params.collectionId,
       'query_id': _params.queryId,
-      'example_id': _params.exampleId
+      'example_id': _params.exampleId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getTrainingExample');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getTrainingExample'
+    );
 
     const parameters = {
       options: {
@@ -2751,15 +3243,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -2779,8 +3275,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
    */
-  public deleteUserData(params: DiscoveryV1.DeleteUserDataParams): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: DiscoveryV1.DeleteUserDataParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2790,10 +3288,14 @@ class DiscoveryV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -2802,14 +3304,18 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * eventsAndFeedback
    ************************/
@@ -2826,8 +3332,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.CreateEventResponse>>}
    */
-  public createEvent(params: DiscoveryV1.CreateEventParams): Promise<DiscoveryV1.Response<DiscoveryV1.CreateEventResponse>> {
-    const _params = Object.assign({}, params);
+  public createEvent(
+    params: DiscoveryV1.CreateEventParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.CreateEventResponse>> {
+    const _params = { ...params };
     const requiredParams = ['type', 'data'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2837,14 +3345,18 @@ class DiscoveryV1 extends BaseService {
 
     const body = {
       'type': _params.type,
-      'data': _params.data
+      'data': _params.data,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createEvent');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createEvent'
+    );
 
     const parameters = {
       options: {
@@ -2854,15 +3366,20 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Search the query and event log.
@@ -2886,8 +3403,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.LogQueryResponse>>}
    */
-  public queryLog(params?: DiscoveryV1.QueryLogParams): Promise<DiscoveryV1.Response<DiscoveryV1.LogQueryResponse>> {
-    const _params = Object.assign({}, params);
+  public queryLog(
+    params?: DiscoveryV1.QueryLogParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.LogQueryResponse>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
@@ -2895,10 +3414,14 @@ class DiscoveryV1 extends BaseService {
       'query': _params.query,
       'count': _params.count,
       'offset': _params.offset,
-      'sort': _params.sort
+      'sort': _params.sort,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'queryLog');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'queryLog'
+    );
 
     const parameters = {
       options: {
@@ -2907,14 +3430,19 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Number of queries over time.
@@ -2930,17 +3458,23 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>>}
    */
-  public getMetricsQuery(params?: DiscoveryV1.GetMetricsQueryParams): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
-    const _params = Object.assign({}, params);
+  public getMetricsQuery(
+    params?: DiscoveryV1.GetMetricsQueryParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
       'start_time': _params.startTime,
       'end_time': _params.endTime,
-      'result_type': _params.resultType
+      'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQuery');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getMetricsQuery'
+    );
 
     const parameters = {
       options: {
@@ -2949,14 +3483,19 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Number of queries with an event over time.
@@ -2974,17 +3513,23 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>>}
    */
-  public getMetricsQueryEvent(params?: DiscoveryV1.GetMetricsQueryEventParams): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
-    const _params = Object.assign({}, params);
+  public getMetricsQueryEvent(
+    params?: DiscoveryV1.GetMetricsQueryEventParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
       'start_time': _params.startTime,
       'end_time': _params.endTime,
-      'result_type': _params.resultType
+      'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQueryEvent');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getMetricsQueryEvent'
+    );
 
     const parameters = {
       options: {
@@ -2993,14 +3538,19 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Number of queries with no search results over time.
@@ -3017,17 +3567,23 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>>}
    */
-  public getMetricsQueryNoResults(params?: DiscoveryV1.GetMetricsQueryNoResultsParams): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
-    const _params = Object.assign({}, params);
+  public getMetricsQueryNoResults(
+    params?: DiscoveryV1.GetMetricsQueryNoResultsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
       'start_time': _params.startTime,
       'end_time': _params.endTime,
-      'result_type': _params.resultType
+      'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQueryNoResults');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getMetricsQueryNoResults'
+    );
 
     const parameters = {
       options: {
@@ -3036,14 +3592,19 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Percentage of queries with an associated event.
@@ -3061,17 +3622,23 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>>}
    */
-  public getMetricsEventRate(params?: DiscoveryV1.GetMetricsEventRateParams): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
-    const _params = Object.assign({}, params);
+  public getMetricsEventRate(
+    params?: DiscoveryV1.GetMetricsEventRateParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
       'start_time': _params.startTime,
       'end_time': _params.endTime,
-      'result_type': _params.resultType
+      'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsEventRate');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getMetricsEventRate'
+    );
 
     const parameters = {
       options: {
@@ -3080,14 +3647,19 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Most frequent query tokens with an event.
@@ -3102,15 +3674,21 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.MetricTokenResponse>>}
    */
-  public getMetricsQueryTokenEvent(params?: DiscoveryV1.GetMetricsQueryTokenEventParams): Promise<DiscoveryV1.Response<DiscoveryV1.MetricTokenResponse>> {
-    const _params = Object.assign({}, params);
+  public getMetricsQueryTokenEvent(
+    params?: DiscoveryV1.GetMetricsQueryTokenEventParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricTokenResponse>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
-      'count': _params.count
+      'count': _params.count,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQueryTokenEvent');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getMetricsQueryTokenEvent'
+    );
 
     const parameters = {
       options: {
@@ -3119,15 +3697,19 @@ class DiscoveryV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * credentials
    ************************/
@@ -3144,8 +3726,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.CredentialsList>>}
    */
-  public listCredentials(params: DiscoveryV1.ListCredentialsParams): Promise<DiscoveryV1.Response<DiscoveryV1.CredentialsList>> {
-    const _params = Object.assign({}, params);
+  public listCredentials(
+    params: DiscoveryV1.ListCredentialsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.CredentialsList>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3154,14 +3738,18 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listCredentials');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCredentials'
+    );
 
     const parameters = {
       options: {
@@ -3171,14 +3759,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create credentials.
@@ -3199,14 +3792,15 @@ class DiscoveryV1 extends BaseService {
    * @param {CredentialDetails} [params.credentialDetails] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
-   * @param {string} [params.status] - The current status of this set of credentials. `connected` indicates that the
-   * credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials
-   * (for example, the password provided has expired) and must be corrected before they can be used with a collection.
+   * @param {StatusDetails} [params.status] - Object that contains details about the status of the authentication
+   * process.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>>}
    */
-  public createCredentials(params: DiscoveryV1.CreateCredentialsParams): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
-    const _params = Object.assign({}, params);
+  public createCredentials(
+    params: DiscoveryV1.CreateCredentialsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3217,18 +3811,22 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'source_type': _params.sourceType,
       'credential_details': _params.credentialDetails,
-      'status': _params.status
+      'status': _params.status,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createCredentials');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createCredentials'
+    );
 
     const parameters = {
       options: {
@@ -3239,15 +3837,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * View Credentials.
@@ -3263,8 +3866,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>>}
    */
-  public getCredentials(params: DiscoveryV1.GetCredentialsParams): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
-    const _params = Object.assign({}, params);
+  public getCredentials(
+    params: DiscoveryV1.GetCredentialsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'credentialId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3273,15 +3878,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'credential_id': _params.credentialId
+      'credential_id': _params.credentialId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getCredentials');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCredentials'
+    );
 
     const parameters = {
       options: {
@@ -3291,14 +3900,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update credentials.
@@ -3319,14 +3933,15 @@ class DiscoveryV1 extends BaseService {
    * @param {CredentialDetails} [params.credentialDetails] - Object containing details of the stored credentials.
    *
    * Obtain credentials for your source from the administrator of the source.
-   * @param {string} [params.status] - The current status of this set of credentials. `connected` indicates that the
-   * credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials
-   * (for example, the password provided has expired) and must be corrected before they can be used with a collection.
+   * @param {StatusDetails} [params.status] - Object that contains details about the status of the authentication
+   * process.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>>}
    */
-  public updateCredentials(params: DiscoveryV1.UpdateCredentialsParams): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
-    const _params = Object.assign({}, params);
+  public updateCredentials(
+    params: DiscoveryV1.UpdateCredentialsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'credentialId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3337,19 +3952,23 @@ class DiscoveryV1 extends BaseService {
     const body = {
       'source_type': _params.sourceType,
       'credential_details': _params.credentialDetails,
-      'status': _params.status
+      'status': _params.status,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'credential_id': _params.credentialId
+      'credential_id': _params.credentialId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCredentials');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateCredentials'
+    );
 
     const parameters = {
       options: {
@@ -3360,15 +3979,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete credentials.
@@ -3381,8 +4005,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCredentials>>}
    */
-  public deleteCredentials(params: DiscoveryV1.DeleteCredentialsParams): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCredentials>> {
-    const _params = Object.assign({}, params);
+  public deleteCredentials(
+    params: DiscoveryV1.DeleteCredentialsParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCredentials>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'credentialId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3391,15 +4017,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'credential_id': _params.credentialId
+      'credential_id': _params.credentialId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCredentials');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCredentials'
+    );
 
     const parameters = {
       options: {
@@ -3409,15 +4039,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * gatewayConfiguration
    ************************/
@@ -3432,8 +4066,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.GatewayList>>}
    */
-  public listGateways(params: DiscoveryV1.ListGatewaysParams): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayList>> {
-    const _params = Object.assign({}, params);
+  public listGateways(
+    params: DiscoveryV1.ListGatewaysParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayList>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3442,14 +4078,18 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listGateways');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listGateways'
+    );
 
     const parameters = {
       options: {
@@ -3459,14 +4099,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create Gateway.
@@ -3479,8 +4124,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>>}
    */
-  public createGateway(params: DiscoveryV1.CreateGatewayParams): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
-    const _params = Object.assign({}, params);
+  public createGateway(
+    params: DiscoveryV1.CreateGatewayParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3489,18 +4136,22 @@ class DiscoveryV1 extends BaseService {
     }
 
     const body = {
-      'name': _params.name
+      'name': _params.name,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'environment_id': _params.environmentId
+      'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createGateway');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createGateway'
+    );
 
     const parameters = {
       options: {
@@ -3511,15 +4162,20 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List Gateway Details.
@@ -3532,8 +4188,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>>}
    */
-  public getGateway(params: DiscoveryV1.GetGatewayParams): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
-    const _params = Object.assign({}, params);
+  public getGateway(
+    params: DiscoveryV1.GetGatewayParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'gatewayId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3542,15 +4200,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'gateway_id': _params.gatewayId
+      'gateway_id': _params.gatewayId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getGateway');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getGateway'
+    );
 
     const parameters = {
       options: {
@@ -3560,14 +4222,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete Gateway.
@@ -3580,8 +4247,10 @@ class DiscoveryV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.GatewayDelete>>}
    */
-  public deleteGateway(params: DiscoveryV1.DeleteGatewayParams): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayDelete>> {
-    const _params = Object.assign({}, params);
+  public deleteGateway(
+    params: DiscoveryV1.DeleteGatewayParams
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayDelete>> {
+    const _params = { ...params };
     const requiredParams = ['environmentId', 'gatewayId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3590,15 +4259,19 @@ class DiscoveryV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'environment_id': _params.environmentId,
-      'gateway_id': _params.gatewayId
+      'gateway_id': _params.gatewayId,
     };
 
-    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteGateway');
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteGateway'
+    );
 
     const parameters = {
       options: {
@@ -3608,15 +4281,19 @@ class DiscoveryV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -3624,10 +4301,8 @@ class DiscoveryV1 extends BaseService {
  ************************/
 
 namespace DiscoveryV1 {
-
   /** Options for the `DiscoveryV1` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
      *  version is `2019-04-30`.
      */
@@ -3635,7 +4310,7 @@ namespace DiscoveryV1 {
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -3646,7 +4321,7 @@ namespace DiscoveryV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -3991,7 +4666,7 @@ namespace DiscoveryV1 {
     /** The ID of the collection. */
     collectionId: string;
     /** The content of the stopword list to ingest. */
-    stopwordFile: NodeJS.ReadableStream|Buffer;
+    stopwordFile: NodeJS.ReadableStream | Buffer;
     /** The filename for stopwordFile. */
     stopwordFilename: string;
     headers?: OutgoingHttpHeaders;
@@ -4016,7 +4691,7 @@ namespace DiscoveryV1 {
      *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
-    file?: NodeJS.ReadableStream|Buffer;
+    file?: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */
     filename?: string;
     /** The content type of file. */
@@ -4067,7 +4742,7 @@ namespace DiscoveryV1 {
      *  50 megabytes, the maximum supported file size when testing a configuration is 1 megabyte. Files larger than the
      *  supported size are rejected.
      */
-    file?: NodeJS.ReadableStream|Buffer;
+    file?: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */
     filename?: string;
     /** The content type of file. */
@@ -4439,8 +5114,8 @@ namespace DiscoveryV1 {
     environmentId: string;
     /** The ID of the collection. */
     collectionId: string;
-    /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `Hot`, `Housing`,
-     *  or `How do I upgrade`. Possible completions are.
+    /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `hot`, `housing`,
+     *  or `how`.
      */
     prefix: string;
     /** The field in the result documents that autocompletion suggestions are identified from. */
@@ -4736,11 +5411,8 @@ namespace DiscoveryV1 {
      *  Obtain credentials for your source from the administrator of the source.
      */
     credentialDetails?: CredentialDetails;
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to
-     *  use with the source configuration of a collection. `invalid` refers to the credentials (for example, the
-     *  password provided has expired) and must be corrected before they can be used with a collection.
-     */
-    status?: CreateCredentialsConstants.Status | string;
+    /** Object that contains details about the status of the authentication process. */
+    status?: StatusDetails;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4753,11 +5425,6 @@ namespace DiscoveryV1 {
       SHAREPOINT = 'sharepoint',
       WEB_CRAWL = 'web_crawl',
       CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
-    }
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials (for example, the password provided has expired) and must be corrected before they can be used with a collection. */
-    export enum Status {
-      CONNECTED = 'connected',
-      INVALID = 'invalid',
     }
   }
 
@@ -4789,11 +5456,8 @@ namespace DiscoveryV1 {
      *  Obtain credentials for your source from the administrator of the source.
      */
     credentialDetails?: CredentialDetails;
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to
-     *  use with the source configuration of a collection. `invalid` refers to the credentials (for example, the
-     *  password provided has expired) and must be corrected before they can be used with a collection.
-     */
-    status?: UpdateCredentialsConstants.Status | string;
+    /** Object that contains details about the status of the authentication process. */
+    status?: StatusDetails;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4806,11 +5470,6 @@ namespace DiscoveryV1 {
       SHAREPOINT = 'sharepoint',
       WEB_CRAWL = 'web_crawl',
       CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
-    }
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to use with the source configuration of a collection. `invalid` refers to the credentials (for example, the password provided has expired) and must be corrected before they can be used with a collection. */
-    export enum Status {
-      CONNECTED = 'connected',
-      INVALID = 'invalid',
     }
   }
 
@@ -5100,11 +5759,8 @@ namespace DiscoveryV1 {
      *  Obtain credentials for your source from the administrator of the source.
      */
     credential_details?: CredentialDetails;
-    /** The current status of this set of credentials. `connected` indicates that the credentials are available to
-     *  use with the source configuration of a collection. `invalid` refers to the credentials (for example, the
-     *  password provided has expired) and must be corrected before they can be used with a collection.
-     */
-    status?: string;
+    /** Object that contains details about the status of the authentication process. */
+    status?: StatusDetails;
   }
 
   /** Object containing array of credential definitions. */
@@ -5229,7 +5885,7 @@ namespace DiscoveryV1 {
      *   When using `natual_language_understanding`, the **options** object must contain Natural Language Understanding
      *  options.
      *
-     *   When using `elements` the **options** object must contain Element Classification options. Additionally, when
+     *  When using `elements` the **options** object must contain Element Classification options. Additionally, when
      *  using the `elements` enrichment the configuration specified and files ingested must meet all the criteria
      *  specified in [the
      *  documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-element-classification#element-classification).
@@ -5253,7 +5909,7 @@ namespace DiscoveryV1 {
      *  features support all languages, automatic detection is recommended.
      */
     language?: string;
-    /** *For use with `elements` enrichments only.* The element extraction model to use. Models available are:
+    /** For use with `elements` enrichments only. The element extraction model to use. The only model available is
      *  `contract`.
      */
     model?: string;
@@ -5748,7 +6404,7 @@ namespace DiscoveryV1 {
      *  `missing_model`, `unsupported_model`, `smart_document_understanding_failed_incompatible_field`,
      *  `smart_document_understanding_failed_internal_error`, `smart_document_understanding_failed_internal_error`,
      *  `smart_document_understanding_failed_warning`, `smart_document_understanding_page_error`,
-     *  `smart_document_understanding_page_warning`. **Note:** This is not a complete list, other values might be
+     *  `smart_document_understanding_page_warning`. **Note:** This is not a complete list; other values might be
      *  returned.
      */
     notice_id?: string;
@@ -5760,8 +6416,8 @@ namespace DiscoveryV1 {
     query_id?: string;
     /** Severity level of the notice. */
     severity?: string;
-    /** Ingestion or training step in which the notice occurred. Typical step values include: `classify_elements`,
-     *  `smartDocumentUnderstanding`, `ingestion`, `indexing`, `convert`. **Note:** This is not a complete list, other
+    /** Ingestion or training step in which the notice occurred. Typical step values include:
+     *  `smartDocumentUnderstanding`, `ingestion`, `indexing`, `convert`. **Note:** This is not a complete list; other
      *  values might be returned.
      */
     step?: string;
@@ -6142,6 +6798,14 @@ namespace DiscoveryV1 {
     next_crawl?: string;
   }
 
+  /** Object that contains details about the status of the authentication process. */
+  export interface StatusDetails {
+    /** Indicates whether the credential is accepted by the target data source. */
+    authenticated?: boolean;
+    /** If `authenticated` is `false`, a message describes why the authentication was unsuccessful. */
+    error_message?: string;
+  }
+
   /** An object defining a single tokenizaion rule. */
   export interface TokenDictRule {
     /** The string to tokenize. */
@@ -6316,7 +6980,6 @@ namespace DiscoveryV1 {
     size?: number;
     hits?: TopHitsResults;
   }
-
 }
 
 export = DiscoveryV1;

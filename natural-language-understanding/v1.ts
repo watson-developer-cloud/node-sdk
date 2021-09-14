@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -32,15 +37,18 @@ import { getSdkHeaders } from '../lib/common';
  * You can create [custom
  * models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
  * with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
+ *
+ * API Version: 1.0
+ * See: https://cloud.ibm.com/docs/natural-language-understanding
  */
 
 class NaturalLanguageUnderstandingV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'natural-language-understanding';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2021-03-25`.
+   *  `2021-08-01`.
    */
   version: string;
 
@@ -49,7 +57,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2021-03-25`.
+   * format. The current version is `2021-08-01`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -130,8 +138,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>>}
    */
-  public analyze(params: NaturalLanguageUnderstandingV1.AnalyzeParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
-    const _params = Object.assign({}, params);
+  public analyze(
+    params: NaturalLanguageUnderstandingV1.AnalyzeParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
+    const _params = { ...params };
     const requiredParams = ['features'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -149,14 +159,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'fallback_to_raw': _params.fallbackToRaw,
       'return_analyzed_text': _params.returnAnalyzedText,
       'language': _params.language,
-      'limit_text_characters': _params.limitTextCharacters
+      'limit_text_characters': _params.limitTextCharacters,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'analyze');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'analyze'
+    );
 
     const parameters = {
       options: {
@@ -166,16 +180,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * manageModels
    ************************/
@@ -191,14 +209,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>>}
    */
-  public listModels(params?: NaturalLanguageUnderstandingV1.ListModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
-    const _params = Object.assign({}, params);
+  public listModels(
+    params?: NaturalLanguageUnderstandingV1.ListModelsParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listModels'
+    );
 
     const parameters = {
       options: {
@@ -207,14 +231,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete model.
@@ -226,8 +255,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
    */
-  public deleteModel(params: NaturalLanguageUnderstandingV1.DeleteModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
-    const _params = Object.assign({}, params);
+  public deleteModel(
+    params: NaturalLanguageUnderstandingV1.DeleteModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -236,14 +267,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteModel'
+    );
 
     const parameters = {
       options: {
@@ -253,15 +288,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * manageSentimentModels
    ************************/
@@ -274,8 +313,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in CSV format. For more information, see
-   * [Sentiment training data
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in CSV format. For more information,
+   * see [Sentiment training data
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
    * @param {string} [params.name] - An optional name for the model.
    * @param {string} [params.description] - An optional description of the model.
@@ -286,8 +325,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
    */
-  public createSentimentModel(params: NaturalLanguageUnderstandingV1.CreateSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
-    const _params = Object.assign({}, params);
+  public createSentimentModel(
+    params: NaturalLanguageUnderstandingV1.CreateSentimentModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
+    const _params = { ...params };
     const requiredParams = ['language', 'trainingData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -299,20 +340,24 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'training_data': {
         data: _params.trainingData,
-        contentType: 'text/csv'
+        contentType: 'text/csv',
       },
       'name': _params.name,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription
+      'version_description': _params.versionDescription,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createSentimentModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createSentimentModel'
+    );
 
     const parameters = {
       options: {
@@ -322,15 +367,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List sentiment models.
@@ -341,14 +391,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>>}
    */
-  public listSentimentModels(params?: NaturalLanguageUnderstandingV1.ListSentimentModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>> {
-    const _params = Object.assign({}, params);
+  public listSentimentModels(
+    params?: NaturalLanguageUnderstandingV1.ListSentimentModelsParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listSentimentModels');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listSentimentModels'
+    );
 
     const parameters = {
       options: {
@@ -357,14 +413,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get sentiment model details.
@@ -376,8 +437,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
    */
-  public getSentimentModel(params: NaturalLanguageUnderstandingV1.GetSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
-    const _params = Object.assign({}, params);
+  public getSentimentModel(
+    params: NaturalLanguageUnderstandingV1.GetSentimentModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -386,14 +449,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getSentimentModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getSentimentModel'
+    );
 
     const parameters = {
       options: {
@@ -403,14 +470,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update sentiment model.
@@ -421,8 +493,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - ID of the model.
    * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in CSV format. For more information, see
-   * [Sentiment training data
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in CSV format. For more information,
+   * see [Sentiment training data
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
    * @param {string} [params.name] - An optional name for the model.
    * @param {string} [params.description] - An optional description of the model.
@@ -433,8 +505,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
    */
-  public updateSentimentModel(params: NaturalLanguageUnderstandingV1.UpdateSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
-    const _params = Object.assign({}, params);
+  public updateSentimentModel(
+    params: NaturalLanguageUnderstandingV1.UpdateSentimentModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId', 'language', 'trainingData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -446,24 +520,28 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'training_data': {
         data: _params.trainingData,
-        contentType: 'text/csv'
+        contentType: 'text/csv',
       },
       'name': _params.name,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription
+      'version_description': _params.versionDescription,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateSentimentModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateSentimentModel'
+    );
 
     const parameters = {
       options: {
@@ -474,15 +552,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete sentiment model.
@@ -495,8 +578,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
    */
-  public deleteSentimentModel(params: NaturalLanguageUnderstandingV1.DeleteSentimentModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
-    const _params = Object.assign({}, params);
+  public deleteSentimentModel(
+    params: NaturalLanguageUnderstandingV1.DeleteSentimentModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -505,14 +590,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteSentimentModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteSentimentModel'
+    );
 
     const parameters = {
       options: {
@@ -522,15 +611,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * manageCategoriesModels
    ************************/
@@ -543,8 +636,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
-   * [Categories training data
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in JSON format. For more information,
+   * see [Categories training data
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
@@ -556,8 +649,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>>}
    */
-  public createCategoriesModel(params: NaturalLanguageUnderstandingV1.CreateCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
-    const _params = Object.assign({}, params);
+  public createCategoriesModel(
+    params: NaturalLanguageUnderstandingV1.CreateCategoriesModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
+    const _params = { ...params };
     const requiredParams = ['language', 'trainingData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -569,20 +664,24 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'training_data': {
         data: _params.trainingData,
-        contentType: _params.trainingDataContentType
+        contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription
+      'version_description': _params.versionDescription,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createCategoriesModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createCategoriesModel'
+    );
 
     const parameters = {
       options: {
@@ -592,15 +691,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List categories models.
@@ -611,14 +715,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModelList>>}
    */
-  public listCategoriesModels(params?: NaturalLanguageUnderstandingV1.ListCategoriesModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModelList>> {
-    const _params = Object.assign({}, params);
+  public listCategoriesModels(
+    params?: NaturalLanguageUnderstandingV1.ListCategoriesModelsParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModelList>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listCategoriesModels');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCategoriesModels'
+    );
 
     const parameters = {
       options: {
@@ -627,14 +737,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get categories model details.
@@ -646,8 +761,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>>}
    */
-  public getCategoriesModel(params: NaturalLanguageUnderstandingV1.GetCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
-    const _params = Object.assign({}, params);
+  public getCategoriesModel(
+    params: NaturalLanguageUnderstandingV1.GetCategoriesModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -656,14 +773,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getCategoriesModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCategoriesModel'
+    );
 
     const parameters = {
       options: {
@@ -673,14 +794,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update categories model.
@@ -691,8 +817,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - ID of the model.
    * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
-   * [Categories training data
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in JSON format. For more information,
+   * see [Categories training data
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
@@ -704,8 +830,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>>}
    */
-  public updateCategoriesModel(params: NaturalLanguageUnderstandingV1.UpdateCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
-    const _params = Object.assign({}, params);
+  public updateCategoriesModel(
+    params: NaturalLanguageUnderstandingV1.UpdateCategoriesModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId', 'language', 'trainingData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -717,24 +845,28 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'training_data': {
         data: _params.trainingData,
-        contentType: _params.trainingDataContentType
+        contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription
+      'version_description': _params.versionDescription,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCategoriesModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateCategoriesModel'
+    );
 
     const parameters = {
       options: {
@@ -745,15 +877,20 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete categories model.
@@ -766,8 +903,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
    */
-  public deleteCategoriesModel(params: NaturalLanguageUnderstandingV1.DeleteCategoriesModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
-    const _params = Object.assign({}, params);
+  public deleteCategoriesModel(
+    params: NaturalLanguageUnderstandingV1.DeleteCategoriesModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -776,14 +915,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCategoriesModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCategoriesModel'
+    );
 
     const parameters = {
       options: {
@@ -793,15 +936,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * manageClassificationsModels
    ************************/
@@ -809,13 +956,13 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   /**
    * Create classifications model.
    *
-   * (Beta) Creates a custom classifications model by uploading training data and associated metadata. The model begins
-   * the training and deploying process and is ready to use when the `status` is `available`.
+   * Creates a custom classifications model by uploading training data and associated metadata. The model begins the
+   * training and deploying process and is ready to use when the `status` is `available`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
-   * [Classifications training data
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in JSON format. For more information,
+   * see [Classifications training data
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
@@ -827,8 +974,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
    */
-  public createClassificationsModel(params: NaturalLanguageUnderstandingV1.CreateClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
-    const _params = Object.assign({}, params);
+  public createClassificationsModel(
+    params: NaturalLanguageUnderstandingV1.CreateClassificationsModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
+    const _params = { ...params };
     const requiredParams = ['language', 'trainingData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -840,20 +989,24 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'training_data': {
         data: _params.trainingData,
-        contentType: _params.trainingDataContentType
+        contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription
+      'version_description': _params.versionDescription,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createClassificationsModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createClassificationsModel'
+    );
 
     const parameters = {
       options: {
@@ -863,33 +1016,44 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List classifications models.
    *
-   * (Beta) Returns all custom classifications models associated with this service instance.
+   * Returns all custom classifications models associated with this service instance.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListClassificationsModelsResponse>>}
+   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModelList>>}
    */
-  public listClassificationsModels(params?: NaturalLanguageUnderstandingV1.ListClassificationsModelsParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListClassificationsModelsResponse>> {
-    const _params = Object.assign({}, params);
+  public listClassificationsModels(
+    params?: NaturalLanguageUnderstandingV1.ListClassificationsModelsParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModelList>> {
+    const _params = { ...params };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listClassificationsModels');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listClassificationsModels'
+    );
 
     const parameters = {
       options: {
@@ -898,27 +1062,34 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get classifications model details.
    *
-   * (Beta) Returns the status of the classifications model with the given model ID.
+   * Returns the status of the classifications model with the given model ID.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - ID of the model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
    */
-  public getClassificationsModel(params: NaturalLanguageUnderstandingV1.GetClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
-    const _params = Object.assign({}, params);
+  public getClassificationsModel(
+    params: NaturalLanguageUnderstandingV1.GetClassificationsModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -927,14 +1098,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getClassificationsModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getClassificationsModel'
+    );
 
     const parameters = {
       options: {
@@ -944,26 +1119,31 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update classifications model.
    *
-   * (Beta) Overwrites the training data associated with this custom classifications model and retrains the model. The
-   * new model replaces the current deployment.
+   * Overwrites the training data associated with this custom classifications model and retrains the model. The new
+   * model replaces the current deployment.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - ID of the model.
    * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in JSON format. For more information, see
-   * [Classifications training data
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in JSON format. For more information,
+   * see [Classifications training data
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
@@ -975,8 +1155,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
    */
-  public updateClassificationsModel(params: NaturalLanguageUnderstandingV1.UpdateClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
-    const _params = Object.assign({}, params);
+  public updateClassificationsModel(
+    params: NaturalLanguageUnderstandingV1.UpdateClassificationsModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
+    const _params = { ...params };
     const requiredParams = ['modelId', 'language', 'trainingData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -988,24 +1170,28 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'language': _params.language,
       'training_data': {
         data: _params.trainingData,
-        contentType: _params.trainingDataContentType
+        contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription
+      'version_description': _params.versionDescription,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateClassificationsModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateClassificationsModel'
+    );
 
     const parameters = {
       options: {
@@ -1016,29 +1202,36 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete classifications model.
    *
-   * (Beta) Un-deploys the custom classifications model with the given model ID and deletes all associated customer
-   * data, including any training data or binary artifacts.
+   * Un-deploys the custom classifications model with the given model ID and deletes all associated customer data,
+   * including any training data or binary artifacts.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - ID of the model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
    */
-  public deleteClassificationsModel(params: NaturalLanguageUnderstandingV1.DeleteClassificationsModelParams): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
-    const _params = Object.assign({}, params);
+  public deleteClassificationsModel(
+    params: NaturalLanguageUnderstandingV1.DeleteClassificationsModelParams
+  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
+    const _params = { ...params };
     const requiredParams = ['modelId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1047,14 +1240,18 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'model_id': _params.modelId
+      'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteClassificationsModel');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteClassificationsModel'
+    );
 
     const parameters = {
       options: {
@@ -1064,15 +1261,19 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -1080,18 +1281,16 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
  ************************/
 
 namespace NaturalLanguageUnderstandingV1 {
-
   /** Options for the `NaturalLanguageUnderstandingV1` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2021-03-25`.
+     *  `2021-08-01`.
      */
     version: string;
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -1102,7 +1301,7 @@ namespace NaturalLanguageUnderstandingV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1167,7 +1366,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Training data in CSV format. For more information, see [Sentiment training data
      *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
      */
-    trainingData: NodeJS.ReadableStream|Buffer;
+    trainingData: NodeJS.ReadableStream | Buffer;
     /** An optional name for the model. */
     name?: string;
     /** An optional description of the model. */
@@ -1202,7 +1401,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Training data in CSV format. For more information, see [Sentiment training data
      *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
      */
-    trainingData: NodeJS.ReadableStream|Buffer;
+    trainingData: NodeJS.ReadableStream | Buffer;
     /** An optional name for the model. */
     name?: string;
     /** An optional description of the model. */
@@ -1230,7 +1429,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Training data in JSON format. For more information, see [Categories training data
      *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
      */
-    trainingData: NodeJS.ReadableStream|Buffer;
+    trainingData: NodeJS.ReadableStream | Buffer;
     /** The content type of trainingData. */
     trainingDataContentType?: CreateCategoriesModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
@@ -1276,7 +1475,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Training data in JSON format. For more information, see [Categories training data
      *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
      */
-    trainingData: NodeJS.ReadableStream|Buffer;
+    trainingData: NodeJS.ReadableStream | Buffer;
     /** The content type of trainingData. */
     trainingDataContentType?: UpdateCategoriesModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
@@ -1315,7 +1514,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Training data in JSON format. For more information, see [Classifications training data
      *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
      */
-    trainingData: NodeJS.ReadableStream|Buffer;
+    trainingData: NodeJS.ReadableStream | Buffer;
     /** The content type of trainingData. */
     trainingDataContentType?: CreateClassificationsModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
@@ -1361,7 +1560,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Training data in JSON format. For more information, see [Classifications training data
      *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
      */
-    trainingData: NodeJS.ReadableStream|Buffer;
+    trainingData: NodeJS.ReadableStream | Buffer;
     /** The content type of trainingData. */
     trainingDataContentType?: UpdateClassificationsModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
@@ -1484,7 +1683,7 @@ namespace NaturalLanguageUnderstandingV1 {
     models?: CategoriesModel[];
   }
 
-  /** Returns a five-level taxonomy of the content. The top three categories are returned. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
+  /** Returns a hierarchical taxonomy of the content. The top three categories are returned by default. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
   export interface CategoriesOptions {
     /** Set this to `true` to return explanations for each categorization. **This is available only for English
      *  categories.**.
@@ -1507,8 +1706,8 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** A categorization of the analyzed text. */
   export interface CategoriesResult {
-    /** The path to the category through the 5-level taxonomy hierarchy. For more information about the categories,
-     *  see [Categories
+    /** The path to the category through the multi-level taxonomy hierarchy. For more information about the
+     *  categories, see [Categories
      *  hierarchy](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories#categories-hierarchy).
      */
     label?: string;
@@ -1566,7 +1765,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Returns text classifications for the content. Supported languages: English only. */
   export interface ClassificationsOptions {
-    /** (Beta) Enter a [custom
+    /** Enter a [custom
      *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
      *  ID of the classification model to be used.
      */
@@ -1754,7 +1953,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image,
      *  and publication date. Supports URL and HTML input types only.
      */
-    metadata?: JsonObject;
+    metadata?: MetadataOptions;
     /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo`
      *  relation might connect the entities "Nobel Prize" and "Albert Einstein". For more information, see [Relation
      *  types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-relations).
@@ -1779,7 +1978,7 @@ namespace NaturalLanguageUnderstandingV1 {
      *  Supported languages: English only.
      */
     summarization?: SummarizationOptions;
-    /** Returns a five-level taxonomy of the content. The top three categories are returned.
+    /** Returns a hierarchical taxonomy of the content. The top three categories are returned by default.
      *
      *  Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
      */
@@ -1832,11 +2031,6 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: FeatureSentimentResults;
   }
 
-  /** ListClassificationsModelsResponse. */
-  export interface ListClassificationsModelsResponse {
-    models?: ClassificationsModelList[];
-  }
-
   /** Custom models that are available for entities and relations. */
   export interface ListModelsResults {
     /** An array of available models. */
@@ -1846,6 +2040,10 @@ namespace NaturalLanguageUnderstandingV1 {
   /** ListSentimentModelsResponse. */
   export interface ListSentimentModelsResponse {
     models?: SentimentModel[];
+  }
+
+  /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
+  export interface MetadataOptions {
   }
 
   /** Model. */
@@ -2104,7 +2302,6 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The [lemma](https://wikipedia.org/wiki/Lemma_%28morphology%29) of the token. */
     lemma?: string;
   }
-
 }
 
 export = NaturalLanguageUnderstandingV1;

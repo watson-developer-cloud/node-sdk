@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -39,16 +44,22 @@ import { getSdkHeaders } from '../lib/common';
  * words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic
  * translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in
  * standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic
- * Representation (SPR). The Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA.
+ * Representation (SPR).
  *
  * The service also offers a Tune by Example feature that lets you define custom prompts. You can also define speaker
  * models to improve the quality of your custom prompts. The service support custom prompts only for US English custom
  * models and voices.
+ *
+ * **IBM Cloud&reg;.** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+ * only for IBM Cloud. For phonetic translation, they support only IPA, not SPR.
+ *
+ * API Version: 1.0.0
+ * See: https://cloud.ibm.com/docs/text-to-speech
  */
 
 class TextToSpeechV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.text-to-speech.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'text_to_speech';
 
   /**
@@ -88,7 +99,8 @@ class TextToSpeechV1 extends BaseService {
    *
    * Lists all voices available for use with the service. The information includes the name, language, gender, and other
    * details about the voice. The ordering of the list of voices can change from call to call; do not rely on an
-   * alphabetized or static list of voices. To see information about a specific voice, use the **Get a voice** method.
+   * alphabetized or static list of voices. To see information about a specific voice, use the [Get a voice](#getvoice).
+   *
    *
    * **See also:** [Listing all available
    * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices).
@@ -97,10 +109,16 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Voices>>}
    */
-  public listVoices(params?: TextToSpeechV1.ListVoicesParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voices>> {
-    const _params = Object.assign({}, params);
+  public listVoices(
+    params?: TextToSpeechV1.ListVoicesParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voices>> {
+    const _params = { ...params };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listVoices');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listVoices'
+    );
 
     const parameters = {
       options: {
@@ -108,26 +126,32 @@ class TextToSpeechV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a voice.
    *
    * Gets information about the specified voice. The information includes the name, language, gender, and other details
    * about the voice. Specify a customization ID to obtain information for a custom model that is defined for the
-   * language of the specified voice. To list information about all available voices, use the **List voices** method.
+   * language of the specified voice. To list information about all available voices, use the [List voices](#listvoices)
+   * method.
    *
    * **See also:** [Listing a specific
    * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice).
    *
-   * ### Important voice updates
+   * ### Important voice updates for IBM Cloud
    *
    *  The service's voices underwent significant change on 2 December 2020.
    * * The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.
@@ -143,19 +167,24 @@ class TextToSpeechV1 extends BaseService {
    * date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
    * information about all voice updates, see the [2 December 2020 service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020) in the release
-   * notes.
+   * notes for IBM Cloud.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned. For more information about
-   * specifying a voice, see **Important voice updates** in the method description.
+   * specifying a voice, see **Important voice updates for IBM Cloud** in the method description.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
    * @param {string} [params.customizationId] - The customization ID (GUID) of a custom model for which information is
    * to be returned. You must make the request with credentials for the instance of the service that owns the custom
    * model. Omit the parameter to see information about the specified voice with no customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Voice>>}
    */
-  public getVoice(params: TextToSpeechV1.GetVoiceParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voice>> {
-    const _params = Object.assign({}, params);
+  public getVoice(
+    params: TextToSpeechV1.GetVoiceParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voice>> {
+    const _params = { ...params };
     const requiredParams = ['voice'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -164,14 +193,18 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const query = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
     const path = {
-      'voice': _params.voice
+      'voice': _params.voice,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getVoice');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getVoice'
+    );
 
     const parameters = {
       options: {
@@ -181,15 +214,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * synthesis
    ************************/
@@ -241,9 +278,9 @@ class TextToSpeechV1 extends BaseService {
    * 22,050 Hz.
    *
    * For more information about specifying an audio format, including additional details about some of the formats, see
-   * [Audio formats](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audioFormats#audioFormats).
+   * [Using audio formats](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audio-formats).
    *
-   * ### Important voice updates
+   * ### Important voice updates for IBM Cloud
    *
    *  The service's voices underwent significant change on 2 December 2020.
    * * The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.
@@ -259,7 +296,7 @@ class TextToSpeechV1 extends BaseService {
    * date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
    * information about all voice updates, see the [2 December 2020 service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020) in the release
-   * notes.
+   * notes for IBM Cloud.
    *
    * ### Warning messages
    *
@@ -274,16 +311,24 @@ class TextToSpeechV1 extends BaseService {
    * the `accept` parameter to specify the audio format. For more information about specifying an audio format, see
    * **Audio formats (accept types)** in the method description.
    * @param {string} [params.voice] - The voice to use for synthesis. For more information about specifying a voice, see
-   * **Important voice updates** in the method description.
+   * **Important voice updates for IBM Cloud** in the method description.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
+   *
+   * **See also:** See also [Using languages and
+   * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices).
    * @param {string} [params.customizationId] - The customization ID (GUID) of a custom model to use for the synthesis.
    * If a custom model is specified, it works only if it matches the language of the indicated voice. You must make the
    * request with credentials for the instance of the service that owns the custom model. Omit the parameter to use the
    * specified voice with no customization.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<NodeJS.ReadableStream|Buffer>>}
+   * @returns {Promise<TextToSpeechV1.Response<NodeJS.ReadableStream>>}
    */
-  public synthesize(params: TextToSpeechV1.SynthesizeParams): Promise<TextToSpeechV1.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public synthesize(
+    params: TextToSpeechV1.SynthesizeParams
+  ): Promise<TextToSpeechV1.Response<NodeJS.ReadableStream>> {
+    const _params = { ...params };
     const requiredParams = ['text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -292,15 +337,19 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const body = {
-      'text': _params.text
+      'text': _params.text,
     };
 
     const query = {
       'voice': _params.voice,
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'synthesize');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'synthesize'
+    );
 
     const parameters = {
       options: {
@@ -311,16 +360,20 @@ class TextToSpeechV1 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-          'Accept': _params.accept
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+            'Accept': _params.accept,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * pronunciation
    ************************/
@@ -335,7 +388,7 @@ class TextToSpeechV1 extends BaseService {
    * **See also:** [Querying a word from a
    * language](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage).
    *
-   * ### Important voice updates
+   * ### Important voice updates for IBM Cloud
    *
    *  The service's voices underwent significant change on 2 December 2020.
    * * The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.
@@ -351,13 +404,16 @@ class TextToSpeechV1 extends BaseService {
    * date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
    * information about all voice updates, see the [2 December 2020 service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020) in the release
-   * notes.
+   * notes for IBM Cloud.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The word for which the pronunciation is requested.
    * @param {string} [params.voice] - A voice that specifies the language in which the pronunciation is to be returned.
    * All voices for the same language (for example, `en-US`) return the same translation. For more information about
-   * specifying a voice, see **Important voice updates** in the method description.
+   * specifying a voice, see **Important voice updates for IBM Cloud** in the method description.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
    * @param {string} [params.format] - The phoneme format in which to return the pronunciation. The Arabic, Chinese,
    * Dutch, Australian English, and Korean languages support only IPA. Omit the parameter to obtain the pronunciation in
    * the default format.
@@ -369,8 +425,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Pronunciation>>}
    */
-  public getPronunciation(params: TextToSpeechV1.GetPronunciationParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Pronunciation>> {
-    const _params = Object.assign({}, params);
+  public getPronunciation(
+    params: TextToSpeechV1.GetPronunciationParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Pronunciation>> {
+    const _params = { ...params };
     const requiredParams = ['text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -382,10 +440,14 @@ class TextToSpeechV1 extends BaseService {
       'text': _params.text,
       'voice': _params.voice,
       'format': _params.format,
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getPronunciation');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getPronunciation'
+    );
 
     const parameters = {
       options: {
@@ -394,15 +456,19 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customModels
    ************************/
@@ -417,7 +483,7 @@ class TextToSpeechV1 extends BaseService {
    * **See also:** [Creating a custom
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
    *
-   * ### Important voice updates
+   * ### Important voice updates for IBM Cloud
    *
    *  The service's voices underwent significant change on 2 December 2020.
    * * The Arabic, Chinese, Dutch, Australian English, and Korean voices are now neural instead of concatenative.
@@ -433,7 +499,7 @@ class TextToSpeechV1 extends BaseService {
    * date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
    * information about all voice updates, see the [2 December 2020 service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020) in the release
-   * notes.
+   * notes for IBM Cloud.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new custom model.
@@ -441,13 +507,18 @@ class TextToSpeechV1 extends BaseService {
    * language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the
    * parameter to use the the default language, `en-US`. **Note:** The `ar-AR` language identifier cannot be used to
    * create a custom model. Use the `ar-MS` identifier instead.
+   *
+   * **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only
+   * for IBM Cloud.
    * @param {string} [params.description] - A description of the new custom model. Specifying a description is
    * recommended.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>>}
    */
-  public createCustomModel(params: TextToSpeechV1.CreateCustomModelParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
-    const _params = Object.assign({}, params);
+  public createCustomModel(
+    params: TextToSpeechV1.CreateCustomModelParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
+    const _params = { ...params };
     const requiredParams = ['name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -458,10 +529,14 @@ class TextToSpeechV1 extends BaseService {
     const body = {
       'name': _params.name,
       'language': _params.language,
-      'description': _params.description
+      'description': _params.description,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'createCustomModel');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createCustomModel'
+    );
 
     const parameters = {
       options: {
@@ -470,23 +545,28 @@ class TextToSpeechV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List custom models.
    *
    * Lists metadata such as the name and description for all custom models that are owned by an instance of the service.
    * Specify a language to list the custom models for that language only. To see the words and prompts in addition to
-   * the metadata for a specific custom model, use the **Get a custom model** method. You must use credentials for the
-   * instance of the service that owns a model to list information about it.
+   * the metadata for a specific custom model, use the [Get a custom model](#getcustommodel) method. You must use
+   * credentials for the instance of the service that owns a model to list information about it.
    *
    * **See also:** [Querying all custom
    * models](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll).
@@ -497,14 +577,20 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModels>>}
    */
-  public listCustomModels(params?: TextToSpeechV1.ListCustomModelsParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModels>> {
-    const _params = Object.assign({}, params);
+  public listCustomModels(
+    params?: TextToSpeechV1.ListCustomModelsParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModels>> {
+    const _params = { ...params };
 
     const query = {
-      'language': _params.language
+      'language': _params.language,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listCustomModels');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCustomModels'
+    );
 
     const parameters = {
       options: {
@@ -513,14 +599,19 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a custom model.
@@ -558,8 +649,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public updateCustomModel(params: TextToSpeechV1.UpdateCustomModelParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public updateCustomModel(
+    params: TextToSpeechV1.UpdateCustomModelParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -570,14 +663,18 @@ class TextToSpeechV1 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'words': _params.words
+      'words': _params.words,
     };
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCustomModel');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateCustomModel'
+    );
 
     const parameters = {
       options: {
@@ -587,23 +684,28 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a custom model.
    *
    * Gets all information about a specified custom model. In addition to metadata such as the name and description of
    * the custom model, the output includes the words and their translations that are defined for the model, as well as
-   * any prompts that are defined for the model. To see just the metadata for a model, use the **List custom models**
-   * method.
+   * any prompts that are defined for the model. To see just the metadata for a model, use the [List custom
+   * models](#listcustommodels) method.
    *
    * **See also:** [Querying a custom
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery).
@@ -614,8 +716,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>>}
    */
-  public getCustomModel(params: TextToSpeechV1.GetCustomModelParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
-    const _params = Object.assign({}, params);
+  public getCustomModel(
+    params: TextToSpeechV1.GetCustomModelParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -624,10 +728,14 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getCustomModel');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCustomModel'
+    );
 
     const parameters = {
       options: {
@@ -636,14 +744,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a custom model.
@@ -660,8 +773,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public deleteCustomModel(params: TextToSpeechV1.DeleteCustomModelParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteCustomModel(
+    params: TextToSpeechV1.DeleteCustomModelParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -670,10 +785,14 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCustomModel');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCustomModel'
+    );
 
     const parameters = {
       options: {
@@ -682,14 +801,18 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customWords
    ************************/
@@ -723,17 +846,19 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom model. You must make the request
    * with credentials for the instance of the service that owns the custom model.
-   * @param {Word[]} params.words - The **Add custom words** method accepts an array of `Word` objects. Each object
-   * provides a word that is to be added or updated for the custom model and the word's translation.
+   * @param {Word[]} params.words - The [Add custom words](#addwords) method accepts an array of `Word` objects. Each
+   * object provides a word that is to be added or updated for the custom model and the word's translation.
    *
-   * The **List custom words** method returns an array of `Word` objects. Each object shows a word and its translation
-   * from the custom model. The words are listed in alphabetical order, with uppercase letters listed before lowercase
-   * letters. The array is empty if the custom model contains no words.
+   * The [List custom words](#listwords) method returns an array of `Word` objects. Each object shows a word and its
+   * translation from the custom model. The words are listed in alphabetical order, with uppercase letters listed before
+   * lowercase letters. The array is empty if the custom model contains no words.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public addWords(params: TextToSpeechV1.AddWordsParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public addWords(
+    params: TextToSpeechV1.AddWordsParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'words'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -742,14 +867,18 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const body = {
-      'words': _params.words
+      'words': _params.words,
     };
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addWords');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addWords'
+    );
 
     const parameters = {
       options: {
@@ -759,15 +888,20 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List custom words.
@@ -785,8 +919,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Words>>}
    */
-  public listWords(params: TextToSpeechV1.ListWordsParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Words>> {
-    const _params = Object.assign({}, params);
+  public listWords(
+    params: TextToSpeechV1.ListWordsParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Words>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -795,10 +931,14 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listWords');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listWords'
+    );
 
     const parameters = {
       options: {
@@ -807,14 +947,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add a custom word.
@@ -858,8 +1003,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public addWord(params: TextToSpeechV1.AddWordParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public addWord(
+    params: TextToSpeechV1.AddWordParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'word', 'translation'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -869,15 +1016,19 @@ class TextToSpeechV1 extends BaseService {
 
     const body = {
       'translation': _params.translation,
-      'part_of_speech': _params.partOfSpeech
+      'part_of_speech': _params.partOfSpeech,
     };
 
     const path = {
       'customization_id': _params.customizationId,
-      'word': _params.word
+      'word': _params.word,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addWord');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addWord'
+    );
 
     const parameters = {
       options: {
@@ -887,14 +1038,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a custom word.
@@ -913,8 +1069,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Translation>>}
    */
-  public getWord(params: TextToSpeechV1.GetWordParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Translation>> {
-    const _params = Object.assign({}, params);
+  public getWord(
+    params: TextToSpeechV1.GetWordParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Translation>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'word'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -924,10 +1082,14 @@ class TextToSpeechV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'word': _params.word
+      'word': _params.word,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getWord');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getWord'
+    );
 
     const parameters = {
       options: {
@@ -936,14 +1098,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a custom word.
@@ -961,8 +1128,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public deleteWord(params: TextToSpeechV1.DeleteWordParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteWord(
+    params: TextToSpeechV1.DeleteWordParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'word'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -972,10 +1141,14 @@ class TextToSpeechV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'word': _params.word
+      'word': _params.word,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWord');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteWord'
+    );
 
     const parameters = {
       options: {
@@ -984,14 +1157,18 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * customPrompts
    ************************/
@@ -1002,11 +1179,9 @@ class TextToSpeechV1 extends BaseService {
    * Lists information about all custom prompts that are defined for a custom model. The information includes the prompt
    * ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
    * the instance of the service that owns the custom model. The same information about all of the prompts for a custom
-   * model is also provided by the **Get a custom model** method. That method provides complete details about a
-   * specified custom model, including its language, owner, custom words, and more.
-   *
-   * **Beta:** Custom prompts are beta functionality that is supported only for use with US English custom models and
-   * voices.
+   * model is also provided by the [Get a custom model](#getcustommodel) method. That method provides complete details
+   * about a specified custom model, including its language, owner, custom words, and more. Custom prompts are supported
+   * only for use with US English custom models and voices.
    *
    * **See also:** [Listing custom
    * prompts](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list).
@@ -1017,8 +1192,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompts>>}
    */
-  public listCustomPrompts(params: TextToSpeechV1.ListCustomPromptsParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompts>> {
-    const _params = Object.assign({}, params);
+  public listCustomPrompts(
+    params: TextToSpeechV1.ListCustomPromptsParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompts>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1027,10 +1204,14 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const path = {
-      'customization_id': _params.customizationId
+      'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listCustomPrompts');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCustomPrompts'
+    );
 
     const parameters = {
       options: {
@@ -1039,14 +1220,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add a custom prompt.
@@ -1074,9 +1260,10 @@ class TextToSpeechV1 extends BaseService {
    * it takes 20 seconds to process a 20-second prompt).
    *
    * For shorter prompts, you can wait for a reasonable amount of time and then check the status of the prompt with the
-   * **Get a custom prompt** method. For longer prompts, consider using that method to poll the service every few
-   * seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it is in the
-   * `processing` or `failed` state. Only prompts that are in the `available` state can be used for speech synthesis.
+   * [Get a custom prompt](#getcustomprompt) method. For longer prompts, consider using that method to poll the service
+   * every few seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it
+   * is in the `processing` or `failed` state. Only prompts that are in the `available` state can be used for speech
+   * synthesis.
    *
    * When it processes a request, the service attempts to align the text and the audio that are provided for the prompt.
    * The text that is passed with a prompt must match the spoken audio as closely as possible. Optimally, the text and
@@ -1106,10 +1293,8 @@ class TextToSpeechV1 extends BaseService {
    * If a prompt that is created without a speaker ID does not adequately reflect the intended prosody, enrolling the
    * speaker and providing a speaker ID for the prompt is one recommended means of potentially improving the quality of
    * the prompt. This is especially important for shorter prompts such as "good-bye" or "thank you," where less audio
-   * data makes it more difficult to match the prosody of the speaker.
-   *
-   * **Beta:** Custom prompts are beta functionality that is supported only for use with US English custom models and
-   * voices.
+   * data makes it more difficult to match the prosody of the speaker. Custom prompts are supported only for use with US
+   * English custom models and voices.
    *
    * **See also:**
    * * [Add a custom
@@ -1134,7 +1319,7 @@ class TextToSpeechV1 extends BaseService {
    * ID:
    *
    * `{ "prompt_text": "Thank you and good-bye!", "speaker_id": "823068b2-ed4e-11ea-b6e0-7b6456aa95cc" }`.
-   * @param {NodeJS.ReadableStream|Buffer} params.file - An audio file that speaks the text of the prompt with
+   * @param {NodeJS.ReadableStream | Buffer} params.file - An audio file that speaks the text of the prompt with
    * intonation and prosody that matches how you would like the prompt to be spoken.
    * * The prompt audio must be in WAV format and must have a minimum sampling rate of 16 kHz. The service accepts audio
    * with higher sampling rates. The service transcodes all audio to 16 kHz before processing it.
@@ -1142,8 +1327,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>>}
    */
-  public addCustomPrompt(params: TextToSpeechV1.AddCustomPromptParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
-    const _params = Object.assign({}, params);
+  public addCustomPrompt(
+    params: TextToSpeechV1.AddCustomPromptParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'promptId', 'metadata', 'file'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1155,16 +1342,20 @@ class TextToSpeechV1 extends BaseService {
       'metadata': _params.metadata,
       'file': {
         data: _params.file,
-        contentType: 'audio/wav'
-      }
+        contentType: 'audio/wav',
+      },
     };
 
     const path = {
       'customization_id': _params.customizationId,
-      'prompt_id': _params.promptId
+      'prompt_id': _params.promptId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addCustomPrompt');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addCustomPrompt'
+    );
 
     const parameters = {
       options: {
@@ -1174,25 +1365,28 @@ class TextToSpeechV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a custom prompt.
    *
    * Gets information about a specified custom prompt for a specified custom model. The information includes the prompt
    * ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
-   * the instance of the service that owns the custom model.
-   *
-   * **Beta:** Custom prompts are beta functionality that is supported only for use with US English custom models and
-   * voices.
+   * the instance of the service that owns the custom model. Custom prompts are supported only for use with US English
+   * custom models and voices.
    *
    * **See also:** [Listing custom
    * prompts](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list).
@@ -1204,8 +1398,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>>}
    */
-  public getCustomPrompt(params: TextToSpeechV1.GetCustomPromptParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
-    const _params = Object.assign({}, params);
+  public getCustomPrompt(
+    params: TextToSpeechV1.GetCustomPromptParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'promptId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1215,10 +1411,14 @@ class TextToSpeechV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'prompt_id': _params.promptId
+      'prompt_id': _params.promptId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getCustomPrompt');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCustomPrompt'
+    );
 
     const parameters = {
       options: {
@@ -1227,14 +1427,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a custom prompt.
@@ -1244,10 +1449,8 @@ class TextToSpeechV1 extends BaseService {
    * deleted.
    *
    * **Caution:** Deleting a custom prompt elicits a 400 response code from synthesis requests that attempt to use the
-   * prompt. Make sure that you do not attempt to use a deleted prompt in a production application.
-   *
-   * **Beta:** Custom prompts are beta functionality that is supported only for use with US English custom models and
-   * voices.
+   * prompt. Make sure that you do not attempt to use a deleted prompt in a production application. Custom prompts are
+   * supported only for use with US English custom models and voices.
    *
    * **See also:** [Deleting a custom
    * prompt](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-delete).
@@ -1259,8 +1462,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public deleteCustomPrompt(params: TextToSpeechV1.DeleteCustomPromptParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteCustomPrompt(
+    params: TextToSpeechV1.DeleteCustomPromptParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customizationId', 'promptId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1270,10 +1475,14 @@ class TextToSpeechV1 extends BaseService {
 
     const path = {
       'customization_id': _params.customizationId,
-      'prompt_id': _params.promptId
+      'prompt_id': _params.promptId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCustomPrompt');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCustomPrompt'
+    );
 
     const parameters = {
       options: {
@@ -1282,14 +1491,18 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * speakerModels
    ************************/
@@ -1299,10 +1512,8 @@ class TextToSpeechV1 extends BaseService {
    *
    * Lists information about all speaker models that are defined for a service instance. The information includes the
    * speaker ID and speaker name of each defined speaker. You must use credentials for the instance of a service to list
-   * its speakers.
-   *
-   * **Beta:** Speaker models and the custom prompts with which they are used are beta functionality that is supported
-   * only for use with US English custom models and voices.
+   * its speakers. Speaker models and the custom prompts with which they are used are supported only for use with US
+   * English custom models and voices.
    *
    * **See also:** [Listing speaker
    * models](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-list).
@@ -1311,10 +1522,16 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Speakers>>}
    */
-  public listSpeakerModels(params?: TextToSpeechV1.ListSpeakerModelsParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Speakers>> {
-    const _params = Object.assign({}, params);
+  public listSpeakerModels(
+    params?: TextToSpeechV1.ListSpeakerModelsParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Speakers>> {
+    const _params = { ...params };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listSpeakerModels');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listSpeakerModels'
+    );
 
     const parameters = {
       options: {
@@ -1322,14 +1539,19 @@ class TextToSpeechV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a speaker model.
@@ -1362,10 +1584,8 @@ class TextToSpeechV1 extends BaseService {
    * audio is fully processed and the speaker enrollment is complete.
    *
    * The service returns a speaker ID with the request. A speaker ID is globally unique identifier (GUID) that you use
-   * to identify the speaker in subsequent requests to the service.
-   *
-   * **Beta:** Speaker models and the custom prompts with which they are used are beta functionality that is supported
-   * only for use with US English custom models and voices.
+   * to identify the speaker in subsequent requests to the service. Speaker models and the custom prompts with which
+   * they are used are supported only for use with US English custom models and voices.
    *
    * **See also:**
    * * [Create a speaker
@@ -1380,7 +1600,7 @@ class TextToSpeechV1 extends BaseService {
    * * Do not include XML sensitive characters (double quotes, single quotes, ampersands, angle brackets, and slashes)
    * in the name.
    * * Do not use the name of an existing speaker that is already defined for the service instance.
-   * @param {NodeJS.ReadableStream|Buffer} params.audio - An enrollment audio file that contains a sample of the
+   * @param {NodeJS.ReadableStream | Buffer} params.audio - An enrollment audio file that contains a sample of the
    * speaker’s voice.
    * * The enrollment audio must be in WAV format and must have a minimum sampling rate of 16 kHz. The service accepts
    * audio with higher sampling rates. It transcodes all audio to 16 kHz before processing it.
@@ -1389,8 +1609,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerModel>>}
    */
-  public createSpeakerModel(params: TextToSpeechV1.CreateSpeakerModelParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerModel>> {
-    const _params = Object.assign({}, params);
+  public createSpeakerModel(
+    params: TextToSpeechV1.CreateSpeakerModelParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerModel>> {
+    const _params = { ...params };
     const requiredParams = ['speakerName', 'audio'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1400,10 +1622,14 @@ class TextToSpeechV1 extends BaseService {
 
     const body = _params.audio;
     const query = {
-      'speaker_name': _params.speakerName
+      'speaker_name': _params.speakerName,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'createSpeakerModel');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createSpeakerModel'
+    );
 
     const parameters = {
       options: {
@@ -1413,15 +1639,20 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'audio/wav',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'audio/wav',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a speaker model.
@@ -1429,10 +1660,9 @@ class TextToSpeechV1 extends BaseService {
    * Gets information about all prompts that are defined by a specified speaker for all custom models that are owned by
    * a service instance. The information is grouped by the customization IDs of the custom models. For each custom
    * model, the information lists information about each prompt that is defined for that custom model by the speaker.
-   * You must use credentials for the instance of the service that owns a speaker model to list its prompts.
-   *
-   * **Beta:** Speaker models and the custom prompts with which they are used are beta functionality that is supported
-   * only for use with US English custom models and voices.
+   * You must use credentials for the instance of the service that owns a speaker model to list its prompts. Speaker
+   * models and the custom prompts with which they are used are supported only for use with US English custom models and
+   * voices.
    *
    * **See also:** [Listing the custom prompts for a speaker
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-list-prompts).
@@ -1443,8 +1673,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerCustomModels>>}
    */
-  public getSpeakerModel(params: TextToSpeechV1.GetSpeakerModelParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerCustomModels>> {
-    const _params = Object.assign({}, params);
+  public getSpeakerModel(
+    params: TextToSpeechV1.GetSpeakerModelParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerCustomModels>> {
+    const _params = { ...params };
     const requiredParams = ['speakerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1453,10 +1685,14 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const path = {
-      'speaker_id': _params.speakerId
+      'speaker_id': _params.speakerId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getSpeakerModel');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getSpeakerModel'
+    );
 
     const parameters = {
       options: {
@@ -1465,14 +1701,19 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a speaker model.
@@ -1484,10 +1725,8 @@ class TextToSpeechV1 extends BaseService {
    * Any prompts that are associated with the deleted speaker are not affected by the speaker's deletion. The prosodic
    * data that defines the quality of a prompt is established when the prompt is created. A prompt is static and remains
    * unaffected by deletion of its associated speaker. However, the prompt cannot be resubmitted or updated with its
-   * original speaker once that speaker is deleted.
-   *
-   * **Beta:** Speaker models and the custom prompts with which they are used are beta functionality that is supported
-   * only for use with US English custom models and voices.
+   * original speaker once that speaker is deleted. Speaker models and the custom prompts with which they are used are
+   * supported only for use with US English custom models and voices.
    *
    * **See also:** [Deleting a speaker
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-delete).
@@ -1498,8 +1737,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public deleteSpeakerModel(params: TextToSpeechV1.DeleteSpeakerModelParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteSpeakerModel(
+    params: TextToSpeechV1.DeleteSpeakerModelParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['speakerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1508,10 +1749,14 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const path = {
-      'speaker_id': _params.speakerId
+      'speaker_id': _params.speakerId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteSpeakerModel');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteSpeakerModel'
+    );
 
     const parameters = {
       options: {
@@ -1520,14 +1765,18 @@ class TextToSpeechV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -1553,8 +1802,10 @@ class TextToSpeechV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
    */
-  public deleteUserData(params: TextToSpeechV1.DeleteUserDataParams): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: TextToSpeechV1.DeleteUserDataParams
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1563,10 +1814,14 @@ class TextToSpeechV1 extends BaseService {
     }
 
     const query = {
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      TextToSpeechV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -1575,14 +1830,18 @@ class TextToSpeechV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -1590,9 +1849,8 @@ class TextToSpeechV1 extends BaseService {
  ************************/
 
 namespace TextToSpeechV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -1603,7 +1861,7 @@ namespace TextToSpeechV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1622,7 +1880,10 @@ namespace TextToSpeechV1 {
   /** Parameters for the `getVoice` operation. */
   export interface GetVoiceParams {
     /** The voice for which information is to be returned. For more information about specifying a voice, see
-     *  **Important voice updates** in the method description.
+     *  **Important voice updates for IBM Cloud** in the method description.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
      */
     voice: GetVoiceConstants.Voice | string;
     /** The customization ID (GUID) of a custom model for which information is to be returned. You must make the
@@ -1635,7 +1896,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `getVoice` operation. */
   export namespace GetVoiceConstants {
-    /** The voice for which information is to be returned. For more information about specifying a voice, see **Important voice updates** in the method description. */
+    /** The voice for which information is to be returned. For more information about specifying a voice, see **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only for IBM Cloud. */
     export enum Voice {
       AR_AR_OMARVOICE = 'ar-AR_OmarVoice',
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
@@ -1680,6 +1941,7 @@ namespace TextToSpeechV1 {
       KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
       KO_KR_YOUNGMIVOICE = 'ko-KR_YoungmiVoice',
       KO_KR_YUNAVOICE = 'ko-KR_YunaVoice',
+      NL_BE_ADELEVOICE = 'nl-BE_AdeleVoice',
       NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
       NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
@@ -1699,8 +1961,14 @@ namespace TextToSpeechV1 {
      *  types)** in the method description.
      */
     accept?: SynthesizeConstants.Accept | string;
-    /** The voice to use for synthesis. For more information about specifying a voice, see **Important voice
-     *  updates** in the method description.
+    /** The voice to use for synthesis. For more information about specifying a voice, see **Important voice updates
+     *  for IBM Cloud** in the method description.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
+     *
+     *  **See also:** See also [Using languages and
+     *  voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices).
      */
     voice?: SynthesizeConstants.Voice | string;
     /** The customization ID (GUID) of a custom model to use for the synthesis. If a custom model is specified, it
@@ -1730,7 +1998,7 @@ namespace TextToSpeechV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The voice to use for synthesis. For more information about specifying a voice, see **Important voice updates** in the method description. */
+    /** The voice to use for synthesis. For more information about specifying a voice, see **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only for IBM Cloud. **See also:** See also [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices). */
     export enum Voice {
       AR_AR_OMARVOICE = 'ar-AR_OmarVoice',
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
@@ -1775,6 +2043,7 @@ namespace TextToSpeechV1 {
       KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
       KO_KR_YOUNGMIVOICE = 'ko-KR_YoungmiVoice',
       KO_KR_YUNAVOICE = 'ko-KR_YunaVoice',
+      NL_BE_ADELEVOICE = 'nl-BE_AdeleVoice',
       NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
       NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
@@ -1791,7 +2060,10 @@ namespace TextToSpeechV1 {
     text: string;
     /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
      *  language (for example, `en-US`) return the same translation. For more information about specifying a voice, see
-     *  **Important voice updates** in the method description.
+     *  **Important voice updates for IBM Cloud** in the method description.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
      */
     voice?: GetPronunciationConstants.Voice | string;
     /** The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, Australian English, and
@@ -1810,7 +2082,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `getPronunciation` operation. */
   export namespace GetPronunciationConstants {
-    /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. For more information about specifying a voice, see **Important voice updates** in the method description. */
+    /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. For more information about specifying a voice, see **Important voice updates for IBM Cloud** in the method description. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only for IBM Cloud. */
     export enum Voice {
       AR_AR_OMARVOICE = 'ar-AR_OmarVoice',
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
@@ -1855,6 +2127,7 @@ namespace TextToSpeechV1 {
       KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
       KO_KR_YOUNGMIVOICE = 'ko-KR_YoungmiVoice',
       KO_KR_YUNAVOICE = 'ko-KR_YunaVoice',
+      NL_BE_ADELEVOICE = 'nl-BE_AdeleVoice',
       NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
       NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
       PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
@@ -1878,6 +2151,9 @@ namespace TextToSpeechV1 {
      *  voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the
      *  default language, `en-US`. **Note:** The `ar-AR` language identifier cannot be used to create a custom model.
      *  Use the `ar-MS` identifier instead.
+     *
+     *  **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+     *  only for IBM Cloud.
      */
     language?: CreateCustomModelConstants.Language | string;
     /** A description of the new custom model. Specifying a description is recommended. */
@@ -1887,7 +2163,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `createCustomModel` operation. */
   export namespace CreateCustomModelConstants {
-    /** The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the default language, `en-US`. **Note:** The `ar-AR` language identifier cannot be used to create a custom model. Use the `ar-MS` identifier instead. */
+    /** The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the default language, `en-US`. **Note:** The `ar-AR` language identifier cannot be used to create a custom model. Use the `ar-MS` identifier instead. **IBM Cloud:** The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only for IBM Cloud. */
     export enum Language {
       AR_MS = 'ar-MS',
       DE_DE = 'de-DE',
@@ -1901,6 +2177,7 @@ namespace TextToSpeechV1 {
       IT_IT = 'it-IT',
       JA_JP = 'ja-JP',
       KO_KR = 'ko-KR',
+      NL_BE = 'nl-BE',
       NL_NL = 'nl-NL',
       PT_BR = 'pt-BR',
       ZH_CN = 'zh-CN',
@@ -1933,6 +2210,7 @@ namespace TextToSpeechV1 {
       IT_IT = 'it-IT',
       JA_JP = 'ja-JP',
       KO_KR = 'ko-KR',
+      NL_BE = 'nl-BE',
       NL_NL = 'nl-NL',
       PT_BR = 'pt-BR',
       ZH_CN = 'zh-CN',
@@ -1980,10 +2258,10 @@ namespace TextToSpeechV1 {
      *  of the service that owns the custom model.
      */
     customizationId: string;
-    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to
-     *  be added or updated for the custom model and the word's translation.
+    /** The [Add custom words](#addwords) method accepts an array of `Word` objects. Each object provides a word
+     *  that is to be added or updated for the custom model and the word's translation.
      *
-     *  The **List custom words** method returns an array of `Word` objects. Each object shows a word and its
+     *  The [List custom words](#listwords) method returns an array of `Word` objects. Each object shows a word and its
      *  translation from the custom model. The words are listed in alphabetical order, with uppercase letters listed
      *  before lowercase letters. The array is empty if the custom model contains no words.
      */
@@ -2106,7 +2384,7 @@ namespace TextToSpeechV1 {
      *  audio with higher sampling rates. The service transcodes all audio to 16 kHz before processing it.
      *  * The length of the prompt audio is limited to 30 seconds.
      */
-    file: NodeJS.ReadableStream|Buffer;
+    file: NodeJS.ReadableStream | Buffer;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -2153,7 +2431,7 @@ namespace TextToSpeechV1 {
      *  * The length of the enrollment audio is limited to 1 minute. Speaking one or two paragraphs of text that include
      *  five to ten sentences is recommended.
      */
-    audio: NodeJS.ReadableStream|Buffer;
+    audio: NodeJS.ReadableStream | Buffer;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -2188,8 +2466,8 @@ namespace TextToSpeechV1 {
 
   /** Information about an existing custom model. */
   export interface CustomModel {
-    /** The customization ID (GUID) of the custom model. The **Create a custom model** method returns only this
-     *  field. It does not not return the other fields of this object.
+    /** The customization ID (GUID) of the custom model. The [Create a custom model](#createcustommodel) method
+     *  returns only this field. It does not not return the other fields of this object.
      */
     customization_id: string;
     /** The name of the custom model. */
@@ -2211,12 +2489,13 @@ namespace TextToSpeechV1 {
     description?: string;
     /** An array of `Word` objects that lists the words and their translations from the custom model. The words are
      *  listed in alphabetical order, with uppercase letters listed before lowercase letters. The array is empty if no
-     *  words are defined for the custom model. This field is returned only by the **Get a custom model** method.
+     *  words are defined for the custom model. This field is returned only by the [Get a custom model](#getcustommodel)
+     *  method.
      */
     words?: Word[];
     /** An array of `Prompt` objects that provides information about the prompts that are defined for the specified
      *  custom model. The array is empty if no prompts are defined for the custom model. This field is returned only by
-     *  the **Get a custom model** method.
+     *  the [Get a custom model](#getcustommodel) method.
      */
     prompts?: Prompt[];
   }
@@ -2393,8 +2672,8 @@ namespace TextToSpeechV1 {
     customizable: boolean;
     /** Additional service features that are supported with the voice. */
     supported_features: SupportedFeatures;
-    /** Returns information about a specified custom model. This field is returned only by the **Get a voice**
-     *  method and only when you specify the customization ID of a custom model.
+    /** Returns information about a specified custom model. This field is returned only by the [Get a
+     *  voice](#getvoice) method and only when you specify the customization ID of a custom model.
      */
     customization?: CustomModel;
   }
@@ -2424,18 +2703,17 @@ namespace TextToSpeechV1 {
     part_of_speech?: string;
   }
 
-  /** For the **Add custom words** method, one or more words that are to be added or updated for the custom model and the translation for each specified word. For the **List custom words** method, the words and their translations from the custom model. */
+  /** For the [Add custom words](#addwords) method, one or more words that are to be added or updated for the custom model and the translation for each specified word. For the [List custom words](#listwords) method, the words and their translations from the custom model. */
   export interface Words {
-    /** The **Add custom words** method accepts an array of `Word` objects. Each object provides a word that is to
-     *  be added or updated for the custom model and the word's translation.
+    /** The [Add custom words](#addwords) method accepts an array of `Word` objects. Each object provides a word
+     *  that is to be added or updated for the custom model and the word's translation.
      *
-     *  The **List custom words** method returns an array of `Word` objects. Each object shows a word and its
+     *  The [List custom words](#listwords) method returns an array of `Word` objects. Each object shows a word and its
      *  translation from the custom model. The words are listed in alphabetical order, with uppercase letters listed
      *  before lowercase letters. The array is empty if the custom model contains no words.
      */
     words: Word[];
   }
-
 }
 
 export = TextToSpeechV1;

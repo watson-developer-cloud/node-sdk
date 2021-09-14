@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,15 +34,18 @@ import { getSdkHeaders } from '../lib/common';
  * dialog editor to create conversation flows between your apps and your users.
  *
  * The Assistant v1 API provides authoring methods your application can use to create or update a workspace.
+ *
+ * API Version: 1.0
+ * See: https://cloud.ibm.com/docs/assistant
  */
 
 class AssistantV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.assistant.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2020-04-01`.
+   *  `2021-06-14`.
    */
   version: string;
 
@@ -46,7 +54,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2020-04-01`.
+   * format. The current version is `2021-06-14`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -116,8 +124,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.MessageResponse>>}
    */
-  public message(params: AssistantV1.MessageParams): Promise<AssistantV1.Response<AssistantV1.MessageResponse>> {
-    const _params = Object.assign({}, params);
+  public message(
+    params: AssistantV1.MessageParams
+  ): Promise<AssistantV1.Response<AssistantV1.MessageResponse>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -132,19 +142,23 @@ class AssistantV1 extends BaseService {
       'alternate_intents': _params.alternateIntents,
       'context': _params.context,
       'output': _params.output,
-      'user_id': _params.userId
+      'user_id': _params.userId,
     };
 
     const query = {
       'version': this.version,
-      'nodes_visited_details': _params.nodesVisitedDetails
+      'nodes_visited_details': _params.nodesVisitedDetails,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'message');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'message'
+    );
 
     const parameters = {
       options: {
@@ -155,16 +169,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * bulkClassify
    ************************/
@@ -183,8 +201,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>>}
    */
-  public bulkClassify(params: AssistantV1.BulkClassifyParams): Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>> {
-    const _params = Object.assign({}, params);
+  public bulkClassify(
+    params: AssistantV1.BulkClassifyParams
+  ): Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -193,18 +213,22 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'input': _params.input
+      'input': _params.input,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'bulkClassify');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'bulkClassify'
+    );
 
     const parameters = {
       options: {
@@ -215,16 +239,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * workspaces
    ************************/
@@ -247,8 +275,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>>}
    */
-  public listWorkspaces(params?: AssistantV1.ListWorkspacesParams): Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>> {
-    const _params = Object.assign({}, params);
+  public listWorkspaces(
+    params?: AssistantV1.ListWorkspacesParams
+  ): Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>> {
+    const _params = { ...params };
 
     const query = {
       'version': this.version,
@@ -256,10 +286,14 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listWorkspaces');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listWorkspaces'
+    );
 
     const parameters = {
       options: {
@@ -268,14 +302,19 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create workspace.
@@ -305,8 +344,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
    */
-  public createWorkspace(params?: AssistantV1.CreateWorkspaceParams): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
-    const _params = Object.assign({}, params);
+  public createWorkspace(
+    params?: AssistantV1.CreateWorkspaceParams
+  ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
+    const _params = { ...params };
 
     const body = {
       'name': _params.name,
@@ -319,15 +360,19 @@ class AssistantV1 extends BaseService {
       'system_settings': _params.systemSettings,
       'webhooks': _params.webhooks,
       'intents': _params.intents,
-      'entities': _params.entities
+      'entities': _params.entities,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createWorkspace');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createWorkspace'
+    );
 
     const parameters = {
       options: {
@@ -337,15 +382,20 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get information about a workspace.
@@ -365,8 +415,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
    */
-  public getWorkspace(params: AssistantV1.GetWorkspaceParams): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
-    const _params = Object.assign({}, params);
+  public getWorkspace(
+    params: AssistantV1.GetWorkspaceParams
+  ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -378,14 +430,18 @@ class AssistantV1 extends BaseService {
       'version': this.version,
       'export': _params._export,
       'include_audit': _params.includeAudit,
-      'sort': _params.sort
+      'sort': _params.sort,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getWorkspace');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getWorkspace'
+    );
 
     const parameters = {
       options: {
@@ -395,14 +451,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update workspace.
@@ -440,8 +501,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
    */
-  public updateWorkspace(params: AssistantV1.UpdateWorkspaceParams): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
-    const _params = Object.assign({}, params);
+  public updateWorkspace(
+    params: AssistantV1.UpdateWorkspaceParams
+  ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -460,20 +523,24 @@ class AssistantV1 extends BaseService {
       'system_settings': _params.systemSettings,
       'webhooks': _params.webhooks,
       'intents': _params.intents,
-      'entities': _params.entities
+      'entities': _params.entities,
     };
 
     const query = {
       'version': this.version,
       'append': _params.append,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateWorkspace');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateWorkspace'
+    );
 
     const parameters = {
       options: {
@@ -484,15 +551,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete workspace.
@@ -504,8 +576,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteWorkspace(params: AssistantV1.DeleteWorkspaceParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteWorkspace(
+    params: AssistantV1.DeleteWorkspaceParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -514,14 +588,18 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWorkspace');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteWorkspace'
+    );
 
     const parameters = {
       options: {
@@ -531,15 +609,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * intents
    ************************/
@@ -566,8 +648,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.IntentCollection>>}
    */
-  public listIntents(params: AssistantV1.ListIntentsParams): Promise<AssistantV1.Response<AssistantV1.IntentCollection>> {
-    const _params = Object.assign({}, params);
+  public listIntents(
+    params: AssistantV1.ListIntentsParams
+  ): Promise<AssistantV1.Response<AssistantV1.IntentCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -582,14 +666,18 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listIntents');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listIntents'
+    );
 
     const parameters = {
       options: {
@@ -599,14 +687,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create intent.
@@ -629,8 +722,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
    */
-  public createIntent(params: AssistantV1.CreateIntentParams): Promise<AssistantV1.Response<AssistantV1.Intent>> {
-    const _params = Object.assign({}, params);
+  public createIntent(
+    params: AssistantV1.CreateIntentParams
+  ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -641,19 +736,23 @@ class AssistantV1 extends BaseService {
     const body = {
       'intent': _params.intent,
       'description': _params.description,
-      'examples': _params.examples
+      'examples': _params.examples,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createIntent');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createIntent'
+    );
 
     const parameters = {
       options: {
@@ -664,15 +763,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get intent.
@@ -690,8 +794,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
    */
-  public getIntent(params: AssistantV1.GetIntentParams): Promise<AssistantV1.Response<AssistantV1.Intent>> {
-    const _params = Object.assign({}, params);
+  public getIntent(
+    params: AssistantV1.GetIntentParams
+  ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -702,15 +808,19 @@ class AssistantV1 extends BaseService {
     const query = {
       'version': this.version,
       'export': _params._export,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'intent': _params.intent
+      'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getIntent');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getIntent'
+    );
 
     const parameters = {
       options: {
@@ -720,14 +830,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update intent.
@@ -760,8 +875,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Intent>>}
    */
-  public updateIntent(params: AssistantV1.UpdateIntentParams): Promise<AssistantV1.Response<AssistantV1.Intent>> {
-    const _params = Object.assign({}, params);
+  public updateIntent(
+    params: AssistantV1.UpdateIntentParams
+  ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -772,21 +889,25 @@ class AssistantV1 extends BaseService {
     const body = {
       'intent': _params.newIntent,
       'description': _params.newDescription,
-      'examples': _params.newExamples
+      'examples': _params.newExamples,
     };
 
     const query = {
       'version': this.version,
       'append': _params.append,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'intent': _params.intent
+      'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateIntent');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateIntent'
+    );
 
     const parameters = {
       options: {
@@ -797,15 +918,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete intent.
@@ -818,8 +944,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteIntent(params: AssistantV1.DeleteIntentParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteIntent(
+    params: AssistantV1.DeleteIntentParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -828,15 +956,19 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'intent': _params.intent
+      'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteIntent');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteIntent'
+    );
 
     const parameters = {
       options: {
@@ -846,15 +978,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * examples
    ************************/
@@ -879,8 +1015,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.ExampleCollection>>}
    */
-  public listExamples(params: AssistantV1.ListExamplesParams): Promise<AssistantV1.Response<AssistantV1.ExampleCollection>> {
-    const _params = Object.assign({}, params);
+  public listExamples(
+    params: AssistantV1.ListExamplesParams
+  ): Promise<AssistantV1.Response<AssistantV1.ExampleCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -894,15 +1032,19 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'intent': _params.intent
+      'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listExamples');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listExamples'
+    );
 
     const parameters = {
       options: {
@@ -912,14 +1054,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create user input example.
@@ -942,8 +1089,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
    */
-  public createExample(params: AssistantV1.CreateExampleParams): Promise<AssistantV1.Response<AssistantV1.Example>> {
-    const _params = Object.assign({}, params);
+  public createExample(
+    params: AssistantV1.CreateExampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Example>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -953,20 +1102,24 @@ class AssistantV1 extends BaseService {
 
     const body = {
       'text': _params.text,
-      'mentions': _params.mentions
+      'mentions': _params.mentions,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'intent': _params.intent
+      'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createExample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createExample'
+    );
 
     const parameters = {
       options: {
@@ -977,15 +1130,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get user input example.
@@ -1001,8 +1159,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
    */
-  public getExample(params: AssistantV1.GetExampleParams): Promise<AssistantV1.Response<AssistantV1.Example>> {
-    const _params = Object.assign({}, params);
+  public getExample(
+    params: AssistantV1.GetExampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Example>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1012,16 +1172,20 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'intent': _params.intent,
-      'text': _params.text
+      'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getExample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getExample'
+    );
 
     const parameters = {
       options: {
@@ -1031,14 +1195,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update user input example.
@@ -1062,8 +1231,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Example>>}
    */
-  public updateExample(params: AssistantV1.UpdateExampleParams): Promise<AssistantV1.Response<AssistantV1.Example>> {
-    const _params = Object.assign({}, params);
+  public updateExample(
+    params: AssistantV1.UpdateExampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Example>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1073,21 +1244,25 @@ class AssistantV1 extends BaseService {
 
     const body = {
       'text': _params.newText,
-      'mentions': _params.newMentions
+      'mentions': _params.newMentions,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'intent': _params.intent,
-      'text': _params.text
+      'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateExample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateExample'
+    );
 
     const parameters = {
       options: {
@@ -1098,15 +1273,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete user input example.
@@ -1120,8 +1300,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteExample(params: AssistantV1.DeleteExampleParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteExample(
+    params: AssistantV1.DeleteExampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'intent', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1130,16 +1312,20 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'intent': _params.intent,
-      'text': _params.text
+      'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteExample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteExample'
+    );
 
     const parameters = {
       options: {
@@ -1149,15 +1335,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * counterexamples
    ************************/
@@ -1181,8 +1371,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>>}
    */
-  public listCounterexamples(params: AssistantV1.ListCounterexamplesParams): Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>> {
-    const _params = Object.assign({}, params);
+  public listCounterexamples(
+    params: AssistantV1.ListCounterexamplesParams
+  ): Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1196,14 +1388,18 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listCounterexamples');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCounterexamples'
+    );
 
     const parameters = {
       options: {
@@ -1213,14 +1409,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create counterexample.
@@ -1241,8 +1442,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
    */
-  public createCounterexample(params: AssistantV1.CreateCounterexampleParams): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
-    const _params = Object.assign({}, params);
+  public createCounterexample(
+    params: AssistantV1.CreateCounterexampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1251,19 +1454,23 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'text': _params.text
+      'text': _params.text,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createCounterexample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createCounterexample'
+    );
 
     const parameters = {
       options: {
@@ -1274,15 +1481,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get counterexample.
@@ -1297,8 +1509,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
    */
-  public getCounterexample(params: AssistantV1.GetCounterexampleParams): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
-    const _params = Object.assign({}, params);
+  public getCounterexample(
+    params: AssistantV1.GetCounterexampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1308,15 +1522,19 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'text': _params.text
+      'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getCounterexample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCounterexample'
+    );
 
     const parameters = {
       options: {
@@ -1326,14 +1544,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update counterexample.
@@ -1352,8 +1575,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Counterexample>>}
    */
-  public updateCounterexample(params: AssistantV1.UpdateCounterexampleParams): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
-    const _params = Object.assign({}, params);
+  public updateCounterexample(
+    params: AssistantV1.UpdateCounterexampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1362,20 +1587,24 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'text': _params.newText
+      'text': _params.newText,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'text': _params.text
+      'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCounterexample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateCounterexample'
+    );
 
     const parameters = {
       options: {
@@ -1386,15 +1615,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete counterexample.
@@ -1407,8 +1641,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteCounterexample(params: AssistantV1.DeleteCounterexampleParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteCounterexample(
+    params: AssistantV1.DeleteCounterexampleParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1417,15 +1653,19 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'text': _params.text
+      'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCounterexample');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCounterexample'
+    );
 
     const parameters = {
       options: {
@@ -1435,15 +1675,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * entities
    ************************/
@@ -1470,8 +1714,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.EntityCollection>>}
    */
-  public listEntities(params: AssistantV1.ListEntitiesParams): Promise<AssistantV1.Response<AssistantV1.EntityCollection>> {
-    const _params = Object.assign({}, params);
+  public listEntities(
+    params: AssistantV1.ListEntitiesParams
+  ): Promise<AssistantV1.Response<AssistantV1.EntityCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1486,14 +1732,18 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listEntities');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listEntities'
+    );
 
     const parameters = {
       options: {
@@ -1503,14 +1753,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create entity.
@@ -1536,8 +1791,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
    */
-  public createEntity(params: AssistantV1.CreateEntityParams): Promise<AssistantV1.Response<AssistantV1.Entity>> {
-    const _params = Object.assign({}, params);
+  public createEntity(
+    params: AssistantV1.CreateEntityParams
+  ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1550,19 +1807,23 @@ class AssistantV1 extends BaseService {
       'description': _params.description,
       'metadata': _params.metadata,
       'fuzzy_match': _params.fuzzyMatch,
-      'values': _params.values
+      'values': _params.values,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createEntity');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createEntity'
+    );
 
     const parameters = {
       options: {
@@ -1573,15 +1834,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get entity.
@@ -1599,8 +1865,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
    */
-  public getEntity(params: AssistantV1.GetEntityParams): Promise<AssistantV1.Response<AssistantV1.Entity>> {
-    const _params = Object.assign({}, params);
+  public getEntity(
+    params: AssistantV1.GetEntityParams
+  ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1611,15 +1879,19 @@ class AssistantV1 extends BaseService {
     const query = {
       'version': this.version,
       'export': _params._export,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'entity': _params.entity
+      'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getEntity');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getEntity'
+    );
 
     const parameters = {
       options: {
@@ -1629,14 +1901,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update entity.
@@ -1671,8 +1948,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Entity>>}
    */
-  public updateEntity(params: AssistantV1.UpdateEntityParams): Promise<AssistantV1.Response<AssistantV1.Entity>> {
-    const _params = Object.assign({}, params);
+  public updateEntity(
+    params: AssistantV1.UpdateEntityParams
+  ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1685,21 +1964,25 @@ class AssistantV1 extends BaseService {
       'description': _params.newDescription,
       'metadata': _params.newMetadata,
       'fuzzy_match': _params.newFuzzyMatch,
-      'values': _params.newValues
+      'values': _params.newValues,
     };
 
     const query = {
       'version': this.version,
       'append': _params.append,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'entity': _params.entity
+      'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateEntity');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateEntity'
+    );
 
     const parameters = {
       options: {
@@ -1710,15 +1993,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete entity.
@@ -1731,8 +2019,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteEntity(params: AssistantV1.DeleteEntityParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteEntity(
+    params: AssistantV1.DeleteEntityParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1741,15 +2031,19 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'entity': _params.entity
+      'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteEntity');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteEntity'
+    );
 
     const parameters = {
       options: {
@@ -1759,15 +2053,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * mentions
    ************************/
@@ -1789,8 +2087,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>>}
    */
-  public listMentions(params: AssistantV1.ListMentionsParams): Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>> {
-    const _params = Object.assign({}, params);
+  public listMentions(
+    params: AssistantV1.ListMentionsParams
+  ): Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1801,15 +2101,19 @@ class AssistantV1 extends BaseService {
     const query = {
       'version': this.version,
       'export': _params._export,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'entity': _params.entity
+      'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listMentions');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listMentions'
+    );
 
     const parameters = {
       options: {
@@ -1819,15 +2123,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * values
    ************************/
@@ -1855,8 +2163,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.ValueCollection>>}
    */
-  public listValues(params: AssistantV1.ListValuesParams): Promise<AssistantV1.Response<AssistantV1.ValueCollection>> {
-    const _params = Object.assign({}, params);
+  public listValues(
+    params: AssistantV1.ListValuesParams
+  ): Promise<AssistantV1.Response<AssistantV1.ValueCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1871,15 +2181,19 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'entity': _params.entity
+      'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listValues');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listValues'
+    );
 
     const parameters = {
       options: {
@@ -1889,14 +2203,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create entity value.
@@ -1929,8 +2248,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
    */
-  public createValue(params: AssistantV1.CreateValueParams): Promise<AssistantV1.Response<AssistantV1.Value>> {
-    const _params = Object.assign({}, params);
+  public createValue(
+    params: AssistantV1.CreateValueParams
+  ): Promise<AssistantV1.Response<AssistantV1.Value>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1943,20 +2264,24 @@ class AssistantV1 extends BaseService {
       'metadata': _params.metadata,
       'type': _params.type,
       'synonyms': _params.synonyms,
-      'patterns': _params.patterns
+      'patterns': _params.patterns,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'entity': _params.entity
+      'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createValue');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createValue'
+    );
 
     const parameters = {
       options: {
@@ -1967,15 +2292,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get entity value.
@@ -1994,8 +2324,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
    */
-  public getValue(params: AssistantV1.GetValueParams): Promise<AssistantV1.Response<AssistantV1.Value>> {
-    const _params = Object.assign({}, params);
+  public getValue(
+    params: AssistantV1.GetValueParams
+  ): Promise<AssistantV1.Response<AssistantV1.Value>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2006,16 +2338,20 @@ class AssistantV1 extends BaseService {
     const query = {
       'version': this.version,
       'export': _params._export,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
-      'value': _params.value
+      'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getValue');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getValue'
+    );
 
     const parameters = {
       options: {
@@ -2025,14 +2361,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update entity value.
@@ -2074,8 +2415,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Value>>}
    */
-  public updateValue(params: AssistantV1.UpdateValueParams): Promise<AssistantV1.Response<AssistantV1.Value>> {
-    const _params = Object.assign({}, params);
+  public updateValue(
+    params: AssistantV1.UpdateValueParams
+  ): Promise<AssistantV1.Response<AssistantV1.Value>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2088,22 +2431,26 @@ class AssistantV1 extends BaseService {
       'metadata': _params.newMetadata,
       'type': _params.newType,
       'synonyms': _params.newSynonyms,
-      'patterns': _params.newPatterns
+      'patterns': _params.newPatterns,
     };
 
     const query = {
       'version': this.version,
       'append': _params.append,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
-      'value': _params.value
+      'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateValue');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateValue'
+    );
 
     const parameters = {
       options: {
@@ -2114,15 +2461,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete entity value.
@@ -2136,8 +2488,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteValue(params: AssistantV1.DeleteValueParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteValue(
+    params: AssistantV1.DeleteValueParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2146,16 +2500,20 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
-      'value': _params.value
+      'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteValue');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteValue'
+    );
 
     const parameters = {
       options: {
@@ -2165,15 +2523,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * synonyms
    ************************/
@@ -2199,8 +2561,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.SynonymCollection>>}
    */
-  public listSynonyms(params: AssistantV1.ListSynonymsParams): Promise<AssistantV1.Response<AssistantV1.SynonymCollection>> {
-    const _params = Object.assign({}, params);
+  public listSynonyms(
+    params: AssistantV1.ListSynonymsParams
+  ): Promise<AssistantV1.Response<AssistantV1.SynonymCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2214,16 +2578,20 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
-      'value': _params.value
+      'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listSynonyms');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listSynonyms'
+    );
 
     const parameters = {
       options: {
@@ -2233,14 +2601,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create entity value synonym.
@@ -2262,8 +2635,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
    */
-  public createSynonym(params: AssistantV1.CreateSynonymParams): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
-    const _params = Object.assign({}, params);
+  public createSynonym(
+    params: AssistantV1.CreateSynonymParams
+  ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2272,21 +2647,25 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'synonym': _params.synonym
+      'synonym': _params.synonym,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
-      'value': _params.value
+      'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createSynonym');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createSynonym'
+    );
 
     const parameters = {
       options: {
@@ -2297,15 +2676,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get entity value synonym.
@@ -2322,8 +2706,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
    */
-  public getSynonym(params: AssistantV1.GetSynonymParams): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
-    const _params = Object.assign({}, params);
+  public getSynonym(
+    params: AssistantV1.GetSynonymParams
+  ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2333,17 +2719,21 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value,
-      'synonym': _params.synonym
+      'synonym': _params.synonym,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getSynonym');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getSynonym'
+    );
 
     const parameters = {
       options: {
@@ -2353,14 +2743,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update entity value synonym.
@@ -2384,8 +2779,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Synonym>>}
    */
-  public updateSynonym(params: AssistantV1.UpdateSynonymParams): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
-    const _params = Object.assign({}, params);
+  public updateSynonym(
+    params: AssistantV1.UpdateSynonymParams
+  ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2394,22 +2791,26 @@ class AssistantV1 extends BaseService {
     }
 
     const body = {
-      'synonym': _params.newSynonym
+      'synonym': _params.newSynonym,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value,
-      'synonym': _params.synonym
+      'synonym': _params.synonym,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateSynonym');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateSynonym'
+    );
 
     const parameters = {
       options: {
@@ -2420,15 +2821,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete entity value synonym.
@@ -2443,8 +2849,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteSynonym(params: AssistantV1.DeleteSynonymParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteSynonym(
+    params: AssistantV1.DeleteSynonymParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2453,17 +2861,21 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
       'entity': _params.entity,
       'value': _params.value,
-      'synonym': _params.synonym
+      'synonym': _params.synonym,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteSynonym');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteSynonym'
+    );
 
     const parameters = {
       options: {
@@ -2473,15 +2885,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * dialogNodes
    ************************/
@@ -2505,8 +2921,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>>}
    */
-  public listDialogNodes(params: AssistantV1.ListDialogNodesParams): Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>> {
-    const _params = Object.assign({}, params);
+  public listDialogNodes(
+    params: AssistantV1.ListDialogNodesParams
+  ): Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2520,14 +2938,18 @@ class AssistantV1 extends BaseService {
       'include_count': _params.includeCount,
       'sort': _params.sort,
       'cursor': _params.cursor,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listDialogNodes');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listDialogNodes'
+    );
 
     const parameters = {
       options: {
@@ -2537,14 +2959,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create dialog node.
@@ -2598,8 +3025,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
    */
-  public createDialogNode(params: AssistantV1.CreateDialogNodeParams): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
-    const _params = Object.assign({}, params);
+  public createDialogNode(
+    params: AssistantV1.CreateDialogNodeParams
+  ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2626,19 +3055,23 @@ class AssistantV1 extends BaseService {
       'digress_out': _params.digressOut,
       'digress_out_slots': _params.digressOutSlots,
       'user_label': _params.userLabel,
-      'disambiguation_opt_out': _params.disambiguationOptOut
+      'disambiguation_opt_out': _params.disambiguationOptOut,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createDialogNode');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createDialogNode'
+    );
 
     const parameters = {
       options: {
@@ -2649,15 +3082,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get dialog node.
@@ -2672,8 +3110,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
    */
-  public getDialogNode(params: AssistantV1.GetDialogNodeParams): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
-    const _params = Object.assign({}, params);
+  public getDialogNode(
+    params: AssistantV1.GetDialogNodeParams
+  ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2683,15 +3123,19 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'dialog_node': _params.dialogNode
+      'dialog_node': _params.dialogNode,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getDialogNode');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getDialogNode'
+    );
 
     const parameters = {
       options: {
@@ -2701,14 +3145,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update dialog node.
@@ -2764,8 +3213,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.DialogNode>>}
    */
-  public updateDialogNode(params: AssistantV1.UpdateDialogNodeParams): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
-    const _params = Object.assign({}, params);
+  public updateDialogNode(
+    params: AssistantV1.UpdateDialogNodeParams
+  ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2792,20 +3243,24 @@ class AssistantV1 extends BaseService {
       'digress_out': _params.newDigressOut,
       'digress_out_slots': _params.newDigressOutSlots,
       'user_label': _params.newUserLabel,
-      'disambiguation_opt_out': _params.newDisambiguationOptOut
+      'disambiguation_opt_out': _params.newDisambiguationOptOut,
     };
 
     const query = {
       'version': this.version,
-      'include_audit': _params.includeAudit
+      'include_audit': _params.includeAudit,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'dialog_node': _params.dialogNode
+      'dialog_node': _params.dialogNode,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateDialogNode');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateDialogNode'
+    );
 
     const parameters = {
       options: {
@@ -2816,15 +3271,20 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete dialog node.
@@ -2837,8 +3297,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteDialogNode(params: AssistantV1.DeleteDialogNodeParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteDialogNode(
+    params: AssistantV1.DeleteDialogNodeParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId', 'dialogNode'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2847,15 +3309,19 @@ class AssistantV1 extends BaseService {
     }
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
     const path = {
       'workspace_id': _params.workspaceId,
-      'dialog_node': _params.dialogNode
+      'dialog_node': _params.dialogNode,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteDialogNode');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteDialogNode'
+    );
 
     const parameters = {
       options: {
@@ -2865,15 +3331,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * logs
    ************************/
@@ -2897,8 +3367,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.LogCollection>>}
    */
-  public listLogs(params: AssistantV1.ListLogsParams): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
-    const _params = Object.assign({}, params);
+  public listLogs(
+    params: AssistantV1.ListLogsParams
+  ): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
+    const _params = { ...params };
     const requiredParams = ['workspaceId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2911,14 +3383,18 @@ class AssistantV1 extends BaseService {
       'sort': _params.sort,
       'filter': _params.filter,
       'page_limit': _params.pageLimit,
-      'cursor': _params.cursor
+      'cursor': _params.cursor,
     };
 
     const path = {
-      'workspace_id': _params.workspaceId
+      'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listLogs');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listLogs'
+    );
 
     const parameters = {
       options: {
@@ -2928,14 +3404,19 @@ class AssistantV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List log events in all workspaces.
@@ -2945,8 +3426,8 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
    * filter. You must specify a filter query that includes a value for `language`, as well as a value for
-   * `request.context.system.assistant_id`, `workspace_id`, or `request.context.metadata.deployment`. For more
-   * information, see the
+   * `request.context.system.assistant_id`, `workspace_id`, or `request.context.metadata.deployment`. These required
+   * filters must be specified using the exact match (`::`) operator. For more information, see the
    * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
@@ -2955,8 +3436,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.LogCollection>>}
    */
-  public listAllLogs(params: AssistantV1.ListAllLogsParams): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
-    const _params = Object.assign({}, params);
+  public listAllLogs(
+    params: AssistantV1.ListAllLogsParams
+  ): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
+    const _params = { ...params };
     const requiredParams = ['filter'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -2969,10 +3452,14 @@ class AssistantV1 extends BaseService {
       'filter': _params.filter,
       'sort': _params.sort,
       'page_limit': _params.pageLimit,
-      'cursor': _params.cursor
+      'cursor': _params.cursor,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listAllLogs');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listAllLogs'
+    );
 
     const parameters = {
       options: {
@@ -2981,15 +3468,19 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * userData
    ************************/
@@ -3014,8 +3505,10 @@ class AssistantV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
    */
-  public deleteUserData(params: AssistantV1.DeleteUserDataParams): Promise<AssistantV1.Response<AssistantV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteUserData(
+    params: AssistantV1.DeleteUserDataParams
+  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['customerId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -3025,10 +3518,14 @@ class AssistantV1 extends BaseService {
 
     const query = {
       'version': this.version,
-      'customer_id': _params.customerId
+      'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteUserData'
+    );
 
     const parameters = {
       options: {
@@ -3037,15 +3534,19 @@ class AssistantV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -3053,18 +3554,16 @@ class AssistantV1 extends BaseService {
  ************************/
 
 namespace AssistantV1 {
-
   /** Options for the `AssistantV1` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2020-04-01`.
+     *  `2021-06-14`.
      */
     version: string;
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -3075,7 +3574,7 @@ namespace AssistantV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -4233,7 +4732,8 @@ namespace AssistantV1 {
   export interface ListAllLogsParams {
     /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a
      *  filter query that includes a value for `language`, as well as a value for `request.context.system.assistant_id`,
-     *  `workspace_id`, or `request.context.metadata.deployment`. For more information, see the
+     *  `workspace_id`, or `request.context.metadata.deployment`. These required filters must be specified using the
+     *  exact match (`::`) operator. For more information, see the
      *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
      */
     filter: string;
@@ -4978,12 +5478,16 @@ namespace AssistantV1 {
     /** An array of zero-based character offsets that indicate where the detected entity values begin and end in the
      *  input text.
      */
-    location: number[];
+    location?: number[];
     /** The entity value that was recognized in the user input. */
     value: string;
     /** A decimal percentage that represents Watson's confidence in the recognized entity. */
     confidence?: number;
-    /** Any metadata for the entity. */
+    /** **Deprecated.** Any metadata for the entity.
+     *
+     *  Beginning with the `2021-06-14` API version, the `metadata` property is no longer returned. For information
+     *  about system entities recognized in the user input, see the `interpretation` property.
+     */
     metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
@@ -5272,8 +5776,8 @@ namespace AssistantV1 {
     none_of_the_above_prompt?: string;
     /** Whether the disambiguation feature is enabled for the workspace. */
     enabled?: boolean;
-    /** The sensitivity of the disambiguation feature to intent detection conflicts. Set to **high** if you want the
-     *  disambiguation feature to be triggered more often. This can be useful for testing or demonstration purposes.
+    /** The sensitivity of the disambiguation feature to intent detection uncertainty. Higher sensitivity means that
+     *  the disambiguation feature is triggered more often and includes more choices.
      */
     sensitivity?: string;
     /** Whether the order in which disambiguation suggestions are presented should be randomized (but still
@@ -5346,7 +5850,7 @@ namespace AssistantV1 {
      *  client application or channel.
      */
     response_type: string;
-    /** The URL of the image. */
+    /** The `https:` URL of the image. */
     source: string;
     /** An optional title to show before the response. */
     title?: string;
@@ -5354,6 +5858,8 @@ namespace AssistantV1 {
     description?: string;
     /** An array of objects specifying channels for which the response is intended. */
     channels?: ResponseGenericChannel[];
+    /** Descriptive text that can be used for screen readers or other situations where the image cannot be seen. */
+    alt_text?: string;
   }
 
   /** DialogNodeOutputGenericDialogNodeOutputResponseTypeOption. */
@@ -5501,7 +6007,7 @@ namespace AssistantV1 {
      *  client application or channel.
      */
     response_type: string;
-    /** The URL of the image. */
+    /** The `https:` URL of the image. */
     source: string;
     /** The title or introductory text to show before the response. */
     title?: string;
@@ -5511,6 +6017,8 @@ namespace AssistantV1 {
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
     channels?: ResponseGenericChannel[];
+    /** Descriptive text that can be used for screen readers or other situations where the image cannot be seen. */
+    alt_text?: string;
   }
 
   /** RuntimeResponseGenericRuntimeResponseTypeOption. */
@@ -5592,7 +6100,6 @@ namespace AssistantV1 {
      */
     channels?: ResponseGenericChannel[];
   }
-
 }
 
 export = AssistantV1;

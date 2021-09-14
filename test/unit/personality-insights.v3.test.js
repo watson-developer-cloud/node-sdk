@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const PersonalityInsightsV3 = require('../../dist/personality-insights/v3');
@@ -29,13 +29,13 @@ const {
   checkUserHeader,
 } = unitTestUtils;
 
-const service = {
+const personalityInsightsServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.us-south.personality-insights.watson.cloud.ibm.com',
   version: 'testString',
 };
 
-const personalityInsightsService = new PersonalityInsightsV3(service);
+const personalityInsightsService = new PersonalityInsightsV3(personalityInsightsServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(personalityInsightsService, 'createRequest');
@@ -134,43 +134,23 @@ describe('PersonalityInsightsV3', () => {
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
-        const serviceObj = new PersonalityInsightsV3(service);
+        const serviceObj = new PersonalityInsightsV3(personalityInsightsServiceOptions);
         expect(serviceObj).not.toBeNull();
-        expect(serviceObj.version).toEqual(service.version);
+        expect(serviceObj.version).toEqual(personalityInsightsServiceOptions.version);
       });
     });
   });
   describe('profile', () => {
     describe('positive tests', () => {
-      // Request models needed by this operation.
-
-      // ContentItem
-      const contentItemModel = {
-        content: 'testString',
-        id: 'testString',
-        created: 26,
-        updated: 26,
-        contenttype: 'text/plain',
-        language: 'ar',
-        parentid: 'testString',
-        reply: true,
-        forward: true,
-      };
-
-      // Content
-      const contentModel = {
-        contentItems: [contentItemModel],
-      };
-
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation profile
-        const content = contentModel;
-        const contentType = 'application/json';
-        const contentLanguage = 'ar';
-        const acceptLanguage = 'ar';
-        const rawScores = true;
-        const csvHeaders = true;
-        const consumptionPreferences = true;
+        const content = {};
+        const contentType = 'text/plain';
+        const contentLanguage = 'en';
+        const acceptLanguage = 'en';
+        const rawScores = false;
+        const csvHeaders = false;
+        const consumptionPreferences = false;
         const params = {
           content: content,
           contentType: contentType,
@@ -189,25 +169,25 @@ describe('PersonalityInsightsV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/profile', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/profile', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = contentType;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'Content-Type', contentType);
         checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
         checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
-        expect(options.body).toEqual(content);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['raw_scores']).toEqual(rawScores);
-        expect(options.qs['csv_headers']).toEqual(csvHeaders);
-        expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
+        expect(mockRequestOptions.body).toEqual(content);
+        expect(mockRequestOptions.qs.version).toEqual(personalityInsightsServiceOptions.version);
+        expect(mockRequestOptions.qs.raw_scores).toEqual(rawScores);
+        expect(mockRequestOptions.qs.csv_headers).toEqual(csvHeaders);
+        expect(mockRequestOptions.qs.consumption_preferences).toEqual(consumptionPreferences);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const content = contentModel;
+        const content = {};
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -224,7 +204,7 @@ describe('PersonalityInsightsV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await personalityInsightsService.profile({});
@@ -236,11 +216,11 @@ describe('PersonalityInsightsV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const profilePromise = personalityInsightsService.profile();
         expectToBePromise(profilePromise);
 
-        profilePromise.catch(err => {
+        profilePromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -249,35 +229,15 @@ describe('PersonalityInsightsV3', () => {
   });
   describe('profileAsCsv', () => {
     describe('positive tests', () => {
-      // Request models needed by this operation.
-
-      // ContentItem
-      const contentItemModel = {
-        content: 'testString',
-        id: 'testString',
-        created: 26,
-        updated: 26,
-        contenttype: 'text/plain',
-        language: 'ar',
-        parentid: 'testString',
-        reply: true,
-        forward: true,
-      };
-
-      // Content
-      const contentModel = {
-        contentItems: [contentItemModel],
-      };
-
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation profileAsCsv
-        const content = contentModel;
-        const contentType = 'application/json';
-        const contentLanguage = 'ar';
-        const acceptLanguage = 'ar';
-        const rawScores = true;
-        const csvHeaders = true;
-        const consumptionPreferences = true;
+        const content = {};
+        const contentType = 'text/plain';
+        const contentLanguage = 'en';
+        const acceptLanguage = 'en';
+        const rawScores = false;
+        const csvHeaders = false;
+        const consumptionPreferences = false;
         const params = {
           content: content,
           contentType: contentType,
@@ -296,25 +256,25 @@ describe('PersonalityInsightsV3', () => {
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
 
-        const options = getOptions(createRequestMock);
+        const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(options, '/v3/profile', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v3/profile', 'POST');
         const expectedAccept = 'text/csv';
         const expectedContentType = contentType;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'Content-Type', contentType);
         checkUserHeader(createRequestMock, 'Content-Language', contentLanguage);
         checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
-        expect(options.body).toEqual(content);
-        expect(options.qs['version']).toEqual(service.version);
-        expect(options.qs['raw_scores']).toEqual(rawScores);
-        expect(options.qs['csv_headers']).toEqual(csvHeaders);
-        expect(options.qs['consumption_preferences']).toEqual(consumptionPreferences);
+        expect(mockRequestOptions.body).toEqual(content);
+        expect(mockRequestOptions.qs.version).toEqual(personalityInsightsServiceOptions.version);
+        expect(mockRequestOptions.qs.raw_scores).toEqual(rawScores);
+        expect(mockRequestOptions.qs.csv_headers).toEqual(csvHeaders);
+        expect(mockRequestOptions.qs.consumption_preferences).toEqual(consumptionPreferences);
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const content = contentModel;
+        const content = {};
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -331,7 +291,7 @@ describe('PersonalityInsightsV3', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await personalityInsightsService.profileAsCsv({});
@@ -343,11 +303,11 @@ describe('PersonalityInsightsV3', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const profileAsCsvPromise = personalityInsightsService.profileAsCsv();
         expectToBePromise(profileAsCsvPromise);
 
-        profileAsCsvPromise.catch(err => {
+        profileAsCsvPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

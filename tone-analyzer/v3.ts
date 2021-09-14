@@ -15,13 +15,18 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-902c9336-20210507-162723
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
-
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -33,11 +38,14 @@ import { getSdkHeaders } from '../lib/common';
  *
  * **Note:** Request logging is disabled for the Tone Analyzer service. Regardless of whether you set the
  * `X-Watson-Learning-Opt-Out` request header, the service does not log or retain data from requests and responses.
+ *
+ * API Version: 3.5.3
+ * See: https://cloud.ibm.com/docs/tone-analyzer
  */
 
 class ToneAnalyzerV3 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'tone_analyzer';
 
   /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
@@ -106,7 +114,7 @@ class ToneAnalyzerV3 extends BaseService {
    * endpoint](https://cloud.ibm.com/docs/tone-analyzer?topic=tone-analyzer-utgpe#utgpe).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {ToneInput|string} params.toneInput - JSON, plain text, or HTML input that contains the content to be
+   * @param {ToneInput | string} params.toneInput - JSON, plain text, or HTML input that contains the content to be
    * analyzed. For JSON input, provide an object of type `ToneInput`.
    * @param {string} [params.contentType] - The type of the input. A character encoding can be specified by including a
    * `charset` parameter. For example, 'text/plain;charset=utf-8'.
@@ -131,8 +139,10 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>>}
    */
-  public tone(params: ToneAnalyzerV3.ToneParams): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>> {
-    const _params = Object.assign({}, params);
+  public tone(
+    params: ToneAnalyzerV3.ToneParams
+  ): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.ToneAnalysis>> {
+    const _params = { ...params };
     const requiredParams = ['toneInput'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -144,10 +154,14 @@ class ToneAnalyzerV3 extends BaseService {
     const query = {
       'version': this.version,
       'sentences': _params.sentences,
-      'tones': _params.tones
+      'tones': _params.tones,
     };
 
-    const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'tone');
+    const sdkHeaders = getSdkHeaders(
+      ToneAnalyzerV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'tone'
+    );
 
     const parameters = {
       options: {
@@ -157,17 +171,22 @@ class ToneAnalyzerV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': _params.contentType,
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Analyze customer-engagement tone.
@@ -200,8 +219,10 @@ class ToneAnalyzerV3 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>>}
    */
-  public toneChat(params: ToneAnalyzerV3.ToneChatParams): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>> {
-    const _params = Object.assign({}, params);
+  public toneChat(
+    params: ToneAnalyzerV3.ToneChatParams
+  ): Promise<ToneAnalyzerV3.Response<ToneAnalyzerV3.UtteranceAnalyses>> {
+    const _params = { ...params };
     const requiredParams = ['utterances'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -210,14 +231,18 @@ class ToneAnalyzerV3 extends BaseService {
     }
 
     const body = {
-      'utterances': _params.utterances
+      'utterances': _params.utterances,
     };
 
     const query = {
-      'version': this.version
+      'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(ToneAnalyzerV3.DEFAULT_SERVICE_NAME, 'v3', 'toneChat');
+    const sdkHeaders = getSdkHeaders(
+      ToneAnalyzerV3.DEFAULT_SERVICE_NAME,
+      'v3',
+      'toneChat'
+    );
 
     const parameters = {
       options: {
@@ -227,18 +252,22 @@ class ToneAnalyzerV3 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Content-Language': _params.contentLanguage,
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Content-Language': _params.contentLanguage,
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -246,10 +275,8 @@ class ToneAnalyzerV3 extends BaseService {
  ************************/
 
 namespace ToneAnalyzerV3 {
-
   /** Options for the `ToneAnalyzerV3` constructor. */
   export interface Options extends UserOptions {
-
     /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
      *  version is `2017-09-21`.
      */
@@ -257,7 +284,7 @@ namespace ToneAnalyzerV3 {
   }
 
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -268,7 +295,7 @@ namespace ToneAnalyzerV3 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -284,7 +311,7 @@ namespace ToneAnalyzerV3 {
     /** JSON, plain text, or HTML input that contains the content to be analyzed. For JSON input, provide an object
      *  of type `ToneInput`.
      */
-    toneInput: ToneInput|string;
+    toneInput: ToneInput | string;
     /** The type of the input. A character encoding can be specified by including a `charset` parameter. For
      *  example, 'text/plain;charset=utf-8'.
      */
@@ -552,7 +579,6 @@ namespace ToneAnalyzerV3 {
      */
     error?: string;
   }
-
 }
 
 export = ToneAnalyzerV3;

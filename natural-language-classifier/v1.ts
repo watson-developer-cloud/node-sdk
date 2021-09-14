@@ -15,24 +15,39 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201103-112432
+ * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
  */
- 
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * IBM Watson&trade; Natural Language Classifier uses machine learning algorithms to return the top matching predefined
- * classes for short text input. You create and train a classifier to connect predefined classes to example texts so
- * that the service can apply those classes to new inputs.
+ * On 9 August 2021, IBM announced the deprecation of IBM Watson&trade; Natural Language Classifier. As of 9 September
+ * 2021, you cannot create new instances. However, existing instances are supported until 8 August 2022. The service
+ * will no longer be available on 8 August 2022.<br/><br/>As an alternative, consider migrating to IBM Watson Natural
+ * Language Understanding. For more information, see [Migrating to Natural Language
+ * Understanding](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-migrating).
+ * {: deprecated}
+ *
+ * Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short
+ * text input. You create and train a classifier to connect predefined classes to example texts so that the service can
+ * apply those classes to new inputs.
+ *
+ * API Version: 1.0
+ * See: https://cloud.ibm.com/docs/natural-language-classifier
  */
 
 class NaturalLanguageClassifierV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'natural_language_classifier';
 
   /**
@@ -84,8 +99,10 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classification>>}
    */
-  public classify(params: NaturalLanguageClassifierV1.ClassifyParams): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classification>> {
-    const _params = Object.assign({}, params);
+  public classify(
+    params: NaturalLanguageClassifierV1.ClassifyParams
+  ): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classification>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId', 'text'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -94,14 +111,18 @@ class NaturalLanguageClassifierV1 extends BaseService {
     }
 
     const body = {
-      'text': _params.text
+      'text': _params.text,
     };
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME, 'v1', 'classify');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'classify'
+    );
 
     const parameters = {
       options: {
@@ -111,15 +132,20 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Classify multiple phrases.
@@ -135,8 +161,10 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.ClassificationCollection>>}
    */
-  public classifyCollection(params: NaturalLanguageClassifierV1.ClassifyCollectionParams): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.ClassificationCollection>> {
-    const _params = Object.assign({}, params);
+  public classifyCollection(
+    params: NaturalLanguageClassifierV1.ClassifyCollectionParams
+  ): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.ClassificationCollection>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId', 'collection'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -145,14 +173,18 @@ class NaturalLanguageClassifierV1 extends BaseService {
     }
 
     const body = {
-      'collection': _params.collection
+      'collection': _params.collection,
     };
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME, 'v1', 'classifyCollection');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'classifyCollection'
+    );
 
     const parameters = {
       options: {
@@ -162,16 +194,20 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
   /*************************
    * manageClassifiers
    ************************/
@@ -182,20 +218,22 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * Sends data to create and train a classifier and returns information about the new classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingMetadata - Metadata in JSON format. The metadata identifies
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingMetadata - Metadata in JSON format. The metadata identifies
    * the language of the data, and an optional name to identify the classifier. Specify the language with the 2-letter
    * primary language code as assigned in ISO standard 639.
    *
    * Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese
    * (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
-   * @param {NodeJS.ReadableStream|Buffer} params.trainingData - Training data in CSV format. Each text value must have
-   * at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in CSV format. Each text value must
+   * have at least one class. The data can include up to 3,000 classes and 20,000 records. For details, see [Data
    * preparation](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-using-your-data).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classifier>>}
    */
-  public createClassifier(params: NaturalLanguageClassifierV1.CreateClassifierParams): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classifier>> {
-    const _params = Object.assign({}, params);
+  public createClassifier(
+    params: NaturalLanguageClassifierV1.CreateClassifierParams
+  ): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classifier>> {
+    const _params = { ...params };
     const requiredParams = ['trainingMetadata', 'trainingData'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -206,15 +244,19 @@ class NaturalLanguageClassifierV1 extends BaseService {
     const formData = {
       'training_metadata': {
         data: _params.trainingMetadata,
-        contentType: 'application/json'
+        contentType: 'application/json',
       },
       'training_data': {
         data: _params.trainingData,
-        contentType: 'text/csv'
-      }
+        contentType: 'text/csv',
+      },
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME, 'v1', 'createClassifier');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createClassifier'
+    );
 
     const parameters = {
       options: {
@@ -223,15 +265,20 @@ class NaturalLanguageClassifierV1 extends BaseService {
         formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List classifiers.
@@ -242,10 +289,16 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.ClassifierList>>}
    */
-  public listClassifiers(params?: NaturalLanguageClassifierV1.ListClassifiersParams): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.ClassifierList>> {
-    const _params = Object.assign({}, params);
+  public listClassifiers(
+    params?: NaturalLanguageClassifierV1.ListClassifiersParams
+  ): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.ClassifierList>> {
+    const _params = { ...params };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME, 'v1', 'listClassifiers');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listClassifiers'
+    );
 
     const parameters = {
       options: {
@@ -253,14 +306,19 @@ class NaturalLanguageClassifierV1 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get information about a classifier.
@@ -272,8 +330,10 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classifier>>}
    */
-  public getClassifier(params: NaturalLanguageClassifierV1.GetClassifierParams): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classifier>> {
-    const _params = Object.assign({}, params);
+  public getClassifier(
+    params: NaturalLanguageClassifierV1.GetClassifierParams
+  ): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Classifier>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -282,10 +342,14 @@ class NaturalLanguageClassifierV1 extends BaseService {
     }
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME, 'v1', 'getClassifier');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getClassifier'
+    );
 
     const parameters = {
       options: {
@@ -294,14 +358,19 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete classifier.
@@ -311,8 +380,10 @@ class NaturalLanguageClassifierV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Empty>>}
    */
-  public deleteClassifier(params: NaturalLanguageClassifierV1.DeleteClassifierParams): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteClassifier(
+    params: NaturalLanguageClassifierV1.DeleteClassifierParams
+  ): Promise<NaturalLanguageClassifierV1.Response<NaturalLanguageClassifierV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['classifierId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -321,10 +392,14 @@ class NaturalLanguageClassifierV1 extends BaseService {
     }
 
     const path = {
-      'classifier_id': _params.classifierId
+      'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteClassifier');
+    const sdkHeaders = getSdkHeaders(
+      NaturalLanguageClassifierV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteClassifier'
+    );
 
     const parameters = {
       options: {
@@ -333,15 +408,19 @@ class NaturalLanguageClassifierV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -349,9 +428,8 @@ class NaturalLanguageClassifierV1 extends BaseService {
  ************************/
 
 namespace NaturalLanguageClassifierV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -362,7 +440,7 @@ namespace NaturalLanguageClassifierV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -399,12 +477,12 @@ namespace NaturalLanguageClassifierV1 {
      *  Supported languages are English (`en`), Arabic (`ar`), French (`fr`), German, (`de`), Italian (`it`), Japanese
      *  (`ja`), Korean (`ko`), Brazilian Portuguese (`pt`), and Spanish (`es`).
      */
-    trainingMetadata: NodeJS.ReadableStream|Buffer;
+    trainingMetadata: NodeJS.ReadableStream | Buffer;
     /** Training data in CSV format. Each text value must have at least one class. The data can include up to 3,000
      *  classes and 20,000 records. For details, see [Data
      *  preparation](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-using-your-data).
      */
-    trainingData: NodeJS.ReadableStream|Buffer;
+    trainingData: NodeJS.ReadableStream | Buffer;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -504,7 +582,6 @@ namespace NaturalLanguageClassifierV1 {
     /** An array of up to ten class-confidence pairs sorted in descending order of confidence. */
     classes?: ClassifiedClass[];
   }
-
 }
 
 export = NaturalLanguageClassifierV1;
