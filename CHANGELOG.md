@@ -1,3 +1,24 @@
+# [6.2.0](https://github.com/watson-developer-cloud/node-sdk/compare/v6.1.2...v6.2.0) (2021-09-14)
+
+
+### Bug Fixes
+
+* **assistant_v2 discovery_v1:** regen with final release ([cc99978](https://github.com/watson-developer-cloud/node-sdk/commit/cc999789e4f308d7859434cd1338361274f26732))
+* **discovery_v1:** update status model ([bb69a7e](https://github.com/watson-developer-cloud/node-sdk/commit/bb69a7eec2bce738d17b06b246d850e8e0dcf8ba))
+* **nlu:** fix listClassificationModels ([8c09145](https://github.com/watson-developer-cloud/node-sdk/commit/8c09145e9f7ad41b767e1500bf5d87826257ff81))
+* **package.json:** bump cloud sdk core version ([f4579b4](https://github.com/watson-developer-cloud/node-sdk/commit/f4579b47b7aca8ba67ac0978f7220345f4481a6f))
+* regenerate with correct version ([16420fc](https://github.com/watson-developer-cloud/node-sdk/commit/16420fc224972fde458e52fbe4a62ec4a699d55d))
+* **package.json:** bump axios version ([29b9b4e](https://github.com/watson-developer-cloud/node-sdk/commit/29b9b4ec47cf0d4b20b2b21c8f296f5f23e1a7ab))
+
+
+### Features
+
+* **assistant_v1:** alt_text property added ([32c7d2e](https://github.com/watson-developer-cloud/node-sdk/commit/32c7d2ebe194922dc971eda54067738643f08870))
+* **assistant_v2:** add properties to model and Image response ([6f0bb29](https://github.com/watson-developer-cloud/node-sdk/commit/6f0bb29a009edc3f13defb89994f2fd62c8b4133))
+* **discovery_v2:** update CreateProjectConstants Type enum ([f272fc6](https://github.com/watson-developer-cloud/node-sdk/commit/f272fc64a5e997679fb277f6a94c4c4aa571c2d7))
+* **stt:** support more languages ([84bb18d](https://github.com/watson-developer-cloud/node-sdk/commit/84bb18da2a4431c4f59cd95f0e05c8d61cd7ab85))
+* **tts:** new voice models added ([1e64b92](https://github.com/watson-developer-cloud/node-sdk/commit/1e64b92ed37428993c4f1f1cbedc7c733668ee81))
+
 ## [6.1.2](https://github.com/watson-developer-cloud/node-sdk/compare/v6.1.1...v6.1.2) (2021-08-25)
 
 
