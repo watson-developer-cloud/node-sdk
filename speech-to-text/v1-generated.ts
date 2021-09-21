@@ -6153,7 +6153,7 @@ namespace SpeechToTextV1 {
      *  `[["hello",0.95],["world",0.866]]`. Confidence scores are returned only for the best alternative and only with
      *  results marked as final.
      */
-    word_confidence?: [string, number, number];
+    word_confidence?: [string, number];
   }
 
   /** Component results for a speech recognition request. */
