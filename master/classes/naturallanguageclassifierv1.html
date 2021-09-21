@@ -67,11 +67,19 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>IBM Watson&trade; Natural Language Classifier uses machine learning algorithms to return the top matching predefined
-							classes for short text input. You create and train a classifier to connect predefined classes to example texts so
-							that the service can apply those classes to new inputs.
+						<p>On 9 August 2021, IBM announced the deprecation of IBM Watson&trade; Natural Language Classifier. As of 9 September
+							2021, you cannot create new instances. However, existing instances are supported until 8 August 2022. The service
+							will no longer be available on 8 August 2022.<br/><br/>As an alternative, consider migrating to IBM Watson Natural
+							Language Understanding. For more information, see <a href="https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-migrating">Migrating to Natural Language
+							Understanding</a>.
+							{: deprecated}
 						interfaces</p>
 					</div>
+					<p>Natural Language Classifier uses machine learning algorithms to return the top matching predefined classes for short
+						text input. You create and train a classifier to connect predefined classes to example texts so that the service can
+					apply those classes to new inputs.</p>
+					<p>API Version: 1.0
+					See: <a href="https://cloud.ibm.com/docs/natural-language-classifier">https://cloud.ibm.com/docs/natural-language-classifier</a></p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -116,8 +124,11 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageclassifierv1.html#classifycollection" class="tsd-kind-icon">classify<wbr>Collection</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageclassifierv1.html#createclassifier" class="tsd-kind-icon">create<wbr>Classifier</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageclassifierv1.html#deleteclassifier" class="tsd-kind-icon">delete<wbr>Classifier</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#disableretries" class="tsd-kind-icon">disable<wbr>Retries</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#enableretries" class="tsd-kind-icon">enable<wbr>Retries</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageclassifierv1.html#getclassifier" class="tsd-kind-icon">get<wbr>Classifier</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#gethttpclient" class="tsd-kind-icon">get<wbr>Http<wbr>Client</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="naturallanguageclassifierv1.html#listclassifiers" class="tsd-kind-icon">list<wbr>Classifiers</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="naturallanguageclassifierv1.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a></li>
@@ -139,7 +150,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L36">natural-language-classifier/v1.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L51">natural-language-classifier/v1.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,7 +194,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L36">natural-language-classifier/v1.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L51">natural-language-classifier/v1.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -194,7 +205,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L35">natural-language-classifier/v1.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L49">natural-language-classifier/v1.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L87">natural-language-classifier/v1.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L102">natural-language-classifier/v1.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -290,7 +301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L138">natural-language-classifier/v1.ts:138</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L164">natural-language-classifier/v1.ts:164</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -370,7 +381,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L197">natural-language-classifier/v1.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L233">natural-language-classifier/v1.ts:233</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -457,7 +468,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L314">natural-language-classifier/v1.ts:314</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L383">natural-language-classifier/v1.ts:383</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -519,6 +530,75 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="disableretries" class="tsd-anchor"></a>
+					<h3>disable<wbr>Retries</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">disable<wbr>Retries<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#disableretries">disableRetries</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:109</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Disables retries.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="enableretries" class="tsd-anchor"></a>
+					<h3>enable<wbr>Retries</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">enable<wbr>Retries<span class="tsd-signature-symbol">(</span>retryOptions<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RetryOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#enableretries">enableRetries</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:105</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enable retries for unfulfilled requests.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>retryOptions</code></td>
+										<td><span class="tsd-signature-type">RetryOptions</span></td>
+										<td>Optional</td>
+										<td>
+											<p>configuration for retries
+											</p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getauthenticator" class="tsd-anchor"></a>
 					<h3>get<wbr>Authenticator</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -529,7 +609,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#getauthenticator">getAuthenticator</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:78</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:82</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,7 +631,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L275">natural-language-classifier/v1.ts:275</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L333">natural-language-classifier/v1.ts:333</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -613,6 +693,30 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="gethttpclient" class="tsd-anchor"></a>
+					<h3>get<wbr>Http<wbr>Client</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Http<wbr>Client<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AxiosInstance</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#gethttpclient">getHttpClient</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:99</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the Axios instance set on the service.
+									All requests will be made using this instance.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AxiosInstance</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="listclassifiers" class="tsd-anchor"></a>
 					<h3>list<wbr>Classifiers</h3>
@@ -623,7 +727,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/natural-language-classifier/v1.ts#L245">natural-language-classifier/v1.ts:245</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/natural-language-classifier/v1.ts#L292">natural-language-classifier/v1.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -690,7 +794,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setenablegzipcompression">setEnableGzipCompression</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:90</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:94</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -736,7 +840,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setserviceurl">setServiceUrl</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:84</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:88</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -860,11 +964,23 @@
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="naturallanguageclassifierv1.html#disableretries" class="tsd-kind-icon">disable<wbr>Retries</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="naturallanguageclassifierv1.html#enableretries" class="tsd-kind-icon">enable<wbr>Retries</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="naturallanguageclassifierv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="naturallanguageclassifierv1.html#getclassifier" class="tsd-kind-icon">get<wbr>Classifier</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="naturallanguageclassifierv1.html#gethttpclient" class="tsd-kind-icon">get<wbr>Http<wbr>Client</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">

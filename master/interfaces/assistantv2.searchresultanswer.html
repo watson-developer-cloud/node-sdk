@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Status | ibm-watson</title>
+	<title>SearchResultAnswer | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,16 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
+					<a href="../classes/assistantv2.html">AssistantV2</a>
 				</li>
 				<li>
-					<a href="../modules/discoveryv1.updatecredentialsconstants.html">UpdateCredentialsConstants</a>
-				</li>
-				<li>
-					<a href="discoveryv1.updatecredentialsconstants.status.html">Status</a>
+					<a href="assistantv2.searchresultanswer.html">SearchResultAnswer</a>
 				</li>
 			</ul>
-			<h1>Enumeration Status</h1>
+			<h1>Interface SearchResultAnswer</h1>
 		</div>
 	</div>
 </header>
@@ -73,9 +70,17 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The current status of this set of credentials. <code>connected</code> indicates that the credentials are available to use with the source configuration of a collection. <code>invalid</code> refers to the credentials (for example, the password provided has expired) and must be corrected before they can be used with a collection.</p>
+						<p>An object specifing a segment of text that was identified as a direct answer to the search query.</p>
 					</div>
 				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">SearchResultAnswer</span>
+					</li>
+				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
@@ -83,36 +88,46 @@
 					<div class="tsd-index-content">
 						<!-- Unless the section is part of the exclusion list, render them -->
 						<section class="tsd-index-section ">
-							<h3>Enumeration members</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.updatecredentialsconstants.status.html#connected" class="tsd-kind-icon">CONNECTED</a></li>
-								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="discoveryv1.updatecredentialsconstants.status.html#invalid" class="tsd-kind-icon">INVALID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresultanswer.html#confidence" class="tsd-kind-icon">confidence</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.searchresultanswer.html#text" class="tsd-kind-icon">text</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Enumeration members</h2>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="connected" class="tsd-anchor"></a>
-					<h3>CONNECTED</h3>
-					<div class="tsd-signature tsd-kind-icon">CONNECTED<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;connected&quot;</span></div>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="confidence" class="tsd-anchor"></a>
+					<h3>confidence</h3>
+					<div class="tsd-signature tsd-kind-icon">confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/discovery/v1.ts#L4812">discovery/v1.ts:4812</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1518">assistant/v2.ts:1518</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The confidence score for the answer, as returned by the Discovery service.</p>
+						</div>
+					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
-					<a name="invalid" class="tsd-anchor"></a>
-					<h3>INVALID</h3>
-					<div class="tsd-signature tsd-kind-icon">INVALID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;invalid&quot;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="text" class="tsd-anchor"></a>
+					<h3>text</h3>
+					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/discovery/v1.ts#L4813">discovery/v1.ts:4813</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1516">assistant/v2.ts:1516</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The text of the answer.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -127,27 +142,90 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-enum tsd-parent-kind-namespace">
-						<a href="discoveryv1.updatecredentialsconstants.sourcetype.html" class="tsd-kind-icon">Source<wbr>Type</a>
+					<li class=" tsd-kind-class">
+						<a href="../classes/assistantv1.html" class="tsd-kind-icon">Assistant<wbr>V1</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class="current tsd-kind-enum tsd-parent-kind-namespace">
-						<a href="discoveryv1.updatecredentialsconstants.status.html" class="tsd-kind-icon">Status</a>
+					<li class="current tsd-kind-class">
+						<a href="../classes/assistantv2.html" class="tsd-kind-icon">Assistant<wbr>V2</a>
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.updatecredentialsconstants.status.html#connected" class="tsd-kind-icon">CONNECTED</a>
-							</li>
-							<!-- Unless the url is part of the exclusion list, render them -->
-							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
-								<a href="discoveryv1.updatecredentialsconstants.status.html#invalid" class="tsd-kind-icon">INVALID</a>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="assistantv2.searchresultanswer.html" class="tsd-kind-icon">Search<wbr>Result<wbr>Answer</a>
+								<ul>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.searchresultanswer.html#confidence" class="tsd-kind-icon">confidence</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.searchresultanswer.html#text" class="tsd-kind-icon">text</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/authorizationv1.html" class="tsd-kind-icon">Authorization<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/languagetranslatorv3.html" class="tsd-kind-icon">Language<wbr>Translator<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/recognizestream.html" class="tsd-kind-icon">Recognize<wbr>Stream</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/speechtotextv1.html" class="tsd-kind-icon">Speech<wbr>ToText<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-class">
+						<a href="../classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#url" class="tsd-kind-icon">url</a>
+					</li>
+					<!-- Unless the url is part of the exclusion list, render them -->
+					<li class=" tsd-kind-function">
+						<a href="../globals.html#parsetokenfromheader" class="tsd-kind-icon">parse<wbr>Token<wbr>From<wbr>Header</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

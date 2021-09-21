@@ -80,10 +80,14 @@
 						words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic
 						translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in
 						standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic
-					Representation (SPR). The Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA.</p>
+					Representation (SPR).</p>
 					<p>The service also offers a Tune by Example feature that lets you define custom prompts. You can also define speaker
 						models to improve the quality of your custom prompts. The service support custom prompts only for US English custom
 					models and voices.</p>
+					<p><strong>IBM Cloud&reg;.</strong> The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported
+					only for IBM Cloud. For phonetic translation, they support only IPA, not SPR.</p>
+					<p>API Version: 1.0.0
+					See: <a href="https://cloud.ibm.com/docs/text-to-speech">https://cloud.ibm.com/docs/text-to-speech</a></p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -146,9 +150,12 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deletespeakermodel" class="tsd-kind-icon">delete<wbr>Speaker<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deleteuserdata" class="tsd-kind-icon">delete<wbr>User<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#deleteword" class="tsd-kind-icon">delete<wbr>Word</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#disableretries" class="tsd-kind-icon">disable<wbr>Retries</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#enableretries" class="tsd-kind-icon">enable<wbr>Retries</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getcustommodel" class="tsd-kind-icon">get<wbr>Custom<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getcustomprompt" class="tsd-kind-icon">get<wbr>Custom<wbr>Prompt</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#gethttpclient" class="tsd-kind-icon">get<wbr>Http<wbr>Client</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getpronunciation" class="tsd-kind-icon">get<wbr>Pronunciation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getspeakermodel" class="tsd-kind-icon">get<wbr>Speaker<wbr>Model</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#getvoice" class="tsd-kind-icon">get<wbr>Voice</a></li>
@@ -180,7 +187,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L52">text-to-speech/v1-generated.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L63">text-to-speech/v1-generated.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -224,7 +231,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L52">text-to-speech/v1-generated.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L63">text-to-speech/v1-generated.ts:63</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -235,7 +242,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L51">text-to-speech/v1-generated.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L61">text-to-speech/v1-generated.ts:61</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -252,7 +259,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1145">text-to-speech/v1-generated.ts:1145</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1330">text-to-speech/v1-generated.ts:1330</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -278,9 +285,10 @@
 									itself. The processing time for a reasonably sized prompt generally matches the length of the audio (for example,
 								it takes 20 seconds to process a 20-second prompt).</p>
 								<p>For shorter prompts, you can wait for a reasonable amount of time and then check the status of the prompt with the
-									<strong>Get a custom prompt</strong> method. For longer prompts, consider using that method to poll the service every few
-									seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it is in the
-								<code>processing</code> or <code>failed</code> state. Only prompts that are in the <code>available</code> state can be used for speech synthesis.</p>
+									<a href="#getcustomprompt">Get a custom prompt</a> method. For longer prompts, consider using that method to poll the service
+									every few seconds to determine when the prompt becomes available. No prompt can be used for speech synthesis if it
+									is in the <code>processing</code> or <code>failed</code> state. Only prompts that are in the <code>available</code> state can be used for speech
+								synthesis.</p>
 								<p>When it processes a request, the service attempts to align the text and the audio that are provided for the prompt.
 									The text that is passed with a prompt must match the spoken audio as closely as possible. Optimally, the text and
 									audio match exactly. The service does its best to align the specified text with the audio, and it can often
@@ -308,9 +316,8 @@
 								<p>If a prompt that is created without a speaker ID does not adequately reflect the intended prosody, enrolling the
 									speaker and providing a speaker ID for the prompt is one recommended means of potentially improving the quality of
 									the prompt. This is especially important for shorter prompts such as &quot;good-bye&quot; or &quot;thank you,&quot; where less audio
-								data makes it more difficult to match the prosody of the speaker.</p>
-								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
-								voices.</p>
+									data makes it more difficult to match the prosody of the speaker. Custom prompts are supported only for use with US
+								English custom models and voices.</p>
 								<p><strong>See also:</strong></p>
 								<ul>
 									<li>[Add a custom
@@ -417,7 +424,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L861">text-to-speech/v1-generated.ts:861</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1006">text-to-speech/v1-generated.ts:1006</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -536,7 +543,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L735">text-to-speech/v1-generated.ts:735</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L858">text-to-speech/v1-generated.ts:858</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -604,8 +611,8 @@
 														<td><code>words</code></td>
 														<td><a href="../interfaces/texttospeechv1.word.html" class="tsd-signature-type">Word</a><span class="tsd-signature-symbol">[]</span></td>
 														<td></td>
-														<td>The **Add custom words** method accepts an array of &#x60;Word&#x60; objects. Each object provides a word that is to
-														be added or updated for the custom model and the word&#x27;s translation.</td>
+														<td>The [Add custom words](#addwords) method accepts an array of &#x60;Word&#x60; objects. Each object provides a word
+														that is to be added or updated for the custom model and the word&#x27;s translation.</td>
 													</tr>
 													<!-- Print out all optional parameters-->
 													<tr>
@@ -634,7 +641,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L449">text-to-speech/v1-generated.ts:449</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L518">text-to-speech/v1-generated.ts:518</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -646,8 +653,8 @@
 								are used to create it.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate">Creating a custom
 								model</a>.</p>
-								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
-									<h3>Important voice updates</h3>
+								<a href="#important-voice-updates-for-ibm-cloud" id="important-voice-updates-for-ibm-cloud" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates for IBM Cloud</h3>
 								</a>
 								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
 								<ul>
@@ -664,7 +671,7 @@
 									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
 									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
 									update</a> in the release
-								notes.</p>
+								notes for IBM Cloud.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -747,7 +754,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1392">text-to-speech/v1-generated.ts:1392</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1612">text-to-speech/v1-generated.ts:1612</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -776,9 +783,8 @@
 									Unlike prompts, speaker models neither need nor accept a transcription of the audio. When the call returns, the
 								audio is fully processed and the speaker enrollment is complete.</p>
 								<p>The service returns a speaker ID with the request. A speaker ID is globally unique identifier (GUID) that you use
-								to identify the speaker in subsequent requests to the service.</p>
-								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
-								only for use with US English custom models and voices.</p>
+									to identify the speaker in subsequent requests to the service. Speaker models and the custom prompts with which
+								they are used are supported only for use with US English custom models and voices.</p>
 								<p><strong>See also:</strong></p>
 								<ul>
 									<li>[Create a speaker
@@ -868,7 +874,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L663">text-to-speech/v1-generated.ts:663</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L776">text-to-speech/v1-generated.ts:776</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -944,7 +950,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1262">text-to-speech/v1-generated.ts:1262</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1465">text-to-speech/v1-generated.ts:1465</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -955,9 +961,8 @@
 									must use credentials for the instance of the service that owns the custom model from which the prompt is to be
 								deleted.</p>
 								<p><strong>Caution:</strong> Deleting a custom prompt elicits a 400 response code from synthesis requests that attempt to use the
-								prompt. Make sure that you do not attempt to use a deleted prompt in a production application.</p>
-								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
-								voices.</p>
+									prompt. Make sure that you do not attempt to use a deleted prompt in a production application. Custom prompts are
+								supported only for use with US English custom models and voices.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-delete">Deleting a custom
 								prompt</a>.</p>
 							</div>
@@ -1031,7 +1036,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1501">text-to-speech/v1-generated.ts:1501</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1740">text-to-speech/v1-generated.ts:1740</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1044,9 +1049,8 @@
 								<p>Any prompts that are associated with the deleted speaker are not affected by the speaker&#39;s deletion. The prosodic
 									data that defines the quality of a prompt is established when the prompt is created. A prompt is static and remains
 									unaffected by deletion of its associated speaker. However, the prompt cannot be resubmitted or updated with its
-								original speaker once that speaker is deleted.</p>
-								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
-								only for use with US English custom models and voices.</p>
+									original speaker once that speaker is deleted. Speaker models and the custom prompts with which they are used are
+								supported only for use with US English custom models and voices.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-delete">Deleting a speaker
 								model</a>.</p>
 							</div>
@@ -1114,7 +1118,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1556">text-to-speech/v1-generated.ts:1556</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1805">text-to-speech/v1-generated.ts:1805</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1195,7 +1199,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L964">text-to-speech/v1-generated.ts:964</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1131">text-to-speech/v1-generated.ts:1131</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1268,6 +1272,75 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="disableretries" class="tsd-anchor"></a>
+					<h3>disable<wbr>Retries</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">disable<wbr>Retries<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#disableretries">disableRetries</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:109</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Disables retries.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="enableretries" class="tsd-anchor"></a>
+					<h3>enable<wbr>Retries</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">enable<wbr>Retries<span class="tsd-signature-symbol">(</span>retryOptions<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RetryOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#enableretries">enableRetries</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:105</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Enable retries for unfulfilled requests.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>retryOptions</code></td>
+										<td><span class="tsd-signature-type">RetryOptions</span></td>
+										<td>Optional</td>
+										<td>
+											<p>configuration for retries
+											</p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="getauthenticator" class="tsd-anchor"></a>
 					<h3>get<wbr>Authenticator</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -1278,7 +1351,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#getauthenticator">getAuthenticator</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:78</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:82</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1300,7 +1373,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L617">text-to-speech/v1-generated.ts:617</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L719">text-to-speech/v1-generated.ts:719</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1309,8 +1382,8 @@
 								</div>
 								<p>Gets all information about a specified custom model. In addition to metadata such as the name and description of
 									the custom model, the output includes the words and their translations that are defined for the model, as well as
-									any prompts that are defined for the model. To see just the metadata for a model, use the <strong>List custom models</strong>
-								method.</p>
+									any prompts that are defined for the model. To see just the metadata for a model, use the <a href="#listcustommodels">List custom
+								models</a> method.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQuery">Querying a custom
 								model</a>.</p>
 							</div>
@@ -1378,7 +1451,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1207">text-to-speech/v1-generated.ts:1207</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1401">text-to-speech/v1-generated.ts:1401</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1387,9 +1460,8 @@
 								</div>
 								<p>Gets information about a specified custom prompt for a specified custom model. The information includes the prompt
 									ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
-								the instance of the service that owns the custom model.</p>
-								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
-								voices.</p>
+									the instance of the service that owns the custom model. Custom prompts are supported only for use with US English
+								custom models and voices.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list">Listing custom
 								prompts</a>.</p>
 							</div>
@@ -1453,6 +1525,30 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="gethttpclient" class="tsd-anchor"></a>
+					<h3>get<wbr>Http<wbr>Client</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Http<wbr>Client<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AxiosInstance</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#gethttpclient">getHttpClient</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:99</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the Axios instance set on the service.
+									All requests will be made using this instance.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AxiosInstance</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getpronunciation" class="tsd-anchor"></a>
 					<h3>get<wbr>Pronunciation</h3>
@@ -1463,7 +1559,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L372">text-to-speech/v1-generated.ts:372</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L428">text-to-speech/v1-generated.ts:428</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1475,8 +1571,8 @@
 								voice or for a specific custom model to see the translation for that model.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage">Querying a word from a
 								language</a>.</p>
-								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
-									<h3>Important voice updates</h3>
+								<a href="#important-voice-updates-for-ibm-cloud" id="important-voice-updates-for-ibm-cloud" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates for IBM Cloud</h3>
 								</a>
 								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
 								<ul>
@@ -1493,7 +1589,7 @@
 									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
 									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
 									update</a> in the release
-								notes.</p>
+								notes for IBM Cloud.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -1567,7 +1663,7 @@
 														<td>Optional</td>
 														<td>A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
 															language (for example, &#x60;en-US&#x60;) return the same translation. For more information about specifying a voice, see
-														**Important voice updates** in the method description.</td>
+														**Important voice updates for IBM Cloud** in the method description.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -1589,7 +1685,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1446">text-to-speech/v1-generated.ts:1446</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1676">text-to-speech/v1-generated.ts:1676</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1599,9 +1695,9 @@
 								<p>Gets information about all prompts that are defined by a specified speaker for all custom models that are owned by
 									a service instance. The information is grouped by the customization IDs of the custom models. For each custom
 									model, the information lists information about each prompt that is defined for that custom model by the speaker.
-								You must use credentials for the instance of the service that owns a speaker model to list its prompts.</p>
-								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
-								only for use with US English custom models and voices.</p>
+									You must use credentials for the instance of the service that owns a speaker model to list its prompts. Speaker
+									models and the custom prompts with which they are used are supported only for use with US English custom models and
+								voices.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-list-prompts">Listing the custom prompts for a speaker
 								model</a>.</p>
 							</div>
@@ -1669,7 +1765,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L157">text-to-speech/v1-generated.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L184">text-to-speech/v1-generated.ts:184</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1678,11 +1774,12 @@
 								</div>
 								<p>Gets information about the specified voice. The information includes the name, language, gender, and other details
 									about the voice. Specify a customization ID to obtain information for a custom model that is defined for the
-								language of the specified voice. To list information about all available voices, use the <strong>List voices</strong> method.</p>
+									language of the specified voice. To list information about all available voices, use the <a href="#listvoices">List voices</a>
+								method.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice">Listing a specific
 								voice</a>.</p>
-								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
-									<h3>Important voice updates</h3>
+								<a href="#important-voice-updates-for-ibm-cloud" id="important-voice-updates-for-ibm-cloud" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates for IBM Cloud</h3>
 								</a>
 								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
 								<ul>
@@ -1699,7 +1796,7 @@
 									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
 									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
 									update</a> in the release
-								notes.</p>
+								notes for IBM Cloud.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -1739,7 +1836,7 @@
 														</td>
 														<td></td>
 														<td>The voice for which information is to be returned. For more information about specifying a voice, see
-														**Important voice updates** in the method description.</td>
+														**Important voice updates for IBM Cloud** in the method description.</td>
 													</tr>
 													<!-- Print out all optional parameters-->
 													<tr>
@@ -1776,7 +1873,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L916">text-to-speech/v1-generated.ts:916</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1072">text-to-speech/v1-generated.ts:1072</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1858,7 +1955,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L500">text-to-speech/v1-generated.ts:500</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L580">text-to-speech/v1-generated.ts:580</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1867,8 +1964,8 @@
 								</div>
 								<p>Lists metadata such as the name and description for all custom models that are owned by an instance of the service.
 									Specify a language to list the custom models for that language only. To see the words and prompts in addition to
-									the metadata for a specific custom model, use the <strong>Get a custom model</strong> method. You must use credentials for the
-								instance of the service that owns a model to list information about it.</p>
+									the metadata for a specific custom model, use the <a href="#getcustommodel">Get a custom model</a> method. You must use
+								credentials for the instance of the service that owns a model to list information about it.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsQueryAll">Querying all custom
 								models</a>.</p>
 							</div>
@@ -1939,7 +2036,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1020">text-to-speech/v1-generated.ts:1020</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1195">text-to-speech/v1-generated.ts:1195</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1949,10 +2046,9 @@
 								<p>Lists information about all custom prompts that are defined for a custom model. The information includes the prompt
 									ID, prompt text, status, and optional speaker ID for each prompt of the custom model. You must use credentials for
 									the instance of the service that owns the custom model. The same information about all of the prompts for a custom
-									model is also provided by the <strong>Get a custom model</strong> method. That method provides complete details about a
-								specified custom model, including its language, owner, custom words, and more.</p>
-								<p><strong>Beta:</strong> Custom prompts are beta functionality that is supported only for use with US English custom models and
-								voices.</p>
+									model is also provided by the <a href="#getcustommodel">Get a custom model</a> method. That method provides complete details
+									about a specified custom model, including its language, owner, custom words, and more. Custom prompts are supported
+								only for use with US English custom models and voices.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-custom-prompts#tbe-custom-prompts-list">Listing custom
 								prompts</a>.</p>
 							</div>
@@ -2020,7 +2116,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L1314">text-to-speech/v1-generated.ts:1314</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L1525">text-to-speech/v1-generated.ts:1525</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2029,9 +2125,8 @@
 								</div>
 								<p>Lists information about all speaker models that are defined for a service instance. The information includes the
 									speaker ID and speaker name of each defined speaker. You must use credentials for the instance of a service to list
-								its speakers.</p>
-								<p><strong>Beta:</strong> Speaker models and the custom prompts with which they are used are beta functionality that is supported
-								only for use with US English custom models and voices.</p>
+									its speakers. Speaker models and the custom prompts with which they are used are supported only for use with US
+								English custom models and voices.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-tbe-speaker-models#tbe-speaker-models-list">Listing speaker
 								models</a>.</p>
 							</div>
@@ -2092,7 +2187,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L100">text-to-speech/v1-generated.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L112">text-to-speech/v1-generated.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2101,7 +2196,7 @@
 								</div>
 								<p>Lists all voices available for use with the service. The information includes the name, language, gender, and other
 									details about the voice. The ordering of the list of voices can change from call to call; do not rely on an
-								alphabetized or static list of voices. To see information about a specific voice, use the <strong>Get a voice</strong> method.</p>
+								alphabetized or static list of voices. To see information about a specific voice, use the <a href="#getvoice">Get a voice</a>.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices">Listing all available
 								voices</a>.</p>
 							</div>
@@ -2162,7 +2257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L788">text-to-speech/v1-generated.ts:788</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L922">text-to-speech/v1-generated.ts:922</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2240,7 +2335,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setenablegzipcompression">setEnableGzipCompression</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:90</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:94</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2286,7 +2381,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setserviceurl">setServiceUrl</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:84</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:88</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2325,13 +2420,13 @@
 					<a name="synthesize" class="tsd-anchor"></a>
 					<h3>synthesize</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">synthesize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.synthesizeparams.html" class="tsd-signature-type">SynthesizeParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">synthesize<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/texttospeechv1.synthesizeparams.html" class="tsd-signature-type">SynthesizeParams</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L285">text-to-speech/v1-generated.ts:285</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L328">text-to-speech/v1-generated.ts:328</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2382,9 +2477,9 @@
 									22,050 Hz.</li>
 								</ul>
 								<p>For more information about specifying an audio format, including additional details about some of the formats, see
-								<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audioFormats#audioFormats">Audio formats</a>.</p>
-								<a href="#important-voice-updates" id="important-voice-updates" style="color: inherit; text-decoration: none;">
-									<h3>Important voice updates</h3>
+								<a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audio-formats">Using audio formats</a>.</p>
+								<a href="#important-voice-updates-for-ibm-cloud" id="important-voice-updates-for-ibm-cloud" style="color: inherit; text-decoration: none;">
+									<h3>Important voice updates for IBM Cloud</h3>
 								</a>
 								<p> The service&#39;s voices underwent significant change on 2 December 2020.</p>
 								<ul>
@@ -2401,7 +2496,7 @@
 									date. You are encouraged to migrate to the equivalent neural voices at your earliest convenience. For more
 									information about all voice updates, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#December2020">2 December 2020 service
 									update</a> in the release
-								notes.</p>
+								notes for IBM Cloud.</p>
 								<a href="#warning-messages" id="warning-messages" style="color: inherit; text-decoration: none;">
 									<h3>Warning messages</h3>
 								</a>
@@ -2480,8 +2575,8 @@
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td>Optional</td>
-														<td>The voice to use for synthesis. For more information about specifying a voice, see **Important voice
-														updates** in the method description.</td>
+														<td>The voice to use for synthesis. For more information about specifying a voice, see **Important voice updates
+														for IBM Cloud** in the method description.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -2489,7 +2584,7 @@
 									</tr>
 								</tbody>
 							</table>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/texttospeechv1.response.html" class="tsd-signature-type">Response</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -2503,7 +2598,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/text-to-speech/v1-generated.ts#L561">text-to-speech/v1-generated.ts:561</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/text-to-speech/v1-generated.ts#L652">text-to-speech/v1-generated.ts:652</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2764,6 +2859,14 @@
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="texttospeechv1.html#disableretries" class="tsd-kind-icon">disable<wbr>Retries</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="texttospeechv1.html#enableretries" class="tsd-kind-icon">enable<wbr>Retries</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="texttospeechv1.html#getauthenticator" class="tsd-kind-icon">get<wbr>Authenticator</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
@@ -2773,6 +2876,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="texttospeechv1.html#getcustomprompt" class="tsd-kind-icon">get<wbr>Custom<wbr>Prompt</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="texttospeechv1.html#gethttpclient" class="tsd-kind-icon">get<wbr>Http<wbr>Client</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">

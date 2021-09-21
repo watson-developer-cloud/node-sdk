@@ -106,7 +106,7 @@
 					<div class="tsd-signature tsd-kind-icon">display_<wbr>as<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/speech-to-text/v1-generated.ts#L5242">speech-to-text/v1-generated.ts:5242</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/speech-to-text/v1-generated.ts#L5849">speech-to-text/v1-generated.ts:5849</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -123,13 +123,14 @@
 					<div class="tsd-signature tsd-kind-icon">sounds_<wbr>like<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/speech-to-text/v1-generated.ts#L5237">speech-to-text/v1-generated.ts:5237</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/speech-to-text/v1-generated.ts#L5844">speech-to-text/v1-generated.ts:5844</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>An array of sounds-like pronunciations for the custom word. Specify how words that are difficult to
-							pronounce, foreign words, acronyms, and so on can be pronounced by users.</p>
+							<p>_For a custom model that is based on a previous-generation model_, an array of sounds-like pronunciations
+								for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can
+							be pronounced by users.</p>
 							<ul>
 								<li>For a word that is not in the service&#39;s base vocabulary, omit the parameter to have the service automatically
 								generate a sounds-like pronunciation for the word.</li>
@@ -140,6 +141,8 @@
 						</div>
 						<p> A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
 						including spaces.</p>
+						<p> _For a custom model that is based on a next-generation model_, omit this field. Custom models based on
+						next-generation models do not support the <code>sounds_like</code> field. The service ignores the field.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -148,16 +151,16 @@
 					<div class="tsd-signature tsd-kind-icon">word<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/speech-to-text/v1-generated.ts#L5225">speech-to-text/v1-generated.ts:5225</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/speech-to-text/v1-generated.ts#L5828">speech-to-text/v1-generated.ts:5828</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>For the <strong>Add custom words</strong> method, you must specify the custom word that is to be added to or updated in
-								the custom model. Do not include spaces in the word. Use a <code>-</code> (dash) or <code>_</code> (underscore) to connect the tokens
-							of compound words.</p>
+							<p>For the <a href="#addwords">Add custom words</a> method, you must specify the custom word that is to be added to or
+								updated in the custom model. Do not include spaces in the word. Use a <code>-</code> (dash) or <code>_</code> (underscore) to connect
+							the tokens of compound words.</p>
 						</div>
-						<p> Omit this parameter for the <strong>Add a custom word</strong> method.</p>
+						<p> Omit this parameter for the <a href="#addword">Add a custom word</a> method.</p>
 					</div>
 				</section>
 			</section>

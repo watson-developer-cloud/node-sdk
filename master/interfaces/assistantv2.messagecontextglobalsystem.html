@@ -92,6 +92,8 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#locale" class="tsd-kind-icon">locale</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#reference_time" class="tsd-kind-icon">reference_<wbr>time</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#session_start_time" class="tsd-kind-icon">session_<wbr>start_<wbr>time</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#state" class="tsd-kind-icon">state</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#timezone" class="tsd-kind-icon">timezone</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#turn_count" class="tsd-kind-icon">turn_<wbr>count</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="assistantv2.messagecontextglobalsystem.html#user_id" class="tsd-kind-icon">user_<wbr>id</a></li>
@@ -108,7 +110,7 @@
 					<div class="tsd-signature tsd-kind-icon">locale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/assistant/v2.ts#L945">assistant/v2.ts:945</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1023">assistant/v2.ts:1023</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -126,7 +128,7 @@
 					<div class="tsd-signature tsd-kind-icon">reference_<wbr>time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/assistant/v2.ts#L956">assistant/v2.ts:956</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1034">assistant/v2.ts:1034</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,9 +138,47 @@
 								This can be useful for simulating past or future times for testing purposes, or when analyzing documents such as
 							news articles.</p>
 						</div>
-						<p> This value must be a UTC time value formatted according to ISO 8601 (for example, <code>2019-06-26T12:00:00Z</code> for
-						noon on 26 June 2019.</p>
+						<p> This value must be a UTC time value formatted according to ISO 8601 (for example, <code>2021-06-26T12:00:00Z</code> for
+						noon UTC on 26 June 2021).</p>
 						<p> This property is included only if the new system entities are enabled for the skill.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="session_start_time" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> session_<wbr>start_<wbr>time</h3>
+					<div class="tsd-signature tsd-kind-icon">session_<wbr>start_<wbr>time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1043">assistant/v2.ts:1043</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The time at which the session started. With the stateful <code>message</code> method, the start time is always present,
+								and is set by the service based on the time the session was created. With the stateless <code>message</code> method, the
+								start time is set by the service in the response to the first message, and should be returned as part of the
+							context with each subsequent message in the session.</p>
+						</div>
+						<p> This value is a UTC time value formatted according to ISO 8601 (for example, <code>2021-06-26T12:00:00Z</code> for noon UTC
+						on 26 June 2021).</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="state" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> state</h3>
+					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1049">assistant/v2.ts:1049</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An encoded string that represents the configuration state of the assistant at the beginning of the
+								conversation. If you are using the stateless <code>message</code> method, save this value and then send it in the context
+								of the subsequent message request to avoid disruptions if there are configuration changes during the
+							conversation (such as a change to a skill the assistant uses).</p>
+						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -147,7 +187,7 @@
 					<div class="tsd-signature tsd-kind-icon">timezone<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/assistant/v2.ts#L923">assistant/v2.ts:923</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1001">assistant/v2.ts:1001</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,7 +202,7 @@
 					<div class="tsd-signature tsd-kind-icon">turn_<wbr>count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/assistant/v2.ts#L938">assistant/v2.ts:938</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1016">assistant/v2.ts:1016</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -179,7 +219,7 @@
 					<div class="tsd-signature tsd-kind-icon">user_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/assistant/v2.ts#L933">assistant/v2.ts:933</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/assistant/v2.ts#L1011">assistant/v2.ts:1011</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -227,6 +267,14 @@
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="assistantv2.messagecontextglobalsystem.html#reference_time" class="tsd-kind-icon">reference_<wbr>time</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messagecontextglobalsystem.html#session_start_time" class="tsd-kind-icon">session_<wbr>start_<wbr>time</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="assistantv2.messagecontextglobalsystem.html#state" class="tsd-kind-icon">state</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">

@@ -107,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/speech-to-text/v1-generated.ts#L4327">speech-to-text/v1-generated.ts:4327</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/speech-to-text/v1-generated.ts#L4914">speech-to-text/v1-generated.ts:4914</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -123,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/speech-to-text/v1-generated.ts#L4349">speech-to-text/v1-generated.ts:4349</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/speech-to-text/v1-generated.ts#L4940">speech-to-text/v1-generated.ts:4940</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,7 +147,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/speech-to-text/v1-generated.ts#L4350">speech-to-text/v1-generated.ts:4350</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/speech-to-text/v1-generated.ts#L4941">speech-to-text/v1-generated.ts:4941</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -157,19 +157,22 @@
 					<div class="tsd-signature tsd-kind-icon">word<wbr>Type<wbr>ToAdd<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.trainlanguagemodelconstants.wordtypetoadd.html" class="tsd-signature-type">WordTypeToAdd</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b269ae/speech-to-text/v1-generated.ts#L4334">speech-to-text/v1-generated.ts:4334</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/29270c6/speech-to-text/v1-generated.ts#L4925">speech-to-text/v1-generated.ts:4925</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The type of words from the custom language model&#39;s words resource on which to train the model:</p>
+							<p>_For custom models that are based on previous-generation models_, the type of words from the custom language
+							model&#39;s words resource on which to train the model:</p>
 							<ul>
 								<li><code>all</code> (the default) trains the model on all new words, regardless of whether they were extracted from corpora
 								or grammars or were added or modified by the user.</li>
-								<li><code>user</code> trains the model only on new words that were added or modified by the user directly. The model is not
-								trained on new words extracted from corpora or grammars.</li>
+								<li><code>user</code> trains the model only on custom words that were added or modified by the user directly. The model is
+								not trained on new words extracted from corpora or grammars.</li>
 							</ul>
 						</div>
+						<p> _For custom models that are based on next-generation models_, the service ignores the parameter. The words
+						resource contains only custom words that the user adds or modifies directly, so the parameter is unnecessary.</p>
 					</div>
 				</section>
 			</section>
