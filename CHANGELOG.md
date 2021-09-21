@@ -1,3 +1,10 @@
+## [6.2.1](https://github.com/watson-developer-cloud/node-sdk/compare/v6.2.0...v6.2.1) (2021-09-21)
+
+
+### Bug Fixes
+
+* **stt:** fix timestamps type to properly reflect response model ([1efa983](https://github.com/watson-developer-cloud/node-sdk/commit/1efa98382303fda77ba078541e0c7922d750339d))
+
 # [6.2.0](https://github.com/watson-developer-cloud/node-sdk/compare/v6.1.2...v6.2.0) (2021-09-14)
 
 
