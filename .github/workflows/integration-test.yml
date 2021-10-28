@@ -36,12 +36,11 @@ jobs:
       env:
         NATURAL_LANGUAGE_CLASSIFIER_APIKEY: ${{ secrets.NLC_APIKEY }}
         NATURAL_LANGUAGE_CLASSIFIER_URL: "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com"
+        NATURAL_LANGUAGE_CLASSIFIER_ID: ${{ secrets.NLCCI_APIKEY }}
       run: |
         npm ci
         npm run build --if-present
-        npm run test-unit-travis
-        npm run check-packages
-        scripts/typedoc/generate_typedoc.sh
+        jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/natural-language-classifier.test.js
 
     - name: Notify slack on success
       if: false # success()
