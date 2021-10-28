@@ -38,7 +38,6 @@ jobs:
         NATURAL_LANGUAGE_CLASSIFIER_URL: "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com"
         NATURAL_LANGUAGE_CLASSIFIER_ID: ${{ secrets.NLCCI_APIKEY }}
       run: |
-        npm run build --if-present
         npm install -g jest
         jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/natural-language-classifier.test.js
 
