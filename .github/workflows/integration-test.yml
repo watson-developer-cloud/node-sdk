@@ -68,8 +68,6 @@ jobs:
 
       run: |
         mv test/resources/auth.gha.js test/resources/auth.js
-        jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v3.test.js
-        jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v4.test.js
         jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.custom-classifiers.test.js
 
     - name: Notify slack on success
