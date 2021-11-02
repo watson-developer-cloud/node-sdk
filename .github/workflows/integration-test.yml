@@ -40,12 +40,37 @@ jobs:
 
     - name: Execute Node integration tests
       env:
-        NATURAL_LANGUAGE_CLASSIFIER_APIKEY: ${{ secrets.NLC_APIKEY }}
         NATURAL_LANGUAGE_CLASSIFIER_URL: "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com"
+        NATURAL_LANGUAGE_CLASSIFIER_APIKEY: ${{ secrets.NLC_APIKEY }}
         NATURAL_LANGUAGE_CLASSIFIER_ID: ${{ secrets.NLC_CLASSIFIER_ID }}
+        ASSISTANT_URL: "https://api.us-south.assistant.watson.cloud.ibm.com"
+        ASSISTANT_APIKEY: ${{ secrets.WA_APIKEY }}
+        ASSISTANT_WORKSPACE_ID: ${{ secrets.WA_WORKSPACE_ID }}
+        ASSISTANT_ASSISTANT_ID: ${{ secrets.WA_ASSISTANT_ID }}
+        COMPARE_COMPLY_URL: "https://api.us-south.compare-comply.watson.cloud.ibm.com"
+        COMPARE_COMPLY_APIKEY: ${{ secrets.CC_APIKEY }}
+        LANGUAGE_TRANSLATOR_URL: "https://api.us-south.language-translator.watson.cloud.ibm.com"
+        LANGUAGE_TRANSLATOR_APIKEY: ${{ secrets.LT_APIKEY }}
+        NATURAL_LANGUAGE_UNDERSTANDING_URL: "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com"
+        NATURAL_LANGUAGE_UNDERSTANDING_APIKEY: ${{ secrets.NLU_APIKEY }}
+        PERSONALITY_INSIGHTS_URL: "https://api.us-south.personality-insights.watson.cloud.ibm.com"
+        PERSONALITY_INSIGHTS_APIKEY: ${{ secrets.PI_APIKEY }}
+        SPEECH_TO_TEXT_URL: "https://api.us-south.speech-to-text.watson.cloud.ibm.com"
+        SPEECH_TO_TEXT_APIKEY: ${{ secrets.STT_APIKEY }}
+        TEXT_TO_SPEECH_URL: "https://api.us-south.text-to-speech.watson.cloud.ibm.com"
+        TEXT_TO_SPEECH_APIKEY: ${{ secrets.TTS_APIKEY }}
+        TONE_ANALYZER_URL: "https://api.us-south.tone-analyzer.watson.cloud.ibm.com"
+        TONE_ANALYZER_APIKEY: ${{ secrets.TA_APIKEY }}
+        VISUAL_RECOGNITION_URL: "https://api.us-south.visual-recognition.watson.cloud.ibm.com"
+        VISUAL_RECOGNITION_APIKEY: ${{ secrets.VR_APIKEY }}
+        VISUAL_RECOGNITION_COLLECTION_ID: ${{ secrets.VR_COLLECTION_ID }}
+
       run: |
         mv test/resources/auth.gha.js test/resources/auth.js
         jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/natural-language-classifier.test.js
+        jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v1.test.js
+        jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v2.test.js
+        jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/compare-comply.test.js
 
     - name: Notify slack on success
       if: false # success()
