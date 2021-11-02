@@ -49,6 +49,7 @@ jobs:
         ASSISTANT_ASSISTANT_ID: ${{ secrets.WA_ASSISTANT_ID }}
         COMPARE_COMPLY_URL: "https://api.us-south.compare-comply.watson.cloud.ibm.com"
         COMPARE_COMPLY_APIKEY: ${{ secrets.CC_APIKEY }}
+        COMPARE_COMPLY_FEEDBACK_ID: ${{ secrets.CC_FEEDBACK_ID }}
         LANGUAGE_TRANSLATOR_URL: "https://api.us-south.language-translator.watson.cloud.ibm.com"
         LANGUAGE_TRANSLATOR_APIKEY: ${{ secrets.LT_APIKEY }}
         NATURAL_LANGUAGE_UNDERSTANDING_URL: "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com"

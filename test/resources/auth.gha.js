@@ -32,6 +32,7 @@ module.exports = {
   compareComply: {
     url: process.env.COMPARE_COMPLY_URL,
     apikey: process.env.COMPARE_COMPLY_APIKEY,
+    feedbackId: process.env.COMPARE_COMPLY_FEEDBACK_ID,
     headers: testingHeaders,
     version: '2018-12-06',
   },
