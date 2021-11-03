@@ -39,7 +39,7 @@ jobs:
         npm install -g jest
 
     - name: Execute Node integration tests
-      continue-on-error: true
+      # continue-on-error: true
       env:
         NATURAL_LANGUAGE_CLASSIFIER_URL: "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com"
         NATURAL_LANGUAGE_CLASSIFIER_APIKEY: ${{ secrets.NLC_APIKEY }}
