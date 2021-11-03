@@ -76,20 +76,20 @@ jobs:
 
       run: |
         mv test/resources/auth.gha.js test/resources/auth.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v1.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v2.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/compare-comply.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v1.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v2.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/language-translator.v3.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/natural-language-classifier.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/personality-insights.v3.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/speech-to-text.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/text-to-speech.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/tone-analyzer.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.custom-classifiers.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v3.test.js
-        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v4.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v1.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v2.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/compare-comply.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v1.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v2.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/language-translator.v3.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/natural-language-classifier.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/personality-insights.v3.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/speech-to-text.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/text-to-speech.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/tone-analyzer.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.custom-classifiers.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v3.test.js
+        jest --testTimeout=50000 --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v4.test.js
 
 # Do not notify on success.  We will leave the code here just in case we decide to switch gears
     - name: Notify slack on success
