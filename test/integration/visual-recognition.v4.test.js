@@ -82,7 +82,7 @@ describe('visual recognition v4 integration', () => {
       collectionId = result.collection_id;
     });
 
-    test('listCollections', async () => {
+    test('listCollections @slow', async () => {
       const res = await visualRecognition.listCollections();
 
       expect(res).toBeDefined();

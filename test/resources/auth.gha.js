@@ -85,4 +85,14 @@ module.exports = {
     headers: testingHeaders,
     version: 'v3',
   },
+  discovery: {
+    apikey: process.env.DISCOVERY_APIKEY,
+    environmentId: process.env.DISCOVERY_ENVIRONMENT_ID,
+    configurationId: process.env.DISCOVERY_CONFIGURATION_ID,
+    collectionId: process.env.DISCOVERY_COLLECTION_ID1,
+    collectionId2: process.env.DISCOVERY_COLLECTION_ID2,
+    japaneseCollectionId: process.env.DISCOVERY_COLLECTION_ID3, // This collection is no longer valid
+    version_date: '2018-10-24',
+    headers: testingHeaders,
+  },
 };

@@ -65,11 +65,32 @@ jobs:
         VISUAL_RECOGNITION_URL: "https://api.us-south.visual-recognition.watson.cloud.ibm.com"
         VISUAL_RECOGNITION_APIKEY: ${{ secrets.VR_APIKEY }}
         VISUAL_RECOGNITION_COLLECTION_ID: ${{ secrets.VR_COLLECTION_ID }}
+        DISCOVERY_URL: "https://api.us-south.discovery.watson.cloud.ibm.com"
+        DISCOVERY_APIKEY: ${{ secrets.D1_APIKEY }}
+        DISCOVERY_ENVIRONMENT_ID: ${{ secrets.D1_ENVIRONMENT_ID }}
+        DISCOVERY_CONFIGURATION_ID: ${{ secrets.D1_CONFIGURATION_ID }}
+        DISCOVERY_COLLECTION_ID1: ${{ secrets.D1_COLLECTION_ID1 }}
+        DISCOVERY_COLLECTION_ID2: ${{ secrets.D1_COLLECTION_ID2 }}
+        DISCOVERY_COLLECTION_ID3: ${{ secrets.D1_COLLECTION_ID3 }}  # japanese
 
       run: |
         mv test/resources/auth.gha.js test/resources/auth.js
-        jest --silent --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v4.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v1.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v2.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/compare-comply.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v1.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v2.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/language-translator.v3.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/natural-language-classifier.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/personality-insights.v3.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/speech-to-text.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/text-to-speech.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/tone-analyzer.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.custom-classifiers.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v3.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v4.test.js
 
+# Do not notify on success.  We will leave the code here just in case we decide to switch gears
     - name: Notify slack on success
       if: false # success()
       env:
