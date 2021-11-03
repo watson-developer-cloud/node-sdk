@@ -39,6 +39,7 @@ jobs:
         npm install -g jest
 
     - name: Execute Node integration tests
+      continue-on-error: true
       env:
         NATURAL_LANGUAGE_CLASSIFIER_URL: "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com"
         NATURAL_LANGUAGE_CLASSIFIER_APIKEY: ${{ secrets.NLC_APIKEY }}
@@ -102,7 +103,7 @@ jobs:
         color: good
 
     - name: Notify slack on failure
-      if: false # failure()
+      if: failure()
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
