@@ -78,7 +78,7 @@ jobs:
         mv test/resources/auth.gha.js test/resources/auth.js
         jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v1.test.js
         jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v2.test.js
-#        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/compare-comply.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/compare-comply.test.js
         jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v1.test.js
         jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v2.test.js
         jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/language-translator.v3.test.js
