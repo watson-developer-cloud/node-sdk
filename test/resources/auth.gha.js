@@ -95,4 +95,11 @@ module.exports = {
     version_date: '2018-10-24',
     headers: testingHeaders,
   },
+  discoveryV2: {
+    url: process.env.DISCOVERY_V2_URL,
+    apikey: process.env.DISCOVERY_V2_APIKEY,
+    projectId: process.env.DISCOVERY_V2_PROJECT_ID,
+    collectionId: process.env.DISCOVERY_V2_COLLECTION_ID,
+    headers: testingHeaders,
+  },
 };

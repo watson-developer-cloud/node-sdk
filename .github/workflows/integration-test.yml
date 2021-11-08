@@ -71,6 +71,10 @@ jobs:
         DISCOVERY_COLLECTION_ID1: ${{ secrets.D1_COLLECTION_ID1 }}
         DISCOVERY_COLLECTION_ID2: ${{ secrets.D1_COLLECTION_ID2 }}
         DISCOVERY_COLLECTION_ID3: ${{ secrets.D1_COLLECTION_ID3 }}  # japanese
+        DISCOVERY_V2_URL: "https://api.us-south.discovery.watson.cloud.ibm.com"
+        DISCOVERY_V2_APIKEY: ${{ secrets.D2_APIKEY }}
+        DISCOVERY_V2_PROJECT_ID: ${{ secrets.D2_PROJECT_ID }}
+        DISCOVERY_V2_COLLECTION_ID: ${{ secrets.D2_COLLECTION_ID }}
 
       run: |
         mv test/resources/auth.gha.js test/resources/auth.js
