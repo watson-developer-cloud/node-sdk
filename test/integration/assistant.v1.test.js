@@ -1068,7 +1068,7 @@ describe('assistant v1 integration', () => {
   });
 
   describe('bulkClassify()', () => {
-    it('should bulk classify messages', async () => {
+    it('should bulk classify messages @slow', async () => {
       const params = {
         input: {
           text: 'Turn on the lights',

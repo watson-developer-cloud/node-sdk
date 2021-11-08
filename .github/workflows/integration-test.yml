@@ -1,0 +1,111 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support documentation.
+# This workflow will download a prebuilt Node version, install dependencies and run integration tests
+
+name: Run Integration Tests
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  integration_test:
+    name: Build and Run Integration Tests on Node ${{ matrix.node-version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: ['14.x']
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install Node dependencies
+      run: |
+        npm ci
+        npm run build --if-present
+        npm install -g jest
+
+    - name: Execute Node integration tests
+      # continue-on-error: true
+      env:
+        NATURAL_LANGUAGE_CLASSIFIER_URL: "https://api.us-south.natural-language-classifier.watson.cloud.ibm.com"
+        NATURAL_LANGUAGE_CLASSIFIER_APIKEY: ${{ secrets.NLC_APIKEY }}
+        NATURAL_LANGUAGE_CLASSIFIER_ID: ${{ secrets.NLC_CLASSIFIER_ID }}
+        ASSISTANT_URL: "https://api.us-south.assistant.watson.cloud.ibm.com"
+        ASSISTANT_APIKEY: ${{ secrets.WA_APIKEY }}
+        ASSISTANT_WORKSPACE_ID: ${{ secrets.WA_WORKSPACE_ID }}
+        ASSISTANT_ASSISTANT_ID: ${{ secrets.WA_ASSISTANT_ID }}
+        COMPARE_COMPLY_URL: "https://api.us-south.compare-comply.watson.cloud.ibm.com"
+        COMPARE_COMPLY_APIKEY: ${{ secrets.CC_APIKEY }}
+        COMPARE_COMPLY_FEEDBACK_ID: ${{ secrets.CC_FEEDBACK_ID }}
+        LANGUAGE_TRANSLATOR_URL: "https://api.us-south.language-translator.watson.cloud.ibm.com"
+        LANGUAGE_TRANSLATOR_APIKEY: ${{ secrets.LT_APIKEY }}
+        NATURAL_LANGUAGE_UNDERSTANDING_URL: "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com"
+        NATURAL_LANGUAGE_UNDERSTANDING_APIKEY: ${{ secrets.NLU_APIKEY }}
+        PERSONALITY_INSIGHTS_URL: "https://api.us-south.personality-insights.watson.cloud.ibm.com"
+        PERSONALITY_INSIGHTS_APIKEY: ${{ secrets.PI_APIKEY }}
+        SPEECH_TO_TEXT_URL: "https://api.us-south.speech-to-text.watson.cloud.ibm.com"
+        SPEECH_TO_TEXT_APIKEY: ${{ secrets.STT_APIKEY }}
+        TEXT_TO_SPEECH_URL: "https://api.us-south.text-to-speech.watson.cloud.ibm.com"
+        TEXT_TO_SPEECH_APIKEY: ${{ secrets.TTS_APIKEY }}
+        TONE_ANALYZER_URL: "https://api.us-south.tone-analyzer.watson.cloud.ibm.com"
+        TONE_ANALYZER_APIKEY: ${{ secrets.TA_APIKEY }}
+        VISUAL_RECOGNITION_URL: "https://api.us-south.visual-recognition.watson.cloud.ibm.com"
+        VISUAL_RECOGNITION_APIKEY: ${{ secrets.VR_APIKEY }}
+        VISUAL_RECOGNITION_COLLECTION_ID: ${{ secrets.VR_COLLECTION_ID }}
+        DISCOVERY_URL: "https://api.us-south.discovery.watson.cloud.ibm.com"
+        DISCOVERY_APIKEY: ${{ secrets.D1_APIKEY }}
+        DISCOVERY_ENVIRONMENT_ID: ${{ secrets.D1_ENVIRONMENT_ID }}
+        DISCOVERY_CONFIGURATION_ID: ${{ secrets.D1_CONFIGURATION_ID }}
+        DISCOVERY_COLLECTION_ID1: ${{ secrets.D1_COLLECTION_ID1 }}
+        DISCOVERY_COLLECTION_ID2: ${{ secrets.D1_COLLECTION_ID2 }}
+        DISCOVERY_COLLECTION_ID3: ${{ secrets.D1_COLLECTION_ID3 }}  # japanese
+        DISCOVERY_V2_URL: "https://api.us-south.discovery.watson.cloud.ibm.com"
+        DISCOVERY_V2_APIKEY: ${{ secrets.D2_APIKEY }}
+        DISCOVERY_V2_PROJECT_ID: ${{ secrets.D2_PROJECT_ID }}
+        DISCOVERY_V2_COLLECTION_ID: ${{ secrets.D2_COLLECTION_ID }}
+
+      run: |
+        mv test/resources/auth.gha.js test/resources/auth.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v1.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/assistant.v2.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/compare-comply.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v1.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/discovery.v2.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/language-translator.v3.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/natural-language-classifier.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/personality-insights.v3.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/speech-to-text.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/text-to-speech.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/tone-analyzer.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.custom-classifiers.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v3.test.js
+        jest --silent --coverage=false --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' test/integration/visual-recognition.v4.test.js
+
+# Do not notify on success.  We will leave the code here just in case we decide to switch gears
+    - name: Notify slack on success
+      if: false # success()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: watson-e2e-tests
+        status: SUCCESS
+        color: good
+
+    - name: Notify slack on failure
+      if: failure()
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+      uses: voxmedia/github-action-slack-notify-build@v1
+      with:
+        channel: watson-e2e-tests
+        status: FAILED
+        color: danger
