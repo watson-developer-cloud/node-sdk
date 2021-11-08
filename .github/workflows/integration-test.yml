@@ -6,11 +6,6 @@
 name: Run Integration Tests
 
 on:
-  push:
-    branches: [ '**' ]
-  pull_request:
-    branches: [ master ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -106,7 +101,7 @@ jobs:
         color: good
 
     - name: Notify slack on failure
-      if: false # failure()
+      if: failure()
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
       uses: voxmedia/github-action-slack-notify-build@v1
