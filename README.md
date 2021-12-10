@@ -412,6 +412,9 @@ const discovery = new DiscoveryV1({
 });
 ```
 
+### All other configuration options
+To see all possible https agent configuration options go to this [link](https://node.readthedocs.io/en/latest/api/https/#httpsrequestoptions-callback) for the quickest and most readable format. For even more detailed information, you can go to the Node documentation [here](https://nodejs.org/api/http.html#httprequestoptions-callback)
+
 ## Documentation
 
 You can find links to the documentation at https://cloud.ibm.com/developer/watson/documentation. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
