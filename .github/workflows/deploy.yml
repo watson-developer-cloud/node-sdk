@@ -7,11 +7,8 @@
 name: Deploy and Publish
 
 on:
-  workflow_run:
-    workflows: ["Build and Test"]
-    branches: [ master ]
-    types:
-      - completed
+  push:
+    branches: [ '**' ]
 
   # Allows you to run this workflow manually from the Action tab
   workflow_dispatch:
@@ -46,5 +43,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npx semantic-release # --dry-run
+      run: npx semantic-release --dry-run --branches gha_9926
 
