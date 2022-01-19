@@ -1,3 +1,10 @@
+## [6.2.2](https://github.com/watson-developer-cloud/node-sdk/compare/v6.2.1...v6.2.2) (2022-01-19)
+
+
+### Bug Fixes
+
+* **stt:** update word confidence and timestamps type ([9f4d664](https://github.com/watson-developer-cloud/node-sdk/commit/9f4d6645fa8080b41f4f99fb0cf07e3f5b68a4c1))
+
 ## [6.2.1](https://github.com/watson-developer-cloud/node-sdk/compare/v6.2.0...v6.2.1) (2021-09-21)
 
 
