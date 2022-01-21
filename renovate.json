@@ -1,5 +1,21 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    "group:all",
+    // Regular updates
+    "schedule:after 10:51am every weekday"
+  ],
+  // Random assignee of PR
+  "assigneesFromCodeOwners": true,
+  "assigneesSampleSize": 1,
+  "separateMinorPatch": true,
+  "packageRules": [
+    {
+      // Only major and minor updates
+      "updateTypes": ["patch"],
+      "enabled": false
+    }
   ]
+  // Encrypted NPM token for private packages
+  
 }
