@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Term | ibm-watson</title>
+	<title>QueryTimesliceAggregationResult | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.term.html">Term</a>
+					<a href="discoveryv1.querytimesliceaggregationresult.html">QueryTimesliceAggregationResult</a>
 				</li>
 			</ul>
-			<h1>Interface Term</h1>
+			<h1>Interface QueryTimesliceAggregationResult</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Term.</p>
+						<p>A timeslice interval segment.</p>
 					</div>
 				</div>
 			</section>
@@ -78,12 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="discoveryv1.queryaggregation.html" class="tsd-signature-type">QueryAggregation</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">Term</span>
-							</li>
-						</ul>
+						<span class="target">QueryTimesliceAggregationResult</span>
 					</li>
 				</ul>
 			</section>
@@ -95,12 +90,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.term.html#aggregations" class="tsd-kind-icon">aggregations</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.term.html#count" class="tsd-kind-icon">count</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.term.html#field" class="tsd-kind-icon">field</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.term.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.term.html#results" class="tsd-kind-icon">results</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.term.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.querytimesliceaggregationresult.html#aggregations" class="tsd-kind-icon">aggregations</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.querytimesliceaggregationresult.html#key" class="tsd-kind-icon">key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.querytimesliceaggregationresult.html#key_as_string" class="tsd-kind-icon">key_<wbr>as_<wbr>string</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.querytimesliceaggregationresult.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,97 +101,63 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="aggregations" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> aggregations</h3>
 					<div class="tsd-signature tsd-kind-icon">aggregations<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.queryaggregation.html" class="tsd-signature-type">QueryAggregation</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#aggregations">aggregations</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6445">discovery/v1.ts:6445</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6579">discovery/v1.ts:6579</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Aggregations returned by Discovery.</p>
+							<p>An array of sub-aggregations.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="count" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> count</h3>
-					<div class="tsd-signature tsd-kind-icon">count<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="key" class="tsd-anchor"></a>
+					<h3>key</h3>
+					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6956">discovery/v1.ts:6956</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6575">discovery/v1.ts:6575</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The number of terms identified.</p>
+							<p>Numeric date value of the upper bound for the timeslice interval in UNIX milliseconds since epoch.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="field" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> field</h3>
-					<div class="tsd-signature tsd-kind-icon">field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="key_as_string" class="tsd-anchor"></a>
+					<h3>key_<wbr>as_<wbr>string</h3>
+					<div class="tsd-signature tsd-kind-icon">key_<wbr>as_<wbr>string<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6954">discovery/v1.ts:6954</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6573">discovery/v1.ts:6573</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The field where the aggregation is located in the document.</p>
+							<p>String date value of the upper bound for the timeslice interval in ISO-8601 format.</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="matching_results" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> matching_<wbr>results</h3>
+					<h3>matching_<wbr>results</h3>
 					<div class="tsd-signature tsd-kind-icon">matching_<wbr>results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#matching_results">matching_results</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6443">discovery/v1.ts:6443</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6577">discovery/v1.ts:6577</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Number of matching results.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="results" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> results</h3>
-					<div class="tsd-signature tsd-kind-icon">results<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.aggregationresult.html" class="tsd-signature-type">AggregationResult</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#results">results</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6441">discovery/v1.ts:6441</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Array of aggregation results.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="type" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#type">type</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6439">discovery/v1.ts:6439</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The type of aggregation command used. For example: term, filter, max, min, etc.</p>
+							<p>Number of documents with the specified key as the upper bound.</p>
 						</div>
 					</div>
 				</section>
@@ -234,31 +193,23 @@
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.term.html" class="tsd-kind-icon">Term</a>
+								<a href="discoveryv1.querytimesliceaggregationresult.html" class="tsd-kind-icon">Query<wbr>Timeslice<wbr>Aggregation<wbr>Result</a>
 								<ul>
 									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.term.html#aggregations" class="tsd-kind-icon">aggregations</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.querytimesliceaggregationresult.html#aggregations" class="tsd-kind-icon">aggregations</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.term.html#count" class="tsd-kind-icon">count</a>
+										<a href="discoveryv1.querytimesliceaggregationresult.html#key" class="tsd-kind-icon">key</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.term.html#field" class="tsd-kind-icon">field</a>
+										<a href="discoveryv1.querytimesliceaggregationresult.html#key_as_string" class="tsd-kind-icon">key_<wbr>as_<wbr>string</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.term.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.term.html#results" class="tsd-kind-icon">results</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.term.html#type" class="tsd-kind-icon">type</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.querytimesliceaggregationresult.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a>
 									</li>
 								</ul>
 							</li>

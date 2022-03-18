@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TopHitsResults | ibm-watson</title>
+	<title>QueryCalculationAggregation | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.tophitsresults.html">TopHitsResults</a>
+					<a href="discoveryv1.querycalculationaggregation.html">QueryCalculationAggregation</a>
 				</li>
 			</ul>
-			<h1>Interface TopHitsResults</h1>
+			<h1>Interface QueryCalculationAggregation</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Top hit information for this query.</p>
+						<p>Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count.</p>
 					</div>
 				</div>
 			</section>
@@ -78,7 +78,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">TopHitsResults</span>
+						<a href="discoveryv1.queryaggregation.html" class="tsd-signature-type">QueryAggregation</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">QueryCalculationAggregation</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -90,8 +95,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.tophitsresults.html#hits" class="tsd-kind-icon">hits</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.tophitsresults.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.querycalculationaggregation.html#field" class="tsd-kind-icon">field</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.querycalculationaggregation.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.querycalculationaggregation.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -100,32 +106,48 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="hits" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> hits</h3>
-					<div class="tsd-signature tsd-kind-icon">hits<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.queryresult.html" class="tsd-signature-type">QueryResult</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="field" class="tsd-anchor"></a>
+					<h3>field</h3>
+					<div class="tsd-signature tsd-kind-icon">field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6832">discovery/v1.ts:6832</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6952">discovery/v1.ts:6952</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Top results returned by the aggregation.</p>
+							<p>The field to perform the calculation on.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#type">type</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6429">discovery/v1.ts:6429</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The type of aggregation command used. For example: term, filter, max, min, etc.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="matching_results" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> matching_<wbr>results</h3>
-					<div class="tsd-signature tsd-kind-icon">matching_<wbr>results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="value" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6830">discovery/v1.ts:6830</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6954">discovery/v1.ts:6954</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Number of matching results.</p>
+							<p>The value of the calculation.</p>
 						</div>
 					</div>
 				</section>
@@ -161,15 +183,19 @@
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.tophitsresults.html" class="tsd-kind-icon">Top<wbr>Hits<wbr>Results</a>
+								<a href="discoveryv1.querycalculationaggregation.html" class="tsd-kind-icon">Query<wbr>Calculation<wbr>Aggregation</a>
 								<ul>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.tophitsresults.html#hits" class="tsd-kind-icon">hits</a>
+										<a href="discoveryv1.querycalculationaggregation.html#field" class="tsd-kind-icon">field</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+										<a href="discoveryv1.querycalculationaggregation.html#type" class="tsd-kind-icon">type</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.tophitsresults.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a>
+										<a href="discoveryv1.querycalculationaggregation.html#value" class="tsd-kind-icon">value</a>
 									</li>
 								</ul>
 							</li>

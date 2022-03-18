@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Histogram | ibm-watson</title>
+	<title>QueryHistogramAggregationResult | ibm-watson</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,10 +57,10 @@
 					<a href="../classes/discoveryv1.html">DiscoveryV1</a>
 				</li>
 				<li>
-					<a href="discoveryv1.histogram.html">Histogram</a>
+					<a href="discoveryv1.queryhistogramaggregationresult.html">QueryHistogramAggregationResult</a>
 				</li>
 			</ul>
-			<h1>Interface Histogram</h1>
+			<h1>Interface QueryHistogramAggregationResult</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Histogram.</p>
+						<p>Histogram numeric interval result.</p>
 					</div>
 				</div>
 			</section>
@@ -78,12 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="discoveryv1.queryaggregation.html" class="tsd-signature-type">QueryAggregation</a>
-						<ul class="tsd-hierarchy">
-							<li>
-								<span class="target">Histogram</span>
-							</li>
-						</ul>
+						<span class="target">QueryHistogramAggregationResult</span>
 					</li>
 				</ul>
 			</section>
@@ -95,12 +90,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.histogram.html#aggregations" class="tsd-kind-icon">aggregations</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.histogram.html#field" class="tsd-kind-icon">field</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.histogram.html#interval" class="tsd-kind-icon">interval</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.histogram.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.histogram.html#results" class="tsd-kind-icon">results</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="discoveryv1.histogram.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryhistogramaggregationresult.html#aggregations" class="tsd-kind-icon">aggregations</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryhistogramaggregationresult.html#key" class="tsd-kind-icon">key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="discoveryv1.queryhistogramaggregationresult.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,97 +100,48 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="aggregations" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> aggregations</h3>
 					<div class="tsd-signature tsd-kind-icon">aggregations<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.queryaggregation.html" class="tsd-signature-type">QueryAggregation</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#aggregations">aggregations</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6445">discovery/v1.ts:6445</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6439">discovery/v1.ts:6439</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Aggregations returned by Discovery.</p>
+							<p>An array of sub-aggregations.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="field" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> field</h3>
-					<div class="tsd-signature tsd-kind-icon">field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="key" class="tsd-anchor"></a>
+					<h3>key</h3>
+					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6940">discovery/v1.ts:6940</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6435">discovery/v1.ts:6435</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The field where the aggregation is located in the document.</p>
+							<p>The value of the upper bound for the numeric segment.</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="interval" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> interval</h3>
-					<div class="tsd-signature tsd-kind-icon">interval<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6942">discovery/v1.ts:6942</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Interval of the aggregation. (For &#39;histogram&#39; type).</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="matching_results" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> matching_<wbr>results</h3>
+					<h3>matching_<wbr>results</h3>
 					<div class="tsd-signature tsd-kind-icon">matching_<wbr>results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#matching_results">matching_results</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6443">discovery/v1.ts:6443</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/e331bbe/discovery/v1.ts#L6437">discovery/v1.ts:6437</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Number of matching results.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="results" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> results</h3>
-					<div class="tsd-signature tsd-kind-icon">results<span class="tsd-signature-symbol">:</span> <a href="discoveryv1.aggregationresult.html" class="tsd-signature-type">AggregationResult</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#results">results</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6441">discovery/v1.ts:6441</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Array of aggregation results.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="type" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="discoveryv1.queryaggregation.html">QueryAggregation</a>.<a href="discoveryv1.queryaggregation.html#type">type</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/ba4a3eb/discovery/v1.ts#L6439">discovery/v1.ts:6439</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The type of aggregation command used. For example: term, filter, max, min, etc.</p>
+							<p>Number of documents with the specified key as the upper bound.</p>
 						</div>
 					</div>
 				</section>
@@ -234,31 +177,19 @@
 						<ul>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class="current tsd-kind-interface tsd-parent-kind-class">
-								<a href="discoveryv1.histogram.html" class="tsd-kind-icon">Histogram</a>
+								<a href="discoveryv1.queryhistogramaggregationresult.html" class="tsd-kind-icon">Query<wbr>Histogram<wbr>Aggregation<wbr>Result</a>
 								<ul>
 									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.histogram.html#aggregations" class="tsd-kind-icon">aggregations</a>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="discoveryv1.queryhistogramaggregationresult.html#aggregations" class="tsd-kind-icon">aggregations</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.histogram.html#field" class="tsd-kind-icon">field</a>
+										<a href="discoveryv1.queryhistogramaggregationresult.html#key" class="tsd-kind-icon">key</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="discoveryv1.histogram.html#interval" class="tsd-kind-icon">interval</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.histogram.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.histogram.html#results" class="tsd-kind-icon">results</a>
-									</li>
-									<!-- Unless the url is part of the exclusion list, render them -->
-									<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-										<a href="discoveryv1.histogram.html#type" class="tsd-kind-icon">type</a>
+										<a href="discoveryv1.queryhistogramaggregationresult.html#matching_results" class="tsd-kind-icon">matching_<wbr>results</a>
 									</li>
 								</ul>
 							</li>
