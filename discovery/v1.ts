@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2021.
+ * (C) Copyright IBM Corp. 2017, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -267,8 +267,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} [params.name] - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
-   * @param {string} [params.size] - Size that the environment should be increased to. Environment size cannot be
-   * modified when using a Lite plan. Environment size can only increased and not decreased.
+   * @param {string} [params.size] - Size to change the environment to. **Note:** Lite plan users cannot change the
+   * environment size.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Environment>>}
    */
@@ -4384,16 +4384,14 @@ namespace DiscoveryV1 {
     name?: string;
     /** Description of the environment. */
     description?: string;
-    /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite
-     *  plan. Environment size can only increased and not decreased.
-     */
+    /** Size to change the environment to. **Note:** Lite plan users cannot change the environment size. */
     size?: UpdateEnvironmentConstants.Size | string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `updateEnvironment` operation. */
   export namespace UpdateEnvironmentConstants {
-    /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
+    /** Size to change the environment to. **Note:** Lite plan users cannot change the environment size. */
     export enum Size {
       S = 'S',
       MS = 'MS',
@@ -5880,26 +5878,26 @@ namespace DiscoveryV1 {
     source_field: string;
     /** Indicates that the enrichments will overwrite the destination_field field if it already exists. */
     overwrite?: boolean;
-    /** Name of the enrichment service to call. Current options are `natural_language_understanding` and `elements`.
+    /** Name of the enrichment service to call. The only supported option is `natural_language_understanding`. The
+     *  `elements` option is deprecated and support ended on 10 July 2020.
      *
-     *   When using `natual_language_understanding`, the **options** object must contain Natural Language Understanding
-     *  options.
-     *
-     *  When using `elements` the **options** object must contain Element Classification options. Additionally, when
-     *  using the `elements` enrichment the configuration specified and files ingested must meet all the criteria
-     *  specified in [the
-     *  documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-element-classification#element-classification).
+     *   The **options** object must contain Natural Language Understanding options.
      */
     enrichment: string;
     /** If true, then most errors generated during the enrichment process will be treated as warnings and will not
      *  cause the document to fail processing.
      */
     ignore_downstream_errors?: boolean;
-    /** Options which are specific to a particular enrichment. */
+    /** Options that are specific to a particular enrichment.
+     *
+     *  The `elements` enrichment type is deprecated. Use the [Create a
+     *  project](https://cloud.ibm.com/apidocs/discovery-data#createproject) method of the Discovery v2 API to create a
+     *  `content_intelligence` project type instead.
+     */
     options?: EnrichmentOptions;
   }
 
-  /** Options which are specific to a particular enrichment. */
+  /** Options that are specific to a particular enrichment. The `elements` enrichment type is deprecated. Use the [Create a project](https://cloud.ibm.com/apidocs/discovery-data#createproject) method of the Discovery v2 API to create a `content_intelligence` project type instead. */
   export interface EnrichmentOptions {
     /** Object containing Natural Language Understanding features to be used. */
     features?: NluEnrichmentFeatures;
@@ -5909,9 +5907,7 @@ namespace DiscoveryV1 {
      *  features support all languages, automatic detection is recommended.
      */
     language?: string;
-    /** For use with `elements` enrichments only. The element extraction model to use. The only model available is
-     *  `contract`.
-     */
+    /** The element extraction model to use, which can be `contract` only. The `elements` enrichment is deprecated. */
     model?: string;
   }
 
@@ -6802,7 +6798,7 @@ namespace DiscoveryV1 {
   export interface StatusDetails {
     /** Indicates whether the credential is accepted by the target data source. */
     authenticated?: boolean;
-    /** If `authenticated` is `false`, a message describes why the authentication was unsuccessful. */
+    /** If `authenticated` is `false`, a message describes why authentication is unsuccessful. */
     error_message?: string;
   }
 
