@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2018, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2074,7 +2074,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation addGrammar
         const customizationId = 'testString';
         const grammarName = 'testString';
-        const grammarFile = 'testString';
+        const grammarFile = Buffer.from('This is a mock file.');
         const contentType = 'application/srgs';
         const allowOverwrite = false;
         const params = {
@@ -2110,7 +2110,7 @@ describe('SpeechToTextV1', () => {
         // parameters
         const customizationId = 'testString';
         const grammarName = 'testString';
-        const grammarFile = 'testString';
+        const grammarFile = Buffer.from('This is a mock file.');
         const contentType = 'application/srgs';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
