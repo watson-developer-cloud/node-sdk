@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -211,7 +211,6 @@ describe('AssistantV1', () => {
         location: [38],
         value: 'testString',
         confidence: 72.5,
-        metadata: { 'key1': 'testString' },
         groups: [captureGroupModel],
         interpretation: runtimeEntityInterpretationModel,
         alternatives: [runtimeEntityAlternativeModel],
@@ -286,7 +285,6 @@ describe('AssistantV1', () => {
         nodes_visited: ['testString'],
         nodes_visited_details: [dialogNodeVisitedDetailsModel],
         log_messages: [logMessageModel],
-        text: ['testString'],
         generic: [runtimeResponseGenericModel],
         foo: 'testString',
       };
@@ -526,32 +524,20 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // ChannelTransferTargetChat
-      const channelTransferTargetChatModel = {
-        url: 'testString',
-      };
-
-      // ChannelTransferTarget
-      const channelTransferTargetModel = {
-        chat: channelTransferTargetChatModel,
-      };
-
-      // ChannelTransferInfo
-      const channelTransferInfoModel = {
-        target: channelTransferTargetModel,
-      };
-
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
       const dialogNodeOutputGenericModel = {
-        response_type: 'channel_transfer',
-        message_to_user: 'testString',
-        transfer_info: channelTransferInfoModel,
+        response_type: 'audio',
+        source: 'testString',
+        title: 'testString',
+        description: 'testString',
         channels: [responseGenericChannelModel],
+        channel_options: { foo: 'bar' },
+        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -652,6 +638,7 @@ describe('AssistantV1', () => {
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
         off_topic: workspaceSystemSettingsOffTopicModel,
+        foo: 'testString',
       };
 
       // WebhookHeader
@@ -866,32 +853,20 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // ChannelTransferTargetChat
-      const channelTransferTargetChatModel = {
-        url: 'testString',
-      };
-
-      // ChannelTransferTarget
-      const channelTransferTargetModel = {
-        chat: channelTransferTargetChatModel,
-      };
-
-      // ChannelTransferInfo
-      const channelTransferInfoModel = {
-        target: channelTransferTargetModel,
-      };
-
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
       const dialogNodeOutputGenericModel = {
-        response_type: 'channel_transfer',
-        message_to_user: 'testString',
-        transfer_info: channelTransferInfoModel,
+        response_type: 'audio',
+        source: 'testString',
+        title: 'testString',
+        description: 'testString',
         channels: [responseGenericChannelModel],
+        channel_options: { foo: 'bar' },
+        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -992,6 +967,7 @@ describe('AssistantV1', () => {
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
         off_topic: workspaceSystemSettingsOffTopicModel,
+        foo: 'testString',
       };
 
       // WebhookHeader
@@ -3998,32 +3974,20 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // ChannelTransferTargetChat
-      const channelTransferTargetChatModel = {
-        url: 'testString',
-      };
-
-      // ChannelTransferTarget
-      const channelTransferTargetModel = {
-        chat: channelTransferTargetChatModel,
-      };
-
-      // ChannelTransferInfo
-      const channelTransferInfoModel = {
-        target: channelTransferTargetModel,
-      };
-
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
       const dialogNodeOutputGenericModel = {
-        response_type: 'channel_transfer',
-        message_to_user: 'testString',
-        transfer_info: channelTransferInfoModel,
+        response_type: 'audio',
+        source: 'testString',
+        title: 'testString',
+        description: 'testString',
         channels: [responseGenericChannelModel],
+        channel_options: { foo: 'bar' },
+        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -4271,32 +4235,20 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // ChannelTransferTargetChat
-      const channelTransferTargetChatModel = {
-        url: 'testString',
-      };
-
-      // ChannelTransferTarget
-      const channelTransferTargetModel = {
-        chat: channelTransferTargetChatModel,
-      };
-
-      // ChannelTransferInfo
-      const channelTransferInfoModel = {
-        target: channelTransferTargetModel,
-      };
-
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
       const dialogNodeOutputGenericModel = {
-        response_type: 'channel_transfer',
-        message_to_user: 'testString',
-        transfer_info: channelTransferInfoModel,
+        response_type: 'audio',
+        source: 'testString',
+        title: 'testString',
+        description: 'testString',
         channels: [responseGenericChannelModel],
+        channel_options: { foo: 'bar' },
+        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers

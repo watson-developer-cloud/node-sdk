@@ -168,7 +168,7 @@ describe('assistant v1 integration', () => {
       const res = await assistant.message(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(result.context.system.dialog_stack).toEqual([]);
+      expect(result.context.system.dialog_stack).toEqual([{"dialog_node": "root"}]);
     });
 
     it('dialog_stack with 2016-07-11 version', async () => {
@@ -187,7 +187,7 @@ describe('assistant v1 integration', () => {
       const res = await assistant.message(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(result.context.system.dialog_stack).toEqual([]);
+      expect(result.context.system.dialog_stack).toEqual(["root"]);
     });
   });
 
