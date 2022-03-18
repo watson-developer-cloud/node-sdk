@@ -2755,9 +2755,9 @@ class SpeechToTextV1 extends BaseService {
    * * Do not use the name `user`, which is reserved by the service to denote custom words that are added or modified by
    * the user.
    * * Do not use the name `base_lm` or `default_lm`. Both names are reserved for future use by the service.
-   * @param {string | NodeJS.ReadableStream | Buffer} params.grammarFile - A plain text file that contains the grammar
-   * in the format specified by the `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using
-   * any other encoding can lead to issues when compiling the grammar or to unexpected results in decoding. The service
+   * @param {NodeJS.ReadableStream | Buffer} params.grammarFile - A plain text file that contains the grammar in the
+   * format specified by the `Content-Type` header. Encode the file in UTF-8 (ASCII is a subset of UTF-8). Using any
+   * other encoding can lead to issues when compiling the grammar or to unexpected results in decoding. The service
    * ignores an encoding that is specified in the header of the grammar.
    *
    * With the `curl` command, use the `--data-binary` option to upload the file for the request.
@@ -5326,7 +5326,7 @@ namespace SpeechToTextV1 {
      *
      *  With the `curl` command, use the `--data-binary` option to upload the file for the request.
      */
-    grammarFile: string | NodeJS.ReadableStream | Buffer;
+    grammarFile: NodeJS.ReadableStream | Buffer;
     /** The format (MIME type) of the grammar file:
      *  * `application/srgs` for Augmented Backus-Naur Form (ABNF), which uses a plain-text representation that is
      *  similar to traditional BNF grammars.
