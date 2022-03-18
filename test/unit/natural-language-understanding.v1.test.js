@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -176,10 +176,6 @@ describe('NaturalLanguageUnderstandingV1', () => {
         emotion: false,
       };
 
-      // MetadataOptions
-      const metadataOptionsModel = {
-      };
-
       // RelationsOptions
       const relationsOptionsModel = {
         model: 'testString',
@@ -230,7 +226,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         emotion: emotionOptionsModel,
         entities: entitiesOptionsModel,
         keywords: keywordsOptionsModel,
-        metadata: metadataOptionsModel,
+        metadata: { 'key1': 'testString' },
         relations: relationsOptionsModel,
         semantic_roles: semanticRolesOptionsModel,
         sentiment: sentimentOptionsModel,

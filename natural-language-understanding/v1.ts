@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2021.
+ * (C) Copyright IBM Corp. 2017, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1763,11 +1763,15 @@ namespace NaturalLanguageUnderstandingV1 {
     models?: ClassificationsModel[];
   }
 
-  /** Returns text classifications for the content. Supported languages: English only. */
+  /** Returns text classifications for the content. */
   export interface ClassificationsOptions {
     /** Enter a [custom
      *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
-     *  ID of the classification model to be used.
+     *  ID of the classifications model to be used.
+     *
+     *  You can analyze tone by using a language-specific model ID. See [Tone analytics
+     *  (Classifications)](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-tone_analytics)
+     *  for more information.
      */
     model?: string;
   }
@@ -1919,10 +1923,7 @@ namespace NaturalLanguageUnderstandingV1 {
 
   /** Analysis features and options. */
   export interface Features {
-    /** Returns text classifications for the content.
-     *
-     *  Supported languages: English only.
-     */
+    /** Returns text classifications for the content. */
     classifications?: ClassificationsOptions;
     /** Returns high-level concepts in the content. For example, a research paper about deep learning might return
      *  the concept, "Artificial Intelligence" although the term is not mentioned.
@@ -1953,7 +1954,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image,
      *  and publication date. Supports URL and HTML input types only.
      */
-    metadata?: MetadataOptions;
+    metadata?: JsonObject;
     /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo`
      *  relation might connect the entities "Nobel Prize" and "Albert Einstein". For more information, see [Relation
      *  types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-relations).
@@ -2040,10 +2041,6 @@ namespace NaturalLanguageUnderstandingV1 {
   /** ListSentimentModelsResponse. */
   export interface ListSentimentModelsResponse {
     models?: SentimentModel[];
-  }
-
-  /** Returns information from the document, including author name, title, RSS/ATOM feeds, prominent page image, and publication date. Supports URL and HTML input types only. */
-  export interface MetadataOptions {
   }
 
   /** Model. */
