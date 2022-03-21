@@ -73,7 +73,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the default language, <code>en-US</code>. <strong>Note:</strong> The <code>ar-AR</code> language identifier cannot be used to create a custom model. Use the <code>ar-MS</code> identifier instead. <strong>IBM Cloud:</strong> The Arabic, Chinese, Dutch, Australian English, and Korean languages and voices are supported only for IBM Cloud.</p>
+						<p>The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the default language, <code>en-US</code>. <strong>Important:</strong> If you are using the service on IBM Cloud Pak for Data <em>and</em> you install the neural voices, the <code>language</code>parameter is required. You must specify the language for the custom model in the indicated format (for example, <code>en-AU</code> for Australian English). The request fails if you do not specify a language.</p>
 					</div>
 				</div>
 			</section>
@@ -86,7 +86,9 @@
 							<h3>Enumeration members</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#ar_ms" class="tsd-kind-icon">AR_<wbr>MS</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#cs_cz" class="tsd-kind-icon">CS_<wbr>CZ</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#de_de" class="tsd-kind-icon">DE_<wbr>DE</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#en_au" class="tsd-kind-icon">EN_<wbr>AU</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#en_gb" class="tsd-kind-icon">EN_<wbr>GB</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#en_us" class="tsd-kind-icon">EN_<wbr>US</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#es_es" class="tsd-kind-icon">ES_<wbr>ES</a></li>
@@ -100,6 +102,7 @@
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#nl_be" class="tsd-kind-icon">NL_<wbr>BE</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#nl_nl" class="tsd-kind-icon">NL_<wbr>NL</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#pt_br" class="tsd-kind-icon">PT_<wbr>BR</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#sv_se" class="tsd-kind-icon">SV_<wbr>SE</a></li>
 								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="texttospeechv1.createcustommodelconstants.language.html#zh_cn" class="tsd-kind-icon">ZH_<wbr>CN</a></li>
 							</ul>
 						</section>
@@ -114,7 +117,17 @@
 					<div class="tsd-signature tsd-kind-icon">AR_<wbr>MS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;ar-MS&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2168">text-to-speech/v1-generated.ts:2168</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2109">text-to-speech/v1-generated.ts:2109</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="cs_cz" class="tsd-anchor"></a>
+					<h3>CS_<wbr>CZ</h3>
+					<div class="tsd-signature tsd-kind-icon">CS_<wbr>CZ<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;cs-CZ&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2110">text-to-speech/v1-generated.ts:2110</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -124,7 +137,17 @@
 					<div class="tsd-signature tsd-kind-icon">DE_<wbr>DE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;de-DE&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2169">text-to-speech/v1-generated.ts:2169</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2111">text-to-speech/v1-generated.ts:2111</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="en_au" class="tsd-anchor"></a>
+					<h3>EN_<wbr>AU</h3>
+					<div class="tsd-signature tsd-kind-icon">EN_<wbr>AU<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;en-AU&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2112">text-to-speech/v1-generated.ts:2112</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -134,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">EN_<wbr>GB<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;en-GB&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2170">text-to-speech/v1-generated.ts:2170</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2113">text-to-speech/v1-generated.ts:2113</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -144,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">EN_<wbr>US<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;en-US&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2171">text-to-speech/v1-generated.ts:2171</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2114">text-to-speech/v1-generated.ts:2114</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,7 +177,7 @@
 					<div class="tsd-signature tsd-kind-icon">ES_<wbr>ES<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;es-ES&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2172">text-to-speech/v1-generated.ts:2172</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2115">text-to-speech/v1-generated.ts:2115</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -164,7 +187,7 @@
 					<div class="tsd-signature tsd-kind-icon">ES_<wbr>LA<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;es-LA&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2173">text-to-speech/v1-generated.ts:2173</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2116">text-to-speech/v1-generated.ts:2116</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -174,7 +197,7 @@
 					<div class="tsd-signature tsd-kind-icon">ES_<wbr>US<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;es-US&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2174">text-to-speech/v1-generated.ts:2174</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2117">text-to-speech/v1-generated.ts:2117</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,7 +207,7 @@
 					<div class="tsd-signature tsd-kind-icon">FR_<wbr>CA<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;fr-CA&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2175">text-to-speech/v1-generated.ts:2175</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2118">text-to-speech/v1-generated.ts:2118</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -194,7 +217,7 @@
 					<div class="tsd-signature tsd-kind-icon">FR_<wbr>FR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;fr-FR&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2176">text-to-speech/v1-generated.ts:2176</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2119">text-to-speech/v1-generated.ts:2119</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -204,7 +227,7 @@
 					<div class="tsd-signature tsd-kind-icon">IT_<wbr>IT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;it-IT&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2177">text-to-speech/v1-generated.ts:2177</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2120">text-to-speech/v1-generated.ts:2120</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -214,7 +237,7 @@
 					<div class="tsd-signature tsd-kind-icon">JA_<wbr>JP<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;ja-JP&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2178">text-to-speech/v1-generated.ts:2178</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2121">text-to-speech/v1-generated.ts:2121</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -224,7 +247,7 @@
 					<div class="tsd-signature tsd-kind-icon">KO_<wbr>KR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;ko-KR&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2179">text-to-speech/v1-generated.ts:2179</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2122">text-to-speech/v1-generated.ts:2122</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -234,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">NL_<wbr>BE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;nl-BE&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2180">text-to-speech/v1-generated.ts:2180</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2123">text-to-speech/v1-generated.ts:2123</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -244,7 +267,7 @@
 					<div class="tsd-signature tsd-kind-icon">NL_<wbr>NL<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;nl-NL&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2181">text-to-speech/v1-generated.ts:2181</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2124">text-to-speech/v1-generated.ts:2124</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -254,7 +277,17 @@
 					<div class="tsd-signature tsd-kind-icon">PT_<wbr>BR<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;pt-BR&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2182">text-to-speech/v1-generated.ts:2182</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2125">text-to-speech/v1-generated.ts:2125</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="sv_se" class="tsd-anchor"></a>
+					<h3>SV_<wbr>SE</h3>
+					<div class="tsd-signature tsd-kind-icon">SV_<wbr>SE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;sv-SE&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2126">text-to-speech/v1-generated.ts:2126</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -264,7 +297,7 @@
 					<div class="tsd-signature tsd-kind-icon">ZH_<wbr>CN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = &quot;zh-CN&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/676f762/text-to-speech/v1-generated.ts#L2183">text-to-speech/v1-generated.ts:2183</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/text-to-speech/v1-generated.ts#L2127">text-to-speech/v1-generated.ts:2127</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -292,7 +325,15 @@
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="texttospeechv1.createcustommodelconstants.language.html#cs_cz" class="tsd-kind-icon">CS_<wbr>CZ</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 								<a href="texttospeechv1.createcustommodelconstants.language.html#de_de" class="tsd-kind-icon">DE_<wbr>DE</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="texttospeechv1.createcustommodelconstants.language.html#en_au" class="tsd-kind-icon">EN_<wbr>AU</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
@@ -345,6 +386,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
 								<a href="texttospeechv1.createcustommodelconstants.language.html#pt_br" class="tsd-kind-icon">PT_<wbr>BR</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="texttospeechv1.createcustommodelconstants.language.html#sv_se" class="tsd-kind-icon">SV_<wbr>SE</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
