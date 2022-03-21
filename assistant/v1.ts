@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2021.
+ * (C) Copyright IBM Corp. 2018, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ class AssistantV1 extends BaseService {
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2021-06-14`.
+   *  `2021-11-27`.
    */
   version: string;
 
@@ -54,7 +54,7 @@ class AssistantV1 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2021-06-14`.
+   * format. The current version is `2021-11-27`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -3557,7 +3557,7 @@ namespace AssistantV1 {
   /** Options for the `AssistantV1` constructor. */
   export interface Options extends UserOptions {
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2021-06-14`.
+     *  `2021-11-27`.
      */
     version: string;
   }
@@ -5437,8 +5437,6 @@ namespace AssistantV1 {
     nodes_visited_details?: DialogNodeVisitedDetails[];
     /** An array of up to 50 messages logged with the request. */
     log_messages: LogMessage[];
-    /** An array of responses to the user. */
-    text: string[];
     /** Output intended for any channel. It is the responsibility of the client application to implement the
      *  supported response types.
      */
@@ -5483,12 +5481,6 @@ namespace AssistantV1 {
     value: string;
     /** A decimal percentage that represents Watson's confidence in the recognized entity. */
     confidence?: number;
-    /** **Deprecated.** Any metadata for the entity.
-     *
-     *  Beginning with the `2021-06-14` API version, the `metadata` property is no longer returned. For information
-     *  about system entities recognized in the user input, see the `interpretation` property.
-     */
-    metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
     /** An object containing detailed information about the entity recognized in the user input.
@@ -5764,6 +5756,8 @@ namespace AssistantV1 {
     system_entities?: WorkspaceSystemSettingsSystemEntities;
     /** Workspace settings related to detection of irrelevant input. */
     off_topic?: WorkspaceSystemSettingsOffTopic;
+    /** WorkspaceSystemSettings accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Workspace settings related to the disambiguation feature. */
@@ -5808,6 +5802,30 @@ namespace AssistantV1 {
     store_generic_responses?: boolean;
   }
 
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio. */
+  export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio extends DialogNodeOutputGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the audio clip. */
+    source: string;
+    /** An optional title to show before the response. */
+    title?: string;
+    /** An optional description to show with the response. */
+    description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+    /** For internal use only. */
+    channel_options?: JsonObject;
+    /** Descriptive text that can be used for screen readers or other situations where the audio player cannot be
+     *  seen.
+     */
+    alt_text?: string;
+  }
+
   /** DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer. */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
@@ -5841,6 +5859,26 @@ namespace AssistantV1 {
     /** Routing or other contextual information to be used by target service desk systems. */
     transfer_info?: DialogNodeOutputConnectToAgentTransferInfo;
     /** An array of objects specifying channels for which the response is intended. */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeIframe. */
+  export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeIframe extends DialogNodeOutputGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the embeddable content. */
+    source: string;
+    /** An optional title to show before the response. */
+    title?: string;
+    /** An optional description to show with the response. */
+    description?: string;
+    /** The URL of an image that shows a preview of the embedded content. */
+    image_url?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
     channels?: ResponseGenericChannel[];
   }
 
@@ -5953,6 +5991,52 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
+  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeVideo. */
+  export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeVideo extends DialogNodeOutputGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the video. */
+    source: string;
+    /** An optional title to show before the response. */
+    title?: string;
+    /** An optional description to show with the response. */
+    description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+    /** For internal use only. */
+    channel_options?: JsonObject;
+    /** Descriptive text that can be used for screen readers or other situations where the video cannot be seen. */
+    alt_text?: string;
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeAudio. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeAudio extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the audio clip. */
+    source: string;
+    /** The title or introductory text to show before the response. */
+    title?: string;
+    /** The description to show with the response. */
+    description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+    /** For internal use only. */
+    channel_options?: JsonObject;
+    /** Descriptive text that can be used for screen readers or other situations where the audio player cannot be
+     *  seen.
+     */
+    alt_text?: string;
+  }
+
   /** RuntimeResponseGenericRuntimeResponseTypeChannelTransfer. */
   export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
@@ -6001,6 +6085,26 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
+  /** RuntimeResponseGenericRuntimeResponseTypeIframe. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeIframe extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the embeddable content. */
+    source: string;
+    /** The title or introductory text to show before the response. */
+    title?: string;
+    /** The description to show with the response. */
+    description?: string;
+    /** The URL of an image that shows a preview of the embedded content. */
+    image_url?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+  }
+
   /** RuntimeResponseGenericRuntimeResponseTypeImage. */
   export interface RuntimeResponseGenericRuntimeResponseTypeImage extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
@@ -6011,7 +6115,7 @@ namespace AssistantV1 {
     source: string;
     /** The title or introductory text to show before the response. */
     title?: string;
-    /** The description to show with the the response. */
+    /** The description to show with the response. */
     description?: string;
     /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
      *  response is intended for a built-in integration and should not be handled by an API client.
@@ -6029,7 +6133,7 @@ namespace AssistantV1 {
     response_type: string;
     /** The title or introductory text to show before the response. */
     title: string;
-    /** The description to show with the the response. */
+    /** The description to show with the response. */
     description?: string;
     /** The preferred type of control to display. */
     preference?: string;
@@ -6099,6 +6203,28 @@ namespace AssistantV1 {
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
     channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeVideo. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeVideo extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the video. */
+    source: string;
+    /** The title or introductory text to show before the response. */
+    title?: string;
+    /** The description to show with the response. */
+    description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+    /** For internal use only. */
+    channel_options?: JsonObject;
+    /** Descriptive text that can be used for screen readers or other situations where the video cannot be seen. */
+    alt_text?: string;
   }
 }
 

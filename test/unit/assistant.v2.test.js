@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2021.
+ * (C) Copyright IBM Corp. 2018, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -345,11 +345,16 @@ describe('AssistantV2', () => {
         location: [38],
         value: 'testString',
         confidence: 72.5,
-        metadata: { 'key1': 'testString' },
         groups: [captureGroupModel],
         interpretation: runtimeEntityInterpretationModel,
         alternatives: [runtimeEntityAlternativeModel],
         role: runtimeEntityRoleModel,
+      };
+
+      // MessageInputAttachment
+      const messageInputAttachmentModel = {
+        url: 'testString',
+        media_type: 'testString',
       };
 
       // MessageInputOptionsSpelling
@@ -375,6 +380,7 @@ describe('AssistantV2', () => {
         intents: [runtimeIntentModel],
         entities: [runtimeEntityModel],
         suggestion_id: 'testString',
+        attachments: [messageInputAttachmentModel],
         options: messageInputOptionsModel,
       };
 
@@ -387,6 +393,7 @@ describe('AssistantV2', () => {
         reference_time: 'testString',
         session_start_time: 'testString',
         state: 'testString',
+        skip_user_input: true,
       };
 
       // MessageContextGlobal
@@ -410,6 +417,7 @@ describe('AssistantV2', () => {
       const messageContextModel = {
         global: messageContextGlobalModel,
         skills: { 'key1': messageContextSkillModel },
+        integrations: { foo: 'bar' },
       };
 
       test('should pass the right params to createRequest', () => {
@@ -556,11 +564,16 @@ describe('AssistantV2', () => {
         location: [38],
         value: 'testString',
         confidence: 72.5,
-        metadata: { 'key1': 'testString' },
         groups: [captureGroupModel],
         interpretation: runtimeEntityInterpretationModel,
         alternatives: [runtimeEntityAlternativeModel],
         role: runtimeEntityRoleModel,
+      };
+
+      // MessageInputAttachment
+      const messageInputAttachmentModel = {
+        url: 'testString',
+        media_type: 'testString',
       };
 
       // MessageInputOptionsSpelling
@@ -584,6 +597,7 @@ describe('AssistantV2', () => {
         intents: [runtimeIntentModel],
         entities: [runtimeEntityModel],
         suggestion_id: 'testString',
+        attachments: [messageInputAttachmentModel],
         options: messageInputOptionsStatelessModel,
       };
 
@@ -596,6 +610,7 @@ describe('AssistantV2', () => {
         reference_time: 'testString',
         session_start_time: 'testString',
         state: 'testString',
+        skip_user_input: true,
       };
 
       // MessageContextGlobalStateless
@@ -620,6 +635,7 @@ describe('AssistantV2', () => {
       const messageContextStatelessModel = {
         global: messageContextGlobalStatelessModel,
         skills: { 'key1': messageContextSkillModel },
+        integrations: { foo: 'bar' },
       };
 
       test('should pass the right params to createRequest', () => {

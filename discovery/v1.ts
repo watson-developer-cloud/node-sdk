@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -267,8 +267,8 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} [params.name] - Name that identifies the environment.
    * @param {string} [params.description] - Description of the environment.
-   * @param {string} [params.size] - Size that the environment should be increased to. Environment size cannot be
-   * modified when using a Lite plan. Environment size can only increased and not decreased.
+   * @param {string} [params.size] - Size to change the environment to. **Note:** Lite plan users cannot change the
+   * environment size.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Environment>>}
    */
@@ -4384,16 +4384,14 @@ namespace DiscoveryV1 {
     name?: string;
     /** Description of the environment. */
     description?: string;
-    /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite
-     *  plan. Environment size can only increased and not decreased.
-     */
+    /** Size to change the environment to. **Note:** Lite plan users cannot change the environment size. */
     size?: UpdateEnvironmentConstants.Size | string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `updateEnvironment` operation. */
   export namespace UpdateEnvironmentConstants {
-    /** Size that the environment should be increased to. Environment size cannot be modified when using a Lite plan. Environment size can only increased and not decreased. */
+    /** Size to change the environment to. **Note:** Lite plan users cannot change the environment size. */
     export enum Size {
       S = 'S',
       MS = 'MS',
@@ -5520,16 +5518,6 @@ namespace DiscoveryV1 {
    * model interfaces
    ************************/
 
-  /** Aggregation results for the specified query. */
-  export interface AggregationResult {
-    /** Key that matched the aggregation type. */
-    key?: string;
-    /** Number of matching results. */
-    matching_results?: number;
-    /** Aggregations returned in the case of chained aggregations. */
-    aggregations?: QueryAggregation[];
-  }
-
   /** A collection for storing documents. */
   export interface Collection {
     /** The unique identifier of the collection. */
@@ -5880,26 +5868,26 @@ namespace DiscoveryV1 {
     source_field: string;
     /** Indicates that the enrichments will overwrite the destination_field field if it already exists. */
     overwrite?: boolean;
-    /** Name of the enrichment service to call. Current options are `natural_language_understanding` and `elements`.
+    /** Name of the enrichment service to call. The only supported option is `natural_language_understanding`. The
+     *  `elements` option is deprecated and support ended on 10 July 2020.
      *
-     *   When using `natual_language_understanding`, the **options** object must contain Natural Language Understanding
-     *  options.
-     *
-     *  When using `elements` the **options** object must contain Element Classification options. Additionally, when
-     *  using the `elements` enrichment the configuration specified and files ingested must meet all the criteria
-     *  specified in [the
-     *  documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-element-classification#element-classification).
+     *   The **options** object must contain Natural Language Understanding options.
      */
     enrichment: string;
     /** If true, then most errors generated during the enrichment process will be treated as warnings and will not
      *  cause the document to fail processing.
      */
     ignore_downstream_errors?: boolean;
-    /** Options which are specific to a particular enrichment. */
+    /** Options that are specific to a particular enrichment.
+     *
+     *  The `elements` enrichment type is deprecated. Use the [Create a
+     *  project](https://cloud.ibm.com/apidocs/discovery-data#createproject) method of the Discovery v2 API to create a
+     *  `content_intelligence` project type instead.
+     */
     options?: EnrichmentOptions;
   }
 
-  /** Options which are specific to a particular enrichment. */
+  /** Options that are specific to a particular enrichment. The `elements` enrichment type is deprecated. Use the [Create a project](https://cloud.ibm.com/apidocs/discovery-data#createproject) method of the Discovery v2 API to create a `content_intelligence` project type instead. */
   export interface EnrichmentOptions {
     /** Object containing Natural Language Understanding features to be used. */
     features?: NluEnrichmentFeatures;
@@ -5909,9 +5897,7 @@ namespace DiscoveryV1 {
      *  features support all languages, automatic detection is recommended.
      */
     language?: string;
-    /** For use with `elements` enrichments only. The element extraction model to use. The only model available is
-     *  `contract`.
-     */
+    /** The element extraction model to use, which can be `contract` only. The `elements` enrichment is deprecated. */
     model?: string;
   }
 
@@ -6440,12 +6426,16 @@ namespace DiscoveryV1 {
   /** An aggregation produced by  Discovery to analyze the input provided. */
   export interface QueryAggregation {
     /** The type of aggregation command used. For example: term, filter, max, min, etc. */
-    type?: string;
-    /** Array of aggregation results. */
-    results?: AggregationResult[];
-    /** Number of matching results. */
-    matching_results?: number;
-    /** Aggregations returned by Discovery. */
+    type: string;
+  }
+
+  /** Histogram numeric interval result. */
+  export interface QueryHistogramAggregationResult {
+    /** The value of the upper bound for the numeric segment. */
+    key: number;
+    /** Number of documents with the specified key as the upper bound. */
+    matching_results: number;
+    /** An array of sub-aggregations. */
     aggregations?: QueryAggregation[];
   }
 
@@ -6555,6 +6545,46 @@ namespace DiscoveryV1 {
      *  field of the result set.
      */
     confidence?: number;
+  }
+
+  /** Top value result for the term aggregation. */
+  export interface QueryTermAggregationResult {
+    /** Value of the field with a non-zero frequency in the document set. */
+    key: string;
+    /** Number of documents that contain the 'key'. */
+    matching_results: number;
+    /** The relevancy for this term. */
+    relevancy?: number;
+    /** The number of documents which have the term as the value of specified field in the whole set of documents in
+     *  this collection. Returned only when the `relevancy` parameter is set to `true`.
+     */
+    total_matching_documents?: number;
+    /** The estimated number of documents which would match the query and also meet the condition. Returned only
+     *  when the `relevancy` parameter is set to `true`.
+     */
+    estimated_matching_documents?: number;
+    /** An array of sub-aggregations. */
+    aggregations?: QueryAggregation[];
+  }
+
+  /** A timeslice interval segment. */
+  export interface QueryTimesliceAggregationResult {
+    /** String date value of the upper bound for the timeslice interval in ISO-8601 format. */
+    key_as_string: string;
+    /** Numeric date value of the upper bound for the timeslice interval in UNIX milliseconds since epoch. */
+    key: number;
+    /** Number of documents with the specified key as the upper bound. */
+    matching_results: number;
+    /** An array of sub-aggregations. */
+    aggregations?: QueryAggregation[];
+  }
+
+  /** A query response that contains the matching documents for the preceding aggregations. */
+  export interface QueryTopHitsAggregationResult {
+    /** Number of matching results. */
+    matching_results: number;
+    /** An array of the document results. */
+    hits?: JsonObject[];
   }
 
   /** An object contain retrieval type information. */
@@ -6802,7 +6832,7 @@ namespace DiscoveryV1 {
   export interface StatusDetails {
     /** Indicates whether the credential is accepted by the target data source. */
     authenticated?: boolean;
-    /** If `authenticated` is `false`, a message describes why the authentication was unsuccessful. */
+    /** If `authenticated` is `false`, a message describes why authentication is unsuccessful. */
     error_message?: string;
   }
 
@@ -6826,14 +6856,6 @@ namespace DiscoveryV1 {
     status?: string;
     /** The type for this wordlist. Can be `tokenization_dictionary` or `stopwords`. */
     type?: string;
-  }
-
-  /** Top hit information for this query. */
-  export interface TopHitsResults {
-    /** Number of matching results. */
-    matching_results?: number;
-    /** Top results returned by the aggregation. */
-    hits?: QueryResult[];
   }
 
   /** Training information for a specific collection. */
@@ -6924,61 +6946,79 @@ namespace DiscoveryV1 {
     xpaths?: string[];
   }
 
-  /** Calculation. */
-  export interface Calculation extends QueryAggregation {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    /** Value of the aggregation. */
+  /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
+  export interface QueryCalculationAggregation extends QueryAggregation {
+    /** The field to perform the calculation on. */
+    field: string;
+    /** The value of the calculation. */
     value?: number;
   }
 
-  /** Filter. */
-  export interface Filter extends QueryAggregation {
-    /** The match the aggregated results queried for. */
-    match?: string;
+  /** A modifier that narrows the document set of the sub-aggregations it precedes. */
+  export interface QueryFilterAggregation extends QueryAggregation {
+    /** The filter that is written in Discovery Query Language syntax and is applied to the documents before
+     *  sub-aggregations are run.
+     */
+    match: string;
+    /** Number of documents that match the filter. */
+    matching_results: number;
+    /** An array of sub-aggregations. */
+    aggregations?: QueryAggregation[];
   }
 
-  /** Histogram. */
-  export interface Histogram extends QueryAggregation {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    /** Interval of the aggregation. (For 'histogram' type). */
-    interval?: number;
+  /** Numeric interval segments to categorize documents by using field values from a single numeric field to describe the category. */
+  export interface QueryHistogramAggregation extends QueryAggregation {
+    /** The numeric field name used to create the histogram. */
+    field: string;
+    /** The size of the sections that the results are split into. */
+    interval: number;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
+    /** Array of numeric intervals. */
+    results?: QueryHistogramAggregationResult[];
   }
 
-  /** Nested. */
-  export interface Nested extends QueryAggregation {
-    /** The area of the results the aggregation was restricted to. */
-    path?: string;
+  /** A restriction that alters the document set that is used for sub-aggregations it precedes to nested documents found in the field specified. */
+  export interface QueryNestedAggregation extends QueryAggregation {
+    /** The path to the document field to scope sub-aggregations to. */
+    path: string;
+    /** Number of nested documents found in the specified field. */
+    matching_results: number;
+    /** An array of sub-aggregations. */
+    aggregations?: QueryAggregation[];
   }
 
-  /** Term. */
-  export interface Term extends QueryAggregation {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    /** The number of terms identified. */
+  /** Returns the top values for the field specified. */
+  export interface QueryTermAggregation extends QueryAggregation {
+    /** The field in the document used to generate top values from. */
+    field: string;
+    /** The number of top values returned. */
     count?: number;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
+    /** Array of top values for the field. */
+    results?: QueryTermAggregationResult[];
   }
 
-  /** Timeslice. */
-  export interface Timeslice extends QueryAggregation {
-    /** The field where the aggregation is located in the document. */
-    field?: string;
-    /** Interval of the aggregation. Valid date interval values are second/seconds minute/minutes, hour/hours,
-     *  day/days, week/weeks, month/months, and year/years.
-     */
-    interval?: string;
-    /** Used to indicate that anomaly detection should be performed. Anomaly detection is used to locate unusual
-     *  datapoints within a time series.
-     */
-    anomaly?: boolean;
+  /** A specialized histogram aggregation that uses dates to create interval segments. */
+  export interface QueryTimesliceAggregation extends QueryAggregation {
+    /** The date field name used to create the timeslice. */
+    field: string;
+    /** The date interval value. Valid values are seconds, minutes, hours, days, weeks, and years. */
+    interval: string;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
+    /** Array of aggregation results. */
+    results?: QueryTimesliceAggregationResult[];
   }
 
-  /** TopHits. */
-  export interface TopHits extends QueryAggregation {
-    /** Number of top hits returned by the aggregation. */
-    size?: number;
-    hits?: TopHitsResults;
+  /** Returns the top documents ranked by the score of the query. */
+  export interface QueryTopHitsAggregation extends QueryAggregation {
+    /** The number of documents to return. */
+    size: number;
+    /** Identifier specified in the query request of this aggregation. */
+    name?: string;
+    hits?: QueryTopHitsAggregationResult;
   }
 }
 

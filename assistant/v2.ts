@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2021.
+ * (C) Copyright IBM Corp. 2018, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ class AssistantV2 extends BaseService {
   static DEFAULT_SERVICE_NAME: string = 'conversation';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2021-06-14`.
+   *  `2021-11-27`.
    */
   version: string;
 
@@ -55,7 +55,7 @@ class AssistantV2 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2021-06-14`.
+   * format. The current version is `2021-11-27`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -620,7 +620,7 @@ namespace AssistantV2 {
   /** Options for the `AssistantV2` constructor. */
   export interface Options extends UserOptions {
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2021-06-14`.
+     *  `2021-11-27`.
      */
     version: string;
   }
@@ -887,8 +887,8 @@ namespace AssistantV2 {
     input?: MessageInput;
   }
 
-  /** DialogNodesVisited. */
-  export interface DialogNodesVisited {
+  /** An objects containing detailed diagnostic information about a dialog node that was triggered during processing of the input message. */
+  export interface DialogNodeVisited {
     /** A dialog node that was triggered during processing of the input message. */
     dialog_node?: string;
     /** The title of the dialog node. */
@@ -969,7 +969,7 @@ namespace AssistantV2 {
 
   /** MessageContext. */
   export interface MessageContext {
-    /** Session context data that is shared by all skills used by the Assistant. */
+    /** Session context data that is shared by all skills used by the assistant. */
     global?: MessageContextGlobal;
     /** Information specific to particular skills used by the assistant.
      *
@@ -977,9 +977,13 @@ namespace AssistantV2 {
      *  skill used by the assistant.
      */
     skills?: JsonObject;
+    /** An object containing context data that is specific to particular integrations. For more information, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
+     */
+    integrations?: JsonObject;
   }
 
-  /** Session context data that is shared by all skills used by the Assistant. */
+  /** Session context data that is shared by all skills used by the assistant. */
   export interface MessageContextGlobal {
     /** Built-in system properties that apply to all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
@@ -987,7 +991,7 @@ namespace AssistantV2 {
     session_id?: string;
   }
 
-  /** Session context data that is shared by all skills used by the Assistant. */
+  /** Session context data that is shared by all skills used by the assistant. */
   export interface MessageContextGlobalStateless {
     /** Built-in system properties that apply to all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
@@ -1047,9 +1051,11 @@ namespace AssistantV2 {
      *  conversation (such as a change to a skill the assistant uses).
      */
     state?: string;
+    /** For internal use only. */
+    skip_user_input?: boolean;
   }
 
-  /** Contains information specific to a particular skill used by the Assistant. The property name must be the same as the name of the skill (for example, `main skill`). */
+  /** Contains information specific to a particular skill used by the assistant. The property name must be the same as the name of the skill (for example, `main skill`). */
   export interface MessageContextSkill {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
@@ -1071,7 +1077,7 @@ namespace AssistantV2 {
 
   /** MessageContextStateless. */
   export interface MessageContextStateless {
-    /** Session context data that is shared by all skills used by the Assistant. */
+    /** Session context data that is shared by all skills used by the assistant. */
     global?: MessageContextGlobalStateless;
     /** Information specific to particular skills used by the assistant.
      *
@@ -1079,6 +1085,10 @@ namespace AssistantV2 {
      *  skill used by the assistant.
      */
     skills?: JsonObject;
+    /** An object containing context data that is specific to particular integrations. For more information, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
+     */
+    integrations?: JsonObject;
   }
 
   /** An input object that includes the input text. */
@@ -1103,8 +1113,22 @@ namespace AssistantV2 {
     entities?: RuntimeEntity[];
     /** For internal use only. */
     suggestion_id?: string;
+    /** An array of multimedia attachments to be sent with the message.
+     *
+     *  **Note:** Attachments are not processed by the assistant itself, but can be sent to external services by
+     *  webhooks.
+     */
+    attachments?: MessageInputAttachment[];
     /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptions;
+  }
+
+  /** A reference to a media file to be sent as an attachment with the message. */
+  export interface MessageInputAttachment {
+    /** The URL of the media file. */
+    url: string;
+    /** The media content type (such as a MIME type) of the attachment. */
+    media_type?: string;
   }
 
   /** Optional properties that control how the assistant responds. */
@@ -1195,6 +1219,12 @@ namespace AssistantV2 {
     entities?: RuntimeEntity[];
     /** For internal use only. */
     suggestion_id?: string;
+    /** An array of multimedia attachments to be sent with the message.
+     *
+     *  **Note:** Attachments are not processed by the assistant itself, but can be sent to external services by
+     *  webhooks.
+     */
+    attachments?: MessageInputAttachment[];
     /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptionsStateless;
   }
@@ -1223,15 +1253,15 @@ namespace AssistantV2 {
 
   /** Additional detailed information about a message response and how it was generated. */
   export interface MessageOutputDebug {
-    /** An array of objects containing detailed diagnostic information about the nodes that were triggered during
+    /** An array of objects containing detailed diagnostic information about dialog nodes that were triggered during
      *  processing of the input message.
      */
-    nodes_visited?: DialogNodesVisited[];
+    nodes_visited?: DialogNodeVisited[];
     /** An array of up to 50 messages logged with the request. */
     log_messages?: DialogLogMessage[];
     /** Assistant sets this to true when this message response concludes or interrupts a dialog. */
     branch_exited?: boolean;
-    /** When `branch_exited` is set to `true` by the Assistant, the `branch_exited_reason` specifies whether the
+    /** When `branch_exited` is set to `true` by the assistant, the `branch_exited_reason` specifies whether the
      *  dialog completed by itself or got interrupted.
      */
     branch_exited_reason?: string;
@@ -1334,12 +1364,6 @@ namespace AssistantV2 {
     value: string;
     /** A decimal percentage that represents Watson's confidence in the recognized entity. */
     confidence?: number;
-    /** **Deprecated.** Any metadata for the entity.
-     *
-     *  Beginning with the `2021-06-14` API version, the `metadata` property is no longer returned. For information
-     *  about system entities recognized in the user input, see the `interpretation` property.
-     */
-    metadata?: JsonObject;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
     /** An object containing detailed information about the entity recognized in the user input. This property is
@@ -1590,6 +1614,30 @@ namespace AssistantV2 {
     step: string;
   }
 
+  /** RuntimeResponseGenericRuntimeResponseTypeAudio. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeAudio extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the audio clip. */
+    source: string;
+    /** The title or introductory text to show before the response. */
+    title?: string;
+    /** The description to show with the the response. */
+    description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+    /** For internal use only. */
+    channel_options?: JsonObject;
+    /** Descriptive text that can be used for screen readers or other situations where the audio player cannot be
+     *  seen.
+     */
+    alt_text?: string;
+  }
+
   /** RuntimeResponseGenericRuntimeResponseTypeChannelTransfer. */
   export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
@@ -1628,6 +1676,26 @@ namespace AssistantV2 {
      *  or the **topic** property of the dialog node response.
      */
     topic?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeIframe. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeIframe extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the embeddable content. */
+    source: string;
+    /** The title or introductory text to show before the response. */
+    title?: string;
+    /** The description to show with the the response. */
+    description?: string;
+    /** The URL of an image that shows a preview of the embedded content. */
+    image_url?: string;
     /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
@@ -1752,6 +1820,28 @@ namespace AssistantV2 {
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
     channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeVideo. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeVideo extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** The `https:` URL of the video. */
+    source: string;
+    /** The title or introductory text to show before the response. */
+    title?: string;
+    /** The description to show with the the response. */
+    description?: string;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+    /** For internal use only. */
+    channel_options?: JsonObject;
+    /** Descriptive text that can be used for screen readers or other situations where the video cannot be seen. */
+    alt_text?: string;
   }
 }
 
