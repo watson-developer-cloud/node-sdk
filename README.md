@@ -25,17 +25,6 @@ Version v6.0.0 of the SDK has been released and includes a number of breaking ch
 ### Updating endpoint URLs from watsonplatform.net
 Watson API endpoint URLs at watsonplatform.net are changing and will not work after 26 May 2021. Update your calls to use the newer endpoint URLs. For more information, see https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change.
 
-### Personality Insights deprecation
-IBM Watson™ Personality Insights is discontinued. For a period of one year from 1 December 2020, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.
-
-As an alternative, we encourage you to consider migrating to IBM Watson™ [Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-understanding), a service on IBM Cloud® that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business or industry. For more information, see About Natural Language Understanding.
-
-### Visual Recognition deprecation
-IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.
-
-### Compare and Comply deprecation
-IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.
-
 ### Supporting Node versions 10+
 The SDK will no longer be tested with Node versions 6 and 8. Support will be officially dropped in v5.
 
@@ -486,39 +475,6 @@ assistant.message(
   });
 ```
 
-### Compare Comply
-**IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can't create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit https://ibm.biz/contact-wdc-premium.**
-
-Use the Compare Comply service to compare and classify documents.
-
-```js
-const fs = require('fs');
-const CompareComplyV1 = require('ibm-watson/compare-comply/v1');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const compareComply = new CompareComplyV1({
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://api.us-south.compare-comply.watson.cloud.ibm.com',
-  version: '2018-12-06'
-});
-
-compareComply.compareDocuments(
-  {
-      file1: fs.createReadStream('<path-to-file-1>'),
-      file1Filename: '<filename-1>',
-      file1Label: 'file-1',
-      file2: fs.createReadStream('<path-to-file-2>'),
-      file2Filename: '<filename-2>',
-      file2Label: 'file-2',
-  })
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
-  });
-```
-
 ### Discovery v2
 
 Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
@@ -614,34 +570,6 @@ languageTranslator.identify(
   });
 ```
 
-### Natural Language Classifier
-
-Use [Natural Language Classifier](https://cloud.ibm.com/docs/natural-language-classifier/getting-started.html) service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.
-
-```js
-const NaturalLanguageClassifierV1 = require('ibm-watson/natural-language-classifier/v1');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const classifier = new NaturalLanguageClassifierV1({
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://api.us-south.natural-language-classifier.watson.cloud.ibm.com'
-});
-
-classifier.classify(
-  {
-    text: 'Is it sunny?',
-    classifierId: '<classifier-id>'
-  })
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log('error: ', err);
-  });
-```
-
-See this [example](https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js) to learn how to create a classifier.
-
 
 ### Natural Language Understanding
 
@@ -665,39 +593,6 @@ nlu.analyze(
       concepts: {},
       keywords: {}
     }
-  })
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log('error: ', err);
-  });
-```
-
-
-### Personality Insights
-**On 1 December 2021, Personality Insights will no longer be available.
-    Consider migrating to Watson Natural Language Understanding.
-    For more information, see https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation**
-
-Analyze text in English and get a personality profile by using the
-[Personality Insights][personality_insights] service.
-
-```js
-const PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const personalityInsights = new PersonalityInsightsV3({
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  version: '2016-10-19',
-  serviceUrl: 'https://api.us-south.personality-insights.watson.cloud.ibm.com'
-});
-
-personalityInsights.profile(
-  {
-    content: 'Enter more than 100 unique words here...',
-    contentType: 'text/plain',
-    consumptionPreferences: true
   })
   .then(response => {
     console.log(JSON.stringify(response.result, null, 2));
@@ -786,96 +681,6 @@ textToSpeech
 textToSpeech.synthesizeUsingWebSocket(params);
 synthStream.pipe(fs.createWriteStream('./audio.ogg'));
 // see more information in examples/text_to_speech_websocket.js
-```
-
-
-
-### Tone Analyzer
-
-Use the [Tone Analyzer][tone_analyzer] service to analyze the
-emotion, writing and social tones of a text.
-
-```js
-const ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const toneAnalyzer = new ToneAnalyzerV3({
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  version: '2016-05-19',
-  serviceUrl: 'https://api.us-south.tone-analyzer.watson.cloud.ibm.com'
-});
-
-toneAnalyzer.tone(
-  {
-    toneInput: 'Greetings from Watson Developer Cloud!',
-    contentType: 'text/plain'
-  })
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
-  });
-```
-
-### Visual Recognition v4
-**IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can't create instances. Any instance that is provisioned on 1 December 2021 will be deleted.**
-
-Use the [Visual Recognition][visual_recognition] service to recognize the
-following picture.
-
-```js
-const VisualRecognitionV4 = require('ibm-watson/visual-recognition/v4');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const visualRecognition = new VisualRecognitionV4({
-  serviceUrl: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
-  version: '2019-02-11',
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-});
-
-const params = {
-  collectionIds: ['<collectionId1','collectionId2','collectionId3'],
-  features: 'objects'
-};
-
-visualRecognition.classify(params)
-  .then(response => {
-    const image = response.result.images[0]
-    const detectedObjects = image.objects.collections[0].objects
-    console.log(detectedObjects)
-  })
-  .catch(err => {
-    console.log(err);
-  });
-```
-### Visual Recognition v3
-
-Use the [Visual Recognition][visual_recognition] service to recognize the
-following picture.
-
-```js
-const fs = require('fs');
-const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const visualRecognition = new VisualRecognitionV3({
-  serviceUrl: 'https://api.us-south.visual-recognition.watson.cloud.ibm.com',
-  version: '2018-03-19',
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-});
-
-const params = {
-  imagesFile: fs.createReadStream('./resources/car.png')
-};
-
-visualRecognition.classify(params)
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
-  });
 ```
 
 ## Unauthenticated requests
