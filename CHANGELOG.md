@@ -1,3 +1,41 @@
+# [7.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v6.2.2...v7.0.0) (2022-03-21)
+
+
+### Features
+
+* **assistantv1:** assistant v1 generated with new spec ([5c6e9db](https://github.com/watson-developer-cloud/node-sdk/commit/5c6e9db67a3b99b66f9fa1ac4ecfcbb7f54ac54b))
+* **assistantv2:** assistant v2 generated with new spec ([7f7d96f](https://github.com/watson-developer-cloud/node-sdk/commit/7f7d96fbbf0afc15cbb1e2243c88522daa9d42fd))
+* **compare-comply:** remove compare-comply ([a851442](https://github.com/watson-developer-cloud/node-sdk/commit/a851442ae7afc981a786c04529921ceafad1552a))
+* **discoveryv1:** discovery v1 generated with new spec ([cf1d976](https://github.com/watson-developer-cloud/node-sdk/commit/cf1d9760482f44a53cc3d1b2d4c19d052ce87acb))
+* **discoveryv1:** regen with more recent defs ([46752a1](https://github.com/watson-developer-cloud/node-sdk/commit/46752a16b622f1e97589c392b34804480c78f0a9))
+* **lt:** lT generated with new spec ([ed54e99](https://github.com/watson-developer-cloud/node-sdk/commit/ed54e99c587dc4be28846562003961a5878bdd32))
+* **nlc:** remove NLC ([698b3be](https://github.com/watson-developer-cloud/node-sdk/commit/698b3be2811dfaed8e6094776ef534b3977d30c5))
+* **nlu:** nLU generated with new spec ([beeb8a0](https://github.com/watson-developer-cloud/node-sdk/commit/beeb8a03d182487e1a1761c707b386e510c3bb33))
+* **pi:** remove PI ([350ed36](https://github.com/watson-developer-cloud/node-sdk/commit/350ed3678ec26404f1fc47986bdda38ff5b0140a))
+* **secrets:** run detect secrets ([5a5690a](https://github.com/watson-developer-cloud/node-sdk/commit/5a5690a8f7b697c9f19097d20ee465cd1302202e))
+* **stt:** change addGrammar to take a file ([d21b462](https://github.com/watson-developer-cloud/node-sdk/commit/d21b462044c18b3d06c5592f4b038338b3c698d9))
+* **stt:** stt generated with new spec ([ec98a33](https://github.com/watson-developer-cloud/node-sdk/commit/ec98a33d37eacb2209ea344550ca756a35e35654))
+* **tone analyzer:** remove tone analyzer ([fbd5be1](https://github.com/watson-developer-cloud/node-sdk/commit/fbd5be13525ec0e9283d378b4dea1998f87f0f3a))
+* **tts:** tTS generated with new spec ([b1e87d3](https://github.com/watson-developer-cloud/node-sdk/commit/b1e87d389f88f762cc23ecc9768c0620a589b64d))
+* **vizrec:** remove vizrec ([a6f3134](https://github.com/watson-developer-cloud/node-sdk/commit/a6f31347d1d34fe08b10a7a102aab2cfc19987ff))
+
+
+### BREAKING CHANGES
+
+* **stt:** addGrammar no longer accepts a string and must take a file
+* **discoveryv1:** QueryAggregation subclasses changed, be sure to regen models
+* **stt:** Changed file type of addGrammar from String to Data
+* **discoveryv1:** QueryAggregation - subclasses have changed
+* **assistantv2:** MessageOutputDebug - renamed DialogNodesVisited to DialogNodeVisited; RuntimeEntity
+- removed optional metadata property
+* **assistantv1:** Removed required text property on outputdata and removed optional metadata property
+from runtimeentity
+* **tone analyzer:** Tone Analyzer functionality has been removed
+* **vizrec:** VizRec functionality has been removed
+* **pi:** PI functionality has been removed
+* **nlc:** NLC functionality has been removed
+* **compare-comply:** Compare and comply functionality has been removed
+
 ## [6.2.2](https://github.com/watson-developer-cloud/node-sdk/compare/v6.2.1...v6.2.2) (2022-01-19)
 
 
