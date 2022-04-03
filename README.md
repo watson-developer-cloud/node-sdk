@@ -78,7 +78,7 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 
 Authentication is accomplished using dedicated Authenticators for each authentication scheme. Import authenticators from `ibm-watson/auth` or rely on externally-configured credentials which will be read from a credentials file or environment variables.
 
-To learn more about the Authenticators and how to use them with your services, see [the detailed documentation](https://github.com/IBM/node-sdk-core/blob/master/AUTHENTICATION.md).
+To learn more about the Authenticators and how to use them with your services, see [the detailed documentation](https://github.com/IBM/node-sdk-core/blob/master/Authentication.md).
 
 ### Getting credentials
 
@@ -165,7 +165,7 @@ To use the SDK in a Cloud Pak, use the `CloudPakForDataAuthenticator`. This will
 When uploading your application to IBM Cloud there is a certain priority Watson services will use when looking for proper credentials. The order is as follows:
 1. Programmatic (i.e. IamAuthenticator)
 2. Credentials File
-3. VCAP_SERVICES (an environment variable used by IBM Cloud, details found [here](https://cloud.ibm.com/docs/watson?topic=watson-vcapServices))
+3. VCAP_SERVICES (an environment variable used by IBM Cloud, details found [here](https://cloud.ibm.com/docs/cloud-foundry-public?topic=cloud-foundry-public-deployingapps#app_env))
 
 ## Setting the Service URL
 You can set or reset the base URL after constructing the client instance using the `setServiceUrl` method:
