@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,13 +24,13 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * IBM Watson&trade; Discovery is a cognitive search and content analytics engine that you can add to applications to
+ * IBM Watson&trade; Discovery v1 is a cognitive search and content analytics engine that you can add to applications to
  * identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and
  * unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual
  * filtering of results.
@@ -65,10 +65,10 @@ class DiscoveryV1 extends BaseService {
   constructor(options: UserOptions) {
     options = options || {};
 
-    const requiredParams = ['version'];
-    const missingParams = getMissingParams(options, requiredParams);
-    if (missingParams) {
-      throw missingParams;
+    const _requiredParams = ['version'];
+    const _validationErrors = validateParams(options, _requiredParams, null);
+    if (_validationErrors) {
+      throw _validationErrors;
     }
     if (!options.serviceName) {
       options.serviceName = DiscoveryV1.DEFAULT_SERVICE_NAME;
@@ -109,11 +109,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateEnvironmentParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
     const _params = { ...params };
-    const requiredParams = ['name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['name'];
+    const _validParams = ['name', 'description', 'size', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -169,6 +169,12 @@ class DiscoveryV1 extends BaseService {
     params?: DiscoveryV1.ListEnvironmentsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.ListEnvironmentsResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['name', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -214,11 +220,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetEnvironmentParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -276,11 +282,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.UpdateEnvironmentParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Environment>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'name', 'description', 'size', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -339,11 +345,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteEnvironmentParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteEnvironmentResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -397,11 +403,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListFieldsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionIds'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionIds'];
+    const _validParams = ['environmentId', 'collectionIds', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -473,11 +479,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateConfigurationParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'name'];
+    const _validParams = ['environmentId', 'name', 'description', 'conversions', 'enrichments', 'normalizations', 'source', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -542,11 +548,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListConfigurationsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.ListConfigurationsResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'name', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -599,11 +605,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetConfigurationParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'configurationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'configurationId'];
+    const _validParams = ['environmentId', 'configurationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -671,11 +677,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.UpdateConfigurationParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Configuration>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'configurationId', 'name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'configurationId', 'name'];
+    const _validParams = ['environmentId', 'configurationId', 'name', 'description', 'conversions', 'enrichments', 'normalizations', 'source', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -744,11 +750,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteConfigurationParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteConfigurationResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'configurationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'configurationId'];
+    const _validParams = ['environmentId', 'configurationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -808,11 +814,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateCollectionParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'name'];
+    const _validParams = ['environmentId', 'name', 'description', 'configurationId', 'language', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -875,11 +881,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListCollectionsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionsResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'name', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -932,11 +938,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetCollectionParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -992,11 +998,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.UpdateCollectionParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Collection>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'name'];
+    const _validParams = ['environmentId', 'collectionId', 'name', 'description', 'configurationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1057,11 +1063,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteCollectionParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCollectionResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1116,11 +1122,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListCollectionFieldsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.ListCollectionFieldsResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1179,11 +1185,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListExpansionsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1252,11 +1258,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateExpansionsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Expansions>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'expansions'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'expansions'];
+    const _validParams = ['environmentId', 'collectionId', 'expansions', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1318,11 +1324,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteExpansionsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1376,11 +1382,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetTokenizationDictionaryStatusParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1438,11 +1444,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateTokenizationDictionaryParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'tokenizationRules', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1503,11 +1509,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteTokenizationDictionaryParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1561,11 +1567,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetStopwordListStatusParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1622,11 +1628,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateStopwordListParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TokenDictStatusResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename'];
+    const _validParams = ['environmentId', 'collectionId', 'stopwordFile', 'stopwordFilename', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -1692,11 +1698,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteStopwordListParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1784,11 +1790,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.AddDocumentParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'file', 'filename', 'fileContentType', 'metadata', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -1857,11 +1863,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetDocumentStatusParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentStatus>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'documentId'];
+    const _validParams = ['environmentId', 'collectionId', 'documentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1932,11 +1938,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.UpdateDocumentParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DocumentAccepted>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'documentId'];
+    const _validParams = ['environmentId', 'collectionId', 'documentId', 'file', 'filename', 'fileContentType', 'metadata', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -2005,11 +2011,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteDocumentParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteDocumentResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'documentId'];
+    const _validParams = ['environmentId', 'collectionId', 'documentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2121,11 +2127,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.QueryParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'filter', 'query', 'naturalLanguageQuery', 'passages', 'aggregation', 'count', '_return', 'offset', 'sort', 'highlight', 'passagesFields', 'passagesCount', 'passagesCharacters', 'deduplicate', 'deduplicateField', 'similar', 'similarDocumentIds', 'similarFields', 'bias', 'spellingSuggestions', 'xWatsonLoggingOptOut', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2247,11 +2253,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.QueryNoticesParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'filter', 'query', 'naturalLanguageQuery', 'passages', 'aggregation', 'count', '_return', 'offset', 'sort', 'highlight', 'passagesFields', 'passagesCount', 'passagesCharacters', 'deduplicateField', 'similar', 'similarDocumentIds', 'similarFields', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2371,11 +2377,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.FederatedQueryParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionIds'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionIds'];
+    const _validParams = ['environmentId', 'collectionIds', 'filter', 'query', 'naturalLanguageQuery', 'passages', 'aggregation', 'count', '_return', 'offset', 'sort', 'highlight', 'passagesFields', 'passagesCount', 'passagesCharacters', 'deduplicate', 'deduplicateField', 'similar', 'similarDocumentIds', 'similarFields', 'bias', 'xWatsonLoggingOptOut', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2490,11 +2496,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.FederatedQueryNoticesParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.QueryNoticesResponse>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionIds'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionIds'];
+    const _validParams = ['environmentId', 'collectionIds', 'filter', 'query', 'naturalLanguageQuery', 'aggregation', 'count', '_return', 'offset', 'sort', 'highlight', 'deduplicateField', 'similar', 'similarDocumentIds', 'similarFields', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2568,11 +2574,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetAutocompletionParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Completions>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'prefix'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'prefix'];
+    const _validParams = ['environmentId', 'collectionId', 'prefix', 'field', 'count', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2633,11 +2639,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListTrainingDataParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingDataSet>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2696,11 +2702,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.AddTrainingDataParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'naturalLanguageQuery', 'filter', 'examples', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2763,11 +2769,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteAllTrainingDataParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId'];
+    const _validParams = ['environmentId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2822,11 +2828,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetTrainingDataParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingQuery>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'queryId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'queryId'];
+    const _validParams = ['environmentId', 'collectionId', 'queryId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2883,11 +2889,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteTrainingDataParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'queryId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'queryId'];
+    const _validParams = ['environmentId', 'collectionId', 'queryId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2943,11 +2949,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListTrainingExamplesParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExampleList>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'queryId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'queryId'];
+    const _validParams = ['environmentId', 'collectionId', 'queryId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3007,11 +3013,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateTrainingExampleParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'queryId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'queryId'];
+    const _validParams = ['environmentId', 'collectionId', 'queryId', 'documentId', 'crossReference', 'relevance', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -3077,11 +3083,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteTrainingExampleParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
+    const _validParams = ['environmentId', 'collectionId', 'queryId', 'exampleId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3141,11 +3147,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.UpdateTrainingExampleParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
+    const _validParams = ['environmentId', 'collectionId', 'queryId', 'exampleId', 'crossReference', 'relevance', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -3211,11 +3217,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetTrainingExampleParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.TrainingExample>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
+    const _validParams = ['environmentId', 'collectionId', 'queryId', 'exampleId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3279,11 +3285,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteUserDataParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customerId'];
+    const _validParams = ['customerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3336,11 +3342,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateEventParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.CreateEventResponse>> {
     const _params = { ...params };
-    const requiredParams = ['type', 'data'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['type', 'data'];
+    const _validParams = ['type', 'data', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -3407,6 +3413,12 @@ class DiscoveryV1 extends BaseService {
     params?: DiscoveryV1.QueryLogParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.LogQueryResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['filter', 'query', 'count', 'offset', 'sort', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -3462,6 +3474,12 @@ class DiscoveryV1 extends BaseService {
     params?: DiscoveryV1.GetMetricsQueryParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['startTime', 'endTime', 'resultType', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -3517,6 +3535,12 @@ class DiscoveryV1 extends BaseService {
     params?: DiscoveryV1.GetMetricsQueryEventParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['startTime', 'endTime', 'resultType', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -3571,6 +3595,12 @@ class DiscoveryV1 extends BaseService {
     params?: DiscoveryV1.GetMetricsQueryNoResultsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['startTime', 'endTime', 'resultType', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -3626,6 +3656,12 @@ class DiscoveryV1 extends BaseService {
     params?: DiscoveryV1.GetMetricsEventRateParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['startTime', 'endTime', 'resultType', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -3678,6 +3714,12 @@ class DiscoveryV1 extends BaseService {
     params?: DiscoveryV1.GetMetricsQueryTokenEventParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.MetricTokenResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['count', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -3730,11 +3772,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListCredentialsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.CredentialsList>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3801,11 +3843,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateCredentialsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'sourceType', 'credentialDetails', 'status', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -3870,11 +3912,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetCredentialsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'credentialId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'credentialId'];
+    const _validParams = ['environmentId', 'credentialId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3942,11 +3984,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.UpdateCredentialsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Credentials>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'credentialId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'credentialId'];
+    const _validParams = ['environmentId', 'credentialId', 'sourceType', 'credentialDetails', 'status', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -4009,11 +4051,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteCredentialsParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.DeleteCredentials>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'credentialId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'credentialId'];
+    const _validParams = ['environmentId', 'credentialId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -4070,11 +4112,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.ListGatewaysParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayList>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -4128,11 +4170,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.CreateGatewayParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId'];
+    const _validParams = ['environmentId', 'name', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -4192,11 +4234,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.GetGatewayParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.Gateway>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'gatewayId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'gatewayId'];
+    const _validParams = ['environmentId', 'gatewayId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -4251,11 +4293,11 @@ class DiscoveryV1 extends BaseService {
     params: DiscoveryV1.DeleteGatewayParams
   ): Promise<DiscoveryV1.Response<DiscoveryV1.GatewayDelete>> {
     const _params = { ...params };
-    const requiredParams = ['environmentId', 'gatewayId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['environmentId', 'gatewayId'];
+    const _validParams = ['environmentId', 'gatewayId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -5834,13 +5876,13 @@ namespace DiscoveryV1 {
   /** Status information about a submitted document. */
   export interface DocumentStatus {
     /** The unique identifier of the document. */
-    document_id: string;
+    document_id?: string;
     /** The unique identifier for the configuration. */
     configuration_id?: string;
     /** Status of the document in the ingestion process. */
-    status: string;
+    status?: string;
     /** Description of the document status. */
-    status_description: string;
+    status_description?: string;
     /** Name of the original source file (if available). */
     filename?: string;
     /** The type of the original source file. */
@@ -5848,7 +5890,7 @@ namespace DiscoveryV1 {
     /** The SHA-1 hash of the original source file (formatted as a hexadecimal string). */
     sha1?: string;
     /** Array of notices produced by the document-ingestion process. */
-    notices: Notice[];
+    notices?: Notice[];
   }
 
   /** Enrichment step to perform on the document. Each enrichment is performed on the specified field in the order that they are listed in the configuration. */
@@ -6864,7 +6906,9 @@ namespace DiscoveryV1 {
     environment_id?: string;
     /** The collection id associated with this training data set. */
     collection_id?: string;
-    /** Array of training queries. */
+    /** Array of training queries. At least 50 queries are required for training to begin. A maximum of 10,000
+     *  queries are returned.
+     */
     queries?: TrainingQuery[];
   }
 

@@ -38,29 +38,38 @@ const discoveryServiceOptions = {
 
 const discoveryService = new DiscoveryV1(discoveryServiceOptions);
 
-// dont actually create a request
-const createRequestMock = jest.spyOn(discoveryService, 'createRequest');
-createRequestMock.mockImplementation(() => Promise.resolve());
+let createRequestMock = null;
+function mock_createRequest() {
+  if (!createRequestMock) {
+    createRequestMock = jest.spyOn(discoveryService, 'createRequest');
+    createRequestMock.mockImplementation(() => Promise.resolve());
+  }
+}
 
 // dont actually construct an authenticator
 const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
-afterEach(() => {
-  createRequestMock.mockClear();
-  getAuthenticatorMock.mockClear();
-});
-
 // used for the service construction tests
 let requiredGlobals;
-beforeEach(() => {
-  // these are changed when passed into the factory/constructor, so re-init
-  requiredGlobals = {
-    version: 'testString',
-  };
-});
 
 describe('DiscoveryV1', () => {
+
+  beforeEach(() => {
+    mock_createRequest();
+    // these are changed when passed into the factory/constructor, so re-init
+    requiredGlobals = {
+      version: 'testString',
+    };
+  });
+
+  afterEach(() => {
+    if (createRequestMock) {
+      createRequestMock.mockClear();
+    }
+    getAuthenticatorMock.mockClear();
+  });
+
   describe('the constructor', () => {
     test('use user-given service url', () => {
       let options = {
@@ -132,6 +141,7 @@ describe('DiscoveryV1', () => {
       expect(getAuthenticatorMock).toHaveBeenCalled();
     });
   });
+
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
@@ -141,20 +151,21 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('createEnvironment', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createEnvironmentTest() {
         // Construct the params object for operation createEnvironment
         const name = 'testString';
         const description = 'testString';
         const size = 'LT';
-        const params = {
+        const createEnvironmentParams = {
           name: name,
           description: description,
           size: size,
         };
 
-        const createEnvironmentResult = discoveryService.createEnvironment(params);
+        const createEnvironmentResult = discoveryService.createEnvironment(createEnvironmentParams);
 
         // all methods should return a Promise
         expectToBePromise(createEnvironmentResult);
@@ -172,6 +183,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.description).toEqual(description);
         expect(mockRequestOptions.body.size).toEqual(size);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createEnvironmentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createEnvironmentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createEnvironmentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -179,7 +205,7 @@ describe('DiscoveryV1', () => {
         const name = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createEnvironmentParams = {
           name,
           headers: {
             Accept: userAccept,
@@ -187,13 +213,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createEnvironment(params);
+        discoveryService.createEnvironment(createEnvironmentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createEnvironment({});
@@ -202,30 +228,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createEnvironmentPromise = discoveryService.createEnvironment();
-        expectToBePromise(createEnvironmentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createEnvironment();
+        } catch (e) {
+          err = e;
+        }
 
-        createEnvironmentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listEnvironments', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listEnvironmentsTest() {
         // Construct the params object for operation listEnvironments
         const name = 'testString';
-        const params = {
+        const listEnvironmentsParams = {
           name: name,
         };
 
-        const listEnvironmentsResult = discoveryService.listEnvironments(params);
+        const listEnvironmentsResult = discoveryService.listEnvironments(listEnvironmentsParams);
 
         // all methods should return a Promise
         expectToBePromise(listEnvironmentsResult);
@@ -241,20 +268,35 @@ describe('DiscoveryV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.qs.name).toEqual(name);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listEnvironmentsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listEnvironmentsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listEnvironmentsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listEnvironmentsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        discoveryService.listEnvironments(params);
+        discoveryService.listEnvironments(listEnvironmentsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -265,16 +307,17 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('getEnvironment', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getEnvironmentTest() {
         // Construct the params object for operation getEnvironment
         const environmentId = 'testString';
-        const params = {
+        const getEnvironmentParams = {
           environmentId: environmentId,
         };
 
-        const getEnvironmentResult = discoveryService.getEnvironment(params);
+        const getEnvironmentResult = discoveryService.getEnvironment(getEnvironmentParams);
 
         // all methods should return a Promise
         expectToBePromise(getEnvironmentResult);
@@ -290,6 +333,21 @@ describe('DiscoveryV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getEnvironmentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getEnvironmentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getEnvironmentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -297,7 +355,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getEnvironmentParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -305,13 +363,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getEnvironment(params);
+        discoveryService.getEnvironment(getEnvironmentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getEnvironment({});
@@ -320,36 +378,37 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getEnvironmentPromise = discoveryService.getEnvironment();
-        expectToBePromise(getEnvironmentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getEnvironment();
+        } catch (e) {
+          err = e;
+        }
 
-        getEnvironmentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateEnvironment', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateEnvironmentTest() {
         // Construct the params object for operation updateEnvironment
         const environmentId = 'testString';
         const name = 'testString';
         const description = 'testString';
         const size = 'S';
-        const params = {
+        const updateEnvironmentParams = {
           environmentId: environmentId,
           name: name,
           description: description,
           size: size,
         };
 
-        const updateEnvironmentResult = discoveryService.updateEnvironment(params);
+        const updateEnvironmentResult = discoveryService.updateEnvironment(updateEnvironmentParams);
 
         // all methods should return a Promise
         expectToBePromise(updateEnvironmentResult);
@@ -368,6 +427,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.size).toEqual(size);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateEnvironmentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __updateEnvironmentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __updateEnvironmentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -375,7 +449,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateEnvironmentParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -383,13 +457,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.updateEnvironment(params);
+        discoveryService.updateEnvironment(updateEnvironmentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.updateEnvironment({});
@@ -398,30 +472,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateEnvironmentPromise = discoveryService.updateEnvironment();
-        expectToBePromise(updateEnvironmentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.updateEnvironment();
+        } catch (e) {
+          err = e;
+        }
 
-        updateEnvironmentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteEnvironment', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteEnvironmentTest() {
         // Construct the params object for operation deleteEnvironment
         const environmentId = 'testString';
-        const params = {
+        const deleteEnvironmentParams = {
           environmentId: environmentId,
         };
 
-        const deleteEnvironmentResult = discoveryService.deleteEnvironment(params);
+        const deleteEnvironmentResult = discoveryService.deleteEnvironment(deleteEnvironmentParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteEnvironmentResult);
@@ -437,6 +512,21 @@ describe('DiscoveryV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteEnvironmentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteEnvironmentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteEnvironmentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -444,7 +534,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteEnvironmentParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -452,13 +542,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteEnvironment(params);
+        discoveryService.deleteEnvironment(deleteEnvironmentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteEnvironment({});
@@ -467,32 +557,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteEnvironmentPromise = discoveryService.deleteEnvironment();
-        expectToBePromise(deleteEnvironmentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteEnvironment();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteEnvironmentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listFields', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listFieldsTest() {
         // Construct the params object for operation listFields
         const environmentId = 'testString';
         const collectionIds = ['testString'];
-        const params = {
+        const listFieldsParams = {
           environmentId: environmentId,
           collectionIds: collectionIds,
         };
 
-        const listFieldsResult = discoveryService.listFields(params);
+        const listFieldsResult = discoveryService.listFields(listFieldsParams);
 
         // all methods should return a Promise
         expectToBePromise(listFieldsResult);
@@ -509,6 +600,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.qs.collection_ids).toEqual(collectionIds);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listFieldsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listFieldsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listFieldsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -517,7 +623,7 @@ describe('DiscoveryV1', () => {
         const collectionIds = ['testString'];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listFieldsParams = {
           environmentId,
           collectionIds,
           headers: {
@@ -526,13 +632,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listFields(params);
+        discoveryService.listFields(listFieldsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listFields({});
@@ -541,20 +647,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listFieldsPromise = discoveryService.listFields();
-        expectToBePromise(listFieldsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listFields();
+        } catch (e) {
+          err = e;
+        }
 
-        listFieldsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createConfiguration', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -774,7 +881,7 @@ describe('DiscoveryV1', () => {
         options: sourceOptionsModel,
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createConfigurationTest() {
         // Construct the params object for operation createConfiguration
         const environmentId = 'testString';
         const name = 'testString';
@@ -783,7 +890,7 @@ describe('DiscoveryV1', () => {
         const enrichments = [enrichmentModel];
         const normalizations = [normalizationOperationModel];
         const source = sourceModel;
-        const params = {
+        const createConfigurationParams = {
           environmentId: environmentId,
           name: name,
           description: description,
@@ -793,7 +900,7 @@ describe('DiscoveryV1', () => {
           source: source,
         };
 
-        const createConfigurationResult = discoveryService.createConfiguration(params);
+        const createConfigurationResult = discoveryService.createConfiguration(createConfigurationParams);
 
         // all methods should return a Promise
         expectToBePromise(createConfigurationResult);
@@ -815,6 +922,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.source).toEqual(source);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createConfigurationTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createConfigurationTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createConfigurationTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -823,7 +945,7 @@ describe('DiscoveryV1', () => {
         const name = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createConfigurationParams = {
           environmentId,
           name,
           headers: {
@@ -832,13 +954,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createConfiguration(params);
+        discoveryService.createConfiguration(createConfigurationParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createConfiguration({});
@@ -847,32 +969,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createConfigurationPromise = discoveryService.createConfiguration();
-        expectToBePromise(createConfigurationPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createConfiguration();
+        } catch (e) {
+          err = e;
+        }
 
-        createConfigurationPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listConfigurations', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listConfigurationsTest() {
         // Construct the params object for operation listConfigurations
         const environmentId = 'testString';
         const name = 'testString';
-        const params = {
+        const listConfigurationsParams = {
           environmentId: environmentId,
           name: name,
         };
 
-        const listConfigurationsResult = discoveryService.listConfigurations(params);
+        const listConfigurationsResult = discoveryService.listConfigurations(listConfigurationsParams);
 
         // all methods should return a Promise
         expectToBePromise(listConfigurationsResult);
@@ -889,6 +1012,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.qs.name).toEqual(name);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listConfigurationsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listConfigurationsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listConfigurationsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -896,7 +1034,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listConfigurationsParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -904,13 +1042,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listConfigurations(params);
+        discoveryService.listConfigurations(listConfigurationsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listConfigurations({});
@@ -919,32 +1057,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listConfigurationsPromise = discoveryService.listConfigurations();
-        expectToBePromise(listConfigurationsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listConfigurations();
+        } catch (e) {
+          err = e;
+        }
 
-        listConfigurationsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getConfiguration', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getConfigurationTest() {
         // Construct the params object for operation getConfiguration
         const environmentId = 'testString';
         const configurationId = 'testString';
-        const params = {
+        const getConfigurationParams = {
           environmentId: environmentId,
           configurationId: configurationId,
         };
 
-        const getConfigurationResult = discoveryService.getConfiguration(params);
+        const getConfigurationResult = discoveryService.getConfiguration(getConfigurationParams);
 
         // all methods should return a Promise
         expectToBePromise(getConfigurationResult);
@@ -961,6 +1100,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.configuration_id).toEqual(configurationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getConfigurationTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getConfigurationTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getConfigurationTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -969,7 +1123,7 @@ describe('DiscoveryV1', () => {
         const configurationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getConfigurationParams = {
           environmentId,
           configurationId,
           headers: {
@@ -978,13 +1132,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getConfiguration(params);
+        discoveryService.getConfiguration(getConfigurationParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getConfiguration({});
@@ -993,20 +1147,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getConfigurationPromise = discoveryService.getConfiguration();
-        expectToBePromise(getConfigurationPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getConfiguration();
+        } catch (e) {
+          err = e;
+        }
 
-        getConfigurationPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateConfiguration', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -1226,7 +1381,7 @@ describe('DiscoveryV1', () => {
         options: sourceOptionsModel,
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __updateConfigurationTest() {
         // Construct the params object for operation updateConfiguration
         const environmentId = 'testString';
         const configurationId = 'testString';
@@ -1236,7 +1391,7 @@ describe('DiscoveryV1', () => {
         const enrichments = [enrichmentModel];
         const normalizations = [normalizationOperationModel];
         const source = sourceModel;
-        const params = {
+        const updateConfigurationParams = {
           environmentId: environmentId,
           configurationId: configurationId,
           name: name,
@@ -1247,7 +1402,7 @@ describe('DiscoveryV1', () => {
           source: source,
         };
 
-        const updateConfigurationResult = discoveryService.updateConfiguration(params);
+        const updateConfigurationResult = discoveryService.updateConfiguration(updateConfigurationParams);
 
         // all methods should return a Promise
         expectToBePromise(updateConfigurationResult);
@@ -1270,6 +1425,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.configuration_id).toEqual(configurationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateConfigurationTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __updateConfigurationTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __updateConfigurationTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1279,7 +1449,7 @@ describe('DiscoveryV1', () => {
         const name = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateConfigurationParams = {
           environmentId,
           configurationId,
           name,
@@ -1289,13 +1459,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.updateConfiguration(params);
+        discoveryService.updateConfiguration(updateConfigurationParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.updateConfiguration({});
@@ -1304,32 +1474,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateConfigurationPromise = discoveryService.updateConfiguration();
-        expectToBePromise(updateConfigurationPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.updateConfiguration();
+        } catch (e) {
+          err = e;
+        }
 
-        updateConfigurationPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteConfiguration', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteConfigurationTest() {
         // Construct the params object for operation deleteConfiguration
         const environmentId = 'testString';
         const configurationId = 'testString';
-        const params = {
+        const deleteConfigurationParams = {
           environmentId: environmentId,
           configurationId: configurationId,
         };
 
-        const deleteConfigurationResult = discoveryService.deleteConfiguration(params);
+        const deleteConfigurationResult = discoveryService.deleteConfiguration(deleteConfigurationParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteConfigurationResult);
@@ -1346,6 +1517,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.configuration_id).toEqual(configurationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteConfigurationTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteConfigurationTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteConfigurationTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1354,7 +1540,7 @@ describe('DiscoveryV1', () => {
         const configurationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteConfigurationParams = {
           environmentId,
           configurationId,
           headers: {
@@ -1363,13 +1549,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteConfiguration(params);
+        discoveryService.deleteConfiguration(deleteConfigurationParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteConfiguration({});
@@ -1378,30 +1564,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteConfigurationPromise = discoveryService.deleteConfiguration();
-        expectToBePromise(deleteConfigurationPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteConfiguration();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteConfigurationPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createCollection', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createCollectionTest() {
         // Construct the params object for operation createCollection
         const environmentId = 'testString';
         const name = 'testString';
         const description = 'testString';
         const configurationId = 'testString';
         const language = 'en';
-        const params = {
+        const createCollectionParams = {
           environmentId: environmentId,
           name: name,
           description: description,
@@ -1409,7 +1596,7 @@ describe('DiscoveryV1', () => {
           language: language,
         };
 
-        const createCollectionResult = discoveryService.createCollection(params);
+        const createCollectionResult = discoveryService.createCollection(createCollectionParams);
 
         // all methods should return a Promise
         expectToBePromise(createCollectionResult);
@@ -1429,6 +1616,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.language).toEqual(language);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createCollectionTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createCollectionTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createCollectionTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1437,7 +1639,7 @@ describe('DiscoveryV1', () => {
         const name = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createCollectionParams = {
           environmentId,
           name,
           headers: {
@@ -1446,13 +1648,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createCollection(params);
+        discoveryService.createCollection(createCollectionParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createCollection({});
@@ -1461,32 +1663,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createCollectionPromise = discoveryService.createCollection();
-        expectToBePromise(createCollectionPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createCollection();
+        } catch (e) {
+          err = e;
+        }
 
-        createCollectionPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listCollections', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listCollectionsTest() {
         // Construct the params object for operation listCollections
         const environmentId = 'testString';
         const name = 'testString';
-        const params = {
+        const listCollectionsParams = {
           environmentId: environmentId,
           name: name,
         };
 
-        const listCollectionsResult = discoveryService.listCollections(params);
+        const listCollectionsResult = discoveryService.listCollections(listCollectionsParams);
 
         // all methods should return a Promise
         expectToBePromise(listCollectionsResult);
@@ -1503,6 +1706,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.qs.name).toEqual(name);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listCollectionsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listCollectionsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listCollectionsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1510,7 +1728,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listCollectionsParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -1518,13 +1736,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listCollections(params);
+        discoveryService.listCollections(listCollectionsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listCollections({});
@@ -1533,32 +1751,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listCollectionsPromise = discoveryService.listCollections();
-        expectToBePromise(listCollectionsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listCollections();
+        } catch (e) {
+          err = e;
+        }
 
-        listCollectionsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getCollection', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getCollectionTest() {
         // Construct the params object for operation getCollection
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const getCollectionParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const getCollectionResult = discoveryService.getCollection(params);
+        const getCollectionResult = discoveryService.getCollection(getCollectionParams);
 
         // all methods should return a Promise
         expectToBePromise(getCollectionResult);
@@ -1575,6 +1794,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getCollectionTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getCollectionTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getCollectionTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1583,7 +1817,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getCollectionParams = {
           environmentId,
           collectionId,
           headers: {
@@ -1592,13 +1826,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getCollection(params);
+        discoveryService.getCollection(getCollectionParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getCollection({});
@@ -1607,30 +1841,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getCollectionPromise = discoveryService.getCollection();
-        expectToBePromise(getCollectionPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getCollection();
+        } catch (e) {
+          err = e;
+        }
 
-        getCollectionPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateCollection', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateCollectionTest() {
         // Construct the params object for operation updateCollection
         const environmentId = 'testString';
         const collectionId = 'testString';
         const name = 'testString';
         const description = 'testString';
         const configurationId = 'testString';
-        const params = {
+        const updateCollectionParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           name: name,
@@ -1638,7 +1873,7 @@ describe('DiscoveryV1', () => {
           configurationId: configurationId,
         };
 
-        const updateCollectionResult = discoveryService.updateCollection(params);
+        const updateCollectionResult = discoveryService.updateCollection(updateCollectionParams);
 
         // all methods should return a Promise
         expectToBePromise(updateCollectionResult);
@@ -1658,6 +1893,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateCollectionTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __updateCollectionTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __updateCollectionTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1667,7 +1917,7 @@ describe('DiscoveryV1', () => {
         const name = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateCollectionParams = {
           environmentId,
           collectionId,
           name,
@@ -1677,13 +1927,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.updateCollection(params);
+        discoveryService.updateCollection(updateCollectionParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.updateCollection({});
@@ -1692,32 +1942,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateCollectionPromise = discoveryService.updateCollection();
-        expectToBePromise(updateCollectionPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.updateCollection();
+        } catch (e) {
+          err = e;
+        }
 
-        updateCollectionPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteCollection', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteCollectionTest() {
         // Construct the params object for operation deleteCollection
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const deleteCollectionParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const deleteCollectionResult = discoveryService.deleteCollection(params);
+        const deleteCollectionResult = discoveryService.deleteCollection(deleteCollectionParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteCollectionResult);
@@ -1734,6 +1985,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteCollectionTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteCollectionTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteCollectionTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1742,7 +2008,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteCollectionParams = {
           environmentId,
           collectionId,
           headers: {
@@ -1751,13 +2017,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteCollection(params);
+        discoveryService.deleteCollection(deleteCollectionParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteCollection({});
@@ -1766,32 +2032,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteCollectionPromise = discoveryService.deleteCollection();
-        expectToBePromise(deleteCollectionPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteCollection();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteCollectionPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listCollectionFields', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listCollectionFieldsTest() {
         // Construct the params object for operation listCollectionFields
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const listCollectionFieldsParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const listCollectionFieldsResult = discoveryService.listCollectionFields(params);
+        const listCollectionFieldsResult = discoveryService.listCollectionFields(listCollectionFieldsParams);
 
         // all methods should return a Promise
         expectToBePromise(listCollectionFieldsResult);
@@ -1808,6 +2075,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listCollectionFieldsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listCollectionFieldsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listCollectionFieldsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1816,7 +2098,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listCollectionFieldsParams = {
           environmentId,
           collectionId,
           headers: {
@@ -1825,13 +2107,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listCollectionFields(params);
+        discoveryService.listCollectionFields(listCollectionFieldsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listCollectionFields({});
@@ -1840,32 +2122,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listCollectionFieldsPromise = discoveryService.listCollectionFields();
-        expectToBePromise(listCollectionFieldsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listCollectionFields();
+        } catch (e) {
+          err = e;
+        }
 
-        listCollectionFieldsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listExpansions', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listExpansionsTest() {
         // Construct the params object for operation listExpansions
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const listExpansionsParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const listExpansionsResult = discoveryService.listExpansions(params);
+        const listExpansionsResult = discoveryService.listExpansions(listExpansionsParams);
 
         // all methods should return a Promise
         expectToBePromise(listExpansionsResult);
@@ -1882,6 +2165,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listExpansionsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listExpansionsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listExpansionsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1890,7 +2188,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listExpansionsParams = {
           environmentId,
           collectionId,
           headers: {
@@ -1899,13 +2197,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listExpansions(params);
+        discoveryService.listExpansions(listExpansionsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listExpansions({});
@@ -1914,20 +2212,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listExpansionsPromise = discoveryService.listExpansions();
-        expectToBePromise(listExpansionsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listExpansions();
+        } catch (e) {
+          err = e;
+        }
 
-        listExpansionsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createExpansions', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -1938,18 +2237,18 @@ describe('DiscoveryV1', () => {
         expanded_terms: ['testString'],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createExpansionsTest() {
         // Construct the params object for operation createExpansions
         const environmentId = 'testString';
         const collectionId = 'testString';
         const expansions = [expansionModel];
-        const params = {
+        const createExpansionsParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           expansions: expansions,
         };
 
-        const createExpansionsResult = discoveryService.createExpansions(params);
+        const createExpansionsResult = discoveryService.createExpansions(createExpansionsParams);
 
         // all methods should return a Promise
         expectToBePromise(createExpansionsResult);
@@ -1967,6 +2266,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createExpansionsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createExpansionsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createExpansionsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1976,7 +2290,7 @@ describe('DiscoveryV1', () => {
         const expansions = [expansionModel];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createExpansionsParams = {
           environmentId,
           collectionId,
           expansions,
@@ -1986,13 +2300,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createExpansions(params);
+        discoveryService.createExpansions(createExpansionsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createExpansions({});
@@ -2001,32 +2315,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createExpansionsPromise = discoveryService.createExpansions();
-        expectToBePromise(createExpansionsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createExpansions();
+        } catch (e) {
+          err = e;
+        }
 
-        createExpansionsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteExpansions', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteExpansionsTest() {
         // Construct the params object for operation deleteExpansions
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const deleteExpansionsParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const deleteExpansionsResult = discoveryService.deleteExpansions(params);
+        const deleteExpansionsResult = discoveryService.deleteExpansions(deleteExpansionsParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteExpansionsResult);
@@ -2043,6 +2358,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteExpansionsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteExpansionsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteExpansionsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2051,7 +2381,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteExpansionsParams = {
           environmentId,
           collectionId,
           headers: {
@@ -2060,13 +2390,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteExpansions(params);
+        discoveryService.deleteExpansions(deleteExpansionsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteExpansions({});
@@ -2075,32 +2405,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteExpansionsPromise = discoveryService.deleteExpansions();
-        expectToBePromise(deleteExpansionsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteExpansions();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteExpansionsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getTokenizationDictionaryStatus', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getTokenizationDictionaryStatusTest() {
         // Construct the params object for operation getTokenizationDictionaryStatus
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const getTokenizationDictionaryStatusParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const getTokenizationDictionaryStatusResult = discoveryService.getTokenizationDictionaryStatus(params);
+        const getTokenizationDictionaryStatusResult = discoveryService.getTokenizationDictionaryStatus(getTokenizationDictionaryStatusParams);
 
         // all methods should return a Promise
         expectToBePromise(getTokenizationDictionaryStatusResult);
@@ -2117,6 +2448,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getTokenizationDictionaryStatusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getTokenizationDictionaryStatusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getTokenizationDictionaryStatusTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2125,7 +2471,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getTokenizationDictionaryStatusParams = {
           environmentId,
           collectionId,
           headers: {
@@ -2134,13 +2480,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getTokenizationDictionaryStatus(params);
+        discoveryService.getTokenizationDictionaryStatus(getTokenizationDictionaryStatusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getTokenizationDictionaryStatus({});
@@ -2149,20 +2495,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getTokenizationDictionaryStatusPromise = discoveryService.getTokenizationDictionaryStatus();
-        expectToBePromise(getTokenizationDictionaryStatusPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getTokenizationDictionaryStatus();
+        } catch (e) {
+          err = e;
+        }
 
-        getTokenizationDictionaryStatusPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createTokenizationDictionary', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -2175,18 +2522,18 @@ describe('DiscoveryV1', () => {
         part_of_speech: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createTokenizationDictionaryTest() {
         // Construct the params object for operation createTokenizationDictionary
         const environmentId = 'testString';
         const collectionId = 'testString';
         const tokenizationRules = [tokenDictRuleModel];
-        const params = {
+        const createTokenizationDictionaryParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           tokenizationRules: tokenizationRules,
         };
 
-        const createTokenizationDictionaryResult = discoveryService.createTokenizationDictionary(params);
+        const createTokenizationDictionaryResult = discoveryService.createTokenizationDictionary(createTokenizationDictionaryParams);
 
         // all methods should return a Promise
         expectToBePromise(createTokenizationDictionaryResult);
@@ -2204,6 +2551,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createTokenizationDictionaryTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createTokenizationDictionaryTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createTokenizationDictionaryTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2212,7 +2574,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createTokenizationDictionaryParams = {
           environmentId,
           collectionId,
           headers: {
@@ -2221,13 +2583,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createTokenizationDictionary(params);
+        discoveryService.createTokenizationDictionary(createTokenizationDictionaryParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createTokenizationDictionary({});
@@ -2236,32 +2598,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createTokenizationDictionaryPromise = discoveryService.createTokenizationDictionary();
-        expectToBePromise(createTokenizationDictionaryPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createTokenizationDictionary();
+        } catch (e) {
+          err = e;
+        }
 
-        createTokenizationDictionaryPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteTokenizationDictionary', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteTokenizationDictionaryTest() {
         // Construct the params object for operation deleteTokenizationDictionary
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const deleteTokenizationDictionaryParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const deleteTokenizationDictionaryResult = discoveryService.deleteTokenizationDictionary(params);
+        const deleteTokenizationDictionaryResult = discoveryService.deleteTokenizationDictionary(deleteTokenizationDictionaryParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteTokenizationDictionaryResult);
@@ -2278,6 +2641,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteTokenizationDictionaryTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteTokenizationDictionaryTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteTokenizationDictionaryTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2286,7 +2664,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteTokenizationDictionaryParams = {
           environmentId,
           collectionId,
           headers: {
@@ -2295,13 +2673,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteTokenizationDictionary(params);
+        discoveryService.deleteTokenizationDictionary(deleteTokenizationDictionaryParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteTokenizationDictionary({});
@@ -2310,32 +2688,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteTokenizationDictionaryPromise = discoveryService.deleteTokenizationDictionary();
-        expectToBePromise(deleteTokenizationDictionaryPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteTokenizationDictionary();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteTokenizationDictionaryPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getStopwordListStatus', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getStopwordListStatusTest() {
         // Construct the params object for operation getStopwordListStatus
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const getStopwordListStatusParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const getStopwordListStatusResult = discoveryService.getStopwordListStatus(params);
+        const getStopwordListStatusResult = discoveryService.getStopwordListStatus(getStopwordListStatusParams);
 
         // all methods should return a Promise
         expectToBePromise(getStopwordListStatusResult);
@@ -2352,6 +2731,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getStopwordListStatusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getStopwordListStatusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getStopwordListStatusTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2360,7 +2754,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getStopwordListStatusParams = {
           environmentId,
           collectionId,
           headers: {
@@ -2369,13 +2763,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getStopwordListStatus(params);
+        discoveryService.getStopwordListStatus(getStopwordListStatusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getStopwordListStatus({});
@@ -2384,36 +2778,37 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getStopwordListStatusPromise = discoveryService.getStopwordListStatus();
-        expectToBePromise(getStopwordListStatusPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getStopwordListStatus();
+        } catch (e) {
+          err = e;
+        }
 
-        getStopwordListStatusPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createStopwordList', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createStopwordListTest() {
         // Construct the params object for operation createStopwordList
         const environmentId = 'testString';
         const collectionId = 'testString';
         const stopwordFile = Buffer.from('This is a mock file.');
         const stopwordFilename = 'testString';
-        const params = {
+        const createStopwordListParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           stopwordFile: stopwordFile,
           stopwordFilename: stopwordFilename,
         };
 
-        const createStopwordListResult = discoveryService.createStopwordList(params);
+        const createStopwordListResult = discoveryService.createStopwordList(createStopwordListParams);
 
         // all methods should return a Promise
         expectToBePromise(createStopwordListResult);
@@ -2433,6 +2828,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createStopwordListTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createStopwordListTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createStopwordListTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2443,7 +2853,7 @@ describe('DiscoveryV1', () => {
         const stopwordFilename = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createStopwordListParams = {
           environmentId,
           collectionId,
           stopwordFile,
@@ -2454,13 +2864,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createStopwordList(params);
+        discoveryService.createStopwordList(createStopwordListParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createStopwordList({});
@@ -2469,32 +2879,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createStopwordListPromise = discoveryService.createStopwordList();
-        expectToBePromise(createStopwordListPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createStopwordList();
+        } catch (e) {
+          err = e;
+        }
 
-        createStopwordListPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteStopwordList', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteStopwordListTest() {
         // Construct the params object for operation deleteStopwordList
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const deleteStopwordListParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const deleteStopwordListResult = discoveryService.deleteStopwordList(params);
+        const deleteStopwordListResult = discoveryService.deleteStopwordList(deleteStopwordListParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteStopwordListResult);
@@ -2511,6 +2922,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteStopwordListTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteStopwordListTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteStopwordListTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2519,7 +2945,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteStopwordListParams = {
           environmentId,
           collectionId,
           headers: {
@@ -2528,13 +2954,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteStopwordList(params);
+        discoveryService.deleteStopwordList(deleteStopwordListParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteStopwordList({});
@@ -2543,23 +2969,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteStopwordListPromise = discoveryService.deleteStopwordList();
-        expectToBePromise(deleteStopwordListPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteStopwordList();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteStopwordListPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('addDocument', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __addDocumentTest() {
         // Construct the params object for operation addDocument
         const environmentId = 'testString';
         const collectionId = 'testString';
@@ -2567,7 +2994,7 @@ describe('DiscoveryV1', () => {
         const filename = 'testString';
         const fileContentType = 'application/json';
         const metadata = 'testString';
-        const params = {
+        const addDocumentParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           file: file,
@@ -2576,7 +3003,7 @@ describe('DiscoveryV1', () => {
           metadata: metadata,
         };
 
-        const addDocumentResult = discoveryService.addDocument(params);
+        const addDocumentResult = discoveryService.addDocument(addDocumentParams);
 
         // all methods should return a Promise
         expectToBePromise(addDocumentResult);
@@ -2597,6 +3024,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __addDocumentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __addDocumentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __addDocumentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2605,7 +3047,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const addDocumentParams = {
           environmentId,
           collectionId,
           headers: {
@@ -2614,13 +3056,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.addDocument(params);
+        discoveryService.addDocument(addDocumentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.addDocument({});
@@ -2629,34 +3071,35 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const addDocumentPromise = discoveryService.addDocument();
-        expectToBePromise(addDocumentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.addDocument();
+        } catch (e) {
+          err = e;
+        }
 
-        addDocumentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getDocumentStatus', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getDocumentStatusTest() {
         // Construct the params object for operation getDocumentStatus
         const environmentId = 'testString';
         const collectionId = 'testString';
         const documentId = 'testString';
-        const params = {
+        const getDocumentStatusParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           documentId: documentId,
         };
 
-        const getDocumentStatusResult = discoveryService.getDocumentStatus(params);
+        const getDocumentStatusResult = discoveryService.getDocumentStatus(getDocumentStatusParams);
 
         // all methods should return a Promise
         expectToBePromise(getDocumentStatusResult);
@@ -2674,6 +3117,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.document_id).toEqual(documentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getDocumentStatusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getDocumentStatusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getDocumentStatusTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2683,7 +3141,7 @@ describe('DiscoveryV1', () => {
         const documentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getDocumentStatusParams = {
           environmentId,
           collectionId,
           documentId,
@@ -2693,13 +3151,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getDocumentStatus(params);
+        discoveryService.getDocumentStatus(getDocumentStatusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getDocumentStatus({});
@@ -2708,23 +3166,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getDocumentStatusPromise = discoveryService.getDocumentStatus();
-        expectToBePromise(getDocumentStatusPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getDocumentStatus();
+        } catch (e) {
+          err = e;
+        }
 
-        getDocumentStatusPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateDocument', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateDocumentTest() {
         // Construct the params object for operation updateDocument
         const environmentId = 'testString';
         const collectionId = 'testString';
@@ -2733,7 +3192,7 @@ describe('DiscoveryV1', () => {
         const filename = 'testString';
         const fileContentType = 'application/json';
         const metadata = 'testString';
-        const params = {
+        const updateDocumentParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           documentId: documentId,
@@ -2743,7 +3202,7 @@ describe('DiscoveryV1', () => {
           metadata: metadata,
         };
 
-        const updateDocumentResult = discoveryService.updateDocument(params);
+        const updateDocumentResult = discoveryService.updateDocument(updateDocumentParams);
 
         // all methods should return a Promise
         expectToBePromise(updateDocumentResult);
@@ -2765,6 +3224,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.document_id).toEqual(documentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateDocumentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __updateDocumentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __updateDocumentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2774,7 +3248,7 @@ describe('DiscoveryV1', () => {
         const documentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateDocumentParams = {
           environmentId,
           collectionId,
           documentId,
@@ -2784,13 +3258,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.updateDocument(params);
+        discoveryService.updateDocument(updateDocumentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.updateDocument({});
@@ -2799,34 +3273,35 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateDocumentPromise = discoveryService.updateDocument();
-        expectToBePromise(updateDocumentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.updateDocument();
+        } catch (e) {
+          err = e;
+        }
 
-        updateDocumentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteDocument', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteDocumentTest() {
         // Construct the params object for operation deleteDocument
         const environmentId = 'testString';
         const collectionId = 'testString';
         const documentId = 'testString';
-        const params = {
+        const deleteDocumentParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           documentId: documentId,
         };
 
-        const deleteDocumentResult = discoveryService.deleteDocument(params);
+        const deleteDocumentResult = discoveryService.deleteDocument(deleteDocumentParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteDocumentResult);
@@ -2844,6 +3319,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.document_id).toEqual(documentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteDocumentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteDocumentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteDocumentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2853,7 +3343,7 @@ describe('DiscoveryV1', () => {
         const documentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteDocumentParams = {
           environmentId,
           collectionId,
           documentId,
@@ -2863,13 +3353,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteDocument(params);
+        discoveryService.deleteDocument(deleteDocumentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteDocument({});
@@ -2878,23 +3368,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteDocumentPromise = discoveryService.deleteDocument();
-        expectToBePromise(deleteDocumentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteDocument();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteDocumentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('query', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __queryTest() {
         // Construct the params object for operation query
         const environmentId = 'testString';
         const collectionId = 'testString';
@@ -2919,7 +3410,7 @@ describe('DiscoveryV1', () => {
         const bias = 'testString';
         const spellingSuggestions = false;
         const xWatsonLoggingOptOut = false;
-        const params = {
+        const queryParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           filter: filter,
@@ -2945,7 +3436,7 @@ describe('DiscoveryV1', () => {
           xWatsonLoggingOptOut: xWatsonLoggingOptOut,
         };
 
-        const queryResult = discoveryService.query(params);
+        const queryResult = discoveryService.query(queryParams);
 
         // all methods should return a Promise
         expectToBePromise(queryResult);
@@ -2983,6 +3474,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __queryTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __queryTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __queryTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2991,7 +3497,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const queryParams = {
           environmentId,
           collectionId,
           headers: {
@@ -3000,13 +3506,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.query(params);
+        discoveryService.query(queryParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.query({});
@@ -3015,23 +3521,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const queryPromise = discoveryService.query();
-        expectToBePromise(queryPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.query();
+        } catch (e) {
+          err = e;
+        }
 
-        queryPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('queryNotices', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __queryNoticesTest() {
         // Construct the params object for operation queryNotices
         const environmentId = 'testString';
         const collectionId = 'testString';
@@ -3052,7 +3559,7 @@ describe('DiscoveryV1', () => {
         const similar = false;
         const similarDocumentIds = ['testString'];
         const similarFields = ['testString'];
-        const params = {
+        const queryNoticesParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           filter: filter,
@@ -3074,7 +3581,7 @@ describe('DiscoveryV1', () => {
           similarFields: similarFields,
         };
 
-        const queryNoticesResult = discoveryService.queryNotices(params);
+        const queryNoticesResult = discoveryService.queryNotices(queryNoticesParams);
 
         // all methods should return a Promise
         expectToBePromise(queryNoticesResult);
@@ -3108,6 +3615,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs['similar.fields']).toEqual(similarFields);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __queryNoticesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __queryNoticesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __queryNoticesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3116,7 +3638,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const queryNoticesParams = {
           environmentId,
           collectionId,
           headers: {
@@ -3125,13 +3647,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.queryNotices(params);
+        discoveryService.queryNotices(queryNoticesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.queryNotices({});
@@ -3140,23 +3662,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const queryNoticesPromise = discoveryService.queryNotices();
-        expectToBePromise(queryNoticesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.queryNotices();
+        } catch (e) {
+          err = e;
+        }
 
-        queryNoticesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('federatedQuery', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __federatedQueryTest() {
         // Construct the params object for operation federatedQuery
         const environmentId = 'testString';
         const collectionIds = 'testString';
@@ -3180,7 +3703,7 @@ describe('DiscoveryV1', () => {
         const similarFields = 'testString';
         const bias = 'testString';
         const xWatsonLoggingOptOut = false;
-        const params = {
+        const federatedQueryParams = {
           environmentId: environmentId,
           collectionIds: collectionIds,
           filter: filter,
@@ -3205,7 +3728,7 @@ describe('DiscoveryV1', () => {
           xWatsonLoggingOptOut: xWatsonLoggingOptOut,
         };
 
-        const federatedQueryResult = discoveryService.federatedQuery(params);
+        const federatedQueryResult = discoveryService.federatedQuery(federatedQueryParams);
 
         // all methods should return a Promise
         expectToBePromise(federatedQueryResult);
@@ -3242,6 +3765,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.bias).toEqual(bias);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __federatedQueryTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __federatedQueryTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __federatedQueryTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3250,7 +3788,7 @@ describe('DiscoveryV1', () => {
         const collectionIds = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const federatedQueryParams = {
           environmentId,
           collectionIds,
           headers: {
@@ -3259,13 +3797,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.federatedQuery(params);
+        discoveryService.federatedQuery(federatedQueryParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.federatedQuery({});
@@ -3274,23 +3812,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const federatedQueryPromise = discoveryService.federatedQuery();
-        expectToBePromise(federatedQueryPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.federatedQuery();
+        } catch (e) {
+          err = e;
+        }
 
-        federatedQueryPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('federatedQueryNotices', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __federatedQueryNoticesTest() {
         // Construct the params object for operation federatedQueryNotices
         const environmentId = 'testString';
         const collectionIds = ['testString'];
@@ -3307,7 +3846,7 @@ describe('DiscoveryV1', () => {
         const similar = false;
         const similarDocumentIds = ['testString'];
         const similarFields = ['testString'];
-        const params = {
+        const federatedQueryNoticesParams = {
           environmentId: environmentId,
           collectionIds: collectionIds,
           filter: filter,
@@ -3325,7 +3864,7 @@ describe('DiscoveryV1', () => {
           similarFields: similarFields,
         };
 
-        const federatedQueryNoticesResult = discoveryService.federatedQueryNotices(params);
+        const federatedQueryNoticesResult = discoveryService.federatedQueryNotices(federatedQueryNoticesParams);
 
         // all methods should return a Promise
         expectToBePromise(federatedQueryNoticesResult);
@@ -3355,6 +3894,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs['similar.document_ids']).toEqual(similarDocumentIds);
         expect(mockRequestOptions.qs['similar.fields']).toEqual(similarFields);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __federatedQueryNoticesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __federatedQueryNoticesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __federatedQueryNoticesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3363,7 +3917,7 @@ describe('DiscoveryV1', () => {
         const collectionIds = ['testString'];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const federatedQueryNoticesParams = {
           environmentId,
           collectionIds,
           headers: {
@@ -3372,13 +3926,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.federatedQueryNotices(params);
+        discoveryService.federatedQueryNotices(federatedQueryNoticesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.federatedQueryNotices({});
@@ -3387,30 +3941,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const federatedQueryNoticesPromise = discoveryService.federatedQueryNotices();
-        expectToBePromise(federatedQueryNoticesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.federatedQueryNotices();
+        } catch (e) {
+          err = e;
+        }
 
-        federatedQueryNoticesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getAutocompletion', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getAutocompletionTest() {
         // Construct the params object for operation getAutocompletion
         const environmentId = 'testString';
         const collectionId = 'testString';
         const prefix = 'testString';
         const field = 'testString';
         const count = 38;
-        const params = {
+        const getAutocompletionParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           prefix: prefix,
@@ -3418,7 +3973,7 @@ describe('DiscoveryV1', () => {
           count: count,
         };
 
-        const getAutocompletionResult = discoveryService.getAutocompletion(params);
+        const getAutocompletionResult = discoveryService.getAutocompletion(getAutocompletionParams);
 
         // all methods should return a Promise
         expectToBePromise(getAutocompletionResult);
@@ -3438,6 +3993,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.count).toEqual(count);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getAutocompletionTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getAutocompletionTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getAutocompletionTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3447,7 +4017,7 @@ describe('DiscoveryV1', () => {
         const prefix = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getAutocompletionParams = {
           environmentId,
           collectionId,
           prefix,
@@ -3457,13 +4027,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getAutocompletion(params);
+        discoveryService.getAutocompletion(getAutocompletionParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getAutocompletion({});
@@ -3472,32 +4042,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getAutocompletionPromise = discoveryService.getAutocompletion();
-        expectToBePromise(getAutocompletionPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getAutocompletion();
+        } catch (e) {
+          err = e;
+        }
 
-        getAutocompletionPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listTrainingData', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listTrainingDataTest() {
         // Construct the params object for operation listTrainingData
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const listTrainingDataParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const listTrainingDataResult = discoveryService.listTrainingData(params);
+        const listTrainingDataResult = discoveryService.listTrainingData(listTrainingDataParams);
 
         // all methods should return a Promise
         expectToBePromise(listTrainingDataResult);
@@ -3514,6 +4085,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listTrainingDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listTrainingDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listTrainingDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3522,7 +4108,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listTrainingDataParams = {
           environmentId,
           collectionId,
           headers: {
@@ -3531,13 +4117,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listTrainingData(params);
+        discoveryService.listTrainingData(listTrainingDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listTrainingData({});
@@ -3546,20 +4132,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listTrainingDataPromise = discoveryService.listTrainingData();
-        expectToBePromise(listTrainingDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listTrainingData();
+        } catch (e) {
+          err = e;
+        }
 
-        listTrainingDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('addTrainingData', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -3571,14 +4158,14 @@ describe('DiscoveryV1', () => {
         relevance: 38,
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __addTrainingDataTest() {
         // Construct the params object for operation addTrainingData
         const environmentId = 'testString';
         const collectionId = 'testString';
         const naturalLanguageQuery = 'testString';
         const filter = 'testString';
         const examples = [trainingExampleModel];
-        const params = {
+        const addTrainingDataParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           naturalLanguageQuery: naturalLanguageQuery,
@@ -3586,7 +4173,7 @@ describe('DiscoveryV1', () => {
           examples: examples,
         };
 
-        const addTrainingDataResult = discoveryService.addTrainingData(params);
+        const addTrainingDataResult = discoveryService.addTrainingData(addTrainingDataParams);
 
         // all methods should return a Promise
         expectToBePromise(addTrainingDataResult);
@@ -3606,6 +4193,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __addTrainingDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __addTrainingDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __addTrainingDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3614,7 +4216,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const addTrainingDataParams = {
           environmentId,
           collectionId,
           headers: {
@@ -3623,13 +4225,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.addTrainingData(params);
+        discoveryService.addTrainingData(addTrainingDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.addTrainingData({});
@@ -3638,32 +4240,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const addTrainingDataPromise = discoveryService.addTrainingData();
-        expectToBePromise(addTrainingDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.addTrainingData();
+        } catch (e) {
+          err = e;
+        }
 
-        addTrainingDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteAllTrainingData', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteAllTrainingDataTest() {
         // Construct the params object for operation deleteAllTrainingData
         const environmentId = 'testString';
         const collectionId = 'testString';
-        const params = {
+        const deleteAllTrainingDataParams = {
           environmentId: environmentId,
           collectionId: collectionId,
         };
 
-        const deleteAllTrainingDataResult = discoveryService.deleteAllTrainingData(params);
+        const deleteAllTrainingDataResult = discoveryService.deleteAllTrainingData(deleteAllTrainingDataParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteAllTrainingDataResult);
@@ -3680,6 +4283,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteAllTrainingDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteAllTrainingDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteAllTrainingDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3688,7 +4306,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteAllTrainingDataParams = {
           environmentId,
           collectionId,
           headers: {
@@ -3697,13 +4315,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteAllTrainingData(params);
+        discoveryService.deleteAllTrainingData(deleteAllTrainingDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteAllTrainingData({});
@@ -3712,34 +4330,35 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteAllTrainingDataPromise = discoveryService.deleteAllTrainingData();
-        expectToBePromise(deleteAllTrainingDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteAllTrainingData();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteAllTrainingDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getTrainingData', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getTrainingDataTest() {
         // Construct the params object for operation getTrainingData
         const environmentId = 'testString';
         const collectionId = 'testString';
         const queryId = 'testString';
-        const params = {
+        const getTrainingDataParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           queryId: queryId,
         };
 
-        const getTrainingDataResult = discoveryService.getTrainingData(params);
+        const getTrainingDataResult = discoveryService.getTrainingData(getTrainingDataParams);
 
         // all methods should return a Promise
         expectToBePromise(getTrainingDataResult);
@@ -3757,6 +4376,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.query_id).toEqual(queryId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getTrainingDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getTrainingDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getTrainingDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3766,7 +4400,7 @@ describe('DiscoveryV1', () => {
         const queryId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getTrainingDataParams = {
           environmentId,
           collectionId,
           queryId,
@@ -3776,13 +4410,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getTrainingData(params);
+        discoveryService.getTrainingData(getTrainingDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getTrainingData({});
@@ -3791,34 +4425,35 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getTrainingDataPromise = discoveryService.getTrainingData();
-        expectToBePromise(getTrainingDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getTrainingData();
+        } catch (e) {
+          err = e;
+        }
 
-        getTrainingDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteTrainingData', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteTrainingDataTest() {
         // Construct the params object for operation deleteTrainingData
         const environmentId = 'testString';
         const collectionId = 'testString';
         const queryId = 'testString';
-        const params = {
+        const deleteTrainingDataParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           queryId: queryId,
         };
 
-        const deleteTrainingDataResult = discoveryService.deleteTrainingData(params);
+        const deleteTrainingDataResult = discoveryService.deleteTrainingData(deleteTrainingDataParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteTrainingDataResult);
@@ -3836,6 +4471,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.query_id).toEqual(queryId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteTrainingDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteTrainingDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteTrainingDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3845,7 +4495,7 @@ describe('DiscoveryV1', () => {
         const queryId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteTrainingDataParams = {
           environmentId,
           collectionId,
           queryId,
@@ -3855,13 +4505,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteTrainingData(params);
+        discoveryService.deleteTrainingData(deleteTrainingDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteTrainingData({});
@@ -3870,34 +4520,35 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteTrainingDataPromise = discoveryService.deleteTrainingData();
-        expectToBePromise(deleteTrainingDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteTrainingData();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteTrainingDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listTrainingExamples', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listTrainingExamplesTest() {
         // Construct the params object for operation listTrainingExamples
         const environmentId = 'testString';
         const collectionId = 'testString';
         const queryId = 'testString';
-        const params = {
+        const listTrainingExamplesParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           queryId: queryId,
         };
 
-        const listTrainingExamplesResult = discoveryService.listTrainingExamples(params);
+        const listTrainingExamplesResult = discoveryService.listTrainingExamples(listTrainingExamplesParams);
 
         // all methods should return a Promise
         expectToBePromise(listTrainingExamplesResult);
@@ -3915,6 +4566,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.query_id).toEqual(queryId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listTrainingExamplesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listTrainingExamplesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listTrainingExamplesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3924,7 +4590,7 @@ describe('DiscoveryV1', () => {
         const queryId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listTrainingExamplesParams = {
           environmentId,
           collectionId,
           queryId,
@@ -3934,13 +4600,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listTrainingExamples(params);
+        discoveryService.listTrainingExamples(listTrainingExamplesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listTrainingExamples({});
@@ -3949,23 +4615,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listTrainingExamplesPromise = discoveryService.listTrainingExamples();
-        expectToBePromise(listTrainingExamplesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listTrainingExamples();
+        } catch (e) {
+          err = e;
+        }
 
-        listTrainingExamplesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createTrainingExample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createTrainingExampleTest() {
         // Construct the params object for operation createTrainingExample
         const environmentId = 'testString';
         const collectionId = 'testString';
@@ -3973,7 +4640,7 @@ describe('DiscoveryV1', () => {
         const documentId = 'testString';
         const crossReference = 'testString';
         const relevance = 38;
-        const params = {
+        const createTrainingExampleParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           queryId: queryId,
@@ -3982,7 +4649,7 @@ describe('DiscoveryV1', () => {
           relevance: relevance,
         };
 
-        const createTrainingExampleResult = discoveryService.createTrainingExample(params);
+        const createTrainingExampleResult = discoveryService.createTrainingExample(createTrainingExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(createTrainingExampleResult);
@@ -4003,6 +4670,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.query_id).toEqual(queryId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createTrainingExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createTrainingExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createTrainingExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4012,7 +4694,7 @@ describe('DiscoveryV1', () => {
         const queryId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createTrainingExampleParams = {
           environmentId,
           collectionId,
           queryId,
@@ -4022,13 +4704,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createTrainingExample(params);
+        discoveryService.createTrainingExample(createTrainingExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createTrainingExample({});
@@ -4037,36 +4719,37 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createTrainingExamplePromise = discoveryService.createTrainingExample();
-        expectToBePromise(createTrainingExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createTrainingExample();
+        } catch (e) {
+          err = e;
+        }
 
-        createTrainingExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteTrainingExample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteTrainingExampleTest() {
         // Construct the params object for operation deleteTrainingExample
         const environmentId = 'testString';
         const collectionId = 'testString';
         const queryId = 'testString';
         const exampleId = 'testString';
-        const params = {
+        const deleteTrainingExampleParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           queryId: queryId,
           exampleId: exampleId,
         };
 
-        const deleteTrainingExampleResult = discoveryService.deleteTrainingExample(params);
+        const deleteTrainingExampleResult = discoveryService.deleteTrainingExample(deleteTrainingExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteTrainingExampleResult);
@@ -4085,6 +4768,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.query_id).toEqual(queryId);
         expect(mockRequestOptions.path.example_id).toEqual(exampleId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteTrainingExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteTrainingExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteTrainingExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4095,7 +4793,7 @@ describe('DiscoveryV1', () => {
         const exampleId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteTrainingExampleParams = {
           environmentId,
           collectionId,
           queryId,
@@ -4106,13 +4804,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteTrainingExample(params);
+        discoveryService.deleteTrainingExample(deleteTrainingExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteTrainingExample({});
@@ -4121,23 +4819,24 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteTrainingExamplePromise = discoveryService.deleteTrainingExample();
-        expectToBePromise(deleteTrainingExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteTrainingExample();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteTrainingExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateTrainingExample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateTrainingExampleTest() {
         // Construct the params object for operation updateTrainingExample
         const environmentId = 'testString';
         const collectionId = 'testString';
@@ -4145,7 +4844,7 @@ describe('DiscoveryV1', () => {
         const exampleId = 'testString';
         const crossReference = 'testString';
         const relevance = 38;
-        const params = {
+        const updateTrainingExampleParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           queryId: queryId,
@@ -4154,7 +4853,7 @@ describe('DiscoveryV1', () => {
           relevance: relevance,
         };
 
-        const updateTrainingExampleResult = discoveryService.updateTrainingExample(params);
+        const updateTrainingExampleResult = discoveryService.updateTrainingExample(updateTrainingExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(updateTrainingExampleResult);
@@ -4175,6 +4874,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.query_id).toEqual(queryId);
         expect(mockRequestOptions.path.example_id).toEqual(exampleId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateTrainingExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __updateTrainingExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __updateTrainingExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4185,7 +4899,7 @@ describe('DiscoveryV1', () => {
         const exampleId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateTrainingExampleParams = {
           environmentId,
           collectionId,
           queryId,
@@ -4196,13 +4910,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.updateTrainingExample(params);
+        discoveryService.updateTrainingExample(updateTrainingExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.updateTrainingExample({});
@@ -4211,36 +4925,37 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateTrainingExamplePromise = discoveryService.updateTrainingExample();
-        expectToBePromise(updateTrainingExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.updateTrainingExample();
+        } catch (e) {
+          err = e;
+        }
 
-        updateTrainingExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getTrainingExample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getTrainingExampleTest() {
         // Construct the params object for operation getTrainingExample
         const environmentId = 'testString';
         const collectionId = 'testString';
         const queryId = 'testString';
         const exampleId = 'testString';
-        const params = {
+        const getTrainingExampleParams = {
           environmentId: environmentId,
           collectionId: collectionId,
           queryId: queryId,
           exampleId: exampleId,
         };
 
-        const getTrainingExampleResult = discoveryService.getTrainingExample(params);
+        const getTrainingExampleResult = discoveryService.getTrainingExample(getTrainingExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(getTrainingExampleResult);
@@ -4259,6 +4974,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
         expect(mockRequestOptions.path.query_id).toEqual(queryId);
         expect(mockRequestOptions.path.example_id).toEqual(exampleId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getTrainingExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getTrainingExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getTrainingExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4269,7 +4999,7 @@ describe('DiscoveryV1', () => {
         const exampleId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getTrainingExampleParams = {
           environmentId,
           collectionId,
           queryId,
@@ -4280,13 +5010,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getTrainingExample(params);
+        discoveryService.getTrainingExample(getTrainingExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getTrainingExample({});
@@ -4295,30 +5025,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getTrainingExamplePromise = discoveryService.getTrainingExample();
-        expectToBePromise(getTrainingExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getTrainingExample();
+        } catch (e) {
+          err = e;
+        }
 
-        getTrainingExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteUserData', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteUserDataTest() {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
-        const params = {
+        const deleteUserDataParams = {
           customerId: customerId,
         };
 
-        const deleteUserDataResult = discoveryService.deleteUserData(params);
+        const deleteUserDataResult = discoveryService.deleteUserData(deleteUserDataParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteUserDataResult);
@@ -4334,6 +5065,21 @@ describe('DiscoveryV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.qs.customer_id).toEqual(customerId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteUserDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteUserDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteUserDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4341,7 +5087,7 @@ describe('DiscoveryV1', () => {
         const customerId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteUserDataParams = {
           customerId,
           headers: {
             Accept: userAccept,
@@ -4349,13 +5095,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteUserData(params);
+        discoveryService.deleteUserData(deleteUserDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteUserData({});
@@ -4364,20 +5110,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteUserDataPromise = discoveryService.deleteUserData();
-        expectToBePromise(deleteUserDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteUserData();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteUserDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createEvent', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -4392,16 +5139,16 @@ describe('DiscoveryV1', () => {
         document_id: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createEventTest() {
         // Construct the params object for operation createEvent
         const type = 'click';
         const data = eventDataModel;
-        const params = {
+        const createEventParams = {
           type: type,
           data: data,
         };
 
-        const createEventResult = discoveryService.createEvent(params);
+        const createEventResult = discoveryService.createEvent(createEventParams);
 
         // all methods should return a Promise
         expectToBePromise(createEventResult);
@@ -4418,6 +5165,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.type).toEqual(type);
         expect(mockRequestOptions.body.data).toEqual(data);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createEventTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createEventTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createEventTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4426,7 +5188,7 @@ describe('DiscoveryV1', () => {
         const data = eventDataModel;
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createEventParams = {
           type,
           data,
           headers: {
@@ -4435,13 +5197,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createEvent(params);
+        discoveryService.createEvent(createEventParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createEvent({});
@@ -4450,30 +5212,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createEventPromise = discoveryService.createEvent();
-        expectToBePromise(createEventPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createEvent();
+        } catch (e) {
+          err = e;
+        }
 
-        createEventPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('queryLog', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __queryLogTest() {
         // Construct the params object for operation queryLog
         const filter = 'testString';
         const query = 'testString';
         const count = 38;
         const offset = 38;
         const sort = ['testString'];
-        const params = {
+        const queryLogParams = {
           filter: filter,
           query: query,
           count: count,
@@ -4481,7 +5244,7 @@ describe('DiscoveryV1', () => {
           sort: sort,
         };
 
-        const queryLogResult = discoveryService.queryLog(params);
+        const queryLogResult = discoveryService.queryLog(queryLogParams);
 
         // all methods should return a Promise
         expectToBePromise(queryLogResult);
@@ -4501,20 +5264,35 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.count).toEqual(count);
         expect(mockRequestOptions.qs.offset).toEqual(offset);
         expect(mockRequestOptions.qs.sort).toEqual(sort);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __queryLogTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __queryLogTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __queryLogTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const queryLogParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        discoveryService.queryLog(params);
+        discoveryService.queryLog(queryLogParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -4525,20 +5303,21 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('getMetricsQuery', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getMetricsQueryTest() {
         // Construct the params object for operation getMetricsQuery
         const startTime = '2019-01-01T12:00:00.000Z';
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
-        const params = {
+        const getMetricsQueryParams = {
           startTime: startTime,
           endTime: endTime,
           resultType: resultType,
         };
 
-        const getMetricsQueryResult = discoveryService.getMetricsQuery(params);
+        const getMetricsQueryResult = discoveryService.getMetricsQuery(getMetricsQueryParams);
 
         // all methods should return a Promise
         expectToBePromise(getMetricsQueryResult);
@@ -4556,20 +5335,35 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.start_time).toEqual(startTime);
         expect(mockRequestOptions.qs.end_time).toEqual(endTime);
         expect(mockRequestOptions.qs.result_type).toEqual(resultType);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getMetricsQueryTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getMetricsQueryTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getMetricsQueryTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getMetricsQueryParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        discoveryService.getMetricsQuery(params);
+        discoveryService.getMetricsQuery(getMetricsQueryParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -4580,20 +5374,21 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('getMetricsQueryEvent', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getMetricsQueryEventTest() {
         // Construct the params object for operation getMetricsQueryEvent
         const startTime = '2019-01-01T12:00:00.000Z';
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
-        const params = {
+        const getMetricsQueryEventParams = {
           startTime: startTime,
           endTime: endTime,
           resultType: resultType,
         };
 
-        const getMetricsQueryEventResult = discoveryService.getMetricsQueryEvent(params);
+        const getMetricsQueryEventResult = discoveryService.getMetricsQueryEvent(getMetricsQueryEventParams);
 
         // all methods should return a Promise
         expectToBePromise(getMetricsQueryEventResult);
@@ -4611,20 +5406,35 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.start_time).toEqual(startTime);
         expect(mockRequestOptions.qs.end_time).toEqual(endTime);
         expect(mockRequestOptions.qs.result_type).toEqual(resultType);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getMetricsQueryEventTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getMetricsQueryEventTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getMetricsQueryEventTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getMetricsQueryEventParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        discoveryService.getMetricsQueryEvent(params);
+        discoveryService.getMetricsQueryEvent(getMetricsQueryEventParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -4635,20 +5445,21 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('getMetricsQueryNoResults', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getMetricsQueryNoResultsTest() {
         // Construct the params object for operation getMetricsQueryNoResults
         const startTime = '2019-01-01T12:00:00.000Z';
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
-        const params = {
+        const getMetricsQueryNoResultsParams = {
           startTime: startTime,
           endTime: endTime,
           resultType: resultType,
         };
 
-        const getMetricsQueryNoResultsResult = discoveryService.getMetricsQueryNoResults(params);
+        const getMetricsQueryNoResultsResult = discoveryService.getMetricsQueryNoResults(getMetricsQueryNoResultsParams);
 
         // all methods should return a Promise
         expectToBePromise(getMetricsQueryNoResultsResult);
@@ -4666,20 +5477,35 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.start_time).toEqual(startTime);
         expect(mockRequestOptions.qs.end_time).toEqual(endTime);
         expect(mockRequestOptions.qs.result_type).toEqual(resultType);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getMetricsQueryNoResultsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getMetricsQueryNoResultsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getMetricsQueryNoResultsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getMetricsQueryNoResultsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        discoveryService.getMetricsQueryNoResults(params);
+        discoveryService.getMetricsQueryNoResults(getMetricsQueryNoResultsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -4690,20 +5516,21 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('getMetricsEventRate', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getMetricsEventRateTest() {
         // Construct the params object for operation getMetricsEventRate
         const startTime = '2019-01-01T12:00:00.000Z';
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
-        const params = {
+        const getMetricsEventRateParams = {
           startTime: startTime,
           endTime: endTime,
           resultType: resultType,
         };
 
-        const getMetricsEventRateResult = discoveryService.getMetricsEventRate(params);
+        const getMetricsEventRateResult = discoveryService.getMetricsEventRate(getMetricsEventRateParams);
 
         // all methods should return a Promise
         expectToBePromise(getMetricsEventRateResult);
@@ -4721,20 +5548,35 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.start_time).toEqual(startTime);
         expect(mockRequestOptions.qs.end_time).toEqual(endTime);
         expect(mockRequestOptions.qs.result_type).toEqual(resultType);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getMetricsEventRateTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getMetricsEventRateTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getMetricsEventRateTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getMetricsEventRateParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        discoveryService.getMetricsEventRate(params);
+        discoveryService.getMetricsEventRate(getMetricsEventRateParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -4745,16 +5587,17 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('getMetricsQueryTokenEvent', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getMetricsQueryTokenEventTest() {
         // Construct the params object for operation getMetricsQueryTokenEvent
         const count = 38;
-        const params = {
+        const getMetricsQueryTokenEventParams = {
           count: count,
         };
 
-        const getMetricsQueryTokenEventResult = discoveryService.getMetricsQueryTokenEvent(params);
+        const getMetricsQueryTokenEventResult = discoveryService.getMetricsQueryTokenEvent(getMetricsQueryTokenEventParams);
 
         // all methods should return a Promise
         expectToBePromise(getMetricsQueryTokenEventResult);
@@ -4770,20 +5613,35 @@ describe('DiscoveryV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.qs.count).toEqual(count);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getMetricsQueryTokenEventTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getMetricsQueryTokenEventTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getMetricsQueryTokenEventTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getMetricsQueryTokenEventParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        discoveryService.getMetricsQueryTokenEvent(params);
+        discoveryService.getMetricsQueryTokenEvent(getMetricsQueryTokenEventParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -4794,16 +5652,17 @@ describe('DiscoveryV1', () => {
       });
     });
   });
+
   describe('listCredentials', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listCredentialsTest() {
         // Construct the params object for operation listCredentials
         const environmentId = 'testString';
-        const params = {
+        const listCredentialsParams = {
           environmentId: environmentId,
         };
 
-        const listCredentialsResult = discoveryService.listCredentials(params);
+        const listCredentialsResult = discoveryService.listCredentials(listCredentialsParams);
 
         // all methods should return a Promise
         expectToBePromise(listCredentialsResult);
@@ -4819,6 +5678,21 @@ describe('DiscoveryV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listCredentialsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listCredentialsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listCredentialsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4826,7 +5700,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listCredentialsParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -4834,13 +5708,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listCredentials(params);
+        discoveryService.listCredentials(listCredentialsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listCredentials({});
@@ -4849,20 +5723,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listCredentialsPromise = discoveryService.listCredentials();
-        expectToBePromise(listCredentialsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listCredentials();
+        } catch (e) {
+          err = e;
+        }
 
-        listCredentialsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createCredentials', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -4896,20 +5771,20 @@ describe('DiscoveryV1', () => {
         error_message: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createCredentialsTest() {
         // Construct the params object for operation createCredentials
         const environmentId = 'testString';
         const sourceType = 'box';
         const credentialDetails = credentialDetailsModel;
         const status = statusDetailsModel;
-        const params = {
+        const createCredentialsParams = {
           environmentId: environmentId,
           sourceType: sourceType,
           credentialDetails: credentialDetails,
           status: status,
         };
 
-        const createCredentialsResult = discoveryService.createCredentials(params);
+        const createCredentialsResult = discoveryService.createCredentials(createCredentialsParams);
 
         // all methods should return a Promise
         expectToBePromise(createCredentialsResult);
@@ -4928,6 +5803,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.status).toEqual(status);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createCredentialsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createCredentialsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createCredentialsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4935,7 +5825,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createCredentialsParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -4943,13 +5833,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createCredentials(params);
+        discoveryService.createCredentials(createCredentialsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createCredentials({});
@@ -4958,32 +5848,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createCredentialsPromise = discoveryService.createCredentials();
-        expectToBePromise(createCredentialsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createCredentials();
+        } catch (e) {
+          err = e;
+        }
 
-        createCredentialsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getCredentials', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getCredentialsTest() {
         // Construct the params object for operation getCredentials
         const environmentId = 'testString';
         const credentialId = 'testString';
-        const params = {
+        const getCredentialsParams = {
           environmentId: environmentId,
           credentialId: credentialId,
         };
 
-        const getCredentialsResult = discoveryService.getCredentials(params);
+        const getCredentialsResult = discoveryService.getCredentials(getCredentialsParams);
 
         // all methods should return a Promise
         expectToBePromise(getCredentialsResult);
@@ -5000,6 +5891,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.credential_id).toEqual(credentialId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getCredentialsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getCredentialsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getCredentialsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -5008,7 +5914,7 @@ describe('DiscoveryV1', () => {
         const credentialId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getCredentialsParams = {
           environmentId,
           credentialId,
           headers: {
@@ -5017,13 +5923,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getCredentials(params);
+        discoveryService.getCredentials(getCredentialsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getCredentials({});
@@ -5032,20 +5938,21 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getCredentialsPromise = discoveryService.getCredentials();
-        expectToBePromise(getCredentialsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getCredentials();
+        } catch (e) {
+          err = e;
+        }
 
-        getCredentialsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateCredentials', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -5079,14 +5986,14 @@ describe('DiscoveryV1', () => {
         error_message: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __updateCredentialsTest() {
         // Construct the params object for operation updateCredentials
         const environmentId = 'testString';
         const credentialId = 'testString';
         const sourceType = 'box';
         const credentialDetails = credentialDetailsModel;
         const status = statusDetailsModel;
-        const params = {
+        const updateCredentialsParams = {
           environmentId: environmentId,
           credentialId: credentialId,
           sourceType: sourceType,
@@ -5094,7 +6001,7 @@ describe('DiscoveryV1', () => {
           status: status,
         };
 
-        const updateCredentialsResult = discoveryService.updateCredentials(params);
+        const updateCredentialsResult = discoveryService.updateCredentials(updateCredentialsParams);
 
         // all methods should return a Promise
         expectToBePromise(updateCredentialsResult);
@@ -5114,6 +6021,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.credential_id).toEqual(credentialId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateCredentialsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __updateCredentialsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __updateCredentialsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -5122,7 +6044,7 @@ describe('DiscoveryV1', () => {
         const credentialId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateCredentialsParams = {
           environmentId,
           credentialId,
           headers: {
@@ -5131,13 +6053,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.updateCredentials(params);
+        discoveryService.updateCredentials(updateCredentialsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.updateCredentials({});
@@ -5146,32 +6068,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateCredentialsPromise = discoveryService.updateCredentials();
-        expectToBePromise(updateCredentialsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.updateCredentials();
+        } catch (e) {
+          err = e;
+        }
 
-        updateCredentialsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteCredentials', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteCredentialsTest() {
         // Construct the params object for operation deleteCredentials
         const environmentId = 'testString';
         const credentialId = 'testString';
-        const params = {
+        const deleteCredentialsParams = {
           environmentId: environmentId,
           credentialId: credentialId,
         };
 
-        const deleteCredentialsResult = discoveryService.deleteCredentials(params);
+        const deleteCredentialsResult = discoveryService.deleteCredentials(deleteCredentialsParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteCredentialsResult);
@@ -5188,6 +6111,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.credential_id).toEqual(credentialId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteCredentialsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteCredentialsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteCredentialsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -5196,7 +6134,7 @@ describe('DiscoveryV1', () => {
         const credentialId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteCredentialsParams = {
           environmentId,
           credentialId,
           headers: {
@@ -5205,13 +6143,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteCredentials(params);
+        discoveryService.deleteCredentials(deleteCredentialsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteCredentials({});
@@ -5220,30 +6158,31 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteCredentialsPromise = discoveryService.deleteCredentials();
-        expectToBePromise(deleteCredentialsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteCredentials();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteCredentialsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listGateways', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listGatewaysTest() {
         // Construct the params object for operation listGateways
         const environmentId = 'testString';
-        const params = {
+        const listGatewaysParams = {
           environmentId: environmentId,
         };
 
-        const listGatewaysResult = discoveryService.listGateways(params);
+        const listGatewaysResult = discoveryService.listGateways(listGatewaysParams);
 
         // all methods should return a Promise
         expectToBePromise(listGatewaysResult);
@@ -5259,6 +6198,21 @@ describe('DiscoveryV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listGatewaysTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listGatewaysTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listGatewaysTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -5266,7 +6220,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listGatewaysParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -5274,13 +6228,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.listGateways(params);
+        discoveryService.listGateways(listGatewaysParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.listGateways({});
@@ -5289,32 +6243,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listGatewaysPromise = discoveryService.listGateways();
-        expectToBePromise(listGatewaysPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listGateways();
+        } catch (e) {
+          err = e;
+        }
 
-        listGatewaysPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createGateway', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createGatewayTest() {
         // Construct the params object for operation createGateway
         const environmentId = 'testString';
         const name = 'testString';
-        const params = {
+        const createGatewayParams = {
           environmentId: environmentId,
           name: name,
         };
 
-        const createGatewayResult = discoveryService.createGateway(params);
+        const createGatewayResult = discoveryService.createGateway(createGatewayParams);
 
         // all methods should return a Promise
         expectToBePromise(createGatewayResult);
@@ -5331,6 +6286,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.body.name).toEqual(name);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createGatewayTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __createGatewayTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __createGatewayTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -5338,7 +6308,7 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createGatewayParams = {
           environmentId,
           headers: {
             Accept: userAccept,
@@ -5346,13 +6316,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.createGateway(params);
+        discoveryService.createGateway(createGatewayParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.createGateway({});
@@ -5361,32 +6331,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createGatewayPromise = discoveryService.createGateway();
-        expectToBePromise(createGatewayPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.createGateway();
+        } catch (e) {
+          err = e;
+        }
 
-        createGatewayPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getGateway', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getGatewayTest() {
         // Construct the params object for operation getGateway
         const environmentId = 'testString';
         const gatewayId = 'testString';
-        const params = {
+        const getGatewayParams = {
           environmentId: environmentId,
           gatewayId: gatewayId,
         };
 
-        const getGatewayResult = discoveryService.getGateway(params);
+        const getGatewayResult = discoveryService.getGateway(getGatewayParams);
 
         // all methods should return a Promise
         expectToBePromise(getGatewayResult);
@@ -5403,6 +6374,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.gateway_id).toEqual(gatewayId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getGatewayTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __getGatewayTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __getGatewayTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -5411,7 +6397,7 @@ describe('DiscoveryV1', () => {
         const gatewayId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getGatewayParams = {
           environmentId,
           gatewayId,
           headers: {
@@ -5420,13 +6406,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.getGateway(params);
+        discoveryService.getGateway(getGatewayParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.getGateway({});
@@ -5435,32 +6421,33 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getGatewayPromise = discoveryService.getGateway();
-        expectToBePromise(getGatewayPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.getGateway();
+        } catch (e) {
+          err = e;
+        }
 
-        getGatewayPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteGateway', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteGatewayTest() {
         // Construct the params object for operation deleteGateway
         const environmentId = 'testString';
         const gatewayId = 'testString';
-        const params = {
+        const deleteGatewayParams = {
           environmentId: environmentId,
           gatewayId: gatewayId,
         };
 
-        const deleteGatewayResult = discoveryService.deleteGateway(params);
+        const deleteGatewayResult = discoveryService.deleteGateway(deleteGatewayParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteGatewayResult);
@@ -5477,6 +6464,21 @@ describe('DiscoveryV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.gateway_id).toEqual(gatewayId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteGatewayTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __deleteGatewayTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __deleteGatewayTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -5485,7 +6487,7 @@ describe('DiscoveryV1', () => {
         const gatewayId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteGatewayParams = {
           environmentId,
           gatewayId,
           headers: {
@@ -5494,13 +6496,13 @@ describe('DiscoveryV1', () => {
           },
         };
 
-        discoveryService.deleteGateway(params);
+        discoveryService.deleteGateway(deleteGatewayParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await discoveryService.deleteGateway({});
@@ -5509,17 +6511,17 @@ describe('DiscoveryV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteGatewayPromise = discoveryService.deleteGateway();
-        expectToBePromise(deleteGatewayPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.deleteGateway();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteGatewayPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
