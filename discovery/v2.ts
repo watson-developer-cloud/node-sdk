@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2021.
+ * (C) Copyright IBM Corp. 2019, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,7 +24,7 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
@@ -65,10 +65,10 @@ class DiscoveryV2 extends BaseService {
   constructor(options: UserOptions) {
     options = options || {};
 
-    const requiredParams = ['version'];
-    const missingParams = getMissingParams(options, requiredParams);
-    if (missingParams) {
-      throw missingParams;
+    const _requiredParams = ['version'];
+    const _validationErrors = validateParams(options, _requiredParams, null);
+    if (_validationErrors) {
+      throw _validationErrors;
     }
     if (!options.serviceName) {
       options.serviceName = DiscoveryV2.DEFAULT_SERVICE_NAME;
@@ -85,6 +85,372 @@ class DiscoveryV2 extends BaseService {
     this.version = options.version;
   }
 
+  /*************************
+   * projects
+   ************************/
+
+  /**
+   * List projects.
+   *
+   * Lists existing projects for this instance.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>>}
+   */
+  public listProjects(
+    params?: DiscoveryV2.ListProjectsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>> {
+    const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listProjects'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Create a project.
+   *
+   * Create a new project for this instance.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.name - The human readable name of this project.
+   * @param {string} params.type - The type of project.
+   *
+   * The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom*
+   * project.
+   *
+   * The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
+   * installed deployments only.
+   * @param {DefaultQueryParams} [params.defaultQueryParameters] - Default query parameters for this project.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
+   */
+  public createProject(
+    params: DiscoveryV2.CreateProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = { ...params };
+    const _requiredParams = ['name', 'type'];
+    const _validParams = ['name', 'type', 'defaultQueryParameters', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+      'type': _params.type,
+      'default_query_parameters': _params.defaultQueryParameters,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createProject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get project.
+   *
+   * Get details on the specified project.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
+   */
+  public getProject(
+    params: DiscoveryV2.GetProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getProject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update a project.
+   *
+   * Update the specified project's name.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} [params.name] - The new name to give this project.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
+   */
+  public updateProject(
+    params: DiscoveryV2.UpdateProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'name', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateProject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete a project.
+   *
+   * Deletes the specified project.
+   *
+   * **Important:** Deleting a project deletes everything that is part of the specified project, including all
+   * collections.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   */
+  public deleteProject(
+    params: DiscoveryV2.DeleteProjectParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteProject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * List fields.
+   *
+   * Gets a list of the unique fields (and their types) stored in the specified collections.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
+   * specified, all collections in the project are used.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>>}
+   */
+  public listFields(
+    params: DiscoveryV2.ListFieldsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'collectionIds', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'collection_ids': _params.collectionIds,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listFields'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/fields',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
   /*************************
    * collections
    ************************/
@@ -104,11 +470,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.ListCollectionsParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>> {
     const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -157,8 +523,16 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.name - The name of the collection.
    * @param {string} [params.description] - A description of the collection.
-   * @param {string} [params.language] - The language of the collection.
+   * @param {string} [params.language] - The language of the collection. For a list of supported languages, see the
+   * [product documentation](/docs/discovery-data?topic=discovery-data-language-support).
    * @param {CollectionEnrichment[]} [params.enrichments] - An array of enrichments that are applied to this collection.
+   * To get a list of enrichments that are available for a project, use the [List enrichments](#listenrichments) method.
+   *
+   * If no enrichments are specified when the collection is created, the default enrichments for the project type are
+   * applied. For more information about project default settings, see the [product
+   * documentation](/docs/discovery-data?topic=discovery-data-project-defaults).
+   * @param {CollectionDetailsSmartDocumentUnderstanding} [params.smartDocumentUnderstanding] - An object that describes
+   * the Smart Document Understanding model for a collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
@@ -166,11 +540,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.CreateCollectionParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'name'];
+    const _validParams = ['projectId', 'name', 'description', 'language', 'enrichments', 'smartDocumentUnderstanding', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -178,6 +552,7 @@ class DiscoveryV2 extends BaseService {
       'description': _params.description,
       'language': _params.language,
       'enrichments': _params.enrichments,
+      'smart_document_understanding': _params.smartDocumentUnderstanding,
     };
 
     const query = {
@@ -234,11 +609,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.GetCollectionParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -287,8 +662,8 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {string} [params.name] - The name of the collection.
-   * @param {string} [params.description] - A description of the collection.
+   * @param {string} [params.name] - The new name of the collection.
+   * @param {string} [params.description] - The new description of the collection.
    * @param {CollectionEnrichment[]} [params.enrichments] - An array of enrichments that are applied to this collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
@@ -297,11 +672,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.UpdateCollectionParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'name', 'description', 'enrichments', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -366,11 +741,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.DeleteCollectionParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -409,229 +784,76 @@ class DiscoveryV2 extends BaseService {
     return this.createRequest(parameters);
   }
   /*************************
-   * queries
+   * documents
    ************************/
 
   /**
-   * Query a project.
+   * List documents.
    *
-   * By using this method, you can construct queries. For details, see the [Discovery
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-concepts). The default query
-   * parameters are defined by the settings for this project, see the [Discovery
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-project-defaults) for an overview of
-   * the standard default settings, and see [the Projects API documentation](#create-project) for details about how to
-   * set custom default query settings.
+   * Lists the documents in the specified collection. The list includes only the document ID of each document and
+   * returns information for up to 10,000 documents.
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string[]} [params.collectionIds] - A comma-separated list of collection IDs to be queried against.
-   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
-   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
-   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
-   * full text, but with the most relevant documents listed first. Use a query search when you want to find the most
-   * relevant search results.
-   * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by
-   * utilizing training data and natural language understanding.
-   * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
-   * with filters. Useful for applications to build lists, tables, and time series. For a full list of possible
-   * aggregations, see the Query reference.
-   * @param {number} [params.count] - Number of results to return.
-   * @param {string[]} [params._return] - A list of the fields in the document hierarchy to return. If this parameter is
-   * an empty list, then all fields are returned.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
-   * @param {string} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
-   * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
-   * default sort direction if no prefix is specified.
-   * @param {boolean} [params.highlight] - When `true`, a highlight field is returned for each result which contains the
-   * fields which match the query with `<em></em>` tags around the matching query terms.
-   * @param {boolean} [params.spellingSuggestions] - When `true` and the **natural_language_query** parameter is used,
-   * the **natural_language_query** parameter is spell checked. The most likely correction is returned in the
-   * **suggested_query** field of the response (if one exists).
-   * @param {QueryLargeTableResults} [params.tableResults] - Configuration for table retrieval.
-   * @param {QueryLargeSuggestedRefinements} [params.suggestedRefinements] - Configuration for suggested refinements.
-   * Available with Premium plans only.
-   * @param {QueryLargePassages} [params.passages] - Configuration for passage retrieval.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>>}
-   */
-  public query(
-    params: DiscoveryV2.QueryParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
-    const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const body = {
-      'collection_ids': _params.collectionIds,
-      'filter': _params.filter,
-      'query': _params.query,
-      'natural_language_query': _params.naturalLanguageQuery,
-      'aggregation': _params.aggregation,
-      'count': _params.count,
-      'return': _params._return,
-      'offset': _params.offset,
-      'sort': _params.sort,
-      'highlight': _params.highlight,
-      'spelling_suggestions': _params.spellingSuggestions,
-      'table_results': _params.tableResults,
-      'suggested_refinements': _params.suggestedRefinements,
-      'passages': _params.passages,
-    };
-
-    const query = {
-      'version': this.version,
-    };
-
-    const path = {
-      'project_id': _params.projectId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'query'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects/{project_id}/query',
-        method: 'POST',
-        body,
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get Autocomplete Suggestions.
-   *
-   * Returns completion query suggestions for the specified prefix.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.prefix - The prefix to use for autocompletion. For example, the prefix `Ho` could
-   * autocomplete to `hot`, `housing`, or `how`.
-   * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
-   * specified, all collections in the project are used.
-   * @param {string} [params.field] - The field in the result documents that autocompletion suggestions are identified
-   * from.
-   * @param {number} [params.count] - The number of autocompletion suggestions to return.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Completions>>}
-   */
-  public getAutocompletion(
-    params: DiscoveryV2.GetAutocompletionParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
-    const _params = { ...params };
-    const requiredParams = ['projectId', 'prefix'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'version': this.version,
-      'prefix': _params.prefix,
-      'collection_ids': _params.collectionIds,
-      'field': _params.field,
-      'count': _params.count,
-    };
-
-    const path = {
-      'project_id': _params.projectId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getAutocompletion'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects/{project_id}/autocompletion',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Query collection notices.
-   *
-   * Finds collection-level notices (errors and warnings) that are generated when documents are ingested.
+   * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances and
+   * from Plus and Enterprise plan IBM Cloud-managed instances.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
-   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
-   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
-   * full text, but with the most relevant documents listed first.
-   * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by
-   * utilizing training data and natural language understanding.
-   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
-   * together in any one query is **10000**.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
-   * **count** and **offset** values together in any one query is **10000**.
+   * @param {number} [params.count] - The maximum number of documents to return. Up to 1,000 documents are returned by
+   * default. The maximum number allowed is 10,000.
+   * @param {string} [params.status] - Filters the documents to include only documents with the specified ingestion
+   * status. The options include:
+   *
+   * * `available`: Ingestion is finished and the document is indexed.
+   *
+   * * `failed`: Ingestion is finished, but the document is not indexed because of an error.
+   *
+   * * `pending`: The document is uploaded, but the ingestion process is not started.
+   *
+   * * `processing`: Ingestion is in progress.
+   *
+   * You can specify one status value or add a comma-separated list of more than one status value. For example,
+   * `available,failed`.
+   * @param {boolean} [params.hasNotices] - If set to `true`, only documents that have notices, meaning documents for
+   * which warnings or errors were generated during the ingestion, are returned. If set to `false`, only documents that
+   * don't have notices are returned. If unspecified, no filter based on notices is applied.
+   *
+   * Notice details are not available in the result, but you can use the [Query collection
+   * notices](#querycollectionnotices) method to find details by adding the parameter
+   * `query=notices.document_id:{document-id}`.
+   * @param {boolean} [params.isParent] - If set to `true`, only parent documents, meaning documents that were split
+   * during the ingestion process and resulted in two or more child documents, are returned. If set to `false`, only
+   * child documents are returned. If unspecified, no filter based on the parent or child relationship is applied.
+   *
+   * CSV files, for example, are split into separate documents per line and JSON files are split into separate documents
+   * per object.
+   * @param {string} [params.parentDocumentId] - Filters the documents to include only child documents that were
+   * generated when the specified parent document was processed.
+   * @param {string} [params.sha256] - Filters the documents to include only documents with the specified SHA-256 hash.
+   * Format the hash as a hexadecimal string.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListDocumentsResponse>>}
    */
-  public queryCollectionNotices(
-    params: DiscoveryV2.QueryCollectionNoticesParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
+  public listDocuments(
+    params: DiscoveryV2.ListDocumentsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListDocumentsResponse>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'count', 'status', 'hasNotices', 'isParent', 'parentDocumentId', 'sha256', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
       'version': this.version,
-      'filter': _params.filter,
-      'query': _params.query,
-      'natural_language_query': _params.naturalLanguageQuery,
       'count': _params.count,
-      'offset': _params.offset,
+      'status': _params.status,
+      'has_notices': _params.hasNotices,
+      'is_parent': _params.isParent,
+      'parent_document_id': _params.parentDocumentId,
+      'sha256': _params.sha256,
     };
 
     const path = {
@@ -642,12 +864,12 @@ class DiscoveryV2 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       DiscoveryV2.DEFAULT_SERVICE_NAME,
       'v2',
-      'queryCollectionNotices'
+      'listDocuments'
     );
 
     const parameters = {
       options: {
-        url: '/v2/projects/{project_id}/collections/{collection_id}/notices',
+        url: '/v2/projects/{project_id}/collections/{collection_id}/documents',
         method: 'GET',
         qs: query,
         path,
@@ -666,206 +888,6 @@ class DiscoveryV2 extends BaseService {
 
     return this.createRequest(parameters);
   }
-
-  /**
-   * Query project notices.
-   *
-   * Finds project-level notices (errors and warnings). Currently, project-level notices are generated by relevancy
-   * training.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} [params.filter] - A cacheable query that excludes documents that don't mention the query content.
-   * Filter searches are better for metadata-type searches and for assessing the concepts in the data set.
-   * @param {string} [params.query] - A query search returns all documents in your data set with full enrichments and
-   * full text, but with the most relevant documents listed first.
-   * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by
-   * utilizing training data and natural language understanding.
-   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
-   * together in any one query is **10000**.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
-   * **count** and **offset** values together in any one query is **10000**.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
-   */
-  public queryNotices(
-    params: DiscoveryV2.QueryNoticesParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
-    const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'version': this.version,
-      'filter': _params.filter,
-      'query': _params.query,
-      'natural_language_query': _params.naturalLanguageQuery,
-      'count': _params.count,
-      'offset': _params.offset,
-    };
-
-    const path = {
-      'project_id': _params.projectId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'queryNotices'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects/{project_id}/notices',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * List fields.
-   *
-   * Gets a list of the unique fields (and their types) stored in the the specified collections.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
-   * specified, all collections in the project are used.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>>}
-   */
-  public listFields(
-    params: DiscoveryV2.ListFieldsParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
-    const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'version': this.version,
-      'collection_ids': _params.collectionIds,
-    };
-
-    const path = {
-      'project_id': _params.projectId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listFields'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects/{project_id}/fields',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-  /*************************
-   * componentSettings
-   ************************/
-
-  /**
-   * List component settings.
-   *
-   * Returns default configuration settings for components.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>>}
-   */
-  public getComponentSettings(
-    params: DiscoveryV2.GetComponentSettingsParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
-    const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'version': this.version,
-    };
-
-    const path = {
-      'project_id': _params.projectId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getComponentSettings'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects/{project_id}/component_settings',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-  /*************************
-   * documents
-   ************************/
 
   /**
    * Add a document.
@@ -874,47 +896,53 @@ class DiscoveryV2 extends BaseService {
    *
    * Returns immediately after the system has accepted the document for processing.
    *
-   *   * The user must provide document content, metadata, or both. If the request is missing both document content and
+   * This operation works with a file upload collection. It cannot be used to modify a collection that crawls an
+   * external data source.
+   *
+   *  * For a list of supported file types, see the [product
+   * documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
+   *
+   *  * You must provide document content, metadata, or both. If the request is missing both document content and
    * metadata, it is rejected.
    *
    *   * You can set the **Content-Type** parameter on the **file** part to indicate the media type of the document. If
    * the **Content-Type** parameter is missing or is one of the generic media types (for example,
    * `application/octet-stream`), then the service attempts to automatically detect the document's media type.
    *
-   *   * The following field names are reserved and are filtered out if present after normalization: `id`, `score`,
-   * `highlight`, and any field with the prefix of: `_`, `+`, or `-`
-   *
-   *   * Fields with empty name values after normalization are filtered out before indexing.
-   *
-   *   * Fields that contain the following characters after normalization are filtered out before indexing: `#` and `,`
-   *
-   *   If the document is uploaded to a collection that shares its data with another collection, the
+   *  *  If the document is uploaded to a collection that shares its data with another collection, the
    * **X-Watson-Discovery-Force** header must be set to `true`.
    *
-   * **Note:** You can assign an ID to a document that you add by appending the ID to the endpoint
+   *  * In curl requests only, you can assign an ID to a document that you add by appending the ID to the endpoint
    * (`/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}`). If a document already exists
    * with the specified ID, it is replaced.
    *
-   * **Note:** This operation works with a file upload collection. It cannot be used to modify a collection that crawls
-   * an external data source.
+   * For more information about how certain file types and field names are handled when a file is added to a collection,
+   * see the [product documentation](/docs/discovery-data?topic=discovery-data-index-overview#field-name-limits).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. For maximum
-   * supported file size limits, see [the
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
+   * ingest. For maximum supported file size limits, see [the
    * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   *
+   * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
+   * content type is supported currently. For maximum supported file size limits, see [the product
+   * documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
-   * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
-   * MB are rejected.
+   * @param {string} [params.metadata] - Add information about the file that you want to include in the response.
    *
+   * The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
    *
-   * Example:  ``` {
-   *   "Creator": "Johnny Appleseed",
-   *   "Subject": "Apples"
-   * } ```.
+   * Example:
+   *
+   *  ```
+   *  {
+   *   "filename": "favorites2.json",
+   *   "file_type": "json"
+   *  }.
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -924,11 +952,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.AddDocumentParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'file', 'filename', 'fileContentType', 'metadata', 'xWatsonDiscoveryForce', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -981,41 +1009,116 @@ class DiscoveryV2 extends BaseService {
   }
 
   /**
-   * Update a document.
+   * Get document details.
    *
-   * Replace an existing document or add a document with a specified **document_id**. Starts ingesting a document with
-   * optional metadata.
+   * Get details about a specific document, whether the document is added by uploading a file or by crawling an external
+   * data source.
    *
-   * If the document is uploaded to a collection that shares its data with another collection, the
-   * **X-Watson-Discovery-Force** header must be set to `true`.
-   *
-   * **Note:** When uploading a new document with this method it automatically replaces any document stored with the
-   * same **document_id** if it exists.
-   *
-   * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
-   * modify a collection that connects to an external source such as Microsoft SharePoint.
-   *
-   * **Note:** If an uploaded document is segmented, all segments are overwritten, even if the updated version of the
-   * document has fewer segments.
+   * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances and
+   * from Plus and Enterprise plan IBM Cloud-managed instances.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.documentId - The ID of the document.
-   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. For maximum
-   * supported file size limits, see [the
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentDetails>>}
+   */
+  public getDocument(
+    params: DiscoveryV2.GetDocumentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentDetails>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId', 'documentId'];
+    const _validParams = ['projectId', 'collectionId', 'documentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+      'document_id': _params.documentId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getDocument'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/documents/{document_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update a document.
+   *
+   * Replace an existing document or add a document with a specified document ID. Starts ingesting a document with
+   * optional metadata.
+   *
+   * This operation works with a file upload collection. It cannot be used to modify a collection that crawls an
+   * external data source.
+   *
+   * If the document is uploaded to a collection that shares its data with another collection, the
+   * **X-Watson-Discovery-Force** header must be set to `true`.
+   *
+   * **Notes:**
+   *
+   *  * Uploading a new document with this method automatically replaces any existing document stored with the same
+   * document ID.
+   *
+   *  * If an uploaded document is split into child documents during ingestion, all existing child documents are
+   * overwritten, even if the updated version of the document has fewer child documents.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.documentId - The ID of the document.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
+   * ingest. For maximum supported file size limits, see [the
    * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   *
+   * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
+   * content type is supported currently. For maximum supported file size limits, see [the product
+   * documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
-   * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
-   * MB are rejected.
+   * @param {string} [params.metadata] - Add information about the file that you want to include in the response.
    *
+   * The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
    *
-   * Example:  ``` {
-   *   "Creator": "Johnny Appleseed",
-   *   "Subject": "Apples"
-   * } ```.
+   * Example:
+   *
+   *  ```
+   *  {
+   *   "filename": "favorites2.json",
+   *   "file_type": "json"
+   *  }.
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -1025,11 +1128,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.UpdateDocumentParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId', 'documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'collectionId', 'documentId'];
+    const _validParams = ['projectId', 'collectionId', 'documentId', 'file', 'filename', 'fileContentType', 'metadata', 'xWatsonDiscoveryForce', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -1108,11 +1211,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.DeleteDocumentParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId', 'documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'collectionId', 'documentId'];
+    const _validParams = ['projectId', 'collectionId', 'documentId', 'xWatsonDiscoveryForce', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1154,6 +1257,823 @@ class DiscoveryV2 extends BaseService {
     return this.createRequest(parameters);
   }
   /*************************
+   * queries
+   ************************/
+
+  /**
+   * Query a project.
+   *
+   * Search your data by submitting queries that are written in natural language or formatted in the Discovery Query
+   * Language. For more information, see the [Discovery
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-concepts). The default query
+   * parameters differ by project type. For more information about the project default settings, see the [Discovery
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-defaults). See [the Projects
+   * API documentation](#create-project) for details about how to set custom default query settings.
+   *
+   * The length of the UTF-8 encoding of the POST body cannot exceed 10,000 bytes, which is roughly equivalent to 10,000
+   * characters in English.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string[]} [params.collectionIds] - A comma-separated list of collection IDs to be queried against.
+   * @param {string} [params.filter] - Searches for documents that match the Discovery Query Language criteria that is
+   * specified as input. Filter calls are cached and are faster than query calls because the results are not ordered by
+   * relevance. When used with the **aggregation**, **query**, or **natural_language_query** parameters, the **filter**
+   * parameter runs first. This parameter is useful for limiting results to those that contain specific metadata values.
+   * @param {string} [params.query] - A query search that is written in the Discovery Query Language and returns all
+   * matching documents in your data set with full enrichments and full text, and with the most relevant documents
+   * listed first. Use a query search when you want to find the most relevant search results.
+   * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by using
+   * training data and natural language understanding.
+   * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
+   * with filters. Useful for applications to build lists, tables, and time series. For more information about the
+   * supported types of aggregations, see the [Discovery
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-aggregations).
+   * @param {number} [params.count] - Number of results to return.
+   * @param {string[]} [params._return] - A list of the fields in the document hierarchy to return. You can specify both
+   * root-level (`text`) and nested (`extracted_metadata.filename`) fields. If this parameter is an empty list, then all
+   * fields are returned.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * @param {string} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
+   * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
+   * default sort direction if no prefix is specified.
+   * @param {boolean} [params.highlight] - When `true`, a highlight field is returned for each result that contains
+   * fields that match the query. The matching query terms are emphasized with surrounding `<em></em>` tags. This
+   * parameter is ignored if **passages.enabled** and **passages.per_document** are `true`, in which case passages are
+   * returned for each document instead of highlights.
+   * @param {boolean} [params.spellingSuggestions] - When `true` and the **natural_language_query** parameter is used,
+   * the **natural_language_query** parameter is spell checked. The most likely correction is returned in the
+   * **suggested_query** field of the response (if one exists).
+   * @param {QueryLargeTableResults} [params.tableResults] - Configuration for table retrieval.
+   * @param {QueryLargeSuggestedRefinements} [params.suggestedRefinements] - Configuration for suggested refinements.
+   *
+   * **Note**: The **suggested_refinements** parameter that identified dynamic facets from the data is deprecated.
+   * @param {QueryLargePassages} [params.passages] - Configuration for passage retrieval.
+   * @param {QueryLargeSimilar} [params.similar] - Finds results from documents that are similar to documents of
+   * interest. Use this parameter to add a *More like these* function to your search. You can include this parameter
+   * with or without a **query**, **filter** or **natural_language_query** parameter.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>>}
+   */
+  public query(
+    params: DiscoveryV2.QueryParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'collectionIds', 'filter', 'query', 'naturalLanguageQuery', 'aggregation', 'count', '_return', 'offset', 'sort', 'highlight', 'spellingSuggestions', 'tableResults', 'suggestedRefinements', 'passages', 'similar', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'collection_ids': _params.collectionIds,
+      'filter': _params.filter,
+      'query': _params.query,
+      'natural_language_query': _params.naturalLanguageQuery,
+      'aggregation': _params.aggregation,
+      'count': _params.count,
+      'return': _params._return,
+      'offset': _params.offset,
+      'sort': _params.sort,
+      'highlight': _params.highlight,
+      'spelling_suggestions': _params.spellingSuggestions,
+      'table_results': _params.tableResults,
+      'suggested_refinements': _params.suggestedRefinements,
+      'passages': _params.passages,
+      'similar': _params.similar,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'query'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/query',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get Autocomplete Suggestions.
+   *
+   * Returns completion query suggestions for the specified prefix.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.prefix - The prefix to use for autocompletion. For example, the prefix `Ho` could
+   * autocomplete to `hot`, `housing`, or `how`.
+   * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
+   * specified, all collections in the project are used.
+   * @param {string} [params.field] - The field in the result documents that autocompletion suggestions are identified
+   * from.
+   * @param {number} [params.count] - The number of autocompletion suggestions to return.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Completions>>}
+   */
+  public getAutocompletion(
+    params: DiscoveryV2.GetAutocompletionParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'prefix'];
+    const _validParams = ['projectId', 'prefix', 'collectionIds', 'field', 'count', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'prefix': _params.prefix,
+      'collection_ids': _params.collectionIds,
+      'field': _params.field,
+      'count': _params.count,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getAutocompletion'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/autocompletion',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Query collection notices.
+   *
+   * Finds collection-level notices (errors and warnings) that are generated when documents are ingested.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} [params.filter] - Searches for documents that match the Discovery Query Language criteria that is
+   * specified as input. Filter calls are cached and are faster than query calls because the results are not ordered by
+   * relevance. When used with the `aggregation`, `query`, or `natural_language_query` parameters, the `filter`
+   * parameter runs first. This parameter is useful for limiting results to those that contain specific metadata values.
+   * @param {string} [params.query] - A query search that is written in the Discovery Query Language and returns all
+   * matching documents in your data set with full enrichments and full text, and with the most relevant documents
+   * listed first.
+   * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by using
+   * training data and natural language understanding.
+   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
+   * together in any one query is **10,000**.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
+   * **count** and **offset** values together in any one query is **10000**.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
+   */
+  public queryCollectionNotices(
+    params: DiscoveryV2.QueryCollectionNoticesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'filter', 'query', 'naturalLanguageQuery', 'count', 'offset', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'filter': _params.filter,
+      'query': _params.query,
+      'natural_language_query': _params.naturalLanguageQuery,
+      'count': _params.count,
+      'offset': _params.offset,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'queryCollectionNotices'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/notices',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Query project notices.
+   *
+   * Finds project-level notices (errors and warnings). Currently, project-level notices are generated by relevancy
+   * training.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} [params.filter] - Searches for documents that match the Discovery Query Language criteria that is
+   * specified as input. Filter calls are cached and are faster than query calls because the results are not ordered by
+   * relevance. When used with the `aggregation`, `query`, or `natural_language_query` parameters, the `filter`
+   * parameter runs first. This parameter is useful for limiting results to those that contain specific metadata values.
+   * @param {string} [params.query] - A query search that is written in the Discovery Query Language and returns all
+   * matching documents in your data set with full enrichments and full text, and with the most relevant documents
+   * listed first.
+   * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by using
+   * training data and natural language understanding.
+   * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
+   * together in any one query is **10,000**.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
+   * number of results that are returned is 10 and the offset is 8, it returns the last two results. The maximum for the
+   * **count** and **offset** values together in any one query is **10000**.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>>}
+   */
+  public queryNotices(
+    params: DiscoveryV2.QueryNoticesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'filter', 'query', 'naturalLanguageQuery', 'count', 'offset', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'filter': _params.filter,
+      'query': _params.query,
+      'natural_language_query': _params.naturalLanguageQuery,
+      'count': _params.count,
+      'offset': _params.offset,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'queryNotices'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/notices',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
+   * queryModifications
+   ************************/
+
+  /**
+   * Get a custom stop words list.
+   *
+   * Returns the custom stop words list that is used by the collection. For information about the default stop words
+   * lists that are applied to queries, see [the product
+   * documentation](/docs/discovery-data?topic=discovery-data-stopwords).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>>}
+   */
+  public getStopwordList(
+    params: DiscoveryV2.GetStopwordListParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getStopwordList'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/stopwords',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Create a custom stop words list.
+   *
+   * Adds a list of custom stop words. Stop words are words that you want the service to ignore when they occur in a
+   * query because they're not useful in distinguishing the semantic meaning of the query. The stop words list cannot
+   * contain more than 1 million characters.
+   *
+   * A default stop words list is used by all collections. The default list is applied both at indexing time and at
+   * query time. A custom stop words list that you add is used at query time only.
+   *
+   * The custom stop words list replaces the default stop words list. Therefore, if you want to keep the stop words that
+   * were used when the collection was indexed, get the default stop words list for the language of the collection first
+   * and edit it to create your custom list. For information about the default stop words lists per language, see [the
+   * product documentation](/docs/discovery-data?topic=discovery-data-stopwords).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string[]} [params.stopwords] - List of stop words.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>>}
+   */
+  public createStopwordList(
+    params: DiscoveryV2.CreateStopwordListParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'stopwords', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'stopwords': _params.stopwords,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createStopwordList'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/stopwords',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete a custom stop words list.
+   *
+   * Deletes a custom stop words list to stop using it in queries against the collection. After a custom stop words list
+   * is deleted, the default stop words list is used.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   */
+  public deleteStopwordList(
+    params: DiscoveryV2.DeleteStopwordListParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteStopwordList'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/stopwords',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get the expansion list.
+   *
+   * Returns the current expansion list for the specified collection. If an expansion list is not specified, an empty
+   * expansions array is returned.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Expansions>>}
+   */
+  public listExpansions(
+    params: DiscoveryV2.ListExpansionsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Expansions>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listExpansions'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/expansions',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Create or update an expansion list.
+   *
+   * Creates or replaces the expansion list for this collection. An expansion list introduces alternative wording for
+   * key terms that are mentioned in your collection. By identifying synonyms or common misspellings, you expand the
+   * scope of a query beyond exact matches. The maximum number of expanded terms allowed per collection is 5,000.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {Expansion[]} params.expansions - An array of query expansion definitions.
+   *
+   *  Each object in the **expansions** array represents a term or set of terms that will be expanded into other terms.
+   * Each expansion object can be configured as `bidirectional` or `unidirectional`.
+   *
+   * * **Bidirectional**: Each entry in the `expanded_terms` list expands to include all expanded terms. For example, a
+   * query for `ibm` expands to `ibm OR international business machines OR big blue`.
+   *
+   * * **Unidirectional**: The terms in `input_terms` in the query are replaced by the terms in `expanded_terms`. For
+   * example, a query for the often misused term `on premise` is converted to `on premises OR on-premises` and does not
+   * contain the original term. If you want an input term to be included in the query, then repeat the input term in the
+   * expanded terms list.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Expansions>>}
+   */
+  public createExpansions(
+    params: DiscoveryV2.CreateExpansionsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Expansions>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId', 'expansions'];
+    const _validParams = ['projectId', 'collectionId', 'expansions', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'expansions': _params.expansions,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createExpansions'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/expansions',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete the expansion list.
+   *
+   * Removes the expansion information for this collection. To disable query expansion for a collection, delete the
+   * expansion list.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   */
+  public deleteExpansions(
+    params: DiscoveryV2.DeleteExpansionsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteExpansions'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/expansions',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
+   * componentSettings
+   ************************/
+
+  /**
+   * List component settings.
+   *
+   * Returns default configuration settings for components.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>>}
+   */
+  public getComponentSettings(
+    params: DiscoveryV2.GetComponentSettingsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getComponentSettings'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/component_settings',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
    * trainingData
    ************************/
 
@@ -1172,11 +2092,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.ListTrainingQueriesParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>> {
     const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1230,11 +2150,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.DeleteTrainingQueriesParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1280,7 +2200,7 @@ class DiscoveryV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
-   * @param {string} params.naturalLanguageQuery - The natural text query for the training query.
+   * @param {string} params.naturalLanguageQuery - The natural text query that is used as the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
    * applied.
@@ -1291,11 +2211,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.CreateTrainingQueryParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
+    const _validParams = ['projectId', 'naturalLanguageQuery', 'examples', 'filter', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1358,11 +2278,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.GetTrainingQueryParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'queryId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'queryId'];
+    const _validParams = ['projectId', 'queryId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1411,7 +2331,7 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
-   * @param {string} params.naturalLanguageQuery - The natural text query for the training query.
+   * @param {string} params.naturalLanguageQuery - The natural text query that is used as the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
    * applied.
@@ -1422,11 +2342,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.UpdateTrainingQueryParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
+    const _validParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples', 'filter', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1490,11 +2410,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.DeleteTrainingQueryParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'queryId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'queryId'];
+    const _validParams = ['projectId', 'queryId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1533,102 +2453,11 @@ class DiscoveryV2 extends BaseService {
     return this.createRequest(parameters);
   }
   /*************************
-   * analyze
-   ************************/
-
-  /**
-   * Analyze a Document.
-   *
-   * Process a document and return it for realtime use. Supports JSON files only.
-   *
-   * The document is processed according to the collection's configuration settings but is not stored in the collection.
-   *
-   * **Note:** This method is supported on installed instances of Discovery only.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The content of the document to ingest. For maximum
-   * supported file size limits, see [the
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
-   * @param {string} [params.filename] - The filename for file.
-   * @param {string} [params.fileContentType] - The content type of file.
-   * @param {string} [params.metadata] - The maximum supported metadata file size is 1 MB. Metadata parts larger than 1
-   * MB are rejected.
-   *
-   *
-   * Example:  ``` {
-   *   "Creator": "Johnny Appleseed",
-   *   "Subject": "Apples"
-   * } ```.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>>}
-   */
-  public analyzeDocument(
-    params: DiscoveryV2.AnalyzeDocumentParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>> {
-    const _params = { ...params };
-    const requiredParams = ['projectId', 'collectionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const formData = {
-      'file': {
-        data: _params.file,
-        filename: _params.filename,
-        contentType: _params.fileContentType,
-      },
-      'metadata': _params.metadata,
-    };
-
-    const query = {
-      'version': this.version,
-    };
-
-    const path = {
-      'project_id': _params.projectId,
-      'collection_id': _params.collectionId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'analyzeDocument'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects/{project_id}/collections/{collection_id}/analyze',
-        method: 'POST',
-        qs: query,
-        path,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-  /*************************
    * enrichments
    ************************/
 
   /**
-   * List Enrichments.
+   * List enrichments.
    *
    * Lists the enrichments available to this project. The *Part of Speech* and *Sentiment of Phrases* enrichments might
    * be listed, but are reserved for internal use only.
@@ -1643,11 +2472,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.ListEnrichmentsParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>> {
     const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1689,13 +2518,21 @@ class DiscoveryV2 extends BaseService {
   /**
    * Create an enrichment.
    *
-   * Create an enrichment for use with the specified project.
+   * Create an enrichment for use with the specified project. To apply the enrichment to a collection in the project,
+   * use the [Collections API](/apidocs/discovery-data#createcollection).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {CreateEnrichment} params.enrichment - Information about a specific enrichment.
-   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The enrichment file to upload.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - The enrichment file to upload. Expected file types per
+   * enrichment are as follows:
+   *
+   * * CSV for `dictionary`
+   *
+   * * PEAR for `uima_annotator` and `rule_based` (Explorer)
+   *
+   * * ZIP for `watson_knowledge_studio_model` and `rule_based` (Studio Advanced Rule Editor).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
@@ -1703,11 +2540,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.CreateEnrichmentParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'enrichment'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'enrichment'];
+    const _validParams = ['projectId', 'enrichment', 'file', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -1772,11 +2609,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.GetEnrichmentParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'enrichmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'enrichmentId'];
+    const _validParams = ['projectId', 'enrichmentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1834,11 +2671,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.UpdateEnrichmentParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'enrichmentId', 'name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'enrichmentId', 'name'];
+    const _validParams = ['projectId', 'enrichmentId', 'name', 'description', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1903,11 +2740,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.DeleteEnrichmentParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['projectId', 'enrichmentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'enrichmentId'];
+    const _validParams = ['projectId', 'enrichmentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1946,142 +2783,30 @@ class DiscoveryV2 extends BaseService {
     return this.createRequest(parameters);
   }
   /*************************
-   * projects
+   * documentClassifiers
    ************************/
 
   /**
-   * List projects.
+   * List document classifiers.
    *
-   * Lists existing projects for this instance.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>>}
-   */
-  public listProjects(
-    params?: DiscoveryV2.ListProjectsParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>> {
-    const _params = { ...params };
-
-    const query = {
-      'version': this.version,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listProjects'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Create a Project.
-   *
-   * Create a new project for this instance.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.name - The human readable name of this project.
-   * @param {string} params.type - The type of project.
-   *
-   * The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom*
-   * project.
-   *
-   * The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
-   * installed deployments only.
-   * @param {DefaultQueryParams} [params.defaultQueryParameters] - Default query parameters for this project.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
-   */
-  public createProject(
-    params: DiscoveryV2.CreateProjectParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
-    const _params = { ...params };
-    const requiredParams = ['name', 'type'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const body = {
-      'name': _params.name,
-      'type': _params.type,
-      'default_query_parameters': _params.defaultQueryParameters,
-    };
-
-    const query = {
-      'version': this.version,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createProject'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v2/projects',
-        method: 'POST',
-        body,
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get project.
-   *
-   * Get details on the specified project.
+   * Get a list of the document classifiers in a project. Returns only the name and classifier ID of each document
+   * classifier.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifiers>>}
    */
-  public getProject(
-    params: DiscoveryV2.GetProjectParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+  public listDocumentClassifiers(
+    params: DiscoveryV2.ListDocumentClassifiersParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifiers>> {
     const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId'];
+    const _validParams = ['projectId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2095,12 +2820,12 @@ class DiscoveryV2 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       DiscoveryV2.DEFAULT_SERVICE_NAME,
       'v2',
-      'getProject'
+      'listDocumentClassifiers'
     );
 
     const parameters = {
       options: {
-        url: '/v2/projects/{project_id}',
+        url: '/v2/projects/{project_id}/document_classifiers',
         method: 'GET',
         qs: query,
         path,
@@ -2121,30 +2846,52 @@ class DiscoveryV2 extends BaseService {
   }
 
   /**
-   * Update a project.
+   * Create a document classifier.
    *
-   * Update the specified project's name.
+   * Create a document classifier. You can use the API to create a document classifier in any project type. After you
+   * create a document classifier, you can use the Enrichments API to create a classifier enrichment, and then the
+   * Collections API to apply the enrichment to a collection in the project.
+   *
+   * **Note:** This method is supported on installed instances (IBM Cloud Pak for Data) or IBM Cloud-managed Premium or
+   * Enterprise plan instances.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
-   * @param {string} [params.name] - The new name to give this project.
+   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - The training data CSV file to upload. The CSV file
+   * must have headers. The file must include a field that contains the text you want to classify and a field that
+   * contains the classification labels that you want to use to classify your data. If you want to specify multiple
+   * values in a single field, use a semicolon as the value separator. For a sample file, see [the product
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+   * @param {CreateDocumentClassifier} params.classifier - An object that manages the settings and data that is required
+   * to train a document classification model.
+   * @param {NodeJS.ReadableStream | Buffer} [params.testData] - The CSV with test data to upload. The column values in
+   * the test file must be the same as the column values in the training data file. If no test data is provided, the
+   * training data is split into two separate groups of training and test data.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>>}
    */
-  public updateProject(
-    params: DiscoveryV2.UpdateProjectParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
+  public createDocumentClassifier(
+    params: DiscoveryV2.CreateDocumentClassifierParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>> {
     const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'trainingData', 'classifier'];
+    const _validParams = ['projectId', 'trainingData', 'classifier', 'testData', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
-    const body = {
-      'name': _params.name,
+    const formData = {
+      'training_data': {
+        data: _params.trainingData,
+        contentType: 'text/csv',
+      },
+      'classifier': _params.classifier,
+      'test_data': {
+        data: _params.testData,
+        contentType: 'text/csv',
+      },
     };
 
     const query = {
@@ -2158,16 +2905,16 @@ class DiscoveryV2 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       DiscoveryV2.DEFAULT_SERVICE_NAME,
       'v2',
-      'updateProject'
+      'createDocumentClassifier'
     );
 
     const parameters = {
       options: {
-        url: '/v2/projects/{project_id}',
+        url: '/v2/projects/{project_id}/document_classifiers',
         method: 'POST',
-        body,
         qs: query,
         path,
+        formData
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
@@ -2175,7 +2922,7 @@ class DiscoveryV2 extends BaseService {
           sdkHeaders,
           {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
@@ -2186,28 +2933,170 @@ class DiscoveryV2 extends BaseService {
   }
 
   /**
-   * Delete a project.
+   * Get a document classifier.
    *
-   * Deletes the specified project.
-   *
-   * **Important:** Deleting a project deletes everything that is part of the specified project, including all
-   * collections.
+   * Get details about a specific document classifier.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>>}
+   */
+  public getDocumentClassifier(
+    params: DiscoveryV2.GetDocumentClassifierParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'classifierId'];
+    const _validParams = ['projectId', 'classifierId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getDocumentClassifier'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update a document classifier.
+   *
+   * Update the document classifier name or description, update the training data, or add or update the test data.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {UpdateDocumentClassifier} params.classifier - An object that contains a new name or description for a
+   * document classifier, updated training data, or new or updated test data.
+   * @param {NodeJS.ReadableStream | Buffer} [params.trainingData] - The training data CSV file to upload. The CSV file
+   * must have headers. The file must include a field that contains the text you want to classify and a field that
+   * contains the classification labels that you want to use to classify your data. If you want to specify multiple
+   * values in a single column, use a semicolon as the value separator. For a sample file, see [the product
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+   * @param {NodeJS.ReadableStream | Buffer} [params.testData] - The CSV with test data to upload. The column values in
+   * the test file must be the same as the column values in the training data file. If no test data is provided, the
+   * training data is split into two separate groups of training and test data.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>>}
+   */
+  public updateDocumentClassifier(
+    params: DiscoveryV2.UpdateDocumentClassifierParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'classifierId', 'classifier'];
+    const _validParams = ['projectId', 'classifierId', 'classifier', 'trainingData', 'testData', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const formData = {
+      'classifier': _params.classifier,
+      'training_data': {
+        data: _params.trainingData,
+        contentType: 'text/csv',
+      },
+      'test_data': {
+        data: _params.testData,
+        contentType: 'text/csv',
+      },
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateDocumentClassifier'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete a document classifier.
+   *
+   * Deletes an existing document classifier from the specified project.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
    */
-  public deleteProject(
-    params: DiscoveryV2.DeleteProjectParams
+  public deleteDocumentClassifier(
+    params: DiscoveryV2.DeleteDocumentClassifierParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['projectId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['projectId', 'classifierId'];
+    const _validParams = ['projectId', 'classifierId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2216,17 +3105,18 @@ class DiscoveryV2 extends BaseService {
 
     const path = {
       'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
     };
 
     const sdkHeaders = getSdkHeaders(
       DiscoveryV2.DEFAULT_SERVICE_NAME,
       'v2',
-      'deleteProject'
+      'deleteDocumentClassifier'
     );
 
     const parameters = {
       options: {
-        url: '/v2/projects/{project_id}',
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}',
         method: 'DELETE',
         qs: query,
         path,
@@ -2236,6 +3126,458 @@ class DiscoveryV2 extends BaseService {
           true,
           sdkHeaders,
           {
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
+   * documentClassifierModels
+   ************************/
+
+  /**
+   * List document classifier models.
+   *
+   * Get a list of the document classifier models in a project. Returns only the name and model ID of each document
+   * classifier model.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModels>>}
+   */
+  public listDocumentClassifierModels(
+    params: DiscoveryV2.ListDocumentClassifierModelsParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModels>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'classifierId'];
+    const _validParams = ['projectId', 'classifierId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listDocumentClassifierModels'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}/models',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Create a document classifier model.
+   *
+   * Create a document classifier model by training a model that uses the data and classifier settings defined in the
+   * specified document classifier.
+   *
+   * **Note:** This method is supported on installed intances (IBM Cloud Pak for Data) or IBM Cloud-managed Premium or
+   * Enterprise plan instances.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.name - The name of the document classifier model.
+   * @param {string} [params.description] - A description of the document classifier model.
+   * @param {number} [params.learningRate] - A tuning parameter in an optimization algorithm that determines the step
+   * size at each iteration of the training process. It influences how much of any newly acquired information overrides
+   * the existing information, and therefore is said to represent the speed at which a machine learning model learns.
+   * The default value is `0.1`.
+   * @param {number[]} [params.l1RegularizationStrengths] - Avoids overfitting by shrinking the coefficient of less
+   * important features to zero, which removes some features altogether. You can specify many values for hyper-parameter
+   * optimization. The default value is `[0.000001]`.
+   * @param {number[]} [params.l2RegularizationStrengths] - A method you can apply to avoid overfitting your model on
+   * the training data. You can specify many values for hyper-parameter optimization. The default value is `[0.000001]`.
+   * @param {number} [params.trainingMaxSteps] - Maximum number of training steps to complete. This setting is useful if
+   * you need the training process to finish in a specific time frame to fit into an automated process. The default
+   * value is ten million.
+   * @param {number} [params.improvementRatio] - Stops the training run early if the improvement ratio is not met by the
+   * time the process reaches a certain point. The default value is `0.00001`.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>>}
+   */
+  public createDocumentClassifierModel(
+    params: DiscoveryV2.CreateDocumentClassifierModelParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'classifierId', 'name'];
+    const _validParams = ['projectId', 'classifierId', 'name', 'description', 'learningRate', 'l1RegularizationStrengths', 'l2RegularizationStrengths', 'trainingMaxSteps', 'improvementRatio', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'learning_rate': _params.learningRate,
+      'l1_regularization_strengths': _params.l1RegularizationStrengths,
+      'l2_regularization_strengths': _params.l2RegularizationStrengths,
+      'training_max_steps': _params.trainingMaxSteps,
+      'improvement_ratio': _params.improvementRatio,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createDocumentClassifierModel'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}/models',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get a document classifier model.
+   *
+   * Get details about a specific document classifier model.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.modelId - The ID of the classifier model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>>}
+   */
+  public getDocumentClassifierModel(
+    params: DiscoveryV2.GetDocumentClassifierModelParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'classifierId', 'modelId'];
+    const _validParams = ['projectId', 'classifierId', 'modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
+      'model_id': _params.modelId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getDocumentClassifierModel'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}/models/{model_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update a document classifier model.
+   *
+   * Update the document classifier model name or description.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.modelId - The ID of the classifier model.
+   * @param {string} [params.name] - A new name for the enrichment.
+   * @param {string} [params.description] - A new description for the enrichment.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>>}
+   */
+  public updateDocumentClassifierModel(
+    params: DiscoveryV2.UpdateDocumentClassifierModelParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'classifierId', 'modelId'];
+    const _validParams = ['projectId', 'classifierId', 'modelId', 'name', 'description', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
+      'model_id': _params.modelId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateDocumentClassifierModel'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}/models/{model_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete a document classifier model.
+   *
+   * Deletes an existing document classifier model from the specified project.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.modelId - The ID of the classifier model.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   */
+  public deleteDocumentClassifierModel(
+    params: DiscoveryV2.DeleteDocumentClassifierModelParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'classifierId', 'modelId'];
+    const _validParams = ['projectId', 'classifierId', 'modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'classifier_id': _params.classifierId,
+      'model_id': _params.modelId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteDocumentClassifierModel'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/document_classifiers/{classifier_id}/models/{model_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
+   * analyze
+   ************************/
+
+  /**
+   * Analyze a Document.
+   *
+   * Process a document and return it for realtime use. Supports JSON files only.
+   *
+   * The file is not stored in the collection, but is processed according to the collection's configuration settings. To
+   * get results, enrichments must be applied to a field in the collection that also exists in the file that you want to
+   * analyze. For example, to analyze text in a `Quote` field, you must apply enrichments to the `Quote` field in the
+   * collection configuration. Then, when you analyze the file, the text in the `Quote` field is analyzed and results
+   * are written to a field named `enriched_Quote`.
+   *
+   * **Note:** This method is supported with Enterprise plan deployments and installed deployments only.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
+   * Deploy* page in Discovery.
+   * @param {string} params.collectionId - The ID of the collection.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
+   * ingest. For maximum supported file size limits, see [the
+   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   *
+   * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
+   * content type is supported currently. For maximum supported file size limits, see [the product
+   * documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
+   * @param {string} [params.filename] - The filename for file.
+   * @param {string} [params.fileContentType] - The content type of file.
+   * @param {string} [params.metadata] - Add information about the file that you want to include in the response.
+   *
+   * The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
+   *
+   * Example:
+   *
+   *  ```
+   *  {
+   *   "filename": "favorites2.json",
+   *   "file_type": "json"
+   *  }.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>>}
+   */
+  public analyzeDocument(
+    params: DiscoveryV2.AnalyzeDocumentParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'file', 'filename', 'fileContentType', 'metadata', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const formData = {
+      'file': {
+        data: _params.file,
+        filename: _params.filename,
+        contentType: _params.fileContentType,
+      },
+      'metadata': _params.metadata,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      DiscoveryV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'analyzeDocument'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/analyze',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
@@ -2270,11 +3612,11 @@ class DiscoveryV2 extends BaseService {
     params: DiscoveryV2.DeleteUserDataParams
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customerId'];
+    const _validParams = ['customerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2345,463 +3687,6 @@ namespace DiscoveryV2 {
    * request interfaces
    ************************/
 
-  /** Parameters for the `listCollections` operation. */
-  export interface ListCollectionsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `createCollection` operation. */
-  export interface CreateCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The name of the collection. */
-    name: string;
-    /** A description of the collection. */
-    description?: string;
-    /** The language of the collection. */
-    language?: string;
-    /** An array of enrichments that are applied to this collection. */
-    enrichments?: CollectionEnrichment[];
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getCollection` operation. */
-  export interface GetCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `updateCollection` operation. */
-  export interface UpdateCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    /** The name of the collection. */
-    name?: string;
-    /** A description of the collection. */
-    description?: string;
-    /** An array of enrichments that are applied to this collection. */
-    enrichments?: CollectionEnrichment[];
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `deleteCollection` operation. */
-  export interface DeleteCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `query` operation. */
-  export interface QueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** A comma-separated list of collection IDs to be queried against. */
-    collectionIds?: string[];
-    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better
-     *  for metadata-type searches and for assessing the concepts in the data set.
-     */
-    filter?: string;
-    /** A query search returns all documents in your data set with full enrichments and full text, but with the most
-     *  relevant documents listed first. Use a query search when you want to find the most relevant search results.
-     */
-    query?: string;
-    /** A natural language query that returns relevant documents by utilizing training data and natural language
-     *  understanding.
-     */
-    naturalLanguageQuery?: string;
-    /** An aggregation search that returns an exact answer by combining query search with filters. Useful for
-     *  applications to build lists, tables, and time series. For a full list of possible aggregations, see the Query
-     *  reference.
-     */
-    aggregation?: string;
-    /** Number of results to return. */
-    count?: number;
-    /** A list of the fields in the document hierarchy to return. If this parameter is an empty list, then all
-     *  fields are returned.
-     */
-    _return?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are
-     *  returned is 10 and the offset is 8, it returns the last two results.
-     */
-    offset?: number;
-    /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by
-     *  prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no
-     *  prefix is specified.
-     */
-    sort?: string;
-    /** When `true`, a highlight field is returned for each result which contains the fields which match the query
-     *  with `<em></em>` tags around the matching query terms.
-     */
-    highlight?: boolean;
-    /** When `true` and the **natural_language_query** parameter is used, the **natural_language_query** parameter
-     *  is spell checked. The most likely correction is returned in the **suggested_query** field of the response (if
-     *  one exists).
-     */
-    spellingSuggestions?: boolean;
-    /** Configuration for table retrieval. */
-    tableResults?: QueryLargeTableResults;
-    /** Configuration for suggested refinements. Available with Premium plans only. */
-    suggestedRefinements?: QueryLargeSuggestedRefinements;
-    /** Configuration for passage retrieval. */
-    passages?: QueryLargePassages;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getAutocompletion` operation. */
-  export interface GetAutocompletionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `hot`, `housing`,
-     *  or `how`.
-     */
-    prefix: string;
-    /** Comma separated list of the collection IDs. If this parameter is not specified, all collections in the
-     *  project are used.
-     */
-    collectionIds?: string[];
-    /** The field in the result documents that autocompletion suggestions are identified from. */
-    field?: string;
-    /** The number of autocompletion suggestions to return. */
-    count?: number;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `queryCollectionNotices` operation. */
-  export interface QueryCollectionNoticesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better
-     *  for metadata-type searches and for assessing the concepts in the data set.
-     */
-    filter?: string;
-    /** A query search returns all documents in your data set with full enrichments and full text, but with the most
-     *  relevant documents listed first.
-     */
-    query?: string;
-    /** A natural language query that returns relevant documents by utilizing training data and natural language
-     *  understanding.
-     */
-    naturalLanguageQuery?: string;
-    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query
-     *  is **10000**.
-     */
-    count?: number;
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are
-     *  returned is 10 and the offset is 8, it returns the last two results. The maximum for the **count** and
-     *  **offset** values together in any one query is **10000**.
-     */
-    offset?: number;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `queryNotices` operation. */
-  export interface QueryNoticesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** A cacheable query that excludes documents that don't mention the query content. Filter searches are better
-     *  for metadata-type searches and for assessing the concepts in the data set.
-     */
-    filter?: string;
-    /** A query search returns all documents in your data set with full enrichments and full text, but with the most
-     *  relevant documents listed first.
-     */
-    query?: string;
-    /** A natural language query that returns relevant documents by utilizing training data and natural language
-     *  understanding.
-     */
-    naturalLanguageQuery?: string;
-    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query
-     *  is **10000**.
-     */
-    count?: number;
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are
-     *  returned is 10 and the offset is 8, it returns the last two results. The maximum for the **count** and
-     *  **offset** values together in any one query is **10000**.
-     */
-    offset?: number;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `listFields` operation. */
-  export interface ListFieldsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** Comma separated list of the collection IDs. If this parameter is not specified, all collections in the
-     *  project are used.
-     */
-    collectionIds?: string[];
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getComponentSettings` operation. */
-  export interface GetComponentSettingsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `addDocument` operation. */
-  export interface AddDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    /** The content of the document to ingest. For maximum supported file size limits, see [the
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
-     */
-    file?: NodeJS.ReadableStream | Buffer;
-    /** The filename for file. */
-    filename?: string;
-    /** The content type of file. */
-    fileContentType?: AddDocumentConstants.FileContentType | string;
-    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
-     *
-     *
-     *  Example:  ``` {
-     *    "Creator": "Johnny Appleseed",
-     *    "Subject": "Apples"
-     *  } ```.
-     */
-    metadata?: string;
-    /** When `true`, the uploaded document is added to the collection even if the data for that collection is shared
-     *  with other collections.
-     */
-    xWatsonDiscoveryForce?: boolean;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Constants for the `addDocument` operation. */
-  export namespace AddDocumentConstants {
-    /** The content type of file. */
-    export enum FileContentType {
-      APPLICATION_JSON = 'application/json',
-      APPLICATION_MSWORD = 'application/msword',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      APPLICATION_PDF = 'application/pdf',
-      TEXT_HTML = 'text/html',
-      APPLICATION_XHTML_XML = 'application/xhtml+xml',
-    }
-  }
-
-  /** Parameters for the `updateDocument` operation. */
-  export interface UpdateDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    /** The ID of the document. */
-    documentId: string;
-    /** The content of the document to ingest. For maximum supported file size limits, see [the
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
-     */
-    file?: NodeJS.ReadableStream | Buffer;
-    /** The filename for file. */
-    filename?: string;
-    /** The content type of file. */
-    fileContentType?: UpdateDocumentConstants.FileContentType | string;
-    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
-     *
-     *
-     *  Example:  ``` {
-     *    "Creator": "Johnny Appleseed",
-     *    "Subject": "Apples"
-     *  } ```.
-     */
-    metadata?: string;
-    /** When `true`, the uploaded document is added to the collection even if the data for that collection is shared
-     *  with other collections.
-     */
-    xWatsonDiscoveryForce?: boolean;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Constants for the `updateDocument` operation. */
-  export namespace UpdateDocumentConstants {
-    /** The content type of file. */
-    export enum FileContentType {
-      APPLICATION_JSON = 'application/json',
-      APPLICATION_MSWORD = 'application/msword',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      APPLICATION_PDF = 'application/pdf',
-      TEXT_HTML = 'text/html',
-      APPLICATION_XHTML_XML = 'application/xhtml+xml',
-    }
-  }
-
-  /** Parameters for the `deleteDocument` operation. */
-  export interface DeleteDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    /** The ID of the document. */
-    documentId: string;
-    /** When `true`, the uploaded document is added to the collection even if the data for that collection is shared
-     *  with other collections.
-     */
-    xWatsonDiscoveryForce?: boolean;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `listTrainingQueries` operation. */
-  export interface ListTrainingQueriesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `deleteTrainingQueries` operation. */
-  export interface DeleteTrainingQueriesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `createTrainingQuery` operation. */
-  export interface CreateTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The natural text query for the training query. */
-    naturalLanguageQuery: string;
-    /** Array of training examples. */
-    examples: TrainingExample[];
-    /** The filter used on the collection before the **natural_language_query** is applied. */
-    filter?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getTrainingQuery` operation. */
-  export interface GetTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the query used for training. */
-    queryId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `updateTrainingQuery` operation. */
-  export interface UpdateTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the query used for training. */
-    queryId: string;
-    /** The natural text query for the training query. */
-    naturalLanguageQuery: string;
-    /** Array of training examples. */
-    examples: TrainingExample[];
-    /** The filter used on the collection before the **natural_language_query** is applied. */
-    filter?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `deleteTrainingQuery` operation. */
-  export interface DeleteTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the query used for training. */
-    queryId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `analyzeDocument` operation. */
-  export interface AnalyzeDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the collection. */
-    collectionId: string;
-    /** The content of the document to ingest. For maximum supported file size limits, see [the
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
-     */
-    file?: NodeJS.ReadableStream | Buffer;
-    /** The filename for file. */
-    filename?: string;
-    /** The content type of file. */
-    fileContentType?: AnalyzeDocumentConstants.FileContentType | string;
-    /** The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
-     *
-     *
-     *  Example:  ``` {
-     *    "Creator": "Johnny Appleseed",
-     *    "Subject": "Apples"
-     *  } ```.
-     */
-    metadata?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Constants for the `analyzeDocument` operation. */
-  export namespace AnalyzeDocumentConstants {
-    /** The content type of file. */
-    export enum FileContentType {
-      APPLICATION_JSON = 'application/json',
-      APPLICATION_MSWORD = 'application/msword',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      APPLICATION_PDF = 'application/pdf',
-      TEXT_HTML = 'text/html',
-      APPLICATION_XHTML_XML = 'application/xhtml+xml',
-    }
-  }
-
-  /** Parameters for the `listEnrichments` operation. */
-  export interface ListEnrichmentsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `createEnrichment` operation. */
-  export interface CreateEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** Information about a specific enrichment. */
-    enrichment: CreateEnrichment;
-    /** The enrichment file to upload. */
-    file?: NodeJS.ReadableStream | Buffer;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getEnrichment` operation. */
-  export interface GetEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the enrichment. */
-    enrichmentId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `updateEnrichment` operation. */
-  export interface UpdateEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the enrichment. */
-    enrichmentId: string;
-    /** A new name for the enrichment. */
-    name: string;
-    /** A new description for the enrichment. */
-    description?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `deleteEnrichment` operation. */
-  export interface DeleteEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
-    projectId: string;
-    /** The ID of the enrichment. */
-    enrichmentId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
   /** Parameters for the `listProjects` operation. */
   export interface ListProjectsParams {
     headers?: OutgoingHttpHeaders;
@@ -2860,6 +3745,811 @@ namespace DiscoveryV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `listFields` operation. */
+  export interface ListFieldsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** Comma separated list of the collection IDs. If this parameter is not specified, all collections in the
+     *  project are used.
+     */
+    collectionIds?: string[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listCollections` operation. */
+  export interface ListCollectionsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createCollection` operation. */
+  export interface CreateCollectionParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The name of the collection. */
+    name: string;
+    /** A description of the collection. */
+    description?: string;
+    /** The language of the collection. For a list of supported languages, see the [product
+     *  documentation](/docs/discovery-data?topic=discovery-data-language-support).
+     */
+    language?: string;
+    /** An array of enrichments that are applied to this collection. To get a list of enrichments that are available
+     *  for a project, use the [List enrichments](#listenrichments) method.
+     *
+     *  If no enrichments are specified when the collection is created, the default enrichments for the project type are
+     *  applied. For more information about project default settings, see the [product
+     *  documentation](/docs/discovery-data?topic=discovery-data-project-defaults).
+     */
+    enrichments?: CollectionEnrichment[];
+    /** An object that describes the Smart Document Understanding model for a collection. */
+    smartDocumentUnderstanding?: CollectionDetailsSmartDocumentUnderstanding;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getCollection` operation. */
+  export interface GetCollectionParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateCollection` operation. */
+  export interface UpdateCollectionParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** The new name of the collection. */
+    name?: string;
+    /** The new description of the collection. */
+    description?: string;
+    /** An array of enrichments that are applied to this collection. */
+    enrichments?: CollectionEnrichment[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteCollection` operation. */
+  export interface DeleteCollectionParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listDocuments` operation. */
+  export interface ListDocumentsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** The maximum number of documents to return. Up to 1,000 documents are returned by default. The maximum number
+     *  allowed is 10,000.
+     */
+    count?: number;
+    /** Filters the documents to include only documents with the specified ingestion status. The options include:
+     *
+     *  * `available`: Ingestion is finished and the document is indexed.
+     *
+     *  * `failed`: Ingestion is finished, but the document is not indexed because of an error.
+     *
+     *  * `pending`: The document is uploaded, but the ingestion process is not started.
+     *
+     *  * `processing`: Ingestion is in progress.
+     *
+     *  You can specify one status value or add a comma-separated list of more than one status value. For example,
+     *  `available,failed`.
+     */
+    status?: string;
+    /** If set to `true`, only documents that have notices, meaning documents for which warnings or errors were
+     *  generated during the ingestion, are returned. If set to `false`, only documents that don't have notices are
+     *  returned. If unspecified, no filter based on notices is applied.
+     *
+     *  Notice details are not available in the result, but you can use the [Query collection
+     *  notices](#querycollectionnotices) method to find details by adding the parameter
+     *  `query=notices.document_id:{document-id}`.
+     */
+    hasNotices?: boolean;
+    /** If set to `true`, only parent documents, meaning documents that were split during the ingestion process and
+     *  resulted in two or more child documents, are returned. If set to `false`, only child documents are returned. If
+     *  unspecified, no filter based on the parent or child relationship is applied.
+     *
+     *  CSV files, for example, are split into separate documents per line and JSON files are split into separate
+     *  documents per object.
+     */
+    isParent?: boolean;
+    /** Filters the documents to include only child documents that were generated when the specified parent document
+     *  was processed.
+     */
+    parentDocumentId?: string;
+    /** Filters the documents to include only documents with the specified SHA-256 hash. Format the hash as a
+     *  hexadecimal string.
+     */
+    sha256?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `addDocument` operation. */
+  export interface AddDocumentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
+     *  [the
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+     *
+     *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
+     *  content type is supported currently. For maximum supported file size limits, see [the product
+     *  documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
+     */
+    file?: NodeJS.ReadableStream | Buffer;
+    /** The filename for file. */
+    filename?: string;
+    /** The content type of file. */
+    fileContentType?: AddDocumentConstants.FileContentType | string;
+    /** Add information about the file that you want to include in the response.
+     *
+     *  The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
+     *
+     *  Example:
+     *
+     *   ```
+     *   {
+     *    "filename": "favorites2.json",
+     *    "file_type": "json"
+     *   }.
+     */
+    metadata?: string;
+    /** When `true`, the uploaded document is added to the collection even if the data for that collection is shared
+     *  with other collections.
+     */
+    xWatsonDiscoveryForce?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `addDocument` operation. */
+  export namespace AddDocumentConstants {
+    /** The content type of file. */
+    export enum FileContentType {
+      APPLICATION_JSON = 'application/json',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      APPLICATION_PDF = 'application/pdf',
+      TEXT_HTML = 'text/html',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+    }
+  }
+
+  /** Parameters for the `getDocument` operation. */
+  export interface GetDocumentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** The ID of the document. */
+    documentId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateDocument` operation. */
+  export interface UpdateDocumentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** The ID of the document. */
+    documentId: string;
+    /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
+     *  [the
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+     *
+     *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
+     *  content type is supported currently. For maximum supported file size limits, see [the product
+     *  documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
+     */
+    file?: NodeJS.ReadableStream | Buffer;
+    /** The filename for file. */
+    filename?: string;
+    /** The content type of file. */
+    fileContentType?: UpdateDocumentConstants.FileContentType | string;
+    /** Add information about the file that you want to include in the response.
+     *
+     *  The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
+     *
+     *  Example:
+     *
+     *   ```
+     *   {
+     *    "filename": "favorites2.json",
+     *    "file_type": "json"
+     *   }.
+     */
+    metadata?: string;
+    /** When `true`, the uploaded document is added to the collection even if the data for that collection is shared
+     *  with other collections.
+     */
+    xWatsonDiscoveryForce?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `updateDocument` operation. */
+  export namespace UpdateDocumentConstants {
+    /** The content type of file. */
+    export enum FileContentType {
+      APPLICATION_JSON = 'application/json',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      APPLICATION_PDF = 'application/pdf',
+      TEXT_HTML = 'text/html',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+    }
+  }
+
+  /** Parameters for the `deleteDocument` operation. */
+  export interface DeleteDocumentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** The ID of the document. */
+    documentId: string;
+    /** When `true`, the uploaded document is added to the collection even if the data for that collection is shared
+     *  with other collections.
+     */
+    xWatsonDiscoveryForce?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `query` operation. */
+  export interface QueryParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** A comma-separated list of collection IDs to be queried against. */
+    collectionIds?: string[];
+    /** Searches for documents that match the Discovery Query Language criteria that is specified as input. Filter
+     *  calls are cached and are faster than query calls because the results are not ordered by relevance. When used
+     *  with the **aggregation**, **query**, or **natural_language_query** parameters, the **filter** parameter runs
+     *  first. This parameter is useful for limiting results to those that contain specific metadata values.
+     */
+    filter?: string;
+    /** A query search that is written in the Discovery Query Language and returns all matching documents in your
+     *  data set with full enrichments and full text, and with the most relevant documents listed first. Use a query
+     *  search when you want to find the most relevant search results.
+     */
+    query?: string;
+    /** A natural language query that returns relevant documents by using training data and natural language
+     *  understanding.
+     */
+    naturalLanguageQuery?: string;
+    /** An aggregation search that returns an exact answer by combining query search with filters. Useful for
+     *  applications to build lists, tables, and time series. For more information about the supported types of
+     *  aggregations, see the [Discovery
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-aggregations).
+     */
+    aggregation?: string;
+    /** Number of results to return. */
+    count?: number;
+    /** A list of the fields in the document hierarchy to return. You can specify both root-level (`text`) and
+     *  nested (`extracted_metadata.filename`) fields. If this parameter is an empty list, then all fields are returned.
+     */
+    _return?: string[];
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are
+     *  returned is 10 and the offset is 8, it returns the last two results.
+     */
+    offset?: number;
+    /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by
+     *  prefixing the field with `-` for descending or `+` for ascending. Ascending is the default sort direction if no
+     *  prefix is specified.
+     */
+    sort?: string;
+    /** When `true`, a highlight field is returned for each result that contains fields that match the query. The
+     *  matching query terms are emphasized with surrounding `<em></em>` tags. This parameter is ignored if
+     *  **passages.enabled** and **passages.per_document** are `true`, in which case passages are returned for each
+     *  document instead of highlights.
+     */
+    highlight?: boolean;
+    /** When `true` and the **natural_language_query** parameter is used, the **natural_language_query** parameter
+     *  is spell checked. The most likely correction is returned in the **suggested_query** field of the response (if
+     *  one exists).
+     */
+    spellingSuggestions?: boolean;
+    /** Configuration for table retrieval. */
+    tableResults?: QueryLargeTableResults;
+    /** Configuration for suggested refinements.
+     *
+     *  **Note**: The **suggested_refinements** parameter that identified dynamic facets from the data is deprecated.
+     */
+    suggestedRefinements?: QueryLargeSuggestedRefinements;
+    /** Configuration for passage retrieval. */
+    passages?: QueryLargePassages;
+    /** Finds results from documents that are similar to documents of interest. Use this parameter to add a *More
+     *  like these* function to your search. You can include this parameter with or without a **query**, **filter** or
+     *  **natural_language_query** parameter.
+     */
+    similar?: QueryLargeSimilar;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getAutocompletion` operation. */
+  export interface GetAutocompletionParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `hot`, `housing`,
+     *  or `how`.
+     */
+    prefix: string;
+    /** Comma separated list of the collection IDs. If this parameter is not specified, all collections in the
+     *  project are used.
+     */
+    collectionIds?: string[];
+    /** The field in the result documents that autocompletion suggestions are identified from. */
+    field?: string;
+    /** The number of autocompletion suggestions to return. */
+    count?: number;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `queryCollectionNotices` operation. */
+  export interface QueryCollectionNoticesParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** Searches for documents that match the Discovery Query Language criteria that is specified as input. Filter
+     *  calls are cached and are faster than query calls because the results are not ordered by relevance. When used
+     *  with the `aggregation`, `query`, or `natural_language_query` parameters, the `filter` parameter runs first. This
+     *  parameter is useful for limiting results to those that contain specific metadata values.
+     */
+    filter?: string;
+    /** A query search that is written in the Discovery Query Language and returns all matching documents in your
+     *  data set with full enrichments and full text, and with the most relevant documents listed first.
+     */
+    query?: string;
+    /** A natural language query that returns relevant documents by using training data and natural language
+     *  understanding.
+     */
+    naturalLanguageQuery?: string;
+    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query
+     *  is **10,000**.
+     */
+    count?: number;
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are
+     *  returned is 10 and the offset is 8, it returns the last two results. The maximum for the **count** and
+     *  **offset** values together in any one query is **10000**.
+     */
+    offset?: number;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `queryNotices` operation. */
+  export interface QueryNoticesParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** Searches for documents that match the Discovery Query Language criteria that is specified as input. Filter
+     *  calls are cached and are faster than query calls because the results are not ordered by relevance. When used
+     *  with the `aggregation`, `query`, or `natural_language_query` parameters, the `filter` parameter runs first. This
+     *  parameter is useful for limiting results to those that contain specific metadata values.
+     */
+    filter?: string;
+    /** A query search that is written in the Discovery Query Language and returns all matching documents in your
+     *  data set with full enrichments and full text, and with the most relevant documents listed first.
+     */
+    query?: string;
+    /** A natural language query that returns relevant documents by using training data and natural language
+     *  understanding.
+     */
+    naturalLanguageQuery?: string;
+    /** Number of results to return. The maximum for the **count** and **offset** values together in any one query
+     *  is **10,000**.
+     */
+    count?: number;
+    /** The number of query results to skip at the beginning. For example, if the total number of results that are
+     *  returned is 10 and the offset is 8, it returns the last two results. The maximum for the **count** and
+     *  **offset** values together in any one query is **10000**.
+     */
+    offset?: number;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getStopwordList` operation. */
+  export interface GetStopwordListParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createStopwordList` operation. */
+  export interface CreateStopwordListParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** List of stop words. */
+    stopwords?: string[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteStopwordList` operation. */
+  export interface DeleteStopwordListParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listExpansions` operation. */
+  export interface ListExpansionsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createExpansions` operation. */
+  export interface CreateExpansionsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** An array of query expansion definitions.
+     *
+     *   Each object in the **expansions** array represents a term or set of terms that will be expanded into other
+     *  terms. Each expansion object can be configured as `bidirectional` or `unidirectional`.
+     *
+     *  * **Bidirectional**: Each entry in the `expanded_terms` list expands to include all expanded terms. For example,
+     *  a query for `ibm` expands to `ibm OR international business machines OR big blue`.
+     *
+     *  * **Unidirectional**: The terms in `input_terms` in the query are replaced by the terms in `expanded_terms`. For
+     *  example, a query for the often misused term `on premise` is converted to `on premises OR on-premises` and does
+     *  not contain the original term. If you want an input term to be included in the query, then repeat the input term
+     *  in the expanded terms list.
+     */
+    expansions: Expansion[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteExpansions` operation. */
+  export interface DeleteExpansionsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getComponentSettings` operation. */
+  export interface GetComponentSettingsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listTrainingQueries` operation. */
+  export interface ListTrainingQueriesParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteTrainingQueries` operation. */
+  export interface DeleteTrainingQueriesParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createTrainingQuery` operation. */
+  export interface CreateTrainingQueryParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The natural text query that is used as the training query. */
+    naturalLanguageQuery: string;
+    /** Array of training examples. */
+    examples: TrainingExample[];
+    /** The filter used on the collection before the **natural_language_query** is applied. */
+    filter?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getTrainingQuery` operation. */
+  export interface GetTrainingQueryParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the query used for training. */
+    queryId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateTrainingQuery` operation. */
+  export interface UpdateTrainingQueryParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the query used for training. */
+    queryId: string;
+    /** The natural text query that is used as the training query. */
+    naturalLanguageQuery: string;
+    /** Array of training examples. */
+    examples: TrainingExample[];
+    /** The filter used on the collection before the **natural_language_query** is applied. */
+    filter?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteTrainingQuery` operation. */
+  export interface DeleteTrainingQueryParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the query used for training. */
+    queryId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listEnrichments` operation. */
+  export interface ListEnrichmentsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createEnrichment` operation. */
+  export interface CreateEnrichmentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** Information about a specific enrichment. */
+    enrichment: CreateEnrichment;
+    /** The enrichment file to upload. Expected file types per enrichment are as follows:
+     *
+     *  * CSV for `dictionary`
+     *
+     *  * PEAR for `uima_annotator` and `rule_based` (Explorer)
+     *
+     *  * ZIP for `watson_knowledge_studio_model` and `rule_based` (Studio Advanced Rule Editor).
+     */
+    file?: NodeJS.ReadableStream | Buffer;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getEnrichment` operation. */
+  export interface GetEnrichmentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the enrichment. */
+    enrichmentId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateEnrichment` operation. */
+  export interface UpdateEnrichmentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the enrichment. */
+    enrichmentId: string;
+    /** A new name for the enrichment. */
+    name: string;
+    /** A new description for the enrichment. */
+    description?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteEnrichment` operation. */
+  export interface DeleteEnrichmentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the enrichment. */
+    enrichmentId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listDocumentClassifiers` operation. */
+  export interface ListDocumentClassifiersParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createDocumentClassifier` operation. */
+  export interface CreateDocumentClassifierParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The training data CSV file to upload. The CSV file must have headers. The file must include a field that
+     *  contains the text you want to classify and a field that contains the classification labels that you want to use
+     *  to classify your data. If you want to specify multiple values in a single field, use a semicolon as the value
+     *  separator. For a sample file, see [the product
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+     */
+    trainingData: NodeJS.ReadableStream | Buffer;
+    /** An object that manages the settings and data that is required to train a document classification model. */
+    classifier: CreateDocumentClassifier;
+    /** The CSV with test data to upload. The column values in the test file must be the same as the column values
+     *  in the training data file. If no test data is provided, the training data is split into two separate groups of
+     *  training and test data.
+     */
+    testData?: NodeJS.ReadableStream | Buffer;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getDocumentClassifier` operation. */
+  export interface GetDocumentClassifierParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateDocumentClassifier` operation. */
+  export interface UpdateDocumentClassifierParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    /** An object that contains a new name or description for a document classifier, updated training data, or new
+     *  or updated test data.
+     */
+    classifier: UpdateDocumentClassifier;
+    /** The training data CSV file to upload. The CSV file must have headers. The file must include a field that
+     *  contains the text you want to classify and a field that contains the classification labels that you want to use
+     *  to classify your data. If you want to specify multiple values in a single column, use a semicolon as the value
+     *  separator. For a sample file, see [the product
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+     */
+    trainingData?: NodeJS.ReadableStream | Buffer;
+    /** The CSV with test data to upload. The column values in the test file must be the same as the column values
+     *  in the training data file. If no test data is provided, the training data is split into two separate groups of
+     *  training and test data.
+     */
+    testData?: NodeJS.ReadableStream | Buffer;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteDocumentClassifier` operation. */
+  export interface DeleteDocumentClassifierParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listDocumentClassifierModels` operation. */
+  export interface ListDocumentClassifierModelsParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createDocumentClassifierModel` operation. */
+  export interface CreateDocumentClassifierModelParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    /** The name of the document classifier model. */
+    name: string;
+    /** A description of the document classifier model. */
+    description?: string;
+    /** A tuning parameter in an optimization algorithm that determines the step size at each iteration of the
+     *  training process. It influences how much of any newly acquired information overrides the existing information,
+     *  and therefore is said to represent the speed at which a machine learning model learns. The default value is
+     *  `0.1`.
+     */
+    learningRate?: number;
+    /** Avoids overfitting by shrinking the coefficient of less important features to zero, which removes some
+     *  features altogether. You can specify many values for hyper-parameter optimization. The default value is
+     *  `[0.000001]`.
+     */
+    l1RegularizationStrengths?: number[];
+    /** A method you can apply to avoid overfitting your model on the training data. You can specify many values for
+     *  hyper-parameter optimization. The default value is `[0.000001]`.
+     */
+    l2RegularizationStrengths?: number[];
+    /** Maximum number of training steps to complete. This setting is useful if you need the training process to
+     *  finish in a specific time frame to fit into an automated process. The default value is ten million.
+     */
+    trainingMaxSteps?: number;
+    /** Stops the training run early if the improvement ratio is not met by the time the process reaches a certain
+     *  point. The default value is `0.00001`.
+     */
+    improvementRatio?: number;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getDocumentClassifierModel` operation. */
+  export interface GetDocumentClassifierModelParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    /** The ID of the classifier model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateDocumentClassifierModel` operation. */
+  export interface UpdateDocumentClassifierModelParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    /** The ID of the classifier model. */
+    modelId: string;
+    /** A new name for the enrichment. */
+    name?: string;
+    /** A new description for the enrichment. */
+    description?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteDocumentClassifierModel` operation. */
+  export interface DeleteDocumentClassifierModelParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the classifier. */
+    classifierId: string;
+    /** The ID of the classifier model. */
+    modelId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `analyzeDocument` operation. */
+  export interface AnalyzeDocumentParams {
+    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    projectId: string;
+    /** The ID of the collection. */
+    collectionId: string;
+    /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
+     *  [the
+     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+     *
+     *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
+     *  content type is supported currently. For maximum supported file size limits, see [the product
+     *  documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
+     */
+    file?: NodeJS.ReadableStream | Buffer;
+    /** The filename for file. */
+    filename?: string;
+    /** The content type of file. */
+    fileContentType?: AnalyzeDocumentConstants.FileContentType | string;
+    /** Add information about the file that you want to include in the response.
+     *
+     *  The maximum supported metadata file size is 1 MB. Metadata parts larger than 1 MB are rejected.
+     *
+     *  Example:
+     *
+     *   ```
+     *   {
+     *    "filename": "favorites2.json",
+     *    "file_type": "json"
+     *   }.
+     */
+    metadata?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `analyzeDocument` operation. */
+  export namespace AnalyzeDocumentConstants {
+    /** The content type of file. */
+    export enum FileContentType {
+      APPLICATION_JSON = 'application/json',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      APPLICATION_PDF = 'application/pdf',
+      TEXT_HTML = 'text/html',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+    }
+  }
+
   /** Parameters for the `deleteUserData` operation. */
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
@@ -2871,9 +4561,9 @@ namespace DiscoveryV2 {
    * model interfaces
    ************************/
 
-  /** An object that contains the converted document and any identified enrichments. */
+  /** An object that contains the converted document and any identified enrichments. Root-level fields from the original file are returned also. */
   export interface AnalyzedDocument {
-    /** Array of document results that match the query. */
+    /** Array of notices that are triggered when the files are processed. */
     notices?: Notice[];
     /** Result of the document analysis. */
     result?: AnalyzedResult;
@@ -2881,10 +4571,34 @@ namespace DiscoveryV2 {
 
   /** Result of the document analysis. */
   export interface AnalyzedResult {
-    /** Metadata of the document. */
+    /** Metadata that was specified with the request. */
     metadata?: JsonObject;
     /** AnalyzedResult accepts additional properties. */
     [propName: string]: any;
+  }
+
+  /** An object with details for creating federated document classifier models. */
+  export interface ClassifierFederatedModel {
+    /** Name of the field that contains the values from which multiple classifier models are defined. For example,
+     *  you can specify a field that lists product lines to create a separate model per product line.
+     */
+    field: string;
+  }
+
+  /** An object that contains information about a trained document classifier model. */
+  export interface ClassifierModelEvaluation {
+    /** A micro-average aggregates the contributions of all classes to compute the average metric. Classes refers to
+     *  the classification labels that are specified in the **answer_field**.
+     */
+    micro_average: ModelEvaluationMicroAverage;
+    /** A macro-average computes metric independently for each class and then takes the average. Class refers to the
+     *  classification label that is specified in the **answer_field**.
+     */
+    macro_average: ModelEvaluationMacroAverage;
+    /** An array of evaluation metrics, one set of metrics for each class, where class refers to the classification
+     *  label that is specified in the **answer_field**.
+     */
+    per_class: PerClassModelEvaluation[];
   }
 
   /** A collection for storing documents. */
@@ -2905,15 +4619,51 @@ namespace DiscoveryV2 {
     description?: string;
     /** The date that the collection was created. */
     created?: string;
-    /** The language of the collection. */
+    /** The language of the collection. For a list of supported languages, see the [product
+     *  documentation](/docs/discovery-data?topic=discovery-data-language-support).
+     */
     language?: string;
-    /** An array of enrichments that are applied to this collection. */
+    /** An array of enrichments that are applied to this collection. To get a list of enrichments that are available
+     *  for a project, use the [List enrichments](#listenrichments) method.
+     *
+     *  If no enrichments are specified when the collection is created, the default enrichments for the project type are
+     *  applied. For more information about project default settings, see the [product
+     *  documentation](/docs/discovery-data?topic=discovery-data-project-defaults).
+     */
     enrichments?: CollectionEnrichment[];
+    /** An object that describes the Smart Document Understanding model for a collection. */
+    smart_document_understanding?: CollectionDetailsSmartDocumentUnderstanding;
   }
 
-  /** An object describing an Enrichment for a collection. */
+  /** An object that describes the Smart Document Understanding model for a collection. */
+  export interface CollectionDetailsSmartDocumentUnderstanding {
+    /** When `true`, smart document understanding conversion is enabled for the collection. */
+    enabled?: boolean;
+    /** Specifies the type of Smart Document Understanding (SDU) model that is enabled for the collection. The
+     *  following types of models are supported:
+     *
+     *   * `custom`: A user-trained model is applied.
+     *
+     *   * `pre_trained`: A pretrained model is applied. This type of model is applied automatically to *Document
+     *  Retrieval for Contracts* projects.
+     *
+     *   * `text_extraction`: An SDU model that extracts text and metadata from the content. This model is enabled in
+     *  collections by default regardless of the types of documents in the collection (as long as the service plan
+     *  supports SDU models).
+     *
+     *  You can apply user-trained or pretrained models to collections from the *Identify fields* page of the product
+     *  user interface. For more information, see [the product
+     *  documentation](/docs/discovery-data?topic=discovery-data-configuring-fields).
+     */
+    model?: string;
+  }
+
+  /** An object describing an enrichment for a collection. */
   export interface CollectionEnrichment {
-    /** The unique identifier of this enrichment. */
+    /** The unique identifier of this enrichment. For more information about how to determine the ID of an
+     *  enrichment, see [the product
+     *  documentation](/docs/discovery-data?topic=discovery-data-manage-enrichments#enrichments-ids).
+     */
     enrichment_id?: string;
     /** An array of field names that the enrichment is applied to.
      *
@@ -2977,13 +4727,57 @@ namespace DiscoveryV2 {
     aggregations?: ComponentSettingsAggregation[];
   }
 
+  /** An object that manages the settings and data that is required to train a document classification model. */
+  export interface CreateDocumentClassifier {
+    /** A human-readable name of the document classifier. */
+    name: string;
+    /** A description of the document classifier. */
+    description?: string;
+    /** The language of the training data that is associated with the document classifier. Language is specified by
+     *  using the ISO 639-1 language code, such as `en` for English or `ja` for Japanese.
+     */
+    language: string;
+    /** The name of the field from the training and test data that contains the classification labels. */
+    answer_field: string;
+    /** An array of enrichments to apply to the data that is used to train and test the document classifier. The
+     *  output from the enrichments is used as features by the classifier to classify the document content both during
+     *  training and at run time.
+     */
+    enrichments?: DocumentClassifierEnrichment[];
+    /** An object with details for creating federated document classifier models. */
+    federated_classification?: ClassifierFederatedModel;
+  }
+
   /** Information about a specific enrichment. */
   export interface CreateEnrichment {
     /** The human readable name for this enrichment. */
     name?: string;
     /** The description of this enrichment. */
     description?: string;
-    /** The type of this enrichment. */
+    /** The type of this enrichment. The following types are supported:
+     *
+     *  * `classifier`: Creates a document classifier enrichment from a document classifier model that you create by
+     *  using the [Document classifier API](/apidocs/discovery-data#createdocumentclassifier). **Note**: A text
+     *  classifier enrichment can be created only from the product user interface.
+     *
+     *  * `dictionary`: Creates a custom dictionary enrichment that you define in a CSV file.
+     *
+     *  * `regular_expression`: Creates a custom regular expression enrichment from regex syntax that you specify in the
+     *  request.
+     *
+     *  * `rule_based`: Creates an enrichment from an advanced rules model that is created and exported as a ZIP file
+     *  from Watson Knowledge Studio.
+     *
+     *  * `uima_annotator`: Creates an enrichment from a custom UIMA text analysis model that is defined in a PEAR file
+     *  created in one of the following ways:
+     *
+     *      * Watson Explorer Content Analytics Studio. **Note**: Supported in IBM Cloud Pak for Data instances only.
+     *
+     *      * Rule-based model that is created in Watson Knowledge Studio.
+     *
+     *  * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model
+     *  that is defined in a ZIP file.
+     */
     type?: string;
     /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the
      *  enrichment options are not included in responses from the List Enrichments method.
@@ -3001,11 +4795,14 @@ namespace DiscoveryV2 {
     table_results?: DefaultQueryParamsTableResults;
     /** A string representing the default aggregation query for the project. */
     aggregation?: string;
-    /** Object that contains suggested refinement settings. Available with Premium plans only. */
+    /** Object that contains suggested refinement settings.
+     *
+     *  **Note**: The `suggested_refinements` parameter that identified dynamic facets from the data is deprecated.
+     */
     suggested_refinements?: DefaultQueryParamsSuggestedRefinements;
     /** When `true`, a spelling suggestions for the query are returned by default. */
     spelling_suggestions?: boolean;
-    /** When `true`, a highlights for the query are returned by default. */
+    /** When `true`, highlights for the query are returned by default. */
     highlight?: boolean;
     /** The number of document results returned by default. */
     count?: number;
@@ -3035,7 +4832,7 @@ namespace DiscoveryV2 {
     max_per_document?: number;
   }
 
-  /** Object that contains suggested refinement settings. Available with Premium plans only. */
+  /** Object that contains suggested refinement settings. **Note**: The `suggested_refinements` parameter that identified dynamic facets from the data is deprecated. */
   export interface DefaultQueryParamsSuggestedRefinements {
     /** When `true`, suggested refinements for the query are returned by default. */
     enabled?: boolean;
@@ -3083,6 +4880,145 @@ namespace DiscoveryV2 {
     location?: TableElementLocation;
   }
 
+  /** Information about a document classifier. */
+  export interface DocumentClassifier {
+    /** A unique identifier of the document classifier. */
+    classifier_id?: string;
+    /** A human-readable name of the document classifier. */
+    name: string;
+    /** A description of the document classifier. */
+    description?: string;
+    /** The date that the document classifier was created. */
+    created?: string;
+    /** The language of the training data that is associated with the document classifier. Language is specified by
+     *  using the ISO 639-1 language code, such as `en` for English or `ja` for Japanese.
+     */
+    language?: string;
+    /** An array of enrichments to apply to the data that is used to train and test the document classifier. The
+     *  output from the enrichments is used as features by the classifier to classify the document content both during
+     *  training and at run time.
+     */
+    enrichments?: DocumentClassifierEnrichment[];
+    /** An array of fields that are used to train the document classifier. The same set of fields must exist in the
+     *  training data, the test data, and the documents where the resulting document classifier enrichment is applied at
+     *  run time.
+     */
+    recognized_fields?: string[];
+    /** The name of the field from the training and test data that contains the classification labels. */
+    answer_field?: string;
+    /** Name of the CSV file with training data that is used to train the document classifier. */
+    training_data_file?: string;
+    /** Name of the CSV file with data that is used to test the document classifier. If no test data is provided, a
+     *  subset of the training data is used for testing purposes.
+     */
+    test_data_file?: string;
+    /** An object with details for creating federated document classifier models. */
+    federated_classification?: ClassifierFederatedModel;
+  }
+
+  /** An object that describes enrichments that are applied to the training and test data that is used by the document classifier. */
+  export interface DocumentClassifierEnrichment {
+    /** A unique identifier of the enrichment. */
+    enrichment_id: string;
+    /** An array of field names where the enrichment is applied. */
+    fields: string[];
+  }
+
+  /** Information about a document classifier model. */
+  export interface DocumentClassifierModel {
+    /** A unique identifier of the document classifier model. */
+    model_id?: string;
+    /** A human-readable name of the document classifier model. */
+    name: string;
+    /** A description of the document classifier model. */
+    description?: string;
+    /** The date that the document classifier model was created. */
+    created?: string;
+    /** The date that the document classifier model was last updated. */
+    updated?: string;
+    /** Name of the CSV file that contains the training data that is used to train the document classifier model. */
+    training_data_file?: string;
+    /** Name of the CSV file that contains data that is used to test the document classifier model. If no test data
+     *  is provided, a subset of the training data is used for testing purposes.
+     */
+    test_data_file?: string;
+    /** The status of the training run. */
+    status?: string;
+    /** An object that contains information about a trained document classifier model. */
+    evaluation?: ClassifierModelEvaluation;
+    /** A unique identifier of the enrichment that is generated by this document classifier model. */
+    enrichment_id?: string;
+    /** The date that the document classifier model was deployed. */
+    deployed_at?: string;
+  }
+
+  /** An object that contains a list of document classifier model definitions. */
+  export interface DocumentClassifierModels {
+    /** An array of document classifier model definitions. */
+    models?: DocumentClassifierModel[];
+  }
+
+  /** An object that contains a list of document classifier definitions. */
+  export interface DocumentClassifiers {
+    /** An array of document classifier definitions. */
+    classifiers?: DocumentClassifier[];
+  }
+
+  /** Information about a document. */
+  export interface DocumentDetails {
+    /** The unique identifier of the document. */
+    document_id?: string;
+    /** Date and time that the document is added to the collection. For a child document, the date and time when the
+     *  process that generates the child document runs. The date-time format is `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`.
+     */
+    created?: string;
+    /** Date and time that the document is finished being processed and is indexed. This date changes whenever the
+     *  document is reprocessed, including for enrichment changes. The date-time format is
+     *  `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`.
+     */
+    updated?: string;
+    /** The status of the ingestion of the document. The possible values are:
+     *
+     *  * `available`: Ingestion is finished and the document is indexed.
+     *
+     *  * `failed`: Ingestion is finished, but the document is not indexed because of an error.
+     *
+     *  * `pending`: The document is uploaded, but the ingestion process is not started.
+     *
+     *  * `processing`: Ingestion is in progress.
+     */
+    status?: string;
+    /** Array of JSON objects for notices, meaning warning or error messages, that are produced by the document
+     *  ingestion process. The array does not include notices that are produced for child documents that are generated
+     *  when a document is processed.
+     */
+    notices?: Notice[];
+    /** Information about the child documents that are generated from a single document during ingestion or other
+     *  processing.
+     */
+    children?: DocumentDetailsChildren;
+    /** Name of the original source file (if available). */
+    filename?: string;
+    /** The type of the original source file, such as `csv`, `excel`, `html`, `json`, `pdf`, `text`, `word`, and so
+     *  on.
+     */
+    file_type?: string;
+    /** The SHA-256 hash of the original source file. The hash is formatted as a hexadecimal string. */
+    sha256?: string;
+  }
+
+  /** Information about the child documents that are generated from a single document during ingestion or other processing. */
+  export interface DocumentDetailsChildren {
+    /** Indicates whether the child documents have any notices. The value is `false` if the document does not have
+     *  child documents.
+     */
+    have_notices?: boolean;
+    /** Number of child documents. The value is `0` when processing of the document doesn't generate any child
+     *  documents.
+     */
+    count?: number;
+  }
+
   /** Information about a specific enrichment. */
   export interface Enrichment {
     /** The unique identifier of this enrichment. */
@@ -3101,28 +5037,78 @@ namespace DiscoveryV2 {
 
   /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the enrichment options are not included in responses from the List Enrichments method. */
   export interface EnrichmentOptions {
-    /** An array of supported languages for this enrichment. Required when `type` is `dictionary`. Optional when
-     *  `type` is `rule_based`. Not valid when creating any other type of enrichment.
+    /** An array of supported languages for this enrichment. When creating an enrichment, only specify a language
+     *  that is used by the model or in the dictionary. Required when **type** is `dictionary`. Optional when **type**
+     *  is `rule_based`. Not valid when creating any other type of enrichment.
      */
     languages?: string[];
-    /** The name of the entity type. This value is used as the field name in the index. Required when `type` is
+    /** The name of the entity type. This value is used as the field name in the index. Required when **type** is
      *  `dictionary` or `regular_expression`. Not valid when creating any other type of enrichment.
      */
     entity_type?: string;
-    /** The regular expression to apply for this enrichment. Required when `type` is `regular_expression`. Not valid
-     *  when creating any other type of enrichment.
+    /** The regular expression to apply for this enrichment. Required when **type** is `regular_expression`. Not
+     *  valid when creating any other type of enrichment.
      */
     regular_expression?: string;
-    /** The name of the result document field that this enrichment creates. Required when `type` is `rule_based`.
-     *  Not valid when creating any other type of enrichment.
+    /** The name of the result document field that this enrichment creates. Required when **type** is `rule_based`
+     *  or `classifier`. Not valid when creating any other type of enrichment.
      */
     result_field?: string;
+    /** A unique identifier of the document classifier. Required when **type** is `classifier`. Not valid when
+     *  creating any other type of enrichment.
+     */
+    classifier_id?: string;
+    /** A unique identifier of the document classifier model. Required when **type** is `classifier`. Not valid when
+     *  creating any other type of enrichment.
+     */
+    model_id?: string;
+    /** Specifies a threshold. Only classes with evaluation confidence scores that are higher than the specified
+     *  threshold are included in the output. Optional when **type** is `classifier`. Not valid when creating any other
+     *  type of enrichment.
+     */
+    confidence_threshold?: number;
+    /** Evaluates only the classes that fall in the top set of results when ranked by confidence. For example, if
+     *  set to `5`, then the top five classes for each document are evaluated. If set to 0, the **confidence_threshold**
+     *  is used to determine the predicted classes. Optional when **type** is `classifier`. Not valid when creating any
+     *  other type of enrichment.
+     */
+    top_k?: number;
   }
 
   /** An object that contains an array of enrichment definitions. */
   export interface Enrichments {
     /** An array of enrichment definitions. */
     enrichments?: Enrichment[];
+  }
+
+  /** An expansion definition. Each object respresents one set of expandable strings. For example, you could have expansions for the word `hot` in one object, and expansions for the word `cold` in another. Follow these guidelines when you add terms: * Specify the terms in lowercase. Lowercase terms expand to uppercase. * Multiword terms are supported only in bidirectional expansions. * Do not specify a term that is specified in the stop words list for the collection. */
+  export interface Expansion {
+    /** A list of terms that will be expanded for this expansion. If specified, only the items in this list are
+     *  expanded.
+     */
+    input_terms?: string[];
+    /** A list of terms that this expansion will be expanded to. If specified without **input_terms**, the list also
+     *  functions as the input term list.
+     */
+    expanded_terms: string[];
+  }
+
+  /** The query expansion definitions for the specified collection. */
+  export interface Expansions {
+    /** An array of query expansion definitions.
+     *
+     *   Each object in the **expansions** array represents a term or set of terms that will be expanded into other
+     *  terms. Each expansion object can be configured as `bidirectional` or `unidirectional`.
+     *
+     *  * **Bidirectional**: Each entry in the `expanded_terms` list expands to include all expanded terms. For example,
+     *  a query for `ibm` expands to `ibm OR international business machines OR big blue`.
+     *
+     *  * **Unidirectional**: The terms in `input_terms` in the query are replaced by the terms in `expanded_terms`. For
+     *  example, a query for the often misused term `on premise` is converted to `on premises OR on-premises` and does
+     *  not contain the original term. If you want an input term to be included in the query, then repeat the input term
+     *  in the expanded terms list.
+     */
+    expansions: Expansion[];
   }
 
   /** Object that contains field details. */
@@ -3141,6 +5127,16 @@ namespace DiscoveryV2 {
     collections?: Collection[];
   }
 
+  /** Response object that contains an array of documents. */
+  export interface ListDocumentsResponse {
+    /** The number of matching results for the document query. */
+    matching_results?: number;
+    /** An array that lists the documents in a collection. Only the document ID of each document is returned in the
+     *  list. You can use the [Get document](#getdocument) method to get more information about an individual document.
+     */
+    documents?: DocumentDetails[];
+  }
+
   /** The list of fetched fields. The fields are returned using a fully qualified name format, however, the format differs slightly from that used by the query operations. * Fields which contain nested objects are assigned a type of "nested". * Fields which belong to a nested object are prefixed with `.properties` (for example, `warnings.properties.severity` means that the `warnings` object has a property called `severity`). */
   export interface ListFieldsResponse {
     /** An array that contains information about each field in the collections. */
@@ -3153,16 +5149,47 @@ namespace DiscoveryV2 {
     projects?: ProjectListDetails[];
   }
 
+  /** A macro-average computes metric independently for each class and then takes the average. Class refers to the classification label that is specified in the **answer_field**. */
+  export interface ModelEvaluationMacroAverage {
+    /** A metric that measures how many of the overall documents are classified correctly. */
+    precision: number;
+    /** A metric that measures how often documents that should be classified into certain classes are classified
+     *  into those classes.
+     */
+    recall: number;
+    /** A metric that measures whether the optimal balance between precision and recall is reached. The F1 score can
+     *  be interpreted as a weighted average of the precision and recall values. An F1 score reaches its best value at 1
+     *  and worst value at 0.
+     */
+    f1: number;
+  }
+
+  /** A micro-average aggregates the contributions of all classes to compute the average metric. Classes refers to the classification labels that are specified in the **answer_field**. */
+  export interface ModelEvaluationMicroAverage {
+    /** A metric that measures how many of the overall documents are classified correctly. */
+    precision: number;
+    /** A metric that measures how often documents that should be classified into certain classes are classified
+     *  into those classes.
+     */
+    recall: number;
+    /** A metric that measures whether the optimal balance between precision and recall is reached. The F1 score can
+     *  be interpreted as a weighted average of the precision and recall values. An F1 score reaches its best value at 1
+     *  and worst value at 0.
+     */
+    f1: number;
+  }
+
   /** A notice produced for the collection. */
   export interface Notice {
     /** Identifies the notice. Many notices might have the same ID. This field exists so that user applications can
      *  programmatically identify a notice and take automatic corrective action. Typical notice IDs include:
+     *
      *  `index_failed`, `index_failed_too_many_requests`, `index_failed_incompatible_field`,
      *  `index_failed_cluster_unavailable`, `ingestion_timeout`, `ingestion_error`, `bad_request`, `internal_error`,
      *  `missing_model`, `unsupported_model`, `smart_document_understanding_failed_incompatible_field`,
      *  `smart_document_understanding_failed_internal_error`, `smart_document_understanding_failed_internal_error`,
      *  `smart_document_understanding_failed_warning`, `smart_document_understanding_page_error`,
-     *  `smart_document_understanding_page_warning`. **Note:** This is not a complete list, other values might be
+     *  `smart_document_understanding_page_warning`. **Note:** This is not a complete list. Other values might be
      *  returned.
      */
     notice_id?: string;
@@ -3180,6 +5207,23 @@ namespace DiscoveryV2 {
     step?: string;
     /** The description of the notice. */
     description?: string;
+  }
+
+  /** An object that measures the metrics from a training run for each classification label separately. */
+  export interface PerClassModelEvaluation {
+    /** Class name. Each class name is derived from a value in the **answer_field**. */
+    name: string;
+    /** A metric that measures how many of the overall documents are classified correctly. */
+    precision: number;
+    /** A metric that measures how often documents that should be classified into certain classes are classified
+     *  into those classes.
+     */
+    recall: number;
+    /** A metric that measures whether the optimal balance between precision and recall is reached. The F1 score can
+     *  be interpreted as a weighted average of the precision and recall values. An F1 score reaches its best value at 1
+     *  and worst value at 0.
+     */
+    f1: number;
   }
 
   /** Detailed information about the specified project. */
@@ -3297,7 +5341,7 @@ namespace DiscoveryV2 {
      *  and returns them in a separate `passages` field in the response.
      */
     per_document?: boolean;
-    /** Maximum number of passages to return per document in the result. Ignored if `passages.per_document` is
+    /** Maximum number of passages to return per document in the result. Ignored if **passages.per_document** is
      *  `false`.
      */
     max_per_document?: number;
@@ -3305,7 +5349,7 @@ namespace DiscoveryV2 {
      *  are included.
      */
     fields?: string[];
-    /** The maximum number of passages to return. Ignored if `passages.per_document` is `true`. */
+    /** The maximum number of passages to return. Ignored if **passages.per_document** is `true`. */
     count?: number;
     /** The approximate number of characters that any one passage will have. */
     characters?: number;
@@ -3332,7 +5376,19 @@ namespace DiscoveryV2 {
     max_answers_per_passage?: number;
   }
 
-  /** Configuration for suggested refinements. Available with Premium plans only. */
+  /** Finds results from documents that are similar to documents of interest. Use this parameter to add a *More like these* function to your search. You can include this parameter with or without a **query**, **filter** or **natural_language_query** parameter. */
+  export interface QueryLargeSimilar {
+    /** When `true`, includes documents in the query results that are similar to documents you specify. */
+    enabled?: boolean;
+    /** The list of documents of interest. Required if **enabled** is `true`. */
+    document_ids?: string[];
+    /** Looks for similarities in the specified subset of fields in the documents. If not specified, all of the
+     *  document fields are used.
+     */
+    fields?: string[];
+  }
+
+  /** Configuration for suggested refinements. **Note**: The **suggested_refinements** parameter that identified dynamic facets from the data is deprecated. */
   export interface QueryLargeSuggestedRefinements {
     /** Whether to perform suggested refinements. */
     enabled?: boolean;
@@ -3370,7 +5426,9 @@ namespace DiscoveryV2 {
     retrieval_details?: RetrievalDetails;
     /** Suggested correction to the submitted **natural_language_query** value. */
     suggested_query?: string;
-    /** Array of suggested refinements. */
+    /** Array of suggested refinements. **Note**: The `suggested_refinements` parameter that identified dynamic
+     *  facets from the data is deprecated.
+     */
     suggested_refinements?: QuerySuggestedRefinement[];
     /** Array of table results. */
     table_results?: QueryTableResult[];
@@ -3382,7 +5440,9 @@ namespace DiscoveryV2 {
   export interface QueryResponsePassage {
     /** The content of the extracted passage. */
     passage_text?: string;
-    /** The confidence score of the passage's analysis. A higher score indicates greater confidence. */
+    /** The confidence score of the passage's analysis. A higher score indicates greater confidence. The score is
+     *  used to rank the passages from all documents and is returned only if **passages.per_document** is `false`.
+     */
     passage_score?: number;
     /** The unique identifier of the ingested document. */
     document_id?: string;
@@ -3445,7 +5505,7 @@ namespace DiscoveryV2 {
     answers?: ResultPassageAnswer[];
   }
 
-  /** A suggested additional query term or terms user to filter results. */
+  /** A suggested additional query term or terms user to filter results. **Note**: The `suggested_refinements` parameter is deprecated. */
   export interface QuerySuggestedRefinement {
     /** The text used to filter. */
     text?: string;
@@ -3528,6 +5588,12 @@ namespace DiscoveryV2 {
      *  results, the **document_retrieval_strategy** is listed as `untrained`.
      */
     document_retrieval_strategy?: string;
+  }
+
+  /** List of words to filter out of text that is submitted in queries. */
+  export interface StopWordList {
+    /** List of stop words. */
+    stopwords: string[];
   }
 
   /** Cells that are not table header, column header, or row header cells. */
@@ -3768,7 +5834,7 @@ namespace DiscoveryV2 {
   export interface TrainingQuery {
     /** The query ID associated with the training query. */
     query_id?: string;
-    /** The natural text query for the training query. */
+    /** The natural text query that is used as the training query. */
     natural_language_query: string;
     /** The filter used on the collection before the **natural_language_query** is applied. */
     filter?: string;
@@ -3782,8 +5848,18 @@ namespace DiscoveryV2 {
 
   /** Object specifying the training queries contained in the identified training set. */
   export interface TrainingQuerySet {
-    /** Array of training queries. */
+    /** Array of training queries. At least 50 queries are required for training to begin. A maximum of 10,000
+     *  queries are returned.
+     */
     queries?: TrainingQuery[];
+  }
+
+  /** An object that contains a new name or description for a document classifier, updated training data, or new or updated test data. */
+  export interface UpdateDocumentClassifier {
+    /** A new name for the classifier. */
+    name?: string;
+    /** A new description for the classifier. */
+    description?: string;
   }
 
   /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
