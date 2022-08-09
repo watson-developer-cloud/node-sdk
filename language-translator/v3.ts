@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,7 +24,7 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
@@ -65,10 +65,10 @@ class LanguageTranslatorV3 extends BaseService {
   constructor(options: UserOptions) {
     options = options || {};
 
-    const requiredParams = ['version'];
-    const missingParams = getMissingParams(options, requiredParams);
-    if (missingParams) {
-      throw missingParams;
+    const _requiredParams = ['version'];
+    const _validationErrors = validateParams(options, _requiredParams, null);
+    if (_validationErrors) {
+      throw _validationErrors;
     }
     if (!options.serviceName) {
       options.serviceName = LanguageTranslatorV3.DEFAULT_SERVICE_NAME;
@@ -106,6 +106,12 @@ class LanguageTranslatorV3 extends BaseService {
     params?: LanguageTranslatorV3.ListLanguagesParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Languages>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -170,11 +176,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.TranslateParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationResult>> {
     const _params = { ...params };
-    const requiredParams = ['text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['text'];
+    const _validParams = ['text', 'modelId', 'source', 'target', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -234,6 +240,12 @@ class LanguageTranslatorV3 extends BaseService {
     params?: LanguageTranslatorV3.ListIdentifiableLanguagesParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiableLanguages>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -280,11 +292,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.IdentifyParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.IdentifiedLanguages>> {
     const _params = { ...params };
-    const requiredParams = ['text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['text'];
+    const _validParams = ['text', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = _params.text;
@@ -343,6 +355,12 @@ class LanguageTranslatorV3 extends BaseService {
     params?: LanguageTranslatorV3.ListModelsParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModels>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['source', 'target', '_default', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -455,6 +473,7 @@ class LanguageTranslatorV3 extends BaseService {
    * the method description.
    *
    * *With `curl`, use `--form forced_glossary=@{filename}`.*.
+   * @param {string} [params.forcedGlossaryContentType] - The content type of forcedGlossary.
    * @param {NodeJS.ReadableStream | Buffer} [params.parallelCorpus] - A file with parallel sentences for the source and
    * target languages. You can upload multiple parallel corpus files in one request by repeating the parameter. All
    * uploaded parallel corpus files combined must contain at least 5000 parallel sentences to train successfully. You
@@ -464,6 +483,7 @@ class LanguageTranslatorV3 extends BaseService {
    * cumulative maximum size of 250 MB. For more information, see **Supported file formats** in the method description.
    *
    * *With `curl`, use `--form parallel_corpus=@{filename}`.*.
+   * @param {string} [params.parallelCorpusContentType] - The content type of parallelCorpus.
    * @param {string} [params.name] - An optional model name that you can use to identify the model. Valid characters are
    * letters, numbers, dashes, underscores, spaces, and apostrophes. The maximum length of the name is 32 characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -473,21 +493,21 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.CreateModelParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
     const _params = { ...params };
-    const requiredParams = ['baseModelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['baseModelId'];
+    const _validParams = ['baseModelId', 'forcedGlossary', 'forcedGlossaryContentType', 'parallelCorpus', 'parallelCorpusContentType', 'name', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
       'forced_glossary': {
         data: _params.forcedGlossary,
-        contentType: 'application/octet-stream',
+        contentType: _params.forcedGlossaryContentType,
       },
       'parallel_corpus': {
         data: _params.parallelCorpus,
-        contentType: 'application/octet-stream',
+        contentType: _params.parallelCorpusContentType,
       },
     };
 
@@ -540,11 +560,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.DeleteModelParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DeleteModelResult>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -598,11 +618,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.GetModelParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.TranslationModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -657,6 +677,12 @@ class LanguageTranslatorV3 extends BaseService {
     params?: LanguageTranslatorV3.ListDocumentsParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentList>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -695,13 +721,16 @@ class LanguageTranslatorV3 extends BaseService {
    * Submit a document for translation. You can submit the document contents in the `file` parameter, or you can
    * reference a previously submitted document by document ID. The maximum file size for document translation is
    * * 20 MB for service instances on the Standard, Advanced, and Premium plans
-   * * 2 MB for service instances on the Lite plan.
+   * * 2 MB for service instances on the Lite plan
+   *
+   * **Note:** When translating a previously submitted document, the target language must be different from the target
+   * language of the original request when the document was initially submitted.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream | Buffer} params.file - The contents of the source file to translate. The maximum
    * file size for document translation is 20 MB for service instances on the Standard, Advanced, and Premium plans, and
-   * 2 MB for service instances on the Lite plan. For more information, see [Supported file formats
-   * (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
+   * 2 MB for service instances on the Lite plan. For more information, see [Supported file
+   * formats](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
    * @param {string} params.filename - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
    * @param {string} [params.modelId] - The model to use for translation. For example, `en-de` selects the IBM-provided
@@ -721,11 +750,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.TranslateDocumentParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
     const _params = { ...params };
-    const requiredParams = ['file', 'filename'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['file', 'filename'];
+    const _validParams = ['file', 'filename', 'fileContentType', 'modelId', 'source', 'target', 'documentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -787,11 +816,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.GetDocumentStatusParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.DocumentStatus>> {
     const _params = { ...params };
-    const requiredParams = ['documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['documentId'];
+    const _validParams = ['documentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -844,11 +873,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.DeleteDocumentParams
   ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['documentId'];
+    const _validParams = ['documentId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -909,11 +938,11 @@ class LanguageTranslatorV3 extends BaseService {
     params: LanguageTranslatorV3.GetTranslatedDocumentParams
   ): Promise<LanguageTranslatorV3.Response<NodeJS.ReadableStream>> {
     const _params = { ...params };
-    const requiredParams = ['documentId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['documentId'];
+    const _validParams = ['documentId', 'accept', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1061,6 +1090,8 @@ namespace LanguageTranslatorV3 {
      *  *With `curl`, use `--form forced_glossary=@{filename}`.*.
      */
     forcedGlossary?: NodeJS.ReadableStream | Buffer;
+    /** The content type of forcedGlossary. */
+    forcedGlossaryContentType?: CreateModelConstants.ForcedGlossaryContentType | string;
     /** A file with parallel sentences for the source and target languages. You can upload multiple parallel corpus
      *  files in one request by repeating the parameter. All uploaded parallel corpus files combined must contain at
      *  least 5000 parallel sentences to train successfully. You can provide a maximum of 500,000 parallel sentences
@@ -1073,11 +1104,35 @@ namespace LanguageTranslatorV3 {
      *  *With `curl`, use `--form parallel_corpus=@{filename}`.*.
      */
     parallelCorpus?: NodeJS.ReadableStream | Buffer;
+    /** The content type of parallelCorpus. */
+    parallelCorpusContentType?: CreateModelConstants.ParallelCorpusContentType | string;
     /** An optional model name that you can use to identify the model. Valid characters are letters, numbers,
      *  dashes, underscores, spaces, and apostrophes. The maximum length of the name is 32 characters.
      */
     name?: string;
     headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `createModel` operation. */
+  export namespace CreateModelConstants {
+    /** The content type of forcedGlossary. */
+    export enum ForcedGlossaryContentType {
+      APPLICATION_X_TMX_XML = 'application/x-tmx+xml',
+      APPLICATION_XLIFF_XML = 'application/xliff+xml',
+      TEXT_CSV = 'text/csv',
+      TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values',
+      APPLICATION_JSON = 'application/json',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    }
+    /** The content type of parallelCorpus. */
+    export enum ParallelCorpusContentType {
+      APPLICATION_X_TMX_XML = 'application/x-tmx+xml',
+      APPLICATION_XLIFF_XML = 'application/xliff+xml',
+      TEXT_CSV = 'text/csv',
+      TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values',
+      APPLICATION_JSON = 'application/json',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    }
   }
 
   /** Parameters for the `deleteModel` operation. */
@@ -1103,8 +1158,8 @@ namespace LanguageTranslatorV3 {
   export interface TranslateDocumentParams {
     /** The contents of the source file to translate. The maximum file size for document translation is 20 MB for
      *  service instances on the Standard, Advanced, and Premium plans, and 2 MB for service instances on the Lite plan.
-     *  For more information, see [Supported file formats
-     *  (Beta)](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
+     *  For more information, see [Supported file
+     *  formats](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
      */
     file: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */

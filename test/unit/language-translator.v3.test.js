@@ -38,29 +38,38 @@ const languageTranslatorServiceOptions = {
 
 const languageTranslatorService = new LanguageTranslatorV3(languageTranslatorServiceOptions);
 
-// dont actually create a request
-const createRequestMock = jest.spyOn(languageTranslatorService, 'createRequest');
-createRequestMock.mockImplementation(() => Promise.resolve());
+let createRequestMock = null;
+function mock_createRequest() {
+  if (!createRequestMock) {
+    createRequestMock = jest.spyOn(languageTranslatorService, 'createRequest');
+    createRequestMock.mockImplementation(() => Promise.resolve());
+  }
+}
 
 // dont actually construct an authenticator
 const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
-afterEach(() => {
-  createRequestMock.mockClear();
-  getAuthenticatorMock.mockClear();
-});
-
 // used for the service construction tests
 let requiredGlobals;
-beforeEach(() => {
-  // these are changed when passed into the factory/constructor, so re-init
-  requiredGlobals = {
-    version: '2018-05-01',
-  };
-});
 
 describe('LanguageTranslatorV3', () => {
+
+  beforeEach(() => {
+    mock_createRequest();
+    // these are changed when passed into the factory/constructor, so re-init
+    requiredGlobals = {
+      version: '2018-05-01',
+    };
+  });
+
+  afterEach(() => {
+    if (createRequestMock) {
+      createRequestMock.mockClear();
+    }
+    getAuthenticatorMock.mockClear();
+  });
+
   describe('the constructor', () => {
     test('use user-given service url', () => {
       let options = {
@@ -132,6 +141,7 @@ describe('LanguageTranslatorV3', () => {
       expect(getAuthenticatorMock).toHaveBeenCalled();
     });
   });
+
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
@@ -141,13 +151,14 @@ describe('LanguageTranslatorV3', () => {
       });
     });
   });
+
   describe('listLanguages', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listLanguagesTest() {
         // Construct the params object for operation listLanguages
-        const params = {};
+        const listLanguagesParams = {};
 
-        const listLanguagesResult = languageTranslatorService.listLanguages(params);
+        const listLanguagesResult = languageTranslatorService.listLanguages(listLanguagesParams);
 
         // all methods should return a Promise
         expectToBePromise(listLanguagesResult);
@@ -162,20 +173,35 @@ describe('LanguageTranslatorV3', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listLanguagesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __listLanguagesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __listLanguagesTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listLanguagesParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        languageTranslatorService.listLanguages(params);
+        languageTranslatorService.listLanguages(listLanguagesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -186,22 +212,23 @@ describe('LanguageTranslatorV3', () => {
       });
     });
   });
+
   describe('translate', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __translateTest() {
         // Construct the params object for operation translate
         const text = ['testString'];
         const modelId = 'testString';
         const source = 'testString';
         const target = 'testString';
-        const params = {
+        const translateParams = {
           text: text,
           modelId: modelId,
           source: source,
           target: target,
         };
 
-        const translateResult = languageTranslatorService.translate(params);
+        const translateResult = languageTranslatorService.translate(translateParams);
 
         // all methods should return a Promise
         expectToBePromise(translateResult);
@@ -220,6 +247,21 @@ describe('LanguageTranslatorV3', () => {
         expect(mockRequestOptions.body.source).toEqual(source);
         expect(mockRequestOptions.body.target).toEqual(target);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __translateTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __translateTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __translateTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -227,7 +269,7 @@ describe('LanguageTranslatorV3', () => {
         const text = ['testString'];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const translateParams = {
           text,
           headers: {
             Accept: userAccept,
@@ -235,13 +277,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.translate(params);
+        languageTranslatorService.translate(translateParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.translate({});
@@ -250,27 +292,28 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const translatePromise = languageTranslatorService.translate();
-        expectToBePromise(translatePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.translate();
+        } catch (e) {
+          err = e;
+        }
 
-        translatePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listIdentifiableLanguages', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listIdentifiableLanguagesTest() {
         // Construct the params object for operation listIdentifiableLanguages
-        const params = {};
+        const listIdentifiableLanguagesParams = {};
 
-        const listIdentifiableLanguagesResult = languageTranslatorService.listIdentifiableLanguages(params);
+        const listIdentifiableLanguagesResult = languageTranslatorService.listIdentifiableLanguages(listIdentifiableLanguagesParams);
 
         // all methods should return a Promise
         expectToBePromise(listIdentifiableLanguagesResult);
@@ -285,20 +328,35 @@ describe('LanguageTranslatorV3', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listIdentifiableLanguagesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __listIdentifiableLanguagesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __listIdentifiableLanguagesTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listIdentifiableLanguagesParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        languageTranslatorService.listIdentifiableLanguages(params);
+        languageTranslatorService.listIdentifiableLanguages(listIdentifiableLanguagesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -309,16 +367,17 @@ describe('LanguageTranslatorV3', () => {
       });
     });
   });
+
   describe('identify', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __identifyTest() {
         // Construct the params object for operation identify
         const text = 'testString';
-        const params = {
+        const identifyParams = {
           text: text,
         };
 
-        const identifyResult = languageTranslatorService.identify(params);
+        const identifyResult = languageTranslatorService.identify(identifyParams);
 
         // all methods should return a Promise
         expectToBePromise(identifyResult);
@@ -334,6 +393,21 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body).toEqual(text);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __identifyTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __identifyTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __identifyTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -341,7 +415,7 @@ describe('LanguageTranslatorV3', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const identifyParams = {
           text,
           headers: {
             Accept: userAccept,
@@ -349,13 +423,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.identify(params);
+        languageTranslatorService.identify(identifyParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.identify({});
@@ -364,34 +438,35 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const identifyPromise = languageTranslatorService.identify();
-        expectToBePromise(identifyPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.identify();
+        } catch (e) {
+          err = e;
+        }
 
-        identifyPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listModelsTest() {
         // Construct the params object for operation listModels
         const source = 'testString';
         const target = 'testString';
         const _default = true;
-        const params = {
+        const listModelsParams = {
           source: source,
           target: target,
           _default: _default,
         };
 
-        const listModelsResult = languageTranslatorService.listModels(params);
+        const listModelsResult = languageTranslatorService.listModels(listModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listModelsResult);
@@ -409,20 +484,35 @@ describe('LanguageTranslatorV3', () => {
         expect(mockRequestOptions.qs.source).toEqual(source);
         expect(mockRequestOptions.qs.target).toEqual(target);
         expect(mockRequestOptions.qs.default).toEqual(_default);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __listModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __listModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        languageTranslatorService.listModels(params);
+        languageTranslatorService.listModels(listModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -433,22 +523,27 @@ describe('LanguageTranslatorV3', () => {
       });
     });
   });
+
   describe('createModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createModelTest() {
         // Construct the params object for operation createModel
         const baseModelId = 'testString';
         const forcedGlossary = Buffer.from('This is a mock file.');
+        const forcedGlossaryContentType = 'application/x-tmx+xml';
         const parallelCorpus = Buffer.from('This is a mock file.');
+        const parallelCorpusContentType = 'application/x-tmx+xml';
         const name = 'testString';
-        const params = {
+        const createModelParams = {
           baseModelId: baseModelId,
           forcedGlossary: forcedGlossary,
+          forcedGlossaryContentType: forcedGlossaryContentType,
           parallelCorpus: parallelCorpus,
+          parallelCorpusContentType: parallelCorpusContentType,
           name: name,
         };
 
-        const createModelResult = languageTranslatorService.createModel(params);
+        const createModelResult = languageTranslatorService.createModel(createModelParams);
 
         // all methods should return a Promise
         expectToBePromise(createModelResult);
@@ -463,12 +558,27 @@ describe('LanguageTranslatorV3', () => {
         const expectedContentType = 'multipart/form-data';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.formData.forced_glossary.data).toEqual(forcedGlossary);
-        expect(mockRequestOptions.formData.forced_glossary.contentType).toEqual('application/octet-stream');
+        expect(mockRequestOptions.formData.forced_glossary.contentType).toEqual(forcedGlossaryContentType);
         expect(mockRequestOptions.formData.parallel_corpus.data).toEqual(parallelCorpus);
-        expect(mockRequestOptions.formData.parallel_corpus.contentType).toEqual('application/octet-stream');
+        expect(mockRequestOptions.formData.parallel_corpus.contentType).toEqual(parallelCorpusContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
         expect(mockRequestOptions.qs.base_model_id).toEqual(baseModelId);
         expect(mockRequestOptions.qs.name).toEqual(name);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __createModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __createModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -476,7 +586,7 @@ describe('LanguageTranslatorV3', () => {
         const baseModelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createModelParams = {
           baseModelId,
           headers: {
             Accept: userAccept,
@@ -484,13 +594,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.createModel(params);
+        languageTranslatorService.createModel(createModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.createModel({});
@@ -499,30 +609,31 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createModelPromise = languageTranslatorService.createModel();
-        expectToBePromise(createModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.createModel();
+        } catch (e) {
+          err = e;
+        }
 
-        createModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteModelTest() {
         // Construct the params object for operation deleteModel
         const modelId = 'testString';
-        const params = {
+        const deleteModelParams = {
           modelId: modelId,
         };
 
-        const deleteModelResult = languageTranslatorService.deleteModel(params);
+        const deleteModelResult = languageTranslatorService.deleteModel(deleteModelParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteModelResult);
@@ -538,6 +649,21 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __deleteModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __deleteModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -545,7 +671,7 @@ describe('LanguageTranslatorV3', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -553,13 +679,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.deleteModel(params);
+        languageTranslatorService.deleteModel(deleteModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.deleteModel({});
@@ -568,30 +694,31 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteModelPromise = languageTranslatorService.deleteModel();
-        expectToBePromise(deleteModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.deleteModel();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getModelTest() {
         // Construct the params object for operation getModel
         const modelId = 'testString';
-        const params = {
+        const getModelParams = {
           modelId: modelId,
         };
 
-        const getModelResult = languageTranslatorService.getModel(params);
+        const getModelResult = languageTranslatorService.getModel(getModelParams);
 
         // all methods should return a Promise
         expectToBePromise(getModelResult);
@@ -607,6 +734,21 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __getModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __getModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -614,7 +756,7 @@ describe('LanguageTranslatorV3', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -622,13 +764,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.getModel(params);
+        languageTranslatorService.getModel(getModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.getModel({});
@@ -637,27 +779,28 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getModelPromise = languageTranslatorService.getModel();
-        expectToBePromise(getModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.getModel();
+        } catch (e) {
+          err = e;
+        }
 
-        getModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listDocuments', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listDocumentsTest() {
         // Construct the params object for operation listDocuments
-        const params = {};
+        const listDocumentsParams = {};
 
-        const listDocumentsResult = languageTranslatorService.listDocuments(params);
+        const listDocumentsResult = languageTranslatorService.listDocuments(listDocumentsParams);
 
         // all methods should return a Promise
         expectToBePromise(listDocumentsResult);
@@ -672,20 +815,35 @@ describe('LanguageTranslatorV3', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listDocumentsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __listDocumentsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __listDocumentsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listDocumentsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        languageTranslatorService.listDocuments(params);
+        languageTranslatorService.listDocuments(listDocumentsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -696,9 +854,10 @@ describe('LanguageTranslatorV3', () => {
       });
     });
   });
+
   describe('translateDocument', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __translateDocumentTest() {
         // Construct the params object for operation translateDocument
         const file = Buffer.from('This is a mock file.');
         const filename = 'testString';
@@ -707,7 +866,7 @@ describe('LanguageTranslatorV3', () => {
         const source = 'testString';
         const target = 'testString';
         const documentId = 'testString';
-        const params = {
+        const translateDocumentParams = {
           file: file,
           filename: filename,
           fileContentType: fileContentType,
@@ -717,7 +876,7 @@ describe('LanguageTranslatorV3', () => {
           documentId: documentId,
         };
 
-        const translateDocumentResult = languageTranslatorService.translateDocument(params);
+        const translateDocumentResult = languageTranslatorService.translateDocument(translateDocumentParams);
 
         // all methods should return a Promise
         expectToBePromise(translateDocumentResult);
@@ -739,6 +898,21 @@ describe('LanguageTranslatorV3', () => {
         expect(mockRequestOptions.formData.target).toEqual(target);
         expect(mockRequestOptions.formData.document_id).toEqual(documentId);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __translateDocumentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __translateDocumentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __translateDocumentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -747,7 +921,7 @@ describe('LanguageTranslatorV3', () => {
         const filename = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const translateDocumentParams = {
           file,
           filename,
           headers: {
@@ -756,13 +930,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.translateDocument(params);
+        languageTranslatorService.translateDocument(translateDocumentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.translateDocument({});
@@ -771,30 +945,31 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const translateDocumentPromise = languageTranslatorService.translateDocument();
-        expectToBePromise(translateDocumentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.translateDocument();
+        } catch (e) {
+          err = e;
+        }
 
-        translateDocumentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getDocumentStatus', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getDocumentStatusTest() {
         // Construct the params object for operation getDocumentStatus
         const documentId = 'testString';
-        const params = {
+        const getDocumentStatusParams = {
           documentId: documentId,
         };
 
-        const getDocumentStatusResult = languageTranslatorService.getDocumentStatus(params);
+        const getDocumentStatusResult = languageTranslatorService.getDocumentStatus(getDocumentStatusParams);
 
         // all methods should return a Promise
         expectToBePromise(getDocumentStatusResult);
@@ -810,6 +985,21 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
         expect(mockRequestOptions.path.document_id).toEqual(documentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getDocumentStatusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __getDocumentStatusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __getDocumentStatusTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -817,7 +1007,7 @@ describe('LanguageTranslatorV3', () => {
         const documentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getDocumentStatusParams = {
           documentId,
           headers: {
             Accept: userAccept,
@@ -825,13 +1015,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.getDocumentStatus(params);
+        languageTranslatorService.getDocumentStatus(getDocumentStatusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.getDocumentStatus({});
@@ -840,30 +1030,31 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getDocumentStatusPromise = languageTranslatorService.getDocumentStatus();
-        expectToBePromise(getDocumentStatusPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.getDocumentStatus();
+        } catch (e) {
+          err = e;
+        }
 
-        getDocumentStatusPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteDocument', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteDocumentTest() {
         // Construct the params object for operation deleteDocument
         const documentId = 'testString';
-        const params = {
+        const deleteDocumentParams = {
           documentId: documentId,
         };
 
-        const deleteDocumentResult = languageTranslatorService.deleteDocument(params);
+        const deleteDocumentResult = languageTranslatorService.deleteDocument(deleteDocumentParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteDocumentResult);
@@ -879,6 +1070,21 @@ describe('LanguageTranslatorV3', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
         expect(mockRequestOptions.path.document_id).toEqual(documentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteDocumentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __deleteDocumentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __deleteDocumentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -886,7 +1092,7 @@ describe('LanguageTranslatorV3', () => {
         const documentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteDocumentParams = {
           documentId,
           headers: {
             Accept: userAccept,
@@ -894,13 +1100,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.deleteDocument(params);
+        languageTranslatorService.deleteDocument(deleteDocumentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.deleteDocument({});
@@ -909,32 +1115,33 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteDocumentPromise = languageTranslatorService.deleteDocument();
-        expectToBePromise(deleteDocumentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.deleteDocument();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteDocumentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getTranslatedDocument', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getTranslatedDocumentTest() {
         // Construct the params object for operation getTranslatedDocument
         const documentId = 'testString';
         const accept = 'application/powerpoint';
-        const params = {
+        const getTranslatedDocumentParams = {
           documentId: documentId,
           accept: accept,
         };
 
-        const getTranslatedDocumentResult = languageTranslatorService.getTranslatedDocument(params);
+        const getTranslatedDocumentResult = languageTranslatorService.getTranslatedDocument(getTranslatedDocumentParams);
 
         // all methods should return a Promise
         expectToBePromise(getTranslatedDocumentResult);
@@ -952,6 +1159,21 @@ describe('LanguageTranslatorV3', () => {
         expect(mockRequestOptions.qs.version).toEqual(languageTranslatorServiceOptions.version);
         expect(mockRequestOptions.path.document_id).toEqual(documentId);
         expect(mockRequestOptions.responseType).toBe('stream');
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getTranslatedDocumentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.enableRetries();
+        __getTranslatedDocumentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        languageTranslatorService.disableRetries();
+        __getTranslatedDocumentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -959,7 +1181,7 @@ describe('LanguageTranslatorV3', () => {
         const documentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getTranslatedDocumentParams = {
           documentId,
           headers: {
             Accept: userAccept,
@@ -967,13 +1189,13 @@ describe('LanguageTranslatorV3', () => {
           },
         };
 
-        languageTranslatorService.getTranslatedDocument(params);
+        languageTranslatorService.getTranslatedDocument(getTranslatedDocumentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await languageTranslatorService.getTranslatedDocument({});
@@ -982,17 +1204,17 @@ describe('LanguageTranslatorV3', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getTranslatedDocumentPromise = languageTranslatorService.getTranslatedDocument();
-        expectToBePromise(getTranslatedDocumentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await languageTranslatorService.getTranslatedDocument();
+        } catch (e) {
+          err = e;
+        }
 
-        getTranslatedDocumentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
