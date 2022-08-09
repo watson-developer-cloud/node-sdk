@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,14 +24,14 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize
- * text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one
+ * text into natural-sounding speech in a variety of languages, dialects, and voices.  The service supports at least one
  * male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.
  *
  *
@@ -50,6 +50,13 @@ import { getSdkHeaders } from '../lib/common';
  * The service also offers a Tune by Example feature that lets you define custom prompts. You can also define speaker
  * models to improve the quality of your custom prompts. The service support custom prompts only for US English custom
  * models and voices.
+ *
+ * Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to existing users
+ * until 31 March 2023, when they will be removed from the service and the documentation. The neural voices are
+ * supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural voices remain
+ * available to all users. For more information, see the [31 March 2022 service
+ * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+ * the release notes for {{site.data.keyword.texttospeechshort}} for {{site.data.keyword.cloud_notm}}.{: deprecated}
  *
  * API Version: 1.0.0
  * See: https://cloud.ibm.com/docs/text-to-speech
@@ -100,6 +107,13 @@ class TextToSpeechV1 extends BaseService {
    * alphabetized or static list of voices. To see information about a specific voice, use the [Get a voice](#getvoice).
    *
    *
+   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * the release notes.
+   *
    * **See also:** [Listing all available
    * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices).
    *
@@ -111,6 +125,12 @@ class TextToSpeechV1 extends BaseService {
     params?: TextToSpeechV1.ListVoicesParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voices>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const sdkHeaders = getSdkHeaders(
       TextToSpeechV1.DEFAULT_SERVICE_NAME,
@@ -149,9 +169,12 @@ class TextToSpeechV1 extends BaseService {
    * **See also:** [Listing a specific
    * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice).
    *
-   * **Note:** The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-   * languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-   * `ar-AR_OmarVoice` voice is deprecated; use the `ar-MS_OmarVoice` voice instead.
+   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * the release notes.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned.
@@ -165,11 +188,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.GetVoiceParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voice>> {
     const _params = { ...params };
-    const requiredParams = ['voice'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['voice'];
+    const _validParams = ['voice', 'customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -224,22 +247,26 @@ class TextToSpeechV1 extends BaseService {
    * **See also:** [The HTTP
    * interface](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP).
    *
-   * **Note:** The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-   * languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-   * `ar-AR_OmarVoice` voice is deprecated; use the `ar-MS_OmarVoice` voice instead.
+   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * the release notes.
    *
    * ### Audio formats (accept types)
    *
    *  The service can return audio in the following formats (MIME types).
    * * Where indicated, you can optionally specify the sampling rate (`rate`) of the audio. You must specify a sampling
-   * rate for the `audio/l16` and `audio/mulaw` formats. A specified sampling rate must lie in the range of 8 kHz to 192
-   * kHz. Some formats restrict the sampling rate to certain values, as noted.
+   * rate for the `audio/alaw`, `audio/l16`,  and `audio/mulaw` formats. A specified sampling rate must lie in the range
+   * of 8 kHz to 192 kHz. Some formats restrict the sampling rate to certain values, as noted.
    * * For the `audio/l16` format, you can optionally specify the endianness (`endianness`) of the audio:
    * `endianness=big-endian` or `endianness=little-endian`.
    *
    * Use the `Accept` header or the `accept` parameter to specify the requested format of the response audio. If you
    * omit an audio format altogether, the service returns the audio in Ogg format with the Opus codec
    * (`audio/ogg;codecs=opus`). The service always returns single-channel audio.
+   * * `audio/alaw` - You must specify the `rate` of the audio.
    * * `audio/basic` - The service returns audio with a sampling rate of 8000 Hz.
    * * `audio/flac` - You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
    * * `audio/l16` - You must specify the `rate` of the audio. You can optionally specify the `endianness` of the audio.
@@ -276,20 +303,31 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} [params.accept] - The requested format (MIME type) of the audio. You can use the `Accept` header or
    * the `accept` parameter to specify the audio format. For more information about specifying an audio format, see
    * **Audio formats (accept types)** in the method description.
-   * @param {string} [params.voice] - The voice to use for synthesis. If you omit the `voice` parameter, the service
-   * uses a default voice, which depends on the version of the service that you are using:
-   * * _For IBM Cloud,_ the service always uses the US English `en-US_MichaelV3Voice` by default.
-   * * _For IBM Cloud Pak for Data,_ the default voice depends on the voices that you installed. If you installed the
-   * _enhanced neural voices_, the service uses the US English `en-US_MichaelV3Voice` by default; if that voice is not
-   * installed, you must specify a voice. If you installed the _neural voices_, the service always uses the Australian
-   * English `en-AU_MadisonVoice` by default.
+   * @param {string} [params.voice] - The voice to use for speech synthesis. If you omit the `voice` parameter, the
+   * service uses the US English `en-US_MichaelV3Voice` by default.
    *
-   * **See also:** See also [Using languages and
-   * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices).
+   * _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice
+   * with the request or specify a new default voice for your installation of the service.
+   *
+   * **See also:**
+   * * [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices)
+   * * [The default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
    * @param {string} [params.customizationId] - The customization ID (GUID) of a custom model to use for the synthesis.
    * If a custom model is specified, it works only if it matches the language of the indicated voice. You must make the
    * request with credentials for the instance of the service that owns the custom model. Omit the parameter to use the
    * specified voice with no customization.
+   * @param {string} [params.spellOutMode] - *For German voices,* indicates how the service is to spell out strings of
+   * individual letters. To indicate the pace of the spelling, specify one of the following values:
+   * * `default` - The service reads the characters at the rate at which it synthesizes speech for the request. You can
+   * also omit the parameter entirely to achieve the default behavior.
+   * * `singles` - The service reads the characters one at a time, with a brief pause between each character.
+   * * `pairs` - The service reads the characters two at a time, with a brief pause between each pair.
+   * * `triples` - The service reads the characters three at a time, with a brief pause between each triplet.
+   *
+   * The parameter is available only for IBM Cloud.
+   *
+   * **See also:** [Specifying how strings are spelled
+   * out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<NodeJS.ReadableStream>>}
    */
@@ -297,11 +335,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.SynthesizeParams
   ): Promise<TextToSpeechV1.Response<NodeJS.ReadableStream>> {
     const _params = { ...params };
-    const requiredParams = ['text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['text'];
+    const _validParams = ['text', 'accept', 'voice', 'customizationId', 'spellOutMode', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -311,6 +349,7 @@ class TextToSpeechV1 extends BaseService {
     const query = {
       'voice': _params.voice,
       'customization_id': _params.customizationId,
+      'spell_out_mode': _params.spellOutMode,
     };
 
     const sdkHeaders = getSdkHeaders(
@@ -353,17 +392,27 @@ class TextToSpeechV1 extends BaseService {
    * You can also request the pronunciation for a specific voice to see the default translation for the language of that
    * voice or for a specific custom model to see the translation for that model.
    *
+   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * the release notes.
+   *
    * **See also:** [Querying a word from a
    * language](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage).
-   *
-   * **Note:** The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-   * languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-   * `ar-AR_OmarVoice` voice is deprecated; use the `ar-MS_OmarVoice` voice instead.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.text - The word for which the pronunciation is requested.
    * @param {string} [params.voice] - A voice that specifies the language in which the pronunciation is to be returned.
-   * All voices for the same language (for example, `en-US`) return the same translation.
+   * If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. All voices
+   * for the same language (for example, `en-US`) return the same translation.
+   *
+   * _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice
+   * with the request or specify a new default voice for your installation of the service.
+   *
+   * **See also:** [The default
+   * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
    * @param {string} [params.format] - The phoneme format in which to return the pronunciation. The Arabic, Chinese,
    * Dutch, Australian English, and Korean languages support only IPA. Omit the parameter to obtain the pronunciation in
    * the default format.
@@ -379,11 +428,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.GetPronunciationParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Pronunciation>> {
     const _params = { ...params };
-    const requiredParams = ['text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['text'];
+    const _validParams = ['text', 'voice', 'format', 'customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -433,19 +482,18 @@ class TextToSpeechV1 extends BaseService {
    * **See also:** [Creating a custom
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
    *
-   * **Note:** The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-   * languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-   * `ar-AR` language identifier cannot be used to create a custom model; use the `ar-MS` identifier instead.
+   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * the release notes.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new custom model.
    * @param {string} [params.language] - The language of the new custom model. You create a custom model for a specific
    * language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the
    * parameter to use the the default language, `en-US`.
-   *
-   * **Important:** If you are using the service on IBM Cloud Pak for Data _and_ you install the neural voices, the
-   * `language`parameter is required. You must specify the language for the custom model in the indicated format (for
-   * example, `en-AU` for Australian English). The request fails if you do not specify a language.
    * @param {string} [params.description] - A description of the new custom model. Specifying a description is
    * recommended.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -455,11 +503,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.CreateCustomModelParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
     const _params = { ...params };
-    const requiredParams = ['name'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['name'];
+    const _validParams = ['name', 'language', 'description', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -517,6 +565,12 @@ class TextToSpeechV1 extends BaseService {
     params?: TextToSpeechV1.ListCustomModelsParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModels>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['language', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'language': _params.language,
@@ -589,11 +643,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.UpdateCustomModelParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'name', 'description', 'words', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -656,11 +710,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.GetCustomModelParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -713,11 +767,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.DeleteCustomModelParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -795,11 +849,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.AddWordsParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'words'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'words'];
+    const _validParams = ['customizationId', 'words', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -859,11 +913,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.ListWordsParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Words>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -943,11 +997,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.AddWordParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'word', 'translation'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'word', 'translation'];
+    const _validParams = ['customizationId', 'word', 'translation', 'partOfSpeech', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1009,11 +1063,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.GetWordParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Translation>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'word'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'word'];
+    const _validParams = ['customizationId', 'word', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1068,11 +1122,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.DeleteWordParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'word'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'word'];
+    const _validParams = ['customizationId', 'word', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1132,11 +1186,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.ListCustomPromptsParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompts>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1267,11 +1321,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.AddCustomPromptParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'promptId', 'metadata', 'file'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'promptId', 'metadata', 'file'];
+    const _validParams = ['customizationId', 'promptId', 'metadata', 'file', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -1338,11 +1392,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.GetCustomPromptParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'promptId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'promptId'];
+    const _validParams = ['customizationId', 'promptId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1402,11 +1456,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.DeleteCustomPromptParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'promptId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'promptId'];
+    const _validParams = ['customizationId', 'promptId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1462,6 +1516,12 @@ class TextToSpeechV1 extends BaseService {
     params?: TextToSpeechV1.ListSpeakerModelsParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Speakers>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const sdkHeaders = getSdkHeaders(
       TextToSpeechV1.DEFAULT_SERVICE_NAME,
@@ -1549,11 +1609,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.CreateSpeakerModelParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerModel>> {
     const _params = { ...params };
-    const requiredParams = ['speakerName', 'audio'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['speakerName', 'audio'];
+    const _validParams = ['speakerName', 'audio', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = _params.audio;
@@ -1613,11 +1673,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.GetSpeakerModelParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerCustomModels>> {
     const _params = { ...params };
-    const requiredParams = ['speakerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['speakerId'];
+    const _validParams = ['speakerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1677,11 +1737,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.DeleteSpeakerModelParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['speakerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['speakerId'];
+    const _validParams = ['speakerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1742,11 +1802,11 @@ class TextToSpeechV1 extends BaseService {
     params: TextToSpeechV1.DeleteUserDataParams
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customerId'];
+    const _validParams = ['customerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1829,12 +1889,9 @@ namespace TextToSpeechV1 {
   export namespace GetVoiceConstants {
     /** The voice for which information is to be returned. */
     export enum Voice {
-      AR_AR_OMARVOICE = 'ar-AR_OmarVoice',
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
       CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
-      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
       DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
       EN_AU_CRAIGVOICE = 'en-AU_CraigVoice',
@@ -1842,33 +1899,22 @@ namespace TextToSpeechV1 {
       EN_AU_STEVEVOICE = 'en-AU_SteveVoice',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
-      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
-      EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
       EN_US_KEVINV3VOICE = 'en-US_KevinV3Voice',
-      EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
-      EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
-      ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
-      ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
-      ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
-      ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_CA_LOUISEV3VOICE = 'fr-CA_LouiseV3Voice',
       FR_FR_NICOLASV3VOICE = 'fr-FR_NicolasV3Voice',
-      FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
-      IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
       IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
-      JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       JA_JP_EMIV3VOICE = 'ja-JP_EmiV3Voice',
       KO_KR_HYUNJUNVOICE = 'ko-KR_HyunjunVoice',
       KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
@@ -1878,7 +1924,6 @@ namespace TextToSpeechV1 {
       NL_BE_BRAMVOICE = 'nl-BE_BramVoice',
       NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
       NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
-      PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
       SV_SE_INGRIDVOICE = 'sv-SE_IngridVoice',
       ZH_CN_LINAVOICE = 'zh-CN_LiNaVoice',
@@ -1896,16 +1941,16 @@ namespace TextToSpeechV1 {
      *  types)** in the method description.
      */
     accept?: SynthesizeConstants.Accept | string;
-    /** The voice to use for synthesis. If you omit the `voice` parameter, the service uses a default voice, which
-     *  depends on the version of the service that you are using:
-     *  * _For IBM Cloud,_ the service always uses the US English `en-US_MichaelV3Voice` by default.
-     *  * _For IBM Cloud Pak for Data,_ the default voice depends on the voices that you installed. If you installed the
-     *  _enhanced neural voices_, the service uses the US English `en-US_MichaelV3Voice` by default; if that voice is
-     *  not installed, you must specify a voice. If you installed the _neural voices_, the service always uses the
-     *  Australian English `en-AU_MadisonVoice` by default.
+    /** The voice to use for speech synthesis. If you omit the `voice` parameter, the service uses the US English
+     *  `en-US_MichaelV3Voice` by default.
      *
-     *  **See also:** See also [Using languages and
-     *  voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices).
+     *  _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice
+     *  with the request or specify a new default voice for your installation of the service.
+     *
+     *  **See also:**
+     *  * [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices)
+     *  * [The default
+     *  voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
      */
     voice?: SynthesizeConstants.Voice | string;
     /** The customization ID (GUID) of a custom model to use for the synthesis. If a custom model is specified, it
@@ -1914,6 +1959,20 @@ namespace TextToSpeechV1 {
      *  customization.
      */
     customizationId?: string;
+    /** *For German voices,* indicates how the service is to spell out strings of individual letters. To indicate
+     *  the pace of the spelling, specify one of the following values:
+     *  * `default` - The service reads the characters at the rate at which it synthesizes speech for the request. You
+     *  can also omit the parameter entirely to achieve the default behavior.
+     *  * `singles` - The service reads the characters one at a time, with a brief pause between each character.
+     *  * `pairs` - The service reads the characters two at a time, with a brief pause between each pair.
+     *  * `triples` - The service reads the characters three at a time, with a brief pause between each triplet.
+     *
+     *  The parameter is available only for IBM Cloud.
+     *
+     *  **See also:** [Specifying how strings are spelled
+     *  out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode).
+     */
+    spellOutMode?: SynthesizeConstants.SpellOutMode | string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1921,6 +1980,7 @@ namespace TextToSpeechV1 {
   export namespace SynthesizeConstants {
     /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to specify the audio format. For more information about specifying an audio format, see **Audio formats (accept types)** in the method description. */
     export enum Accept {
+      AUDIO_ALAW = 'audio/alaw',
       AUDIO_BASIC = 'audio/basic',
       AUDIO_FLAC = 'audio/flac',
       AUDIO_L16 = 'audio/l16',
@@ -1935,14 +1995,11 @@ namespace TextToSpeechV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The voice to use for synthesis. If you omit the `voice` parameter, the service uses a default voice, which depends on the version of the service that you are using: * _For IBM Cloud,_ the service always uses the US English `en-US_MichaelV3Voice` by default. * _For IBM Cloud Pak for Data,_ the default voice depends on the voices that you installed. If you installed the _enhanced neural voices_, the service uses the US English `en-US_MichaelV3Voice` by default; if that voice is not installed, you must specify a voice. If you installed the _neural voices_, the service always uses the Australian English `en-AU_MadisonVoice` by default. **See also:** See also [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices). */
+    /** The voice to use for speech synthesis. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** * [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices) * [The default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default). */
     export enum Voice {
-      AR_AR_OMARVOICE = 'ar-AR_OmarVoice',
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
       CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
-      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
       DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
       EN_AU_CRAIGVOICE = 'en-AU_CraigVoice',
@@ -1950,33 +2007,22 @@ namespace TextToSpeechV1 {
       EN_AU_STEVEVOICE = 'en-AU_SteveVoice',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
-      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
-      EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
       EN_US_KEVINV3VOICE = 'en-US_KevinV3Voice',
-      EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
-      EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
-      ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
-      ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
-      ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
-      ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_CA_LOUISEV3VOICE = 'fr-CA_LouiseV3Voice',
       FR_FR_NICOLASV3VOICE = 'fr-FR_NicolasV3Voice',
-      FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
-      IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
       IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
-      JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       JA_JP_EMIV3VOICE = 'ja-JP_EmiV3Voice',
       KO_KR_HYUNJUNVOICE = 'ko-KR_HyunjunVoice',
       KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
@@ -1986,12 +2032,18 @@ namespace TextToSpeechV1 {
       NL_BE_BRAMVOICE = 'nl-BE_BramVoice',
       NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
       NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
-      PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
       SV_SE_INGRIDVOICE = 'sv-SE_IngridVoice',
       ZH_CN_LINAVOICE = 'zh-CN_LiNaVoice',
       ZH_CN_WANGWEIVOICE = 'zh-CN_WangWeiVoice',
       ZH_CN_ZHANGJINGVOICE = 'zh-CN_ZhangJingVoice',
+    }
+    /** *For German voices,* indicates how the service is to spell out strings of individual letters. To indicate the pace of the spelling, specify one of the following values: * `default` - The service reads the characters at the rate at which it synthesizes speech for the request. You can also omit the parameter entirely to achieve the default behavior. * `singles` - The service reads the characters one at a time, with a brief pause between each character. * `pairs` - The service reads the characters two at a time, with a brief pause between each pair. * `triples` - The service reads the characters three at a time, with a brief pause between each triplet. The parameter is available only for IBM Cloud. **See also:** [Specifying how strings are spelled out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode). */
+    export enum SpellOutMode {
+      DEFAULT = 'default',
+      SINGLES = 'singles',
+      PAIRS = 'pairs',
+      TRIPLES = 'triples',
     }
   }
 
@@ -1999,8 +2051,15 @@ namespace TextToSpeechV1 {
   export interface GetPronunciationParams {
     /** The word for which the pronunciation is requested. */
     text: string;
-    /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
-     *  language (for example, `en-US`) return the same translation.
+    /** A voice that specifies the language in which the pronunciation is to be returned. If you omit the `voice`
+     *  parameter, the service uses the US English `en-US_MichaelV3Voice` by default. All voices for the same language
+     *  (for example, `en-US`) return the same translation.
+     *
+     *  _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice
+     *  with the request or specify a new default voice for your installation of the service.
+     *
+     *  **See also:** [The default
+     *  voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
      */
     voice?: GetPronunciationConstants.Voice | string;
     /** The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, Australian English, and
@@ -2019,14 +2078,11 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `getPronunciation` operation. */
   export namespace GetPronunciationConstants {
-    /** A voice that specifies the language in which the pronunciation is to be returned. All voices for the same language (for example, `en-US`) return the same translation. */
+    /** A voice that specifies the language in which the pronunciation is to be returned. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. All voices for the same language (for example, `en-US`) return the same translation. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** [The default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default). */
     export enum Voice {
-      AR_AR_OMARVOICE = 'ar-AR_OmarVoice',
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
       CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
-      DE_DE_BIRGITVOICE = 'de-DE_BirgitVoice',
       DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
-      DE_DE_DIETERVOICE = 'de-DE_DieterVoice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
       EN_AU_CRAIGVOICE = 'en-AU_CraigVoice',
@@ -2034,33 +2090,22 @@ namespace TextToSpeechV1 {
       EN_AU_STEVEVOICE = 'en-AU_SteveVoice',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
-      EN_GB_KATEVOICE = 'en-GB_KateVoice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
-      EN_US_ALLISONVOICE = 'en-US_AllisonVoice',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
       EN_US_KEVINV3VOICE = 'en-US_KevinV3Voice',
-      EN_US_LISAVOICE = 'en-US_LisaVoice',
       EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
-      EN_US_MICHAELVOICE = 'en-US_MichaelVoice',
       EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
-      ES_ES_ENRIQUEVOICE = 'es-ES_EnriqueVoice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
-      ES_ES_LAURAVOICE = 'es-ES_LauraVoice',
       ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
-      ES_LA_SOFIAVOICE = 'es-LA_SofiaVoice',
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
-      ES_US_SOFIAVOICE = 'es-US_SofiaVoice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_CA_LOUISEV3VOICE = 'fr-CA_LouiseV3Voice',
       FR_FR_NICOLASV3VOICE = 'fr-FR_NicolasV3Voice',
-      FR_FR_RENEEVOICE = 'fr-FR_ReneeVoice',
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
-      IT_IT_FRANCESCAVOICE = 'it-IT_FrancescaVoice',
       IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
-      JA_JP_EMIVOICE = 'ja-JP_EmiVoice',
       JA_JP_EMIV3VOICE = 'ja-JP_EmiV3Voice',
       KO_KR_HYUNJUNVOICE = 'ko-KR_HyunjunVoice',
       KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
@@ -2070,7 +2115,6 @@ namespace TextToSpeechV1 {
       NL_BE_BRAMVOICE = 'nl-BE_BramVoice',
       NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
       NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
-      PT_BR_ISABELAVOICE = 'pt-BR_IsabelaVoice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
       SV_SE_INGRIDVOICE = 'sv-SE_IngridVoice',
       ZH_CN_LINAVOICE = 'zh-CN_LiNaVoice',
@@ -2091,10 +2135,6 @@ namespace TextToSpeechV1 {
     /** The language of the new custom model. You create a custom model for a specific language, not for a specific
      *  voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the
      *  default language, `en-US`.
-     *
-     *  **Important:** If you are using the service on IBM Cloud Pak for Data _and_ you install the neural voices, the
-     *  `language`parameter is required. You must specify the language for the custom model in the indicated format (for
-     *  example, `en-AU` for Australian English). The request fails if you do not specify a language.
      */
     language?: CreateCustomModelConstants.Language | string;
     /** A description of the new custom model. Specifying a description is recommended. */
@@ -2104,7 +2144,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `createCustomModel` operation. */
   export namespace CreateCustomModelConstants {
-    /** The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the default language, `en-US`. **Important:** If you are using the service on IBM Cloud Pak for Data _and_ you install the neural voices, the `language`parameter is required. You must specify the language for the custom model in the indicated format (for example, `en-AU` for Australian English). The request fails if you do not specify a language. */
+    /** The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the default language, `en-US`. */
     export enum Language {
       AR_MS = 'ar-MS',
       CS_CZ = 'cs-CZ',
