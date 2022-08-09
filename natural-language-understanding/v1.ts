@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,7 +24,7 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
@@ -48,7 +48,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   static DEFAULT_SERVICE_NAME: string = 'natural-language-understanding';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-   *  `2021-08-01`.
+   *  `2022-04-07`.
    */
   version: string;
 
@@ -57,7 +57,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
-   * format. The current version is `2021-08-01`.
+   * format. The current version is `2022-04-07`.
    * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -68,10 +68,10 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   constructor(options: UserOptions) {
     options = options || {};
 
-    const requiredParams = ['version'];
-    const missingParams = getMissingParams(options, requiredParams);
-    if (missingParams) {
-      throw missingParams;
+    const _requiredParams = ['version'];
+    const _validationErrors = validateParams(options, _requiredParams, null);
+    if (_validationErrors) {
+      throw _validationErrors;
     }
     if (!options.serviceName) {
       options.serviceName = NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME;
@@ -142,11 +142,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.AnalyzeParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
     const _params = { ...params };
-    const requiredParams = ['features'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['features'];
+    const _validParams = ['features', 'text', 'html', 'url', 'clean', 'xpath', 'fallbackToRaw', 'returnAnalyzedText', 'language', 'limitTextCharacters', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -213,6 +213,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params?: NaturalLanguageUnderstandingV1.ListModelsParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -259,11 +265,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.DeleteModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -329,11 +335,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.CreateSentimentModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
     const _params = { ...params };
-    const requiredParams = ['language', 'trainingData'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['language', 'trainingData'];
+    const _validParams = ['language', 'trainingData', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -395,6 +401,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params?: NaturalLanguageUnderstandingV1.ListSentimentModelsParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -441,11 +453,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.GetSentimentModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -509,11 +521,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.UpdateSentimentModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId', 'language', 'trainingData'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId', 'language', 'trainingData'];
+    const _validParams = ['modelId', 'language', 'trainingData', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -582,11 +594,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.DeleteSentimentModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -653,11 +665,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.CreateCategoriesModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
-    const requiredParams = ['language', 'trainingData'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['language', 'trainingData'];
+    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -719,6 +731,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params?: NaturalLanguageUnderstandingV1.ListCategoriesModelsParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModelList>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -765,11 +783,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.GetCategoriesModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -834,11 +852,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.UpdateCategoriesModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId', 'language', 'trainingData'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId', 'language', 'trainingData'];
+    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -907,11 +925,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.DeleteCategoriesModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -971,6 +989,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
    * Natural Language Understanding.
    * @param {string} [params.versionDescription] - The description of the version.
+   * @param {ClassificationsTrainingParameters} [params.trainingParameters] - Optional classifications training
+   * parameters along with model train requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
    */
@@ -978,11 +998,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.CreateClassificationsModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
-    const requiredParams = ['language', 'trainingData'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['language', 'trainingData'];
+    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -996,6 +1016,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
       'version_description': _params.versionDescription,
+      'training_parameters': _params.trainingParameters,
     };
 
     const query = {
@@ -1044,6 +1065,12 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params?: NaturalLanguageUnderstandingV1.ListClassificationsModelsParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModelList>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -1090,11 +1117,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.GetClassificationsModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1152,6 +1179,8 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
    * Natural Language Understanding.
    * @param {string} [params.versionDescription] - The description of the version.
+   * @param {ClassificationsTrainingParameters} [params.trainingParameters] - Optional classifications training
+   * parameters along with model train requests.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>>}
    */
@@ -1159,11 +1188,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.UpdateClassificationsModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId', 'language', 'trainingData'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId', 'language', 'trainingData'];
+    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -1177,6 +1206,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
       'version_description': _params.versionDescription,
+      'training_parameters': _params.trainingParameters,
     };
 
     const query = {
@@ -1232,11 +1262,11 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     params: NaturalLanguageUnderstandingV1.DeleteClassificationsModelParams
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1284,7 +1314,7 @@ namespace NaturalLanguageUnderstandingV1 {
   /** Options for the `NaturalLanguageUnderstandingV1` constructor. */
   export interface Options extends UserOptions {
     /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
-     *  `2021-08-01`.
+     *  `2022-04-07`.
      */
     version: string;
   }
@@ -1527,6 +1557,8 @@ namespace NaturalLanguageUnderstandingV1 {
     workspaceId?: string;
     /** The description of the version. */
     versionDescription?: string;
+    /** Optional classifications training parameters along with model train requests. */
+    trainingParameters?: ClassificationsTrainingParameters;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1573,6 +1605,8 @@ namespace NaturalLanguageUnderstandingV1 {
     workspaceId?: string;
     /** The description of the version. */
     versionDescription?: string;
+    /** Optional classifications training parameters along with model train requests. */
+    trainingParameters?: ClassificationsTrainingParameters;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1782,6 +1816,12 @@ namespace NaturalLanguageUnderstandingV1 {
     class_name?: string;
     /** Confidence score for the classification. Higher values indicate greater confidence. */
     confidence?: number;
+  }
+
+  /** Optional classifications training parameters along with model train requests. */
+  export interface ClassificationsTrainingParameters {
+    /** Model type selector to train either a single_label or a multi_label classifier. */
+    model_type?: string;
   }
 
   /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
