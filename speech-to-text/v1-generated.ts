@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,7 +24,7 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
@@ -118,6 +118,12 @@ class SpeechToTextV1 extends BaseService {
     params?: SpeechToTextV1.ListModelsParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModels>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const sdkHeaders = getSdkHeaders(
       SpeechToTextV1.DEFAULT_SERVICE_NAME,
@@ -165,11 +171,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.GetModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>> {
     const _params = { ...params };
-    const requiredParams = ['modelId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['modelId'];
+    const _validParams = ['modelId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -274,9 +280,16 @@ class SpeechToTextV1 extends BaseService {
    * also provide noticeably better transcription accuracy.
    *
    * You specify a next-generation model by using the `model` query parameter, as you do a previous-generation model.
-   * Many next-generation models also support the `low_latency` parameter, which is not available with
-   * previous-generation models. Next-generation models do not support all of the parameters that are available for use
-   * with previous-generation models.
+   * Most next-generation models support the `low_latency` parameter, and all next-generation models support the
+   * `character_insertion_bias` parameter. These parameters are not available with previous-generation models.
+   *
+   * Next-generation models do not support all of the speech recognition parameters that are available for use with
+   * previous-generation models. Next-generation models do not support the following parameters:
+   * * `acoustic_customization_id`
+   * * `keywords` and `keywords_threshold`
+   * * `max_alternatives`
+   * * `processing_metrics` and `processing_metrics_interval`
+   * * `word_alternatives_threshold`
    *
    * **Important:** Effective 15 March 2022, previous-generation models for all languages other than Arabic and Japanese
    * are deprecated. The deprecated models remain available until 15 September 2022, when they will be removed from the
@@ -310,9 +323,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {NodeJS.ReadableStream | Buffer} params.audio - The audio to transcribe.
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
-   * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
-   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Using a model
-   * for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use).
+   * @param {string} [params.model] - The model to use for speech recognition. If you omit the `model` parameter, the
+   * service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use
+   * `ar-MS_BroadbandModel` instead.)
+   *
+   * _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
+   * with the request or specify a new default model for your installation of the service.
+   *
+   * **See also:**
+   * * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
+   * * [The default
+   * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
    * specified with the `model` parameter. You must make the request with credentials for the instance of the service
@@ -404,9 +425,6 @@ class SpeechToTextV1 extends BaseService {
    * German, Japanese, Korean, and Spanish transcription only.
    *
    * See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
-   * @param {string} [params.customizationId] - **Deprecated.** Use the `language_customization_id` parameter to specify
-   * the customization ID (GUID) of a custom language model that is to be used with the recognition request. Do not
-   * specify both parameters with a request.
    * @param {string} [params.grammarName] - The name of a grammar that is to be used with the recognition request. If
    * you specify a grammar, you must also use the `language_customization_id` parameter to specify the name of the
    * custom language model for which the grammar is defined. The service recognizes only strings that are recognized by
@@ -468,7 +486,8 @@ class SpeechToTextV1 extends BaseService {
    * * 0.5 (the default) provides a reasonable compromise for the level of sensitivity.
    * * 1.0 suppresses no audio (speech detection sensitivity is disabled).
    *
-   * The values increase on a monotonic curve.
+   * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
+   * is typically more than sufficient.
    *
    * The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
    * detector
@@ -484,7 +503,8 @@ class SpeechToTextV1 extends BaseService {
    * * 0.5 provides a reasonable level of audio suppression for general usage.
    * * 1.0 suppresses all audio (no audio is transcribed).
    *
-   * The values increase on a monotonic curve.
+   * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
+   * is typically more than sufficient.
    *
    * The parameter is supported with all next-generation models and with most previous-generation models. See
    * [Background audio
@@ -496,12 +516,31 @@ class SpeechToTextV1 extends BaseService {
    * models produce transcription results faster than previous-generation models. The `low_latency` parameter causes the
    * models to produce results even more quickly, though the results might be less accurate when the parameter is used.
    *
-   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available only
-   * for some next-generation models. For a list of next-generation models that support low latency, see [Supported
-   * next-generation language
+   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
+   * most next-generation models.
+   * * For a list of next-generation models that support low latency, see [Supported next-generation language
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
    * * For more information about the `low_latency` parameter, see [Low
    * latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
+   * @param {number} [params.characterInsertionBias] - For next-generation `Multimedia` and `Telephony` models, an
+   * indication of whether the service is biased to recognize shorter or longer strings of characters when developing
+   * transcription hypotheses. By default, the service is optimized for each individual model to balance its recognition
+   * of strings of different lengths. The model-specific bias is equivalent to 0.0.
+   *
+   * The value that you specify represents a change from a model's default bias. The allowable range of values is -1.0
+   * to 1.0.
+   * * Negative values bias the service to favor hypotheses with shorter strings of characters.
+   * * Positive values bias the service to favor hypotheses with longer strings of characters.
+   *
+   * As the value approaches -1.0 or 1.0, the impact of the parameter becomes more pronounced. To determine the most
+   * effective value for your scenario, start by setting the value of the parameter to a small increment, such as -0.1,
+   * -0.05, 0.05, or 0.1, and assess how the value impacts the transcription results. Then experiment with different
+   * values as necessary, adjusting the value by small increments.
+   *
+   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models.
+   *
+   * See [Character insertion
+   * bias](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-parsing#insertion-bias).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>>}
    */
@@ -509,11 +548,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.RecognizeParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
     const _params = { ...params };
-    const requiredParams = ['audio'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['audio'];
+    const _validParams = ['audio', 'contentType', 'model', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = _params.audio;
@@ -533,7 +572,6 @@ class SpeechToTextV1 extends BaseService {
       'profanity_filter': _params.profanityFilter,
       'smart_formatting': _params.smartFormatting,
       'speaker_labels': _params.speakerLabels,
-      'customization_id': _params.customizationId,
       'grammar_name': _params.grammarName,
       'redaction': _params.redaction,
       'audio_metrics': _params.audioMetrics,
@@ -542,6 +580,7 @@ class SpeechToTextV1 extends BaseService {
       'speech_detector_sensitivity': _params.speechDetectorSensitivity,
       'background_audio_suppression': _params.backgroundAudioSuppression,
       'low_latency': _params.lowLatency,
+      'character_insertion_bias': _params.characterInsertionBias,
     };
 
     const sdkHeaders = getSdkHeaders(
@@ -623,11 +662,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.RegisterCallbackParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RegisterStatus>> {
     const _params = { ...params };
-    const requiredParams = ['callbackUrl'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['callbackUrl'];
+    const _validParams = ['callbackUrl', 'userSecret', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -681,11 +720,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.UnregisterCallbackParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['callbackUrl'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['callbackUrl'];
+    const _validParams = ['callbackUrl', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -808,9 +847,16 @@ class SpeechToTextV1 extends BaseService {
    * also provide noticeably better transcription accuracy.
    *
    * You specify a next-generation model by using the `model` query parameter, as you do a previous-generation model.
-   * Many next-generation models also support the `low_latency` parameter, which is not available with
-   * previous-generation models. Next-generation models do not support all of the parameters that are available for use
-   * with previous-generation models.
+   * Most next-generation models support the `low_latency` parameter, and all next-generation models support the
+   * `character_insertion_bias` parameter. These parameters are not available with previous-generation models.
+   *
+   * Next-generation models do not support all of the speech recognition parameters that are available for use with
+   * previous-generation models. Next-generation models do not support the following parameters:
+   * * `acoustic_customization_id`
+   * * `keywords` and `keywords_threshold`
+   * * `max_alternatives`
+   * * `processing_metrics` and `processing_metrics_interval`
+   * * `word_alternatives_threshold`
    *
    * **Important:** Effective 15 March 2022, previous-generation models for all languages other than Arabic and Japanese
    * are deprecated. The deprecated models remain available until 15 September 2022, when they will be removed from the
@@ -827,9 +873,17 @@ class SpeechToTextV1 extends BaseService {
    * @param {NodeJS.ReadableStream | Buffer} params.audio - The audio to transcribe.
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
-   * @param {string} [params.model] - The identifier of the model that is to be used for the recognition request.
-   * (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Using a model
-   * for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use).
+   * @param {string} [params.model] - The model to use for speech recognition. If you omit the `model` parameter, the
+   * service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use
+   * `ar-MS_BroadbandModel` instead.)
+   *
+   * _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
+   * with the request or specify a new default model for your installation of the service.
+   *
+   * **See also:**
+   * * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
+   * * [The default
+   * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
    * @param {string} [params.callbackUrl] - A URL to which callback notifications are to be sent. The URL must already
    * be successfully allowlisted by using the [Register a callback](#registercallback) method. You can include the same
    * callback URL with any number of job creation requests. Omit the parameter to poll the service for job completion
@@ -950,9 +1004,6 @@ class SpeechToTextV1 extends BaseService {
    * German, Japanese, Korean, and Spanish transcription only.
    *
    * See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
-   * @param {string} [params.customizationId] - **Deprecated.** Use the `language_customization_id` parameter to specify
-   * the customization ID (GUID) of a custom language model that is to be used with the recognition request. Do not
-   * specify both parameters with a request.
    * @param {string} [params.grammarName] - The name of a grammar that is to be used with the recognition request. If
    * you specify a grammar, you must also use the `language_customization_id` parameter to specify the name of the
    * custom language model for which the grammar is defined. The service recognizes only strings that are recognized by
@@ -1034,7 +1085,8 @@ class SpeechToTextV1 extends BaseService {
    * * 0.5 (the default) provides a reasonable compromise for the level of sensitivity.
    * * 1.0 suppresses no audio (speech detection sensitivity is disabled).
    *
-   * The values increase on a monotonic curve.
+   * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
+   * is typically more than sufficient.
    *
    * The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
    * detector
@@ -1050,7 +1102,8 @@ class SpeechToTextV1 extends BaseService {
    * * 0.5 provides a reasonable level of audio suppression for general usage.
    * * 1.0 suppresses all audio (no audio is transcribed).
    *
-   * The values increase on a monotonic curve.
+   * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
+   * is typically more than sufficient.
    *
    * The parameter is supported with all next-generation models and with most previous-generation models. See
    * [Background audio
@@ -1062,12 +1115,31 @@ class SpeechToTextV1 extends BaseService {
    * models produce transcription results faster than previous-generation models. The `low_latency` parameter causes the
    * models to produce results even more quickly, though the results might be less accurate when the parameter is used.
    *
-   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available only
-   * for some next-generation models. For a list of next-generation models that support low latency, see [Supported
-   * next-generation language
+   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
+   * most next-generation models.
+   * * For a list of next-generation models that support low latency, see [Supported next-generation language
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
    * * For more information about the `low_latency` parameter, see [Low
    * latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
+   * @param {number} [params.characterInsertionBias] - For next-generation `Multimedia` and `Telephony` models, an
+   * indication of whether the service is biased to recognize shorter or longer strings of characters when developing
+   * transcription hypotheses. By default, the service is optimized for each individual model to balance its recognition
+   * of strings of different lengths. The model-specific bias is equivalent to 0.0.
+   *
+   * The value that you specify represents a change from a model's default bias. The allowable range of values is -1.0
+   * to 1.0.
+   * * Negative values bias the service to favor hypotheses with shorter strings of characters.
+   * * Positive values bias the service to favor hypotheses with longer strings of characters.
+   *
+   * As the value approaches -1.0 or 1.0, the impact of the parameter becomes more pronounced. To determine the most
+   * effective value for your scenario, start by setting the value of the parameter to a small increment, such as -0.1,
+   * -0.05, 0.05, or 0.1, and assess how the value impacts the transcription results. Then experiment with different
+   * values as necessary, adjusting the value by small increments.
+   *
+   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models.
+   *
+   * See [Character insertion
+   * bias](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-parsing#insertion-bias).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>>}
    */
@@ -1075,11 +1147,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.CreateJobParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
     const _params = { ...params };
-    const requiredParams = ['audio'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['audio'];
+    const _validParams = ['audio', 'contentType', 'model', 'callbackUrl', 'events', 'userToken', 'resultsTtl', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'speakerLabels', 'grammarName', 'redaction', 'processingMetrics', 'processingMetricsInterval', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = _params.audio;
@@ -1103,7 +1175,6 @@ class SpeechToTextV1 extends BaseService {
       'profanity_filter': _params.profanityFilter,
       'smart_formatting': _params.smartFormatting,
       'speaker_labels': _params.speakerLabels,
-      'customization_id': _params.customizationId,
       'grammar_name': _params.grammarName,
       'redaction': _params.redaction,
       'processing_metrics': _params.processingMetrics,
@@ -1114,6 +1185,7 @@ class SpeechToTextV1 extends BaseService {
       'speech_detector_sensitivity': _params.speechDetectorSensitivity,
       'background_audio_suppression': _params.backgroundAudioSuppression,
       'low_latency': _params.lowLatency,
+      'character_insertion_bias': _params.characterInsertionBias,
     };
 
     const sdkHeaders = getSdkHeaders(
@@ -1166,6 +1238,12 @@ class SpeechToTextV1 extends BaseService {
     params?: SpeechToTextV1.CheckJobsParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJobs>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const sdkHeaders = getSdkHeaders(
       SpeechToTextV1.DEFAULT_SERVICE_NAME,
@@ -1218,11 +1296,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.CheckJobParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
     const _params = { ...params };
-    const requiredParams = ['id'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['id'];
+    const _validParams = ['id', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1275,11 +1353,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteJobParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['id'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['id'];
+    const _validParams = ['id', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1371,11 +1449,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.CreateLanguageModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
     const _params = { ...params };
-    const requiredParams = ['name', 'baseModelName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['name', 'baseModelName'];
+    const _validParams = ['name', 'baseModelName', 'dialect', 'description', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1443,6 +1521,12 @@ class SpeechToTextV1 extends BaseService {
     params?: SpeechToTextV1.ListLanguageModelsParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModels>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['language', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'language': _params.language,
@@ -1498,11 +1582,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.GetLanguageModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1560,11 +1644,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteLanguageModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1660,6 +1744,10 @@ class SpeechToTextV1 extends BaseService {
    *
    * See [Using customization
    * weight](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageUse#weight).
+   * @param {boolean} [params.strict] - If `false`, allows training of the custom language model to proceed as long as
+   * the model contains at least one valid resource. The method returns an array of `TrainingWarning` objects that lists
+   * any invalid resources. By default (`true`), training of a custom language model fails (status code 400) if the
+   * model contains one or more invalid resources (corpus files, grammar files, or custom words).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>>}
    */
@@ -1667,16 +1755,17 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.TrainLanguageModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'wordTypeToAdd', 'customizationWeight', 'strict', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
       'word_type_to_add': _params.wordTypeToAdd,
       'customization_weight': _params.customizationWeight,
+      'strict': _params.strict,
     };
 
     const path = {
@@ -1736,11 +1825,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.ResetLanguageModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1808,11 +1897,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.UpgradeLanguageModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1871,11 +1960,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.ListCorporaParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpora>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -1933,7 +2022,8 @@ class SpeechToTextV1 extends BaseService {
    * resource with words from the corpus that are not found in its base vocabulary. These words are referred to as
    * out-of-vocabulary (OOV) words. After adding a corpus, you must validate the words resource to ensure that each OOV
    * word's definition is complete and valid. You can use the [List custom words](#listwords) method to examine the
-   * words resource. You can use other words method to eliminate typos and modify how words are pronounced as needed.
+   * words resource. You can use other words method to eliminate typos and modify how words are pronounced and displayed
+   * as needed.
    *
    * To add a corpus file that has the same name as an existing corpus, set the `allow_overwrite` parameter to `true`;
    * otherwise, the request fails. Overwriting an existing corpus causes the service to process the corpus text file and
@@ -1993,11 +2083,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.AddCorpusParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'corpusName', 'corpusFile'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'corpusName', 'corpusFile'];
+    const _validParams = ['customizationId', 'corpusName', 'corpusFile', 'allowOverwrite', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const formData = {
@@ -2069,11 +2159,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.GetCorpusParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Corpus>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'corpusName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'corpusName'];
+    const _validParams = ['customizationId', 'corpusName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -2137,11 +2227,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteCorpusParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'corpusName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'corpusName'];
+    const _validParams = ['customizationId', 'corpusName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -2185,9 +2275,12 @@ class SpeechToTextV1 extends BaseService {
    * Lists information about custom words from a custom language model. You can list all words from the custom model's
    * words resource, only custom words that were added or modified by the user, or, _for a custom model that is based on
    * a previous-generation model_, only out-of-vocabulary (OOV) words that were extracted from corpora or are recognized
-   * by grammars. You can also indicate the order in which the service is to return words; by default, the service lists
-   * words in ascending alphabetical order. You must use credentials for the instance of the service that owns a model
-   * to list information about its words.
+   * by grammars. _For a custom model that is based on a next-generation model_, you can list all words or only those
+   * words that were added directly by a user, which return the same results.
+   *
+   * You can also indicate the order in which the service is to return words; by default, the service lists words in
+   * ascending alphabetical order. You must use credentials for the instance of the service that owns a model to list
+   * information about its words.
    *
    * **See also:** [Listing words from a custom language
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageWords#listWords).
@@ -2217,11 +2310,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.ListWordsParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Words>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'wordType', 'sort', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2284,13 +2377,13 @@ class SpeechToTextV1 extends BaseService {
    * * The `display_as` field provides a different way of spelling the word in a transcript. Use the parameter when you
    * want the word to appear different from its usual representation or from its spelling in training data. For example,
    * you might indicate that the word `IBM` is to be displayed as `IBM&trade;`.
-   * * The `sounds_like` field, _which can be used only with a custom model that is based on a previous-generation
-   * model_, provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can
-   * be pronounced by users. Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and
-   * so on. For example, you might specify that the word `IEEE` can sound like `i triple e`. You can specify a maximum
-   * of five sounds-like pronunciations for a word. If you omit the `sounds_like` field, the service attempts to set the
-   * field to its pronunciation of the word. It cannot generate a pronunciation for all words, so you must review the
-   * word's definition to ensure that it is complete and valid.
+   * * The `sounds_like` field provides an array of one or more pronunciations for the word. Use the parameter to
+   * specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce,
+   * foreign words, acronyms, and so on. For example, you might specify that the word `IEEE` can sound like `I triple
+   * E`. You can specify a maximum of five sounds-like pronunciations for a word. _For a custom model that is based on a
+   * previous-generation model_, if you omit the `sounds_like` field, the service attempts to set the field to its
+   * pronunciation of the word. It cannot generate a pronunciation for all words, so you must review the word's
+   * definition to ensure that it is complete and valid.
    *
    * If you add a custom word that already exists in the words resource for the custom model, the new definition
    * overwrites the existing data for the word. If the service encounters an error with the input data, it returns a
@@ -2335,11 +2428,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.AddWordsParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'words'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'words'];
+    const _validParams = ['customizationId', 'words', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2400,13 +2493,13 @@ class SpeechToTextV1 extends BaseService {
    * * The `display_as` field provides a different way of spelling the word in a transcript. Use the parameter when you
    * want the word to appear different from its usual representation or from its spelling in training data. For example,
    * you might indicate that the word `IBM` is to be displayed as `IBM&trade;`.
-   * * The `sounds_like` field, _which can be used only with a custom model that is based on a previous-generation
-   * model_, provides an array of one or more pronunciations for the word. Use the parameter to specify how the word can
-   * be pronounced by users. Use the parameter for words that are difficult to pronounce, foreign words, acronyms, and
-   * so on. For example, you might specify that the word `IEEE` can sound like `i triple e`. You can specify a maximum
-   * of five sounds-like pronunciations for a word. If you omit the `sounds_like` field, the service attempts to set the
-   * field to its pronunciation of the word. It cannot generate a pronunciation for all words, so you must review the
-   * word's definition to ensure that it is complete and valid.
+   * * The `sounds_like` field provides an array of one or more pronunciations for the word. Use the parameter to
+   * specify how the word can be pronounced by users. Use the parameter for words that are difficult to pronounce,
+   * foreign words, acronyms, and so on. For example, you might specify that the word `IEEE` can sound like `i triple
+   * e`. You can specify a maximum of five sounds-like pronunciations for a word. _For custom models that are based on
+   * previous-generation models_, if you omit the `sounds_like` field, the service attempts to set the field to its
+   * pronunciation of the word. It cannot generate a pronunciation for all words, so you must review the word's
+   * definition to ensure that it is complete and valid.
    *
    * If you add a custom word that already exists in the words resource for the custom model, the new definition
    * overwrites the existing data for the word. If the service encounters an error, it does not add the word to the
@@ -2437,23 +2530,22 @@ class SpeechToTextV1 extends BaseService {
    * (underscore) to connect the tokens of compound words.
    *
    * Omit this parameter for the [Add a custom word](#addword) method.
-   * @param {string[]} [params.soundsLike] - _For a custom model that is based on a previous-generation model_, an array
-   * of sounds-like pronunciations for the custom word. Specify how words that are difficult to pronounce, foreign
-   * words, acronyms, and so on can be pronounced by users.
-   * * For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically
-   * generate a sounds-like pronunciation for the word.
+   * @param {string[]} [params.soundsLike] - As array of sounds-like pronunciations for the custom word. Specify how
+   * words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users.
+   * * _For custom models that are based on previous-generation models_, for a word that is not in the service's base
+   * vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the word.
    * * For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations for
    * the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation
    * from the base vocabulary.
    *
    * A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
    * including spaces.
-   *
-   * _For a custom model that is based on a next-generation model_, omit this field. Custom models based on
-   * next-generation models do not support the `sounds_like` field. The service ignores the field.
    * @param {string} [params.displayAs] - An alternative spelling for the custom word when it appears in a transcript.
    * Use the parameter when you want the word to have a spelling that is different from its usual representation or from
    * its spelling in corpora training data.
+   *
+   * _For custom models that are based on next-generation models_, the service uses the spelling of the word as the
+   * display-as value if you omit the field.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
    */
@@ -2461,11 +2553,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.AddWordParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'wordName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'wordName'];
+    const _validParams = ['customizationId', 'wordName', 'word', 'soundsLike', 'displayAs', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2531,11 +2623,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.GetWordParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Word>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'wordName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'wordName'];
+    const _validParams = ['customizationId', 'wordName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -2596,11 +2688,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteWordParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'wordName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'wordName'];
+    const _validParams = ['customizationId', 'wordName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -2662,11 +2754,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.ListGrammarsParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammars>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -2775,11 +2867,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.AddGrammarParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'grammarName', 'grammarFile', 'contentType'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'grammarName', 'grammarFile', 'contentType'];
+    const _validParams = ['customizationId', 'grammarName', 'grammarFile', 'contentType', 'allowOverwrite', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = _params.grammarFile;
@@ -2847,11 +2939,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.GetGrammarParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Grammar>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'grammarName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'grammarName'];
+    const _validParams = ['customizationId', 'grammarName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -2914,11 +3006,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteGrammarParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'grammarName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'grammarName'];
+    const _validParams = ['customizationId', 'grammarName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -2999,11 +3091,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.CreateAcousticModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
     const _params = { ...params };
-    const requiredParams = ['name', 'baseModelName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['name', 'baseModelName'];
+    const _validParams = ['name', 'baseModelName', 'description', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -3070,6 +3162,12 @@ class SpeechToTextV1 extends BaseService {
     params?: SpeechToTextV1.ListAcousticModelsParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModels>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['language', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'language': _params.language,
@@ -3125,11 +3223,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.GetAcousticModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -3187,11 +3285,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteAcousticModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -3288,6 +3386,10 @@ class SpeechToTextV1 extends BaseService {
    * audio resources. The custom language model must be based on the same version of the same base model as the custom
    * acoustic model, and the custom language model must be fully trained and available. The credentials specified with
    * the request must own both custom models.
+   * @param {boolean} [params.strict] - If `false`, allows training of the custom acoustic model to proceed as long as
+   * the model contains at least one valid audio resource. The method returns an array of `TrainingWarning` objects that
+   * lists any invalid resources. By default (`true`), training of a custom acoustic model fails (status code 400) if
+   * the model contains one or more invalid audio resources.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>>}
    */
@@ -3295,15 +3397,16 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.TrainAcousticModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'customLanguageModelId', 'strict', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
       'custom_language_model_id': _params.customLanguageModelId,
+      'strict': _params.strict,
     };
 
     const path = {
@@ -3365,11 +3468,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.ResetAcousticModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -3453,11 +3556,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.UpgradeAcousticModelParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'customLanguageModelId', 'force', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3526,11 +3629,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.ListAudioParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioResources>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId'];
+    const _validParams = ['customizationId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -3699,11 +3802,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.AddAudioParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'audioName', 'audioResource'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'audioName', 'audioResource'];
+    const _validParams = ['customizationId', 'audioName', 'audioResource', 'contentType', 'containedContentType', 'allowOverwrite', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = _params.audioResource;
@@ -3784,11 +3887,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.GetAudioParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.AudioListing>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'audioName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'audioName'];
+    const _validParams = ['customizationId', 'audioName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -3852,11 +3955,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteAudioParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customizationId', 'audioName'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customizationId', 'audioName'];
+    const _validParams = ['customizationId', 'audioName', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const path = {
@@ -3920,11 +4023,11 @@ class SpeechToTextV1 extends BaseService {
     params: SpeechToTextV1.DeleteUserDataParams
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customerId'];
+    const _validParams = ['customerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -4052,6 +4155,7 @@ namespace SpeechToTextV1 {
       HI_IN_TELEPHONY = 'hi-IN_Telephony',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
+      IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
@@ -4065,6 +4169,7 @@ namespace SpeechToTextV1 {
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
+      PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
@@ -4081,9 +4186,18 @@ namespace SpeechToTextV1 {
      *  formats (content types)** in the method description.
      */
     contentType?: RecognizeConstants.ContentType | string;
-    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model
-     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Using a model for speech
-     *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use).
+    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English
+     *  `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel`
+     *  instead.)
+     *
+     *  _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
+     *  with the request or specify a new default model for your installation of the service.
+     *
+     *  **See also:**
+     *  * [Using a model for speech
+     *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
+     *  * [The default
+     *  model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
      */
     model?: RecognizeConstants.Model | string;
     /** The customization ID (GUID) of a custom language model that is to be used with the recognition request. The
@@ -4204,11 +4318,6 @@ namespace SpeechToTextV1 {
      *  See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
      */
     speakerLabels?: boolean;
-    /** **Deprecated.** Use the `language_customization_id` parameter to specify the customization ID (GUID) of a
-     *  custom language model that is to be used with the recognition request. Do not specify both parameters with a
-     *  request.
-     */
-    customizationId?: string;
     /** The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must
      *  also use the `language_customization_id` parameter to specify the name of the custom language model for which
      *  the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it
@@ -4277,7 +4386,8 @@ namespace SpeechToTextV1 {
      *  * 0.5 (the default) provides a reasonable compromise for the level of sensitivity.
      *  * 1.0 suppresses no audio (speech detection sensitivity is disabled).
      *
-     *  The values increase on a monotonic curve.
+     *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
+     *  `0.55`) is typically more than sufficient.
      *
      *  The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
      *  detector
@@ -4294,7 +4404,8 @@ namespace SpeechToTextV1 {
      *  * 0.5 provides a reasonable level of audio suppression for general usage.
      *  * 1.0 suppresses all audio (no audio is transcribed).
      *
-     *  The values increase on a monotonic curve.
+     *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
+     *  `0.55`) is typically more than sufficient.
      *
      *  The parameter is supported with all next-generation models and with most previous-generation models. See
      *  [Background audio
@@ -4308,14 +4419,35 @@ namespace SpeechToTextV1 {
      *  results faster than previous-generation models. The `low_latency` parameter causes the models to produce results
      *  even more quickly, though the results might be less accurate when the parameter is used.
      *
-     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available only
-     *  for some next-generation models. For a list of next-generation models that support low latency, see [Supported
-     *  next-generation language
+     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
+     *  most next-generation models.
+     *  * For a list of next-generation models that support low latency, see [Supported next-generation language
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
      *  * For more information about the `low_latency` parameter, see [Low
      *  latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
      */
     lowLatency?: boolean;
+    /** For next-generation `Multimedia` and `Telephony` models, an indication of whether the service is biased to
+     *  recognize shorter or longer strings of characters when developing transcription hypotheses. By default, the
+     *  service is optimized for each individual model to balance its recognition of strings of different lengths. The
+     *  model-specific bias is equivalent to 0.0.
+     *
+     *  The value that you specify represents a change from a model's default bias. The allowable range of values is
+     *  -1.0 to 1.0.
+     *  * Negative values bias the service to favor hypotheses with shorter strings of characters.
+     *  * Positive values bias the service to favor hypotheses with longer strings of characters.
+     *
+     *  As the value approaches -1.0 or 1.0, the impact of the parameter becomes more pronounced. To determine the most
+     *  effective value for your scenario, start by setting the value of the parameter to a small increment, such as
+     *  -0.1, -0.05, 0.05, or 0.1, and assess how the value impacts the transcription results. Then experiment with
+     *  different values as necessary, adjusting the value by small increments.
+     *
+     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models.
+     *
+     *  See [Character insertion
+     *  bias](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-parsing#insertion-bias).
+     */
+    characterInsertionBias?: number;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4340,7 +4472,7 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use). */
+    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model with the request or specify a new default model for your installation of the service. **See also:** * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use) * [The default model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default). */
     export enum Model {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
@@ -4390,6 +4522,7 @@ namespace SpeechToTextV1 {
       HI_IN_TELEPHONY = 'hi-IN_Telephony',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
+      IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
@@ -4403,6 +4536,7 @@ namespace SpeechToTextV1 {
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
+      PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
@@ -4442,9 +4576,18 @@ namespace SpeechToTextV1 {
      *  formats (content types)** in the method description.
      */
     contentType?: CreateJobConstants.ContentType | string;
-    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model
-     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Using a model for speech
-     *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use).
+    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English
+     *  `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel`
+     *  instead.)
+     *
+     *  _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
+     *  with the request or specify a new default model for your installation of the service.
+     *
+     *  **See also:**
+     *  * [Using a model for speech
+     *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
+     *  * [The default
+     *  model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
      */
     model?: CreateJobConstants.Model | string;
     /** A URL to which callback notifications are to be sent. The URL must already be successfully allowlisted by
@@ -4601,11 +4744,6 @@ namespace SpeechToTextV1 {
      *  See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
      */
     speakerLabels?: boolean;
-    /** **Deprecated.** Use the `language_customization_id` parameter to specify the customization ID (GUID) of a
-     *  custom language model that is to be used with the recognition request. Do not specify both parameters with a
-     *  request.
-     */
-    customizationId?: string;
     /** The name of a grammar that is to be used with the recognition request. If you specify a grammar, you must
      *  also use the `language_customization_id` parameter to specify the name of the custom language model for which
      *  the grammar is defined. The service recognizes only strings that are recognized by the specified grammar; it
@@ -4697,7 +4835,8 @@ namespace SpeechToTextV1 {
      *  * 0.5 (the default) provides a reasonable compromise for the level of sensitivity.
      *  * 1.0 suppresses no audio (speech detection sensitivity is disabled).
      *
-     *  The values increase on a monotonic curve.
+     *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
+     *  `0.55`) is typically more than sufficient.
      *
      *  The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
      *  detector
@@ -4714,7 +4853,8 @@ namespace SpeechToTextV1 {
      *  * 0.5 provides a reasonable level of audio suppression for general usage.
      *  * 1.0 suppresses all audio (no audio is transcribed).
      *
-     *  The values increase on a monotonic curve.
+     *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
+     *  `0.55`) is typically more than sufficient.
      *
      *  The parameter is supported with all next-generation models and with most previous-generation models. See
      *  [Background audio
@@ -4728,14 +4868,35 @@ namespace SpeechToTextV1 {
      *  results faster than previous-generation models. The `low_latency` parameter causes the models to produce results
      *  even more quickly, though the results might be less accurate when the parameter is used.
      *
-     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available only
-     *  for some next-generation models. For a list of next-generation models that support low latency, see [Supported
-     *  next-generation language
+     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
+     *  most next-generation models.
+     *  * For a list of next-generation models that support low latency, see [Supported next-generation language
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
      *  * For more information about the `low_latency` parameter, see [Low
      *  latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
      */
     lowLatency?: boolean;
+    /** For next-generation `Multimedia` and `Telephony` models, an indication of whether the service is biased to
+     *  recognize shorter or longer strings of characters when developing transcription hypotheses. By default, the
+     *  service is optimized for each individual model to balance its recognition of strings of different lengths. The
+     *  model-specific bias is equivalent to 0.0.
+     *
+     *  The value that you specify represents a change from a model's default bias. The allowable range of values is
+     *  -1.0 to 1.0.
+     *  * Negative values bias the service to favor hypotheses with shorter strings of characters.
+     *  * Positive values bias the service to favor hypotheses with longer strings of characters.
+     *
+     *  As the value approaches -1.0 or 1.0, the impact of the parameter becomes more pronounced. To determine the most
+     *  effective value for your scenario, start by setting the value of the parameter to a small increment, such as
+     *  -0.1, -0.05, 0.05, or 0.1, and assess how the value impacts the transcription results. Then experiment with
+     *  different values as necessary, adjusting the value by small increments.
+     *
+     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models.
+     *
+     *  See [Character insertion
+     *  bias](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-parsing#insertion-bias).
+     */
+    characterInsertionBias?: number;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4760,7 +4921,7 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The identifier of the model that is to be used for the recognition request. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) See [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use). */
+    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model with the request or specify a new default model for your installation of the service. **See also:** * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use) * [The default model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default). */
     export enum Model {
       AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
@@ -4810,6 +4971,7 @@ namespace SpeechToTextV1 {
       HI_IN_TELEPHONY = 'hi-IN_Telephony',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
+      IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
@@ -4823,6 +4985,7 @@ namespace SpeechToTextV1 {
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
+      PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
@@ -4948,6 +5111,7 @@ namespace SpeechToTextV1 {
       HI_IN_TELEPHONY = 'hi-IN_Telephony',
       IT_IT_BROADBANDMODEL = 'it-IT_BroadbandModel',
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
+      IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
@@ -4961,6 +5125,7 @@ namespace SpeechToTextV1 {
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
+      PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
       ZH_CN_TELEPHONY = 'zh-CN_Telephony',
@@ -5065,6 +5230,12 @@ namespace SpeechToTextV1 {
      *  weight](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageUse#weight).
      */
     customizationWeight?: number;
+    /** If `false`, allows training of the custom language model to proceed as long as the model contains at least
+     *  one valid resource. The method returns an array of `TrainingWarning` objects that lists any invalid resources.
+     *  By default (`true`), training of a custom language model fails (status code 400) if the model contains one or
+     *  more invalid resources (corpus files, grammar files, or custom words).
+     */
+    strict?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5239,25 +5410,25 @@ namespace SpeechToTextV1 {
      *  Omit this parameter for the [Add a custom word](#addword) method.
      */
     word?: string;
-    /** _For a custom model that is based on a previous-generation model_, an array of sounds-like pronunciations
-     *  for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can
-     *  be pronounced by users.
-     *  * For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically
-     *  generate a sounds-like pronunciation for the word.
+    /** As array of sounds-like pronunciations for the custom word. Specify how words that are difficult to
+     *  pronounce, foreign words, acronyms, and so on can be pronounced by users.
+     *  * _For custom models that are based on previous-generation models_, for a word that is not in the service's base
+     *  vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the
+     *  word.
      *  * For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations
      *  for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the
      *  pronunciation from the base vocabulary.
      *
      *  A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
      *  including spaces.
-     *
-     *  _For a custom model that is based on a next-generation model_, omit this field. Custom models based on
-     *  next-generation models do not support the `sounds_like` field. The service ignores the field.
      */
     soundsLike?: string[];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want
      *  the word to have a spelling that is different from its usual representation or from its spelling in corpora
      *  training data.
+     *
+     *  _For custom models that are based on next-generation models_, the service uses the spelling of the word as the
+     *  display-as value if you omit the field.
      */
     displayAs?: string;
     headers?: OutgoingHttpHeaders;
@@ -5521,6 +5692,12 @@ namespace SpeechToTextV1 {
      *  custom models.
      */
     customLanguageModelId?: string;
+    /** If `false`, allows training of the custom acoustic model to proceed as long as the model contains at least
+     *  one valid audio resource. The method returns an array of `TrainingWarning` objects that lists any invalid
+     *  resources. By default (`true`), training of a custom acoustic model fails (status code 400) if the model
+     *  contains one or more invalid audio resources.
+     */
+    strict?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5958,25 +6135,25 @@ namespace SpeechToTextV1 {
      *  Omit this parameter for the [Add a custom word](#addword) method.
      */
     word?: string;
-    /** _For a custom model that is based on a previous-generation model_, an array of sounds-like pronunciations
-     *  for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can
-     *  be pronounced by users.
-     *  * For a word that is not in the service's base vocabulary, omit the parameter to have the service automatically
-     *  generate a sounds-like pronunciation for the word.
+    /** As array of sounds-like pronunciations for the custom word. Specify how words that are difficult to
+     *  pronounce, foreign words, acronyms, and so on can be pronounced by users.
+     *  * _For custom models that are based on previous-generation models_, for a word that is not in the service's base
+     *  vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the
+     *  word.
      *  * For a word that is in the service's base vocabulary, use the parameter to specify additional pronunciations
      *  for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the
      *  pronunciation from the base vocabulary.
      *
      *  A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
      *  including spaces.
-     *
-     *  _For a custom model that is based on a next-generation model_, omit this field. Custom models based on
-     *  next-generation models do not support the `sounds_like` field. The service ignores the field.
      */
     sounds_like?: string[];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want
      *  the word to have a spelling that is different from its usual representation or from its spelling in corpora
      *  training data.
+     *
+     *  _For custom models that are based on next-generation models_, the service uses the spelling of the word as the
+     *  display-as value if you omit the field.
      */
     display_as?: string;
   }
@@ -6197,7 +6374,9 @@ namespace SpeechToTextV1 {
     /** An array of warning messages about invalid parameters included with the request. Each warning includes a
      *  descriptive message and a list of invalid argument strings, for example, `"unexpected query parameter
      *  'user_token', query parameter 'callback_url' was not specified"`. The request succeeds despite the warnings.
-     *  This field can be returned only by the [Create a job](#createjob) method.
+     *  This field can be returned only by the [Create a job](#createjob) method. (If you use the
+     *  `character_insertion_bias` parameter with a previous-generation model, the warning message refers to the
+     *  parameter as `lambdaBias`.).
      */
     warnings?: string[];
   }
@@ -6365,7 +6544,8 @@ namespace SpeechToTextV1 {
     /** An array of warning messages associated with the request:
      *  * Warnings for invalid parameters or fields can include a descriptive message and a list of invalid argument
      *  strings, for example, `"Unknown arguments:"` or `"Unknown url query arguments:"` followed by a list of the form
-     *  `"{invalid_arg_1}, {invalid_arg_2}."`
+     *  `"{invalid_arg_1}, {invalid_arg_2}."` (If you use the `character_insertion_bias` parameter with a
+     *  previous-generation model, the warning message refers to the parameter as `lambdaBias`.)
      *  * The following warning is returned if the request passes a custom model that is based on an older version of a
      *  base model for which an updated version is available: `"Using previous version of base model, because your
      *  custom model has been built with it. Please note that this version will be supported only for a limited time.
@@ -6431,18 +6611,20 @@ namespace SpeechToTextV1 {
   export interface Word {
     /** A word from the custom model's words resource. The spelling of the word is used to train the model. */
     word: string;
-    /** _For a custom model that is based on a previous-generation model_, an array of as many as five
-     *  pronunciations for the word. The array can include the sounds-like pronunciation that is automatically generated
-     *  by the service if none is provided when the word is added to the custom model; the service adds this
-     *  pronunciation when it finishes processing the word.
-     *
-     *  _For a custom model that is based on a next-generation model_, this field does not apply. Custom models based on
-     *  next-generation models do not support the `sounds_like` field, which is ignored.
+    /** An array of as many as five pronunciations for the word.
+     *  * _For a custom model that is based on a previous-generation model_, in addition to sounds-like pronunciations
+     *  that were added by a user, the array can include a sounds-like pronunciation that is automatically generated by
+     *  the service if none is provided when the word is added to the custom model.
+     *  * _For a custom model that is based on a next-generation model_, the array can include only sounds-like
+     *  pronunciations that were added by a user.
      */
     sounds_like: string[];
-    /** The spelling of the word that the service uses to display the word in a transcript. The field contains an
-     *  empty string if no display-as value is provided for the word, in which case the word is displayed as it is
-     *  spelled.
+    /** The spelling of the word that the service uses to display the word in a transcript.
+     *  * _For a custom model that is based on a previous-generation model_, the field can contain an empty string if no
+     *  display-as value is provided for a word that exists in the service's base vocabulary. In this case, the word is
+     *  displayed as it is spelled.
+     *  * _For a custom model that is based on a next-generation model_, the service uses the spelling of the word as
+     *  the value of the display-as field when the word is added to the model.
      */
     display_as: string;
     /** _For a custom model that is based on a previous-generation model_, a sum of the number of times the word is
