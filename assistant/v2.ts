@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,7 +24,7 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
@@ -66,10 +66,10 @@ class AssistantV2 extends BaseService {
   constructor(options: UserOptions) {
     options = options || {};
 
-    const requiredParams = ['version'];
-    const missingParams = getMissingParams(options, requiredParams);
-    if (missingParams) {
-      throw missingParams;
+    const _requiredParams = ['version'];
+    const _validationErrors = validateParams(options, _requiredParams, null);
+    if (_validationErrors) {
+      throw _validationErrors;
     }
     if (!options.serviceName) {
       options.serviceName = AssistantV2.DEFAULT_SERVICE_NAME;
@@ -105,6 +105,7 @@ class AssistantV2 extends BaseService {
    * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
    *
    * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {CreateSession} [params.createSession] -
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.SessionResponse>>}
    */
@@ -112,12 +113,15 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.CreateSessionParams
   ): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
     const _params = { ...params };
-    const requiredParams = ['assistantId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
+
+    const body = {
+    };
 
     const query = {
       'version': this.version,
@@ -137,6 +141,7 @@ class AssistantV2 extends BaseService {
       options: {
         url: '/v2/assistants/{assistant_id}/sessions',
         method: 'POST',
+        body,
         qs: query,
         path,
       },
@@ -146,6 +151,7 @@ class AssistantV2 extends BaseService {
           sdkHeaders,
           {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
           },
           _params.headers
         ),
@@ -176,11 +182,11 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.DeleteSessionParams
   ): Promise<AssistantV2.Response<AssistantV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['assistantId', 'sessionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['assistantId', 'sessionId'];
+    const _validParams = ['assistantId', 'sessionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -258,11 +264,11 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.MessageParams
   ): Promise<AssistantV2.Response<AssistantV2.MessageResponse>> {
     const _params = { ...params };
-    const requiredParams = ['assistantId', 'sessionId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['assistantId', 'sessionId'];
+    const _validParams = ['assistantId', 'sessionId', 'input', 'context', 'userId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -344,11 +350,11 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.MessageStatelessParams
   ): Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>> {
     const _params = { ...params };
-    const requiredParams = ['assistantId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'input', 'context', 'userId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -410,7 +416,7 @@ class AssistantV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.skillId - Unique identifier of the skill. To find the skill ID in the Watson Assistant user
    * interface, open the skill settings and click **API Details**.
-   * @param {BulkClassifyUtterance[]} [params.input] - An array of input utterances to classify.
+   * @param {BulkClassifyUtterance[]} params.input - An array of input utterances to classify.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>>}
    */
@@ -418,11 +424,11 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.BulkClassifyParams
   ): Promise<AssistantV2.Response<AssistantV2.BulkClassifyResponse>> {
     const _params = { ...params };
-    const requiredParams = ['skillId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['skillId', 'input'];
+    const _validParams = ['skillId', 'input', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -477,6 +483,10 @@ class AssistantV2 extends BaseService {
    *
    * This method requires Manager access, and is available only with Enterprise plans.
    *
+   * **Note:** If you use the **cursor** parameter to retrieve results one page at a time, subsequent requests must be
+   * no more than 5 minutes apart. Any returned value for the **cursor** parameter becomes invalid after 5 minutes. For
+   * more information about using pagination, see [Pagination](#pagination).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
    * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
@@ -498,11 +508,11 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.ListLogsParams
   ): Promise<AssistantV2.Response<AssistantV2.LogCollection>> {
     const _params = { ...params };
-    const requiredParams = ['assistantId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'sort', 'filter', 'pageLimit', 'cursor', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -572,11 +582,11 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.DeleteUserDataParams
   ): Promise<AssistantV2.Response<AssistantV2.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customerId'];
+    const _validParams = ['customerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -602,6 +612,381 @@ class AssistantV2 extends BaseService {
           sdkHeaders,
           {
             'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
+   * environments
+   ************************/
+
+  /**
+   * List environments.
+   *
+   * List the environments associated with an assistant.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   *
+   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
+   * @param {boolean} [params.includeCount] - Whether to include information about the number of records that satisfy
+   * the request, regardless of the page limit. If this parameter is `true`, the `pagination` object in the response
+   * includes the `total` property.
+   * @param {string} [params.sort] - The attribute by which returned environments will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.EnvironmentCollection>>}
+   */
+  public listEnvironments(
+    params: AssistantV2.ListEnvironmentsParams
+  ): Promise<AssistantV2.Response<AssistantV2.EnvironmentCollection>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'page_limit': _params.pageLimit,
+      'include_count': _params.includeCount,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listEnvironments'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/environments',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get environment.
+   *
+   * Get information about an environment. For more information about environments, see
+   * [Environments](https://cloud.ibm.com/docs/watson-assistant?topic=watson-assistant-publish-overview#environments).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   *
+   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
+   * Watson Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
+   * API does not support creating environments.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Environment>>}
+   */
+  public getEnvironment(
+    params: AssistantV2.GetEnvironmentParams
+  ): Promise<AssistantV2.Response<AssistantV2.Environment>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'environmentId'];
+    const _validParams = ['assistantId', 'environmentId', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'environment_id': _params.environmentId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getEnvironment'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/environments/{environment_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
+   * releases
+   ************************/
+
+  /**
+   * List releases.
+   *
+   * List the releases associated with an assistant. (In the Watson Assistant user interface, a release is called a
+   * *version*.).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   *
+   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
+   * @param {boolean} [params.includeCount] - Whether to include information about the number of records that satisfy
+   * the request, regardless of the page limit. If this parameter is `true`, the `pagination` object in the response
+   * includes the `total` property.
+   * @param {string} [params.sort] - The attribute by which returned workspaces will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.ReleaseCollection>>}
+   */
+  public listReleases(
+    params: AssistantV2.ListReleasesParams
+  ): Promise<AssistantV2.Response<AssistantV2.ReleaseCollection>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'page_limit': _params.pageLimit,
+      'include_count': _params.includeCount,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listReleases'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/releases',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get release.
+   *
+   * Get information about a release.
+   *
+   * Release data is not available until publishing of the release completes. If publishing is still in progress, you
+   * can continue to poll by calling the same request again and checking the value of the **status** property. When
+   * processing has completed, the request returns the release data.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   *
+   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {string} params.release - Unique identifier of the release.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Release>>}
+   */
+  public getRelease(
+    params: AssistantV2.GetReleaseParams
+  ): Promise<AssistantV2.Response<AssistantV2.Release>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'release'];
+    const _validParams = ['assistantId', 'release', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'release': _params.release,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getRelease'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/releases/{release}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Deploy release.
+   *
+   * Update the environment with the content of the release. All snapshots saved as part of the release become active in
+   * the environment.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
+   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
+   * assistants, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   *
+   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {string} params.release - Unique identifier of the release.
+   * @param {string} params.environmentId - The environment ID of the environment where the release is to be deployed.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Environment>>}
+   */
+  public deployRelease(
+    params: AssistantV2.DeployReleaseParams
+  ): Promise<AssistantV2.Response<AssistantV2.Environment>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'release', 'environmentId'];
+    const _validParams = ['assistantId', 'release', 'environmentId', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'environment_id': _params.environmentId,
+    };
+
+    const query = {
+      'version': this.version,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'release': _params.release,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deployRelease'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/releases/{release}/deploy',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
           },
           _params.headers
         ),
@@ -744,7 +1129,7 @@ namespace AssistantV2 {
      */
     skillId: string;
     /** An array of input utterances to classify. */
-    input?: BulkClassifyUtterance[];
+    input: BulkClassifyUtterance[];
     headers?: OutgoingHttpHeaders;
   }
 
@@ -776,6 +1161,129 @@ namespace AssistantV2 {
   export interface DeleteUserDataParams {
     /** The customer ID for which all data is to be deleted. */
     customerId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listEnvironments` operation. */
+  export interface ListEnvironmentsParams {
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+     *  the assistant settings and click **API Details**. For information about creating assistants, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *
+     *  **Note:** Currently, the v2 API does not support creating assistants.
+     */
+    assistantId: string;
+    /** The number of records to return in each page of results. */
+    pageLimit?: number;
+    /** Whether to include information about the number of records that satisfy the request, regardless of the page
+     *  limit. If this parameter is `true`, the `pagination` object in the response includes the `total` property.
+     */
+    includeCount?: boolean;
+    /** The attribute by which returned environments will be sorted. To reverse the sort order, prefix the value
+     *  with a minus sign (`-`).
+     */
+    sort?: ListEnvironmentsConstants.Sort | string;
+    /** A token identifying the page of results to retrieve. */
+    cursor?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `listEnvironments` operation. */
+  export namespace ListEnvironmentsConstants {
+    /** The attribute by which returned environments will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      NAME = 'name',
+      UPDATED = 'updated',
+    }
+  }
+
+  /** Parameters for the `getEnvironment` operation. */
+  export interface GetEnvironmentParams {
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+     *  the assistant settings and click **API Details**. For information about creating assistants, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *
+     *  **Note:** Currently, the v2 API does not support creating assistants.
+     */
+    assistantId: string;
+    /** Unique identifier of the environment. To find the environment ID in the Watson Assistant user interface,
+     *  open the environment settings and click **API Details**. **Note:** Currently, the API does not support creating
+     *  environments.
+     */
+    environmentId: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listReleases` operation. */
+  export interface ListReleasesParams {
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+     *  the assistant settings and click **API Details**. For information about creating assistants, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *
+     *  **Note:** Currently, the v2 API does not support creating assistants.
+     */
+    assistantId: string;
+    /** The number of records to return in each page of results. */
+    pageLimit?: number;
+    /** Whether to include information about the number of records that satisfy the request, regardless of the page
+     *  limit. If this parameter is `true`, the `pagination` object in the response includes the `total` property.
+     */
+    includeCount?: boolean;
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with
+     *  a minus sign (`-`).
+     */
+    sort?: ListReleasesConstants.Sort | string;
+    /** A token identifying the page of results to retrieve. */
+    cursor?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `listReleases` operation. */
+  export namespace ListReleasesConstants {
+    /** The attribute by which returned workspaces will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      NAME = 'name',
+      UPDATED = 'updated',
+    }
+  }
+
+  /** Parameters for the `getRelease` operation. */
+  export interface GetReleaseParams {
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+     *  the assistant settings and click **API Details**. For information about creating assistants, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *
+     *  **Note:** Currently, the v2 API does not support creating assistants.
+     */
+    assistantId: string;
+    /** Unique identifier of the release. */
+    release: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deployRelease` operation. */
+  export interface DeployReleaseParams {
+    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
+     *  the assistant settings and click **API Details**. For information about creating assistants, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+     *
+     *  **Note:** Currently, the v2 API does not support creating assistants.
+     */
+    assistantId: string;
+    /** Unique identifier of the release. */
+    release: string;
+    /** The environment ID of the environment where the release is to be deployed. */
+    environmentId: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -887,9 +1395,9 @@ namespace AssistantV2 {
     input?: MessageInput;
   }
 
-  /** An objects containing detailed diagnostic information about a dialog node that was triggered during processing of the input message. */
+  /** An objects containing detailed diagnostic information about a dialog node that was visited during processing of the input message. */
   export interface DialogNodeVisited {
-    /** A dialog node that was triggered during processing of the input message. */
+    /** A dialog node that was visited during processing of the input message. */
     dialog_node?: string;
     /** The title of the dialog node. */
     title?: string;
@@ -917,6 +1425,82 @@ namespace AssistantV2 {
   export interface DialogSuggestionValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
+  }
+
+  /** Environment. */
+  export interface Environment {
+    /** The name of the environment. */
+    name?: string;
+    /** The description of the environment. */
+    description?: string;
+    /** The language of the environment. An environment is always created with the same language as the assistant it
+     *  is associated with.
+     */
+    language?: string;
+    /** The assistant ID of the assistant the environment is associated with. */
+    assistant_id?: string;
+    /** The environment ID of the environment. */
+    environment_id?: string;
+    /** The type of the environment. All environments other than the `draft` and `live` environments have the type
+     *  `staging`.
+     */
+    environment?: string;
+    /** An object describing the release that is currently deployed in the environment. */
+    release_reference?: EnvironmentReleaseReference;
+    /** The search skill orchestration settings for the environment. */
+    orchestration?: EnvironmentOrchestration;
+    /** The session inactivity timeout setting for the environment. */
+    session_timeout?: number;
+    /** An array of objects describing the integrations that exist in the environment. */
+    integration_references?: IntegrationReference[];
+    /** An array of objects describing the skills (such as actions and dialog) that exist in the environment. */
+    skill_references?: SkillReference[];
+    /** The timestamp for creation of the object. */
+    created?: string;
+    /** The timestamp for the most recent update to the object. */
+    updated?: string;
+  }
+
+  /** EnvironmentCollection. */
+  export interface EnvironmentCollection {
+    /** An array of objects describing the environments associated with an assistant. */
+    environments: Environment[];
+    /** The pagination data for the returned objects. */
+    pagination: Pagination;
+  }
+
+  /** The search skill orchestration settings for the environment. */
+  export interface EnvironmentOrchestration {
+    /** Whether assistants deployed to the environment fall back to a search skill when responding to messages that
+     *  do not match any intent. If no search skill is configured for the assistant, this property is ignored.
+     */
+    search_skill_fallback?: boolean;
+  }
+
+  /** EnvironmentReference. */
+  export interface EnvironmentReference {
+    /** The name of the deployed environment. */
+    name?: string;
+    /** The environment ID of the deployed environment. */
+    environment_id?: string;
+    /** The type of the deployed environment. All environments other than the draft and live environments have the
+     *  type `staging`.
+     */
+    environment?: string;
+  }
+
+  /** An object describing the release that is currently deployed in the environment. */
+  export interface EnvironmentReleaseReference {
+    /** The name of the deployed release. */
+    release?: string;
+  }
+
+  /** IntegrationReference. */
+  export interface IntegrationReference {
+    /** The integration ID of the integration. */
+    integration_id?: string;
+    /** The type of the integration. */
+    type?: string;
   }
 
   /** Log. */
@@ -971,11 +1555,7 @@ namespace AssistantV2 {
   export interface MessageContext {
     /** Session context data that is shared by all skills used by the assistant. */
     global?: MessageContextGlobal;
-    /** Information specific to particular skills used by the assistant.
-     *
-     *  **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog
-     *  skill used by the assistant.
-     */
+    /** Information specific to particular skills used by the assistant. */
     skills?: JsonObject;
     /** An object containing context data that is specific to particular integrations. For more information, see the
      *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
@@ -1055,7 +1635,7 @@ namespace AssistantV2 {
     skip_user_input?: boolean;
   }
 
-  /** Contains information specific to a particular skill used by the assistant. The property name must be the same as the name of the skill (for example, `main skill`). */
+  /** Contains information specific to a particular skill used by the assistant. The property name must be the same as the name of the skill. **Note:** The default skill names are `main skill` for the dialog skill (if enabled), and `actions skill` for the actions skill. */
   export interface MessageContextSkill {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
@@ -1079,11 +1659,7 @@ namespace AssistantV2 {
   export interface MessageContextStateless {
     /** Session context data that is shared by all skills used by the assistant. */
     global?: MessageContextGlobalStateless;
-    /** Information specific to particular skills used by the assistant.
-     *
-     *  **Note:** Currently, only a single child property is supported, containing variables that apply to the dialog
-     *  skill used by the assistant.
-     */
+    /** Information specific to particular skills used by the assistant. */
     skills?: JsonObject;
     /** An object containing context data that is specific to particular integrations. For more information, see the
      *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
@@ -1253,7 +1829,7 @@ namespace AssistantV2 {
 
   /** Additional detailed information about a message response and how it was generated. */
   export interface MessageOutputDebug {
-    /** An array of objects containing detailed diagnostic information about dialog nodes that were triggered during
+    /** An array of objects containing detailed diagnostic information about dialog nodes that were visited during
      *  processing of the input message.
      */
     nodes_visited?: DialogNodeVisited[];
@@ -1265,6 +1841,16 @@ namespace AssistantV2 {
      *  dialog completed by itself or got interrupted.
      */
     branch_exited_reason?: string;
+    /** An array of objects containing detailed diagnostic information about dialog nodes and actions that were
+     *  visited during processing of the input message.
+     *
+     *  This property is present only if the assistant has an actions skill.
+     */
+    turn_events?: MessageOutputDebugTurnEvent[];
+  }
+
+  /** MessageOutputDebugTurnEvent. */
+  export interface MessageOutputDebugTurnEvent {
   }
 
   /** Properties describing any spelling corrections in the user input that was received. */
@@ -1346,6 +1932,72 @@ namespace AssistantV2 {
     user_id?: string;
   }
 
+  /** The pagination data for the returned objects. */
+  export interface Pagination {
+    /** The URL that will return the same page of results. */
+    refresh_url: string;
+    /** The URL that will return the next page of results. */
+    next_url?: string;
+    /** The total number of objects that satisfy the request. This total includes all results, not just those
+     *  included in the current page.
+     */
+    total?: number;
+    /** Reserved for future use. */
+    matched?: number;
+    /** A token identifying the current page of results. */
+    refresh_cursor?: string;
+    /** A token identifying the next page of results. */
+    next_cursor?: string;
+  }
+
+  /** Release. */
+  export interface Release {
+    /** The name of the release. The name is the version number (an integer), returned as a string. */
+    release?: string;
+    /** The description of the release. */
+    description?: string;
+    /** An array of objects describing the environments where this release has been deployed. */
+    environment_references?: EnvironmentReference[];
+    /** An object describing the versionable content objects (such as skill snapshots) that are included in the
+     *  release.
+     */
+    content?: ReleaseContent;
+    /** The current status of the release:
+     *   - **Available**: The release is available for deployment.
+     *   - **Failed**: An asynchronous publish operation has failed.
+     *   - **Processing**: An asynchronous publish operation has not yet completed.
+     */
+    status?: string;
+    /** The timestamp for creation of the object. */
+    created?: string;
+    /** The timestamp for the most recent update to the object. */
+    updated?: string;
+  }
+
+  /** ReleaseCollection. */
+  export interface ReleaseCollection {
+    /** An array of objects describing the releases associated with an assistant. */
+    releases: Release[];
+    /** The pagination data for the returned objects. */
+    pagination: Pagination;
+  }
+
+  /** An object describing the versionable content objects (such as skill snapshots) that are included in the release. */
+  export interface ReleaseContent {
+    /** The skill snapshots that are included in the release. */
+    skills?: ReleaseSkillReference[];
+  }
+
+  /** ReleaseSkillReference. */
+  export interface ReleaseSkillReference {
+    /** The skill ID of the skill. */
+    skill_id?: string;
+    /** The type of the skill. */
+    type?: string;
+    /** The name of the snapshot (skill version) that is saved as part of the release (for example, `draft` or `1`). */
+    snapshot?: string;
+  }
+
   /** ResponseGenericChannel. */
   export interface ResponseGenericChannel {
     /** A channel for which the response is intended. */
@@ -1385,6 +2037,12 @@ namespace AssistantV2 {
      *  skill.
      */
     role?: RuntimeEntityRole;
+    /** The skill that recognized the entity value. Currently, the only possible values are `main skill` for the
+     *  dialog skill (if enabled) and `actions skill` for the actions skill.
+     *
+     *  This property is present only if the assistant has both a dialog skill and an actions skill.
+     */
+    skill?: string;
   }
 
   /** An alternative value for the recognized entity. */
@@ -1493,8 +2151,16 @@ namespace AssistantV2 {
   export interface RuntimeIntent {
     /** The name of the recognized intent. */
     intent: string;
-    /** A decimal percentage that represents Watson's confidence in the intent. */
-    confidence: number;
+    /** A decimal percentage that represents Watson's confidence in the intent. If you are specifying an intent as
+     *  part of a request, but you do not have a calculated confidence value, specify `1`.
+     */
+    confidence?: number;
+    /** The skill that identified the intent. Currently, the only possible values are `main skill` for the dialog
+     *  skill (if enabled) and `actions skill` for the actions skill.
+     *
+     *  This property is present only if the assistant has both a dialog skill and an actions skill.
+     */
+    skill?: string;
   }
 
   /** RuntimeResponseGeneric. */
@@ -1576,6 +2242,68 @@ namespace AssistantV2 {
     session_id: string;
   }
 
+  /** SkillReference. */
+  export interface SkillReference {
+    /** The skill ID of the skill. */
+    skill_id?: string;
+    /** The type of the skill. */
+    type?: string;
+    /** Whether the skill is disabled. A disabled skill in the draft environment does not handle any messages at run
+     *  time, and it is not included in saved releases.
+     */
+    disabled?: boolean;
+    /** The name of the snapshot (skill version) that is saved as part of the release (for example, `draft` or `1`). */
+    snapshot?: string;
+    /** The type of skill identified by the skill reference. The possible values are `main skill` (for a dialog
+     *  skill), `actions skill`, and `search skill`.
+     */
+    skill_reference?: string;
+  }
+
+  /** TurnEventActionSource. */
+  export interface TurnEventActionSource {
+    /** The type of turn event. */
+    type?: string;
+    /** An action that was visited during processing of the message. */
+    action?: string;
+    /** The title of the action. */
+    action_title?: string;
+    /** The condition that triggered the dialog node. */
+    condition?: string;
+  }
+
+  /** TurnEventCalloutCallout. */
+  export interface TurnEventCalloutCallout {
+    /** callout type. */
+    type?: string;
+    /** For internal use only. */
+    internal?: JsonObject;
+  }
+
+  /** TurnEventCalloutError. */
+  export interface TurnEventCalloutError {
+    /** Any error message returned by a failed call to an external service. */
+    message?: string;
+  }
+
+  /** TurnEventNodeSource. */
+  export interface TurnEventNodeSource {
+    /** The type of turn event. */
+    type?: string;
+    /** A dialog node that was visited during processing of the input message. */
+    dialog_node?: string;
+    /** The title of the dialog node. */
+    title?: string;
+    /** The condition that triggered the dialog node. */
+    condition?: string;
+  }
+
+  /** TurnEventSearchError. */
+  export interface TurnEventSearchError {
+    /** Any error message returned by a failed call to a search skill. */
+    message?: string;
+  }
+
   /** An object that identifies the dialog element that generated the error message. */
   export interface LogMessageSourceAction extends LogMessageSource {
     /** A string that indicates the type of dialog element that generated the error message. */
@@ -1612,6 +2340,97 @@ namespace AssistantV2 {
     action: string;
     /** The unique identifier of the step that generated the error message. */
     step: string;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventActionFinished. */
+  export interface MessageOutputDebugTurnEventTurnEventActionFinished extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventActionSource;
+    /** The time when the action started processing the message. */
+    action_start_time?: string;
+    /** The type of condition (if any) that is defined for the action. */
+    condition_type?: string;
+    /** The reason the action finished processing. */
+    reason?: string;
+    /** The state of all action variables at the time the action finished. */
+    action_variables?: JsonObject;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventActionVisited. */
+  export interface MessageOutputDebugTurnEventTurnEventActionVisited extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventActionSource;
+    /** The time when the action started processing the message. */
+    action_start_time?: string;
+    /** The type of condition (if any) that is defined for the action. */
+    condition_type?: string;
+    /** The reason the action was visited. */
+    reason?: string;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventCallout. */
+  export interface MessageOutputDebugTurnEventTurnEventCallout extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventActionSource;
+    callout?: TurnEventCalloutCallout;
+    error?: TurnEventCalloutError;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventHandlerVisited. */
+  export interface MessageOutputDebugTurnEventTurnEventHandlerVisited extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventActionSource;
+    /** The time when the action started processing the message. */
+    action_start_time?: string;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventNodeVisited. */
+  export interface MessageOutputDebugTurnEventTurnEventNodeVisited extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventNodeSource;
+    /** The reason the dialog node was visited. */
+    reason?: string;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventSearch. */
+  export interface MessageOutputDebugTurnEventTurnEventSearch extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventActionSource;
+    error?: TurnEventSearchError;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventStepAnswered. */
+  export interface MessageOutputDebugTurnEventTurnEventStepAnswered extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventActionSource;
+    /** The type of condition (if any) that is defined for the action. */
+    condition_type?: string;
+    /** The time when the action started processing the message. */
+    action_start_time?: string;
+    /** Whether the step was answered in response to a prompt from the assistant. If this property is `false`, the
+     *  user provided the answer without visiting the step.
+     */
+    prompted?: boolean;
+  }
+
+  /** MessageOutputDebugTurnEventTurnEventStepVisited. */
+  export interface MessageOutputDebugTurnEventTurnEventStepVisited extends MessageOutputDebugTurnEvent {
+    /** The type of turn event. */
+    event?: string;
+    source?: TurnEventActionSource;
+    /** The type of condition (if any) that is defined for the action. */
+    condition_type?: string;
+    /** The time when the action started processing the message. */
+    action_start_time?: string;
+    /** Whether the step collects a customer response. */
+    has_question?: boolean;
   }
 
   /** RuntimeResponseGenericRuntimeResponseTypeAudio. */
@@ -1680,6 +2499,14 @@ namespace AssistantV2 {
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
     channels?: ResponseGenericChannel[];
+  }
+
+  /** RuntimeResponseGenericRuntimeResponseTypeDate. */
+  export interface RuntimeResponseGenericRuntimeResponseTypeDate extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
   }
 
   /** RuntimeResponseGenericRuntimeResponseTypeIframe. */
