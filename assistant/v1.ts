@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.38.0-07189efd-20210827-205025
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 import * as extend from 'extend';
@@ -24,7 +24,7 @@ import {
   Authenticator,
   BaseService,
   getAuthenticatorFromEnvironment,
-  getMissingParams,
+  validateParams,
   UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
@@ -65,10 +65,10 @@ class AssistantV1 extends BaseService {
   constructor(options: UserOptions) {
     options = options || {};
 
-    const requiredParams = ['version'];
-    const missingParams = getMissingParams(options, requiredParams);
-    if (missingParams) {
-      throw missingParams;
+    const _requiredParams = ['version'];
+    const _validationErrors = validateParams(options, _requiredParams, null);
+    if (_validationErrors) {
+      throw _validationErrors;
     }
     if (!options.serviceName) {
       options.serviceName = AssistantV1.DEFAULT_SERVICE_NAME;
@@ -128,11 +128,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.MessageParams
   ): Promise<AssistantV1.Response<AssistantV1.MessageResponse>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'input', 'intents', 'entities', 'alternateIntents', 'context', 'output', 'userId', 'nodesVisitedDetails', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -205,11 +205,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.BulkClassifyParams
   ): Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'input', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -279,6 +279,12 @@ class AssistantV1 extends BaseService {
     params?: AssistantV1.ListWorkspacesParams
   ): Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const query = {
       'version': this.version,
@@ -322,6 +328,9 @@ class AssistantV1 extends BaseService {
    * Create a workspace based on component objects. You must provide workspace components defining the content of the
    * new workspace.
    *
+   * **Note:** The new workspace data cannot be larger than 1.5 MB. For larger requests, use the **Create workspace
+   * asynchronously** method.
+   *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
    * tab characters.
@@ -348,6 +357,12 @@ class AssistantV1 extends BaseService {
     params?: AssistantV1.CreateWorkspaceParams
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
 
     const body = {
       'name': _params.name,
@@ -419,11 +434,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetWorkspaceParams
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', '_export', 'includeAudit', 'sort', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -471,6 +486,9 @@ class AssistantV1 extends BaseService {
    * Update an existing workspace with new or modified data. You must provide component objects defining the content of
    * the updated workspace.
    *
+   * **Note:** The new workspace data cannot be larger than 1.5 MB. For larger requests, use the **Update workspace
+   * asynchronously** method.
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
@@ -505,11 +523,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateWorkspaceParams
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'append', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -580,11 +598,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteWorkspaceParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -605,6 +623,267 @@ class AssistantV1 extends BaseService {
       options: {
         url: '/v1/workspaces/{workspace_id}',
         method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Create workspace asynchronously.
+   *
+   * Create a workspace asynchronously based on component objects. You must provide workspace components defining the
+   * content of the new workspace.
+   *
+   * A successful call to this method only initiates asynchronous creation of the workspace. The new workspace is not
+   * available until processing completes. To check the status of the asynchronous operation, use the **Export workspace
+   * asynchronously** method.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
+   * tab characters.
+   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
+   * return, newline, or tab characters.
+   * @param {string} [params.language] - The language of the workspace.
+   * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
+   * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
+   * marked as irrelevant input.
+   * @param {JsonObject} [params.metadata] - Any metadata related to the workspace.
+   * @param {boolean} [params.learningOptOut] - Whether training data from the workspace (including artifacts such as
+   * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
+   * data is not to be used.
+   * @param {WorkspaceSystemSettings} [params.systemSettings] - Global settings for the workspace.
+   * @param {Webhook[]} [params.webhooks] -
+   * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+   * @param {CreateEntity[]} [params.entities] - An array of objects describing the entities for the workspace.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
+   */
+  public createWorkspaceAsync(
+    params?: AssistantV1.CreateWorkspaceAsyncParams
+  ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
+    const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'language': _params.language,
+      'dialog_nodes': _params.dialogNodes,
+      'counterexamples': _params.counterexamples,
+      'metadata': _params.metadata,
+      'learning_opt_out': _params.learningOptOut,
+      'system_settings': _params.systemSettings,
+      'webhooks': _params.webhooks,
+      'intents': _params.intents,
+      'entities': _params.entities,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createWorkspaceAsync'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces_async',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update workspace asynchronously.
+   *
+   * Update an existing workspace asynchronously with new or modified data. You must provide component objects defining
+   * the content of the updated workspace.
+   *
+   * A successful call to this method only initiates an asynchronous update of the workspace. The updated workspace is
+   * not available until processing completes. To check the status of the asynchronous operation, use the **Export
+   * workspace asynchronously** method.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {string} [params.name] - The name of the workspace. This string cannot contain carriage return, newline, or
+   * tab characters.
+   * @param {string} [params.description] - The description of the workspace. This string cannot contain carriage
+   * return, newline, or tab characters.
+   * @param {string} [params.language] - The language of the workspace.
+   * @param {DialogNode[]} [params.dialogNodes] - An array of objects describing the dialog nodes in the workspace.
+   * @param {Counterexample[]} [params.counterexamples] - An array of objects defining input examples that have been
+   * marked as irrelevant input.
+   * @param {JsonObject} [params.metadata] - Any metadata related to the workspace.
+   * @param {boolean} [params.learningOptOut] - Whether training data from the workspace (including artifacts such as
+   * intents and entities) can be used by IBM for general service improvements. `true` indicates that workspace training
+   * data is not to be used.
+   * @param {WorkspaceSystemSettings} [params.systemSettings] - Global settings for the workspace.
+   * @param {Webhook[]} [params.webhooks] -
+   * @param {CreateIntent[]} [params.intents] - An array of objects defining the intents for the workspace.
+   * @param {CreateEntity[]} [params.entities] - An array of objects describing the entities for the workspace.
+   * @param {boolean} [params.append] - Whether the new data is to be appended to the existing data in the object. If
+   * **append**=`false`, elements included in the new data completely replace the corresponding existing elements,
+   * including all subelements. For example, if the new data for a workspace includes **entities** and
+   * **append**=`false`, all existing entities in the workspace are discarded and replaced with the new entities.
+   *
+   * If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the new
+   * data collide with existing elements, the update request fails.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
+   */
+  public updateWorkspaceAsync(
+    params: AssistantV1.UpdateWorkspaceAsyncParams
+  ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
+    const _params = { ...params };
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'append', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'language': _params.language,
+      'dialog_nodes': _params.dialogNodes,
+      'counterexamples': _params.counterexamples,
+      'metadata': _params.metadata,
+      'learning_opt_out': _params.learningOptOut,
+      'system_settings': _params.systemSettings,
+      'webhooks': _params.webhooks,
+      'intents': _params.intents,
+      'entities': _params.entities,
+    };
+
+    const query = {
+      'version': this.version,
+      'append': _params.append,
+    };
+
+    const path = {
+      'workspace_id': _params.workspaceId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateWorkspaceAsync'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces_async/{workspace_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Export workspace asynchronously.
+   *
+   * Export the entire workspace asynchronously, including all workspace content.
+   *
+   * A successful call to this method only initiates an asynchronous export. The exported JSON data is not available
+   * until processing completes. After the initial request is submitted, you can continue to poll by calling the same
+   * request again and checking the value of the **status** property. When processing has completed, the request returns
+   * the exported JSON data. Remember that the usual rate limits apply.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.workspaceId - Unique identifier of the workspace.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {string} [params.sort] - Indicates how the returned workspace data will be sorted. Specify `sort=stable` to
+   * sort all workspace objects by unique identifier, in ascending alphabetical order.
+   * @param {boolean} [params.verbose] - Whether the response should include the `counts` property, which indicates how
+   * many of each component (such as intents and entities) the workspace contains.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV1.Response<AssistantV1.Workspace>>}
+   */
+  public exportWorkspaceAsync(
+    params: AssistantV1.ExportWorkspaceAsyncParams
+  ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
+    const _params = { ...params };
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'includeAudit', 'sort', 'verbose', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'include_audit': _params.includeAudit,
+      'sort': _params.sort,
+      'verbose': _params.verbose,
+    };
+
+    const path = {
+      'workspace_id': _params.workspaceId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'exportWorkspaceAsync'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v1/workspaces_async/{workspace_id}/export',
+        method: 'GET',
         qs: query,
         path,
       },
@@ -652,11 +931,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListIntentsParams
   ): Promise<AssistantV1.Response<AssistantV1.IntentCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -726,11 +1005,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.CreateIntentParams
   ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent'];
+    const _validParams = ['workspaceId', 'intent', 'description', 'examples', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -798,11 +1077,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetIntentParams
   ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent'];
+    const _validParams = ['workspaceId', 'intent', '_export', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -879,11 +1158,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateIntentParams
   ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent'];
+    const _validParams = ['workspaceId', 'intent', 'newIntent', 'newDescription', 'newExamples', 'append', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -948,11 +1227,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteIntentParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent'];
+    const _validParams = ['workspaceId', 'intent', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1019,11 +1298,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListExamplesParams
   ): Promise<AssistantV1.Response<AssistantV1.ExampleCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent'];
+    const _validParams = ['workspaceId', 'intent', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1093,11 +1372,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.CreateExampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent', 'text'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'mentions', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1163,11 +1442,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetExampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent', 'text'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1235,11 +1514,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateExampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent', 'text'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'newText', 'newMentions', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1304,11 +1583,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteExampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'intent', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'intent', 'text'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1375,11 +1654,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListCounterexamplesParams
   ): Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1446,11 +1725,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.CreateCounterexampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'text'];
+    const _validParams = ['workspaceId', 'text', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1513,11 +1792,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetCounterexampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'text'];
+    const _validParams = ['workspaceId', 'text', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1579,11 +1858,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateCounterexampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'text'];
+    const _validParams = ['workspaceId', 'text', 'newText', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1645,11 +1924,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteCounterexampleParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'text'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'text'];
+    const _validParams = ['workspaceId', 'text', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1718,11 +1997,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListEntitiesParams
   ): Promise<AssistantV1.Response<AssistantV1.EntityCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1795,11 +2074,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.CreateEntityParams
   ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity'];
+    const _validParams = ['workspaceId', 'entity', 'description', 'metadata', 'fuzzyMatch', 'values', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -1869,11 +2148,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetEntityParams
   ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity'];
+    const _validParams = ['workspaceId', 'entity', '_export', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -1952,11 +2231,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateEntityParams
   ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity'];
+    const _validParams = ['workspaceId', 'entity', 'newEntity', 'newDescription', 'newMetadata', 'newFuzzyMatch', 'newValues', 'append', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2023,11 +2302,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteEntityParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity'];
+    const _validParams = ['workspaceId', 'entity', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2091,11 +2370,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListMentionsParams
   ): Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity'];
+    const _validParams = ['workspaceId', 'entity', '_export', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2167,11 +2446,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListValuesParams
   ): Promise<AssistantV1.Response<AssistantV1.ValueCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity'];
+    const _validParams = ['workspaceId', 'entity', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2252,11 +2531,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.CreateValueParams
   ): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'metadata', 'type', 'synonyms', 'patterns', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2328,11 +2607,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetValueParams
   ): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value'];
+    const _validParams = ['workspaceId', 'entity', 'value', '_export', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2419,11 +2698,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateValueParams
   ): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'newValue', 'newMetadata', 'newType', 'newSynonyms', 'newPatterns', 'append', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2492,11 +2771,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteValueParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2565,11 +2844,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListSynonymsParams
   ): Promise<AssistantV1.Response<AssistantV1.SynonymCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2639,11 +2918,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.CreateSynonymParams
   ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2710,11 +2989,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetSynonymParams
   ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2783,11 +3062,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateSynonymParams
   ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'newSynonym', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -2853,11 +3132,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteSynonymParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -2925,11 +3204,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListDialogNodesParams
   ): Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3029,11 +3308,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.CreateDialogNodeParams
   ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'dialogNode'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'dialogNode'];
+    const _validParams = ['workspaceId', 'dialogNode', 'description', 'conditions', 'parent', 'previousSibling', 'output', 'context', 'metadata', 'nextStep', 'title', 'type', 'eventName', 'variable', 'actions', 'digressIn', 'digressOut', 'digressOutSlots', 'userLabel', 'disambiguationOptOut', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -3114,11 +3393,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.GetDialogNodeParams
   ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'dialogNode'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'dialogNode'];
+    const _validParams = ['workspaceId', 'dialogNode', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3217,11 +3496,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.UpdateDialogNodeParams
   ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'dialogNode'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'dialogNode'];
+    const _validParams = ['workspaceId', 'dialogNode', 'newDialogNode', 'newDescription', 'newConditions', 'newParent', 'newPreviousSibling', 'newOutput', 'newContext', 'newMetadata', 'newNextStep', 'newTitle', 'newType', 'newEventName', 'newVariable', 'newActions', 'newDigressIn', 'newDigressOut', 'newDigressOutSlots', 'newUserLabel', 'newDisambiguationOptOut', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const body = {
@@ -3301,11 +3580,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteDialogNodeParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId', 'dialogNode'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId', 'dialogNode'];
+    const _validParams = ['workspaceId', 'dialogNode', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3355,6 +3634,10 @@ class AssistantV1 extends BaseService {
    *
    * This method requires Manager access.
    *
+   * **Note:** If you use the **cursor** parameter to retrieve results one page at a time, subsequent requests must be
+   * no more than 5 minutes apart. Any returned value for the **cursor** parameter becomes invalid after 5 minutes. For
+   * more information about using pagination, see [Pagination](#pagination).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
@@ -3371,11 +3654,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListLogsParams
   ): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = { ...params };
-    const requiredParams = ['workspaceId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['workspaceId'];
+    const _validParams = ['workspaceId', 'sort', 'filter', 'pageLimit', 'cursor', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3423,6 +3706,10 @@ class AssistantV1 extends BaseService {
    *
    * List the events from the logs of all workspaces in the service instance.
    *
+   * **Note:** If you use the **cursor** parameter to retrieve results one page at a time, subsequent requests must be
+   * no more than 5 minutes apart. Any returned value for the **cursor** parameter becomes invalid after 5 minutes. For
+   * more information about using pagination, see [Pagination](#pagination).
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.filter - A cacheable parameter that limits the results to those matching the specified
    * filter. You must specify a filter query that includes a value for `language`, as well as a value for
@@ -3440,11 +3727,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.ListAllLogsParams
   ): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = { ...params };
-    const requiredParams = ['filter'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['filter'];
+    const _validParams = ['filter', 'sort', 'pageLimit', 'cursor', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3509,11 +3796,11 @@ class AssistantV1 extends BaseService {
     params: AssistantV1.DeleteUserDataParams
   ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
     const _params = { ...params };
-    const requiredParams = ['customerId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
+    const _requiredParams = ['customerId'];
+    const _validParams = ['customerId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
     }
 
     const query = {
@@ -3763,6 +4050,98 @@ namespace AssistantV1 {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createWorkspaceAsync` operation. */
+  export interface CreateWorkspaceAsyncParams {
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
+    name?: string;
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** The language of the workspace. */
+    language?: string;
+    /** An array of objects describing the dialog nodes in the workspace. */
+    dialogNodes?: DialogNode[];
+    /** An array of objects defining input examples that have been marked as irrelevant input. */
+    counterexamples?: Counterexample[];
+    /** Any metadata related to the workspace. */
+    metadata?: JsonObject;
+    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by
+     *  IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+     */
+    learningOptOut?: boolean;
+    /** Global settings for the workspace. */
+    systemSettings?: WorkspaceSystemSettings;
+    webhooks?: Webhook[];
+    /** An array of objects defining the intents for the workspace. */
+    intents?: CreateIntent[];
+    /** An array of objects describing the entities for the workspace. */
+    entities?: CreateEntity[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateWorkspaceAsync` operation. */
+  export interface UpdateWorkspaceAsyncParams {
+    /** Unique identifier of the workspace. */
+    workspaceId: string;
+    /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
+    name?: string;
+    /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** The language of the workspace. */
+    language?: string;
+    /** An array of objects describing the dialog nodes in the workspace. */
+    dialogNodes?: DialogNode[];
+    /** An array of objects defining input examples that have been marked as irrelevant input. */
+    counterexamples?: Counterexample[];
+    /** Any metadata related to the workspace. */
+    metadata?: JsonObject;
+    /** Whether training data from the workspace (including artifacts such as intents and entities) can be used by
+     *  IBM for general service improvements. `true` indicates that workspace training data is not to be used.
+     */
+    learningOptOut?: boolean;
+    /** Global settings for the workspace. */
+    systemSettings?: WorkspaceSystemSettings;
+    webhooks?: Webhook[];
+    /** An array of objects defining the intents for the workspace. */
+    intents?: CreateIntent[];
+    /** An array of objects describing the entities for the workspace. */
+    entities?: CreateEntity[];
+    /** Whether the new data is to be appended to the existing data in the object. If **append**=`false`, elements
+     *  included in the new data completely replace the corresponding existing elements, including all subelements. For
+     *  example, if the new data for a workspace includes **entities** and **append**=`false`, all existing entities in
+     *  the workspace are discarded and replaced with the new entities.
+     *
+     *  If **append**=`true`, existing elements are preserved, and the new elements are added. If any elements in the
+     *  new data collide with existing elements, the update request fails.
+     */
+    append?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `exportWorkspaceAsync` operation. */
+  export interface ExportWorkspaceAsyncParams {
+    /** Unique identifier of the workspace. */
+    workspaceId: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    /** Indicates how the returned workspace data will be sorted. Specify `sort=stable` to sort all workspace
+     *  objects by unique identifier, in ascending alphabetical order.
+     */
+    sort?: ExportWorkspaceAsyncConstants.Sort | string;
+    /** Whether the response should include the `counts` property, which indicates how many of each component (such
+     *  as intents and entities) the workspace contains.
+     */
+    verbose?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `exportWorkspaceAsync` operation. */
+  export namespace ExportWorkspaceAsyncConstants {
+    /** Indicates how the returned workspace data will be sorted. Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order. */
+    export enum Sort {
+      STABLE = 'stable',
+    }
   }
 
   /** Parameters for the `listIntents` operation. */
@@ -5609,12 +5988,20 @@ namespace AssistantV1 {
   export interface RuntimeIntent {
     /** The name of the recognized intent. */
     intent: string;
-    /** A decimal percentage that represents Watson's confidence in the intent. */
-    confidence: number;
+    /** A decimal percentage that represents Watson's confidence in the intent. If you are specifying an intent as
+     *  part of a request, but you do not have a calculated confidence value, specify `1`.
+     */
+    confidence?: number;
   }
 
   /** RuntimeResponseGeneric. */
   export interface RuntimeResponseGeneric {
+  }
+
+  /** An object describing an error that occurred during processing of an asynchronous operation. */
+  export interface StatusError {
+    /** The text of the error message. */
+    message?: string;
   }
 
   /** Synonym. */
@@ -5702,7 +6089,7 @@ namespace AssistantV1 {
     /** The language of the workspace. */
     language: string;
     /** The workspace ID of the workspace. */
-    workspace_id: string;
+    workspace_id?: string;
     /** An array of objects describing the dialog nodes in the workspace. */
     dialog_nodes?: DialogNode[];
     /** An array of objects defining input examples that have been marked as irrelevant input. */
@@ -5719,13 +6106,28 @@ namespace AssistantV1 {
     learning_opt_out: boolean;
     /** Global settings for the workspace. */
     system_settings?: WorkspaceSystemSettings;
-    /** The current status of the workspace. */
+    /** The current status of the workspace:
+     *   - **Available**: The workspace is available and ready to process messages.
+     *   - **Failed**: An asynchronous operation has failed. See the **status_errors** property for more information
+     *  about the cause of the failure. Returned only by the **Export workspace asynchronously** method.
+     *   - **Non Existent**: The workspace does not exist.
+     *   - **Processing**: An asynchronous operation has not yet completed. Returned only by the **Export workspace
+     *  asynchronously** method.
+     *   - **Training**: The workspace is training based on new data such as intents or examples.
+     */
     status?: string;
+    /** An array of messages about errors that caused an asynchronous operation to fail. */
+    status_errors?: StatusError[];
     webhooks?: Webhook[];
     /** An array of intents. */
     intents?: Intent[];
     /** An array of objects describing the entities for the workspace. */
     entities?: Entity[];
+    /** An object containing properties that indicate how many intents, entities, and dialog nodes are defined in
+     *  the workspace. This property is included only in responses from the **Export workspace asynchronously** method,
+     *  and only when the **verbose** query parameter is set to `true`.
+     */
+    counts?: WorkspaceCounts;
   }
 
   /** WorkspaceCollection. */
@@ -5734,6 +6136,16 @@ namespace AssistantV1 {
     workspaces: Workspace[];
     /** The pagination data for the returned objects. */
     pagination: Pagination;
+  }
+
+  /** An object containing properties that indicate how many intents, entities, and dialog nodes are defined in the workspace. This property is included only in responses from the **Export workspace asynchronously** method, and only when the **verbose** query parameter is set to `true`. */
+  export interface WorkspaceCounts {
+    /** The number of intents defined in the workspace. */
+    intent?: number;
+    /** The number of entities defined in the workspace. */
+    entity?: number;
+    /** The number of nodes defined in the workspace. */
+    node?: number;
   }
 
   /** Global settings for the workspace. */
@@ -5756,6 +6168,8 @@ namespace AssistantV1 {
     system_entities?: WorkspaceSystemSettingsSystemEntities;
     /** Workspace settings related to detection of irrelevant input. */
     off_topic?: WorkspaceSystemSettingsOffTopic;
+    /** Workspace settings related to the version of the training algorithms currently used by the skill. */
+    nlp?: WorkspaceSystemSettingsNlp;
     /** WorkspaceSystemSettings accepts additional properties. */
     [propName: string]: any;
   }
@@ -5782,6 +6196,16 @@ namespace AssistantV1 {
     max_suggestions?: number;
     /** For internal use only. */
     suggestion_text_policy?: string;
+  }
+
+  /** Workspace settings related to the version of the training algorithms currently used by the skill. */
+  export interface WorkspaceSystemSettingsNlp {
+    /** The policy the skill follows for selecting the algorithm version to use:
+     *
+     *   - `baseline`: the latest mature version
+     *   - `beta`: the latest beta version.
+     */
+    model?: string;
   }
 
   /** Workspace settings related to detection of irrelevant input. */

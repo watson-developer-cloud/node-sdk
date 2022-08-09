@@ -37,29 +37,38 @@ const assistantServiceOptions = {
 
 const assistantService = new AssistantV1(assistantServiceOptions);
 
-// dont actually create a request
-const createRequestMock = jest.spyOn(assistantService, 'createRequest');
-createRequestMock.mockImplementation(() => Promise.resolve());
+let createRequestMock = null;
+function mock_createRequest() {
+  if (!createRequestMock) {
+    createRequestMock = jest.spyOn(assistantService, 'createRequest');
+    createRequestMock.mockImplementation(() => Promise.resolve());
+  }
+}
 
 // dont actually construct an authenticator
 const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
-afterEach(() => {
-  createRequestMock.mockClear();
-  getAuthenticatorMock.mockClear();
-});
-
 // used for the service construction tests
 let requiredGlobals;
-beforeEach(() => {
-  // these are changed when passed into the factory/constructor, so re-init
-  requiredGlobals = {
-    version: 'testString',
-  };
-});
 
 describe('AssistantV1', () => {
+
+  beforeEach(() => {
+    mock_createRequest();
+    // these are changed when passed into the factory/constructor, so re-init
+    requiredGlobals = {
+      version: 'testString',
+    };
+  });
+
+  afterEach(() => {
+    if (createRequestMock) {
+      createRequestMock.mockClear();
+    }
+    getAuthenticatorMock.mockClear();
+  });
+
   describe('the constructor', () => {
     test('use user-given service url', () => {
       let options = {
@@ -131,6 +140,7 @@ describe('AssistantV1', () => {
       expect(getAuthenticatorMock).toHaveBeenCalled();
     });
   });
+
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
@@ -140,6 +150,7 @@ describe('AssistantV1', () => {
       });
     });
   });
+
   describe('message', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -289,7 +300,7 @@ describe('AssistantV1', () => {
         foo: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __messageTest() {
         // Construct the params object for operation message
         const workspaceId = 'testString';
         const input = messageInputModel;
@@ -300,7 +311,7 @@ describe('AssistantV1', () => {
         const output = outputDataModel;
         const userId = 'testString';
         const nodesVisitedDetails = false;
-        const params = {
+        const messageParams = {
           workspaceId: workspaceId,
           input: input,
           intents: intents,
@@ -312,7 +323,7 @@ describe('AssistantV1', () => {
           nodesVisitedDetails: nodesVisitedDetails,
         };
 
-        const messageResult = assistantService.message(params);
+        const messageResult = assistantService.message(messageParams);
 
         // all methods should return a Promise
         expectToBePromise(messageResult);
@@ -336,6 +347,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.nodes_visited_details).toEqual(nodesVisitedDetails);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __messageTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __messageTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __messageTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -343,7 +369,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const messageParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -351,13 +377,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.message(params);
+        assistantService.message(messageParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.message({});
@@ -366,20 +392,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const messagePromise = assistantService.message();
-        expectToBePromise(messagePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.message();
+        } catch (e) {
+          err = e;
+        }
 
-        messagePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('bulkClassify', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -389,16 +416,16 @@ describe('AssistantV1', () => {
         text: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __bulkClassifyTest() {
         // Construct the params object for operation bulkClassify
         const workspaceId = 'testString';
         const input = [bulkClassifyUtteranceModel];
-        const params = {
+        const bulkClassifyParams = {
           workspaceId: workspaceId,
           input: input,
         };
 
-        const bulkClassifyResult = assistantService.bulkClassify(params);
+        const bulkClassifyResult = assistantService.bulkClassify(bulkClassifyParams);
 
         // all methods should return a Promise
         expectToBePromise(bulkClassifyResult);
@@ -415,6 +442,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.body.input).toEqual(input);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __bulkClassifyTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __bulkClassifyTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __bulkClassifyTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -422,7 +464,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const bulkClassifyParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -430,13 +472,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.bulkClassify(params);
+        assistantService.bulkClassify(bulkClassifyParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.bulkClassify({});
@@ -445,30 +487,31 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const bulkClassifyPromise = assistantService.bulkClassify();
-        expectToBePromise(bulkClassifyPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.bulkClassify();
+        } catch (e) {
+          err = e;
+        }
 
-        bulkClassifyPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listWorkspaces', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listWorkspacesTest() {
         // Construct the params object for operation listWorkspaces
         const pageLimit = 38;
         const includeCount = false;
         const sort = 'name';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listWorkspacesParams = {
           pageLimit: pageLimit,
           includeCount: includeCount,
           sort: sort,
@@ -476,7 +519,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listWorkspacesResult = assistantService.listWorkspaces(params);
+        const listWorkspacesResult = assistantService.listWorkspaces(listWorkspacesParams);
 
         // all methods should return a Promise
         expectToBePromise(listWorkspacesResult);
@@ -496,20 +539,35 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.sort).toEqual(sort);
         expect(mockRequestOptions.qs.cursor).toEqual(cursor);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listWorkspacesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listWorkspacesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listWorkspacesTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listWorkspacesParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        assistantService.listWorkspaces(params);
+        assistantService.listWorkspaces(listWorkspacesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -520,6 +578,7 @@ describe('AssistantV1', () => {
       });
     });
   });
+
   describe('createWorkspace', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -629,6 +688,11 @@ describe('AssistantV1', () => {
         enabled: false,
       };
 
+      // WorkspaceSystemSettingsNlp
+      const workspaceSystemSettingsNlpModel = {
+        model: 'baseline',
+      };
+
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
@@ -638,6 +702,7 @@ describe('AssistantV1', () => {
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
         off_topic: workspaceSystemSettingsOffTopicModel,
+        nlp: workspaceSystemSettingsNlpModel,
         foo: 'testString',
       };
 
@@ -691,7 +756,7 @@ describe('AssistantV1', () => {
         values: [createValueModel],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createWorkspaceTest() {
         // Construct the params object for operation createWorkspace
         const name = 'testString';
         const description = 'testString';
@@ -705,7 +770,7 @@ describe('AssistantV1', () => {
         const intents = [createIntentModel];
         const entities = [createEntityModel];
         const includeAudit = false;
-        const params = {
+        const createWorkspaceParams = {
           name: name,
           description: description,
           language: language,
@@ -720,7 +785,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const createWorkspaceResult = assistantService.createWorkspace(params);
+        const createWorkspaceResult = assistantService.createWorkspace(createWorkspaceParams);
 
         // all methods should return a Promise
         expectToBePromise(createWorkspaceResult);
@@ -747,20 +812,35 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.body.entities).toEqual(entities);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createWorkspaceTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createWorkspaceTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createWorkspaceTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createWorkspaceParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        assistantService.createWorkspace(params);
+        assistantService.createWorkspace(createWorkspaceParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -771,22 +851,23 @@ describe('AssistantV1', () => {
       });
     });
   });
+
   describe('getWorkspace', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getWorkspaceTest() {
         // Construct the params object for operation getWorkspace
         const workspaceId = 'testString';
         const _export = false;
         const includeAudit = false;
         const sort = 'stable';
-        const params = {
+        const getWorkspaceParams = {
           workspaceId: workspaceId,
           _export: _export,
           includeAudit: includeAudit,
           sort: sort,
         };
 
-        const getWorkspaceResult = assistantService.getWorkspace(params);
+        const getWorkspaceResult = assistantService.getWorkspace(getWorkspaceParams);
 
         // all methods should return a Promise
         expectToBePromise(getWorkspaceResult);
@@ -805,6 +886,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.qs.sort).toEqual(sort);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getWorkspaceTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getWorkspaceTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getWorkspaceTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -812,7 +908,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getWorkspaceParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -820,13 +916,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getWorkspace(params);
+        assistantService.getWorkspace(getWorkspaceParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getWorkspace({});
@@ -835,20 +931,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getWorkspacePromise = assistantService.getWorkspace();
-        expectToBePromise(getWorkspacePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getWorkspace();
+        } catch (e) {
+          err = e;
+        }
 
-        getWorkspacePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateWorkspace', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -958,6 +1055,11 @@ describe('AssistantV1', () => {
         enabled: false,
       };
 
+      // WorkspaceSystemSettingsNlp
+      const workspaceSystemSettingsNlpModel = {
+        model: 'baseline',
+      };
+
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
@@ -967,6 +1069,7 @@ describe('AssistantV1', () => {
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
         off_topic: workspaceSystemSettingsOffTopicModel,
+        nlp: workspaceSystemSettingsNlpModel,
         foo: 'testString',
       };
 
@@ -1020,7 +1123,7 @@ describe('AssistantV1', () => {
         values: [createValueModel],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __updateWorkspaceTest() {
         // Construct the params object for operation updateWorkspace
         const workspaceId = 'testString';
         const name = 'testString';
@@ -1036,7 +1139,7 @@ describe('AssistantV1', () => {
         const entities = [createEntityModel];
         const append = false;
         const includeAudit = false;
-        const params = {
+        const updateWorkspaceParams = {
           workspaceId: workspaceId,
           name: name,
           description: description,
@@ -1053,7 +1156,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const updateWorkspaceResult = assistantService.updateWorkspace(params);
+        const updateWorkspaceResult = assistantService.updateWorkspace(updateWorkspaceParams);
 
         // all methods should return a Promise
         expectToBePromise(updateWorkspaceResult);
@@ -1082,6 +1185,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.append).toEqual(append);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateWorkspaceTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateWorkspaceTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateWorkspaceTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1089,7 +1207,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateWorkspaceParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -1097,13 +1215,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateWorkspace(params);
+        assistantService.updateWorkspace(updateWorkspaceParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateWorkspace({});
@@ -1112,30 +1230,31 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateWorkspacePromise = assistantService.updateWorkspace();
-        expectToBePromise(updateWorkspacePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateWorkspace();
+        } catch (e) {
+          err = e;
+        }
 
-        updateWorkspacePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteWorkspace', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteWorkspaceTest() {
         // Construct the params object for operation deleteWorkspace
         const workspaceId = 'testString';
-        const params = {
+        const deleteWorkspaceParams = {
           workspaceId: workspaceId,
         };
 
-        const deleteWorkspaceResult = assistantService.deleteWorkspace(params);
+        const deleteWorkspaceResult = assistantService.deleteWorkspace(deleteWorkspaceParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteWorkspaceResult);
@@ -1151,6 +1270,21 @@ describe('AssistantV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteWorkspaceTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteWorkspaceTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteWorkspaceTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1158,7 +1292,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteWorkspaceParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -1166,13 +1300,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteWorkspace(params);
+        assistantService.deleteWorkspace(deleteWorkspaceParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteWorkspace({});
@@ -1181,23 +1315,684 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteWorkspacePromise = assistantService.deleteWorkspace();
-        expectToBePromise(deleteWorkspacePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteWorkspace();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteWorkspacePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
+  describe('createWorkspaceAsync', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ResponseGenericChannel
+      const responseGenericChannelModel = {
+        channel: 'chat',
+      };
+
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      const dialogNodeOutputGenericModel = {
+        response_type: 'audio',
+        source: 'testString',
+        title: 'testString',
+        description: 'testString',
+        channels: [responseGenericChannelModel],
+        channel_options: { foo: 'bar' },
+        alt_text: 'testString',
+      };
+
+      // DialogNodeOutputModifiers
+      const dialogNodeOutputModifiersModel = {
+        overwrite: true,
+      };
+
+      // DialogNodeOutput
+      const dialogNodeOutputModel = {
+        generic: [dialogNodeOutputGenericModel],
+        integrations: { 'key1': { 'key1': 'testString' } },
+        modifiers: dialogNodeOutputModifiersModel,
+        foo: 'testString',
+      };
+
+      // DialogNodeContext
+      const dialogNodeContextModel = {
+        integrations: { 'key1': { 'key1': 'testString' } },
+        foo: 'testString',
+      };
+
+      // DialogNodeNextStep
+      const dialogNodeNextStepModel = {
+        behavior: 'get_user_input',
+        dialog_node: 'testString',
+        selector: 'condition',
+      };
+
+      // DialogNodeAction
+      const dialogNodeActionModel = {
+        name: 'testString',
+        type: 'client',
+        parameters: { 'key1': 'testString' },
+        result_variable: 'testString',
+        credentials: 'testString',
+      };
+
+      // DialogNode
+      const dialogNodeModel = {
+        dialog_node: 'testString',
+        description: 'testString',
+        conditions: 'testString',
+        parent: 'testString',
+        previous_sibling: 'testString',
+        output: dialogNodeOutputModel,
+        context: dialogNodeContextModel,
+        metadata: { 'key1': 'testString' },
+        next_step: dialogNodeNextStepModel,
+        title: 'testString',
+        type: 'standard',
+        event_name: 'focus',
+        variable: 'testString',
+        actions: [dialogNodeActionModel],
+        digress_in: 'not_available',
+        digress_out: 'allow_returning',
+        digress_out_slots: 'not_allowed',
+        user_label: 'testString',
+        disambiguation_opt_out: false,
+      };
+
+      // Counterexample
+      const counterexampleModel = {
+        text: 'testString',
+      };
+
+      // WorkspaceSystemSettingsTooling
+      const workspaceSystemSettingsToolingModel = {
+        store_generic_responses: true,
+      };
+
+      // WorkspaceSystemSettingsDisambiguation
+      const workspaceSystemSettingsDisambiguationModel = {
+        prompt: 'testString',
+        none_of_the_above_prompt: 'testString',
+        enabled: false,
+        sensitivity: 'auto',
+        randomize: true,
+        max_suggestions: 1,
+        suggestion_text_policy: 'testString',
+      };
+
+      // WorkspaceSystemSettingsSystemEntities
+      const workspaceSystemSettingsSystemEntitiesModel = {
+        enabled: false,
+      };
+
+      // WorkspaceSystemSettingsOffTopic
+      const workspaceSystemSettingsOffTopicModel = {
+        enabled: false,
+      };
+
+      // WorkspaceSystemSettingsNlp
+      const workspaceSystemSettingsNlpModel = {
+        model: 'baseline',
+      };
+
+      // WorkspaceSystemSettings
+      const workspaceSystemSettingsModel = {
+        tooling: workspaceSystemSettingsToolingModel,
+        disambiguation: workspaceSystemSettingsDisambiguationModel,
+        human_agent_assist: { 'key1': 'testString' },
+        spelling_suggestions: false,
+        spelling_auto_correct: false,
+        system_entities: workspaceSystemSettingsSystemEntitiesModel,
+        off_topic: workspaceSystemSettingsOffTopicModel,
+        nlp: workspaceSystemSettingsNlpModel,
+        foo: 'testString',
+      };
+
+      // WebhookHeader
+      const webhookHeaderModel = {
+        name: 'testString',
+        value: 'testString',
+      };
+
+      // Webhook
+      const webhookModel = {
+        url: 'testString',
+        name: 'testString',
+        headers: [webhookHeaderModel],
+      };
+
+      // Mention
+      const mentionModel = {
+        entity: 'testString',
+        location: [38],
+      };
+
+      // Example
+      const exampleModel = {
+        text: 'testString',
+        mentions: [mentionModel],
+      };
+
+      // CreateIntent
+      const createIntentModel = {
+        intent: 'testString',
+        description: 'testString',
+        examples: [exampleModel],
+      };
+
+      // CreateValue
+      const createValueModel = {
+        value: 'testString',
+        metadata: { 'key1': 'testString' },
+        type: 'synonyms',
+        synonyms: ['testString'],
+        patterns: ['testString'],
+      };
+
+      // CreateEntity
+      const createEntityModel = {
+        entity: 'testString',
+        description: 'testString',
+        metadata: { 'key1': 'testString' },
+        fuzzy_match: true,
+        values: [createValueModel],
+      };
+
+      function __createWorkspaceAsyncTest() {
+        // Construct the params object for operation createWorkspaceAsync
+        const name = 'testString';
+        const description = 'testString';
+        const language = 'testString';
+        const dialogNodes = [dialogNodeModel];
+        const counterexamples = [counterexampleModel];
+        const metadata = { 'key1': 'testString' };
+        const learningOptOut = false;
+        const systemSettings = workspaceSystemSettingsModel;
+        const webhooks = [webhookModel];
+        const intents = [createIntentModel];
+        const entities = [createEntityModel];
+        const createWorkspaceAsyncParams = {
+          name: name,
+          description: description,
+          language: language,
+          dialogNodes: dialogNodes,
+          counterexamples: counterexamples,
+          metadata: metadata,
+          learningOptOut: learningOptOut,
+          systemSettings: systemSettings,
+          webhooks: webhooks,
+          intents: intents,
+          entities: entities,
+        };
+
+        const createWorkspaceAsyncResult = assistantService.createWorkspaceAsync(createWorkspaceAsyncParams);
+
+        // all methods should return a Promise
+        expectToBePromise(createWorkspaceAsyncResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces_async', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.language).toEqual(language);
+        expect(mockRequestOptions.body.dialog_nodes).toEqual(dialogNodes);
+        expect(mockRequestOptions.body.counterexamples).toEqual(counterexamples);
+        expect(mockRequestOptions.body.metadata).toEqual(metadata);
+        expect(mockRequestOptions.body.learning_opt_out).toEqual(learningOptOut);
+        expect(mockRequestOptions.body.system_settings).toEqual(systemSettings);
+        expect(mockRequestOptions.body.webhooks).toEqual(webhooks);
+        expect(mockRequestOptions.body.intents).toEqual(intents);
+        expect(mockRequestOptions.body.entities).toEqual(entities);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createWorkspaceAsyncTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createWorkspaceAsyncTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createWorkspaceAsyncTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const createWorkspaceAsyncParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.createWorkspaceAsync(createWorkspaceAsyncParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.createWorkspaceAsync({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
+  describe('updateWorkspaceAsync', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ResponseGenericChannel
+      const responseGenericChannelModel = {
+        channel: 'chat',
+      };
+
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      const dialogNodeOutputGenericModel = {
+        response_type: 'audio',
+        source: 'testString',
+        title: 'testString',
+        description: 'testString',
+        channels: [responseGenericChannelModel],
+        channel_options: { foo: 'bar' },
+        alt_text: 'testString',
+      };
+
+      // DialogNodeOutputModifiers
+      const dialogNodeOutputModifiersModel = {
+        overwrite: true,
+      };
+
+      // DialogNodeOutput
+      const dialogNodeOutputModel = {
+        generic: [dialogNodeOutputGenericModel],
+        integrations: { 'key1': { 'key1': 'testString' } },
+        modifiers: dialogNodeOutputModifiersModel,
+        foo: 'testString',
+      };
+
+      // DialogNodeContext
+      const dialogNodeContextModel = {
+        integrations: { 'key1': { 'key1': 'testString' } },
+        foo: 'testString',
+      };
+
+      // DialogNodeNextStep
+      const dialogNodeNextStepModel = {
+        behavior: 'get_user_input',
+        dialog_node: 'testString',
+        selector: 'condition',
+      };
+
+      // DialogNodeAction
+      const dialogNodeActionModel = {
+        name: 'testString',
+        type: 'client',
+        parameters: { 'key1': 'testString' },
+        result_variable: 'testString',
+        credentials: 'testString',
+      };
+
+      // DialogNode
+      const dialogNodeModel = {
+        dialog_node: 'testString',
+        description: 'testString',
+        conditions: 'testString',
+        parent: 'testString',
+        previous_sibling: 'testString',
+        output: dialogNodeOutputModel,
+        context: dialogNodeContextModel,
+        metadata: { 'key1': 'testString' },
+        next_step: dialogNodeNextStepModel,
+        title: 'testString',
+        type: 'standard',
+        event_name: 'focus',
+        variable: 'testString',
+        actions: [dialogNodeActionModel],
+        digress_in: 'not_available',
+        digress_out: 'allow_returning',
+        digress_out_slots: 'not_allowed',
+        user_label: 'testString',
+        disambiguation_opt_out: false,
+      };
+
+      // Counterexample
+      const counterexampleModel = {
+        text: 'testString',
+      };
+
+      // WorkspaceSystemSettingsTooling
+      const workspaceSystemSettingsToolingModel = {
+        store_generic_responses: true,
+      };
+
+      // WorkspaceSystemSettingsDisambiguation
+      const workspaceSystemSettingsDisambiguationModel = {
+        prompt: 'testString',
+        none_of_the_above_prompt: 'testString',
+        enabled: false,
+        sensitivity: 'auto',
+        randomize: true,
+        max_suggestions: 1,
+        suggestion_text_policy: 'testString',
+      };
+
+      // WorkspaceSystemSettingsSystemEntities
+      const workspaceSystemSettingsSystemEntitiesModel = {
+        enabled: false,
+      };
+
+      // WorkspaceSystemSettingsOffTopic
+      const workspaceSystemSettingsOffTopicModel = {
+        enabled: false,
+      };
+
+      // WorkspaceSystemSettingsNlp
+      const workspaceSystemSettingsNlpModel = {
+        model: 'baseline',
+      };
+
+      // WorkspaceSystemSettings
+      const workspaceSystemSettingsModel = {
+        tooling: workspaceSystemSettingsToolingModel,
+        disambiguation: workspaceSystemSettingsDisambiguationModel,
+        human_agent_assist: { 'key1': 'testString' },
+        spelling_suggestions: false,
+        spelling_auto_correct: false,
+        system_entities: workspaceSystemSettingsSystemEntitiesModel,
+        off_topic: workspaceSystemSettingsOffTopicModel,
+        nlp: workspaceSystemSettingsNlpModel,
+        foo: 'testString',
+      };
+
+      // WebhookHeader
+      const webhookHeaderModel = {
+        name: 'testString',
+        value: 'testString',
+      };
+
+      // Webhook
+      const webhookModel = {
+        url: 'testString',
+        name: 'testString',
+        headers: [webhookHeaderModel],
+      };
+
+      // Mention
+      const mentionModel = {
+        entity: 'testString',
+        location: [38],
+      };
+
+      // Example
+      const exampleModel = {
+        text: 'testString',
+        mentions: [mentionModel],
+      };
+
+      // CreateIntent
+      const createIntentModel = {
+        intent: 'testString',
+        description: 'testString',
+        examples: [exampleModel],
+      };
+
+      // CreateValue
+      const createValueModel = {
+        value: 'testString',
+        metadata: { 'key1': 'testString' },
+        type: 'synonyms',
+        synonyms: ['testString'],
+        patterns: ['testString'],
+      };
+
+      // CreateEntity
+      const createEntityModel = {
+        entity: 'testString',
+        description: 'testString',
+        metadata: { 'key1': 'testString' },
+        fuzzy_match: true,
+        values: [createValueModel],
+      };
+
+      function __updateWorkspaceAsyncTest() {
+        // Construct the params object for operation updateWorkspaceAsync
+        const workspaceId = 'testString';
+        const name = 'testString';
+        const description = 'testString';
+        const language = 'testString';
+        const dialogNodes = [dialogNodeModel];
+        const counterexamples = [counterexampleModel];
+        const metadata = { 'key1': 'testString' };
+        const learningOptOut = false;
+        const systemSettings = workspaceSystemSettingsModel;
+        const webhooks = [webhookModel];
+        const intents = [createIntentModel];
+        const entities = [createEntityModel];
+        const append = false;
+        const updateWorkspaceAsyncParams = {
+          workspaceId: workspaceId,
+          name: name,
+          description: description,
+          language: language,
+          dialogNodes: dialogNodes,
+          counterexamples: counterexamples,
+          metadata: metadata,
+          learningOptOut: learningOptOut,
+          systemSettings: systemSettings,
+          webhooks: webhooks,
+          intents: intents,
+          entities: entities,
+          append: append,
+        };
+
+        const updateWorkspaceAsyncResult = assistantService.updateWorkspaceAsync(updateWorkspaceAsyncParams);
+
+        // all methods should return a Promise
+        expectToBePromise(updateWorkspaceAsyncResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces_async/{workspace_id}', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.language).toEqual(language);
+        expect(mockRequestOptions.body.dialog_nodes).toEqual(dialogNodes);
+        expect(mockRequestOptions.body.counterexamples).toEqual(counterexamples);
+        expect(mockRequestOptions.body.metadata).toEqual(metadata);
+        expect(mockRequestOptions.body.learning_opt_out).toEqual(learningOptOut);
+        expect(mockRequestOptions.body.system_settings).toEqual(systemSettings);
+        expect(mockRequestOptions.body.webhooks).toEqual(webhooks);
+        expect(mockRequestOptions.body.intents).toEqual(intents);
+        expect(mockRequestOptions.body.entities).toEqual(entities);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.append).toEqual(append);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateWorkspaceAsyncTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateWorkspaceAsyncTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateWorkspaceAsyncTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const workspaceId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const updateWorkspaceAsyncParams = {
+          workspaceId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.updateWorkspaceAsync(updateWorkspaceAsyncParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.updateWorkspaceAsync({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateWorkspaceAsync();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('exportWorkspaceAsync', () => {
+    describe('positive tests', () => {
+      function __exportWorkspaceAsyncTest() {
+        // Construct the params object for operation exportWorkspaceAsync
+        const workspaceId = 'testString';
+        const includeAudit = false;
+        const sort = 'stable';
+        const verbose = false;
+        const exportWorkspaceAsyncParams = {
+          workspaceId: workspaceId,
+          includeAudit: includeAudit,
+          sort: sort,
+          verbose: verbose,
+        };
+
+        const exportWorkspaceAsyncResult = assistantService.exportWorkspaceAsync(exportWorkspaceAsyncParams);
+
+        // all methods should return a Promise
+        expectToBePromise(exportWorkspaceAsyncResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v1/workspaces_async/{workspace_id}/export', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.verbose).toEqual(verbose);
+        expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __exportWorkspaceAsyncTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __exportWorkspaceAsyncTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __exportWorkspaceAsyncTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const workspaceId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const exportWorkspaceAsyncParams = {
+          workspaceId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.exportWorkspaceAsync(exportWorkspaceAsyncParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.exportWorkspaceAsync({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.exportWorkspaceAsync();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
   describe('listIntents', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listIntentsTest() {
         // Construct the params object for operation listIntents
         const workspaceId = 'testString';
         const _export = false;
@@ -1206,7 +2001,7 @@ describe('AssistantV1', () => {
         const sort = 'intent';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listIntentsParams = {
           workspaceId: workspaceId,
           _export: _export,
           pageLimit: pageLimit,
@@ -1216,7 +2011,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listIntentsResult = assistantService.listIntents(params);
+        const listIntentsResult = assistantService.listIntents(listIntentsParams);
 
         // all methods should return a Promise
         expectToBePromise(listIntentsResult);
@@ -1238,6 +2033,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.cursor).toEqual(cursor);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listIntentsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listIntentsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listIntentsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1245,7 +2055,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listIntentsParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -1253,13 +2063,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listIntents(params);
+        assistantService.listIntents(listIntentsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listIntents({});
@@ -1268,20 +2078,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listIntentsPromise = assistantService.listIntents();
-        expectToBePromise(listIntentsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listIntents();
+        } catch (e) {
+          err = e;
+        }
 
-        listIntentsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createIntent', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -1298,14 +2109,14 @@ describe('AssistantV1', () => {
         mentions: [mentionModel],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createIntentTest() {
         // Construct the params object for operation createIntent
         const workspaceId = 'testString';
         const intent = 'testString';
         const description = 'testString';
         const examples = [exampleModel];
         const includeAudit = false;
-        const params = {
+        const createIntentParams = {
           workspaceId: workspaceId,
           intent: intent,
           description: description,
@@ -1313,7 +2124,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const createIntentResult = assistantService.createIntent(params);
+        const createIntentResult = assistantService.createIntent(createIntentParams);
 
         // all methods should return a Promise
         expectToBePromise(createIntentResult);
@@ -1333,6 +2144,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createIntentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createIntentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createIntentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1341,7 +2167,7 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createIntentParams = {
           workspaceId,
           intent,
           headers: {
@@ -1350,13 +2176,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.createIntent(params);
+        assistantService.createIntent(createIntentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.createIntent({});
@@ -1365,36 +2191,37 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createIntentPromise = assistantService.createIntent();
-        expectToBePromise(createIntentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createIntent();
+        } catch (e) {
+          err = e;
+        }
 
-        createIntentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getIntent', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getIntentTest() {
         // Construct the params object for operation getIntent
         const workspaceId = 'testString';
         const intent = 'testString';
         const _export = false;
         const includeAudit = false;
-        const params = {
+        const getIntentParams = {
           workspaceId: workspaceId,
           intent: intent,
           _export: _export,
           includeAudit: includeAudit,
         };
 
-        const getIntentResult = assistantService.getIntent(params);
+        const getIntentResult = assistantService.getIntent(getIntentParams);
 
         // all methods should return a Promise
         expectToBePromise(getIntentResult);
@@ -1413,6 +2240,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getIntentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getIntentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getIntentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1421,7 +2263,7 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getIntentParams = {
           workspaceId,
           intent,
           headers: {
@@ -1430,13 +2272,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getIntent(params);
+        assistantService.getIntent(getIntentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getIntent({});
@@ -1445,20 +2287,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getIntentPromise = assistantService.getIntent();
-        expectToBePromise(getIntentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getIntent();
+        } catch (e) {
+          err = e;
+        }
 
-        getIntentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateIntent', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -1475,7 +2318,7 @@ describe('AssistantV1', () => {
         mentions: [mentionModel],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __updateIntentTest() {
         // Construct the params object for operation updateIntent
         const workspaceId = 'testString';
         const intent = 'testString';
@@ -1484,7 +2327,7 @@ describe('AssistantV1', () => {
         const newExamples = [exampleModel];
         const append = false;
         const includeAudit = false;
-        const params = {
+        const updateIntentParams = {
           workspaceId: workspaceId,
           intent: intent,
           newIntent: newIntent,
@@ -1494,7 +2337,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const updateIntentResult = assistantService.updateIntent(params);
+        const updateIntentResult = assistantService.updateIntent(updateIntentParams);
 
         // all methods should return a Promise
         expectToBePromise(updateIntentResult);
@@ -1516,6 +2359,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateIntentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateIntentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateIntentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1524,7 +2382,7 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateIntentParams = {
           workspaceId,
           intent,
           headers: {
@@ -1533,13 +2391,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateIntent(params);
+        assistantService.updateIntent(updateIntentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateIntent({});
@@ -1548,32 +2406,33 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateIntentPromise = assistantService.updateIntent();
-        expectToBePromise(updateIntentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateIntent();
+        } catch (e) {
+          err = e;
+        }
 
-        updateIntentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteIntent', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteIntentTest() {
         // Construct the params object for operation deleteIntent
         const workspaceId = 'testString';
         const intent = 'testString';
-        const params = {
+        const deleteIntentParams = {
           workspaceId: workspaceId,
           intent: intent,
         };
 
-        const deleteIntentResult = assistantService.deleteIntent(params);
+        const deleteIntentResult = assistantService.deleteIntent(deleteIntentParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteIntentResult);
@@ -1590,6 +2449,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteIntentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteIntentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteIntentTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1598,7 +2472,7 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteIntentParams = {
           workspaceId,
           intent,
           headers: {
@@ -1607,13 +2481,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteIntent(params);
+        assistantService.deleteIntent(deleteIntentParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteIntent({});
@@ -1622,23 +2496,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteIntentPromise = assistantService.deleteIntent();
-        expectToBePromise(deleteIntentPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteIntent();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteIntentPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listExamples', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listExamplesTest() {
         // Construct the params object for operation listExamples
         const workspaceId = 'testString';
         const intent = 'testString';
@@ -1647,7 +2522,7 @@ describe('AssistantV1', () => {
         const sort = 'text';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listExamplesParams = {
           workspaceId: workspaceId,
           intent: intent,
           pageLimit: pageLimit,
@@ -1657,7 +2532,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listExamplesResult = assistantService.listExamples(params);
+        const listExamplesResult = assistantService.listExamples(listExamplesParams);
 
         // all methods should return a Promise
         expectToBePromise(listExamplesResult);
@@ -1679,6 +2554,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listExamplesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listExamplesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listExamplesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1687,7 +2577,7 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listExamplesParams = {
           workspaceId,
           intent,
           headers: {
@@ -1696,13 +2586,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listExamples(params);
+        assistantService.listExamples(listExamplesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listExamples({});
@@ -1711,20 +2601,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listExamplesPromise = assistantService.listExamples();
-        expectToBePromise(listExamplesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listExamples();
+        } catch (e) {
+          err = e;
+        }
 
-        listExamplesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createExample', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -1735,14 +2626,14 @@ describe('AssistantV1', () => {
         location: [38],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createExampleTest() {
         // Construct the params object for operation createExample
         const workspaceId = 'testString';
         const intent = 'testString';
         const text = 'testString';
         const mentions = [mentionModel];
         const includeAudit = false;
-        const params = {
+        const createExampleParams = {
           workspaceId: workspaceId,
           intent: intent,
           text: text,
@@ -1750,7 +2641,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const createExampleResult = assistantService.createExample(params);
+        const createExampleResult = assistantService.createExample(createExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(createExampleResult);
@@ -1770,6 +2661,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1779,7 +2685,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createExampleParams = {
           workspaceId,
           intent,
           text,
@@ -1789,13 +2695,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.createExample(params);
+        assistantService.createExample(createExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.createExample({});
@@ -1804,36 +2710,37 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createExamplePromise = assistantService.createExample();
-        expectToBePromise(createExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createExample();
+        } catch (e) {
+          err = e;
+        }
 
-        createExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getExample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getExampleTest() {
         // Construct the params object for operation getExample
         const workspaceId = 'testString';
         const intent = 'testString';
         const text = 'testString';
         const includeAudit = false;
-        const params = {
+        const getExampleParams = {
           workspaceId: workspaceId,
           intent: intent,
           text: text,
           includeAudit: includeAudit,
         };
 
-        const getExampleResult = assistantService.getExample(params);
+        const getExampleResult = assistantService.getExample(getExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(getExampleResult);
@@ -1852,6 +2759,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
         expect(mockRequestOptions.path.text).toEqual(text);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1861,7 +2783,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getExampleParams = {
           workspaceId,
           intent,
           text,
@@ -1871,13 +2793,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getExample(params);
+        assistantService.getExample(getExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getExample({});
@@ -1886,20 +2808,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getExamplePromise = assistantService.getExample();
-        expectToBePromise(getExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getExample();
+        } catch (e) {
+          err = e;
+        }
 
-        getExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateExample', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -1910,7 +2833,7 @@ describe('AssistantV1', () => {
         location: [38],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __updateExampleTest() {
         // Construct the params object for operation updateExample
         const workspaceId = 'testString';
         const intent = 'testString';
@@ -1918,7 +2841,7 @@ describe('AssistantV1', () => {
         const newText = 'testString';
         const newMentions = [mentionModel];
         const includeAudit = false;
-        const params = {
+        const updateExampleParams = {
           workspaceId: workspaceId,
           intent: intent,
           text: text,
@@ -1927,7 +2850,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const updateExampleResult = assistantService.updateExample(params);
+        const updateExampleResult = assistantService.updateExample(updateExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(updateExampleResult);
@@ -1948,6 +2871,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
         expect(mockRequestOptions.path.text).toEqual(text);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1957,7 +2895,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateExampleParams = {
           workspaceId,
           intent,
           text,
@@ -1967,13 +2905,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateExample(params);
+        assistantService.updateExample(updateExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateExample({});
@@ -1982,34 +2920,35 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateExamplePromise = assistantService.updateExample();
-        expectToBePromise(updateExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateExample();
+        } catch (e) {
+          err = e;
+        }
 
-        updateExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteExample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteExampleTest() {
         // Construct the params object for operation deleteExample
         const workspaceId = 'testString';
         const intent = 'testString';
         const text = 'testString';
-        const params = {
+        const deleteExampleParams = {
           workspaceId: workspaceId,
           intent: intent,
           text: text,
         };
 
-        const deleteExampleResult = assistantService.deleteExample(params);
+        const deleteExampleResult = assistantService.deleteExample(deleteExampleParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteExampleResult);
@@ -2027,6 +2966,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.intent).toEqual(intent);
         expect(mockRequestOptions.path.text).toEqual(text);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteExampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteExampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteExampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2036,7 +2990,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteExampleParams = {
           workspaceId,
           intent,
           text,
@@ -2046,13 +3000,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteExample(params);
+        assistantService.deleteExample(deleteExampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteExample({});
@@ -2061,23 +3015,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteExamplePromise = assistantService.deleteExample();
-        expectToBePromise(deleteExamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteExample();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteExamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listCounterexamples', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listCounterexamplesTest() {
         // Construct the params object for operation listCounterexamples
         const workspaceId = 'testString';
         const pageLimit = 38;
@@ -2085,7 +3040,7 @@ describe('AssistantV1', () => {
         const sort = 'text';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listCounterexamplesParams = {
           workspaceId: workspaceId,
           pageLimit: pageLimit,
           includeCount: includeCount,
@@ -2094,7 +3049,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listCounterexamplesResult = assistantService.listCounterexamples(params);
+        const listCounterexamplesResult = assistantService.listCounterexamples(listCounterexamplesParams);
 
         // all methods should return a Promise
         expectToBePromise(listCounterexamplesResult);
@@ -2115,6 +3070,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.cursor).toEqual(cursor);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listCounterexamplesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listCounterexamplesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listCounterexamplesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2122,7 +3092,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listCounterexamplesParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -2130,13 +3100,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listCounterexamples(params);
+        assistantService.listCounterexamples(listCounterexamplesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listCounterexamples({});
@@ -2145,34 +3115,35 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listCounterexamplesPromise = assistantService.listCounterexamples();
-        expectToBePromise(listCounterexamplesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listCounterexamples();
+        } catch (e) {
+          err = e;
+        }
 
-        listCounterexamplesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createCounterexample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createCounterexampleTest() {
         // Construct the params object for operation createCounterexample
         const workspaceId = 'testString';
         const text = 'testString';
         const includeAudit = false;
-        const params = {
+        const createCounterexampleParams = {
           workspaceId: workspaceId,
           text: text,
           includeAudit: includeAudit,
         };
 
-        const createCounterexampleResult = assistantService.createCounterexample(params);
+        const createCounterexampleResult = assistantService.createCounterexample(createCounterexampleParams);
 
         // all methods should return a Promise
         expectToBePromise(createCounterexampleResult);
@@ -2190,6 +3161,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createCounterexampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createCounterexampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createCounterexampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2198,7 +3184,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createCounterexampleParams = {
           workspaceId,
           text,
           headers: {
@@ -2207,13 +3193,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.createCounterexample(params);
+        assistantService.createCounterexample(createCounterexampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.createCounterexample({});
@@ -2222,34 +3208,35 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createCounterexamplePromise = assistantService.createCounterexample();
-        expectToBePromise(createCounterexamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createCounterexample();
+        } catch (e) {
+          err = e;
+        }
 
-        createCounterexamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getCounterexample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getCounterexampleTest() {
         // Construct the params object for operation getCounterexample
         const workspaceId = 'testString';
         const text = 'testString';
         const includeAudit = false;
-        const params = {
+        const getCounterexampleParams = {
           workspaceId: workspaceId,
           text: text,
           includeAudit: includeAudit,
         };
 
-        const getCounterexampleResult = assistantService.getCounterexample(params);
+        const getCounterexampleResult = assistantService.getCounterexample(getCounterexampleParams);
 
         // all methods should return a Promise
         expectToBePromise(getCounterexampleResult);
@@ -2267,6 +3254,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.text).toEqual(text);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getCounterexampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getCounterexampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getCounterexampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2275,7 +3277,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getCounterexampleParams = {
           workspaceId,
           text,
           headers: {
@@ -2284,13 +3286,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getCounterexample(params);
+        assistantService.getCounterexample(getCounterexampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getCounterexample({});
@@ -2299,36 +3301,37 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getCounterexamplePromise = assistantService.getCounterexample();
-        expectToBePromise(getCounterexamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getCounterexample();
+        } catch (e) {
+          err = e;
+        }
 
-        getCounterexamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateCounterexample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateCounterexampleTest() {
         // Construct the params object for operation updateCounterexample
         const workspaceId = 'testString';
         const text = 'testString';
         const newText = 'testString';
         const includeAudit = false;
-        const params = {
+        const updateCounterexampleParams = {
           workspaceId: workspaceId,
           text: text,
           newText: newText,
           includeAudit: includeAudit,
         };
 
-        const updateCounterexampleResult = assistantService.updateCounterexample(params);
+        const updateCounterexampleResult = assistantService.updateCounterexample(updateCounterexampleParams);
 
         // all methods should return a Promise
         expectToBePromise(updateCounterexampleResult);
@@ -2347,6 +3350,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.text).toEqual(text);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateCounterexampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateCounterexampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateCounterexampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2355,7 +3373,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateCounterexampleParams = {
           workspaceId,
           text,
           headers: {
@@ -2364,13 +3382,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateCounterexample(params);
+        assistantService.updateCounterexample(updateCounterexampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateCounterexample({});
@@ -2379,32 +3397,33 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateCounterexamplePromise = assistantService.updateCounterexample();
-        expectToBePromise(updateCounterexamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateCounterexample();
+        } catch (e) {
+          err = e;
+        }
 
-        updateCounterexamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteCounterexample', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteCounterexampleTest() {
         // Construct the params object for operation deleteCounterexample
         const workspaceId = 'testString';
         const text = 'testString';
-        const params = {
+        const deleteCounterexampleParams = {
           workspaceId: workspaceId,
           text: text,
         };
 
-        const deleteCounterexampleResult = assistantService.deleteCounterexample(params);
+        const deleteCounterexampleResult = assistantService.deleteCounterexample(deleteCounterexampleParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteCounterexampleResult);
@@ -2421,6 +3440,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.text).toEqual(text);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteCounterexampleTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteCounterexampleTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteCounterexampleTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2429,7 +3463,7 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteCounterexampleParams = {
           workspaceId,
           text,
           headers: {
@@ -2438,13 +3472,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteCounterexample(params);
+        assistantService.deleteCounterexample(deleteCounterexampleParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteCounterexample({});
@@ -2453,23 +3487,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteCounterexamplePromise = assistantService.deleteCounterexample();
-        expectToBePromise(deleteCounterexamplePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteCounterexample();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteCounterexamplePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listEntities', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listEntitiesTest() {
         // Construct the params object for operation listEntities
         const workspaceId = 'testString';
         const _export = false;
@@ -2478,7 +3513,7 @@ describe('AssistantV1', () => {
         const sort = 'entity';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listEntitiesParams = {
           workspaceId: workspaceId,
           _export: _export,
           pageLimit: pageLimit,
@@ -2488,7 +3523,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listEntitiesResult = assistantService.listEntities(params);
+        const listEntitiesResult = assistantService.listEntities(listEntitiesParams);
 
         // all methods should return a Promise
         expectToBePromise(listEntitiesResult);
@@ -2510,6 +3545,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.cursor).toEqual(cursor);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listEntitiesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listEntitiesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listEntitiesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2517,7 +3567,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listEntitiesParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -2525,13 +3575,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listEntities(params);
+        assistantService.listEntities(listEntitiesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listEntities({});
@@ -2540,20 +3590,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listEntitiesPromise = assistantService.listEntities();
-        expectToBePromise(listEntitiesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listEntities();
+        } catch (e) {
+          err = e;
+        }
 
-        listEntitiesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createEntity', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -2567,7 +3618,7 @@ describe('AssistantV1', () => {
         patterns: ['testString'],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createEntityTest() {
         // Construct the params object for operation createEntity
         const workspaceId = 'testString';
         const entity = 'testString';
@@ -2576,7 +3627,7 @@ describe('AssistantV1', () => {
         const fuzzyMatch = true;
         const values = [createValueModel];
         const includeAudit = false;
-        const params = {
+        const createEntityParams = {
           workspaceId: workspaceId,
           entity: entity,
           description: description,
@@ -2586,7 +3637,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const createEntityResult = assistantService.createEntity(params);
+        const createEntityResult = assistantService.createEntity(createEntityParams);
 
         // all methods should return a Promise
         expectToBePromise(createEntityResult);
@@ -2608,6 +3659,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createEntityTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createEntityTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createEntityTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2616,7 +3682,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createEntityParams = {
           workspaceId,
           entity,
           headers: {
@@ -2625,13 +3691,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.createEntity(params);
+        assistantService.createEntity(createEntityParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.createEntity({});
@@ -2640,36 +3706,37 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createEntityPromise = assistantService.createEntity();
-        expectToBePromise(createEntityPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createEntity();
+        } catch (e) {
+          err = e;
+        }
 
-        createEntityPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getEntity', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getEntityTest() {
         // Construct the params object for operation getEntity
         const workspaceId = 'testString';
         const entity = 'testString';
         const _export = false;
         const includeAudit = false;
-        const params = {
+        const getEntityParams = {
           workspaceId: workspaceId,
           entity: entity,
           _export: _export,
           includeAudit: includeAudit,
         };
 
-        const getEntityResult = assistantService.getEntity(params);
+        const getEntityResult = assistantService.getEntity(getEntityParams);
 
         // all methods should return a Promise
         expectToBePromise(getEntityResult);
@@ -2688,6 +3755,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getEntityTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getEntityTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getEntityTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2696,7 +3778,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getEntityParams = {
           workspaceId,
           entity,
           headers: {
@@ -2705,13 +3787,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getEntity(params);
+        assistantService.getEntity(getEntityParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getEntity({});
@@ -2720,20 +3802,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getEntityPromise = assistantService.getEntity();
-        expectToBePromise(getEntityPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getEntity();
+        } catch (e) {
+          err = e;
+        }
 
-        getEntityPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateEntity', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -2747,7 +3830,7 @@ describe('AssistantV1', () => {
         patterns: ['testString'],
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __updateEntityTest() {
         // Construct the params object for operation updateEntity
         const workspaceId = 'testString';
         const entity = 'testString';
@@ -2758,7 +3841,7 @@ describe('AssistantV1', () => {
         const newValues = [createValueModel];
         const append = false;
         const includeAudit = false;
-        const params = {
+        const updateEntityParams = {
           workspaceId: workspaceId,
           entity: entity,
           newEntity: newEntity,
@@ -2770,7 +3853,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const updateEntityResult = assistantService.updateEntity(params);
+        const updateEntityResult = assistantService.updateEntity(updateEntityParams);
 
         // all methods should return a Promise
         expectToBePromise(updateEntityResult);
@@ -2794,6 +3877,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateEntityTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateEntityTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateEntityTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2802,7 +3900,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateEntityParams = {
           workspaceId,
           entity,
           headers: {
@@ -2811,13 +3909,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateEntity(params);
+        assistantService.updateEntity(updateEntityParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateEntity({});
@@ -2826,32 +3924,33 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateEntityPromise = assistantService.updateEntity();
-        expectToBePromise(updateEntityPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateEntity();
+        } catch (e) {
+          err = e;
+        }
 
-        updateEntityPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteEntity', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteEntityTest() {
         // Construct the params object for operation deleteEntity
         const workspaceId = 'testString';
         const entity = 'testString';
-        const params = {
+        const deleteEntityParams = {
           workspaceId: workspaceId,
           entity: entity,
         };
 
-        const deleteEntityResult = assistantService.deleteEntity(params);
+        const deleteEntityResult = assistantService.deleteEntity(deleteEntityParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteEntityResult);
@@ -2868,6 +3967,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteEntityTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteEntityTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteEntityTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2876,7 +3990,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteEntityParams = {
           workspaceId,
           entity,
           headers: {
@@ -2885,13 +3999,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteEntity(params);
+        assistantService.deleteEntity(deleteEntityParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteEntity({});
@@ -2900,36 +4014,37 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteEntityPromise = assistantService.deleteEntity();
-        expectToBePromise(deleteEntityPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteEntity();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteEntityPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listMentions', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listMentionsTest() {
         // Construct the params object for operation listMentions
         const workspaceId = 'testString';
         const entity = 'testString';
         const _export = false;
         const includeAudit = false;
-        const params = {
+        const listMentionsParams = {
           workspaceId: workspaceId,
           entity: entity,
           _export: _export,
           includeAudit: includeAudit,
         };
 
-        const listMentionsResult = assistantService.listMentions(params);
+        const listMentionsResult = assistantService.listMentions(listMentionsParams);
 
         // all methods should return a Promise
         expectToBePromise(listMentionsResult);
@@ -2948,6 +4063,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listMentionsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listMentionsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listMentionsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2956,7 +4086,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listMentionsParams = {
           workspaceId,
           entity,
           headers: {
@@ -2965,13 +4095,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listMentions(params);
+        assistantService.listMentions(listMentionsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listMentions({});
@@ -2980,23 +4110,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listMentionsPromise = assistantService.listMentions();
-        expectToBePromise(listMentionsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listMentions();
+        } catch (e) {
+          err = e;
+        }
 
-        listMentionsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listValues', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listValuesTest() {
         // Construct the params object for operation listValues
         const workspaceId = 'testString';
         const entity = 'testString';
@@ -3006,7 +4137,7 @@ describe('AssistantV1', () => {
         const sort = 'value';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listValuesParams = {
           workspaceId: workspaceId,
           entity: entity,
           _export: _export,
@@ -3017,7 +4148,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listValuesResult = assistantService.listValues(params);
+        const listValuesResult = assistantService.listValues(listValuesParams);
 
         // all methods should return a Promise
         expectToBePromise(listValuesResult);
@@ -3040,6 +4171,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listValuesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listValuesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listValuesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3048,7 +4194,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listValuesParams = {
           workspaceId,
           entity,
           headers: {
@@ -3057,13 +4203,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listValues(params);
+        assistantService.listValues(listValuesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listValues({});
@@ -3072,23 +4218,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listValuesPromise = assistantService.listValues();
-        expectToBePromise(listValuesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listValues();
+        } catch (e) {
+          err = e;
+        }
 
-        listValuesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createValue', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createValueTest() {
         // Construct the params object for operation createValue
         const workspaceId = 'testString';
         const entity = 'testString';
@@ -3098,7 +4245,7 @@ describe('AssistantV1', () => {
         const synonyms = ['testString'];
         const patterns = ['testString'];
         const includeAudit = false;
-        const params = {
+        const createValueParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
@@ -3109,7 +4256,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const createValueResult = assistantService.createValue(params);
+        const createValueResult = assistantService.createValue(createValueParams);
 
         // all methods should return a Promise
         expectToBePromise(createValueResult);
@@ -3132,6 +4279,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createValueTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createValueTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createValueTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3141,7 +4303,7 @@ describe('AssistantV1', () => {
         const value = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createValueParams = {
           workspaceId,
           entity,
           value,
@@ -3151,13 +4313,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.createValue(params);
+        assistantService.createValue(createValueParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.createValue({});
@@ -3166,30 +4328,31 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createValuePromise = assistantService.createValue();
-        expectToBePromise(createValuePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createValue();
+        } catch (e) {
+          err = e;
+        }
 
-        createValuePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getValue', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getValueTest() {
         // Construct the params object for operation getValue
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
         const _export = false;
         const includeAudit = false;
-        const params = {
+        const getValueParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
@@ -3197,7 +4360,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const getValueResult = assistantService.getValue(params);
+        const getValueResult = assistantService.getValue(getValueParams);
 
         // all methods should return a Promise
         expectToBePromise(getValueResult);
@@ -3217,6 +4380,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getValueTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getValueTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getValueTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3226,7 +4404,7 @@ describe('AssistantV1', () => {
         const value = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getValueParams = {
           workspaceId,
           entity,
           value,
@@ -3236,13 +4414,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getValue(params);
+        assistantService.getValue(getValueParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getValue({});
@@ -3251,23 +4429,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getValuePromise = assistantService.getValue();
-        expectToBePromise(getValuePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getValue();
+        } catch (e) {
+          err = e;
+        }
 
-        getValuePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateValue', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateValueTest() {
         // Construct the params object for operation updateValue
         const workspaceId = 'testString';
         const entity = 'testString';
@@ -3279,7 +4458,7 @@ describe('AssistantV1', () => {
         const newPatterns = ['testString'];
         const append = false;
         const includeAudit = false;
-        const params = {
+        const updateValueParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
@@ -3292,7 +4471,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const updateValueResult = assistantService.updateValue(params);
+        const updateValueResult = assistantService.updateValue(updateValueParams);
 
         // all methods should return a Promise
         expectToBePromise(updateValueResult);
@@ -3317,6 +4496,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateValueTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateValueTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateValueTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3326,7 +4520,7 @@ describe('AssistantV1', () => {
         const value = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateValueParams = {
           workspaceId,
           entity,
           value,
@@ -3336,13 +4530,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateValue(params);
+        assistantService.updateValue(updateValueParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateValue({});
@@ -3351,34 +4545,35 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateValuePromise = assistantService.updateValue();
-        expectToBePromise(updateValuePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateValue();
+        } catch (e) {
+          err = e;
+        }
 
-        updateValuePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteValue', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteValueTest() {
         // Construct the params object for operation deleteValue
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
-        const params = {
+        const deleteValueParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
         };
 
-        const deleteValueResult = assistantService.deleteValue(params);
+        const deleteValueResult = assistantService.deleteValue(deleteValueParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteValueResult);
@@ -3396,6 +4591,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteValueTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteValueTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteValueTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3405,7 +4615,7 @@ describe('AssistantV1', () => {
         const value = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteValueParams = {
           workspaceId,
           entity,
           value,
@@ -3415,13 +4625,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteValue(params);
+        assistantService.deleteValue(deleteValueParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteValue({});
@@ -3430,23 +4640,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteValuePromise = assistantService.deleteValue();
-        expectToBePromise(deleteValuePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteValue();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteValuePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listSynonyms', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listSynonymsTest() {
         // Construct the params object for operation listSynonyms
         const workspaceId = 'testString';
         const entity = 'testString';
@@ -3456,7 +4667,7 @@ describe('AssistantV1', () => {
         const sort = 'synonym';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listSynonymsParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
@@ -3467,7 +4678,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listSynonymsResult = assistantService.listSynonyms(params);
+        const listSynonymsResult = assistantService.listSynonyms(listSynonymsParams);
 
         // all methods should return a Promise
         expectToBePromise(listSynonymsResult);
@@ -3490,6 +4701,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listSynonymsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listSynonymsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listSynonymsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3499,7 +4725,7 @@ describe('AssistantV1', () => {
         const value = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listSynonymsParams = {
           workspaceId,
           entity,
           value,
@@ -3509,13 +4735,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listSynonyms(params);
+        assistantService.listSynonyms(listSynonymsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listSynonyms({});
@@ -3524,30 +4750,31 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listSynonymsPromise = assistantService.listSynonyms();
-        expectToBePromise(listSynonymsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listSynonyms();
+        } catch (e) {
+          err = e;
+        }
 
-        listSynonymsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createSynonym', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createSynonymTest() {
         // Construct the params object for operation createSynonym
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
         const synonym = 'testString';
         const includeAudit = false;
-        const params = {
+        const createSynonymParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
@@ -3555,7 +4782,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const createSynonymResult = assistantService.createSynonym(params);
+        const createSynonymResult = assistantService.createSynonym(createSynonymParams);
 
         // all methods should return a Promise
         expectToBePromise(createSynonymResult);
@@ -3575,6 +4802,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createSynonymTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createSynonymTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createSynonymTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3585,7 +4827,7 @@ describe('AssistantV1', () => {
         const synonym = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createSynonymParams = {
           workspaceId,
           entity,
           value,
@@ -3596,13 +4838,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.createSynonym(params);
+        assistantService.createSynonym(createSynonymParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.createSynonym({});
@@ -3611,30 +4853,31 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createSynonymPromise = assistantService.createSynonym();
-        expectToBePromise(createSynonymPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createSynonym();
+        } catch (e) {
+          err = e;
+        }
 
-        createSynonymPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getSynonym', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getSynonymTest() {
         // Construct the params object for operation getSynonym
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
         const synonym = 'testString';
         const includeAudit = false;
-        const params = {
+        const getSynonymParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
@@ -3642,7 +4885,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const getSynonymResult = assistantService.getSynonym(params);
+        const getSynonymResult = assistantService.getSynonym(getSynonymParams);
 
         // all methods should return a Promise
         expectToBePromise(getSynonymResult);
@@ -3662,6 +4905,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
         expect(mockRequestOptions.path.synonym).toEqual(synonym);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getSynonymTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getSynonymTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getSynonymTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3672,7 +4930,7 @@ describe('AssistantV1', () => {
         const synonym = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getSynonymParams = {
           workspaceId,
           entity,
           value,
@@ -3683,13 +4941,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getSynonym(params);
+        assistantService.getSynonym(getSynonymParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getSynonym({});
@@ -3698,23 +4956,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getSynonymPromise = assistantService.getSynonym();
-        expectToBePromise(getSynonymPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getSynonym();
+        } catch (e) {
+          err = e;
+        }
 
-        getSynonymPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateSynonym', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateSynonymTest() {
         // Construct the params object for operation updateSynonym
         const workspaceId = 'testString';
         const entity = 'testString';
@@ -3722,7 +4981,7 @@ describe('AssistantV1', () => {
         const synonym = 'testString';
         const newSynonym = 'testString';
         const includeAudit = false;
-        const params = {
+        const updateSynonymParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
@@ -3731,7 +4990,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const updateSynonymResult = assistantService.updateSynonym(params);
+        const updateSynonymResult = assistantService.updateSynonym(updateSynonymParams);
 
         // all methods should return a Promise
         expectToBePromise(updateSynonymResult);
@@ -3752,6 +5011,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
         expect(mockRequestOptions.path.synonym).toEqual(synonym);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateSynonymTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateSynonymTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateSynonymTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3762,7 +5036,7 @@ describe('AssistantV1', () => {
         const synonym = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateSynonymParams = {
           workspaceId,
           entity,
           value,
@@ -3773,13 +5047,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateSynonym(params);
+        assistantService.updateSynonym(updateSynonymParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateSynonym({});
@@ -3788,36 +5062,37 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateSynonymPromise = assistantService.updateSynonym();
-        expectToBePromise(updateSynonymPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateSynonym();
+        } catch (e) {
+          err = e;
+        }
 
-        updateSynonymPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteSynonym', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteSynonymTest() {
         // Construct the params object for operation deleteSynonym
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
         const synonym = 'testString';
-        const params = {
+        const deleteSynonymParams = {
           workspaceId: workspaceId,
           entity: entity,
           value: value,
           synonym: synonym,
         };
 
-        const deleteSynonymResult = assistantService.deleteSynonym(params);
+        const deleteSynonymResult = assistantService.deleteSynonym(deleteSynonymParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteSynonymResult);
@@ -3836,6 +5111,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.path.entity).toEqual(entity);
         expect(mockRequestOptions.path.value).toEqual(value);
         expect(mockRequestOptions.path.synonym).toEqual(synonym);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteSynonymTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteSynonymTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteSynonymTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3846,7 +5136,7 @@ describe('AssistantV1', () => {
         const synonym = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteSynonymParams = {
           workspaceId,
           entity,
           value,
@@ -3857,13 +5147,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteSynonym(params);
+        assistantService.deleteSynonym(deleteSynonymParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteSynonym({});
@@ -3872,23 +5162,24 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteSynonymPromise = assistantService.deleteSynonym();
-        expectToBePromise(deleteSynonymPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteSynonym();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteSynonymPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listDialogNodes', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listDialogNodesTest() {
         // Construct the params object for operation listDialogNodes
         const workspaceId = 'testString';
         const pageLimit = 38;
@@ -3896,7 +5187,7 @@ describe('AssistantV1', () => {
         const sort = 'dialog_node';
         const cursor = 'testString';
         const includeAudit = false;
-        const params = {
+        const listDialogNodesParams = {
           workspaceId: workspaceId,
           pageLimit: pageLimit,
           includeCount: includeCount,
@@ -3905,7 +5196,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const listDialogNodesResult = assistantService.listDialogNodes(params);
+        const listDialogNodesResult = assistantService.listDialogNodes(listDialogNodesParams);
 
         // all methods should return a Promise
         expectToBePromise(listDialogNodesResult);
@@ -3926,6 +5217,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.cursor).toEqual(cursor);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listDialogNodesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listDialogNodesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listDialogNodesTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3933,7 +5239,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listDialogNodesParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -3941,13 +5247,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listDialogNodes(params);
+        assistantService.listDialogNodes(listDialogNodesParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listDialogNodes({});
@@ -3956,20 +5262,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listDialogNodesPromise = assistantService.listDialogNodes();
-        expectToBePromise(listDialogNodesPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listDialogNodes();
+        } catch (e) {
+          err = e;
+        }
 
-        listDialogNodesPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createDialogNode', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -4025,7 +5332,7 @@ describe('AssistantV1', () => {
         credentials: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __createDialogNodeTest() {
         // Construct the params object for operation createDialogNode
         const workspaceId = 'testString';
         const dialogNode = 'testString';
@@ -4048,7 +5355,7 @@ describe('AssistantV1', () => {
         const userLabel = 'testString';
         const disambiguationOptOut = false;
         const includeAudit = false;
-        const params = {
+        const createDialogNodeParams = {
           workspaceId: workspaceId,
           dialogNode: dialogNode,
           description: description,
@@ -4072,7 +5379,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const createDialogNodeResult = assistantService.createDialogNode(params);
+        const createDialogNodeResult = assistantService.createDialogNode(createDialogNodeParams);
 
         // all methods should return a Promise
         expectToBePromise(createDialogNodeResult);
@@ -4108,6 +5415,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createDialogNodeTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createDialogNodeTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createDialogNodeTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4116,7 +5438,7 @@ describe('AssistantV1', () => {
         const dialogNode = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createDialogNodeParams = {
           workspaceId,
           dialogNode,
           headers: {
@@ -4125,13 +5447,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.createDialogNode(params);
+        assistantService.createDialogNode(createDialogNodeParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.createDialogNode({});
@@ -4140,34 +5462,35 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createDialogNodePromise = assistantService.createDialogNode();
-        expectToBePromise(createDialogNodePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createDialogNode();
+        } catch (e) {
+          err = e;
+        }
 
-        createDialogNodePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getDialogNode', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getDialogNodeTest() {
         // Construct the params object for operation getDialogNode
         const workspaceId = 'testString';
         const dialogNode = 'testString';
         const includeAudit = false;
-        const params = {
+        const getDialogNodeParams = {
           workspaceId: workspaceId,
           dialogNode: dialogNode,
           includeAudit: includeAudit,
         };
 
-        const getDialogNodeResult = assistantService.getDialogNode(params);
+        const getDialogNodeResult = assistantService.getDialogNode(getDialogNodeParams);
 
         // all methods should return a Promise
         expectToBePromise(getDialogNodeResult);
@@ -4185,6 +5508,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.dialog_node).toEqual(dialogNode);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getDialogNodeTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getDialogNodeTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getDialogNodeTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4193,7 +5531,7 @@ describe('AssistantV1', () => {
         const dialogNode = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getDialogNodeParams = {
           workspaceId,
           dialogNode,
           headers: {
@@ -4202,13 +5540,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.getDialogNode(params);
+        assistantService.getDialogNode(getDialogNodeParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.getDialogNode({});
@@ -4217,20 +5555,21 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getDialogNodePromise = assistantService.getDialogNode();
-        expectToBePromise(getDialogNodePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getDialogNode();
+        } catch (e) {
+          err = e;
+        }
 
-        getDialogNodePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateDialogNode', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -4286,7 +5625,7 @@ describe('AssistantV1', () => {
         credentials: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __updateDialogNodeTest() {
         // Construct the params object for operation updateDialogNode
         const workspaceId = 'testString';
         const dialogNode = 'testString';
@@ -4310,7 +5649,7 @@ describe('AssistantV1', () => {
         const newUserLabel = 'testString';
         const newDisambiguationOptOut = false;
         const includeAudit = false;
-        const params = {
+        const updateDialogNodeParams = {
           workspaceId: workspaceId,
           dialogNode: dialogNode,
           newDialogNode: newDialogNode,
@@ -4335,7 +5674,7 @@ describe('AssistantV1', () => {
           includeAudit: includeAudit,
         };
 
-        const updateDialogNodeResult = assistantService.updateDialogNode(params);
+        const updateDialogNodeResult = assistantService.updateDialogNode(updateDialogNodeParams);
 
         // all methods should return a Promise
         expectToBePromise(updateDialogNodeResult);
@@ -4372,6 +5711,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.dialog_node).toEqual(dialogNode);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateDialogNodeTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateDialogNodeTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateDialogNodeTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4380,7 +5734,7 @@ describe('AssistantV1', () => {
         const dialogNode = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateDialogNodeParams = {
           workspaceId,
           dialogNode,
           headers: {
@@ -4389,13 +5743,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.updateDialogNode(params);
+        assistantService.updateDialogNode(updateDialogNodeParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.updateDialogNode({});
@@ -4404,32 +5758,33 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateDialogNodePromise = assistantService.updateDialogNode();
-        expectToBePromise(updateDialogNodePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateDialogNode();
+        } catch (e) {
+          err = e;
+        }
 
-        updateDialogNodePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteDialogNode', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteDialogNodeTest() {
         // Construct the params object for operation deleteDialogNode
         const workspaceId = 'testString';
         const dialogNode = 'testString';
-        const params = {
+        const deleteDialogNodeParams = {
           workspaceId: workspaceId,
           dialogNode: dialogNode,
         };
 
-        const deleteDialogNodeResult = assistantService.deleteDialogNode(params);
+        const deleteDialogNodeResult = assistantService.deleteDialogNode(deleteDialogNodeParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteDialogNodeResult);
@@ -4446,6 +5801,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.path.dialog_node).toEqual(dialogNode);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteDialogNodeTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteDialogNodeTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteDialogNodeTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4454,7 +5824,7 @@ describe('AssistantV1', () => {
         const dialogNode = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteDialogNodeParams = {
           workspaceId,
           dialogNode,
           headers: {
@@ -4463,13 +5833,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteDialogNode(params);
+        assistantService.deleteDialogNode(deleteDialogNodeParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteDialogNode({});
@@ -4478,30 +5848,31 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteDialogNodePromise = assistantService.deleteDialogNode();
-        expectToBePromise(deleteDialogNodePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteDialogNode();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteDialogNodePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listLogs', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listLogsTest() {
         // Construct the params object for operation listLogs
         const workspaceId = 'testString';
         const sort = 'testString';
         const filter = 'testString';
         const pageLimit = 38;
         const cursor = 'testString';
-        const params = {
+        const listLogsParams = {
           workspaceId: workspaceId,
           sort: sort,
           filter: filter,
@@ -4509,7 +5880,7 @@ describe('AssistantV1', () => {
           cursor: cursor,
         };
 
-        const listLogsResult = assistantService.listLogs(params);
+        const listLogsResult = assistantService.listLogs(listLogsParams);
 
         // all methods should return a Promise
         expectToBePromise(listLogsResult);
@@ -4529,6 +5900,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
         expect(mockRequestOptions.qs.cursor).toEqual(cursor);
         expect(mockRequestOptions.path.workspace_id).toEqual(workspaceId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listLogsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listLogsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listLogsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4536,7 +5922,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listLogsParams = {
           workspaceId,
           headers: {
             Accept: userAccept,
@@ -4544,13 +5930,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listLogs(params);
+        assistantService.listLogs(listLogsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listLogs({});
@@ -4559,36 +5945,37 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listLogsPromise = assistantService.listLogs();
-        expectToBePromise(listLogsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listLogs();
+        } catch (e) {
+          err = e;
+        }
 
-        listLogsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listAllLogs', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listAllLogsTest() {
         // Construct the params object for operation listAllLogs
         const filter = 'testString';
         const sort = 'testString';
         const pageLimit = 38;
         const cursor = 'testString';
-        const params = {
+        const listAllLogsParams = {
           filter: filter,
           sort: sort,
           pageLimit: pageLimit,
           cursor: cursor,
         };
 
-        const listAllLogsResult = assistantService.listAllLogs(params);
+        const listAllLogsResult = assistantService.listAllLogs(listAllLogsParams);
 
         // all methods should return a Promise
         expectToBePromise(listAllLogsResult);
@@ -4607,6 +5994,21 @@ describe('AssistantV1', () => {
         expect(mockRequestOptions.qs.sort).toEqual(sort);
         expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
         expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listAllLogsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listAllLogsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listAllLogsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4614,7 +6016,7 @@ describe('AssistantV1', () => {
         const filter = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listAllLogsParams = {
           filter,
           headers: {
             Accept: userAccept,
@@ -4622,13 +6024,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.listAllLogs(params);
+        assistantService.listAllLogs(listAllLogsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.listAllLogs({});
@@ -4637,30 +6039,31 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listAllLogsPromise = assistantService.listAllLogs();
-        expectToBePromise(listAllLogsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.listAllLogs();
+        } catch (e) {
+          err = e;
+        }
 
-        listAllLogsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteUserData', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteUserDataTest() {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
-        const params = {
+        const deleteUserDataParams = {
           customerId: customerId,
         };
 
-        const deleteUserDataResult = assistantService.deleteUserData(params);
+        const deleteUserDataResult = assistantService.deleteUserData(deleteUserDataParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteUserDataResult);
@@ -4676,6 +6079,21 @@ describe('AssistantV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.customer_id).toEqual(customerId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteUserDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteUserDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteUserDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -4683,7 +6101,7 @@ describe('AssistantV1', () => {
         const customerId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteUserDataParams = {
           customerId,
           headers: {
             Accept: userAccept,
@@ -4691,13 +6109,13 @@ describe('AssistantV1', () => {
           },
         };
 
-        assistantService.deleteUserData(params);
+        assistantService.deleteUserData(deleteUserDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await assistantService.deleteUserData({});
@@ -4706,17 +6124,17 @@ describe('AssistantV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteUserDataPromise = assistantService.deleteUserData();
-        expectToBePromise(deleteUserDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteUserData();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteUserDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
