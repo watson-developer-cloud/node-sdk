@@ -37,20 +37,31 @@ const speechToTextServiceOptions = {
 
 const speechToTextService = new SpeechToTextV1(speechToTextServiceOptions);
 
-// dont actually create a request
-const createRequestMock = jest.spyOn(speechToTextService, 'createRequest');
-createRequestMock.mockImplementation(() => Promise.resolve());
+let createRequestMock = null;
+function mock_createRequest() {
+  if (!createRequestMock) {
+    createRequestMock = jest.spyOn(speechToTextService, 'createRequest');
+    createRequestMock.mockImplementation(() => Promise.resolve());
+  }
+}
 
 // dont actually construct an authenticator
 const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
-afterEach(() => {
-  createRequestMock.mockClear();
-  getAuthenticatorMock.mockClear();
-});
-
 describe('SpeechToTextV1', () => {
+
+  beforeEach(() => {
+    mock_createRequest();
+  });
+
+  afterEach(() => {
+    if (createRequestMock) {
+      createRequestMock.mockClear();
+    }
+    getAuthenticatorMock.mockClear();
+  });
+
   describe('the constructor', () => {
     test('use user-given service url', () => {
       const options = {
@@ -112,13 +123,14 @@ describe('SpeechToTextV1', () => {
       expect(getAuthenticatorMock).toHaveBeenCalled();
     });
   });
+
   describe('listModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listModelsTest() {
         // Construct the params object for operation listModels
-        const params = {};
+        const listModelsParams = {};
 
-        const listModelsResult = speechToTextService.listModels(params);
+        const listModelsResult = speechToTextService.listModels(listModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listModelsResult);
@@ -132,20 +144,35 @@ describe('SpeechToTextV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __listModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __listModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        speechToTextService.listModels(params);
+        speechToTextService.listModels(listModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -156,16 +183,17 @@ describe('SpeechToTextV1', () => {
       });
     });
   });
+
   describe('getModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getModelTest() {
         // Construct the params object for operation getModel
         const modelId = 'ar-AR_BroadbandModel';
-        const params = {
+        const getModelParams = {
           modelId: modelId,
         };
 
-        const getModelResult = speechToTextService.getModel(params);
+        const getModelResult = speechToTextService.getModel(getModelParams);
 
         // all methods should return a Promise
         expectToBePromise(getModelResult);
@@ -180,6 +208,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __getModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __getModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -187,7 +230,7 @@ describe('SpeechToTextV1', () => {
         const modelId = 'ar-AR_BroadbandModel';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -195,13 +238,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.getModel(params);
+        speechToTextService.getModel(getModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.getModel({});
@@ -210,23 +253,24 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getModelPromise = speechToTextService.getModel();
-        expectToBePromise(getModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.getModel();
+        } catch (e) {
+          err = e;
+        }
 
-        getModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('recognize', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __recognizeTest() {
         // Construct the params object for operation recognize
         const audio = Buffer.from('This is a mock file.');
         const contentType = 'application/octet-stream';
@@ -245,7 +289,6 @@ describe('SpeechToTextV1', () => {
         const profanityFilter = true;
         const smartFormatting = false;
         const speakerLabels = false;
-        const customizationId = 'testString';
         const grammarName = 'testString';
         const redaction = false;
         const audioMetrics = false;
@@ -254,7 +297,8 @@ describe('SpeechToTextV1', () => {
         const speechDetectorSensitivity = 36.0;
         const backgroundAudioSuppression = 36.0;
         const lowLatency = false;
-        const params = {
+        const characterInsertionBias = 36.0;
+        const recognizeParams = {
           audio: audio,
           contentType: contentType,
           model: model,
@@ -272,7 +316,6 @@ describe('SpeechToTextV1', () => {
           profanityFilter: profanityFilter,
           smartFormatting: smartFormatting,
           speakerLabels: speakerLabels,
-          customizationId: customizationId,
           grammarName: grammarName,
           redaction: redaction,
           audioMetrics: audioMetrics,
@@ -281,9 +324,10 @@ describe('SpeechToTextV1', () => {
           speechDetectorSensitivity: speechDetectorSensitivity,
           backgroundAudioSuppression: backgroundAudioSuppression,
           lowLatency: lowLatency,
+          characterInsertionBias: characterInsertionBias,
         };
 
-        const recognizeResult = speechToTextService.recognize(params);
+        const recognizeResult = speechToTextService.recognize(recognizeParams);
 
         // all methods should return a Promise
         expectToBePromise(recognizeResult);
@@ -314,7 +358,6 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.profanity_filter).toEqual(profanityFilter);
         expect(mockRequestOptions.qs.smart_formatting).toEqual(smartFormatting);
         expect(mockRequestOptions.qs.speaker_labels).toEqual(speakerLabels);
-        expect(mockRequestOptions.qs.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.qs.grammar_name).toEqual(grammarName);
         expect(mockRequestOptions.qs.redaction).toEqual(redaction);
         expect(mockRequestOptions.qs.audio_metrics).toEqual(audioMetrics);
@@ -323,6 +366,22 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.speech_detector_sensitivity).toEqual(speechDetectorSensitivity);
         expect(mockRequestOptions.qs.background_audio_suppression).toEqual(backgroundAudioSuppression);
         expect(mockRequestOptions.qs.low_latency).toEqual(lowLatency);
+        expect(mockRequestOptions.qs.character_insertion_bias).toEqual(characterInsertionBias);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __recognizeTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __recognizeTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __recognizeTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -330,7 +389,7 @@ describe('SpeechToTextV1', () => {
         const audio = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const recognizeParams = {
           audio,
           headers: {
             Accept: userAccept,
@@ -338,13 +397,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.recognize(params);
+        speechToTextService.recognize(recognizeParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.recognize({});
@@ -353,32 +412,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const recognizePromise = speechToTextService.recognize();
-        expectToBePromise(recognizePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.recognize();
+        } catch (e) {
+          err = e;
+        }
 
-        recognizePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('registerCallback', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __registerCallbackTest() {
         // Construct the params object for operation registerCallback
         const callbackUrl = 'testString';
         const userSecret = 'testString';
-        const params = {
+        const registerCallbackParams = {
           callbackUrl: callbackUrl,
           userSecret: userSecret,
         };
 
-        const registerCallbackResult = speechToTextService.registerCallback(params);
+        const registerCallbackResult = speechToTextService.registerCallback(registerCallbackParams);
 
         // all methods should return a Promise
         expectToBePromise(registerCallbackResult);
@@ -394,6 +454,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.callback_url).toEqual(callbackUrl);
         expect(mockRequestOptions.qs.user_secret).toEqual(userSecret);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __registerCallbackTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __registerCallbackTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __registerCallbackTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -401,7 +476,7 @@ describe('SpeechToTextV1', () => {
         const callbackUrl = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const registerCallbackParams = {
           callbackUrl,
           headers: {
             Accept: userAccept,
@@ -409,13 +484,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.registerCallback(params);
+        speechToTextService.registerCallback(registerCallbackParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.registerCallback({});
@@ -424,30 +499,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const registerCallbackPromise = speechToTextService.registerCallback();
-        expectToBePromise(registerCallbackPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.registerCallback();
+        } catch (e) {
+          err = e;
+        }
 
-        registerCallbackPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('unregisterCallback', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __unregisterCallbackTest() {
         // Construct the params object for operation unregisterCallback
         const callbackUrl = 'testString';
-        const params = {
+        const unregisterCallbackParams = {
           callbackUrl: callbackUrl,
         };
 
-        const unregisterCallbackResult = speechToTextService.unregisterCallback(params);
+        const unregisterCallbackResult = speechToTextService.unregisterCallback(unregisterCallbackParams);
 
         // all methods should return a Promise
         expectToBePromise(unregisterCallbackResult);
@@ -462,6 +538,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.callback_url).toEqual(callbackUrl);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __unregisterCallbackTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __unregisterCallbackTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __unregisterCallbackTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -469,7 +560,7 @@ describe('SpeechToTextV1', () => {
         const callbackUrl = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const unregisterCallbackParams = {
           callbackUrl,
           headers: {
             Accept: userAccept,
@@ -477,13 +568,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.unregisterCallback(params);
+        speechToTextService.unregisterCallback(unregisterCallbackParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.unregisterCallback({});
@@ -492,23 +583,24 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const unregisterCallbackPromise = speechToTextService.unregisterCallback();
-        expectToBePromise(unregisterCallbackPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.unregisterCallback();
+        } catch (e) {
+          err = e;
+        }
 
-        unregisterCallbackPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createJob', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createJobTest() {
         // Construct the params object for operation createJob
         const audio = Buffer.from('This is a mock file.');
         const contentType = 'application/octet-stream';
@@ -531,7 +623,6 @@ describe('SpeechToTextV1', () => {
         const profanityFilter = true;
         const smartFormatting = false;
         const speakerLabels = false;
-        const customizationId = 'testString';
         const grammarName = 'testString';
         const redaction = false;
         const processingMetrics = false;
@@ -542,7 +633,8 @@ describe('SpeechToTextV1', () => {
         const speechDetectorSensitivity = 36.0;
         const backgroundAudioSuppression = 36.0;
         const lowLatency = false;
-        const params = {
+        const characterInsertionBias = 36.0;
+        const createJobParams = {
           audio: audio,
           contentType: contentType,
           model: model,
@@ -564,7 +656,6 @@ describe('SpeechToTextV1', () => {
           profanityFilter: profanityFilter,
           smartFormatting: smartFormatting,
           speakerLabels: speakerLabels,
-          customizationId: customizationId,
           grammarName: grammarName,
           redaction: redaction,
           processingMetrics: processingMetrics,
@@ -575,9 +666,10 @@ describe('SpeechToTextV1', () => {
           speechDetectorSensitivity: speechDetectorSensitivity,
           backgroundAudioSuppression: backgroundAudioSuppression,
           lowLatency: lowLatency,
+          characterInsertionBias: characterInsertionBias,
         };
 
-        const createJobResult = speechToTextService.createJob(params);
+        const createJobResult = speechToTextService.createJob(createJobParams);
 
         // all methods should return a Promise
         expectToBePromise(createJobResult);
@@ -612,7 +704,6 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.profanity_filter).toEqual(profanityFilter);
         expect(mockRequestOptions.qs.smart_formatting).toEqual(smartFormatting);
         expect(mockRequestOptions.qs.speaker_labels).toEqual(speakerLabels);
-        expect(mockRequestOptions.qs.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.qs.grammar_name).toEqual(grammarName);
         expect(mockRequestOptions.qs.redaction).toEqual(redaction);
         expect(mockRequestOptions.qs.processing_metrics).toEqual(processingMetrics);
@@ -623,6 +714,22 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.speech_detector_sensitivity).toEqual(speechDetectorSensitivity);
         expect(mockRequestOptions.qs.background_audio_suppression).toEqual(backgroundAudioSuppression);
         expect(mockRequestOptions.qs.low_latency).toEqual(lowLatency);
+        expect(mockRequestOptions.qs.character_insertion_bias).toEqual(characterInsertionBias);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createJobTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __createJobTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __createJobTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -630,7 +737,7 @@ describe('SpeechToTextV1', () => {
         const audio = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createJobParams = {
           audio,
           headers: {
             Accept: userAccept,
@@ -638,13 +745,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.createJob(params);
+        speechToTextService.createJob(createJobParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.createJob({});
@@ -653,27 +760,28 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createJobPromise = speechToTextService.createJob();
-        expectToBePromise(createJobPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.createJob();
+        } catch (e) {
+          err = e;
+        }
 
-        createJobPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('checkJobs', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __checkJobsTest() {
         // Construct the params object for operation checkJobs
-        const params = {};
+        const checkJobsParams = {};
 
-        const checkJobsResult = speechToTextService.checkJobs(params);
+        const checkJobsResult = speechToTextService.checkJobs(checkJobsParams);
 
         // all methods should return a Promise
         expectToBePromise(checkJobsResult);
@@ -687,20 +795,35 @@ describe('SpeechToTextV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __checkJobsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __checkJobsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __checkJobsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const checkJobsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        speechToTextService.checkJobs(params);
+        speechToTextService.checkJobs(checkJobsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -711,16 +834,17 @@ describe('SpeechToTextV1', () => {
       });
     });
   });
+
   describe('checkJob', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __checkJobTest() {
         // Construct the params object for operation checkJob
         const id = 'testString';
-        const params = {
+        const checkJobParams = {
           id: id,
         };
 
-        const checkJobResult = speechToTextService.checkJob(params);
+        const checkJobResult = speechToTextService.checkJob(checkJobParams);
 
         // all methods should return a Promise
         expectToBePromise(checkJobResult);
@@ -735,6 +859,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.id).toEqual(id);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __checkJobTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __checkJobTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __checkJobTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -742,7 +881,7 @@ describe('SpeechToTextV1', () => {
         const id = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const checkJobParams = {
           id,
           headers: {
             Accept: userAccept,
@@ -750,13 +889,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.checkJob(params);
+        speechToTextService.checkJob(checkJobParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.checkJob({});
@@ -765,30 +904,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const checkJobPromise = speechToTextService.checkJob();
-        expectToBePromise(checkJobPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.checkJob();
+        } catch (e) {
+          err = e;
+        }
 
-        checkJobPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteJob', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteJobTest() {
         // Construct the params object for operation deleteJob
         const id = 'testString';
-        const params = {
+        const deleteJobParams = {
           id: id,
         };
 
-        const deleteJobResult = speechToTextService.deleteJob(params);
+        const deleteJobResult = speechToTextService.deleteJob(deleteJobParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteJobResult);
@@ -803,6 +943,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.id).toEqual(id);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteJobTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteJobTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteJobTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -810,7 +965,7 @@ describe('SpeechToTextV1', () => {
         const id = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteJobParams = {
           id,
           headers: {
             Accept: userAccept,
@@ -818,13 +973,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteJob(params);
+        speechToTextService.deleteJob(deleteJobParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteJob({});
@@ -833,36 +988,37 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteJobPromise = speechToTextService.deleteJob();
-        expectToBePromise(deleteJobPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteJob();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteJobPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createLanguageModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createLanguageModelTest() {
         // Construct the params object for operation createLanguageModel
         const name = 'testString';
         const baseModelName = 'ar-MS_Telephony';
         const dialect = 'testString';
         const description = 'testString';
-        const params = {
+        const createLanguageModelParams = {
           name: name,
           baseModelName: baseModelName,
           dialect: dialect,
           description: description,
         };
 
-        const createLanguageModelResult = speechToTextService.createLanguageModel(params);
+        const createLanguageModelResult = speechToTextService.createLanguageModel(createLanguageModelParams);
 
         // all methods should return a Promise
         expectToBePromise(createLanguageModelResult);
@@ -880,6 +1036,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.body.base_model_name).toEqual(baseModelName);
         expect(mockRequestOptions.body.dialect).toEqual(dialect);
         expect(mockRequestOptions.body.description).toEqual(description);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createLanguageModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __createLanguageModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __createLanguageModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -888,7 +1059,7 @@ describe('SpeechToTextV1', () => {
         const baseModelName = 'ar-MS_Telephony';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createLanguageModelParams = {
           name,
           baseModelName,
           headers: {
@@ -897,13 +1068,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.createLanguageModel(params);
+        speechToTextService.createLanguageModel(createLanguageModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.createLanguageModel({});
@@ -912,30 +1083,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createLanguageModelPromise = speechToTextService.createLanguageModel();
-        expectToBePromise(createLanguageModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.createLanguageModel();
+        } catch (e) {
+          err = e;
+        }
 
-        createLanguageModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listLanguageModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listLanguageModelsTest() {
         // Construct the params object for operation listLanguageModels
         const language = 'ar-AR';
-        const params = {
+        const listLanguageModelsParams = {
           language: language,
         };
 
-        const listLanguageModelsResult = speechToTextService.listLanguageModels(params);
+        const listLanguageModelsResult = speechToTextService.listLanguageModels(listLanguageModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listLanguageModelsResult);
@@ -950,20 +1122,35 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.language).toEqual(language);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listLanguageModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __listLanguageModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __listLanguageModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listLanguageModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        speechToTextService.listLanguageModels(params);
+        speechToTextService.listLanguageModels(listLanguageModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -974,16 +1161,17 @@ describe('SpeechToTextV1', () => {
       });
     });
   });
+
   describe('getLanguageModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getLanguageModelTest() {
         // Construct the params object for operation getLanguageModel
         const customizationId = 'testString';
-        const params = {
+        const getLanguageModelParams = {
           customizationId: customizationId,
         };
 
-        const getLanguageModelResult = speechToTextService.getLanguageModel(params);
+        const getLanguageModelResult = speechToTextService.getLanguageModel(getLanguageModelParams);
 
         // all methods should return a Promise
         expectToBePromise(getLanguageModelResult);
@@ -998,6 +1186,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getLanguageModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __getLanguageModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __getLanguageModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1005,7 +1208,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getLanguageModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -1013,13 +1216,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.getLanguageModel(params);
+        speechToTextService.getLanguageModel(getLanguageModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.getLanguageModel({});
@@ -1028,30 +1231,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getLanguageModelPromise = speechToTextService.getLanguageModel();
-        expectToBePromise(getLanguageModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.getLanguageModel();
+        } catch (e) {
+          err = e;
+        }
 
-        getLanguageModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteLanguageModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteLanguageModelTest() {
         // Construct the params object for operation deleteLanguageModel
         const customizationId = 'testString';
-        const params = {
+        const deleteLanguageModelParams = {
           customizationId: customizationId,
         };
 
-        const deleteLanguageModelResult = speechToTextService.deleteLanguageModel(params);
+        const deleteLanguageModelResult = speechToTextService.deleteLanguageModel(deleteLanguageModelParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteLanguageModelResult);
@@ -1066,6 +1270,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteLanguageModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteLanguageModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteLanguageModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1073,7 +1292,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteLanguageModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -1081,13 +1300,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteLanguageModel(params);
+        speechToTextService.deleteLanguageModel(deleteLanguageModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteLanguageModel({});
@@ -1096,34 +1315,37 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteLanguageModelPromise = speechToTextService.deleteLanguageModel();
-        expectToBePromise(deleteLanguageModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteLanguageModel();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteLanguageModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('trainLanguageModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __trainLanguageModelTest() {
         // Construct the params object for operation trainLanguageModel
         const customizationId = 'testString';
         const wordTypeToAdd = 'all';
         const customizationWeight = 72.5;
-        const params = {
+        const strict = true;
+        const trainLanguageModelParams = {
           customizationId: customizationId,
           wordTypeToAdd: wordTypeToAdd,
           customizationWeight: customizationWeight,
+          strict: strict,
         };
 
-        const trainLanguageModelResult = speechToTextService.trainLanguageModel(params);
+        const trainLanguageModelResult = speechToTextService.trainLanguageModel(trainLanguageModelParams);
 
         // all methods should return a Promise
         expectToBePromise(trainLanguageModelResult);
@@ -1139,7 +1361,23 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.word_type_to_add).toEqual(wordTypeToAdd);
         expect(mockRequestOptions.qs.customization_weight).toEqual(customizationWeight);
+        expect(mockRequestOptions.qs.strict).toEqual(strict);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __trainLanguageModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __trainLanguageModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __trainLanguageModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1147,7 +1385,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const trainLanguageModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -1155,13 +1393,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.trainLanguageModel(params);
+        speechToTextService.trainLanguageModel(trainLanguageModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.trainLanguageModel({});
@@ -1170,30 +1408,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const trainLanguageModelPromise = speechToTextService.trainLanguageModel();
-        expectToBePromise(trainLanguageModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.trainLanguageModel();
+        } catch (e) {
+          err = e;
+        }
 
-        trainLanguageModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('resetLanguageModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __resetLanguageModelTest() {
         // Construct the params object for operation resetLanguageModel
         const customizationId = 'testString';
-        const params = {
+        const resetLanguageModelParams = {
           customizationId: customizationId,
         };
 
-        const resetLanguageModelResult = speechToTextService.resetLanguageModel(params);
+        const resetLanguageModelResult = speechToTextService.resetLanguageModel(resetLanguageModelParams);
 
         // all methods should return a Promise
         expectToBePromise(resetLanguageModelResult);
@@ -1208,6 +1447,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __resetLanguageModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __resetLanguageModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __resetLanguageModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1215,7 +1469,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const resetLanguageModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -1223,13 +1477,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.resetLanguageModel(params);
+        speechToTextService.resetLanguageModel(resetLanguageModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.resetLanguageModel({});
@@ -1238,30 +1492,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const resetLanguageModelPromise = speechToTextService.resetLanguageModel();
-        expectToBePromise(resetLanguageModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.resetLanguageModel();
+        } catch (e) {
+          err = e;
+        }
 
-        resetLanguageModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('upgradeLanguageModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __upgradeLanguageModelTest() {
         // Construct the params object for operation upgradeLanguageModel
         const customizationId = 'testString';
-        const params = {
+        const upgradeLanguageModelParams = {
           customizationId: customizationId,
         };
 
-        const upgradeLanguageModelResult = speechToTextService.upgradeLanguageModel(params);
+        const upgradeLanguageModelResult = speechToTextService.upgradeLanguageModel(upgradeLanguageModelParams);
 
         // all methods should return a Promise
         expectToBePromise(upgradeLanguageModelResult);
@@ -1276,6 +1531,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __upgradeLanguageModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __upgradeLanguageModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __upgradeLanguageModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1283,7 +1553,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const upgradeLanguageModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -1291,13 +1561,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.upgradeLanguageModel(params);
+        speechToTextService.upgradeLanguageModel(upgradeLanguageModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.upgradeLanguageModel({});
@@ -1306,30 +1576,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const upgradeLanguageModelPromise = speechToTextService.upgradeLanguageModel();
-        expectToBePromise(upgradeLanguageModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.upgradeLanguageModel();
+        } catch (e) {
+          err = e;
+        }
 
-        upgradeLanguageModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listCorpora', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listCorporaTest() {
         // Construct the params object for operation listCorpora
         const customizationId = 'testString';
-        const params = {
+        const listCorporaParams = {
           customizationId: customizationId,
         };
 
-        const listCorporaResult = speechToTextService.listCorpora(params);
+        const listCorporaResult = speechToTextService.listCorpora(listCorporaParams);
 
         // all methods should return a Promise
         expectToBePromise(listCorporaResult);
@@ -1344,6 +1615,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listCorporaTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __listCorporaTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __listCorporaTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1351,7 +1637,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listCorporaParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -1359,13 +1645,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.listCorpora(params);
+        speechToTextService.listCorpora(listCorporaParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.listCorpora({});
@@ -1374,36 +1660,37 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listCorporaPromise = speechToTextService.listCorpora();
-        expectToBePromise(listCorporaPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.listCorpora();
+        } catch (e) {
+          err = e;
+        }
 
-        listCorporaPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('addCorpus', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __addCorpusTest() {
         // Construct the params object for operation addCorpus
         const customizationId = 'testString';
         const corpusName = 'testString';
         const corpusFile = Buffer.from('This is a mock file.');
         const allowOverwrite = false;
-        const params = {
+        const addCorpusParams = {
           customizationId: customizationId,
           corpusName: corpusName,
           corpusFile: corpusFile,
           allowOverwrite: allowOverwrite,
         };
 
-        const addCorpusResult = speechToTextService.addCorpus(params);
+        const addCorpusResult = speechToTextService.addCorpus(addCorpusParams);
 
         // all methods should return a Promise
         expectToBePromise(addCorpusResult);
@@ -1422,6 +1709,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.allow_overwrite).toEqual(allowOverwrite);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.corpus_name).toEqual(corpusName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __addCorpusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __addCorpusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __addCorpusTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1431,7 +1733,7 @@ describe('SpeechToTextV1', () => {
         const corpusFile = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const addCorpusParams = {
           customizationId,
           corpusName,
           corpusFile,
@@ -1441,13 +1743,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.addCorpus(params);
+        speechToTextService.addCorpus(addCorpusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.addCorpus({});
@@ -1456,32 +1758,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const addCorpusPromise = speechToTextService.addCorpus();
-        expectToBePromise(addCorpusPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.addCorpus();
+        } catch (e) {
+          err = e;
+        }
 
-        addCorpusPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getCorpus', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getCorpusTest() {
         // Construct the params object for operation getCorpus
         const customizationId = 'testString';
         const corpusName = 'testString';
-        const params = {
+        const getCorpusParams = {
           customizationId: customizationId,
           corpusName: corpusName,
         };
 
-        const getCorpusResult = speechToTextService.getCorpus(params);
+        const getCorpusResult = speechToTextService.getCorpus(getCorpusParams);
 
         // all methods should return a Promise
         expectToBePromise(getCorpusResult);
@@ -1497,6 +1800,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.corpus_name).toEqual(corpusName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getCorpusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __getCorpusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __getCorpusTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1505,7 +1823,7 @@ describe('SpeechToTextV1', () => {
         const corpusName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getCorpusParams = {
           customizationId,
           corpusName,
           headers: {
@@ -1514,13 +1832,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.getCorpus(params);
+        speechToTextService.getCorpus(getCorpusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.getCorpus({});
@@ -1529,32 +1847,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getCorpusPromise = speechToTextService.getCorpus();
-        expectToBePromise(getCorpusPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.getCorpus();
+        } catch (e) {
+          err = e;
+        }
 
-        getCorpusPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteCorpus', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteCorpusTest() {
         // Construct the params object for operation deleteCorpus
         const customizationId = 'testString';
         const corpusName = 'testString';
-        const params = {
+        const deleteCorpusParams = {
           customizationId: customizationId,
           corpusName: corpusName,
         };
 
-        const deleteCorpusResult = speechToTextService.deleteCorpus(params);
+        const deleteCorpusResult = speechToTextService.deleteCorpus(deleteCorpusParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteCorpusResult);
@@ -1570,6 +1889,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.corpus_name).toEqual(corpusName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteCorpusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteCorpusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteCorpusTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1578,7 +1912,7 @@ describe('SpeechToTextV1', () => {
         const corpusName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteCorpusParams = {
           customizationId,
           corpusName,
           headers: {
@@ -1587,13 +1921,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteCorpus(params);
+        speechToTextService.deleteCorpus(deleteCorpusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteCorpus({});
@@ -1602,34 +1936,35 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteCorpusPromise = speechToTextService.deleteCorpus();
-        expectToBePromise(deleteCorpusPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteCorpus();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteCorpusPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listWords', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listWordsTest() {
         // Construct the params object for operation listWords
         const customizationId = 'testString';
         const wordType = 'all';
         const sort = 'alphabetical';
-        const params = {
+        const listWordsParams = {
           customizationId: customizationId,
           wordType: wordType,
           sort: sort,
         };
 
-        const listWordsResult = speechToTextService.listWords(params);
+        const listWordsResult = speechToTextService.listWords(listWordsParams);
 
         // all methods should return a Promise
         expectToBePromise(listWordsResult);
@@ -1646,6 +1981,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.word_type).toEqual(wordType);
         expect(mockRequestOptions.qs.sort).toEqual(sort);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listWordsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __listWordsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __listWordsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1653,7 +2003,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listWordsParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -1661,13 +2011,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.listWords(params);
+        speechToTextService.listWords(listWordsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.listWords({});
@@ -1676,20 +2026,21 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listWordsPromise = speechToTextService.listWords();
-        expectToBePromise(listWordsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.listWords();
+        } catch (e) {
+          err = e;
+        }
 
-        listWordsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('addWords', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -1701,16 +2052,16 @@ describe('SpeechToTextV1', () => {
         display_as: 'testString',
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __addWordsTest() {
         // Construct the params object for operation addWords
         const customizationId = 'testString';
         const words = [customWordModel];
-        const params = {
+        const addWordsParams = {
           customizationId: customizationId,
           words: words,
         };
 
-        const addWordsResult = speechToTextService.addWords(params);
+        const addWordsResult = speechToTextService.addWords(addWordsParams);
 
         // all methods should return a Promise
         expectToBePromise(addWordsResult);
@@ -1726,6 +2077,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.words).toEqual(words);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __addWordsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __addWordsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __addWordsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1734,7 +2100,7 @@ describe('SpeechToTextV1', () => {
         const words = [customWordModel];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const addWordsParams = {
           customizationId,
           words,
           headers: {
@@ -1743,13 +2109,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.addWords(params);
+        speechToTextService.addWords(addWordsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.addWords({});
@@ -1758,30 +2124,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const addWordsPromise = speechToTextService.addWords();
-        expectToBePromise(addWordsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.addWords();
+        } catch (e) {
+          err = e;
+        }
 
-        addWordsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('addWord', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __addWordTest() {
         // Construct the params object for operation addWord
         const customizationId = 'testString';
         const wordName = 'testString';
         const word = 'testString';
         const soundsLike = ['testString'];
         const displayAs = 'testString';
-        const params = {
+        const addWordParams = {
           customizationId: customizationId,
           wordName: wordName,
           word: word,
@@ -1789,7 +2156,7 @@ describe('SpeechToTextV1', () => {
           displayAs: displayAs,
         };
 
-        const addWordResult = speechToTextService.addWord(params);
+        const addWordResult = speechToTextService.addWord(addWordParams);
 
         // all methods should return a Promise
         expectToBePromise(addWordResult);
@@ -1808,6 +2175,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.body.display_as).toEqual(displayAs);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.word_name).toEqual(wordName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __addWordTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __addWordTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __addWordTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1816,7 +2198,7 @@ describe('SpeechToTextV1', () => {
         const wordName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const addWordParams = {
           customizationId,
           wordName,
           headers: {
@@ -1825,13 +2207,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.addWord(params);
+        speechToTextService.addWord(addWordParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.addWord({});
@@ -1840,32 +2222,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const addWordPromise = speechToTextService.addWord();
-        expectToBePromise(addWordPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.addWord();
+        } catch (e) {
+          err = e;
+        }
 
-        addWordPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getWord', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getWordTest() {
         // Construct the params object for operation getWord
         const customizationId = 'testString';
         const wordName = 'testString';
-        const params = {
+        const getWordParams = {
           customizationId: customizationId,
           wordName: wordName,
         };
 
-        const getWordResult = speechToTextService.getWord(params);
+        const getWordResult = speechToTextService.getWord(getWordParams);
 
         // all methods should return a Promise
         expectToBePromise(getWordResult);
@@ -1881,6 +2264,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.word_name).toEqual(wordName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getWordTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __getWordTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __getWordTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1889,7 +2287,7 @@ describe('SpeechToTextV1', () => {
         const wordName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getWordParams = {
           customizationId,
           wordName,
           headers: {
@@ -1898,13 +2296,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.getWord(params);
+        speechToTextService.getWord(getWordParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.getWord({});
@@ -1913,32 +2311,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getWordPromise = speechToTextService.getWord();
-        expectToBePromise(getWordPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.getWord();
+        } catch (e) {
+          err = e;
+        }
 
-        getWordPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteWord', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteWordTest() {
         // Construct the params object for operation deleteWord
         const customizationId = 'testString';
         const wordName = 'testString';
-        const params = {
+        const deleteWordParams = {
           customizationId: customizationId,
           wordName: wordName,
         };
 
-        const deleteWordResult = speechToTextService.deleteWord(params);
+        const deleteWordResult = speechToTextService.deleteWord(deleteWordParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteWordResult);
@@ -1954,6 +2353,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.word_name).toEqual(wordName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteWordTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteWordTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteWordTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1962,7 +2376,7 @@ describe('SpeechToTextV1', () => {
         const wordName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteWordParams = {
           customizationId,
           wordName,
           headers: {
@@ -1971,13 +2385,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteWord(params);
+        speechToTextService.deleteWord(deleteWordParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteWord({});
@@ -1986,30 +2400,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteWordPromise = speechToTextService.deleteWord();
-        expectToBePromise(deleteWordPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteWord();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteWordPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listGrammars', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listGrammarsTest() {
         // Construct the params object for operation listGrammars
         const customizationId = 'testString';
-        const params = {
+        const listGrammarsParams = {
           customizationId: customizationId,
         };
 
-        const listGrammarsResult = speechToTextService.listGrammars(params);
+        const listGrammarsResult = speechToTextService.listGrammars(listGrammarsParams);
 
         // all methods should return a Promise
         expectToBePromise(listGrammarsResult);
@@ -2024,6 +2439,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listGrammarsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __listGrammarsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __listGrammarsTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2031,7 +2461,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listGrammarsParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -2039,13 +2469,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.listGrammars(params);
+        speechToTextService.listGrammars(listGrammarsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.listGrammars({});
@@ -2054,30 +2484,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listGrammarsPromise = speechToTextService.listGrammars();
-        expectToBePromise(listGrammarsPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.listGrammars();
+        } catch (e) {
+          err = e;
+        }
 
-        listGrammarsPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('addGrammar', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __addGrammarTest() {
         // Construct the params object for operation addGrammar
         const customizationId = 'testString';
         const grammarName = 'testString';
         const grammarFile = Buffer.from('This is a mock file.');
         const contentType = 'application/srgs';
         const allowOverwrite = false;
-        const params = {
+        const addGrammarParams = {
           customizationId: customizationId,
           grammarName: grammarName,
           grammarFile: grammarFile,
@@ -2085,7 +2516,7 @@ describe('SpeechToTextV1', () => {
           allowOverwrite: allowOverwrite,
         };
 
-        const addGrammarResult = speechToTextService.addGrammar(params);
+        const addGrammarResult = speechToTextService.addGrammar(addGrammarParams);
 
         // all methods should return a Promise
         expectToBePromise(addGrammarResult);
@@ -2104,6 +2535,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.allow_overwrite).toEqual(allowOverwrite);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.grammar_name).toEqual(grammarName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __addGrammarTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __addGrammarTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __addGrammarTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2114,7 +2560,7 @@ describe('SpeechToTextV1', () => {
         const contentType = 'application/srgs';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const addGrammarParams = {
           customizationId,
           grammarName,
           grammarFile,
@@ -2125,13 +2571,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.addGrammar(params);
+        speechToTextService.addGrammar(addGrammarParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.addGrammar({});
@@ -2140,32 +2586,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const addGrammarPromise = speechToTextService.addGrammar();
-        expectToBePromise(addGrammarPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.addGrammar();
+        } catch (e) {
+          err = e;
+        }
 
-        addGrammarPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getGrammar', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getGrammarTest() {
         // Construct the params object for operation getGrammar
         const customizationId = 'testString';
         const grammarName = 'testString';
-        const params = {
+        const getGrammarParams = {
           customizationId: customizationId,
           grammarName: grammarName,
         };
 
-        const getGrammarResult = speechToTextService.getGrammar(params);
+        const getGrammarResult = speechToTextService.getGrammar(getGrammarParams);
 
         // all methods should return a Promise
         expectToBePromise(getGrammarResult);
@@ -2181,6 +2628,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.grammar_name).toEqual(grammarName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getGrammarTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __getGrammarTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __getGrammarTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2189,7 +2651,7 @@ describe('SpeechToTextV1', () => {
         const grammarName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getGrammarParams = {
           customizationId,
           grammarName,
           headers: {
@@ -2198,13 +2660,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.getGrammar(params);
+        speechToTextService.getGrammar(getGrammarParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.getGrammar({});
@@ -2213,32 +2675,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getGrammarPromise = speechToTextService.getGrammar();
-        expectToBePromise(getGrammarPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.getGrammar();
+        } catch (e) {
+          err = e;
+        }
 
-        getGrammarPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteGrammar', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteGrammarTest() {
         // Construct the params object for operation deleteGrammar
         const customizationId = 'testString';
         const grammarName = 'testString';
-        const params = {
+        const deleteGrammarParams = {
           customizationId: customizationId,
           grammarName: grammarName,
         };
 
-        const deleteGrammarResult = speechToTextService.deleteGrammar(params);
+        const deleteGrammarResult = speechToTextService.deleteGrammar(deleteGrammarParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteGrammarResult);
@@ -2254,6 +2717,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.grammar_name).toEqual(grammarName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteGrammarTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteGrammarTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteGrammarTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2262,7 +2740,7 @@ describe('SpeechToTextV1', () => {
         const grammarName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteGrammarParams = {
           customizationId,
           grammarName,
           headers: {
@@ -2271,13 +2749,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteGrammar(params);
+        speechToTextService.deleteGrammar(deleteGrammarParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteGrammar({});
@@ -2286,34 +2764,35 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteGrammarPromise = speechToTextService.deleteGrammar();
-        expectToBePromise(deleteGrammarPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteGrammar();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteGrammarPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createAcousticModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createAcousticModelTest() {
         // Construct the params object for operation createAcousticModel
         const name = 'testString';
         const baseModelName = 'ar-AR_BroadbandModel';
         const description = 'testString';
-        const params = {
+        const createAcousticModelParams = {
           name: name,
           baseModelName: baseModelName,
           description: description,
         };
 
-        const createAcousticModelResult = speechToTextService.createAcousticModel(params);
+        const createAcousticModelResult = speechToTextService.createAcousticModel(createAcousticModelParams);
 
         // all methods should return a Promise
         expectToBePromise(createAcousticModelResult);
@@ -2330,6 +2809,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.body.name).toEqual(name);
         expect(mockRequestOptions.body.base_model_name).toEqual(baseModelName);
         expect(mockRequestOptions.body.description).toEqual(description);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createAcousticModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __createAcousticModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __createAcousticModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2338,7 +2832,7 @@ describe('SpeechToTextV1', () => {
         const baseModelName = 'ar-AR_BroadbandModel';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createAcousticModelParams = {
           name,
           baseModelName,
           headers: {
@@ -2347,13 +2841,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.createAcousticModel(params);
+        speechToTextService.createAcousticModel(createAcousticModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.createAcousticModel({});
@@ -2362,30 +2856,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createAcousticModelPromise = speechToTextService.createAcousticModel();
-        expectToBePromise(createAcousticModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.createAcousticModel();
+        } catch (e) {
+          err = e;
+        }
 
-        createAcousticModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listAcousticModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listAcousticModelsTest() {
         // Construct the params object for operation listAcousticModels
         const language = 'ar-AR';
-        const params = {
+        const listAcousticModelsParams = {
           language: language,
         };
 
-        const listAcousticModelsResult = speechToTextService.listAcousticModels(params);
+        const listAcousticModelsResult = speechToTextService.listAcousticModels(listAcousticModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listAcousticModelsResult);
@@ -2400,20 +2895,35 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.language).toEqual(language);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listAcousticModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __listAcousticModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __listAcousticModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listAcousticModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        speechToTextService.listAcousticModels(params);
+        speechToTextService.listAcousticModels(listAcousticModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -2424,16 +2934,17 @@ describe('SpeechToTextV1', () => {
       });
     });
   });
+
   describe('getAcousticModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getAcousticModelTest() {
         // Construct the params object for operation getAcousticModel
         const customizationId = 'testString';
-        const params = {
+        const getAcousticModelParams = {
           customizationId: customizationId,
         };
 
-        const getAcousticModelResult = speechToTextService.getAcousticModel(params);
+        const getAcousticModelResult = speechToTextService.getAcousticModel(getAcousticModelParams);
 
         // all methods should return a Promise
         expectToBePromise(getAcousticModelResult);
@@ -2448,6 +2959,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getAcousticModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __getAcousticModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __getAcousticModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2455,7 +2981,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getAcousticModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -2463,13 +2989,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.getAcousticModel(params);
+        speechToTextService.getAcousticModel(getAcousticModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.getAcousticModel({});
@@ -2478,30 +3004,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getAcousticModelPromise = speechToTextService.getAcousticModel();
-        expectToBePromise(getAcousticModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.getAcousticModel();
+        } catch (e) {
+          err = e;
+        }
 
-        getAcousticModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteAcousticModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteAcousticModelTest() {
         // Construct the params object for operation deleteAcousticModel
         const customizationId = 'testString';
-        const params = {
+        const deleteAcousticModelParams = {
           customizationId: customizationId,
         };
 
-        const deleteAcousticModelResult = speechToTextService.deleteAcousticModel(params);
+        const deleteAcousticModelResult = speechToTextService.deleteAcousticModel(deleteAcousticModelParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteAcousticModelResult);
@@ -2516,6 +3043,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteAcousticModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteAcousticModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteAcousticModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2523,7 +3065,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteAcousticModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -2531,13 +3073,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteAcousticModel(params);
+        speechToTextService.deleteAcousticModel(deleteAcousticModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteAcousticModel({});
@@ -2546,32 +3088,35 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteAcousticModelPromise = speechToTextService.deleteAcousticModel();
-        expectToBePromise(deleteAcousticModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteAcousticModel();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteAcousticModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('trainAcousticModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __trainAcousticModelTest() {
         // Construct the params object for operation trainAcousticModel
         const customizationId = 'testString';
         const customLanguageModelId = 'testString';
-        const params = {
+        const strict = true;
+        const trainAcousticModelParams = {
           customizationId: customizationId,
           customLanguageModelId: customLanguageModelId,
+          strict: strict,
         };
 
-        const trainAcousticModelResult = speechToTextService.trainAcousticModel(params);
+        const trainAcousticModelResult = speechToTextService.trainAcousticModel(trainAcousticModelParams);
 
         // all methods should return a Promise
         expectToBePromise(trainAcousticModelResult);
@@ -2586,7 +3131,23 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.custom_language_model_id).toEqual(customLanguageModelId);
+        expect(mockRequestOptions.qs.strict).toEqual(strict);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __trainAcousticModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __trainAcousticModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __trainAcousticModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2594,7 +3155,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const trainAcousticModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -2602,13 +3163,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.trainAcousticModel(params);
+        speechToTextService.trainAcousticModel(trainAcousticModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.trainAcousticModel({});
@@ -2617,30 +3178,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const trainAcousticModelPromise = speechToTextService.trainAcousticModel();
-        expectToBePromise(trainAcousticModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.trainAcousticModel();
+        } catch (e) {
+          err = e;
+        }
 
-        trainAcousticModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('resetAcousticModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __resetAcousticModelTest() {
         // Construct the params object for operation resetAcousticModel
         const customizationId = 'testString';
-        const params = {
+        const resetAcousticModelParams = {
           customizationId: customizationId,
         };
 
-        const resetAcousticModelResult = speechToTextService.resetAcousticModel(params);
+        const resetAcousticModelResult = speechToTextService.resetAcousticModel(resetAcousticModelParams);
 
         // all methods should return a Promise
         expectToBePromise(resetAcousticModelResult);
@@ -2655,6 +3217,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __resetAcousticModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __resetAcousticModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __resetAcousticModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2662,7 +3239,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const resetAcousticModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -2670,13 +3247,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.resetAcousticModel(params);
+        speechToTextService.resetAcousticModel(resetAcousticModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.resetAcousticModel({});
@@ -2685,34 +3262,35 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const resetAcousticModelPromise = speechToTextService.resetAcousticModel();
-        expectToBePromise(resetAcousticModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.resetAcousticModel();
+        } catch (e) {
+          err = e;
+        }
 
-        resetAcousticModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('upgradeAcousticModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __upgradeAcousticModelTest() {
         // Construct the params object for operation upgradeAcousticModel
         const customizationId = 'testString';
         const customLanguageModelId = 'testString';
         const force = false;
-        const params = {
+        const upgradeAcousticModelParams = {
           customizationId: customizationId,
           customLanguageModelId: customLanguageModelId,
           force: force,
         };
 
-        const upgradeAcousticModelResult = speechToTextService.upgradeAcousticModel(params);
+        const upgradeAcousticModelResult = speechToTextService.upgradeAcousticModel(upgradeAcousticModelParams);
 
         // all methods should return a Promise
         expectToBePromise(upgradeAcousticModelResult);
@@ -2729,6 +3307,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.custom_language_model_id).toEqual(customLanguageModelId);
         expect(mockRequestOptions.qs.force).toEqual(force);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __upgradeAcousticModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __upgradeAcousticModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __upgradeAcousticModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2736,7 +3329,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const upgradeAcousticModelParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -2744,13 +3337,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.upgradeAcousticModel(params);
+        speechToTextService.upgradeAcousticModel(upgradeAcousticModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.upgradeAcousticModel({});
@@ -2759,30 +3352,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const upgradeAcousticModelPromise = speechToTextService.upgradeAcousticModel();
-        expectToBePromise(upgradeAcousticModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.upgradeAcousticModel();
+        } catch (e) {
+          err = e;
+        }
 
-        upgradeAcousticModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listAudio', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listAudioTest() {
         // Construct the params object for operation listAudio
         const customizationId = 'testString';
-        const params = {
+        const listAudioParams = {
           customizationId: customizationId,
         };
 
-        const listAudioResult = speechToTextService.listAudio(params);
+        const listAudioResult = speechToTextService.listAudio(listAudioParams);
 
         // all methods should return a Promise
         expectToBePromise(listAudioResult);
@@ -2797,6 +3391,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listAudioTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __listAudioTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __listAudioTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2804,7 +3413,7 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listAudioParams = {
           customizationId,
           headers: {
             Accept: userAccept,
@@ -2812,13 +3421,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.listAudio(params);
+        speechToTextService.listAudio(listAudioParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.listAudio({});
@@ -2827,23 +3436,24 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const listAudioPromise = speechToTextService.listAudio();
-        expectToBePromise(listAudioPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.listAudio();
+        } catch (e) {
+          err = e;
+        }
 
-        listAudioPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('addAudio', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __addAudioTest() {
         // Construct the params object for operation addAudio
         const customizationId = 'testString';
         const audioName = 'testString';
@@ -2851,7 +3461,7 @@ describe('SpeechToTextV1', () => {
         const contentType = 'application/zip';
         const containedContentType = 'audio/alaw';
         const allowOverwrite = false;
-        const params = {
+        const addAudioParams = {
           customizationId: customizationId,
           audioName: audioName,
           audioResource: audioResource,
@@ -2860,7 +3470,7 @@ describe('SpeechToTextV1', () => {
           allowOverwrite: allowOverwrite,
         };
 
-        const addAudioResult = speechToTextService.addAudio(params);
+        const addAudioResult = speechToTextService.addAudio(addAudioParams);
 
         // all methods should return a Promise
         expectToBePromise(addAudioResult);
@@ -2880,6 +3490,21 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.allow_overwrite).toEqual(allowOverwrite);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.audio_name).toEqual(audioName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __addAudioTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __addAudioTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __addAudioTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2889,7 +3514,7 @@ describe('SpeechToTextV1', () => {
         const audioResource = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const addAudioParams = {
           customizationId,
           audioName,
           audioResource,
@@ -2899,13 +3524,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.addAudio(params);
+        speechToTextService.addAudio(addAudioParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.addAudio({});
@@ -2914,32 +3539,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const addAudioPromise = speechToTextService.addAudio();
-        expectToBePromise(addAudioPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.addAudio();
+        } catch (e) {
+          err = e;
+        }
 
-        addAudioPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('getAudio', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getAudioTest() {
         // Construct the params object for operation getAudio
         const customizationId = 'testString';
         const audioName = 'testString';
-        const params = {
+        const getAudioParams = {
           customizationId: customizationId,
           audioName: audioName,
         };
 
-        const getAudioResult = speechToTextService.getAudio(params);
+        const getAudioResult = speechToTextService.getAudio(getAudioParams);
 
         // all methods should return a Promise
         expectToBePromise(getAudioResult);
@@ -2955,6 +3581,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.audio_name).toEqual(audioName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getAudioTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __getAudioTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __getAudioTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -2963,7 +3604,7 @@ describe('SpeechToTextV1', () => {
         const audioName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getAudioParams = {
           customizationId,
           audioName,
           headers: {
@@ -2972,13 +3613,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.getAudio(params);
+        speechToTextService.getAudio(getAudioParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.getAudio({});
@@ -2987,32 +3628,33 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getAudioPromise = speechToTextService.getAudio();
-        expectToBePromise(getAudioPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.getAudio();
+        } catch (e) {
+          err = e;
+        }
 
-        getAudioPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteAudio', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteAudioTest() {
         // Construct the params object for operation deleteAudio
         const customizationId = 'testString';
         const audioName = 'testString';
-        const params = {
+        const deleteAudioParams = {
           customizationId: customizationId,
           audioName: audioName,
         };
 
-        const deleteAudioResult = speechToTextService.deleteAudio(params);
+        const deleteAudioResult = speechToTextService.deleteAudio(deleteAudioParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteAudioResult);
@@ -3028,6 +3670,21 @@ describe('SpeechToTextV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.path.audio_name).toEqual(audioName);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteAudioTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteAudioTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteAudioTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3036,7 +3693,7 @@ describe('SpeechToTextV1', () => {
         const audioName = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteAudioParams = {
           customizationId,
           audioName,
           headers: {
@@ -3045,13 +3702,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteAudio(params);
+        speechToTextService.deleteAudio(deleteAudioParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteAudio({});
@@ -3060,30 +3717,31 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteAudioPromise = speechToTextService.deleteAudio();
-        expectToBePromise(deleteAudioPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteAudio();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteAudioPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteUserData', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteUserDataTest() {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
-        const params = {
+        const deleteUserDataParams = {
           customerId: customerId,
         };
 
-        const deleteUserDataResult = speechToTextService.deleteUserData(params);
+        const deleteUserDataResult = speechToTextService.deleteUserData(deleteUserDataParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteUserDataResult);
@@ -3098,6 +3756,21 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.customer_id).toEqual(customerId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteUserDataTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __deleteUserDataTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __deleteUserDataTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -3105,7 +3778,7 @@ describe('SpeechToTextV1', () => {
         const customerId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteUserDataParams = {
           customerId,
           headers: {
             Accept: userAccept,
@@ -3113,13 +3786,13 @@ describe('SpeechToTextV1', () => {
           },
         };
 
-        speechToTextService.deleteUserData(params);
+        speechToTextService.deleteUserData(deleteUserDataParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await speechToTextService.deleteUserData({});
@@ -3128,17 +3801,17 @@ describe('SpeechToTextV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteUserDataPromise = speechToTextService.deleteUserData();
-        expectToBePromise(deleteUserDataPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.deleteUserData();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteUserDataPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
